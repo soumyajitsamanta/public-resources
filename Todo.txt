@@ -1,0 +1,4 @@
+TODO
+
+- Add tables for vibhakti
+- Modify old content spellings and add meanings.
