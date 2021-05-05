@@ -1,7 +1,21 @@
 # Verb Tables
 
 Verb tables are split first according to the Pada (पद) and then according to the lakar (लकार).
-Each heading is presented in manner 'Sanskrit Name - Hindi Name - English Name'.
+Each heading is presented in manner 'Sanskrit Name - Hindi Name - English Name' of lakars.
+
+All lakar meanings are as below:
+[TODO] Add all meanings.
+
+- लट् लकार
+- लोट् लकार
+- लङ्ग् लकार
+- विधिलिङ्ग् लकार
+- लुट् लकार
+- लृट् लकार
+- लृङ्ग् लकार
+- आशीर्लिन्ग लकार
+- लिट् लकार
+- लुङ्ग् लकार
 
 ## Parasmai Pada or परस्मैपद पद
 
@@ -29,7 +43,7 @@ Each heading is presented in manner 'Sanskrit Name - Hindi Name - English Name'.
 | मध्यम पुरुष | स्    | तम्     | त      |
 | उत्तम पुरुष | अम्   | व       | म      |
 
-४. विधिलिङ्ग् लकार - चाहिए के अर्थ में - Potential Mood
+४. विधिलिङ्ग् लकार - जरूरत - Potential Mood
 
 | पुरुष       | एकवचन | द्विवचन | वहुवचन |
 | ----------- | ----- | ------- | ------ |
@@ -37,7 +51,7 @@ Each heading is presented in manner 'Sanskrit Name - Hindi Name - English Name'.
 | मध्यम पुरुष | यास्  | यातम्   | यात    |
 | उत्तम पुरुष | याम्  | याव     | याम    |
 
-५. लुट् लकार (First Future Tense or Periphrastic)
+५. लुट् लकार - बयानी - Periphrastic)
 
 | पुरुष       | एकवचन  | द्विवचन | वहुवचन  |
 | ----------- | ------ | ------- | ------- |
@@ -45,7 +59,7 @@ Each heading is presented in manner 'Sanskrit Name - Hindi Name - English Name'.
 | मध्यम पुरुष | तासि   | तास्थस् | तास्थ   |
 | उत्तम पुरुष | तास्मि | तास्वस् | तास्मस् |
 
-६. लृट् लकार - भविष्यत् - Second Future Tense
+६. लृट् लकार - भविष्यत् काल - Second Future Tense
 
 | पुरुष       | एकवचन  | द्विवचन        | वहुवचन  |
 | ----------- | ------ | -------------- | ------- |
