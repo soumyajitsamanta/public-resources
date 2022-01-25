@@ -38,11 +38,11 @@ All lakar meanings are as below:
 
   Denotes blessing or wish.
 
-- लिट् लकार - - (Past Perfect Tense)
+- लिट् लकार - परोक्ष भूत काल - Past Perfect Tense
 
   Denotes action performed in past and talking about it after completed already.
 
-- लुङ्ग् लकार - - (Perfect Tense)
+- लुङ्ग् लकार - सामान्य भूत काल - Past Tense
 
   Denotes a completed action.
 
