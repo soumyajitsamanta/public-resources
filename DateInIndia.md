@@ -1,4 +1,6 @@
 
+## Month Names
+
 | Months Covered    | Bengali Name | Hindi Name |
 | ----------------- | ------------ | ---------- |
 | April/May         | বৈশাখ          | वैशाख        |
@@ -13,3 +15,15 @@
 | January/February  | মাঘ           | माघ         |
 | February/March    | ফাল্গুন         | फाल्गुन       |
 | March/April       | চৈত্র          | चैत्र        |
+
+## Day Names
+
+| Day In English | Hindi Name         |
+| -------------- | ------------------- |
+| Sunday         | रविवार              |
+| Monday         | सोमवार              |
+| Tuesday        | मंगलवार             |
+| Wednesday      | बुधवार              |
+| Thursday       | गुरूवार/बृहस्पतिवार |
+| Friday         | शुक्रवार            |
+| Saturday       | शनिवार              |
