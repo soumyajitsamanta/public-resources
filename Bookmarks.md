@@ -8,8 +8,14 @@ As long as the number of links are small there will be a single table to take ca
 | [Awesome Sysadmin](https://github.com/awesome-foss/awesome-sysadmin) | Awesome Sysadmin tools                   |
 | [Awesome - Github topic](https://github.com/topics/awesome) | The Github topic collecting all the awesome links pages at one place |
 | [OpenTomb](https://github.com/opentomb/OpenTomb)                     | OpenTomb game engine for Tomb Raider 1-5 |
-|[Linux log files](https://www.cyberciti.biz/faq/linux-log-files-location-and-how-do-i-view-logs-files/)|An article about linux log files|
 
+## Interesting Reads
+[Linux log files](https://www.cyberciti.biz/faq/linux-log-files-location-and-how-do-i-view-logs-files/)
+An article about linux log files
+
+## Security:
+[Breached Forums](https://breached.to/)
+Breached contains discussion related to breached sites and data to be sold from breaches sometimes.
 
 # Books
 
