@@ -17,6 +17,9 @@ An article about linux log files
 [Breached Forums](https://breached.to/)
 Breached contains discussion related to breached sites and data to be sold from breaches sometimes.
 
+[Wallet Scrutiny](https://walletscrutiny.com)
+Contains list of bitcoin supporting wallets, examining the transparency and attacks on those wallets.
+
 ## Productivity
 
 [Untools](https://untools.co)
