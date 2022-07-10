@@ -30,6 +30,9 @@ Contains list of bitcoin supporting wallets, examining the transparency and atta
 [KYC? Not me!](https://kycnot.me)
 Lists the non kyc platforms for crypto with the privacy features. Rates them according to the privacy features
 
+[Cover you track](https://coveryourtracks.eff.org)
+Tells if browser is being tracked and how good the tracking prevention is.
+
 ## Productivity
 
 [Untools](https://untools.co)
