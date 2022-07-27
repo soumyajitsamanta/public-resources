@@ -3,7 +3,23 @@
 Verb tables are split first according to the Pada (पद) and then according to the lakar (लकार).
 Each heading is presented in manner 'Sanskrit Name - Hindi Name - English Name' of lakars.
 
-All lakar meanings are as below:
+All Pada (पद) meanings are as below:
+
+- Parasmai pad (परस्मैपद)
+
+  The action's result is affecting some other person than speaker.
+  E.g.: वो जाता है ।
+
+- Atmane pad (आत्मनेपद)
+
+  The action's result is affecting the speaker or the self.
+  E.g.: मै जाता हु ।
+
+The difference between the self affecting sentence ending in 
+hindi हु and the other है is small but when speaking it can make
+difference.
+
+All lakar (लकार) meanings are as below:
 
 - लट् लकार - वर्तमान काल - Present Tense
 
@@ -50,7 +66,7 @@ All lakar meanings are as below:
 
 Wherever there are स् it can be replaced by : and ending with : can be replaced by स् in some cases.
 
-## Parasmai Pada or परस्मैपद पद
+## Parasmai Pada or परस्मैपद
 
 १. लट् लकार - वर्तमान काल - Present Tense
 
@@ -132,7 +148,7 @@ Wherever there are स् it can be replaced by : and ending with : can be repla
 | मध्यम पुरुष |  स्   |   तम्   |   त    |
 | उत्तम पुरुष |  अम्  |    व    |   म    |
 
-## Atmane Pada or आत्मेनपद पद
+## Atmane Pada or आत्मेनपद
 
 १. लट् लकार - वर्तमान काल - Present Tense
 
