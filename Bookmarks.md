@@ -38,6 +38,14 @@ Tells if browser is being tracked and how good the tracking prevention is.
 [Untools](https://untools.co)
 This is a site with collection of thinking and mental models.
 
+## Design Tools
+
+[Wordmark](https://wordmark.it/)
+Displays a particular text in all the system fonts available.
+
+[Fonts In Use](https://fontsinuse.com/)
+Displays the fonts being used in a design.
+
 # Books
 
 - [Mostly Adeuqate Guide to Functional Programming](https://github.com/MostlyAdequate/mostly-adequate-guide)
