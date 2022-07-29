@@ -54,6 +54,10 @@ Displays the fonts being used in a design.
 [Kamua](https://kamua.com/)
 Automatically tracks and crops video to a size and much more.
 
+## Text Tools
+
+[Hemingway](https://hemingwayapp.com/)
+An app that higlights the parts of text in passive or too dense to understand and so on.
 
 # Books
 
