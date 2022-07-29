@@ -33,6 +33,9 @@ Lists the non kyc platforms for crypto with the privacy features. Rates them acc
 [Cover you track](https://coveryourtracks.eff.org)
 Tells if browser is being tracked and how good the tracking prevention is.
 
+[Mention](mention.com)
+Alerts when you are mentioned in any social media and hundreds of other sources  
+
 ## Productivity
 
 [Untools](https://untools.co)
@@ -45,6 +48,12 @@ Displays a particular text in all the system fonts available.
 
 [Fonts In Use](https://fontsinuse.com/)
 Displays the fonts being used in a design.
+
+## Video Effects and Editing
+
+[Kamua](https://kamua.com/)
+Automatically tracks and crops video to a size and much more.
+
 
 # Books
 
