@@ -14,6 +14,9 @@ The Github topic collecting all the awesome links pages at one place
 [OpenTomb](https://github.com/opentomb/OpenTomb)
 OpenTomb game engine for Tomb Raider 1-5
 
+[Photogrammetry Guide](https://github.com/mikeroyal/Photogrammetry-Guide)
+Collection of tutorials, applications, books etc. for photogrammetry.
+
 ## Interesting Reads
 
 [Linux log files](https://www.cyberciti.biz/faq/linux-log-files-location-and-how-do-i-view-logs-files/)
