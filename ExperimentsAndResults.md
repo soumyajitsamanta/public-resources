@@ -23,13 +23,13 @@ it has no way to do no spring client code generation as the spring dependency wi
 - ++ Code generation
 - -- Depends on Spring ecluding which is the exception case
 
-## Official GraphQL Library
+### Official GraphQL Library
 The official GraphQL library has lots of objects to be created but can be good if we do not want any external dependency.
 
 - ++ No external dependency
 - -- We handle the low level things
 
-## Apollo Kotlin
+### Apollo Kotlin
 The Apollo Kotlin is compatible with android.
 
 - ++ Android support
