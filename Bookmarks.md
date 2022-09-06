@@ -20,7 +20,10 @@ Collection of tutorials, applications, books etc. for photogrammetry.
 ## Interesting Reads
 
 [Linux log files](https://www.cyberciti.biz/faq/linux-log-files-location-and-how-do-i-view-logs-files/)
-An article about linux log files
+An article about linux log files.
+
+[Intro to Language Lexing And Parsing with ANTLR](https://www.willowtreeapps.com/craft/an-introduction-to-language-lexing-and-parsing-with-antlr)
+It gives quick minimal intro to ANTLR grammar with example.
 
 ## Security:
 
