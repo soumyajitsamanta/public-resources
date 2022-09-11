@@ -1,0 +1,86 @@
+[
+    {
+        "fromSymbol": "CRV",
+        "toSymbol": "USDC",
+        "address": "0xadd162f370be707162deb97234c4effd836de7f4",
+        "chainId":137
+    },
+    {
+        "fromSymbol": "EURS",
+        "toSymbol": "USDC",
+        "address": "0xcaf4397b0ff835c340b31cbd97f7d46a3309c43f",
+        "chainId":137
+    },
+    {
+        "fromSymbol": "USDC",
+        "toSymbol": "CRV",
+        "address": "0xadd162f370be707162deb97234c4effd836de7f4",
+        "chainId":137
+    },
+    {
+        "fromSymbol": "USDC",
+        "toSymbol": "EURS",
+        "address": "0xcaf4397b0ff835c340b31cbd97f7d46a3309c43f",
+        "chainId":137
+    },
+    {
+        "fromSymbol": "USDC",
+        "toSymbol": "USDT",
+        "address": "0xdac8a8e6dbf8c690ec6815e0ff03491b2770255d",
+        "chainId":137
+    },
+    {
+        "fromSymbol": "USDC",
+        "toSymbol": "WBTC",
+        "address": "0xba91ae7312ace1137c15786177cbe687fd2d73d0",
+        "chainId":137
+    },
+    {
+        "fromSymbol": "USDC",
+        "toSymbol": "WETH",
+        "address": "0x04537f43f6add7b1b60cab199c7a910024ee0594",
+        "chainId":137
+    },
+    {
+        "fromSymbol": "USDT",
+        "toSymbol": "USDC",
+        "address": "0xdac8a8e6dbf8c690ec6815e0ff03491b2770255d",
+        "chainId":137
+    },
+    {
+        "fromSymbol": "USDT",
+        "toSymbol": "WETH",
+        "address": "0x3840d6a1b96292c8e44991b5605e03245584585b",
+        "chainId":137
+    },
+    {
+        "fromSymbol": "WBTC",
+        "toSymbol": "USDC",
+        "address": "0xba91ae7312ace1137c15786177cbe687fd2d73d0",
+        "chainId":137
+    },
+    {
+        "fromSymbol": "WBTC",
+        "toSymbol": "WETH",
+        "address": "0x960fc6489c9b44da6ba330883dc1898b75a7b27b",
+        "chainId":137
+    },
+    {
+        "fromSymbol": "WETH",
+        "toSymbol": "USDC",
+        "address": "0x04537f43f6add7b1b60cab199c7a910024ee0594",
+        "chainId":137
+    },
+    {
+        "fromSymbol": "WETH",
+        "toSymbol": "USDT",
+        "address": "0x3840d6a1b96292c8e44991b5605e03245584585b",
+        "chainId":137
+    },
+    {
+        "fromSymbol": "WETH",
+        "toSymbol": "WBTC",
+        "address": "0x960fc6489c9b44da6ba330883dc1898b75a7b27b",
+        "chainId":137
+    }
+]

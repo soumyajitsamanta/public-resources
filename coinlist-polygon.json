@@ -2,6 +2,7 @@
   "chainId":137,
   "chainName":"polygon",
   "coinAddressPairs":[
+    {"address":"0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619", "name":"Wrapped Ether", "symbol":"WETH"},
     {"address":"0xc2132d05d31c914a87c6611c10748aeb04b58e8f", "name":"(PoS) Tether USD", "symbol":"USDT"},
     {"address":"0x2791bca1f2de4661ed88a30c99a7a9449aa84174", "name":"USD Coin (PoS)", "symbol":"USDC"},
     {"address":"0x3BA4c387f786bFEE076A58914F5Bd38d668B42c3", "name":"BNB", "symbol":"BNB"},
