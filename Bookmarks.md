@@ -25,6 +25,9 @@ An article about linux log files.
 [Intro to Language Lexing And Parsing with ANTLR](https://www.willowtreeapps.com/craft/an-introduction-to-language-lexing-and-parsing-with-antlr)
 It gives quick minimal intro to ANTLR grammar with example.
 
+[Antlr Mega Tutorial](https://tomassetti.me/antlr-mega-tutorial/)
+Antlr tutorial in full depth from beginning.
+
 ## Security:
 
 [Breached Forums](https://breached.to/)
@@ -106,6 +109,16 @@ Displays a particular text in all the system fonts available.
 Displays the fonts being used in a design.
 
 ## Coordinates Of Cruptocurrency World
+
+### Betting In Crypto
+
+[Dexsport](https://mainnet.dexsport.io/sports)
+Decentralized betting site.
+[BC.game](https://bc.game/)
+Good betting site.
+[Betonline](https://www.betonline.ag/)
+[Bitcasino](https://bitcasino.io/)
+
 
 ### Virtual Credit Cards Funded by Crypto
 
