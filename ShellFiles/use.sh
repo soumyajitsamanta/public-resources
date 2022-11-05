@@ -1,5 +1,11 @@
 # Contains the paths defined and how to use paths
 
+# Common Commands
+
+echo "mvn test "
+echo "org.apache.maven.plugins:maven-checkstyle-plugin:3.2.0:checkstyle"
+echo "org.apache.maven.plugins:maven-pmd-plugin:3.19.0:pmd pmd:cpd"
+
 # Parameters defined with P suffix
 CONTAINERDP=
 GRADLE_HOME_7P=
@@ -10,8 +16,6 @@ MYSQLP=
 NODE_HOMEP=
 SPARKP=
 SQLITEP=
-
-
 
 echo "These are the paths you can add to environments:"
 # echo "0"
