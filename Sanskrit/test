@@ -1,0 +1,12 @@
+Rules:
+
+lakars: lat | lot | lang | vidhiling | lut | lrit 
+        | lring | aashirling | lit | lung ;
+word: Parasmai | Atmane
+Parasmai: plakars;
+Atmane:   alakars;
+
+plakars: pratham-ekvachan 'ति'
+
+
+
