@@ -31,8 +31,7 @@ fi
 echo ""
 
 # Create Use binary in bin
-cp -T ./use.sh ~/Project/bin/
-mv ~/Project/bin/use.sh ~/Project/bin/use
+cp -T ./use ~/Project/bin/
 chmod +x ~/Project/bin/use
 
 # Add to bashrc or print line to add to bashrc
