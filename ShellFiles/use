@@ -1,12 +1,14 @@
-# Contains the paths defined and how to use paths
+# Contains the paths defined and how to use paths and frequently used commands
 
-# Common Commands
+echo "# Common Commands"
+echo "mvn test org.apache.maven.plugins:maven-checkstyle-plugin:3.2.0:checkstyle org.apache.maven.plugins:maven-pmd-plugin:3.19.0:pmd pmd:cpd"
+echo "Run dbs on folder:        mongod --dbpath {db_folder} , mysqld --datadir {db_folder}"
+echo "Limit virtual mem to 8GB: ulimit -v 8388608"
+echo "See all ports and apps:   netstat -a -n -o"
+echo "Path of MTP mounted:      /var/run/user/1000/gvfs/"
+echo ""
 
-echo "mvn test "
-echo "org.apache.maven.plugins:maven-checkstyle-plugin:3.2.0:checkstyle"
-echo "org.apache.maven.plugins:maven-pmd-plugin:3.19.0:pmd pmd:cpd"
-
-# Parameters defined with P suffix
+echo "# Parameters defined with P suffix"
 CONTAINERDP=
 GRADLE_HOME_7P=
 JAVA_HOME_JDK17P=
@@ -16,6 +18,7 @@ MYSQLP=
 NODE_HOMEP=
 SPARKP=
 SQLITEP=
+echo""
 
 echo "These are the paths you can add to environments:"
 # echo "0"
@@ -30,22 +33,25 @@ echo "These are the paths you can add to environments:"
 # echo "9"
 # echo "A"
 # echo "B"
-# echo "C"
+echo "CONTAINERDP=$CONTAINERDP"
 # echo "D"
 # echo "E"
 # echo "F"
-# echo "G"
+echo "GRADLE_HOME_7P=$GRADLE_HOME_7P"
 # echo "H"
 # echo "I"
-echo "JAVA_HOME_JDK17="
-# echo "K"
+echo "JAVA_HOME_JDK17=$JAVA_HOME_JDK17"
+echo "K3SP=$K3SP"
 # echo "L"
-# echo "M"
-# echo "N"
+echo "MVN_HOMEP=$MVN_HOMEP"
+echo "MYSQLP=$MYSQLP"
+echo "NODE_HOMEP=$NODE_HOMEP"
 # echo "O"
 # echo "P"
 # echo "Q"
 # echo "R"
+echo "SPARKP=$SPARKP"
+echo "SQLITEP=$SQLITEP"
 # echo "S"
 # echo "T"
 # echo "U"
@@ -54,10 +60,12 @@ echo "JAVA_HOME_JDK17="
 # echo "X"
 # echo "Y"
 # echo "Z"
-
-echo "Use this to set the paths, append paths at end:"
-echo "export PATH=\$PATH:"
+echo ""
 
 echo "Existing PATH set to:"
 echo $PATH
 echo ""
+
+echo "Use this to set the paths, append paths at end:"
+echo "export PATH=\$PATH:"
+
