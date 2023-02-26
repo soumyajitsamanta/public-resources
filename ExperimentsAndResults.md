@@ -33,3 +33,40 @@ The official GraphQL library has lots of objects to be created but can be good i
 The Apollo Kotlin is compatible with android.
 
 - ++ Android support
+
+# Experiementing with New Ubuntu Live Mode Scanner
+
+When the very old HP Scanjet 3300C scanner was attached to the windows 
+it did not work, attaching it to mac it did not work. 
+But linux had sane and xsane. 
+To install sane ubuntu app store was available as fresh install.
+
+So synaptic had to be installed. This is when the apt-get update gave is nothing back.
+So apt edit-sources was used to add debian packages repository.
+
+Here are steps:
+```sh
+apt edit sources
+```
+
+In the editor type `deb http://ftp.de.debian.org/debian bullseye main` update name as required.
+
+Do
+```sh
+apt update
+# Replace keys as required.
+apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 605C66F00D6C9793
+apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 0E98404D386FA1D9
+apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 648ACFD622F3D138
+apt install synaptic
+```
+
+Use synaptic to install xsane and sane.
+
+
+
+
+
+
+
+
