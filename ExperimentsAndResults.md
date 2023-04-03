@@ -61,9 +61,17 @@ apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 648ACFD622F3D138
 apt install synaptic
 ```
 
-Use synaptic to install xsane and sane.
+Use synaptic to install xsane and sane. It did not scan. 😿
 
+# Trying to run the ftp server in a folder [Pending]
 
+To perform the action of running the ftp servewr on any arbitrary folder 
+what we need to do is install vsftpd which supports local_root option
+ and also takes option from command line as mentioned in the man page.
+
+Here is the full command for that:
+
+vsftpd local_root=/
 
 
 
