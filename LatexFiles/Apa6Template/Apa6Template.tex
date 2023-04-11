@@ -1,0 +1,78 @@
+\documentclass[
+    doc,
+    a4paper,
+    draftall,
+    % apacite
+]{apa6}
+
+\usepackage[utf8]{inputenc}
+\usepackage[hidelinks]{hyperref}
+% \usepackage[
+%     style=apa6,
+%     backend=biber,
+%     sortcites=true,
+%     sorting=nyt,
+%     isbn=false,
+%     url=false,
+%     doi=false,
+%     eprint=false,
+%     hyperref=false,
+%     backref=false,
+%     firstinits=false,
+% ]{biblatex}
+
+% maps apacite commands to biblatex commands
+% \let \citeNP \cite
+% \let \citeA \textcite
+% \let \cite \parencite
+
+% \bibliography{bibliography}
+
+
+
+\title{Title}
+\shorttitle{Short Title}
+\author{Soumyajit Samanta}
+\affiliation{University}
+\date{January 1, 1970}
+
+\leftheader{Samanta}
+
+\abstract{Abstract of the article}
+
+\keywords{template, edit}
+
+\authornote{Author contacts and else}
+
+% \addbibresource{common.bib}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+\newpage
+\listoffigures
+\newpage
+\listoftables
+
+\newpage
+
+% If Not using biblatex  remove printbib next line
+% \printbibliography
+
+\begin{thebibliography}{9}
+    \bibitem{kaurj}
+    Kaur, J. (2023, February 13). Top 5 Edge Computing Platforms in 2023 and Beyond. XenonStack. https://www.xenonstack.com/blog/edge-computing-platforms
+    \bibitem{ms-iot}
+    IoT Edge | Cloud Intelligence | Microsoft Azure. (n.d.). https://azure.microsoft.com/en-in/products/iot-edge/
+    \bibitem{eclipse-iofog}
+    Eclipse ioFog (n.d.). https://iofog.org/
+    \bibitem{s}
+    Hamet, P., Tremblay, J. (2017). Artificial intelligence in medicine. Metabolism, 69, S36-S40.
+\end{thebibliography}
+
+\appendix
+\section{appendix section}
+
+\end{document}
