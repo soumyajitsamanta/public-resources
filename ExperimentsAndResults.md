@@ -65,7 +65,7 @@ Use synaptic to install xsane and sane. It did not scan. 😿
 
 # Different File Sharing Methods
 
-## Creating HTTP server and client with node + http-server
+## HTTP server with node + http-server and browser/wget client
 
 To share files using http clients and server we need node and http-server package installed,
 we can use `http-server` in command line as follows:
@@ -78,12 +78,12 @@ http-server -g ./
 This should start the server to serve folder contents as http listing.
 Then we can use client like curl or wget to get files.
 ```
-# -r for recursively resolve all links
-# -nc for no clobber/ overwrite
+# -r for recursively all links
+# -nc for do not overwrite
 wget -r -nc http://<domain/ip>:8080
 ```
 
-## Trying to run the ftp server in a folder [Pending]
+## Ftp server in a folder [Pending]
 
 To perform the action of running the ftp servewr on any arbitrary folder 
 what we need to do is install vsftpd which supports local_root option
