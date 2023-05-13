@@ -3,6 +3,13 @@
 Verb tables are split first according to the Pada (पद) and then according to the lakar (लकार).
 Each heading is presented in manner 'Sanskrit Name - Hindi Name - English Name' of lakars.
 
+## Types of pada:
+
+| Pada   |
+|--------|
+| परस्मैपद  |
+| आत्मनेपद |
+
 All Pada (पद) meanings are as below:
 
 - Parasmai pad (परस्मैपद)
@@ -18,6 +25,21 @@ All Pada (पद) meanings are as below:
 The difference between the self affecting sentence ending in 
 hindi हु and the other है is small but when speaking it can make
 difference.
+
+## Types of Lakar:
+
+| लकार - Lakar | हिंदी मे मतलब - Hindi Meaning | English Meaning     |
+| ----------- | -------------------------- | ------------------- |
+| लट् लकार      | वर्तमान काल                   | Present Tense       |
+| लोट् लकार      | अनुज्ञा                       | Imperative Mood     |
+| लङ्ग् लकार     | भूतकाल                       | Past Tense          |
+| विधिलिङ्ग् लकार   | जरूरत                       | Potential Mood      |
+| लुट् लकार      | बयानी                        | Periphrastic        |
+| लृट् लकार      | भविष्यत् काल                   | Second Future Tense |
+| लृङ्ग् लकार     | हेतुहेतुमद्भूत                   | Conditional Mood    |
+| आशीर्लिन्ग लकार  | आशीर्वाद देना                   | Benedictive Mood    |
+| लिट् लकार      | परोक्ष भूत काल                 | Past Perfect Tense  |
+| लुङ्ग् लकार     | सामान्य भूत काल                 | Past Tense          |
 
 All lakar (लकार) meanings are as below:
 
@@ -66,7 +88,7 @@ All lakar (लकार) meanings are as below:
 
 Wherever there are स् it can be replaced by : and ending with : can be replaced by स् in some cases.
 
-## Parasmai Pada or परस्मैपद
+# Parasmai Pada or परस्मैपद
 
 १. लट् लकार - वर्तमान काल - Present Tense
 
@@ -148,7 +170,7 @@ Wherever there are स् it can be replaced by : and ending with : can be repla
 | मध्यम पुरुष |  स्   |   तम्   |   त    |
 | उत्तम पुरुष |  अम्  |    व    |   म    |
 
-## Atmane Pada or आत्मेनपद
+# Atmane Pada or आत्मेनपद
 
 १. लट् लकार - वर्तमान काल - Present Tense
 

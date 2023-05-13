@@ -1,8 +1,8 @@
 #!/bin/bash
 # Ignored Repositories: rochus-keller/LeanQt.git
 GITHUB_DOMAIN=https://github.com
-echo "Checking out required repositories"
-for REPO_LOC in $GITHUB_DOMAIN/soumyajitsamanta/shastras $GITHUB_DOMAIN/bvschaik/julius $GITHUB_DOMAIN/Kong/insomnia $GITHUB_DOMAIN/SchemaStore/schemastore $GITHUB_DOMAIN/ioquake/ioq3
+echo "Checking out *.git ending repositories"
+for REPO_LOC in $GITHUB_DOMAIN/JabRef/jabref $GITHUB_DOMAIN/soumyajitsamanta/shastras $GITHUB_DOMAIN/bvschaik/julius $GITHUB_DOMAIN/Kong/insomnia $GITHUB_DOMAIN/SchemaStore/schemastore $GITHUB_DOMAIN/ioquake/ioq3
 do
     cd ~/Project/Checkout && git clone $REPO_LOC.git
     FOLDER_LOC=$(echo $REPO_LOC | sed "s/^.*\///")
