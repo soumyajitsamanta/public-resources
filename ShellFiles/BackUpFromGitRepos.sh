@@ -1,13 +1,16 @@
 #!/bin/bash
 # Ignored Repositories: rochus-keller/LeanQt.git
 GITHUB_DOMAIN=https://github.com
-echo "Checking out *.git ending repositories"
-for REPO_LOC in $GITHUB_DOMAIN/JabRef/jabref $GITHUB_DOMAIN/soumyajitsamanta/shastras $GITHUB_DOMAIN/bvschaik/julius $GITHUB_DOMAIN/Kong/insomnia $GITHUB_DOMAIN/SchemaStore/schemastore $GITHUB_DOMAIN/ioquake/ioq3
+echo "Checking out git repositories in GitRepos.json"
+# for REPO_LOC in JabRef/jabref soumyajitsamanta/shastras bvschaik/julius Kong/insomnia SchemaStore/schemastore ioquake/ioq3 apache/jmeter
+for REPO_LOC in $(cat GitRepos.json)
 do
-    cd ~/Project/Checkout && git clone $REPO_LOC.git
-    FOLDER_LOC=$(echo $REPO_LOC | sed "s/^.*\///")
+    echo $REPO_LOC
+    cd ~/Project/Checkout
+    git clone $REPO_LOC
+    FOLDER_LOC=$(echo $REPO_LOC | sed "s/\.git//" | sed "s/^.*\///")
     cd $FOLDER_LOC
-    git pull
+        git pull
     cd ..
 done
 echo "+ Complete"
