@@ -2,7 +2,7 @@
 # Ignored Repositories: rochus-keller/LeanQt.git
 CURRENT_DIR=$(pwd)
 echo "Checking out git repositories in GitRepos.json"
-for REPO_LOC in $(cat $CURRENT_DIR/GitRepos.json)
+for REPO_LOC in $(cat $CURRENT_DIR/GitRepos.txt)
 do
     cd ~/Project/Checkout
     echo $REPO_LOC
