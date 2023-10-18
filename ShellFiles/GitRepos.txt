@@ -13,3 +13,7 @@ https://github.com/opentomb/OpenTomb.git
 https://github.com/OpenTTD/OpenTTD.git
 https://github.com/SchemaStore/schemastore.git
 https://github.com/soumyajitsamanta/shastras.git
+https://gitlab.gnome.org/GNOME/gimp.git
+https://github.com/maks/MGit.git
+https://github.com/apache/pinot.git
+https://github.com/pentaho/mondrian.git
