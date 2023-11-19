@@ -1,0 +1,402 @@
+head	1.3;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.3
+date	2004.03.16.23.46.38;	author vacula;	state dead;
+branches;
+next	1.2;
+
+1.2
+date	2003.09.22.12.10.35;	author vacula;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2003.09.22.11.08.20;	author vacula;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.3
+log
+@*** empty log message ***
+@
+text
+@#!/usr/bin/perl 
+
+use VRML;
+use CGI qw(:standard);
+use Texture;
+use Style;
+#use strict;
+
+use Data::Dumper;
+
+
+##########################################################################################################################################
+
+ # $q = new CGI;
+ # print $q->header();
+
+our $texture_dir = param("texdir");			## local path to texture directory from "const.def"
+our $ID = param("id");					## ID of report
+our $lang = param("lang");				## language of report
+our $wrldir = param("wrldir");					## local path to wrl scene directory 
+
+our $http_texdir = &localDirToHttpDir($texture_dir);		## path to texture directory from web
+our $report = &report($ID,$lang,);				## load  report 
+
+our ($X,$Y,$Z,$xy,$yx,$xz,$zx,$yz,$zy);
+
+our $vrml = new VRML(2);
+$vrml->comment("------------------------------------------------------------------------");
+$vrml->comment("                    GENERAL PARAMETERS OF SCENE                         ");
+$vrml->comment("------------------------------------------------------------------------");
+					&generalParameters;
+$vrml->comment("------------------------------------------------------------------------");
+$vrml->comment("                            	AXIS                                    ");
+$vrml->comment("------------------------------------------------------------------------");
+						&axis;
+$vrml->comment("------------------------------------------------------------------------");
+$vrml->comment("                   	       LATTICES                                 ");
+$vrml->comment("------------------------------------------------------------------------");
+					      &lattices;
+$vrml->comment("------------------------------------------------------------------------");
+$vrml->comment("                   	       OBJECTS                                 ");
+$vrml->comment("------------------------------------------------------------------------");
+					      &generateObjects;
+
+
+$vrml->print(1,'gzip -f9');				## $vrml->print(1, 'gzip -f9')   		$vrml->print(mime,'pipe')
+$vrml->save("$wrldir/$ID.wrl","gzip -f9");		## $vrml->save(undef, 'gzip -f9')		$vrml->save(filename,'pipe')
+
+############################################################################################################################################
+#--------------------------------------------------------------------------------------------------------------------------------------------
+
+sub generalParameters {
+    $vrml->navigationinfo('EXAMINE', 1, 1, 1000);		## navigationinfo('type', speed, headlight, visibilityLimit, avatarSize)
+    $vrml->backgroundcolor('black');				## backgroundcolor('skyColor', 'groundColor')
+    $vrml->worldinfo("Type - $report->{report_type}","Name - $report->{name}{$lang}","Description - $report->{description}",
+    		     "Modifier - $report->{meta}{modifier}","Modified - $report->{meta}{modified}");		
+
+my ($viewpointX,$viewpointY,$viewpointZ) = &defineViewpoint;
+
+ $vrml->viewpoint_begin;
+ $vrml->viewpoint("Start","$viewpointX $viewpointY $viewpointZ","0 1 0 45","45");
+ $vrml->viewpoint_set('0 0 0','10','45');
+ $vrml->viewpoint_end;
+
+}
+
+#-------------------------------------------------------------------------------------------------------------------------------------------
+
+sub localDirToHttpDir {
+my $local_dir = shift;									#/var/www/html/cache_texture_png
+my $path = $local_dir;
+
+if ( ! -e -d $local_dir ) {
+       mkdir($local_dir);
+}
+
+my $server = $ENV{SERVER_NAME};		# name of curent webserver			myson.instrat.cz
+my $root = $ENV{DOCUMENT_ROOT}; 	# document root of curent webserver 		/var/www/html
+$path =~ s/$root\///;
+
+my $http_dir = "http://$server/$path";
+
+return ($http_dir);
+}
+
+#---------------------------------------------------------------------------------------------------------------------------------------------
+
+sub axis {
+  $X = &defineAxis('X');							## -------------------------------------------------------
+  $Y = &defineAxis('Y');							## 	definition parameters of axis			   
+  $Z = &defineAxis('Z');							##--------------------------------------------------------
+
+ if ( defined $X and $X->{size} != 0 and $X->{length} != 0 ) {			
+    &generateAxis('X');	
+ }   
+
+ if ( defined $Y and $Y->{size} != 0 and $Y->{length} != 0 ) {			
+    &generateAxis('Y');
+ }   
+ if ( defined $Z and $Z->{size} != 0 and $Z->{length} != 0 ) {			
+    &generateAxis('Z');
+ }   
+
+}
+
+#---------------------------------------------------------------------------------------------------------------------------------------------
+
+sub lattices {
+
+ $xy = (defined $X and defined $Y) ? &defineLattice('xy') : undef;		##---------------------------------------------------------		
+ $yx = (defined $Y and defined $X) ? &defineLattice('yx') : undef;		##							   
+ $xz = (defined $X and defined $Z) ? &defineLattice('xz') : undef;		## 	definition parameters of lattices		   
+ $zx = (defined $Z and defined $X) ? &defineLattice('zx') : undef;		## 	(example: xy-> on axis 'X',tendendy 'Y') 	   
+ $yz = (defined $Y and defined $Z) ? &defineLattice('yz') : undef;		##							   
+ $zy = (defined $Z and defined $Y) ? &defineLattice('zy') : undef;		##---------------------------------------------------------
+
+
+if (defined $xy ) {  &generateLattice('xy'); }					## -------------------------------------------------------
+if (defined $yx ) {  &generateLattice('yx'); }					## 
+if (defined $xz ) {  &generateLattice('xz'); }					## draw lattices on defined lattices
+if (defined $zx ) {  &generateLattice('zx'); }					##
+if (defined $yz ) {  &generateLattice('yz'); }					##
+if (defined $zy ) {  &generateLattice('zy'); }					##--------------------------------------------------------
+
+}
+
+#---------------------------------------------------------------------------------------------------------------------------------------------
+
+sub generateAxis {
+my $axis = shift;
+my @@translation = @@{$$axis->{translation}};
+my @@rotation = @@{$$axis->{rotation}};
+my @@color = @@{$$axis->{color}};
+my $length =  $$axis->{length};
+
+ if (! defined $$axis->{crowfoot} ) {				##
+    $length = $$axis->{length}+$$axis->{indent};		## length of axis is enlarge (length + indent)
+    foreach  (@@translation){  					##
+             if ($_ != 0){  					##
+                $_ = $length/2; 				##
+             }
+    }
+ }
+ $vrml->transform_begin("t=@@translation","r=@@rotation");						## draw axis
+ &vrmlMethods($$axis->{format},$$axis->{size},$length,$$axis->{transparency},@@{$$axis->{color}});	## 
+ $vrml->transform_end;											##
+ 
+ if ( defined $$axis->{crowfoot} ) {
+  my @@translation = @@{$$axis->{crowfoot}{translation}};
+  my @@rotation = @@{$$axis->{crowfoot}{rotation}};
+     $vrml->transform_begin("t=@@translation","r=@@rotation");						## draw crowfoot
+     &vrmlMethods(											##
+                  $$axis->{crowfoot}{format},$$axis->{crowfoot}{size},$$axis->{crowfoot}{length},	##
+                  $$axis->{crowfoot}{transparency},@@{$$axis->{crowfoot}{color}}				##
+     		  );											##
+     $vrml->transform_end;										##
+ }
+ if ( defined $$axis->{label} ) {
+    &generateLabel($$axis->{label});
+ }
+
+ return 1;
+}
+
+#---------------------------------------------------------------------------------------------------------------------------------------------
+
+sub generateLattice {
+my $lattice = shift;
+my ($axis,$tendency) = uc($lattice) =~ /(.)(.)/ ;			## draw on $axis (X ->step), tendency drawing (Y->length)
+my @@index = (0);
+my @@rotation = @@{$$lattice->{rotation}};
+my @@translation = @@{$$lattice->{translation}};
+
+ for (my $i=0;$i < @@{$$lattice->{steps}};$i++ ) {
+    my ($j); 
+    if ( $lattice eq 'xz' ) { $j = 0; }
+    if ( $lattice eq 'yx' ) { $j = 1; }
+    if ( $lattice eq 'zx' ) { $j = 2; }
+    my $align = $$lattice->{steps}[$i]{label}{translation}[$j];
+    my $trans = 0;my $title = 0;
+    while ( $trans <= $$axis->{length} ) {
+       my $sign = 0;
+       $trans = $trans + $$lattice->{steps}[$i]{step};
+       $title = $title + $Style->{lattice}{lc($axis)}[$i]{step};
+       foreach (@@index) {
+          if ($trans == $_) { $sign = 1; }
+       } 
+       if ( $trans <= $$axis->{length} and $sign == 0) {
+          push (@@index,$trans);
+          if ( $axis eq 'X' ) { $translation[0] = $trans; $$lattice->{steps}[$i]{label}{string} = $Map->{$axis}{values}[$title] }
+          elsif ( $axis eq 'Y' ) { $translation[1] = $trans; $$lattice->{steps}[$i]{label}{string} = $Map->{$axis}{values}[$title] }
+          elsif ( $axis eq 'Z' ) { $translation[2] = $trans; $$lattice->{steps}[$i]{label}{string} = $Map->{$axis}{values}[$title] }  
+
+          if ( $$lattice->{steps}[$i]{size} != 0 ) {
+	     $vrml->transform_begin("t=@@translation","r=@@rotation");						
+             &vrmlMethods( $$lattice->{steps}[$i]{format},$$lattice->{steps}[$i]{size},$$lattice->{steps}[$i]{length},
+                           $$lattice->{steps}[$i]{transparency},@@{$$lattice->{steps}[$i]{color}} 
+	     	         );			
+             $vrml->transform_end;
+	     if ( defined $$lattice->{steps}[$i]{label} ) {
+	        if (defined $align) {
+	           $$lattice->{steps}[$i]{label}{translation}[$j] = $align + $trans;
+	           &generateLabel($$lattice->{steps}[$i]{label});
+	        }
+	     }
+	  }   
+       }
+    }
+ }  											
+
+
+return 1;
+}
+
+#---------------------------------------------------------------------------------------------------------------------------------------------
+
+sub generateLabel {
+my $p_label = shift;
+
+my @@translation = @@{$p_label->{translation}};
+my @@rotation = @@{$p_label->{rotation}};
+my $height = $p_label->{fheight};
+my $width = length($p_label->{string})*$p_label->{fheight};
+;
+my $file   = &Textures($p_label->{string},$p_label->{font},$p_label->{fontsize},$texture_dir,@@{$p_label->{color}});
+my (@@coordIndex);
+
+if ( $p_label->{coord} == 0) {
+   @@coordIndex = (0,1,2,3,-1);
+}
+if ( $p_label->{coord} == 90) {
+   @@coordIndex = (2,1,0,3,-1);
+}
+if ( $p_label->{coord} == 180) {
+   @@coordIndex = (2,3,0,1,-1);
+}
+
+if ( $p_label->{coord} == 270) {
+   @@coordIndex = (1,0,3,2,-1);
+}
+if ( $p_label->{switch} == 1 ) {
+   my $temp = $height;
+   $height = $width;
+   $width = $temp;
+}
+
+## solid TRUE - vsechny plochy jednostranne
+## ccw TRUE - profil je zadan proti smeru hodinovych rucicek
+
+  $vrml->transform_begin("t=@@translation","r=@@rotation");
+  $vrml->insert("Shape {
+		geometry IndexedFaceSet {
+			solid FALSE
+			coord Coordinate  { point [ 0 0 0,
+						    $width 0 0,
+						    $width $height 0,
+					    	    0 $height 0        ] }
+			coordIndex [ @@coordIndex ]
+			texCoord TextureCoordinate {
+			   point [0 0,
+				  1 0,
+				  1 1,
+				  0 1        ]
+			}
+			texCoordIndex [ 0 1 2 3 -1]
+			}
+			appearance Appearance {
+				texture ImageTexture{url \"$http_texdir/$file.png\" 	
+							repeatS FALSE
+							repeatT FALSE}
+			} 
+	     }\n");
+  $vrml->transform_end;	     
+
+return 1;
+}
+
+#---------------------------------------------------------------------------------------------------------------------------------------------
+
+sub generateObjects {
+
+for ( my $i=1;$i <= @@Data;$i++ ) {
+    my $obj = &defineObject($Data[$i]);
+
+ if (defined $obj) {
+ my @@translation = @@{$obj->{translation}};
+ my @@rotation = @@{$obj->{rotation}};	
+
+   $vrml->transform_begin("t=@@translation","r=@@rotation");				## t = translation, r = rotation
+   &vrmlMethods (											##
+                  $obj->{shape},$obj->{bottom},$obj->{height},$obj->{transparency},@@{$obj->{color}}	##
+     		);											##
+   $vrml->transform_end;
+ }
+
+}
+
+return 1;
+}
+
+#---------------------------------------------------------------------------------------------------------------------------------------------
+
+sub vrmlMethods {
+my ($format,$bottom,$height,$transparency,@@color) = @@_;
+
+  if ($format eq 'cylinder'){
+     my $radius = $bottom/2;
+     $vrml->cylinder("$radius $height","d=@@color;tr=$transparency,");	## cylinder('radius height', 'appearance') ->d = diffuse color
+  }
+  if ($format eq 'box') {
+     my $width =  my $depth = $bottom;
+     $vrml->box("$width $height $depth","d=@@color;tr=$transparency,");
+  }
+  if ($format eq 'sphere') {
+     my $radius = $bottom/2;
+     $vrml->sphere("$radius","d=@@color;tr=$transparency,");
+  }
+  if ($format eq 'cone') {
+     my $bottomRadius = $bottom/2;
+     $vrml->cone("$bottomRadius $height","d=@@color;tr=$transparency,");
+  }
+  if ($format eq 'pyramid') {
+     my $width =  my $depth = $bottom;
+     $vrml->pyramid("$width $height $depth","d=@@color;tr=$transparency,");
+  }
+  if ($format eq 'line') {
+     my $from = -$height/2;
+     my $to = $height/2;
+     $vrml->line("0 $from 0", "0 $to 0", 0,"d=@@color;tr=$transparency,");
+  }
+  if ($format eq 'quadrilateral') {
+     my $tg30 = 0.577350269;
+     my $a = $bottom/2;
+     my $b = $a * $tg30; 
+     my $c = (sqrt(($bottom*$bottom) - ($a*$a))) - $b;
+     my $d = $height/2;
+     $vrml->indexedfaceset("-$a -$d $b, $a -$d  $b, 0  -$d -$c, 0   $d   0",	## coord
+       			   "2 1 0 -1, 0 1 3 -1, 1 2 3 -1, 2 0 3 -1,",		## coordIndex
+       			   "d=@@color;tr=$transparency,"				## appearance
+			   );
+  }
+  if ($format eq 'NULL' or $format eq '') {  }
+
+ return 1;
+}
+
+#---------------------------------------------------------------------------------------------------------------------------------------------
+
+__END__
+@
+
+
+1.2
+log
+@cache directory for *.wrl loaded from const.def
+@
+text
+@@
+
+
+1.1
+log
+@generate and store VRML graph
+@
+text
+@d20 1
+a20 1
+our $wrldir = "wrl";					## local path to wrl scene directory 
+@
+

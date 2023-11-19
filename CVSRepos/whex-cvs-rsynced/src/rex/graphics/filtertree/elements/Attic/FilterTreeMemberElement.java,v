@@ -1,0 +1,408 @@
+head	1.4;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.4
+date	2006.01.13.12.21.14;	author igorludi;	state dead;
+branches;
+next	1.3;
+
+1.3
+date	2005.10.18.14.04.40;	author igorludi;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2005.10.18.13.40.38;	author igorludi;	state dead;
+branches;
+next	1.1;
+
+1.1
+date	2005.06.28.14.11.05;	author igorludi;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.4
+log
+@*** empty log message ***
+@
+text
+@package rex.graphics.filtertree.elements;
+
+import javax.swing.ImageIcon;
+import rex.metadata.ServerMetadata;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+
+import rex.utils.*;
+import org.tempuri.type.ClsXMLAProxDiscoverPropertyList;
+
+import org.tempuri.type.ClsXMLAProxDiscoverRestrictions;
+import org.tempuri.type.ClsXMLAProxDiscoverProperties;
+import org.tempuri.type.ClsXMLAProxDiscoverRestrictionList;
+import rex.metadata.QueryElement;
+import rex.graphics.dimensiontree.elements.DimensionTreeElement;
+import rex.metadata.UniqueNameElement;
+import rex.graphics.dimensiontree.elements.MemberElement;
+
+
+/**
+ * <p>Title: WHEX</p>
+ * <p>Description: </p>
+ * <p>Copyright: Copyright (c) 2003</p>
+ * <p>Company: </p>
+ * @@author igor
+ * @@version 0.3
+ */
+
+
+/*
+ <row>
+  <CATALOG_NAME>Test</CATALOG_NAME>
+  <CUBE_NAME>Ispit</CUBE_NAME>
+  <DIMENSION_UNIQUE_NAME>[RbrIzlaskaNaIspit]</DIMENSION_UNIQUE_NAME>
+  <HIERARCHY_UNIQUE_NAME>[RbrIzlaskaNaIspit]</HIERARCHY_UNIQUE_NAME>
+  <LEVEL_UNIQUE_NAME>[RbrIzlaskaNaIspit].[NazivRbrIzlaskaNaIspit]</LEVEL_UNIQUE_NAME>
+  <LEVEL_NUMBER>1</LEVEL_NUMBER>
+  <MEMBER_ORDINAL>61</MEMBER_ORDINAL>
+  <MEMBER_NAME>61. izlazak</MEMBER_NAME>
+  <MEMBER_UNIQUE_NAME>[RbrIzlaskaNaIspit].[All RbrIzlaskaNaIspit].[61. izlazak]</MEMBER_UNIQUE_NAME>
+  <MEMBER_TYPE>1</MEMBER_TYPE>
+  <MEMBER_CAPTION>61. izlazak</MEMBER_CAPTION>
+  <CHILDREN_CARDINALITY>0</CHILDREN_CARDINALITY>
+  <PARENT_LEVEL>0</PARENT_LEVEL>
+  <PARENT_UNIQUE_NAME>[RbrIzlaskaNaIspit].[All RbrIzlaskaNaIspit]</PARENT_UNIQUE_NAME>
+  <PARENT_COUNT>1</PARENT_COUNT>
+  <MEMBER_KEY>61</MEMBER_KEY>
+  <IS_PLACEHOLDERMEMBER>false</IS_PLACEHOLDERMEMBER>
+  <IS_DATAMEMBER>false</IS_DATAMEMBER>
+  </row>
+
+ */
+
+
+
+public class FilterTreeMemberElement extends MemberElement{
+
+//   private String catalogName;
+//   private String cubeName;
+//   private String dimensionUniqueName;
+//   private String hierarchyUniqueName;
+//   private String levelUniqueName;
+//   private int levelNumber;
+//   private String memberName;
+//   private String memberUniqueName;
+//   private String memberCaption;
+//   private int memberType;
+//   private int memberOrdinal;
+//   private int childrenCardinality;
+   private boolean nodeEnabled;
+
+
+//   private ClsXMLAProxDiscoverRestrictions restrictions;
+//   private ClsXMLAProxDiscoverProperties   properties;
+
+//   private ServerMetadata parent;
+
+   static ImageIcon iconEnabled, iconDisabled;
+
+   static {
+       iconEnabled = S.getAppIcon("member_selected.gif");
+       iconDisabled = S.getAppIcon("member_not_selected.gif");
+   }
+   public FilterTreeMemberElement(
+                             ServerMetadata svm
+                           , ClsXMLAProxDiscoverRestrictions _restrictions
+                           , ClsXMLAProxDiscoverProperties   _properties
+                           , String _catalogName
+                           , String _cubeName
+                           , String _dimensionUniqueName
+                           , String _hierarchyUniqueName
+                           , String _levelUniqueName
+                           , int    _levelNumber
+                           , String _memberName
+                           , String _memberUniqueName
+                           , String _memberCaption
+                           , int    _memberType
+                           , int    _memberOrdinal
+                           , int    _childrenCardinality) {
+
+      super(svm
+            , _restrictions
+            , _properties
+            , _catalogName
+            , _cubeName
+            , _dimensionUniqueName
+            , _hierarchyUniqueName
+            , _levelUniqueName
+            , _levelNumber
+            , _memberName
+            , _memberUniqueName
+            , _memberCaption
+            , _memberType
+            , _memberOrdinal
+            , _childrenCardinality
+              );
+      nodeEnabled = true;
+
+   }
+
+   public DimensionTreeElement[] getChildren(boolean noMatterWhat){
+//      S.out("FilterTreeMemberElement returns 0 children");
+      if (getChildrenCount() > 0){
+//         S.out("-------------------------------------------\n"
+//               + "Getting children for " + memberCaption + "(" + memberUniqueName+ ") + children count=" + childrenCardinality
+//               + "\nwith Restrictions:\n" + restrictions.getRestrictionList());
+
+//       All these objects SHARE the same restrictions/properties, so I must set it exeactly before
+//       query execution beacause it gets overwritten !!
+         getRestrictions().getRestrictionList().setMemberUniqueName(getUniqueName());
+         getRestrictions().getRestrictionList().setTreeOp(ClsXMLAProxDiscoverRestrictionList.MD_TREEOP_CHILDREN);
+         // comment next line if you don't want "deep" tree (only 2 members levels)
+         getRestrictions().getRestrictionList().setLevelUniqueName(null);
+         return getServerMetadata().getFilterTreeMembersList(getRestrictions(), getProperties());
+      }else{
+         return null;
+      }
+   }
+
+
+
+
+   public ImageIcon getIcon(){
+//      S.out("filter tree member element getIcon called");
+      if (isEnabled()){
+         return iconEnabled;
+      }else{
+         return iconDisabled;
+      }
+   }
+
+
+
+
+
+
+   public String[] getPopUpActionList(){
+      if (isEnabled()){
+         return new String[] {
+              FilterTreePopUpActions.DISABLE_THIS_ELEMENT
+            , FilterTreePopUpActions.ENABLE_ONLY_THIS_ELEMENT
+            , FilterTreePopUpActions.ENABLE_ALL_BUT_THIS_ELEMENT
+         };
+      }else{
+         return new String[] {
+              FilterTreePopUpActions.ENABLE_THIS_ELEMENT
+            , FilterTreePopUpActions.ENABLE_ONLY_THIS_ELEMENT
+            , FilterTreePopUpActions.ENABLE_ALL_BUT_THIS_ELEMENT
+         };
+
+      }
+   }
+
+   public boolean isEnabled(){
+      return nodeEnabled;
+   }
+   public void setEnabled(boolean newValue){
+      nodeEnabled = newValue;
+   }
+
+}
+@
+
+
+1.3
+log
+@*** empty log message ***
+@
+text
+@@
+
+
+1.2
+log
+@*** empty log message ***
+@
+text
+@d17 1
+d26 1
+a26 1
+ * @@version 1.0
+d56 1
+a56 1
+public class FilterTreeMemberElement implements DimensionTreeElement, UniqueNameElement {
+d58 12
+a69 12
+   private String catalogName;
+   private String cubeName;
+   private String dimensionUniqueName;
+   private String hierarchyUniqueName;
+   private String levelUniqueName;
+   private int levelNumber;
+   private String memberName;
+   private String memberUniqueName;
+   private String memberCaption;
+   private int memberType;
+   private int memberOrdinal;
+   private int childrenCardinality;
+d73 2
+a74 2
+   private ClsXMLAProxDiscoverRestrictions restrictions;
+   private ClsXMLAProxDiscoverProperties   properties;
+d76 1
+a76 1
+   private ServerMetadata parent;
+a83 44
+   public FilterTreeMemberElement(  ServerMetadata svm
+                           , Node rowNode
+                           , ClsXMLAProxDiscoverRestrictions _restrictions
+                           , ClsXMLAProxDiscoverProperties   _properties) {
+
+      parent = svm;
+      nodeEnabled = true;
+      NodeList nl = rowNode.getChildNodes();
+
+      for(int i=0; i < nl.getLength(); i++){
+         // TO BE DONE: OTHER VARS...
+
+         if (nl.item(i).getNodeType() == 1){
+            if (nl.item(i).getNodeName().equals("CATALOG_NAME")) {
+               catalogName = DOM.getTextFromDOMElement(nl.item(i));
+            }else if (nl.item(i).getNodeName().equals("CUBE_NAME")) {
+               cubeName = DOM.getTextFromDOMElement(nl.item(i));
+            }else if (nl.item(i).getNodeName().equals("DIMENSION_UNIQUE_NAME")) {
+               dimensionUniqueName = DOM.getTextFromDOMElement(nl.item(i));
+            }else if (nl.item(i).getNodeName().equals("HIERARCHY_UNIQUE_NAME")) {
+               hierarchyUniqueName = DOM.getTextFromDOMElement(nl.item(i));
+            }else if (nl.item(i).getNodeName().equals("LEVEL_UNIQUE_NAME")) {
+               levelUniqueName = DOM.getTextFromDOMElement(nl.item(i));
+            }else if (nl.item(i).getNodeName().equals("LEVEL_NUMBER")) {
+               levelNumber = Integer.parseInt(DOM.getTextFromDOMElement(nl.item(i)));
+            }else if (nl.item(i).getNodeName().equals("MEMBER_NAME")) {
+               memberName = DOM.getTextFromDOMElement(nl.item(i));
+            }else if (nl.item(i).getNodeName().equals("MEMBER_UNIQUE_NAME")) {
+               memberUniqueName = DOM.getTextFromDOMElement(nl.item(i));
+            }else if (nl.item(i).getNodeName().equals("MEMBER_CAPTION")) {
+               memberCaption = DOM.getTextFromDOMElement(nl.item(i));
+            }else if (nl.item(i).getNodeName().equals("MEMBER_TYPE")) {
+               memberType = Integer.parseInt(DOM.getTextFromDOMElement(nl.item(i)));
+            }else if (nl.item(i).getNodeName().equals("MEMBER_ORDINAL")){
+               memberOrdinal = Integer.parseInt(DOM.getTextFromDOMElement(nl.item(i)));
+            }else if (nl.item(i).getNodeName().equals("CHILDREN_CARDINALITY")){
+               childrenCardinality = Integer.parseInt(DOM.getTextFromDOMElement(nl.item(i)));
+            }
+
+         }
+      }
+
+
+   }
+d101 16
+a116 3
+      parent = svm;
+      restrictions = _restrictions;
+      properties = _properties;
+d118 1
+a118 12
+      catalogName         = _catalogName;
+      cubeName = _cubeName;
+      dimensionUniqueName = _dimensionUniqueName;
+      hierarchyUniqueName = _hierarchyUniqueName;
+      levelUniqueName = _levelUniqueName;
+      levelNumber = _levelNumber;
+      memberName = _memberName;
+      memberUniqueName = _memberUniqueName;
+      memberCaption = _memberCaption;
+      memberType = _memberType;
+      memberOrdinal = _memberOrdinal;
+      childrenCardinality = _childrenCardinality;
+d121 1
+a121 1
+   public DimensionTreeElement[] getChildren(){
+d123 1
+a123 1
+      if (childrenCardinality > 0){
+d130 2
+a131 2
+         restrictions.getRestrictionList().setMemberUniqueName(memberUniqueName);
+         restrictions.getRestrictionList().setTreeOp(ClsXMLAProxDiscoverRestrictionList.MD_TREEOP_CHILDREN);
+d133 2
+a134 2
+         restrictions.getRestrictionList().setLevelUniqueName(null);
+         return parent.getMembersList(restrictions, properties);
+a140 5
+   public String toString(){
+      if (memberCaption == null)
+         return "not initialized";
+      else
+         return memberCaption;
+a141 1
+   }
+d144 1
+d152 1
+a152 12
+   public String getToolTip(){
+      if (memberCaption == null)
+         return "not initialized";
+      else
+         return "<html>"
+            + "Member name:"                + memberName
+                + "<BR>Member unique name:" + memberUniqueName
+                + "<BR>Member caption:"     + memberCaption
+                + "<BR>Member ordinal:"     + memberOrdinal
+                + "<BR>Children count(estimate):" + childrenCardinality
+                + "</html>";
+   }
+a172 9
+   public String getUniqueName(){
+      return memberUniqueName;
+   }
+   public String getCaption(){
+      return memberCaption;
+   }
+   public String getQueryMembersExpression(){
+      return memberUniqueName;
+   }
+a179 11
+   public String getHierarchyUniqueName(){
+//       <MEMBER_UNIQUE_NAME>[Measures].[Prolaznost]</MEASURE_UNIQUE_NAME>
+      return memberUniqueName.substring(0, memberUniqueName.lastIndexOf(".") - 1);
+//       return measureUniqueName;
+   }
+   public boolean isMeasure(){
+      return false;
+   }
+   public int getChildrenCount(){
+      return childrenCardinality;
+   }
+a180 12
+   public ServerMetadata getServerMetadata(){
+      return parent;
+   }
+   public ClsXMLAProxDiscoverRestrictions getRestrictions(){
+      return restrictions;
+   }
+   public ClsXMLAProxDiscoverProperties   getProperties(){
+      return properties;
+   }
+   public String getDimensionUniqueName(){
+      return dimensionUniqueName;
+   }
+@
+
+
+1.1
+log
+@*** empty log message ***
+@
+text
+@@
+

@@ -1,0 +1,176 @@
+head	1.3;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.3
+date	2003.12.02.12.29.49;	author tuco80;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2003.11.07.12.29.03;	author numberone;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2003.11.07.10.12.52;	author numberone;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.3
+log
+@Updated and revised
+@
+text
+@
+Setting up DAD daemon
+---------------------
+
+The BEE Project's architecture is distributed over several hosts.
+On all these machines there must be a running DAD server (daemon
+gaining access to the host's data sources or CPU resources).
+
+In minimal case, you can run BEE only on one machine. Even so,
+you need to run the DAD daemon there!
+
+You must install the DAD daemon on all hosts you plan to use for
+ETL processing. Then you can use their data or CPU resources.
+
+On UNIX platforms, you can invoke the dad daemon using following 
+commands:
+
+    bash$ cd $BEEDIR/dad
+    bash$ perl dad.pl 2333
+    listenning on port 2333
+
+On Microsoft Windows, open command-box and type following:
+
+    c:\windows\system32> cd c:\bee\dad
+    c:\bee\dad> perl dad.pl 2333
+    listenning on port 2333
+
+Consider automatic call of dad daemon on system startup.
+DAD daemon does not require superuser privileges, but all data sources,
+that we wish to access (especially files stored on host's filesystem),
+must be readable by user executing dad!
+
+
+Setting up client part
+----------------------
+
+Once you executed dad daemon on one or more hosts, you can
+use BEE client to perform ETL transformations.
+
+Basically, there are two possibilities:
+
+ o  Graphical User Interface
+    To start GUI environment, execute $BEEDIR/gui/beetl.pl Perl program. 
+
+    User Guide documentation for GUI is now under development.
+
+ o  Manual creation of XML .scheme and .bee files and manual
+    execution of ETL process using 'task.pl' program.
+    Some examples come with The BEE Project and are located
+    in $BEEDIR/client/ subdirectories (specifically 'bench/', 'demo/'
+    and 'log/'). 
+
+    You can try to run 'bench' example by issuing the following:
+
+       bash$ cd $BEEDIR/client
+       bash$ perl task.pl bench bench.scheme
+       executing task bench/bench.scheme
+       ...
+
+    Or following on Microsoft Windows:
+
+       c:\windows\system32> cd c:\bee\client
+       c:\bee\client> perl task.pl bench bench.scheme
+       executing task bench/bench.scheme
+       ...
+	
+See chapter 'Demo' for examples on how to run more complex 
+ETL transformations.
+
+
+@
+
+
+1.2
+log
+@documentation -- final. no spell checks, no typos check, no grammar check
+@
+text
+@d6 2
+a7 2
+On all these machines there must be running DAD server, daemon
+gaining access to host's data sources or CPU resources.
+d10 1
+a10 1
+you need to run DAD daemon there!
+d12 2
+a13 2
+You must install DAD daemon on all hosts you plan to use in
+ETL process. Then you can use their's data or CPU resources.
+d15 1
+a15 1
+On UNIX platforms, you can invoke dad daemon using following 
+d28 2
+a29 2
+Consider automatical invoking of dad daemon on system startup.
+DAD daemon do not require superuser priviledges, but all data sources,
+d45 1
+a45 1
+    User Guide documentation for GUI is in now development.
+d50 1
+a50 1
+    in $BEEDIR/client/ subdirectories (actualy 'bench/', 'demo/'
+d53 1
+a53 1
+    You can try to run 'bench' example by issuing following:
+d67 2
+a68 1
+See chapter 'Demo' for example how to run more complex ETL transformation.
+@
+
+
+1.1
+log
+@documentation 474 lines
+@
+text
+@d2 2
+a3 2
+Installing and setting up DAD daemon
+------------------------------------
+d15 2
+a16 1
+To install DAD daemon to particular host, you will need to
+d18 3
+a20 4
+  o  Copy installation tarball to these hosts
+  o  Install all required packages and modules
+     Note: You will not need Tk modules for DAD daemon.
+  o  Compile and install libNet and libData
+d22 1
+a22 1
+Now you can invoke DAD daemon using following commands:
+d24 2
+a25 2
+    bash$ cd $BEEDIR/dad
+    bash$ ./dad.pl
+d29 1
+a29 1
+DAD daemon do not require root priviledges, but all data sources,
+d31 37
+a67 1
+must be readable by user executing DAD!
+@
+

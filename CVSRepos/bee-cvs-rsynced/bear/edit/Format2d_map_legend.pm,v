@@ -1,0 +1,179 @@
+head	1.1;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.1
+date	2004.04.16.16.21.49;	author vacula;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@new interface
+@
+text
+@#-----------------------------------------------------
+#  Format Editation
+#-----------------------------------------------------
+# $Id: Format2d_color.pm,v 1.3 2003/11/18 14:38:40 jiri_schmid Exp $
+
+package Format2d_map_legend;
+
+use strict;
+
+#-----------------------------------------------------
+# print_form is called from edit.cgi
+
+sub generateContent {
+my($variables, $lang, $obj) = (shift, shift, shift);
+my $saved = $$variables->{saved} if exists $$variables->{saved};
+
+print <<END ;
+<br />
+<table class="page_skeleton_ex" style='width:100%'>
+<tr class="page_skeleton">
+<td class="page_skeleton_ex" style='padding: 12px 10px 10px 10px'>
+
+
+	<table>
+		<tr><td class='neutral_bold' colspan='3'>$$lang->{'Format2d legend'}:</td></tr>
+		<tr><td colspan='3'><hr /></td></tr>
+END
+	my $check_legend = ($$obj->{legend}{show_legend}) ? " checked='checked'" : ""; 
+	print "<tr><td style='nowrap;padding:0px 10px 0px 0px'>$$lang->{'Format2d show'}</td><td style='nowrap;padding:0px 10px 0px 0px'>&nbsp;</td><td style='nowrap;padding:0px 10px 0px 0px'><input name='show_legend' id='show_legend' type='checkbox' $check_legend value='1' onchange='object_changed()' /></td></tr>";
+my $legend_placement = {
+		BL=>"value='BL'",
+		BC=>"value='BC'",
+		BR=>"value='BR'",
+		RT=>"value='RT'",
+		RC=>"value='RC'",
+		RB=>"value='RB'",
+	};
+	$legend_placement->{ $$obj->{legend}{legend_placement} } .= " checked='checked'";
+	my $cols_compute = ($$obj->{legend}{cols_compute}) ? " checked='checked'" : ""; 
+print <<END;
+		<tr><td></td></tr>
+		<tr><td style='nowrap;padding:0px 10px 0px 0px'>$$lang->{'Format2d legend_placement'}</td></tr>
+<tr><td style='nowrap;padding:0px 10px 0px 0px'>&nbsp;</td><td>
+				<table style="background-image:url('$$variables->{skinPath}img/legend2d.$$variables->{imgType}'); background-repeat:no-repeat; background-position: 30% 40%">
+					<tr><td colspan="3">&nbsp;</td><td><input type='radio' name='legend_placement' $legend_placement->{RT} onchange='object_changed()' /></td></tr>
+					<tr><td colspan="3">&nbsp;</td><td><input type='radio' name='legend_placement' $legend_placement->{RC} onchange='object_changed()' /></td></tr>
+					<tr><td colspan="3">&nbsp;</td><td><input type='radio' name='legend_placement' $legend_placement->{RB} onchange='object_changed()' /></td></tr>
+					<tr><td><input type='radio' name='legend_placement' $legend_placement->{BL} onchange='object_changed()' /></td><td><input type='radio' name='legend_placement' $legend_placement->{BC} onchange='object_changed()' /></td><td><input type='radio' name='legend_placement' $legend_placement->{BR} onchange='object_changed()' /></td></tr>
+				</table>
+</td></tr>
+		<tr><td></td></tr>
+		<tr><td style='nowrap;padding:0px 10px 0px 0px'>$$lang->{'Format2d legend_spacing'}</td><td style='nowrap;padding:0px 10px 0px 0px'>&nbsp;</td><td style='nowrap;padding:0px 10px 0px 0px'><input class='right' type='input' size='4' name='legend_spacing' value='$$obj->{legend}{legend_spacing}' onchange='object_changed()' /></td><td style='nowrap;padding:0px;align:left'>px</td></tr>
+		<tr><td style='nowrap;padding:0px 10px 0px 0px'>$$lang->{'Format2d legend_marker'}</td><td style='nowrap;padding:0px 10px 0px 0px'>$$lang->{'Format2d legend_marker_width'}</td><td style='nowrap;padding:0px 10px 0px 0px'><input class='right' type='input' size='4' name='legend_marker_width' value='$$obj->{legend}{legend_marker_width}' onchange='object_changed()' /></td><td style='nowrap;padding:0px;align:left'>px</td></tr>
+		<tr><td style='nowrap;padding:0px 10px 0px 0px'>&nbsp;</td><td style='nowrap;padding:0px 10px 0px 0px'>$$lang->{'Format2d legend_marker_height'}</td><td style='nowrap;padding:0px 10px 0px 0px'><input class='right' type='input' size='4' name='legend_marker_height' value='$$obj->{legend}{legend_marker_height}' onchange='object_changed()' /></td><td style='nowrap;padding:0px;align:left'>px</td></tr>
+		<tr><td style='nowrap;padding:0px 10px 0px 0px'>$$lang->{'Format2d lg_cols'}</td><td style='nowrap;padding:0px 10px 0px 0px'>$$lang->{'Format2d compute'}</td><td style='nowrap;padding:0px 10px 0px 0px'><input name='cols_compute' id='cols_compute' type='checkbox' $cols_compute value='1' onchange='object_changed()' /></td></tr>
+		<tr><td style='nowrap;padding:0px 10px 0px 0px'>&nbsp;</td><td style='nowrap;padding:0px 10px 0px 0px'>$$lang->{'Format2d number_cols'}</td><td style='nowrap;padding:0px 10px 0px 0px'><input class='right' type='input' size='4' name='lg_cols' value='$$obj->{legend}{lg_cols}' onchange='object_changed()' /></td></tr>
+	</table>
+
+
+</td>
+<td class="page_skeleton_ex" style='width:100%;padding: 12px 10px 10px 10px' >
+END
+
+
+my $show_logo = ($$obj->{legend}{show_logo}) ? " checked='checked'" : "";
+my $logo_position = {
+		UL=>"value='UL'",
+		UR=>"value='UR'",
+		LL=>"value='LL'",
+		LR=>"value='LR'",
+	};
+	$logo_position->{ $$obj->{legend}{logo_position} } .= " checked='checked'";
+print <<END;
+	<table>
+		<tr><td class='neutral_bold' colspan='3'>$$lang->{'Format2d Logo'}:</td></tr>
+		<tr><td colspan='3'><hr /></td></tr>
+		<tr><td style='nowrap;padding:0px 10px 0px 0px'>$$lang->{'Format2d Logo Use'}</td><td style='nowrap;padding:0px 10px 0px 0px'>&nbsp;</td><td style='nowrap;padding:0px 10px 0px 0px'><input name='show_logo' id='show_logo' type='checkbox' $show_logo value='1' onchange='object_changed()' /></td></tr>
+		<tr>	<td style='nowrap;padding:0px 10px 0px 0px'>$$lang->{'Format2d Logo Pos'}:</td><td style='nowrap;padding:0px 10px 0px 0px'>&nbsp;</td>
+			<td>
+				<table style="background-image:url('$$variables->{skinPath}img/logo2d.$$variables->{imgType}'); background-repeat:no-repeat; background-position: 50% 50%">
+					<tr><td><input type='radio' name='logo_position' $logo_position->{UL} onchange='object_changed()' /></td><td><input type='radio' name='logo_position' $logo_position->{UR} onchange='object_changed()' /></td></tr>
+					<tr><td><input type='radio' name='logo_position' $logo_position->{LL} onchange='object_changed()' /></td><td><input type='radio' name='logo_position' $logo_position->{LR} onchange='object_changed()' /></td></tr>				
+				</table>
+			</td>
+		</tr>
+		<tr><td style='nowrap;padding:0px 10px 0px 0px' colspan 3>$$lang->{'Format2d Logo'}:</td>	</tr>
+		</table>
+		<table>
+		<tr>
+			<td>
+END
+	foreach (&Local::GetFiles("$Const::myPath"."img/logo",'png')) {
+		my $src_logo = ($$obj->{legend}{src_logo} eq $_) ? " checked='checked'" : "";
+		print "<span class='preview' onclick='setVrml(this)'><input type='radio' name='src_logo' value='$_' id='$_'$src_logo /><img class='cursor' src='img/logo/$_.$$variables->{imgType}' alt='$_'/></span> ";
+	}
+print <<END;
+			</td>
+		</tr>
+	</table>
+
+
+
+</td>
+</tr>
+END
+
+print <<END;
+<tr class="page_skeleton" >
+<td class="page_skeleton" colspan='2'>
+	<table class="neutral_100">
+		<tr><td align="center">
+		<table class="buttons" cellpading="0" cellspacing="0">
+		<tr>	<td class="buttons"><input id='SAVE' type="submit" name="Action" value="$$lang->{'Save'}"/></td>
+			<td class="buttons">	<input type="submit" name="Action" value="$$lang->{'Save As'}" onclick="return readName();"/>
+						<input type="hidden" name="saveAsName" id="saveAsName" value="" /></td>
+			<td class="buttons"><input type="button" name="reset" value="$$lang->{'Reset'}" onclick="self.frames['format'].location.reload(true)"/></td>
+		</tr>
+		</table>
+	</td></tr>
+	</table>
+</td></tr></table>
+END
+
+print <<END;
+<script type="text/javascript">
+	var saveAsMsg = "$$lang->{SaveAsMsg}$$lang->{'New Format2d'}";
+	reloadTree($saved);
+function setVrml(EID) {
+	var Input = EID.firstChild;
+	Input.checked = true;
+	object_changed();
+}</script>
+END
+
+}
+
+#---------------------------------------------------
+sub set_next_param {
+	my ($o,$q) = (shift, shift);
+
+# save checkboxs	
+	foreach ('show_legend','show_logo','cols_compute') {
+		$$o->{legend}{$_} = ($$q->param("$_")) ? $$q->param("$_") : 0;
+	}
+# save selected
+	foreach ('logo_position','src_logo','legend_placement') {
+		$$o->{legend}{$_} = $$q->param("$_");
+	}
+# save input texts
+	$$o->{legend}{legend_spacing} = $$q->param("legend_spacing");	
+	$$o->{legend}{legend_marker_width} = $$q->param("legend_marker_width");	
+	$$o->{legend}{legend_marker_height} = $$q->param("legend_marker_height");	
+	$$o->{legend}{lg_cols} = $$q->param("lg_cols");	
+}
+
+1
+@

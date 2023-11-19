@@ -1,0 +1,316 @@
+head	1.5;
+access;
+symbols
+	start:1.1.1.1 vendor:1.1.1;
+locks; strict;
+comment	@# @;
+
+
+1.5
+date	2003.03.12.23.31.30;	author numberone;	state dead;
+branches;
+next	1.4;
+
+1.4
+date	2003.02.17.23.38.16;	author numberone;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2002.09.27.13.54.52;	author numberone;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2002.09.26.07.52.42;	author numberone;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2002.09.24.01.40.58;	author michald;	state Exp;
+branches
+	1.1.1.1;
+next	;
+
+1.1.1.1
+date	2002.09.24.01.40.58;	author michald;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.5
+log
+@perl Net library removed
+replaced by libNet-1.2
+@
+text
+@# $Id: Net.pm,v 1.4 2003/02/17 23:38:16 numberone Exp $
+# Net.pm
+#
+# Copyright (c) 2002 Martin Sarfy <xsarfy@@fi.muni.cz>
+
+=head1 NAME
+
+Net - abstract layer to Net::INET, Net::SSL and Net::UNIX. 
+
+=head1 SYNOPSIS
+
+    use Net;   # server part
+    $server = Net->server("INET",2330);
+    $net = $server->accept(1);
+    $net->write($binary_data);
+
+    use Net;   # client part
+    $net = Net->connect("INET",'localhost',2330);
+    until($net->peek()) { sleep 1; print "nothing...\n" }
+    print $net->read(),"\n";
+
+	use Net;   # socketpair, only "UNIX" supported
+	my($net_a,$net_b) = Net->socketpair("UNIX");
+
+=head1 DESCRIPTION
+
+C<Net> is nonblocking, autoflushing communication endpoint. 
+C<Net::INET> is connection over TCP/IP network, C<Net::UNIX> is for
+unix socket based communication and C<Net::SSL> is TCP/IP using
+OpenSSL layer.
+
+=head1 CONSTRUCTOR
+
+=over 4
+
+=item server ( type, [ARGS] )
+
+Creates Net::`type` server object:
+
+    Net::UNIX->server('/tmp/socket-file')
+    Net::INET->server(port)
+    Net::SSL ->server('server.key','server.pem',port)
+
+=item connect ( type, hostname, [ARGS] )
+
+Creates Net::`type` object, same ARGS as for Net::server()
+
+=item accept(wait)
+
+Accepts connection from remote client. If wait is true, accept()
+waits for connection, else it returns undef immediately. Returns
+Net::`server's type` object
+
+=back
+
+=head1 METHODS
+
+=over 4
+
+=item write(chunk)
+
+Write data chunk, will block until second peer read it
+
+=item peek()
+
+Sent the other side any data to us? undef means closed connection 
+and no data in queue. false means no data in queue and true 
+means that there is a data chunk in queue
+
+=item read()
+
+Read binary chunk. Undef means that there is nothing in buffer
+yet. Use peek() method to detect closed connection.
+
+=back
+
+=head1 IMPLEMENTATION
+
+=over 4
+
+All of packages derived from C<Net> must support these functions:
+
+=item server, connect, accept
+
+=item sysread ( net, p_buff )
+
+Read as many data as posible, save them to the _end_ of buffer pointed
+by p_buff. return undef if closed connection or number of bytes
+appended (may be 0).
+
+=item syswrite ( net, p_buff, offset )
+
+Write as many data as posible, starting from offset in buff, return
+number of bytes actualy wrote.
+
+=back
+
+=cut
+
+package Net;
+
+use Net::INET;
+use Net::SSL;
+use Net::UNIX;
+
+use Data::Dumper;
+
+sub init {}
+
+# abstract: do not use! use Net::INET, Net::SSL, Net::UNIX instead
+sub _create {
+	my($pkg,$sock,$host,$port,$user) = @@_;
+	my $peer = "$host\:$port";
+	return bless { sock=>$sock, host=>$host, peer=>$peer, 
+				   buff=>'', user=>$user }, $pkg;	
+}
+
+sub server {
+	my $pkg  = shift;
+	my $type = shift;
+	return "Net::$type"->server(@@_);
+}
+
+#sub accept {
+#	my $net = shift;
+#	my $nettype = ref $net;
+#	return ${nettype}::accept($net,@@_);
+#}
+
+
+sub connect {
+	my $pkg  = shift;
+	my $type = shift;
+	return "Net::$type"->connect(@@_);
+}
+
+sub socketpair {
+	die "socketpair: only \'UNIX\' supported" unless shift ne 'UNIX';
+	return Net::UNIX->socketpair();
+};
+
+#sub close { my $x = shift; print "Net::DESTROY on ".(ref $x)."\n" }
+
+#sub DESTROY {
+#	my $net = shift;
+#	print "Net::DESTROY on ".(ref $net)."\n";
+#	# polymorphic: fd,ssl_ctx,IO::Socket ??
+#	$net->close() if(defined $net);
+#	undef $net;
+#}
+
+
+# prepend length to data chunk
+sub write { 
+	# todo: scather-gather length|data?
+	my($net,$buff) = @@_;
+
+#	$buff = pack("L",length($buff)).$buff;
+
+	# send 32bit word with message length
+	my $len = pack("L",length($buff));
+	unless($net->syswrite(\$len,0)) { }
+
+	# send message
+	my $offset = 0;
+	while($offset < length($buff)) {
+		my $bytes = $net->syswrite(\$buff,$offset);
+		if(defined $bytes) {
+			return undef if($bytes == 0); # closed connection
+			$offset += $bytes;
+		} 
+		# NBIO syswrite returned undef, hm..
+	}
+}
+
+
+sub peek {
+	my($net) = @@_;
+	return undef unless defined $net->{buff};
+	if(length($net->{buff}) >= 4) {
+		my $len = unpack("L",$net->{buff});
+		return $len if(length($net->{buff}) >= 4+$len);
+	}
+	my $bytes = $net->sysread(\$net->{buff});
+	return ($net->{buff} = undef) if(not defined $bytes);
+	return 0; # white-lie
+}
+
+
+sub read {
+	my($net) = @@_;
+	my $len = $net->peek();
+	return undef unless($len);
+	my $chunk = substr($net->{buff},4,$len);
+	$net->{buff} = substr($net->{buff},4+$len);
+	return $chunk;
+}
+
+1;
+
+@
+
+
+1.4
+log
+@demo certificate + some keys
+certs/newkey.sh - script for automated key generation
+@
+text
+@d1 1
+a1 1
+# $Id: Net.pm,v 1.3 2002/09/27 13:54:52 numberone Exp $
+@
+
+
+1.3
+log
+@tablequery, bee->dad msg
+@
+text
+@d1 1
+a1 1
+# $Id: Net.pm,v 1.2 2002/09/26 07:52:42 numberone Exp $
+d107 2
+@
+
+
+1.2
+log
+@version merging with my cvs
+@
+text
+@d1 1
+a1 1
+# $Id: Net.pm,v 1.1.1.1 2002/09/24 01:40:58 michald Exp $
+d140 1
+a140 1
+sub close { my $x = shift; print "Net::DESTROY on ".(ref $x)."\n" }
+d142 7
+a148 5
+sub DESTROY {
+	my $net = shift;
+	# polymorphic: fd,ssl_ctx,IO::Socket ??
+	$net->close();
+}
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d1 1
+a1 1
+# $Id: Net.pm,v 1.3 2002/08/25 18:12:22 martin Exp $
+d196 1
+@
+
+
+1.1.1.1
+log
+@Initial public release of BEE Project.
+@
+text
+@@

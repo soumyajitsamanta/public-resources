@@ -1,0 +1,1216 @@
+head	1.28;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.28
+date	2004.02.24.14.25.41;	author jiri_schmid;	state Exp;
+branches;
+next	1.27;
+
+1.27
+date	2003.12.04.14.30.19;	author jiri_schmid;	state Exp;
+branches;
+next	1.26;
+
+1.26
+date	2003.11.13.16.27.50;	author jiri_schmid;	state Exp;
+branches;
+next	1.25;
+
+1.25
+date	2003.09.26.11.16.31;	author jiri_schmid;	state Exp;
+branches;
+next	1.24;
+
+1.24
+date	2003.09.11.16.23.06;	author jiri_schmid;	state Exp;
+branches;
+next	1.23;
+
+1.23
+date	2003.09.01.12.40.09;	author jiri_schmid;	state Exp;
+branches;
+next	1.22;
+
+1.22
+date	2003.08.06.15.22.33;	author jiri_schmid;	state Exp;
+branches;
+next	1.21;
+
+1.21
+date	2003.08.05.08.02.11;	author jiri_schmid;	state Exp;
+branches;
+next	1.20;
+
+1.20
+date	2003.08.04.14.17.41;	author jiri_schmid;	state Exp;
+branches;
+next	1.19;
+
+1.19
+date	2003.08.04.12.07.40;	author jiri_schmid;	state Exp;
+branches;
+next	1.18;
+
+1.18
+date	2003.08.04.09.51.29;	author jiri_schmid;	state Exp;
+branches;
+next	1.17;
+
+1.17
+date	2003.08.04.08.12.54;	author jiri_schmid;	state Exp;
+branches;
+next	1.16;
+
+1.16
+date	2003.08.01.13.07.14;	author jiri_schmid;	state Exp;
+branches;
+next	1.15;
+
+1.15
+date	2003.07.31.14.34.42;	author jiri_schmid;	state Exp;
+branches;
+next	1.14;
+
+1.14
+date	2003.07.29.12.28.34;	author jiri_schmid;	state Exp;
+branches;
+next	1.13;
+
+1.13
+date	2003.07.29.07.59.42;	author jiri_schmid;	state Exp;
+branches;
+next	1.12;
+
+1.12
+date	2003.07.25.10.53.23;	author jiri_schmid;	state Exp;
+branches;
+next	1.11;
+
+1.11
+date	2003.07.25.09.28.51;	author jiri_schmid;	state Exp;
+branches;
+next	1.10;
+
+1.10
+date	2003.07.24.10.37.52;	author jiri_schmid;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	2003.07.23.11.44.56;	author jiri_schmid;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	2003.07.22.15.13.08;	author jiri_schmid;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	2003.07.22.09.34.44;	author jiri_schmid;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	2003.07.22.08.48.01;	author jiri_schmid;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	2003.07.18.10.51.02;	author jiri_schmid;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2003.07.14.11.52.26;	author jiri_schmid;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2003.07.11.16.06.35;	author jiri_schmid;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2003.07.11.16.00.53;	author jiri_schmid;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2003.07.09.09.27.12;	author jiri_schmid;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.28
+log
+@elements.cgi fixies
+@
+text
+@// $Id: graph3d.js,v 1.27 2003/12/04 14:30:19 jiri_schmid Exp $
+var tableTypes = {pages:"",y:"",z:"",x:"",diameter:"",transparency:"",color:"",shape:""};
+
+var timer, TargeT, Bin;
+
+function setBin(EID) {Bin = EID}
+
+function emptyBin(EID) {if (Bin) Bin.value = ''}
+
+function setSelf(EID) {TargeT = EID; Bin=EID;}
+
+function addSelf(EID) {
+if (TargeT) {
+	TargeT.value += (TargeT.value) ? ','+EID.title : EID.title;
+	object_changed(); 
+}}
+
+function addColor(EID) {
+if (TargeT) {
+	TargeT.value = EID.title;
+	object_changed();
+	var add = String(TargeT.name).match(/\d*$/);
+	document.getElementById("color"+add).style.backgroundColor = getColor();
+}
+}
+
+function reloadColor(EID) {
+var add = String(EID.id).match(/\d*$/);
+var NID = document.getElementById("change"+add);
+NID.ondblclick();
+TargeT = NID;
+}
+
+function setColor(EID) {
+var rgb = String(EID.value).split(/,/);
+var colors = ['red','green','blue'];
+for (i in colors) { document.getElementById(colors[i]).value = rgb[i]; }
+changeColor();
+}
+
+function changeColor() {
+var colorElement = document.getElementById('color');
+var clr16 = getColor();
+colorElement.style.backgroundColor = clr16;
+colorElement.title = getColor(1); //necessary
+}
+
+function startIncrease(colorSegment) {
+if (timer) stopTimer();
+timer = window.setInterval("plus('"+colorSegment+"')",150);
+return true
+}
+
+function startDecrease(colorSegment) {
+if (timer) stopTimer();
+timer = window.setInterval("minus('"+colorSegment+"')",150);
+return true
+}
+
+function stopTimer() {
+if (timer) {
+	window.clearInterval(timer);
+	timer = null;
+}
+return true
+}
+
+function getColor(typ) {	//return hex num
+var rtrn = (typ) ? new Array : '#';
+var colors = ['red','green','blue'];
+for (i in colors) {
+	var segment = document.getElementById(colors[i]).value;
+	if (isNaN(segment))  {	//no input convertible to number
+		document.getElementById(colors[i]).value = 127;
+		segment = (typ) ? 127 : '7F';
+	} else {
+		segment = Number(segment);
+		if (segment > 255) {		//color overload
+			document.getElementById(colors[i]).value = 255;
+			segment = (typ) ? 255 : 'FF';
+		} else if (segment < 0) {	//color underload
+			document.getElementById(colors[i]).value = 0;
+			segment = (typ) ? 0 : '00';
+		} else {			//change color to hex number but as a string
+			if (typ) { }
+			else {
+			segment = dec2hex(segment);
+			if (String(segment).length == 1) segment = '0'+segment;	//the segment is not 2 char string
+			}
+		}
+	}
+	if (typ) {
+		rtrn.push(segment);
+	} else {
+		rtrn += segment;
+	}
+}
+return (typ) ? rtrn.join(",") : rtrn
+}
+
+function plus(color){
+var EID = document.getElementById(color);
+EID.value = Number(EID.value) + 5;
+dec2hex(EID.value);
+changeColor();
+}
+
+function minus(color){
+var EID = document.getElementById(color);
+EID.value = Number(EID.value) - 5;
+changeColor();
+}
+
+function dec2hex(numero) { //numero
+var expnt = 0;
+var original = numero;
+while ( (numero / 16) >= 1 ) { expnt++; numero /= 16; }
+numero = original;
+var rtrn = '';
+for (i=expnt; i>-1; i--) {
+	var num = (numero > 15) ? Math.floor(numero / Math.pow(16,i)) : numero;
+	numero -= num*Math.pow(16,i);
+	switch (num) {
+		case 15 : rtrn += 'F'; break;
+		case 14 : rtrn += 'E'; break;
+		case 13 : rtrn += 'D'; break;
+		case 12 : rtrn += 'C'; break;
+		case 11 : rtrn += 'B'; break;
+		case 10 : rtrn += 'A'; break;
+		default : rtrn += num; break;
+	}
+}
+return rtrn
+}
+
+function hex2dec(stringo) { //stringo accepts hexanumber as unflagged string (ex. FF, no 0xFF)
+var pole = stringo.split("");
+var rtrn = 0;
+for (i=0; i<pole.length; i++) {
+	var ii = pole.length-i-1;
+	switch (pole[ii]) {
+		case 'a' || 'A' : rtrn += Math.pow(16,i)*10; break;
+		case 'b' || 'B' : rtrn += Math.pow(16,i)*12; break;
+		case 'c' || 'C' : rtrn += Math.pow(16,i)*12; break;
+		case 'd' || 'D' : rtrn += Math.pow(16,i)*13; break;
+		case 'e' || 'E' : rtrn += Math.pow(16,i)*14; break;
+		case 'f' || 'F' : rtrn += Math.pow(16,i)*15; break;
+		default: rtrn += Math.pow(16,i)*Number(pole[ii]);
+	}
+}
+return rtrn
+}
+
+function loadElement(EID) {
+var Frame = parent.frames['elements_iframe'];
+if (!Frame.OC) Frame.window.ocElements('open');
+var poleParams = params.split(/&/);
+Frame.location.replace('elements.cgi?itemId='+EID.id+"&"+params);
+}
+
+function subst_graph3d_ID(source,zone){
+var EID = document.getElementById(zone);
+var lngth = EID.rows.length-1;
+for (i=0; i<lngth;i++) EID.deleteRow(0);
+var content = document.getElementById(source);
+if (content.value) {var poleM = String(content.value).split("|");} else return;
+var MPole = parent.frames['tree_iframe'].Tree0;
+var new_cell;
+for (i=0; i < poleM.length; i++) 
+	{
+	var new_row = EID.insertRow(i);
+	 new_cell = new_row.insertCell(0);
+	 new_cell.className="visual_up";
+	 new_cell.onclick = function() {decide(this);};
+	 new_cell.onmouseover = function() {active(this);};
+	 new_cell.onmouseout = function() {passive(this);};
+	 var path = (document.getElementById('skin').value) ? "skins/"+document.getElementById('skin').value+"/" : "";
+		if (String(poleM[i]).match(/~/)) {
+			var nodeParent = findItemById(String(poleM[i]).match(/^[^~]*/));
+			var nodeChild = findItemById(poleM[i],true);
+			if (String(nodeParent[2]).match(/\?/) || String(nodeChild[2]).match(/\?/)) {
+				new_cell.innerHTML = "<img src='"+path+"img/bear_tiny.png' alt='uknown' name='"+nodeParent[2]+"~"+nodeChild[2]+"|"+nodeChild[3]+"'>&nbsp;"+nodeParent[2]+"~"+nodeChild[2];
+			} else {
+				new_cell.innerHTML = "<img src='"+parent.frames['tree_iframe'].document.getElementById("icon"+poleM[i]).src+"' alt='"+nodeChild[0]+"' name='"+nodeParent[2]+"~"+nodeChild[2]+"|"+nodeChild[3]+"'>&nbsp;"+nodeParent[2]+"~"+nodeChild[2];
+			}
+		} else {var node = findItemById(poleM[i]);
+			if (String(node[2]).match(/\?/)) {
+				new_cell.innerHTML = "<img src='"+path+"img/bear_tiny.png' alt='"+node[0]+"' name='"+node[2]+"|"+node[3]+"'>&nbsp;"+node[2];
+			} else {
+				new_cell.innerHTML = "<img src='"+parent.frames['tree_iframe'].document.getElementById("icon"+poleM[i]).src+"' alt='"+node[0]+"' name='"+node[2]+"|"+node[3]+"'>&nbsp;"+node[2];
+			}
+		};
+};
+var img = new_cell.firstChild;
+var typ = (String(img.name).match(/.$/) == 'M') ? 'M' : 'A';
+var object = String(zone).match(/[^_]*$/);
+tableTypes[object] = typ;
+if (typ == 'M') blockMetric(object);
+return true;
+}
+function checkContent(isin){
+var original = isin;
+isin = String(isin).replace(/\[/g,"\\[");
+isin = String(isin).replace(/\]/g,"\\]");
+if (isin.match(/~/)){
+	var nodeParent = findItemByName(isin.match(/^[^~]*/));
+	if (nodeParent) {
+		var MPole = top.frames['body'].frames['tree_iframe'].Tree0;
+		var rgxp = new RegExp(nodeParent[0]+"\\|"+isin.match(/[^~]*$/)+"\\|");
+		for (I in MPole)
+	 		if (I>=0)	//IE unbelieveble bug treatment
+				{if (MPole[I].match(rgxp)) {var hlpX = MPole[I].split("|"); return hlpX[0]};
+			} else continue;//IE unbelieveble bug treatment
+	}
+}
+var node = findItemByName(isin);
+if (node) return node[0]
+return original //substitution of name by id failed
+}
+
+function findItemByName(nodeName) {
+var MPole = top.frames['body'].frames['tree_iframe'].Tree0;
+var rgxp = new RegExp("\\|"+nodeName+"\\|");
+for (I in MPole) 
+	if (I>=0){	//IE unbelieveble bug treatment
+		if (MPole[I].match(rgxp)) {return MPole[I].split("|");}
+	} else continue;//IE unbelieveble bug treatment
+return null
+}
+// put item(s) from drag & drop table "Zone" into relevant SELECT object "Obj"
+function fill_select_by_zone(Obj,Zone) {
+var selectobj = document.getElementById(Obj);
+selectobj.length = 0;
+var EID = document.getElementById(Zone).getElementsByTagName('img');
+for (i=0; i<EID.length; i++) {
+	var hlp = EID.item(i).alt;
+	selectobj.options[i]= new Option(hlp,hlp,false,true);
+	}
+return(true);}
+
+// before saving select all item in SELECT objects
+function fill_selects(){
+	fill_select_by_zone("pages","drop_zone_pages");
+	fill_select_by_zone("y","drop_zone_y");
+	fill_select_by_zone("x","drop_zone_x");
+	fill_select_by_zone("z","drop_zone_z");
+	fill_select_by_zone("diameter","drop_zone_diameter");
+	fill_select_by_zone("transparency","drop_zone_transparency");
+	fill_select_by_zone("shape","drop_zone_shape");
+	fill_select_by_zone("color","drop_zone_color");
+	return(true);
+}
+
+function fill_tables(){
+	force_hide_me();
+	setCheckBoxs();
+	subst_graph3d_ID("id_pages","drop_zone_pages");
+	subst_graph3d_ID("id_y","drop_zone_y");
+	subst_graph3d_ID("id_x","drop_zone_x");
+	subst_graph3d_ID("id_z","drop_zone_z");
+	subst_graph3d_ID("id_diameter","drop_zone_diameter");
+	subst_graph3d_ID("id_transparency","drop_zone_transparency");
+	subst_graph3d_ID("id_shape","drop_zone_shape");
+	subst_graph3d_ID("id_color","drop_zone_color");
+	return(true);
+}
+
+function clearTable(SegmentId){
+var Segment = document.getElementById(SegmentId);
+var object = String(SegmentId).match(/[^_]*$/);
+tableTypes[object] = "";
+unblockMetric(object);
+var lngth = Segment.rows.length-1;
+for (i=0; i<lngth;i++) Segment.deleteRow(0);
+}
+
+function setCheckBoxs() {
+var pole = String( document.getElementById('checked').value ).split("|");
+for (i=0;i<pole.length;i++) {
+	var  subpole = String(pole[i]).split("~");
+	document.getElementById(subpole[0]+"Q").checked  = (subpole[1] == 'on') ? true : false;
+	}
+}
+
+function next(EID){
+EID = EID.firstChild;
+EID.click();
+object_changed();
+}
+
+function check_table(active_row){
+var hlp;
+	var typ,match;
+	var table_section = active_row.parentNode;
+	var object = String(table_section.parentNode.id).match(/[^_]*$/);
+	match = String(dragLocator.name).match(/[^\|]*$/);
+	switch (match[0]) {
+		case 'M' : typ = 'M'; break;
+		case 'A' : typ = 'A'; break;
+		case 'Af': typ = 'A'; break;
+		case 'P' : typ = tableTypes[object]; break
+		default: return 1;
+	}
+	if (self.tableTypes[object]) {
+		if (String(self.tableTypes[object]) == String(typ)) {
+			if (String(object).match(/_x$|_y$|_z$|_pages$/)) {
+				return isInvolved(dragLocator.name,"drop_zone_x","drop_zone_y","drop_zone_z","drop_zone_pages")
+			} else {
+				return isInvolved(dragLocator.name,table_section.parentNode.id)
+			}
+		} else {
+			return 1
+		}
+	} else {
+		self.tableTypes[object] = typ;
+		if (typ == 'M') blockMetric(object);
+		return 0
+	}
+}
+
+function blockMetric(object) {
+var EID = document.getElementById(object+"Q");
+EID.checked = true;
+EID = EID.parentNode;
+EID.style.display = 'none';
+}
+
+function unblockMetric(object) {
+var EID = document.getElementById(object+"Q");
+EID.checked = false;
+EID = EID.parentNode;
+EID.style.display = 'inline';
+}
+
+function isInvolved(){
+var item = isInvolved.arguments[0];
+var rtrn = 0;
+if (item) {
+	for (i=1; i<isInvolved.arguments.length;i++) {
+		var EID = document.getElementById(isInvolved.arguments[i]).innerHTML;
+		if (EID.indexOf(item) >= 0) rtrn++;
+	}
+}
+return rtrn
+}
+
+function itemElements(ID) {
+var node = findItemById(ID);
+if (node[3] == 'M' || node[3] == '') { //metric has no elements or node wasn't found
+		return
+	} else {
+		parent.frames["elements_iframe"].location.href = 'elements.cgi?Elements='+ID+"&"+params;
+	}
+}
+
+function fillAxis(full) {
+var EID = document.getElementById('ids');
+if (EID && full) {
+	var ids = String(EID.value).split("|");
+	for (i=0; i<ids.length; i++) {
+		if (String(ids[i]).match(/~/)) {
+			var nodeParent = findItemById(String(ids[i]).match(/^[^~]*/));
+			var nodeChild = findItemById(ids[i],true);
+			if (nodeParent && nodeChild) document.getElementById(ids[i]).innerHTML = '<img src="'+parent.frames['tree_iframe'].document.getElementById('icon'+ids[i]).src+'" onclick=\"itemElements(\''+ids[i]+'\')"/>&nbsp;'+nodeParent[2]+"~"+nodeChild[2];
+		} else {
+			var node = findItemById(ids[i]);
+			if (node) document.getElementById(ids[i]).innerHTML = '<img src="'+parent.frames['tree_iframe'].document.getElementById('icon'+ids[i]).src+'" />&nbsp;'+node[2];
+		}
+	}
+}
+}
+
+function checkNum(EID) {
+if (String(EID.value).match(/[^\d\s-%;\.\,]/g)) { EID.value = ''; }
+object_changed();
+}
+
+function convertShapes(){
+var metric = document.getElementById('metric').value;
+for (ai=0;ai<convertShapes.arguments.length;ai++){
+	var next = true;
+	var metricIndex = 0;
+	var i = 0;
+	var add = '';
+	while (next) {
+		add = (metric=="1" && String(convertShapes.arguments[ai]).match(/change/)) ? metricIndex + '' + i : i;
+		var EID = document.getElementById(convertShapes.arguments[ai]+add);
+		if (EID){
+			var inString = String(EID.value).replace(/\s/g,'');
+			var inPole = inString.split(",");
+			var outPole = new Array;
+			for (ii = 0; ii< inPole.length; ii++) {
+				if (shapeObject[inPole[ii]]) outPole.push(shapeObject[inPole[ii]]);
+			}
+			EID.value = outPole.join(",");
+			i++;
+			next = true;
+		} else {
+			metricIndex++;
+			i = 0;
+			next = (document.getElementById(convertShapes.arguments[ai]+metricIndex+i)) ? true : false;
+		};
+	}
+}
+}
+@
+
+
+1.27
+log
+@finishing replacing of gif files
+@
+text
+@d1 1
+a1 1
+// $Id: graph3d.js,v 1.26 2003/11/13 16:27:50 jiri_schmid Exp $
+d158 1
+a158 1
+Frame.location.replace('elements.cgi?itemId='+EID.id+"&"+poleParams[0]+"&"+poleParams[5]);
+d352 1
+a352 1
+		parent.frames["elements_iframe"].location.href = 'elements.cgi?Lang='+document.getElementById('activeLang').value+"&Elements="+ID;
+d367 1
+a367 1
+			if (node) document.getElementById(ids[i]).innerHTML = '<img src="'+parent.frames['tree_iframe'].document.getElementById('icon'+ids[i]).src+'" onclick=\"itemElements(\''+ids[i]+'\')"/>&nbsp;'+node[2];
+@
+
+
+1.26
+log
+@fixed bugs and dynamicparam finder implemeted
+@
+text
+@d1 1
+a1 1
+// $Id: graph3d.js,v 1.25 2003/09/26 11:16:31 jiri_schmid Exp $
+d182 1
+a182 1
+				new_cell.innerHTML = "<img src='"+path+"img/bear_tiny.gif' alt='uknown' name='"+nodeParent[2]+"~"+nodeChild[2]+"|"+nodeChild[3]+"'>&nbsp;"+nodeParent[2]+"~"+nodeChild[2];
+d188 1
+a188 1
+				new_cell.innerHTML = "<img src='"+path+"img/bear_tiny.gif' alt='"+node[0]+"' name='"+node[2]+"|"+node[3]+"'>&nbsp;"+node[2];
+@
+
+
+1.25
+log
+@format2d color tab implemented
+@
+text
+@d1 1
+a1 1
+// $Id: graph3d.js,v 1.24 2003/09/11 16:23:06 jiri_schmid Exp $
+d293 1
+a293 1
+	var typ = (String(dragLocator.name).match(/.$/) == 'M') ? 'M' : 'A';
+d296 8
+@
+
+
+1.24
+log
+@minor code changes and visual improvments
+@
+text
+@d1 1
+a1 1
+// $Id: graph3d.js,v 1.23 2003/09/01 12:40:09 jiri_schmid Exp $
+d3 150
+a152 1
+var timer;
+a160 4
+function setBin(EID) {Bin = EID}
+
+function emptyBin(EID) {if (Bin) Bin.value = ''}
+
+a369 8
+function setSelf(EID) {TargeT = EID}
+
+function addSelf(EID) {
+if (TargeT) {
+	TargeT.value += (TargeT.value) ? ','+EID.title : EID.title;
+	object_changed(); 
+}}
+
+a396 137
+}
+
+function addColor(EID) {
+if (TargeT) {
+	TargeT.value = EID.title;
+	object_changed();
+	var add = String(TargeT.name).match(/\d*$/);
+	document.getElementById("color"+add).style.backgroundColor = getColor();
+}
+}
+
+function reloadColor(EID) {
+var add = String(EID.id).match(/\d*$/);
+var NID = document.getElementById("change"+add);
+NID.ondblclick();
+TargeT = NID;
+}
+
+function setColor(EID) {
+var rgb = String(EID.value).split(/,/);
+var colors = ['red','green','blue'];
+for (i in colors) { document.getElementById(colors[i]).value = rgb[i]; }
+changeColor();
+}
+
+function changeColor() {
+var colorElement = document.getElementById('color');
+var clr16 = getColor();
+colorElement.style.backgroundColor = clr16;
+document.getElementById('default0').title =  clr16;
+colorElement.title = getColor(1);
+}
+
+function startIncrease(colorSegment) {
+if (timer) stopTimer();
+timer = window.setInterval("plus('"+colorSegment+"')",150);
+return true
+}
+
+function startDecrease(colorSegment) {
+if (timer) stopTimer();
+timer = window.setInterval("minus('"+colorSegment+"')",150);
+return true
+}
+
+function stopTimer() {
+if (timer) {
+	window.clearInterval(timer);
+	timer = null;
+}
+return true
+}
+
+function getColor(typ) {	//return hex num
+var rtrn = (typ) ? new Array : '#';
+var colors = ['red','green','blue'];
+for (i in colors) {
+	var segment = document.getElementById(colors[i]).value;
+	if (isNaN(segment))  {	//no input convertible to number
+		document.getElementById(colors[i]).value = 127;
+		segment = (typ) ? 127 : '7F';
+	} else {
+		segment = Number(segment);
+		if (segment > 255) {		//color overload
+			document.getElementById(colors[i]).value = 255;
+			segment = (typ) ? 255 : 'FF';
+		} else if (segment < 0) {	//color underload
+			document.getElementById(colors[i]).value = 0;
+			segment = (typ) ? 0 : '00';
+		} else {			//change color to hex number but as a string
+			if (typ) { }
+			else {
+			segment = dec2hex(segment);
+			if (String(segment).length == 1) segment = '0'+segment;	//the segment is not 2 char string
+			}
+		}
+	}
+	if (typ) {
+		rtrn.push(segment);
+	} else {
+		rtrn += segment;
+	}
+}
+return (typ) ? rtrn.join(",") : rtrn
+}
+
+function plus(color){
+var EID = document.getElementById(color);
+EID.value = Number(EID.value) + 5;
+dec2hex(EID.value);
+changeColor();
+}
+
+function minus(color){
+var EID = document.getElementById(color);
+EID.value = Number(EID.value) - 5;
+changeColor();
+}
+
+function dec2hex(numero) { //numero
+var expnt = 0;
+var original = numero;
+while ( (numero / 16) >= 1 ) { expnt++; numero /= 16; }
+numero = original;
+var rtrn = '';
+for (i=expnt; i>-1; i--) {
+	var num = (numero > 15) ? Math.floor(numero / Math.pow(16,i)) : numero;
+	numero -= num*Math.pow(16,i);
+	switch (num) {
+		case 15 : rtrn += 'F'; break;
+		case 14 : rtrn += 'E'; break;
+		case 13 : rtrn += 'D'; break;
+		case 12 : rtrn += 'C'; break;
+		case 11 : rtrn += 'B'; break;
+		case 10 : rtrn += 'A'; break;
+		default : rtrn += num; break;
+	}
+}
+return rtrn
+}
+
+function hex2dec(stringo) { //stringo accepts hexanumber as unflagged string (ex. FF, no 0xFF)
+var pole = stringo.split("");
+var rtrn = 0;
+for (i=0; i<pole.length; i++) {
+	var ii = pole.length-i-1;
+	switch (pole[ii]) {
+		case 'a' || 'A' : rtrn += Math.pow(16,i)*10; break;
+		case 'b' || 'B' : rtrn += Math.pow(16,i)*12; break;
+		case 'c' || 'C' : rtrn += Math.pow(16,i)*12; break;
+		case 'd' || 'D' : rtrn += Math.pow(16,i)*13; break;
+		case 'e' || 'E' : rtrn += Math.pow(16,i)*14; break;
+		case 'f' || 'F' : rtrn += Math.pow(16,i)*15; break;
+		default: rtrn += Math.pow(16,i)*Number(pole[ii]);
+	}
+}
+return rtrn
+@
+
+
+1.23
+log
+@skins implemented. mozilla skin - temporarily copy msie content
+@
+text
+@d1 1
+a1 1
+// $Id: graph3d.js,v 1.22 2003/08/06 15:22:33 jiri_schmid Exp $
+d8 2
+a9 1
+Frame.location.replace('elements.cgi?itemId='+EID.id+"&"+params.match(/^[^\&]*/));
+@
+
+
+1.22
+log
+@user ACL implementation started
+@
+text
+@d1 1
+a1 1
+// $Id: graph3d.js,v 1.21 2003/08/05 08:02:11 jiri_schmid Exp $
+d31 1
+d36 1
+a36 1
+				new_cell.innerHTML = "<img src='img/tree/base.gif' alt='uknown' name='"+nodeParent[2]+"~"+nodeChild[2]+"|"+nodeChild[3]+"'>&nbsp;"+nodeParent[2]+"~"+nodeChild[2];
+d42 1
+a42 1
+				new_cell.innerHTML = "<img src='img/tree/base.gif' alt='"+node[0]+"' name='"+node[2]+"|"+node[3]+"'>&nbsp;"+node[2];
+@
+
+
+1.21
+log
+@bug fixies
+@
+text
+@d1 1
+a1 1
+// $Id: graph3d.js,v 1.20 2003/08/04 14:17:41 jiri_schmid Exp $
+d285 3
+a287 1
+colorElement.style.backgroundColor = getColor();
+@
+
+
+1.20
+log
+@UI improvments
+@
+text
+@d1 1
+a1 1
+// $Id: graph3d.js,v 1.19 2003/08/04 12:07:40 jiri_schmid Exp $
+d5 5
+a9 1
+function loadElement(EID) { parent.frames['elements_iframe'].location.replace('elements.cgi?itemId='+EID.id+"&"+params.match(/^[^\&]*/)) }
+d239 1
+a239 1
+		add = (metric && String(convertShapes.arguments[ai]).match(/change/)) ? metricIndex + '' + i : i;
+@
+
+
+1.19
+log
+@graph3d-color inerface improvment, run.cgi bug fix
+@
+text
+@d1 1
+a1 1
+// $Id: graph3d.js,v 1.18 2003/08/04 09:51:29 jiri_schmid Exp $
+a4 9
+function addColor(EID) {
+if (TargeT) {
+	TargeT.value = EID.title;
+	object_changed();
+	var add = String(TargeT.name).match(/\d*$/);
+	document.getElementById("color"+add).style.backgroundColor = getColor();
+}
+}
+
+d254 16
+@
+
+
+1.18
+log
+@code improvment, bug fixies
+@
+text
+@d1 1
+a1 1
+// $Id: graph3d.js,v 1.17 2003/08/04 08:12:54 jiri_schmid Exp $
+d5 8
+a12 1
+function addColor(EID) { if (TargeT) { TargeT.value = EID.title; object_changed();} }
+d279 3
+a281 1
+timer = window.setInterval("plus('"+colorSegment+"')",250);
+d285 3
+a287 1
+timer = window.setInterval("minus('"+colorSegment+"')",250);
+d290 7
+a296 1
+function stopTimer() { if (timer) { window.clearInterval(timer); timer = null; } }
+@
+
+
+1.17
+log
+@changes depending on implemntation of right pane on graph3d page done
+@
+text
+@d1 1
+a1 1
+// $Id: graph3d.js,v 1.16 2003/08/01 13:07:14 jiri_schmid Exp $
+d3 1
+d258 7
+d270 10
+@
+
+
+1.16
+log
+@graph3d relevant changes made to cooperate with right pane, multiple metric not alowed yet
+@
+text
+@d1 1
+a1 1
+// $Id: graph3d.js,v 1.15 2003/07/31 14:34:42 jiri_schmid Exp $
+d4 1
+a4 1
+function addColor(EID) { TargeT.value = EID.title; object_changed();}
+d228 3
+a230 2
+function convert(){
+for (ai=0;ai<convert.arguments.length;ai++){
+d232 1
+d234 1
+d236 2
+a237 1
+		var EID = document.getElementById(convert.arguments[ai]+i);
+d248 5
+a252 1
+		} else { next = false };
+@
+
+
+1.15
+log
+@right pane implementation aproaching final stage
+@
+text
+@d1 1
+a1 1
+// $Id: graph3d.js,v 1.14 2003/07/29 12:28:34 jiri_schmid Exp $
+d4 2
+d251 6
+a256 1
+var rtrn = '#';
+d262 1
+a262 1
+		segment = '7F';
+d267 1
+a267 1
+			segment = 'FF';
+d270 1
+a270 1
+			segment = '00';
+d272 2
+d276 1
+d279 5
+a283 1
+	rtrn += segment;
+d285 1
+a285 3
+colorElement.style.backgroundColor = rtrn;
+colorElement.title = rtrn;
+return rtrn
+@
+
+
+1.14
+log
+@right frame implemented
+@
+text
+@d1 1
+a1 1
+// $Id: graph3d.js,v 1.13 2003/07/29 07:59:42 jiri_schmid Exp $
+d3 6
+@
+
+
+1.13
+log
+@minor interface and code improvments
+@
+text
+@d1 1
+a1 1
+// $Id: graph3d.js,v 1.12 2003/07/25 10:53:23 jiri_schmid Exp $
+d183 1
+a183 2
+if (node)
+	if (node[3] == 'M') {
+d186 1
+a186 1
+		document.getElementById('elements').src = 'elements.cgi?Lang='+document.getElementById('activeLang').value+"&Elements="+ID;
+@
+
+
+1.12
+log
+@switching tab bug fixed
+@
+text
+@d1 1
+a1 1
+// $Id: graph3d.js,v 1.11 2003/07/25 09:28:51 jiri_schmid Exp $
+d181 10
+d199 1
+a199 1
+			if (nodeParent && nodeChild) document.getElementById(ids[i]).innerHTML = '<img src="'+parent.frames['tree_iframe'].document.getElementById('icon'+ids[i]).src+'"/>&nbsp;'+nodeParent[2]+"~"+nodeChild[2];
+d202 1
+a202 1
+			if (node) document.getElementById(ids[i]).innerHTML = '<img src="'+parent.frames['tree_iframe'].document.getElementById('icon'+ids[i]).src+'"/>&nbsp;'+node[2];
+@
+
+
+1.11
+log
+@minor bug fixies and code improvment
+@
+text
+@d1 1
+a1 1
+// $Id: graph3d.js,v 1.10 2003/07/24 10:37:52 jiri_schmid Exp $
+d257 2
+@
+
+
+1.10
+log
+@next tab implmented
+@
+text
+@d1 1
+a1 1
+// $Id: graph3d.js,v 1.9 2003/07/23 11:44:56 jiri_schmid Exp $
+d186 8
+a193 2
+		var node = findItemById(ids[i]);
+		document.getElementById(ids[i]).innerHTML = '<img src="'+parent.frames['tree_iframe'].document.getElementById('icon'+ids[i]).src+'"/>&nbsp;'+node[2]+":";
+d230 80
+@
+
+
+1.9
+log
+@next tab implemented on graph3d page
+@
+text
+@d1 1
+a1 1
+// $Id: graph3d.js,v 1.8 2003/07/22 15:13:08 jiri_schmid Exp $
+a191 1
+
+d195 29
+@
+
+
+1.8
+log
+@new tabs on graph3d page implemented
+@
+text
+@d1 1
+a1 1
+// $Id: graph3d.js,v 1.7 2003/07/22 09:34:44 jiri_schmid Exp $
+d194 1
+a194 1
+if (String(EID.value).match(/[^\d-%\.\,]/g)) { EID.value = ''; }
+@
+
+
+1.7
+log
+@minor code changes
+@
+text
+@d1 1
+a1 1
+// $Id: graph3d.js,v 1.6 2003/07/22 08:48:01 jiri_schmid Exp $
+d183 1
+a183 1
+if (EID) {
+a184 1
+	var pole = String(document.getElementById('reload').value).split("|");
+d186 2
+a187 5
+		set('input'+ids[i],'value',pole[i],1);
+		if (full) {
+			var node = findItemById(ids[i]);
+			document.getElementById(ids[i]).innerHTML = '<img src="'+parent.frames['tree_iframe'].document.getElementById('icon'+ids[i]).src+'"/>&nbsp;'+node[2]+":";
+		}
+@
+
+
+1.6
+log
+@axis tabs on 3dgraph page implented
+@
+text
+@d1 1
+a1 1
+// $Id: graph3d.js,v 1.5 2003/07/18 10:51:02 jiri_schmid Exp $
+d194 6
+@
+
+
+1.5
+log
+@format3d implemented, format changed all dependencies fixed
+@
+text
+@d1 1
+a1 1
+// $Id: graph3d.js,v 1.4 2003/07/14 11:52:26 jiri_schmid Exp $
+d157 1
+a157 1
+EID.checked = false;
+d163 3
+a165 1
+var EID = document.getElementById(object+"Q").parentNode;
+d179 15
+@
+
+
+1.4
+log
+@3dgraph webpage-rules implantation, minor code changes
+@
+text
+@d1 1
+a1 1
+// $Id: graph3d.js,v 1.3 2003/07/11 16:06:35 jiri_schmid Exp $
+a134 1
+if (parent.frames["tree_iframe"].editType == "G3") {
+d153 1
+a153 1
+}}
+@
+
+
+1.3
+log
+@micro-bug fixed
+@
+text
+@d1 1
+a1 1
+// $Id: graph3d.js,v 1.2 2003/07/11 16:00:53 jiri_schmid Exp $
+d40 1
+d89 2
+a90 2
+	fill_select_by_zone("diameter","drop_zone_diam");
+	fill_select_by_zone("transparency","drop_zone_trans");
+d98 1
+d103 2
+a104 2
+	subst_graph3d_ID("id_diameter","drop_zone_diam");
+	subst_graph3d_ID("id_transparency","drop_zone_trans");
+a106 1
+	setCheckBoxs();
+d114 1
+d141 5
+a145 2
+			hlp = document.getElementById("drop_area_1").innerHTML;
+			return (hlp.indexOf(dragLocator.name) == -1) ? 0 : 1;
+d151 1
+d155 24
+@
+
+
+1.2
+log
+@graph3d next stage
+@
+text
+@d1 1
+a1 1
+// $Id: graph3d.js,v 1.1 2003/07/09 09:27:12 jiri_schmid Exp $
+d121 1
+a121 1
+	if (subpole[1] == 'on') document.getElementById(subpole[0]+"Q").checked = true;
+@
+
+
+1.1
+log
+@added javascript for graph3d
+@
+text
+@d1 2
+a2 1
+// $Id: grid.js,v 1.9 2003/07/08 10:39:05 jiri_schmid Exp $
+d11 2
+a12 1
+for (i=0; i < poleM.length-1; i++) 
+d15 1
+a15 1
+	var new_cell = new_row.insertCell(0);
+d36 4
+d82 1
+a82 1
+// before saving select all item in SELECT objects - PageObj, COlObj, RowObj, Metrics
+d84 8
+a91 4
+	fill_select_by_zone("PagesObj","drop_zone_pages");
+	fill_select_by_zone("YObj","drop_zone_y");
+	fill_select_by_zone("XObj","drop_zone_x");
+	fill_select_by_zone("ZObj","drop_zone_z");
+d97 9
+a105 4
+	subst_graph3d_ID("pages","drop_zone_pages");
+	subst_graph3d_ID("y","drop_zone_y");
+	subst_graph3d_ID("x","drop_zone_x");
+	subst_graph3d_ID("z","drop_zone_z");
+d111 2
+d116 33
+@
+

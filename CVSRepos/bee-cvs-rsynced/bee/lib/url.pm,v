@@ -1,0 +1,456 @@
+head	1.9;
+access;
+symbols
+	start:1.1.1.1 vendor:1.1.1;
+locks; strict;
+comment	@# @;
+
+
+1.9
+date	2003.11.06.14.31.46;	author numberone;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	2003.09.25.08.24.10;	author numberone;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	2003.09.25.08.21.45;	author numberone;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	2003.09.12.09.29.52;	author numberone;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	2003.09.12.09.12.04;	author numberone;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2003.03.12.23.31.30;	author numberone;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2002.12.16.02.18.33;	author numberone;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2002.09.26.07.52.42;	author numberone;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2002.09.24.01.40.58;	author michald;	state Exp;
+branches
+	1.1.1.1;
+next	;
+
+1.1.1.1
+date	2002.09.24.01.40.58;	author michald;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.9
+log
+@demo updates (display:// problem)
+@
+text
+@# $Id: url.pm,v 1.8 2003/09/25 08:24:10 numberone Exp $
+# url.pm
+
+# RFC1738: General URL Syntax (2.2. URL Character Encoding Issues)
+# RFC2718: Guidelines for new URL schemes
+
+# url.pm: url and key string parsing
+
+# dbi-mysql://user:pass@@localhost:3306/dbname/table:field1:field2:field3
+# dir://user@@localhost:2333/file - no fields
+#
+# proto, host and dbname must by specified, rest are optional
+# dbi://host/ invalid (no dbname), dir://host/ valid (dbname='/')
+
+#   0      1         2    3   4    5   6     7+
+# proto-subproto://user:pass@@host/db/table:@@fields
+
+package url;
+
+use Data::Dumper;
+use strict;
+
+# subs: construct, split, source, [proto,host,...]
+
+
+# create $url string from hash
+# usage: url::construct('dbi',undef,'host','port','user','db',...)
+#     or url::construct({host=>'host',proto=>'dir',db=>'/'})
+
+sub construct {
+	my $hash_in = $_[0];
+	if(ref $hash_in ne 'HASH') {
+		$hash_in = {
+			proto=>shift, subproto=>shift, host=>shift, port=>shift,
+			user=>shift,  pass=>shift, db=>shift, table=>shift, fields=>\@@_
+		}
+	}
+
+	my $hash;
+
+	$hash->{$_} = escape($hash_in->{$_}) 
+		foreach(qw/proto subproto host port user pass db table/);
+
+	if(defined $hash_in->{fields} and @@{$hash_in->{fields}}) {
+		for(my $i=0;$i<@@{$hash_in->{fields}};$i++) {
+			$hash->{fields}->[$i] = escape($hash_in->{fields}->[$i]);
+		}
+	}
+
+	my $proto = $hash->{proto};
+	die unless($proto);
+	if($proto eq 'dir' or $proto eq 'dbi') {
+		die unless($hash->{host} and $hash->{db});
+	}
+
+	my $url = $hash->{proto};
+	$url .= "-".$hash->{subproto} if($hash->{subproto});
+	$url .= "://";
+
+	if($proto ne 'dir' and $proto ne 'dbi') {
+		if($proto eq 'array' or $proto eq 'display') {
+			$url .= join(":",@@{$hash->{fields}}) if($hash->{fields});
+		}
+		return $url;
+	}
+	
+	if($hash->{user}) {
+		$url .= $hash->{user};
+		$url .= ":".$hash->{pass} if($hash->{pass});
+		$url .= "\@@";
+	}
+	$url .= $hash->{pass}."\:"    if($hash->{pass});
+	$url .= $hash->{host};
+	$url .= "\:".$hash->{port}    if($hash->{port});
+	$url .= $hash->{proto} eq 'dir' ? $hash->{db} : "/".$hash->{db};
+	if($hash->{table}) {
+		$url .= $hash->{table};
+		if($hash->{fields})	{
+			die "fields in dir??" if($hash->{proto} eq 'dir');
+			$url .= ":".join(":",@@{$hash->{fields}});
+		}
+	} else {
+#		die if(@@{$hash->{fields}});
+	}
+	return $url;
+}
+
+
+# do not use, instead use split() wrapper
+sub split_internal {
+	my $url = shift;
+	my($proto,$sub,$host,$port,$user,$pass,$db,$table,$fields);
+
+	($proto,$host) = ($`,$') if($url =~ /\:\/\//);
+	die "url=$url" unless $proto;
+	($proto,$sub) = ($`,$')  if($proto =~ /\-/);
+
+	if($proto ne 'dir' and $proto ne 'dbi') {
+		if(($proto eq 'array' or $proto eq 'display') and $host) {
+			my @@fields = split(/\:/,$host);
+			return($proto,$sub,undef,undef,undef,undef,undef,undef,@@fields);
+		}
+		return ($proto,$sub);
+	}
+
+	die $url unless $host;
+	($host,$db) = ($`,$')    if($host =~ /\//);
+	die $url unless defined $db;
+	($user,$host) = ($`,$')  if($host =~ /\@@/);
+	($user,$pass) = ($`,$')  if($user =~ /\:/);
+	($host,$port) = ($1,$2)  if($host =~ /(.+)\:(\d+)$/);
+
+	# dir://host/file (==table), vs dbi://host/dbname (==database)
+	if($proto eq 'dbi') {
+		die $url unless $db;
+		($db,$table) = ($`,$')   if($db =~ /\//);
+
+		if(defined $table) {
+			($table,$fields) = ($`,$') if($table =~ /\:/);
+			if(defined $fields) {
+				my @@ary = split /\:/,$fields;
+				$fields = \@@ary;
+			}
+		}
+
+	} elsif($proto eq 'dir') {   # find last '/'
+		$db = "/$db";
+		($db,$table) = ($1,$2)   if($db =~ /^(.*\/)(.*)/);
+	} else {
+		die "unknown protocol: $url";
+	}
+
+	return defined $fields ? 
+			($proto,$sub,$host,$port,$user,$pass,$db,$table,@@$fields) :
+			($proto,$sub,$host,$port,$user,$pass,$db,$table);
+}
+
+# my($proto,$sub,$host,$port,$user,$db,$table,$fields) = url::split($url)
+# my $urlhash = url::split($url);
+sub split {
+	@@_ = url::split_internal(shift);
+	@@_ = map unescape($_), @@_;
+	return wantarray ? @@_ :
+		{
+			proto=>shift, subproto=>shift, host=>shift, port=>shift,
+			user=>shift,  pass=>shift, db=>shift, table=>shift, fields=>\@@_
+		}
+}
+
+sub new { 
+	my($pkg,$url) = @@_;
+	return url::split($url) 
+}
+
+
+# extract source part from url (without table and fields)
+sub source {
+	my @@source = url::split(shift);
+	my($table,@@fields) = splice(@@source,6);
+	my $source = url::construct(@@source);
+	return wantarray ? ($source,$table,@@fields) : $source;
+}
+
+sub proto    { (url::split(shift))[0] }
+sub subproto { (url::split(shift))[1] }
+sub host     { (url::split(shift))[2] }
+sub port     { (url::split(shift))[3] }
+sub user     { (url::split(shift))[4] }
+sub pass     { (url::split(shift))[5] }
+sub db       { (url::split(shift))[6] }
+sub table    { (url::split(shift))[7] }
+sub fields   { (url::split(shift))[8] } # @@!
+
+# modified CGI::Utils
+
+# unescape URL-encoded data
+sub unescape {
+  my $todecode = shift;
+  return undef unless defined($todecode);
+  $todecode =~ tr/+/ /;       # pluses become spaces
+  $todecode =~ s/%([0-9a-fA-F]{2})/chr hex($1)/ge;
+  return $todecode;
+}
+
+# URL-encode data
+sub escape {
+  my $toencode = shift;
+  return undef unless defined($toencode);
+  $toencode=~s/([^a-zA-Z0-9_.\/-])/uc sprintf("%%%02x",ord($1))/eg;
+  return $toencode;
+}
+
+sub key {
+	my($pkg,$key) = @@_;
+
+	# user[/role]@@host[:port]
+	return undef if(not $key or ($key !~ /\@@/));
+
+	my($user,$role,$host,$port);
+
+	($user,$host) = ($`,$');
+	($user,$role) = ($`,$') if($user =~ /\//);
+	($host,$port) = ($`,$') if($host =~ /\:/);
+
+	return { user => $user, role => $role, host => $host, port => $port };
+}
+
+
+1;
+
+
+@
+
+
+1.8
+log
+@url.pm doc II
+@
+text
+@d1 1
+a1 1
+# $Id: url.pm,v 1.7 2003/09/25 08:21:45 numberone Exp $
+d89 1
+a89 1
+# do not use, use slit() wrapper
+d101 1
+a101 1
+			return($proto,$sub,undef,undef,undef,undef,undef,@@fields);
+@
+
+
+1.7
+log
+@url.pm doc
+@
+text
+@d1 1
+a1 1
+# $Id: url.pm,v 1.6 2003/09/12 09:29:52 numberone Exp $
+a8 2
+# see doc/types for url formats
+#
+@
+
+
+1.6
+log
+@user@@pass
+@
+text
+@d1 1
+a1 1
+# $Id: url.pm,v 1.5 2003/09/12 09:12:04 numberone Exp $
+d11 1
+a11 1
+# dbi-mysql://user@@localhost:3306/dbname/table:field1:field2:field3
+@
+
+
+1.5
+log
+@dbi://user@@pass url
+@
+text
+@d1 1
+a1 1
+# $Id: url.pm,v 1.4 2003/03/12 23:31:30 numberone Exp $
+d69 5
+a73 1
+	$url .= $hash->{user}."\@@"    if($hash->{user});
+d112 1
+a112 2
+
+	# [pass]:host:[port] !
+a113 1
+	($pass,$host) = ($`,$')  if($host =~ /\:/);
+@
+
+
+1.4
+log
+@perl Net library removed
+replaced by libNet-1.2
+@
+text
+@d1 1
+a1 1
+# $Id: url.pm,v 1.3 2002/12/16 02:18:33 numberone Exp $
+d17 2
+a18 2
+#   0      1         2   3    4   5     6+
+# proto-subproto://user@@host/db/table:@@fields
+d37 1
+a37 1
+			user=>shift, db=>shift, table=>shift, fields=>\@@_
+d44 1
+a44 1
+		foreach(qw/proto subproto host port user db table/);
+d70 1
+d87 1
+a87 1
+# just wrapper, do not use
+d90 1
+a90 1
+	my($proto,$sub,$host,$port,$user,$db,$table,$fields);
+a107 1
+	($host,$port) = ($`,$')  if($host =~ /\:/);
+d109 3
+d134 2
+a135 2
+			($proto,$sub,$host,$port,$user,$db,$table,@@$fields) :
+			($proto,$sub,$host,$port,$user,$db,$table);
+d146 1
+a146 1
+			user=>shift, db=>shift, table=>shift, fields=>\@@_
+d169 4
+a172 3
+sub db       { (url::split(shift))[5] }
+sub table    { (url::split(shift))[6] }
+sub fields   { (url::split(shift))[7] }
+@
+
+
+1.3
+log
+@allow spaces in metadata. README, init.sql initial revision
+@
+text
+@d1 1
+a1 1
+# $Id: url.pm,v 1.2 2002/09/26 07:52:42 numberone Exp $
+d7 2
+d44 1
+a44 1
+		foreach(qw/proto subproto host port usr db table/);
+d46 1
+a46 1
+	if(@@{$hash_in->{fields}}) {
+d147 5
+d185 1
+a185 1
+  $toencode=~s/([^a-zA-Z0-9_.-])/uc sprintf("%%%02x",ord($1))/eg;
+d189 14
+@
+
+
+1.2
+log
+@version merging with my cvs
+@
+text
+@d1 1
+a1 1
+# $Id: url.pm,v 1.1.1.1 2002/09/24 01:40:58 michald Exp $
+d4 3
+d31 3
+a33 3
+	my $hash = $_[0];
+	if(ref $hash ne 'HASH') {
+		$hash = {
+d39 11
+d78 1
+a78 1
+		die if(@@{$hash->{fields}});
+d137 1
+d162 20
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d1 1
+a1 1
+# $Id: url.pm,v 1.7 2002/08/27 20:44:34 martin Exp $
+d150 1
+@
+
+
+1.1.1.1
+log
+@Initial public release of BEE Project.
+@
+text
+@@

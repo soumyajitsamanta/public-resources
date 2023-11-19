@@ -1,0 +1,85 @@
+head	1.2;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2003.09.12.09.29.52;	author numberone;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2003.02.17.23.38.09;	author numberone;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@user@@pass
+@
+text
+@#!/bin/sh
+
+# die on error
+set -e
+
+pass=honey
+
+if [ "$1$2" == "" ]
+then
+	echo "usage: $0 common_name outfile.pem"
+	exit 1
+fi
+
+openssl req -config ./openssl.cnf -new -passout pass:$pass \
+			-keyout private.pem -out request.pem <<EOF
+
+
+
+
+
+$1
+
+
+
+EOF
+
+echo
+echo
+echo "----------- request for '$1' created ----------------"
+echo "----------------  Enter Root CA password  --------------------"
+echo
+
+openssl ca -config ./openssl.cnf -in request.pem -notext -batch \
+           -cert root.pem -keyfile root-privatekey.pem -out certificate.pem
+
+rm -f $2
+cat private.pem certificate.pem > $2
+rm -f request.pem private.pem certificate.pem
+
+echo
+echo "----------- key '$1' successfuly signed ----------------"
+echo "------------------- RSA passphrase is $pass ---------------------"
+echo
+
+@
+
+
+1.1
+log
+@demo certificate + some keys
+certs/newkey.sh - script for automated key generation
+@
+text
+@d6 1
+a6 1
+pass=bee
+@
+

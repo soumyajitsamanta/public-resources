@@ -1,0 +1,84 @@
+head	1.1;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.1
+date	2004.06.08.15.11.59;	author numberone;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@
+Prepare API
+
+every bee must call ->prepare() before ->put()/->fetch()
+
+or they can call ->prepare_sql("SELECT/INSERT ...")
+
+->put() is identical to new ->execute()
+@
+text
+@<?xml version="1.0" encoding="ISO-8859-2"?>
+
+<task>
+<otec host='localhost' port='2333' >
+
+    <bee name='gen2' script='gen2.bee' >
+		<input input='1' url='scalar://'>10000</input>
+	</bee>
+
+	<bee name='id1' script='id.bee' />
+    <bee name='id2' script='id.bee' />
+	<bee name='id3' script='id.bee' />
+	<bee name='id4' script='id.bee' />
+	<bee name='id5' script='id.bee' />
+	<bee name='id6' script='id.bee' />
+	<bee name='id7' script='id.bee' />
+	<bee name='id8' script='id.bee' />
+	<bee name='id9' script='id.bee' />
+	<bee name='id10' script='id.bee' />
+	<bee name='id11' script='id.bee' />
+	<bee name='id12' script='id.bee' />
+	<bee name='id13' script='id.bee' />
+	<bee name='id14' script='id.bee' />
+	<bee name='id15' script='id.bee' />
+
+    <bee name='eat2' script='eat2.bee' />
+
+</otec>
+
+<links>
+gen2/2 eat2/2
+
+gen2/1 id1/1
+id1/1 id2/1
+id2/1 id3/1
+id3/1 id4/1
+id4/1 id5/1
+id5/1 id6/1
+id6/1 id7/1
+id7/1 id8/1
+id8/1 id9/1
+id9/1 id10/1
+id10/1 id11/1
+id11/1 id12/1
+id12/1 id13/1
+id13/1 id14/1
+id14/1 id15/1
+
+id15/1 eat2/1
+</links>
+
+</task>
+
+
+@

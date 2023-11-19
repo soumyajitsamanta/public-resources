@@ -1,0 +1,234 @@
+head	1.2;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2005.06.28.12.26.17;	author igorludi;	state dead;
+branches;
+next	1.1;
+
+1.1
+date	2005.06.28.11.35.03;	author igorludi;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@*** empty log message ***
+@
+text
+@package org.tempuri.type.customserializers;
+
+import org.apache.axis.AxisFault;
+import org.apache.axis.Constants;
+import org.apache.axis.components.logger.LogFactory;
+import org.apache.axis.description.FieldDesc;
+import org.apache.axis.description.TypeDesc;
+import org.apache.axis.encoding.SerializationContext;
+import org.apache.axis.encoding.Serializer;
+import org.apache.axis.message.MessageElement;
+import org.apache.axis.utils.BeanPropertyDescriptor;
+import org.apache.axis.utils.BeanUtils;
+import org.apache.axis.utils.Messages;
+import org.apache.axis.wsdl.fromJava.Types;
+import org.apache.commons.logging.Log;
+import org.w3c.dom.Element;
+import org.xml.sax.Attributes;
+import org.xml.sax.helpers.AttributesImpl;
+
+import javax.xml.namespace.QName;
+import java.io.IOException;
+import java.io.Serializable;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Modifier;
+import java.util.List;
+
+
+import rex.utils.S;
+/**
+ * <p>Title: WHEX</p>
+ * <p>Description: </p>
+ * <p>Copyright: Copyright (c) 2003</p>
+ * <p>Company: </p>
+ * @@author igor
+ * @@version 1.0
+ */
+
+public class CustomBeanSer extends org.apache.axis.encoding.ser.BeanSerializer{
+   public CustomBeanSer(java.lang.Class javaType, QName xmlType) {
+      super(javaType, xmlType);
+   }
+   public CustomBeanSer(java.lang.Class javaType, QName xmlType, TypeDesc typeDesc) {
+      super(javaType, xmlType, typeDesc);
+   }
+   public CustomBeanSer(java.lang.Class javaType, QName xmlType, TypeDesc typeDesc, BeanPropertyDescriptor[] propertyDescriptor) {
+      super(javaType, xmlType, typeDesc, propertyDescriptor);
+   }
+   public void serialize(QName name, Attributes attributes,
+                          Object value, SerializationContext context)
+        throws IOException
+    {
+        // Check for meta-data in the bean that will tell us if any of the
+        // properties are actually attributes, add those to the element
+        // attribute list
+
+        Attributes beanAttrs = getObjectAttributes(value, attributes, context);
+
+        // Get the encoding style
+        String encodingStyle = context.getMessageContext().getEncodingStyle();
+        //S.out("encoding style = " + encodingStyle);
+        // <igor>
+        // All the extending and overrriding is done for this:
+        // I must omit an null element (instead of nil="true")
+        // in a rpc/literal style, because XMLA don't understand nil="true"
+        // old: boolean isEncoded = Constants.isSOAP_ENC(encodingStyle);
+        boolean isEncoded = false;
+        // </igor>
+
+        // check whether we have and xsd:any namespace="##any" type
+        boolean suppressElement = !context.getMessageContext().isEncoded() &&
+                                  name.getNamespaceURI().equals("") &&
+                                  name.getLocalPart().equals("any");
+
+        if (!suppressElement)
+            context.startElement(name, beanAttrs);
+
+        try {
+            // Serialize each property
+            for (int i=0; i<propertyDescriptor.length; i++) {
+                String propName = propertyDescriptor[i].getName();
+                //S.out("serializing property: " + propName);
+                if (propName.equals("class"))
+                    continue;
+                QName qname = null;
+                QName xmlType = null;
+                boolean isOmittable = false;
+
+                // If we have type metadata, check to see what we're doing
+                // with this field.  If it's an attribute, skip it.  If it's
+                // an element, use whatever qname is in there.  If we can't
+                // find any of this info, use the default.
+
+                if (typeDesc != null) {
+                    FieldDesc field = typeDesc.getFieldByName(propName);
+                    if (field != null) {
+                        if (!field.isElement())
+                            continue;
+
+                        // If we're SOAP encoded, just use the local part,
+                        // not the namespace.  Otherwise use the whole
+                        // QName.
+                        if (isEncoded) {
+                            qname = new QName(
+                                          field.getXmlName().getLocalPart());
+                        } else {
+                            qname = field.getXmlName();
+                        }
+                        isOmittable = field.isMinOccursZero();
+                        xmlType = field.getXmlType();
+                    }
+                }
+
+                if (qname == null) {
+                    // Use the default...
+                    // The default qname would inherit the namespace of a
+                    // parent. Setting this namespace to "" causes interop
+                    // issues when the "literal" style is used -
+                    // most of the elements will be serialised with xmlns=""
+                    qname = new QName(name.getNamespaceURI(), propName);
+                }
+
+                if (xmlType == null) {
+                    // look up the type QName using the class
+                    xmlType = context.getQNameForClass(propertyDescriptor[i].getType());
+                }
+                //S.out("xmlType= "+ xmlType + " qname= " + qname + " isEncoded = " + isEncoded + " isOmittable = " + isOmittable);
+                // Read the value from the property
+                if(propertyDescriptor[i].isReadable()) {
+                    if (!propertyDescriptor[i].isIndexed()) {
+                        // Normal case: serialize the value
+                        Object propValue =
+                            propertyDescriptor[i].get(value);
+                        // if meta data says minOccurs=0, then we can skip
+                        // it if its value is null and we aren't doing SOAP
+                        // encoding.
+                        if (propValue == null &&
+                                isOmittable &&
+                                !isEncoded)
+                            continue;
+
+                        context.serialize(qname,
+                                          null,
+                                          propValue,
+                                          xmlType,
+                                          true,
+                                          null);
+                    } else {
+                        // Collection of properties: serialize each one
+                        int j=0;
+                        while(j >= 0) {
+                            Object propValue = null;
+                            try {
+                                propValue =
+                                    propertyDescriptor[i].get(value, j);
+                                j++;
+                            } catch (Exception e) {
+                                j = -1;
+                            }
+                            if (j >= 0) {
+                                context.serialize(qname, null,
+                                                  propValue, xmlType,
+                                                  true, null);
+                            }
+                        }
+                    }
+                }
+            }
+
+            BeanPropertyDescriptor anyDesc = typeDesc == null ? null :
+                    typeDesc.getAnyDesc();
+            if (anyDesc != null) {
+                // If we have "extra" content here, it'll be an array
+                // of MessageElements.  Serialize each one.
+                Object anyVal = anyDesc.get(value);
+                if (anyVal != null && anyVal instanceof MessageElement[]) {
+                    MessageElement [] anyContent = (MessageElement[])anyVal;
+                    for (int i = 0; i < anyContent.length; i++) {
+                        MessageElement element = anyContent[i];
+                        element.output(context);
+                    }
+                }
+            }
+        } catch (InvocationTargetException ite) {
+            Throwable target = ite.getTargetException();
+            log.error(Messages.getMessage("exception00"), target);
+            throw new IOException(target.toString());
+        } catch (Exception e) {
+            log.error(Messages.getMessage("exception00"), e);
+            throw new IOException(e.toString());
+        }
+
+        if (!suppressElement)
+            context.endElement();
+    }
+
+
+}
+@
+
+
+1.1
+log
+@first time commit
+@
+text
+@@
+

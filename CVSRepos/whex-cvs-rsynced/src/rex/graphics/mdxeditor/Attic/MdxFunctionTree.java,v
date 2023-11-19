@@ -1,0 +1,2945 @@
+head	1.5;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.5
+date	2006.01.13.12.21.15;	author igorludi;	state dead;
+branches;
+next	1.4;
+
+1.4
+date	2005.10.18.14.04.40;	author igorludi;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2005.10.18.13.40.38;	author igorludi;	state dead;
+branches;
+next	1.2;
+
+1.2
+date	2005.10.18.13.31.11;	author igorludi;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2005.06.28.14.11.07;	author igorludi;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.5
+log
+@*** empty log message ***
+@
+text
+@package rex.graphics.mdxeditor;
+
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+import javax.swing.tree.*;
+import rex.graphics.mdxeditor.mdxbuilder.nodes.*;
+import rex.graphics.mdxeditor.mdxfunctions.*;
+import rex.utils.*;
+
+/**
+ * Class that displays Mdx Function Tree in a JPanel.
+ * @@author Igor Mekterovic
+ * @@version 0.3
+ */
+public class MdxFunctionTree extends JPanel{
+   final JTree tree;
+   private JComponent parent;
+   private TreePath popUpSource;
+   private boolean categorized;
+   DefaultMutableTreeNode
+           nonMdxFunctions
+         , arrayFunctions
+         , stringFunctions
+         , dimensionHierarchyAndLevelFunctions
+         , dimensionFunctions
+         , hierarchyFunctions
+         , levelFunctions
+         , logicalFunctions
+         , tupleFunctions
+         , setFunctions
+         , otherFunctions
+         , numericFunctions
+         , memberFunctions
+         , allFunctions;
+
+
+   public MdxFunctionTree(JComponent _parent) {
+      this();
+      parent = _parent;
+   }
+   public MdxFunctionTree() {
+
+      DefaultMutableTreeNode top =  new DefaultMutableTreeNode("");
+
+
+     //Create a tree that allows one selection at a time.
+//      tree = new JTree(top);
+      tree = new JTree(top){
+               {setOpaque(false);}
+               public void paintComponent(Graphics g) {
+                  S.paintBackgroundGreen(g, this);
+                  super.paintComponent(g);
+               }
+
+      };
+      buildFunctionList(top);
+      tree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
+      //Enable tool tips.
+      ToolTipManager.sharedInstance().registerComponent(tree);
+
+
+        //Create the scroll pane and add the tree to it.
+      JScrollPane treeView = new JScrollPane(tree);
+
+
+
+      treeView.setPreferredSize(new Dimension(200, 600));
+
+//      treeView.setMinimumSize(new Dimension(200, 0));
+      treeView.setMaximumSize(new Dimension(800,600));
+
+      this.setLayout(new BorderLayout());
+      this.add(treeView, BorderLayout.CENTER);
+
+//
+//      MdxFunctionTreeRenderer renderer = new MdxFunctionTreeRenderer();
+//      renderer.addMouseListener(new PopupListener());
+      tree.setCellRenderer(new MdxFunctionTreeRenderer());
+      tree.addMouseListener(new PopupListener());
+
+   }
+   /**
+    * Returns a mdx function tree.
+    * @@return JTree
+    */
+   public JTree getTree(){
+      return tree;
+   }
+
+   /**
+    * Builds the function tree by adding Mdx Functions one by one.
+    * @@param top DefaultMutableTreeNode
+    */
+   private void buildFunctionList(DefaultMutableTreeNode top){
+
+      MdxFunction f;
+// ********************************************* Non MDX Functions ***********************************************
+      nonMdxFunctions = new DefaultMutableTreeNode("Non MDX Functions");
+
+      f = new MdxMakeTupleFunction( "make tuple"
+                              , "Creates a tuple from set of items."
+                              , "(«Member»[, «Member»...])") {
+         public MBTNode[] getFunctionArguments() {
+            return new MBTNode[] {
+                 new MBTArgAcceptAllStringNode(false, "«Member»", true, false)
+            };
+         }
+
+      };
+      nonMdxFunctions.add(new DefaultMutableTreeNode(f));
+
+      f = new MdxOperatorFunction( "*"
+                              , "Multiplies numeric expressions with another."
+                              , "(«Numeric Expression1» * «Numeric Expression2»)") {
+         public MBTNode[] getFunctionArguments() {
+            return new MBTNode[] {
+                 new MBTArgNumericNode(true, "«NumExp1»")
+               , new MBTArgNumericNode(false, "«NumExp2»", true, false)
+            };
+         }
+
+      };
+      nonMdxFunctions.add(new DefaultMutableTreeNode(f));
+
+      f = new MdxOperatorFunction( "/"
+                              , "Divides numeric expressions with another."
+                              , "(«Numeric Expression1» / «Numeric Expression2»)") {
+         public MBTNode[] getFunctionArguments() {
+            return new MBTNode[] {
+                 new MBTArgNumericNode(true, "«NumExp1»")
+               , new MBTArgNumericNode(false, "«NumExp2»", true, false)
+            };
+
+         }
+
+      };
+      nonMdxFunctions.add(new DefaultMutableTreeNode(f));
+
+      f = new MdxOperatorFunction( "+"
+                              , "Adds numeric expressions to another."
+                              , "(«Numeric Expression1» + «Numeric Expression2»)") {
+         public MBTNode[] getFunctionArguments() {
+            return new MBTNode[] {
+                 new MBTArgNumericNode(true, "«NumExp1»")
+               , new MBTArgNumericNode(false, "«NumExp2»", true, false)
+            };
+
+         }
+
+      };
+      nonMdxFunctions.add(new DefaultMutableTreeNode(f));
+
+      f = new MdxOperatorFunction( "-"
+                              , "Substracts numeric expressions from another."
+                              , "(«Numeric Expression1» + «Numeric Expression2»)") {
+         public MBTNode[] getFunctionArguments() {
+            return new MBTNode[] {
+                 new MBTArgNumericNode(true, "«NumExp1»")
+               , new MBTArgNumericNode(false, "«NumExp2»", true, false)
+            };
+         }
+
+      };
+      nonMdxFunctions.add(new DefaultMutableTreeNode(f));
+
+// ********************************************* ARRAY ***************************************************
+
+      arrayFunctions = new DefaultMutableTreeNode("Array Functions");
+
+      f = new MdxArrayFunction( "SetToArray"
+                              , "Converts one or more sets to an array for use in a user-defined function."
+                              , "SetToArray(«Set»[, «Set»...][, «Numeric Expression»]") {
+         public MBTNode[] getFunctionArguments() {
+            return new MBTNode[] {
+                 new MBTArgSetNode(false, "«Set1»", true, false)
+               , new MBTArgNumericNode(false, "«Numeric Expression»", false, true)
+            };
+         }
+
+      };
+      arrayFunctions.add(new DefaultMutableTreeNode(f));
+
+
+// ******************************************* STRING ********************************************************
+
+      stringFunctions = new DefaultMutableTreeNode("String Functions");
+      f = new MdxStringFunction("CalculationPassValue"
+                              , "Returns the value of an MDX expression evaluated over the specified calculation pass of a cube."
+                              , "CalculationPassValue(«String Expression», «Pass Value»[, «Access Flag»])") {
+         public MBTNode[] getFunctionArguments() {
+            return new MBTNode[] {
+                 new MBTArgStringNode("«String Expression»")
+               , new MBTArgNumericNode("«Pass Value»")
+               , new MBTArgEnumNode(false, "«Access Flag»", new String[]{"ABSOLUTE", "RELATIVE"}, false, true)
+            };
+         }
+
+      };
+      stringFunctions.add(new DefaultMutableTreeNode(f));
+
+      f = new MdxStringFunction("CoalesceEmpty"
+                              , "Coalesces an empty cell value to a string or number."
+                              , "CoalesceEmpty(«Numeric Expression»[, «Numeric Expression»]...)") {
+         public MBTNode[] getFunctionArguments() {
+            return new MBTNode[] {
+                 new MBTArgNumericNode("«Numeric Expression»")
+               , new MBTArgNumericNode(false, "«Numeric Expression»", true, true)
+            };
+         }
+
+      };
+      stringFunctions.add(new DefaultMutableTreeNode(f));
+
+      f = new MdxStringFunction("Generate"
+                              , "Returns a concatenated string created by evaluating a string expression over a set."
+                              , "Generate(«Set1», «Set2»[, ALL])") {
+         public MBTNode[] getFunctionArguments() {
+            return new MBTNode[] {
+                 new MBTArgSetNode("«Set1»")
+               , new MBTArgSetNode("«Set2»")
+               , new MBTArgEnumNode(false, "ALL", new String[]{"ALL"}, false, true)
+            };
+         }
+
+      };
+      stringFunctions.add(new DefaultMutableTreeNode(f));
+
+
+
+      stringFunctions.add(new DefaultMutableTreeNode(f));
+
+      f = new MdxStringFunction("Generate"
+                              , "Returns a concatenated string created by evaluating a string expression over a set."
+                              , "Generate(«Set», «String Expression»[, «Delimiter»])") {
+         public MBTNode[] getFunctionArguments() {
+            return new MBTNode[] {
+                 new MBTArgSetNode("«Set1»")
+               , new MBTArgStringNode("«String Expression»")
+               , new MBTArgStringNode(false, "«Delimiter»", false, true)
+            };
+         }
+
+      };
+      stringFunctions.add(new DefaultMutableTreeNode(f));
+
+
+      f = new MdxStringFunction("IIf"
+                              , "Returns one of two string or numeric values determined by a logical test."
+                              , "IIf(«Logical Expression», «Numeric or String Expression1», «Numeric or String Expression2»)") {
+         public MBTNode[] getFunctionArguments() {
+            return new MBTNode[] {
+                 new MBTArgLogicalNode("«Logical Expression»")
+               , new MBTArgStringNode("«Numeric or String Expression1»")
+               , new MBTArgStringNode("«Numeric or String Expression1»")
+            };
+         }
+
+      };
+      stringFunctions.add(new DefaultMutableTreeNode(f));
+
+      f = new MdxStringFunction("LookupCube"
+                              , "Returns the value of an MDX expression evaluated over another specified cube in the same database."
+                              , "LookupCube(«Cube String», «Numeric or String Expression»)") {
+         public MBTNode[] getFunctionArguments() {
+            return new MBTNode[] {
+                 new MBTArgStringNode("«Cube String»")
+               , new MBTArgStringNode("«Numeric or String Expression1»")
+            };
+         }
+
+      };
+      stringFunctions.add(new DefaultMutableTreeNode(f));
+
+
+      f = new MdxStringFunction("MemberToStr"
+                              , "Constructs a string from a member."
+                              , "MemberToStr(«Member»)") {
+         public MBTNode[] getFunctionArguments() {
+            return new MBTNode[] {
+                 new MBTArgMemberNode("«Member»")
+            };
+         }
+
+      };
+      stringFunctions.add(new DefaultMutableTreeNode(f));
+
+
+      f = new MdxStringFunction("Name"
+                              , "Returns the name of a dimension, hierarchy, level, or member."
+                              , "«Dimension|Level|Member|Hierarchy».Name") {
+         public MBTNode[] getFunctionArguments() {
+            return new MBTNode[] {
+                 new MBTArgAcceptAllStringNode(true, "«Dimension|Level|Member|Hierarchy»")
+            };
+         }
+
+      };
+      stringFunctions.add(new DefaultMutableTreeNode(f));
+
+      f = new MdxStringFunction("Properties"
+                              , "Returns a string containing a member property value."
+                              , "«Member».Properties(«String Expression»)") {
+         public MBTNode[] getFunctionArguments() {
+            return new MBTNode[] {
+                   new MBTArgMemberNode(true, "«Member»")
+                 , new MBTArgStringNode("«String Expression»")
+            };
+         }
+
+      };
+      stringFunctions.add(new DefaultMutableTreeNode(f));
+
+
+
+      f = new MdxStringFunction("SetToStr"
+                              , "Constructs a string from a set."
+                              , "SetToStr(«Set»)") {
+         public MBTNode[] getFunctionArguments() {
+            return new MBTNode[] {
+                 new MBTArgSetNode("«Set»")
+            };
+         }
+
+      };
+      stringFunctions.add(new DefaultMutableTreeNode(f));
+
+
+      f = new MdxStringFunction("TupleToStr"
+                              , "Constructs a string from a tuple."
+                              , "TupleToStr(«Tuple»)") {
+         public MBTNode[] getFunctionArguments() {
+            return new MBTNode[] {
+                 new MBTArgTupleNode("«Set»")
+            };
+         }
+
+      };
+      stringFunctions.add(new DefaultMutableTreeNode(f));
+
+
+      f = new MdxStringFunction("UniqueName"
+                             , "Returns the unique name of a dimension, level, or member."
+                             , "«Dimension/Level/Member/Hierarchy».UniqueName") {
+         public MBTNode[] getFunctionArguments() {
+            return new MBTNode[] {
+                 new MBTArgStringNode(true, "«Dimension/Level/Member/Hierarchy»")
+            };
+         }
+
+      };
+      stringFunctions.add(new DefaultMutableTreeNode(f));
+
+      f = new MdxStringFunction("UserName"
+                             , "Returns the domain name and user name of the current connection."
+                             , "UserName") {
+         public MBTNode[] getFunctionArguments() {
+            return null;
+         }
+
+      };
+      stringFunctions.add(new DefaultMutableTreeNode(f));
+
+
+
+
+      dimensionHierarchyAndLevelFunctions = new DefaultMutableTreeNode("Dimension, Hierarchy, and Level Functions ");
+
+// ********************************************* DIMENSION *******************************************************
+
+      dimensionFunctions = new DefaultMutableTreeNode("Dimension Functions");
+
+      f = new MdxDimensionFunction("Dimension"
+                             , "Returns the dimension that contains a specified hierarchy, level, or member."
+                             , "«Member|Level|Hierarchy».Dimension") {
+         public MBTNode[] getFunctionArguments() {
+            return new MBTNode[] {
+                 new MBTArgStringNode(true, "«Member|Level|Hierarchy»")
+            };
+         }
+
+      };
+      dimensionFunctions.add(new DefaultMutableTreeNode(f));
+
+
+      f = new MdxDimensionFunction("Dimensions"
+                             , "Returns the dimension whose zero-based position within the cube is specified by a numeric expression or whose name is specified by a string."
+                             , "Dimensions(«Numeric/String Expression»)") {
+         public MBTNode[] getFunctionArguments() {
+            return new MBTNode[] {
+                 new MBTArgStringNode("«Numeric or String Expression1»")
+            };
+         }
+
+      };
+      dimensionFunctions.add(new DefaultMutableTreeNode(f));
+
+
+// ********************************************* HIERARCHY *******************************************************
+
+      hierarchyFunctions = new DefaultMutableTreeNode("Hierarchy Functions");
+      f = new MdxHierarchyFunction("Hierarchy"
+                             , "Returns the hierarchy of a level or member."
+                             , "«Member|Level».Hierarchy") {
+         public MBTNode[] getFunctionArguments() {
+            return new MBTNode[] {
+                 new MBTArgStringNode(true, "«Member|Level»")
+            };
+         }
+
+      };
+      hierarchyFunctions.add(new DefaultMutableTreeNode(f));
+
+
+// ************************************************* LEVEL *****************************************************
+
+      levelFunctions = new DefaultMutableTreeNode("Level Functions");
+
+      f = new MdxLevelFunction("Level"
+                             , "Returns the level of a member."
+                             , "«Member».Level") {
+         public MBTNode[] getFunctionArguments() {
+            return new MBTNode[] {
+                 new MBTArgMemberNode(true, "«Level»")
+            };
+         }
+
+      };
+      levelFunctions.add(new DefaultMutableTreeNode(f));
+
+      f = new MdxLevelFunction("Levels"
+                             , "Returns the level whose position in a dimension is specified by a numeric expression"
+                             , "«Dimension».Levels(«Numeric Expression»)") {
+         public MBTNode[] getFunctionArguments() {
+            return new MBTNode[] {
+                 new MBTArgDimensionNode(true, "«Dimension»")
+               , new MBTArgNumericNode("«Numeric Expression»")
+            };
+         }
+
+      };
+      levelFunctions.add(new DefaultMutableTreeNode(f));
+
+      f = new MdxLevelFunction("Levels"
+                             ,"Returns the level whose position in a dimension is specified by a string expression."
+                             , "Levels(«String Expression»)") {
+         public MBTNode[] getFunctionArguments() {
+            return new MBTNode[] {
+                 new MBTArgStringNode("«String Expression»")
+            };
+         }
+
+      };
+      levelFunctions.add(new DefaultMutableTreeNode(f));
+
+
+
+      dimensionHierarchyAndLevelFunctions.add(dimensionFunctions);
+      dimensionHierarchyAndLevelFunctions.add(hierarchyFunctions);
+      dimensionHierarchyAndLevelFunctions.add(levelFunctions);
+
+// ************************************************* LOGICAL *****************************************************
+
+      logicalFunctions = new DefaultMutableTreeNode("Logical Functions");
+      f = new MdxLogicalFunction("Is (TO BE DONE!!!!)"
+                             ,"Returns True if two compared objects are equivalent, False otherwise."
+                             , "«Object 1» IS «Object 2»") {
+         public MBTNode[] getFunctionArguments() {
+            return new MBTNode[] {
+                   new MBTArgAcceptAllStringNode(true, "«Object 1»")
+                 , new MBTArgAcceptAllStringNode("«Object 2»")
+            };
+         }
+
+      };
+      logicalFunctions.add(new DefaultMutableTreeNode(f));
+
+
+      f = new MdxLogicalFunction("IsAncestor"
+                             ,"Determines whether a specified member is an ancestor of another specified member."
+                             , "IsAncestor(«Member1»,«Member2»)") {
+         public MBTNode[] getFunctionArguments() {
+            return new MBTNode[] {
+                   new MBTArgMemberNode(true, "Member1»")
+                 , new MBTArgMemberNode("«Member2»")
+            };
+         }
+
+      };
+      logicalFunctions.add(new DefaultMutableTreeNode(f));
+
+
+      f = new MdxLogicalFunction("IsEmpty"
+                             ,"Determines whether an expression evaluates to the empty cell value."
+                             , "IsEmpty(«Value Expression»)") {
+         public MBTNode[] getFunctionArguments() {
+            return new MBTNode[] {
+                   new MBTArgAcceptAllStringNode("«Value Expression»")
+            };
+         }
+
+      };
+      logicalFunctions.add(new DefaultMutableTreeNode(f));
+
+      f = new MdxLogicalFunction("IsGeneration"
+                             , "Determines whether a specified member is in a specified generation."
+                             , "IsGeneration(«Member»,«Numeric Expression»)") {
+         public MBTNode[] getFunctionArguments() {
+            return new MBTNode[] {
+                   new MBTArgMemberNode("«Member»")
+                 , new MBTArgNumericNode("«Numeric Expression»")
+            };
+         }
+
+      };
+      logicalFunctions.add(new DefaultMutableTreeNode(f));
+
+      f = new MdxLogicalFunction("IsLeaf"
+                             , "Determines whether a specified member is a leaf member."
+                             , "IsLeaf(«Member»)") {
+         public MBTNode[] getFunctionArguments() {
+            return new MBTNode[] {
+                   new MBTArgMemberNode("«Member»")
+            };
+         }
+
+      };
+      logicalFunctions.add(new DefaultMutableTreeNode(f));
+
+      f = new MdxLogicalFunction("IsSibling"
+                             , "Determines whether a specified member is a sibling of another specified member."
+                             , "IsSibling(«Member1»,«Member2»)") {
+         public MBTNode[] getFunctionArguments() {
+            return new MBTNode[] {
+                   new MBTArgMemberNode("«Member1»")
+                 , new MBTArgMemberNode("«Member2»")
+            };
+         }
+
+      };
+      logicalFunctions.add(new DefaultMutableTreeNode(f));
+
+
+// ************************************************* TUPLE *****************************************************
+
+      tupleFunctions = new DefaultMutableTreeNode("Tuple Functions");
+
+      f = new MdxTupleFunction("Current"
+                             , "Returns the current tuple from a set during an iteration."
+                             , "«Set».Current") {
+         public MBTNode[] getFunctionArguments() {
+            return new MBTNode[] {
+                   new MBTArgSetNode(true, "«Set»")
+            };
+         }
+
+      };
+      tupleFunctions.add(new DefaultMutableTreeNode(f));
+
+      f = new MdxTupleFunction("Item"
+                             , "Returns a tuple from a set."
+                             , "«Set».Item(«String Expression»[, «String Expression»...] | «Index»)") {
+         public MBTNode[] getFunctionArguments() {
+            return new MBTNode[] {
+                 new MBTArgSetNode(true, "«Set»")
+               , new MBTArgStringNode(false, "«String Expression»", true, false)
+            };
+         }
+
+      };
+      tupleFunctions.add(new DefaultMutableTreeNode(f));
+
+      f = new MdxTupleFunction("StrToTuple"
+                             , "Constructs a tuple from a string."
+                             , "StrToTuple(«String Expression»)") {
+         public MBTNode[] getFunctionArguments() {
+            return new MBTNode[] {
+               new MBTArgStringNode("«String Expression»")
+            };
+         }
+
+      };
+      tupleFunctions.add(new DefaultMutableTreeNode(f));
+
+
+// ************************************************* MEMBER *****************************************************
+
+
+      memberFunctions = new DefaultMutableTreeNode("Member Functions");
+
+      f = new MdxMemberFunction("Ancestor"
+                             , "Returns the ancestor of a member at a specified level ."
+                             , "Ancestor(«Member», «Level»)") {
+         public MBTNode[] getFunctionArguments() {
+            return new MBTNode[] {
+                 new MBTArgMemberNode("«Member»")
+               , new MBTArgLevelNode("«Level»")
+            };
+         }
+
+      };
+      memberFunctions.add(new DefaultMutableTreeNode(f));
+
+      f = new MdxMemberFunction("Ancestor"
+                             , "Returns the ancestor of a member at a specified distance from the member."
+                             , "Ancestor(«Member», «Numeric Expression»)") {
+         public MBTNode[] getFunctionArguments() {
+            return new MBTNode[] {
+                 new MBTArgMemberNode("«Member»")
+               , new MBTArgNumericNode("«Numeric Expression»")
+            };
+         }
+
+      };
+      memberFunctions.add(new DefaultMutableTreeNode(f));
+
+      f = new MdxMemberFunction("ClosingPeriod"
+                             , "Returns the last sibling among the descendants of a member at a level."
+                             , "ClosingPeriod([«Level»[, «Member»]])") {
+         public MBTNode[] getFunctionArguments() {
+            return new MBTNode[] {
+                 new MBTArgLevelNode("«Level»")
+               , new MBTArgMemberNode(false, "«Member»", false, true)
+            };
+         }
+
+      };
+      memberFunctions.add(new DefaultMutableTreeNode(f));
+
+
+      f = new MdxMemberFunction("Cousin"
+                             , "Returns the member with the same relative position under a member as the member specified."
+                             , "Cousin(«Member1», «Member2»)") {
+         public MBTNode[] getFunctionArguments() {
+            return new MBTNode[] {
+                 new MBTArgMemberNode("«Member1»")
+               , new MBTArgMemberNode("«Member2»")
+            };
+         }
+
+      };
+      memberFunctions.add(new DefaultMutableTreeNode(f));
+
+
+      f = new MdxMemberFunction("CurrentMember"
+                             , "Returns the current member along a dimension during an iteration."
+                             , "«Dimension».CurrentMember") {
+         public MBTNode[] getFunctionArguments() {
+            return new MBTNode[] {
+               new MBTArgDimensionNode(true, "«Dimension»")
+            };
+         }
+
+      };
+      memberFunctions.add(new DefaultMutableTreeNode(f));
+
+      f = new MdxMemberFunction("DataMember"
+                             , "Returns the system-generated data member associated with a nonleaf member."
+                             , "«Member».DataMember") {
+         public MBTNode[] getFunctionArguments() {
+            return new MBTNode[] {
+               new MBTArgMemberNode(true, "«Member»")
+            };
+         }
+
+      };
+      memberFunctions.add(new DefaultMutableTreeNode(f));
+
+      f = new MdxMemberFunction("DefaultMember"
+                             , "Returns the default member of a dimension or hierarchy."
+                             , "«Dimension».DefaultMember") {
+         public MBTNode[] getFunctionArguments() {
+            return new MBTNode[] {
+               new MBTArgDimensionNode(true, "«Dimension»")
+            };
+         }
+
+      };
+      memberFunctions.add(new DefaultMutableTreeNode(f));
+
+      f = new MdxMemberFunction("FirstChild"
+                             , "Returns the first child of a member."
+                             , "«Member».FirstChild") {
+         public MBTNode[] getFunctionArguments() {
+            return new MBTNode[] {
+               new MBTArgMemberNode(true, "«Member»")
+            };
+         }
+
+      };
+      memberFunctions.add(new DefaultMutableTreeNode(f));
+
+      f = new MdxMemberFunction("FirstSibling"
+                             , "Returns the first child of the parent of a member."
+                             , "«Member».FirstSibling") {
+         public MBTNode[] getFunctionArguments() {
+            return new MBTNode[] {
+               new MBTArgMemberNode(true, "«Member»")
+            };
+         }
+
+      };
+      memberFunctions.add(new DefaultMutableTreeNode(f));
+
+
+      f = new MdxMemberFunction("Item"
+                             , "Returns a member from a tuple."
+                             , "«Tuple».Item(«Index»)") {
+         public MBTNode[] getFunctionArguments() {
+            return new MBTNode[] {
+                   new MBTArgTupleNode(true, "«Tuple»")
+                 , new MBTArgNumericNode("«Index»")
+            };
+         }
+
+      };
+      memberFunctions.add(new DefaultMutableTreeNode(f));
+
+      f = new MdxMemberFunction("Lag"
+                             , "Returns a member prior to the specified member along the member's dimension."
+                             , "«Member».Lag(«Numeric Expression»)") {
+         public MBTNode[] getFunctionArguments() {
+            return new MBTNode[] {
+                   new MBTArgMemberNode(true, "«Member»")
+                 , new MBTArgNumericNode("«Numeric Expression»")
+            };
+         }
+
+      };
+      memberFunctions.add(new DefaultMutableTreeNode(f));
+
+      f = new MdxMemberFunction("LastChild"
+                             , "Returns the last child of a member."
+                             , "«Member».LastChild") {
+         public MBTNode[] getFunctionArguments() {
+            return new MBTNode[] {
+               new MBTArgMemberNode(true, "«Member»")
+            };
+         }
+
+      };
+      memberFunctions.add(new DefaultMutableTreeNode(f));
+
+      f = new MdxMemberFunction("LastSibling"
+                             , "Returns the last child of the parent of a member."
+                             , "«Member».LastSibling") {
+         public MBTNode[] getFunctionArguments() {
+            return new MBTNode[] {
+               new MBTArgMemberNode(true, "«Member»")
+            };
+         }
+
+      };
+      memberFunctions.add(new DefaultMutableTreeNode(f));
+
+      f = new MdxMemberFunction("Lead"
+                             , "Returns a member further along the specified member's dimension."
+                             , "«Member».Lead(«Numeric Expression»)") {
+         public MBTNode[] getFunctionArguments() {
+            return new MBTNode[] {
+                 new MBTArgMemberNode(true, "«Member»")
+               , new MBTArgNumericNode("«Numeric Expression»")
+            };
+         }
+
+      };
+      memberFunctions.add(new DefaultMutableTreeNode(f));
+
+      f = new MdxMemberFunction("LinkMember"
+                             , "Returns a hierarchized member."
+                             , "LinkMember(«Member», «Hierarchy»)") {
+         public MBTNode[] getFunctionArguments() {
+            return new MBTNode[] {
+                 new MBTArgMemberNode("«Member»")
+               , new MBTArgHierarchyNode("«Hierarchy»")
+            };
+         }
+
+      };
+      memberFunctions.add(new DefaultMutableTreeNode(f));
+
+      f = new MdxMemberFunction("Members"
+                             , "Returns the member whose name is specified by a string expression."
+                             , "«Dimension|Hierarchy|Level|String Expression».Members") {
+         public MBTNode[] getFunctionArguments() {
+            return new MBTNode[] {
+               new MBTArgStringNode(true, "«Dimension|Hierarchy|Level|String Expression»")
+            };
+         }
+
+      };
+      memberFunctions.add(new DefaultMutableTreeNode(f));
+
+      f = new MdxMemberFunction("NextMember"
+                             , "Returns the next member in the level that contains a specified member."
+                             , "«Member».NextMember") {
+         public MBTNode[] getFunctionArguments() {
+            return new MBTNode[] {
+               new MBTArgMemberNode(true, "«Member»")
+            };
+         }
+
+      };
+      memberFunctions.add(new DefaultMutableTreeNode(f));
+
+
+      f = new MdxMemberFunction("OpeningPeriod"
+                             , "Returns the first sibling among the descendants of a member at a level."
+                             , "OpeningPeriod([«Level»[, «Member»]])") {
+         public MBTNode[] getFunctionArguments() {
+            return new MBTNode[] {
+                 new MBTArgLevelNode(false, "«Level»", false, true)
+               , new MBTArgMemberNode(false, "«Member»", false, true)
+            };
+         }
+
+      };
+      memberFunctions.add(new DefaultMutableTreeNode(f));
+
+      f = new MdxMemberFunction("ParallelPeriod"
+                             , "Returns a member from a prior period in the same relative position as a specified member."
+                             , "ParallelPeriod([«Level»[, «Numeric Expression»[, «Member»]]])") {
+         public MBTNode[] getFunctionArguments() {
+            return new MBTNode[] {
+                 new MBTArgLevelNode(false, "«Level»", false, true)
+               , new MBTArgNumericNode(false, "«Numeric Expression»", false, true)
+               , new MBTArgMemberNode(false, "«Member»", false, true)
+            };
+         }
+
+      };
+      memberFunctions.add(new DefaultMutableTreeNode(f));
+
+      f = new MdxMemberFunction("Parent"
+                             , "Returns the parent of a member."
+                             , "«Member».Parent") {
+         public MBTNode[] getFunctionArguments() {
+            return new MBTNode[] {
+               new MBTArgMemberNode(true, "«Member»")
+            };
+         }
+
+      };
+      memberFunctions.add(new DefaultMutableTreeNode(f));
+
+      f = new MdxMemberFunction("PrevMember"
+                             , "Returns the previous member in the level that contains a specified member."
+                             , "«Member».PrevMember") {
+         public MBTNode[] getFunctionArguments() {
+            return new MBTNode[] {
+               new MBTArgMemberNode(true, "«Member»")
+            };
+         }
+
+      };
+      memberFunctions.add(new DefaultMutableTreeNode(f));
+
+      f = new MdxMemberFunction("StrToMember"
+                             , "Returns a member based on a string expression."
+                             , "StrToMember(«String Expression»)") {
+         public MBTNode[] getFunctionArguments() {
+            return new MBTNode[] {
+               new MBTArgStringNode("«String Expression»")
+            };
+         }
+
+      };
+      memberFunctions.add(new DefaultMutableTreeNode(f));
+
+      f = new MdxMemberFunction("ValidMeasure"
+                             , "Returns a valid measure in a virtual cube by forcing inapplicable dimensions to their top level."
+                             , "ValidMeasure(«Tuple»)") {
+         public MBTNode[] getFunctionArguments() {
+            return new MBTNode[] {
+               new MBTArgTupleNode("«Tuple»")
+            };
+         }
+
+      };
+      memberFunctions.add(new DefaultMutableTreeNode(f));
+
+
+// ************************************************* NUMERIC *****************************************************
+
+
+      numericFunctions = new DefaultMutableTreeNode("Numeric Functions");
+
+      f = new MdxNumericFunction("Aggregate"
+                             , "Returns a calculated value using the appropriate aggregate function, based on the context of the query."
+                             , "Aggregate(«Set»[, «Numeric Expression»])") {
+         public MBTNode[] getFunctionArguments() {
+            return new MBTNode[] {
+                 new MBTArgSetNode("«Set»")
+               , new MBTArgNumericNode(false, "«Numeric Expression»", false, true)
+            };
+         }
+
+      };
+      numericFunctions.add(new DefaultMutableTreeNode(f));
+
+      f = new MdxNumericFunction("Avg"
+                             , "Returns the average value of a numeric expression evaluated over a set."
+                             , "Avg(«Set»[, «Numeric Expression»])") {
+         public MBTNode[] getFunctionArguments() {
+            return new MBTNode[] {
+                 new MBTArgSetNode("«Set»")
+               , new MBTArgNumericNode(false, "«Numeric Expression»", false, true)
+            };
+         }
+
+      };
+      numericFunctions.add(new DefaultMutableTreeNode(f));
+
+      f = new MdxNumericFunction("CalculationCurrentPass()"
+                             , "Returns the current calculation pass of a cube for the current query context."
+                             , "CalculationCurrentPass()") {
+         public MBTNode[] getFunctionArguments() {
+            return null;
+         }
+
+      };
+      numericFunctions.add(new DefaultMutableTreeNode(f));
+
+
+      f = new MdxNumericFunction("CalculationPassValue"
+                             , "Returns the value of an MDX expression evaluated over a specified calculation pass of the current cube."
+                             , "CalculationPassValue(«Numeric Expression», «Pass Value»[, «Access Flag»])") {
+         public MBTNode[] getFunctionArguments() {
+            return new MBTNode[] {
+                 new MBTArgNumericNode("«Numeric Expression»")
+               , new MBTArgNumericNode("«Pass Value»")
+               , new MBTArgEnumNode(false, "«Access Flag»", new String[]{"ABSOLUTE", "RELATIVE"}, false, true)
+            };
+         }
+
+      };
+      numericFunctions.add(new DefaultMutableTreeNode(f));
+
+
+      f = new MdxNumericFunction("CoalesceEmpty"
+                             , "Coalesces an empty cell value to a number or a string."
+                             , "CoalesceEmpty(«Numeric Expression»[, «Numeric Expression»]...)") {
+         public MBTNode[] getFunctionArguments() {
+            return new MBTNode[] {
+                 new MBTArgNumericNode("«Numeric Expression»")
+               , new MBTArgNumericNode(false, "«Numeric Expression»", true, true)
+            };
+         }
+
+      };
+      numericFunctions.add(new DefaultMutableTreeNode(f));
+
+      f = new MdxNumericFunction("Correlation"
+                             , "Returns the correlation of two series evaluated over a set."
+                             , "Correlation(«Set», «Numeric Expression»[, «Numeric Expression»])") {
+         public MBTNode[] getFunctionArguments() {
+            return new MBTNode[] {
+                 new MBTArgSetNode("«Set»")
+               , new MBTArgNumericNode("«Numeric Expression»")
+               , new MBTArgNumericNode(false, "«Numeric Expression»", false, true)
+            };
+         }
+
+      };
+      numericFunctions.add(new DefaultMutableTreeNode(f));
+
+      f = new MdxNumericFunction("Dimensions.Count"
+                             , "Returns the number of dimensions in a cube."
+                             , "Dimensions.Count") {
+         public MBTNode[] getFunctionArguments() {
+            return null;
+         }
+
+      };
+      numericFunctions.add(new DefaultMutableTreeNode(f));
+
+      f = new MdxNumericFunction("Levels.Count"
+                             , "Returns the number of levels in a dimension."
+                             , "«Dimension»|«Hierarchy».Levels.Count") {
+         public MBTNode[] getFunctionArguments() {
+            return new MBTNode[] {
+               new MBTArgStringNode(true, "«Dimension|Hierarchy»")
+            };
+         }
+
+      };
+      numericFunctions.add(new DefaultMutableTreeNode(f));
+
+      f = new MdxNumericFunction("Count"
+                             , "Returns the number of cells in a set."
+                             , "Count(«Set»[, ExcludeEmpty | IncludeEmpty])") {
+         public MBTNode[] getFunctionArguments() {
+            return new MBTNode[] {
+                 new MBTArgSetNode("«Set»")
+               , new MBTArgEnumNode(false, "ExcludeEmpty | IncludeEmpty", new String[]{"ExcludeEmpty", "IncludeEmpty"}, false, true)
+            };
+         }
+
+      };
+      numericFunctions.add(new DefaultMutableTreeNode(f));
+
+      f = new MdxNumericFunction("Covariance"
+                             , "Returns the population covariance of two series evaluated over a set, using the biased population formula."
+                             , "Covariance(«Set», «Numeric Expression»[, «Numeric Expression»])") {
+         public MBTNode[] getFunctionArguments() {
+            return new MBTNode[] {
+                 new MBTArgSetNode("«Set»")
+               , new MBTArgNumericNode("«Numeric Expression»")
+               , new MBTArgNumericNode(false, "«Numeric Expression»", false, true)
+            };
+         }
+
+      };
+      numericFunctions.add(new DefaultMutableTreeNode(f));
+
+      f = new MdxNumericFunction("CovarianceN"
+                             , "Returns the sample covariance of two series evaluated over a set, using the unbiased population formula."
+                             , "CovarianceN(«Set», «Numeric Expression»[, «Numeric Expression»])") {
+         public MBTNode[] getFunctionArguments() {
+            return new MBTNode[] {
+                 new MBTArgSetNode("«Set»")
+               , new MBTArgNumericNode("«Numeric Expression»")
+               , new MBTArgNumericNode(false, "«Numeric Expression»", false, true)
+            };
+         }
+
+      };
+      numericFunctions.add(new DefaultMutableTreeNode(f));
+
+      f = new MdxNumericFunction("DistinctCount"
+                             , "Returns the count of tuples in a set, excluding duplicate tuples."
+                             , "DistinctCount(«Set»)") {
+         public MBTNode[] getFunctionArguments() {
+            return new MBTNode[] {
+                 new MBTArgSetNode("«Set»")
+            };
+         }
+
+      };
+      numericFunctions.add(new DefaultMutableTreeNode(f));
+
+      f = new MdxNumericFunction("IIf"
+                              , "Returns one of two numeric or string values determined by a logical test."
+                              , "IIf(«Logical Expression», «Numeric or String Expression1», «Numeric or String Expression2»)") {
+         public MBTNode[] getFunctionArguments() {
+            return new MBTNode[] {
+                 new MBTArgLogicalNode("«Logical Expression»")
+               , new MBTArgStringNode("«Numeric or String Expression1»")
+               , new MBTArgStringNode("«Numeric or String Expression1»")
+            };
+         }
+
+      };
+      numericFunctions.add(new DefaultMutableTreeNode(f));
+
+      f = new MdxNumericFunction("LinRegIntercept"
+                              , "Calculates the linear regression of a set and returns the value of b in the regression line y = ax + b."
+                              , "LinRegIntercept(«Set», «Numeric Expression»[, «Numeric Expression»])") {
+         public MBTNode[] getFunctionArguments() {
+            return new MBTNode[] {
+                 new MBTArgStringNode("«Set»")
+               , new MBTArgNumericNode("«Numeric Expression»")
+               , new MBTArgNumericNode(false, "«Numeric Expression»", false, true)
+            };
+         }
+
+      };
+      numericFunctions.add(new DefaultMutableTreeNode(f));
+
+      f = new MdxNumericFunction("LinRegPoint"
+                              , "Calculates the linear regression of a set and returns the value of y in the regression line y = ax + b."
+                              , "LinRegPoint(«Numeric Expression», «Set», «Numeric Expression»[, «Numeric Expression»])") {
+         public MBTNode[] getFunctionArguments() {
+            return new MBTNode[] {
+                 new MBTArgNumericNode("«Numeric Expression»")
+               , new MBTArgStringNode("«Set»")
+               , new MBTArgNumericNode("«Numeric Expression»")
+               , new MBTArgNumericNode(false, "«Numeric Expression»", false, true)
+            };
+         }
+
+      };
+      numericFunctions.add(new DefaultMutableTreeNode(f));
+
+      f = new MdxNumericFunction("LinRegR2"
+                              , "Calculates the linear regression of a set and returns R2 (the coefficient of determination)."
+                              , "LinRegR2(«Set», «Numeric Expression»[, «Numeric Expression»])") {
+         public MBTNode[] getFunctionArguments() {
+            return new MBTNode[] {
+                 new MBTArgStringNode("«Set»")
+               , new MBTArgNumericNode("«Numeric Expression»")
+               , new MBTArgNumericNode(false, "«Numeric Expression»", false, true)
+            };
+         }
+
+      };
+      numericFunctions.add(new DefaultMutableTreeNode(f));
+
+      f = new MdxNumericFunction("LinRegSlope"
+                              , "Calculates the linear regression of a set and returns the value of a in the regression line y = ax + b."
+                              , "LinRegSlope(«Set», «Numeric Expression»[, «Numeric Expression»])") {
+         public MBTNode[] getFunctionArguments() {
+            return new MBTNode[] {
+                 new MBTArgStringNode("«Set»")
+               , new MBTArgNumericNode("«Numeric Expression»")
+               , new MBTArgNumericNode(false, "«Numeric Expression»", false, true)
+            };
+         }
+
+      };
+      numericFunctions.add(new DefaultMutableTreeNode(f));
+
+      f = new MdxNumericFunction("LinRegVariance"
+                              , "Calculates the linear regression of a set and returns the variance associated with the regression line y = ax + b."
+                              , "LinRegVariance(«Set», «Numeric Expression»[, «Numeric Expression»])") {
+         public MBTNode[] getFunctionArguments() {
+            return new MBTNode[] {
+                 new MBTArgStringNode("«Set»")
+               , new MBTArgNumericNode("«Numeric Expression»")
+               , new MBTArgNumericNode(false, "«Numeric Expression»", false, true)
+            };
+         }
+
+      };
+      numericFunctions.add(new DefaultMutableTreeNode(f));
+
+      f = new MdxNumericFunction("LookupCube"
+                              , "Returns the value of an MDX expression evaluated over another specified cube in the same database."
+                              , "LookupCube(«Cube String», «Numeric|String Expression»)") {
+         public MBTNode[] getFunctionArguments() {
+            return new MBTNode[] {
+                 new MBTArgStringNode("«Cube String»")
+               , new MBTArgStringNode("«Numeric|String Expression»")
+            };
+         }
+
+      };
+      numericFunctions.add(new DefaultMutableTreeNode(f));
+
+      f = new MdxNumericFunction("Max"
+                              , "Returns the maximum value of a numeric expression evaluated over a set."
+                              , "Max(«Set»[, «Numeric Expression»])") {
+         public MBTNode[] getFunctionArguments() {
+            return new MBTNode[] {
+                 new MBTArgSetNode("«Set»")
+               , new MBTArgNumericNode(false, "«Numeric Expression»", false, true)
+            };
+         }
+
+      };
+      numericFunctions.add(new DefaultMutableTreeNode(f));
+
+      f = new MdxNumericFunction("Median"
+                              , "Returns the median value of a numeric expression evaluated over a set."
+                              , "Median(«Set»[, «Numeric Expression»])") {
+         public MBTNode[] getFunctionArguments() {
+            return new MBTNode[] {
+                 new MBTArgSetNode("«Set»")
+               , new MBTArgNumericNode(false, "«Numeric Expression»", false, true)
+            };
+         }
+
+      };
+      numericFunctions.add(new DefaultMutableTreeNode(f));
+
+      f = new MdxNumericFunction("Min"
+                              , "Returns the minimum value of a numeric expression evaluated over a set."
+                              , "Min(«Set»[, «Numeric Expression»])") {
+         public MBTNode[] getFunctionArguments() {
+            return new MBTNode[] {
+                 new MBTArgSetNode("«Set»")
+               , new MBTArgNumericNode(false, "«Numeric Expression»", false, true)
+            };
+         }
+
+      };
+      numericFunctions.add(new DefaultMutableTreeNode(f));
+
+      f = new MdxNumericFunction("Ordinal"
+                              , "Returns the zero-based ordinal value associated with a level."
+                              , "«Level».Ordinal") {
+         public MBTNode[] getFunctionArguments() {
+            return new MBTNode[] {
+                 new MBTArgLevelNode(true, "«Level»")
+            };
+         }
+
+      };
+      numericFunctions.add(new DefaultMutableTreeNode(f));
+
+      f = new MdxNumericFunction("Predict"
+                              , "Evaluates the string expression within the data mining model specified within the current coordinates."
+                              , "Predict(«Mining Model Name», «Numeric Expression»)") {
+         public MBTNode[] getFunctionArguments() {
+            return new MBTNode[] {
+                 new MBTArgStringNode("«Mining Model Name»")
+               , new MBTArgNumericNode( "«Numeric Expression»")
+            };
+         }
+
+      };
+      numericFunctions.add(new DefaultMutableTreeNode(f));
+
+      f = new MdxNumericFunction("Rank"
+                              , "Returns the one-based rank of a tuple in a set."
+                              , "Rank(«Tuple», «Set»[, «Calc Expression»])") {
+         public MBTNode[] getFunctionArguments() {
+            return new MBTNode[] {
+                 new MBTArgTupleNode("«Tuple»")
+               , new MBTArgSetNode( "«Set»")
+               , new MBTArgAcceptAllStringNode( false, "«Calc Expression»", false, true)
+            };
+         }
+
+      };
+      numericFunctions.add(new DefaultMutableTreeNode(f));
+
+      f = new MdxNumericFunction("RollupChildren"
+                              , "Scans the children of the member parameter and applies the string expression operator to their evaluated value."
+                              , "RollupChildren(«Member», «String Expression»)") {
+         public MBTNode[] getFunctionArguments() {
+            return new MBTNode[] {
+                 new MBTArgMemberNode("«Member»")
+               , new MBTArgStringNode( "«String Expression»")
+            };
+         }
+
+      };
+      numericFunctions.add(new DefaultMutableTreeNode(f));
+
+      f = new MdxNumericFunction("Stddev"
+                              , "Alias for Stdev."
+                              , "Stdev(«Set»[, «Numeric Expression»])") {
+         public MBTNode[] getFunctionArguments() {
+            return new MBTNode[] {
+                 new MBTArgSetNode("«Set»")
+               , new MBTArgNumericNode(false, "Numeric Expression»", false, true)
+            };
+         }
+
+      };
+      numericFunctions.add(new DefaultMutableTreeNode(f));
+
+      f = new MdxNumericFunction("StddevP"
+                              , "Alias for StdevP."
+                              , "StdevP(«Set»[, «Numeric Expression»])") {
+         public MBTNode[] getFunctionArguments() {
+            return new MBTNode[] {
+                 new MBTArgSetNode("«Set»")
+               , new MBTArgNumericNode(false, "Numeric Expression»", false, true)
+            };
+         }
+
+      };
+      numericFunctions.add(new DefaultMutableTreeNode(f));
+
+      f = new MdxNumericFunction("Stdev"
+                              , "Returns the sample standard deviation of a numeric expression evaluated over a set, using the unbiased population formula."
+                              , "Stdev(«Set»[, «Numeric Expression»])") {
+         public MBTNode[] getFunctionArguments() {
+            return new MBTNode[] {
+                 new MBTArgSetNode("«Set»")
+               , new MBTArgNumericNode(false, "Numeric Expression»", false, true)
+            };
+         }
+
+      };
+      numericFunctions.add(new DefaultMutableTreeNode(f));
+
+      f = new MdxNumericFunction("StdevP"
+                              , "Returns the population standard deviation of a numeric expression evaluated over a set, using the biased population formula."
+                              , "StdevP(«Set»[, «Numeric Expression»])") {
+         public MBTNode[] getFunctionArguments() {
+            return new MBTNode[] {
+                 new MBTArgSetNode("«Set»")
+               , new MBTArgNumericNode(false, "Numeric Expression»", false, true)
+            };
+         }
+
+      };
+      numericFunctions.add(new DefaultMutableTreeNode(f));
+
+      f = new MdxNumericFunction("StrToValue"
+                              , "Returns a value based on a string expression."
+                              , "StrToValue(«String Expression»)") {
+         public MBTNode[] getFunctionArguments() {
+            return new MBTNode[] {
+               new MBTArgStringNode("«String Expression»")
+            };
+         }
+
+      };
+      numericFunctions.add(new DefaultMutableTreeNode(f));
+
+      f = new MdxNumericFunction("Sum"
+                              , "Returns the sum of a numeric expression evaluated over a set."
+                              , "Sum(«Set»[, «Numeric Expression»])") {
+         public MBTNode[] getFunctionArguments() {
+            return new MBTNode[] {
+                 new MBTArgSetNode("«Set»")
+               , new MBTArgNumericNode(false, "««Numeric Expression»", false, true)
+            };
+         }
+
+      };
+      numericFunctions.add(new DefaultMutableTreeNode(f));
+
+
+      f = new MdxNumericFunction("Value"
+                              , "Returns the value of a measure."
+                              , "«Member».Value") {
+         public MBTNode[] getFunctionArguments() {
+            return new MBTNode[] {
+               new MBTArgMemberNode(true, "«Member»")
+            };
+         }
+
+      };
+      numericFunctions.add(new DefaultMutableTreeNode(f));
+
+      f = new MdxNumericFunction("Var"
+                              , "Returns the sample variance of a numeric expression evaluated over a set, using the unbiased population formula."
+                              , "Var(«Set»[, «Numeric Expression»])") {
+         public MBTNode[] getFunctionArguments() {
+            return new MBTNode[] {
+                 new MBTArgSetNode("«Set»")
+               , new MBTArgNumericNode(false, "«Numeric Expression»", false, true)
+            };
+         }
+
+      };
+      numericFunctions.add(new DefaultMutableTreeNode(f));
+
+      f = new MdxNumericFunction("Variance"
+                              , "Alias for Var."
+                              , "Variance(«Set»[, «Numeric Expression»])") {
+         public MBTNode[] getFunctionArguments() {
+            return new MBTNode[] {
+                 new MBTArgSetNode("«Set»")
+               , new MBTArgNumericNode(false, "«Numeric Expression»", false, true)
+            };
+         }
+
+      };
+      numericFunctions.add(new DefaultMutableTreeNode(f));
+
+      f = new MdxNumericFunction("VarianceP"
+                              , "Alias for VarP."
+                              , "VarP(«Set»[, «Numeric Expression»])") {
+         public MBTNode[] getFunctionArguments() {
+            return new MBTNode[] {
+                 new MBTArgSetNode("«Set»")
+               , new MBTArgNumericNode(false, "«Numeric Expression»", false, true)
+            };
+         }
+
+      };
+      numericFunctions.add(new DefaultMutableTreeNode(f));
+
+      f = new MdxNumericFunction("VarP"
+                              , "Returns the population variance of a numeric expression evaluated over a set, using the biased population formula."
+                              , "VarP(«Set»[, «Numeric Expression»])") {
+         public MBTNode[] getFunctionArguments() {
+            return new MBTNode[] {
+                 new MBTArgSetNode("«Set»")
+               , new MBTArgNumericNode(false, "«Numeric Expression»", false, true)
+            };
+         }
+
+      };
+      numericFunctions.add(new DefaultMutableTreeNode(f));
+
+
+
+// ************************************************* OTHER *****************************************************
+
+      otherFunctions = new DefaultMutableTreeNode("Other Functions");
+//      otherFunctions.add(new DefaultMutableTreeNode(new MdxFunction("Call"
+//         , "Executes the string expression containing a user-defined function."
+//         , "Call «UDF Name»")));
+
+
+
+
+// ************************************************* SET *****************************************************
+
+      setFunctions = new DefaultMutableTreeNode("Set Functions");
+
+      f = new MdxSetFunction("AddCalculatedMembers"
+                              , "Adds calculated members to a set."
+                              , "AddCalculatedMembers(«Set»)") {
+         public MBTNode[] getFunctionArguments() {
+            return new MBTNode[] {
+                 new MBTArgSetNode("«Set»")
+            };
+         }
+
+      };
+      setFunctions.add(new DefaultMutableTreeNode(f));
+
+      f = new MdxSetFunction(   "AllMembers"
+                              , "Returns a set containing all members of a specified dimension or level, including calculated members."
+                              , "«Dimension|Level».AllMembers") {
+         public MBTNode[] getFunctionArguments() {
+            return new MBTNode[] {
+               new MBTArgStringNode(true, "«Dimension|Level»")
+            };
+         }
+
+      };
+      setFunctions.add(new DefaultMutableTreeNode(f));
+
+
+      f = new MdxSetFunction(   "Ancestors"
+                              , "Returns all the ancestors of a member at a specified distance."
+                              , "Ancestors(«Member», «Numeric Expression»)") {
+         public MBTNode[] getFunctionArguments() {
+            return new MBTNode[] {
+                 new MBTArgMemberNode("«Member»")
+               , new MBTArgNumericNode("«Numeric Expression»")
+            };
+         }
+
+      };
+      setFunctions.add(new DefaultMutableTreeNode(f));
+
+      f = new MdxSetFunction(   "Ancestors"
+                              , "Returns all the ancestors of a member at a specified level."
+                              , "Ancestors(«Member», «Level»)") {
+         public MBTNode[] getFunctionArguments() {
+            return new MBTNode[] {
+                 new MBTArgMemberNode("«Member»")
+               , new MBTArgLevelNode("«Level»")
+            };
+         }
+
+      };
+      setFunctions.add(new DefaultMutableTreeNode(f));
+
+      f = new MdxSetFunction(   "Ascendants"
+                              , "Returns the set of the ascendants of the member, including the member itself."
+                              , "Ascendants(«Member»)") {
+         public MBTNode[] getFunctionArguments() {
+            return new MBTNode[] {
+               new MBTArgMemberNode("«Member»")
+            };
+         }
+
+      };
+      setFunctions.add(new DefaultMutableTreeNode(f));
+
+
+      f = new MdxSetFunction(   "Axis"
+                              , "Returns the set associated with the main axis."
+                              , "Axis(«Numeric Expression»)") {
+         public MBTNode[] getFunctionArguments() {
+            return new MBTNode[] {
+               new MBTArgNumericNode("«Numeric Expression»")
+            };
+         }
+
+      };
+      setFunctions.add(new DefaultMutableTreeNode(f));
+
+      f = new MdxSetFunction(   "BottomCount"
+                              , "Returns a specified number of items from the bottom of a set, optionally ordering the set first."
+                              , "BottomCount(«Set», «Count»[, «Numeric Expression»])") {
+         public MBTNode[] getFunctionArguments() {
+            return new MBTNode[] {
+                 new MBTArgSetNode("«Set»")
+               , new MBTArgNumericNode("«Count»")
+               , new MBTArgNumericNode(false, "«Numeric Expression»", false, true)
+            };
+         }
+
+      };
+      setFunctions.add(new DefaultMutableTreeNode(f));
+
+      f = new MdxSetFunction(   "BottomPercent"
+                              , "Sorts a set and returns the bottom n elements whose cumulative total is at least a specified percentage."
+                              , "BottomPercent(«Set», «Percentage», «Numeric Expression»)") {
+         public MBTNode[] getFunctionArguments() {
+            return new MBTNode[] {
+                 new MBTArgSetNode("«Set»")
+               , new MBTArgNumericNode("«Percentage»")
+               , new MBTArgNumericNode("«Numeric Expression»")
+            };
+         }
+
+      };
+      setFunctions.add(new DefaultMutableTreeNode(f));
+
+      f = new MdxSetFunction(   "BottomSum"
+                              , "Sorts a set and returns the bottom n elements whose cumulative total is at least a specified value."
+                              , "BottomSum(«Set», «Value», «Numeric Expression»)") {
+         public MBTNode[] getFunctionArguments() {
+            return new MBTNode[] {
+                 new MBTArgSetNode("«Set»")
+               , new MBTArgNumericNode("«Value»")
+               , new MBTArgNumericNode("«Numeric Expression»")
+            };
+         }
+
+      };
+      setFunctions.add(new DefaultMutableTreeNode(f));
+
+      f = new MdxSetFunction(   "Children"
+                              , "Returns the children of a member."
+                              , "«Member».Children") {
+         public MBTNode[] getFunctionArguments() {
+            return new MBTNode[] {
+               new MBTArgMemberNode(true, "«Member»")
+            };
+         }
+
+      };
+      setFunctions.add(new DefaultMutableTreeNode(f));
+
+
+      f = new MdxSetFunction("Crossjoin"
+                             , "Returns the cross product of two sets."
+                             , "Crossjoin(«Set1», «Set2»)") {
+         public MBTNode[] getFunctionArguments() {
+            return new MBTNode[] {
+               new MBTArgSetNode("«Set1»")
+               , new MBTArgSetNode("«Set2»")
+            };
+         }
+
+      };
+      setFunctions.add(new DefaultMutableTreeNode(f));
+
+      f = new MdxSetFunction("Descendants"
+                             , "Returns the set of descendants of a member at a specified level, optionally including or excluding descendants in other levels."
+                             , "Descendants(«Member», [«Level»[, «Desc_flags»]])") {
+         public MBTNode[] getFunctionArguments() {
+            return new MBTNode[] {
+                 new MBTArgMemberNode("«Member»")
+               , new MBTArgLevelNode(false, "«Level»", false, true)
+               , new MBTArgEnumNode(false, "«Desc_flags»", new String[]{"SELF", "AFTER", "BEFORE", "BEFORE_AND_AFTER", "SELF_AND_AFTER", "SELF_AND_BEFORE", "SELF_BEFORE_AFTER", "LEAVES"}, false, true)
+            };
+         }
+
+      };
+      setFunctions.add(new DefaultMutableTreeNode(f));
+
+
+      f = new MdxSetFunction("Descendants"
+                             , "Returns the set of descendants of a member at a specified distance from a member, optionally including or excluding descendants in other levels."
+                             , "Descendants(«Member», «Distance»[, «Desc_flags»])") {
+         public MBTNode[] getFunctionArguments() {
+            return new MBTNode[] {
+                 new MBTArgMemberNode("«Member»")
+               , new MBTArgNumericNode(false, "«Distance»", false, true)
+               , new MBTArgEnumNode(false, "«Desc_flags»", new String[]{"SELF", "AFTER", "BEFORE", "BEFORE_AND_AFTER", "SELF_AND_AFTER", "SELF_AND_BEFORE", "SELF_BEFORE_AFTER", "LEAVES"}, false, true)
+            };
+         }
+
+      };
+      setFunctions.add(new DefaultMutableTreeNode(f));
+
+      f = new MdxSetFunction("Distinct"
+                             , "Eliminates duplicate tuples from a set."
+                             , "Distinct(«Set»)") {
+         public MBTNode[] getFunctionArguments() {
+            return new MBTNode[] {
+                 new MBTArgSetNode("«Set»")
+            };
+         }
+
+      };
+      setFunctions.add(new DefaultMutableTreeNode(f));
+
+      f = new MdxSetFunction("DrilldownLevel"
+                             , "Drills down the members of a set, at a specified level, to one level below. Alternatively, drills down on a specified dimension in the set."
+                             , "DrilldownLevel(«Set»[, {«Level» |  «Index»}])") {
+         public MBTNode[] getFunctionArguments() {
+            return new MBTNode[] {
+                 new MBTArgSetNode("«Set»")
+               , new MBTArgStringNode(false, "«Level» |  «Index»", false, true)
+            };
+         }
+
+      };
+      setFunctions.add(new DefaultMutableTreeNode(f));
+
+      f = new MdxSetFunction("DrilldownLevelBottom"
+                             , "Drills down the bottom n members of a set, at a specified level, to one level below."
+                             , "DrilldownLevelBottom(«Set», «Count»[, [«Level»][, «Numeric Expression»]])") {
+         public MBTNode[] getFunctionArguments() {
+            return new MBTNode[] {
+                 new MBTArgSetNode("«Set»")
+               , new MBTArgNumericNode("«Count»")
+               , new MBTArgLevelNode(false, "«Level»", false, true)
+               , new MBTArgNumericNode(false, "«Numeric Expression»", false, true)
+            };
+         }
+
+      };
+      setFunctions.add(new DefaultMutableTreeNode(f));
+
+      f = new MdxSetFunction("DrilldownLevelTop"
+                             , "Drills down the top n members of a set, at a specified level, to one level below."
+                             , "DrilldownLevelTop(«Set», «Count»[, [«Level»][, «Numeric Expression»]])") {
+         public MBTNode[] getFunctionArguments() {
+            return new MBTNode[] {
+                 new MBTArgSetNode("«Set»")
+               , new MBTArgNumericNode("«Count»")
+               , new MBTArgLevelNode(false, "«Level»", false, true)
+               , new MBTArgNumericNode(false, "«Numeric Expression»", false, true)
+            };
+         }
+
+      };
+      setFunctions.add(new DefaultMutableTreeNode(f));
+
+
+      f = new MdxSetFunction("DrilldownMember"
+                             , "Drills down the members in a set that are present in a second specified set."
+                             , "DrilldownMember(«Set1», «Set2»[, RECURSIVE])") {
+         public MBTNode[] getFunctionArguments() {
+            return new MBTNode[] {
+                 new MBTArgSetNode("«Set1»")
+               , new MBTArgSetNode("«Set2»")
+               , new MBTArgEnumNode(false, "RECURSIVE", new String[]{"RECURSIVE"}, false, true)
+            };
+         }
+
+      };
+      setFunctions.add(new DefaultMutableTreeNode(f));
+
+      f = new MdxSetFunction("DrilldownMemberBottom"
+                             , "Similar to DrilldownMember, except that it includes only the bottom n children."
+                             , "DrilldownMemberBottom(«Set1», «Set2», «Count»[, [«Numeric Expression»][, RECURSIVE]])") {
+         public MBTNode[] getFunctionArguments() {
+            return new MBTNode[] {
+                 new MBTArgSetNode("«Set1»")
+               , new MBTArgSetNode("«Set2»")
+               , new MBTArgNumericNode("«Count»")
+               , new MBTArgNumericNode(false, "«Numeric Expression»", false, true)
+               , new MBTArgEnumNode(false, "RECURSIVE", new String[]{"RECURSIVE"}, false, true)
+            };
+         }
+
+      };
+      setFunctions.add(new DefaultMutableTreeNode(f));
+
+      f = new MdxSetFunction("DrilldownMemberTop"
+                             , "Similar to DrilldownMember, except that it includes only the top n children."
+                             , "DrilldownMemberTop(«Set1», «Set2», «Count»[, [«Numeric Expression»][, RECURSIVE]])") {
+         public MBTNode[] getFunctionArguments() {
+            return new MBTNode[] {
+                 new MBTArgSetNode("«Set1»")
+               , new MBTArgSetNode("«Set2»")
+               , new MBTArgNumericNode("«Count»")
+               , new MBTArgNumericNode(false, "«Numeric Expression»", false, true)
+               , new MBTArgEnumNode(false, "RECURSIVE", new String[]{"RECURSIVE"}, false, true)
+            };
+         }
+
+      };
+      setFunctions.add(new DefaultMutableTreeNode(f));
+
+
+      f = new MdxSetFunction("DrillupLevel"
+                             , "Drills up the members of a set that are below a specified level."
+                             , "DrillupLevel(«Set»[, «Level»])") {
+         public MBTNode[] getFunctionArguments() {
+            return new MBTNode[] {
+                 new MBTArgSetNode("«Set»")
+               , new MBTArgLevelNode(false, "«Level»", false, true)
+            };
+         }
+
+      };
+      setFunctions.add(new DefaultMutableTreeNode(f));
+
+      f = new MdxSetFunction("DrillupMember"
+                             , "Drills up the members in a set that are present in a second specified set."
+                             , "DrillupMember(«Set1», «Set2»)") {
+         public MBTNode[] getFunctionArguments() {
+            return new MBTNode[] {
+                 new MBTArgSetNode("«Set1»")
+               , new MBTArgSetNode("«Set2»")
+            };
+         }
+
+      };
+      setFunctions.add(new DefaultMutableTreeNode(f));
+
+
+
+      f = new MdxSetFunction(  "Except"
+                             , "Finds the difference between two sets, optionally retaining duplicates."
+                             , "Except(«Set1», «Set2»[, ALL])") {
+         public MBTNode[] getFunctionArguments() {
+            return new MBTNode[] {
+                 new MBTArgSetNode("«Set1»")
+               , new MBTArgSetNode("«Set2»")
+               , new MBTArgEnumNode(false, "ALL", new String[]{"ALL"}, false, true)
+            };
+         }
+
+      };
+      setFunctions.add(new DefaultMutableTreeNode(f));
+
+
+      f = new MdxSetFunction(  "Extract"
+                             , "Returns a set of tuples from extracted dimension elements. The opposite of Crossjoin."
+                             , "Extract(«Set», «Dimension»[, «Dimension»...])") {
+         public MBTNode[] getFunctionArguments() {
+            return new MBTNode[] {
+                 new MBTArgSetNode("«Set1»")
+               , new MBTArgDimensionNode(false, "«Dimension»", true, false)
+            };
+         }
+
+      };
+      setFunctions.add(new DefaultMutableTreeNode(f));
+
+
+
+      f = new MdxSetFunction(  "Filter"
+                             , "Returns the set resulting from filtering a set based on a search condition."
+                             , "Filter(«Set», «Search Condition»)") {
+         public MBTNode[] getFunctionArguments() {
+            return new MBTNode[] {
+                 new MBTArgSetNode("«Set»")
+               , new MBTArgStringNode("«Search Condition»")
+            };
+         }
+
+      };
+      setFunctions.add(new DefaultMutableTreeNode(f));
+
+
+      f = new MdxSetFunction(  "Generate"
+                             , "Applies a set to each member of another set and joins the resulting sets by union."
+                             , "Generate(«Set1», «Set2»[, ALL])") {
+         public MBTNode[] getFunctionArguments() {
+            return new MBTNode[] {
+                 new MBTArgSetNode("«Set1»")
+               , new MBTArgSetNode("«Set2»")
+               , new MBTArgEnumNode(false, "ALL", new String[]{"ALL"}, false, true)
+            };
+         }
+
+      };
+      setFunctions.add(new DefaultMutableTreeNode(f));
+
+      f = new MdxSetFunction(  "Generate"
+                             , "Applies a set to each member of another set and joins the resulting sets by union."
+                             , "Generate(«Set», «String Expression»[, «Delimiter»])") {
+         public MBTNode[] getFunctionArguments() {
+            return new MBTNode[] {
+                 new MBTArgSetNode("«Set1»")
+               , new MBTArgStringNode("«String Expression»")
+               , new MBTArgStringNode(false, "«Delimiter»", false, true)
+            };
+         }
+
+      };
+      setFunctions.add(new DefaultMutableTreeNode(f));
+
+      f = new MdxSetFunction(  "Head"
+                             , "Returns the first specified number of elements in a set."
+                             , "Head(«Set»[, «Numeric Expression»])") {
+         public MBTNode[] getFunctionArguments() {
+            return new MBTNode[] {
+                 new MBTArgSetNode("«Set»")
+               , new MBTArgNumericNode(false, "«Numeric Expression»", false, true)
+            };
+         }
+
+      };
+      setFunctions.add(new DefaultMutableTreeNode(f));
+
+
+      f = new MdxSetFunction(  "Hierarchize"
+                             , "Orders the members of a set in a hierarchy."
+                             , "Hierarchize(«Set»[, POST])") {
+         public MBTNode[] getFunctionArguments() {
+            return new MBTNode[] {
+                 new MBTArgSetNode("«Set»")
+               , new MBTArgEnumNode(false, "POST", new String[]{"POST"}, false, true)
+            };
+         }
+
+      };
+      setFunctions.add(new DefaultMutableTreeNode(f));
+
+      f = new MdxSetFunction(  "Intersect"
+                             , "Returns the intersection of two input sets, optionally retaining duplicates."
+                             , "Intersect(«Set1», «Set2»[, ALL])") {
+         public MBTNode[] getFunctionArguments() {
+            return new MBTNode[] {
+                 new MBTArgSetNode("«Set1»")
+               , new MBTArgSetNode("«Set2»")
+               , new MBTArgEnumNode(false, "ALL", new String[]{"ALL"}, false, true)
+            };
+         }
+
+      };
+      setFunctions.add(new DefaultMutableTreeNode(f));
+
+      f = new MdxSetFunction(  "LastPeriods"
+                             , "Returns a set of members prior to and including a specified member."
+                             , "LastPeriods(«Index»[, «Member»])") {
+         public MBTNode[] getFunctionArguments() {
+            return new MBTNode[] {
+                 new MBTArgNumericNode("«Index»")
+               , new MBTArgMemberNode(false, "«Member»", false, true)
+            };
+         }
+
+      };
+      setFunctions.add(new DefaultMutableTreeNode(f));
+
+      f = new MdxSetFunction(  "Members"
+                             , "Returns the set of all members in a dimension, hierarchy, or level."
+                             , "«Dimension|Hierarchy|Level».Members") {
+         public MBTNode[] getFunctionArguments() {
+            return new MBTNode[] {
+               new MBTArgAcceptAllStringNode(true, "«Dimension|Hierarchy|Level»")
+            };
+         }
+
+      };
+      setFunctions.add(new DefaultMutableTreeNode(f));
+
+      f = new MdxSetFunction(  "Members"
+                             , "Returns the set of all members in a dimension, hierarchy, or level."
+                             , "Members(«String Expression»)") {
+         public MBTNode[] getFunctionArguments() {
+            return new MBTNode[] {
+               new MBTArgAcceptAllStringNode("«String Expression»")
+            };
+         }
+
+      };
+      setFunctions.add(new DefaultMutableTreeNode(f));
+
+      f = new MdxSetFunction(  "Mtd"
+                             , "A shortcut function for the PeriodsToDate function that specifies the level to be Month."
+                             , "Mtd([«Member»])") {
+         public MBTNode[] getFunctionArguments() {
+            return new MBTNode[] {
+               new MBTArgMemberNode(false, "«Member»", false, true)
+            };
+         }
+
+      };
+      setFunctions.add(new DefaultMutableTreeNode(f));
+
+      f = new MdxSetFunction(  "NameToSet"
+                             , "Returns a set containing a single member based on a string expression containing a member name."
+                             , "NameToSet(«Member Name»)") {
+         public MBTNode[] getFunctionArguments() {
+            return new MBTNode[] {
+               new MBTArgStringNode("«Member Name»")
+            };
+         }
+
+      };
+      setFunctions.add(new DefaultMutableTreeNode(f));
+
+      f = new MdxSetFunction(  "NonEmptyCrossjoin"
+                             , "Returns the cross product of two or more sets, excluding empty members."
+                             , "NonEmptyCrossjoin(«Set1», «Set2»[, «Set3»...][, «Crossjoin Set Count»])") {
+         public MBTNode[] getFunctionArguments() {
+            return new MBTNode[] {
+                 new MBTArgSetNode("«Set1»")
+               , new MBTArgSetNode("«Set2»")
+               , new MBTArgSetNode(false, "«Set2»", true, true)
+               , new MBTArgNumericNode(false, "«Crossjoin Set Count»", false, true)
+
+            };
+         }
+
+      };
+      setFunctions.add(new DefaultMutableTreeNode(f));
+
+
+      f = new MdxSetFunction("Order"
+                             , "Arranges members of a set, optionally preserving or breaking the hierarchy."
+                             , "Order(«Set», {«String Expression» | «Numeric Expression»} [, ASC | DESC | BASC | BDESC])") {
+         public MBTNode[] getFunctionArguments() {
+            return new MBTNode[] {
+                 new MBTArgSetNode("«Set1»")
+               , new MBTArgStringNode("«String Expression» | «Numeric Expression»")
+               , new MBTArgEnumNode(false, "ASC | DESC | BASC | BDESC", new String[]{"ASC", "DESC", "BASC", "BDESC"}, false, true)
+            };
+         }
+
+      };
+      setFunctions.add(new DefaultMutableTreeNode(f));
+
+
+      f = new MdxSetFunction("PeriodsToDate"
+                             , "Returns a set of periods (members) from a specified level starting with the first period and ending with a specified member."
+                             , "PeriodsToDate([«Level»[, «Member»]])") {
+         public MBTNode[] getFunctionArguments() {
+            return new MBTNode[] {
+                 new MBTArgLevelNode(false, "«Level»", false, true)
+               , new MBTArgMemberNode(false, "«Member»", false, true)
+            };
+         }
+
+      };
+      setFunctions.add(new DefaultMutableTreeNode(f));
+
+      f = new MdxSetFunction(  "Qtd"
+                             , "A shortcut function for the PeriodsToDate function that specifies the level to be Quarter."
+                             , "Qtd([«Member»])") {
+         public MBTNode[] getFunctionArguments() {
+            return new MBTNode[] {
+                 new MBTArgMemberNode(false, "«Member»", false, true)
+            };
+         }
+
+      };
+      setFunctions.add(new DefaultMutableTreeNode(f));
+
+      f = new MdxSetFunction(  "Siblings"
+                             , "Returns the siblings of a member, including the member itself."
+                             , "«Member».Siblings") {
+         public MBTNode[] getFunctionArguments() {
+            return new MBTNode[] {
+                 new MBTArgMemberNode(true, "«Member»")
+            };
+         }
+
+      };
+      setFunctions.add(new DefaultMutableTreeNode(f));
+
+      f = new MdxSetFunction(  "StripCalculatedMembers"
+                             , "Removes calculated members from a set."
+                             , "StripCalculatedMembers(«Set»)") {
+         public MBTNode[] getFunctionArguments() {
+            return new MBTNode[] {
+               new MBTArgSetNode("«Set»")
+            };
+         }
+
+      };
+      setFunctions.add(new DefaultMutableTreeNode(f));
+
+      f = new MdxSetFunction(  "StrToSet"
+                             , "Constructs a set from a string expression."
+                             , "StrToSet(«String Expression»)") {
+         public MBTNode[] getFunctionArguments() {
+            return new MBTNode[] {
+               new MBTArgStringNode("«String Expression»")
+            };
+         }
+
+      };
+      setFunctions.add(new DefaultMutableTreeNode(f));
+
+      f = new MdxSetFunction(  "Subset"
+                             , "Returns a subset of elements from a set."
+                             , "Subset(«Set», «Start»[, «Count»])") {
+         public MBTNode[] getFunctionArguments() {
+            return new MBTNode[] {
+                 new MBTArgSetNode("«Set»")
+               , new MBTArgNumericNode("«Start»")
+               , new MBTArgNumericNode(false, "«Count»", false, true)
+            };
+         }
+
+      };
+      setFunctions.add(new DefaultMutableTreeNode(f));
+
+      f = new MdxSetFunction(  "Tail"
+                             , "Returns a subset from the end of a set."
+                             , "Tail(«Set»[, «Count»])") {
+         public MBTNode[] getFunctionArguments() {
+            return new MBTNode[] {
+                 new MBTArgSetNode("«Set»")
+               , new MBTArgNumericNode(false, "«Count»", false, true)
+            };
+         }
+
+      };
+      setFunctions.add(new DefaultMutableTreeNode(f));
+
+      f = new MdxSetFunction(  "ToggleDrillState"
+                             , "Toggles the drill state of members. This function is a combination of DrillupMember and DrilldownMember."
+                             , "ToggleDrillState(«Set1», «Set2»[, RECURSIVE])") {
+         public MBTNode[] getFunctionArguments() {
+            return new MBTNode[] {
+                 new MBTArgSetNode("«Set1»")
+               , new MBTArgSetNode("«Set2»")
+               , new MBTArgEnumNode(false, "RECURSIVE", new String[]{"RECURSIVE"}, false, true)
+
+            };
+         }
+
+      };
+      setFunctions.add(new DefaultMutableTreeNode(f));
+
+      f = new MdxSetFunction(  "TopCount"
+                             , "Returns a specified number of items from the top of a set, optionally ordering the set first."
+                             , "TopCount(«Set», «Count»[, «Numeric Expression»])") {
+         public MBTNode[] getFunctionArguments() {
+            return new MBTNode[] {
+                 new MBTArgSetNode("«Set»")
+               , new MBTArgNumericNode("«Count»")
+               , new MBTArgNumericNode(false, "«Numeric Expression»", false, true)
+
+            };
+         }
+
+      };
+      setFunctions.add(new DefaultMutableTreeNode(f));
+
+
+      f = new MdxSetFunction(  "TopPercent"
+                             , "Sorts a set and returns the top n elements whose cumulative total is at least a specified percentage."
+                             , "TopPercent(«Set», «Percentage», «Numeric Expression»)") {
+         public MBTNode[] getFunctionArguments() {
+            return new MBTNode[] {
+                 new MBTArgSetNode("«Set»")
+               , new MBTArgNumericNode("«Percentage»")
+               , new MBTArgNumericNode("«Numeric Expression»")
+
+            };
+         }
+
+      };
+      setFunctions.add(new DefaultMutableTreeNode(f));
+
+      f = new MdxSetFunction(  "TopSum"
+                             , "Sorts a set and returns the top n elements whose cumulative total is at least a specified value."
+                             , "TopSum(«Set», «Value», «Numeric Expression»)") {
+         public MBTNode[] getFunctionArguments() {
+            return new MBTNode[] {
+                 new MBTArgSetNode("«Set»")
+               , new MBTArgNumericNode("«Value»")
+               , new MBTArgNumericNode("«Numeric Expression»")
+
+            };
+         }
+
+      };
+      setFunctions.add(new DefaultMutableTreeNode(f));
+
+      f = new MdxSetFunction(  "Union"
+                             , "Returns the union of two sets, optionally retaining duplicates."
+                             , "Union(«Set1», «Set2»[, ALL])") {
+         public MBTNode[] getFunctionArguments() {
+            return new MBTNode[] {
+                 new MBTArgSetNode("«Set1»")
+               , new MBTArgSetNode("«Set2»")
+               , new MBTArgEnumNode(false, "ALL", new String[]{"ALL"}, false, true)
+
+            };
+         }
+
+      };
+      setFunctions.add(new DefaultMutableTreeNode(f));
+
+      f = new MdxSetFunction(  "VisualTotals"
+                             , "Dynamically totals child members specified in a set using a pattern for the total label in the result set."
+                             , "VisualTotals(«Set», «Pattern»)") {
+         public MBTNode[] getFunctionArguments() {
+            return new MBTNode[] {
+                 new MBTArgSetNode("«Set»")
+               , new MBTArgStringNode("«Pattern»")
+            };
+         }
+
+      };
+      setFunctions.add(new DefaultMutableTreeNode(f));
+
+      f = new MdxSetFunction(  "Wtd"
+                             , "A shortcut function for the PeriodsToDate function that specifies the level to be Week."
+                             , "Wtd([«Member»])") {
+         public MBTNode[] getFunctionArguments() {
+            return new MBTNode[] {
+                 new MBTArgMemberNode(false, "«Member»", false, true)
+            };
+         }
+
+      };
+      setFunctions.add(new DefaultMutableTreeNode(f));
+
+      f = new MdxSetFunction(  "Ytd"
+                             , "A shortcut function for the PeriodsToDate function that specifies the level to be Year."
+                             , "Ytd([«Member»])") {
+         public MBTNode[] getFunctionArguments() {
+            return new MBTNode[] {
+                 new MBTArgMemberNode(false, "«Member»", false, true)
+            };
+         }
+
+      };
+      setFunctions.add(new DefaultMutableTreeNode(f));
+
+
+
+
+// Now, I'm performing a merge sort to put all functions in one node.
+      allFunctions = new DefaultMutableTreeNode("All Functions");
+
+      DefaultMutableTreeNode[] heads = new DefaultMutableTreeNode[]{
+         arrayFunctions
+         , dimensionFunctions
+         , hierarchyFunctions
+         , levelFunctions
+         , memberFunctions
+         , numericFunctions
+//         , otherFunctions
+         , setFunctions
+         , stringFunctions
+         , tupleFunctions};
+      int[] headIndexes = new int[heads.length];
+      DefaultMutableTreeNode curr;
+      int selected;
+
+      boolean sortDone = false;
+      while (!sortDone){
+         f = null;
+         sortDone = true;
+         selected = 0;
+         for (int i = 0; i < heads.length; i++) {
+            if (headIndexes[i] < heads[i].getChildCount()){
+               curr = (DefaultMutableTreeNode) heads[i].getChildAt(headIndexes[i]);
+               if (f==null){
+                  f = (MdxFunction)curr.getUserObject();
+                  selected = i;
+               } else if ( ((MdxFunction)curr.getUserObject()).getName().compareTo(f.getName()) < 0 ){
+                  f = (MdxFunction)curr.getUserObject();
+                  selected = i;
+               }
+            }
+
+         }
+         if (f != null){
+            sortDone = false;
+            allFunctions.add(new DefaultMutableTreeNode(f));
+            headIndexes[selected]++;
+         }
+      }
+      // By default, categorized view is displayed:
+      categorized = false;
+      toggleTree();
+
+      // well, this was fun...
+   }
+
+
+   /**
+    * Toggles a display of the function tree between categorized and alphabetical view.
+    */
+   private void toggleTree(){
+      categorized = !categorized;
+      DefaultMutableTreeNode root = ((DefaultMutableTreeNode)tree.getModel().getRoot());
+      root.removeAllChildren();
+      if (categorized){
+         root.add(nonMdxFunctions);
+         root.add(arrayFunctions);
+         root.add(dimensionFunctions);
+         root.add(hierarchyFunctions);
+         root.add(levelFunctions);
+         root.add(memberFunctions);
+         root.add(numericFunctions);
+         root.add(setFunctions);
+         root.add(stringFunctions);
+         root.add(tupleFunctions);
+         root.setUserObject("Mdx Functions (categorized)");
+      }else{
+         root.add(nonMdxFunctions);
+         root.add(allFunctions);
+         tree.expandPath(new TreePath(allFunctions.getPath()));
+         root.setUserObject("Mdx Functions (alphabetical)");
+      }
+      tree.updateUI();
+      tree.repaint();
+
+   }
+   /**
+    * Inner class that adds the double-clicked function syntax to the mdx editor text field.
+    * @@author Igor Mekterovic
+    * @@version 0.3
+    */
+   class PopupListener extends MouseAdapter {
+      public void mouseClicked(MouseEvent e) {
+         if ((e.getClickCount()==2)){
+            int selRow = tree.getRowForLocation(e.getX(), e.getY());
+            TreePath selPath = tree.getPathForLocation(e.getX(), e.getY());
+            if ( (selRow != -1)
+                && ( ( (DefaultMutableTreeNode) selPath.getLastPathComponent())).getUserObject() instanceof MdxFunction) {
+
+               MdxFunction mdxf = ( (MdxFunction) ( (DefaultMutableTreeNode) (selPath.getLastPathComponent())).getUserObject());
+
+               if (MdxFunctionTree.this.parent != null) {
+                  if (parent instanceof MdxEditor) {
+                     ((MdxEditor)parent).addTextToCurrentPosition(mdxf.getSyntax());
+                  }
+               }
+            }else if ( (selRow != -1)
+                && (   selPath.getLastPathComponent() == tree.getModel().getRoot() )) {
+               toggleTree();
+
+            }
+         }
+      }
+   }
+
+
+   /**
+    * Inner class for rendering mdx function tree nodes.
+    * @@author Igor Mekterovic
+    * @@version 0.3
+    */
+   private class MdxFunctionTreeRenderer extends JLabel implements TreeCellRenderer{
+
+      public MdxFunctionTreeRenderer() {
+         this.setOpaque(false);
+      }
+      public Component getTreeCellRendererComponent(
+                                                      JTree tree,
+                                                      Object value,
+                                                      boolean sel,
+                                                      boolean expanded,
+                                                      boolean leaf,
+                                                      int row,
+                                                      boolean hasFocus) {
+         if (( (DefaultMutableTreeNode) value).getUserObject() instanceof MdxFunction ){
+            MdxFunction curr = (MdxFunction) ((DefaultMutableTreeNode) value).getUserObject();
+            setText(curr.toString());
+            setIcon(curr.getIcon());
+            setToolTipText(curr.getToolTip());
+
+         }else{
+            String s = ((DefaultMutableTreeNode) value).getUserObject().toString();
+            setText(s);
+            setIcon(null);
+            setToolTipText(s);
+         }
+         return this;
+      }
+
+   }
+
+
+   /**
+    * Main class for testing the display of the tree.
+    * @@param args String[]
+    */
+   public static void main(String[] args) {
+       JFrame frame = new JFrame("Testing FunctionTree...");
+       MdxFunctionTree dst = new MdxFunctionTree();
+       frame.setContentPane(dst);
+       frame.addWindowListener(new WindowAdapter() {
+             public void windowClosing(WindowEvent e) {
+                System.exit(0);
+             }
+          });
+
+      frame.pack();
+      frame.setVisible(true);
+    }
+
+}
+@
+
+
+1.4
+log
+@*** empty log message ***
+@
+text
+@@
+
+
+1.3
+log
+@*** empty log message ***
+@
+text
+@@
+
+
+1.2
+log
+@*** empty log message ***
+@
+text
+@@
+
+
+1.1
+log
+@*** empty log message ***
+@
+text
+@d3 1291
+a1293 22
+import javax.swing.JPanel;
+import java.awt.event.ActionListener;
+import javax.swing.JTree;
+import javax.swing.JPopupMenu;
+import javax.swing.JComponent;
+import javax.swing.tree.TreePath;
+import javax.swing.tree.TreeSelectionModel;
+import javax.swing.ToolTipManager;
+import javax.swing.JScrollPane;
+import java.awt.Dimension;
+import java.awt.BorderLayout;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import javax.swing.JFrame;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.JLabel;
+import javax.swing.tree.TreeCellRenderer;
+import java.awt.Component;
+import javax.swing.ImageIcon;
+import javax.swing.tree.DefaultTreeCellRenderer;
+d1295 703
+a1997 4
+public class MdxFunctionTree extends JPanel{
+   final JTree tree;
+   private JComponent parent;
+   private TreePath popUpSource;
+d1999 2
+a2000 8
+   public MdxFunctionTree(JComponent _parent) {
+      this();
+      parent = _parent;
+   }
+   public MdxFunctionTree() {
+//      MdxFunctionTreeModel treeModel = new MdxFunctionTreeModel();
+      DefaultMutableTreeNode top =  new DefaultMutableTreeNode("Mdx Function List");
+      buildFunctionList(top);
+d2002 8
+a2009 2
+     //Create a tree that allows one selection at a time.
+      tree = new JTree(top);
+d2011 2
+d2014 2
+a2015 3
+      tree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
+      //Enable tool tips.
+      ToolTipManager.sharedInstance().registerComponent(tree);
+d2018 8
+a2025 2
+        //Create the scroll pane and add the tree to it.
+      JScrollPane treeView = new JScrollPane(tree);
+d2027 2
+d2030 2
+d2033 8
+a2040 1
+      treeView.setPreferredSize(new Dimension(200, 600));
+d2042 2
+a2043 2
+//      treeView.setMinimumSize(new Dimension(200, 0));
+      treeView.setMaximumSize(new Dimension(800,600));
+d2045 2
+a2046 2
+      this.setLayout(new BorderLayout());
+      this.add(treeView, BorderLayout.CENTER);
+d2048 8
+a2055 5
+//
+//      MdxFunctionTreeRenderer renderer = new MdxFunctionTreeRenderer();
+//      renderer.addMouseListener(new PopupListener());
+      tree.setCellRenderer(new MdxFunctionTreeRenderer());
+      tree.addMouseListener(new PopupListener());
+d2057 2
+a2058 17
+   }
+   private void buildFunctionList(DefaultMutableTreeNode top){
+      DefaultMutableTreeNode
+           arrayFunctions
+         , stringFunctions
+         , dimensionHierarchyAndLevelFunctions
+         , dimensionFunctions
+         , hierarchyFunctions
+         , levelFunctions
+         , logicalFunctions
+         , tupleFunctions
+         , setFunctions
+         , otherFunctions
+         , numericFunctions
+         , memberFunctions;
+      arrayFunctions = new DefaultMutableTreeNode("Array Functions");
+      arrayFunctions.add(new DefaultMutableTreeNode(new MdxFunction("SetToArray", "Converts one or more sets to an array for use in a user-defined function.", "SetToArray(«Set»[, «Set»...][, «Numeric Expression»]")));
+d2060 2
+a2061 53
+      stringFunctions = new DefaultMutableTreeNode("String Functions");
+      stringFunctions.add(new DefaultMutableTreeNode(new MdxFunction("CalculationPassValue"
+         , "Returns the value of an MDX expression evaluated over the specified calculation pass of a cube."
+         , "CalculationPassValue(«Numeric Expression», «Pass Value»[, «Access Flag»])"
+         )));
+      stringFunctions.add(new DefaultMutableTreeNode(new MdxFunction("CoalesceEmpty"
+         , "Coalesces an empty cell value to a string or number."
+         , "CoalesceEmpty(«Numeric Expression»[, «Numeric Expression»]...)"
+         )));
+      stringFunctions.add(new DefaultMutableTreeNode(new MdxFunction("Generate"
+         , "Returns a concatenated string created by evaluating a string expression over a set."
+         , "Generate(«Set1», «Set2»[, ALL])"
+         )));
+      stringFunctions.add(new DefaultMutableTreeNode(new MdxFunction("Generate"
+         , "Returns a concatenated string created by evaluating a string expression over a set."
+         , "Generate(«Set», «String Expression»[, «Delimiter»])"
+         )));
+      stringFunctions.add(new DefaultMutableTreeNode(new MdxFunction("IIf"
+         , "Returns one of two string or numeric values determined by a logical test."
+         , "IIf(«Logical Expression», «Numeric or String Expression1», «Numeric or String Expression2»)"
+         )));
+      stringFunctions.add(new DefaultMutableTreeNode(new MdxFunction("LookupCube"
+         , "Returns the value of an MDX expression evaluated over another specified cube in the same database."
+         , "LookupCube(«Cube String», «Numeric or String Expression»)"
+         )));
+      stringFunctions.add(new DefaultMutableTreeNode(new MdxFunction("MemberToStr"
+         , "Constructs a string from a member."
+         , "MemberToStr(«Member»)"
+         )));
+      stringFunctions.add(new DefaultMutableTreeNode(new MdxFunction("Name"
+         , "Returns the name of a dimension, hierarchy, level, or member."
+         , "«Dimension/Level/Member/Hierarchy».Name"
+         )));
+      stringFunctions.add(new DefaultMutableTreeNode(new MdxFunction("Properties"
+         , "Returns a string containing a member property value."
+         , "«Member».Properties(«String Expression»)"
+         )));
+      stringFunctions.add(new DefaultMutableTreeNode(new MdxFunction("SetToStr"
+         , "Constructs a string from a set."
+         , "SetToStr(«Set»)"
+         )));
+      stringFunctions.add(new DefaultMutableTreeNode(new MdxFunction("TupleToStr"
+         , "Constructs a string from a tuple."
+         , "TupleToStr(«Tuple»)"
+         )));
+      stringFunctions.add(new DefaultMutableTreeNode(new MdxFunction("UniqueName"
+         , "Returns the unique name of a dimension, level, or member."
+         , "«Dimension/Level/Member/Hierarchy».UniqueName"
+         )));
+      stringFunctions.add(new DefaultMutableTreeNode(new MdxFunction("UserName"
+         , "Returns the domain name and user name of the current connection."
+         , "UserName"
+         )));
+d2063 9
+a2071 8
+      dimensionHierarchyAndLevelFunctions = new DefaultMutableTreeNode("Dimension, Hierarchy, and Level Functions ");
+      dimensionFunctions = new DefaultMutableTreeNode("Dimension Functions");
+      dimensionFunctions.add(new DefaultMutableTreeNode(new MdxFunction("Dimension"
+         , "Returns the dimension that contains a specified hierarchy, level, or member."
+         , "«Member/Level/Hierarchy».Dimension")));
+      dimensionFunctions.add(new DefaultMutableTreeNode(new MdxFunction("Dimensions"
+         , "Returns the dimension whose zero-based position within the cube is specified by a numeric expression or whose name is specified by a string."
+         , "Dimensions(«Numeric/String Expression»)")));
+d2073 2
+a2074 4
+      hierarchyFunctions = new DefaultMutableTreeNode("Hierarchy Functions");
+      hierarchyFunctions.add(new DefaultMutableTreeNode(new MdxFunction("Hierarchy"
+         , "Returns the hierarchy of a level or member."
+         , "«Member/Level».Hierarchy")));
+d2076 8
+a2083 10
+      levelFunctions = new DefaultMutableTreeNode("Level Functions");
+      levelFunctions.add(new DefaultMutableTreeNode(new MdxFunction("Level"
+         , "Returns the level of a member."
+         , "«Member».Level")));
+      levelFunctions.add(new DefaultMutableTreeNode(new MdxFunction("Levels"
+         , "Returns the level whose position in a dimension is specified by a numeric expression"
+         , "«Dimension».Levels(«Numeric Expression»)")));
+      levelFunctions.add(new DefaultMutableTreeNode(new MdxFunction("Levels"
+         , "Returns the level whose position in a dimension is specified by a string expression."
+         , "Levels(«String Expression»)")));
+d2085 2
+a2086 3
+      dimensionHierarchyAndLevelFunctions.add(dimensionFunctions);
+      dimensionHierarchyAndLevelFunctions.add(hierarchyFunctions);
+      dimensionHierarchyAndLevelFunctions.add(levelFunctions);
+d2088 8
+a2095 19
+      logicalFunctions = new DefaultMutableTreeNode("Logical Functions");
+      logicalFunctions.add(new DefaultMutableTreeNode(new MdxFunction("Is"
+         , "Returns True if two compared objects are equivalent, False otherwise."
+         , "«Object 1» IS «Object 2»")));
+      logicalFunctions.add(new DefaultMutableTreeNode(new MdxFunction("IsAncestor"
+         , "Determines whether a specified member is an ancestor of another specified member."
+         , "IsAncestor(«Member1»,«Member2»)")));
+      logicalFunctions.add(new DefaultMutableTreeNode(new MdxFunction("IsEmpty"
+         , "Determines whether an expression evaluates to the empty cell value."
+         , "IsEmpty(«Value Expression»)")));
+      logicalFunctions.add(new DefaultMutableTreeNode(new MdxFunction("IsGeneration"
+         , "Determines whether a specified member is in a specified generation."
+         , "IsGeneration(«Member»,«Numeric Expression»)")));
+      logicalFunctions.add(new DefaultMutableTreeNode(new MdxFunction("IsLeaf"
+         , "Determines whether a specified member is a leaf member."
+         , "IsLeaf(«Member»)")));
+      logicalFunctions.add(new DefaultMutableTreeNode(new MdxFunction("IsSibling"
+         , "Determines whether a specified member is a sibling of another specified member."
+         , "IsSibling(«Member1»,«Member2»)")));
+d2097 2
+a2098 13
+      tupleFunctions = new DefaultMutableTreeNode("Tuple Functions");
+      tupleFunctions.add(new DefaultMutableTreeNode(new MdxFunction( "Current"
+         , "Returns the current tuple from a set during an iteration."
+         , "«Set».Current")));
+      tupleFunctions.add(new DefaultMutableTreeNode(new MdxFunction("Item"
+         , "Returns a tuple from a set."
+         , "«Tuple».Item(«Index»)")));
+      tupleFunctions.add(new DefaultMutableTreeNode(new MdxFunction("Item"
+         , "Returns a tuple from a set."
+         , "«Set».Item(«String Expression»[, «String Expression»...] | «Index»)")));
+      tupleFunctions.add(new DefaultMutableTreeNode(new MdxFunction("StrToTuple"
+         , "Constructs a tuple from a string."
+         , "StrToTuple(«String Expression»)")));
+a2100 76
+      memberFunctions = new DefaultMutableTreeNode("Member Functions");
+      memberFunctions.add(new DefaultMutableTreeNode(new MdxFunction("Ancestor"
+         , "Returns the ancestor of a member at a specified level ."
+         , "Ancestor(«Member», «Level»)")));
+      memberFunctions.add(new DefaultMutableTreeNode(new MdxFunction("Ancestor"
+         , "Returns the ancestor of a member at a specified distance from the member."
+         , "Ancestor(«Member», «Numeric Expression»)")));
+      memberFunctions.add(new DefaultMutableTreeNode(new MdxFunction("ClosingPeriod"
+         , "Returns the last sibling among the descendants of a member at a level."
+         , "ClosingPeriod([«Level»[, «Member»]])")));
+      memberFunctions.add(new DefaultMutableTreeNode(new MdxFunction("Cousin"
+         , "Returns the member with the same relative position under a member as the member specified."
+         , "Cousin(«Member1», «Member2»)")));
+      memberFunctions.add(new DefaultMutableTreeNode(new MdxFunction("CurrentMember"
+         , "Returns the current member along a dimension during an iteration."
+         , "«Dimension».CurrentMember")));
+      memberFunctions.add(new DefaultMutableTreeNode(new MdxFunction("DataMember"
+         , "Returns the system-generated data member associated with a nonleaf member."
+         , "«Member».DataMember")));
+      memberFunctions.add(new DefaultMutableTreeNode(new MdxFunction("DefaultMember"
+         , "Returns the default member of a dimension or hierarchy."
+         , "«Dimension».DefaultMember")));
+      memberFunctions.add(new DefaultMutableTreeNode(new MdxFunction("FirstChild"
+         , "Returns the first child of a member."
+         , "«Member».FirstChild")));
+      memberFunctions.add(new DefaultMutableTreeNode(new MdxFunction("FirstSibling"
+         , "Returns the first child of the parent of a member."
+         , "«Member».FirstSibling")));
+      memberFunctions.add(new DefaultMutableTreeNode(new MdxFunction("Ignore"
+         , "Reserved."
+         , "Reserved.")));
+      memberFunctions.add(new DefaultMutableTreeNode(new MdxFunction("Item"
+         , "Returns a member from a tuple."
+         , "«Tuple».Item(«Index»)")));
+      memberFunctions.add(new DefaultMutableTreeNode(new MdxFunction("Item"
+         , "Returns a tuple from the set specified in «Set»."
+         , "«Set».Item(«String Expression»[, «String Expression»...] | «Index»)")));
+      memberFunctions.add(new DefaultMutableTreeNode(new MdxFunction("Lag"
+         , "Returns a member prior to the specified member along the member's dimension."
+         , "«Member».Lag(«Numeric Expression»)")));
+      memberFunctions.add(new DefaultMutableTreeNode(new MdxFunction("LastChild"
+         , "Returns the last child of a member."
+         , "«Member».LastChild")));
+      memberFunctions.add(new DefaultMutableTreeNode(new MdxFunction("LastSibling"
+         , "Returns the last child of the parent of a member."
+         , "«Member».LastSibling")));
+      memberFunctions.add(new DefaultMutableTreeNode(new MdxFunction("Lead"
+         , "Returns a member further along the specified member's dimension."
+         , "«Member».Lead(«Numeric Expression»)")));
+      memberFunctions.add(new DefaultMutableTreeNode(new MdxFunction("LinkMember"
+         , "Returns a hierarchized member."
+         , "LinkMember(«Member», «Hierarchy»)")));
+      memberFunctions.add(new DefaultMutableTreeNode(new MdxFunction("Members"
+         , "Returns the member whose name is specified by a string expression."
+         , "«Dimension/Hierarchy/Level/String Expression».Members")));
+      memberFunctions.add(new DefaultMutableTreeNode(new MdxFunction("NextMember"
+         , "Returns the next member in the level that contains a specified member."
+         , "«Member».NextMember")));
+      memberFunctions.add(new DefaultMutableTreeNode(new MdxFunction("OpeningPeriod"
+         , "Returns the first sibling among the descendants of a member at a level."
+         , "OpeningPeriod([«Level»[, «Member»]])")));
+      memberFunctions.add(new DefaultMutableTreeNode(new MdxFunction("ParallelPeriod"
+         , "Returns a member from a prior period in the same relative position as a specified member."
+         , "ParallelPeriod([«Level»[, «Numeric Expression»[, «Member»]]])")));
+      memberFunctions.add(new DefaultMutableTreeNode(new MdxFunction("Parent"
+         , "Returns the parent of a member."
+         , "«Member».Parent")));
+      memberFunctions.add(new DefaultMutableTreeNode(new MdxFunction("PrevMember"
+         , "Returns the previous member in the level that contains a specified member."
+         , "«Member».PrevMember")));
+      memberFunctions.add(new DefaultMutableTreeNode(new MdxFunction("StrToMember"
+         , "Returns a member based on a string expression."
+         , "StrToMember(«String Expression»)")));
+      memberFunctions.add(new DefaultMutableTreeNode(new MdxFunction("ValidMeasure"
+         , "Returns a valid measure in a virtual cube by forcing inapplicable dimensions to their top level."
+         , "ValidMeasure(«Tuple»)")));
+d2103 2
+a2104 118
+      numericFunctions = new DefaultMutableTreeNode("Numeric Functions");
+      numericFunctions.add(new DefaultMutableTreeNode(new MdxFunction("Aggregate"
+         , "Returns a calculated value using the appropriate aggregate function, based on the context of the query."
+         , "Aggregate(«Set»[, «Numeric Expression»])")));
+      numericFunctions.add(new DefaultMutableTreeNode(new MdxFunction("Avg"
+         , "Returns the average value of a numeric expression evaluated over a set."
+         , "Avg(«Set»[, «Numeric Expression»])")));
+      numericFunctions.add(new DefaultMutableTreeNode(new MdxFunction("CalculationCurrentPass"
+         , "Returns the current calculation pass of a cube for the current query context."
+         , "CalculationCurrentPass()")));
+      numericFunctions.add(new DefaultMutableTreeNode(new MdxFunction("CalculationPassValue"
+         , "Returns the value of an MDX expression evaluated over a specified calculation pass of the current cube."
+         , "CalculationPassValue(«Numeric Expression», «Pass Value»[, «Access Flag»])")));
+      numericFunctions.add(new DefaultMutableTreeNode(new MdxFunction("CoalesceEmpty"
+         , "Coalesces an empty cell value to a number or a string."
+         , "CoalesceEmpty(«Numeric Expression»[, «Numeric Expression»]...)")));
+      numericFunctions.add(new DefaultMutableTreeNode(new MdxFunction("Correlation"
+         , "Returns the correlation of two series evaluated over a set."
+         , "Correlation(«Set», «Numeric Expression»[, «Numeric Expression»])")));
+      numericFunctions.add(new DefaultMutableTreeNode(new MdxFunction("Count"
+         , "Returns the number of dimensions in a cube."
+         , "Dimensions.Count")));
+      numericFunctions.add(new DefaultMutableTreeNode(new MdxFunction("Count"
+         , "Returns the number of levels in a dimension."
+         , "«Dimension»|«Hierarchy».Levels.Count")));
+      numericFunctions.add(new DefaultMutableTreeNode(new MdxFunction("Count"
+         , "Returns the number of cells in a set."
+         , "Count(«Set»[, ExcludeEmpty | IncludeEmpty])")));
+      numericFunctions.add(new DefaultMutableTreeNode(new MdxFunction("Count"
+         , "Returns the number of cells in a set."
+         , "«Set».Count")));
+      numericFunctions.add(new DefaultMutableTreeNode(new MdxFunction("Covariance"
+         , "Returns the population covariance of two series evaluated over a set, using the biased population formula."
+         , "Covariance(«Set», «Numeric Expression»[, «Numeric Expression»])")));
+      numericFunctions.add(new DefaultMutableTreeNode(new MdxFunction("CovarianceN"
+         , "Returns the sample covariance of two series evaluated over a set, using the unbiased population formula."
+         , "CovarianceN(«Set», «Numeric Expression»[, «Numeric Expression»])")));
+      numericFunctions.add(new DefaultMutableTreeNode(new MdxFunction("DistinctCount"
+         , "Returns the count of tuples in a set, excluding duplicate tuples."
+         , "DistinctCount(«Set»)")));
+      numericFunctions.add(new DefaultMutableTreeNode(new MdxFunction("IIf"
+         , "Returns one of two numeric or string values determined by a logical test."
+         , "IIf(«Logical Expression», «Numeric|String Expression1», «Numeric|String Expression2»)")));
+      numericFunctions.add(new DefaultMutableTreeNode(new MdxFunction("LinRegIntercept"
+         , "Calculates the linear regression of a set and returns the value of b in the regression line y = ax + b."
+         , "LinRegIntercept(«Set», «Numeric Expression»[, «Numeric Expression»])")));
+      numericFunctions.add(new DefaultMutableTreeNode(new MdxFunction("LinRegPoint"
+         , "Calculates the linear regression of a set and returns the value of y in the regression line y = ax + b."
+         , "LinRegPoint(«Numeric Expression», «Set», «Numeric Expression»[, «Numeric Expression»])")));
+      numericFunctions.add(new DefaultMutableTreeNode(new MdxFunction("LinRegR2"
+         , "Calculates the linear regression of a set and returns R2 (the coefficient of determination)."
+         , "LinRegR2(«Set», «Numeric Expression»[, «Numeric Expression»])")));
+      numericFunctions.add(new DefaultMutableTreeNode(new MdxFunction("LinRegSlope"
+         , "Calculates the linear regression of a set and returns the value of a in the regression line y = ax + b."
+         , "LinRegSlope(«Set», «Numeric Expression»[, «Numeric Expression»])")));
+      numericFunctions.add(new DefaultMutableTreeNode(new MdxFunction("LinRegVariance"
+         , "Calculates the linear regression of a set and returns the variance associated with the regression line y = ax + b."
+         , "LinRegVariance(«Set», «Numeric Expression»[, «Numeric Expression»])")));
+      numericFunctions.add(new DefaultMutableTreeNode(new MdxFunction("LookupCube"
+         , "Returns the value of an MDX expression evaluated over another specified cube in the same database."
+         , "LookupCube(«Cube String», «Numeric|String Expression»)")));
+      numericFunctions.add(new DefaultMutableTreeNode(new MdxFunction("Max"
+         , "Returns the maximum value of a numeric expression evaluated over a set."
+         , "Max(«Set»[, «Numeric Expression»])")));
+      numericFunctions.add(new DefaultMutableTreeNode(new MdxFunction("Median"
+         , "Returns the median value of a numeric expression evaluated over a set."
+         , "Median(«Set»[, «Numeric Expression»])")));
+      numericFunctions.add(new DefaultMutableTreeNode(new MdxFunction("Min"
+         , "Returns the minimum value of a numeric expression evaluated over a set."
+         , "Min(«Set»[, «Numeric Expression»])")));
+      numericFunctions.add(new DefaultMutableTreeNode(new MdxFunction("Ordinal"
+         , "Returns the zero-based ordinal value associated with a level."
+         , "«Level».Ordinal")));
+      numericFunctions.add(new DefaultMutableTreeNode(new MdxFunction("Predict"
+         , "Evaluates the string expression within the data mining model specified within the current coordinates."
+         , "Predict(«Mining Model Name», «Numeric Expression»)")));
+      numericFunctions.add(new DefaultMutableTreeNode(new MdxFunction("Rank"
+         , "Returns the one-based rank of a tuple in a set."
+         , "Rank(«Tuple», «Set»[, «Calc Expression»])")));
+      numericFunctions.add(new DefaultMutableTreeNode(new MdxFunction("RollupChildren"
+         ,
+         "Scans the children of the member parameter and applies the string expression operator to their evaluated value."
+         , "RollupChildren(«Member», «String Expression»)")));
+      numericFunctions.add(new DefaultMutableTreeNode(new MdxFunction("Stddev"
+         , "Alias for Stdev."
+         , "Stdev(«Set»[, «Numeric Expression»])")));
+      numericFunctions.add(new DefaultMutableTreeNode(new MdxFunction("StddevP"
+         , "Alias for StdevP."
+         , "StdevP(«Set»[, «Numeric Expression»])")));
+      numericFunctions.add(new DefaultMutableTreeNode(new MdxFunction("Stdev"
+         , "Returns the sample standard deviation of a numeric expression evaluated over a set, using the unbiased population formula."
+         , "Stdev(«Set»[, «Numeric Expression»])")));
+      numericFunctions.add(new DefaultMutableTreeNode(new MdxFunction("StdevP"
+         , "Returns the population standard deviation of a numeric expression evaluated over a set, using the biased population formula."
+         , "StdevP(«Set»[, «Numeric Expression»])")));
+      numericFunctions.add(new DefaultMutableTreeNode(new MdxFunction("StrToValue"
+         , "Returns a value based on a string expression."
+         , "StrToValue(«String Expression»)")));
+      numericFunctions.add(new DefaultMutableTreeNode(new MdxFunction("Sum"
+         , "Returns the sum of a numeric expression evaluated over a set."
+         , "Sum(«Set»[, «Numeric Expression»])")));
+      numericFunctions.add(new DefaultMutableTreeNode(new MdxFunction("Value"
+         , "Returns the value of a measure."
+         , "«Member».Value")));
+      numericFunctions.add(new DefaultMutableTreeNode(new MdxFunction("Var"
+         ,
+         "Returns the sample variance of a numeric expression evaluated over a set, using the unbiased population formula."
+         , "Var(«Set»[, «Numeric Expression»])")));
+      numericFunctions.add(new DefaultMutableTreeNode(new MdxFunction("Variance"
+         , "Alias for Var."
+         , "Var(«Set»[, «Numeric Expression»])")));
+      numericFunctions.add(new DefaultMutableTreeNode(new MdxFunction("VarianceP"
+         , "Alias for VarP."
+         , "VarP(«Set»[, «Numeric Expression»])")));
+      numericFunctions.add(new DefaultMutableTreeNode(new MdxFunction("VarP"
+         ,
+         "Returns the population variance of a numeric expression evaluated over a set, using the biased population formula."
+         , "VarP(«Set»[, «Numeric Expression»])")));
+d2106 31
+a2136 4
+      otherFunctions = new DefaultMutableTreeNode("Other Functions");
+      otherFunctions.add(new DefaultMutableTreeNode(new MdxFunction("Call"
+         , "Executes the string expression containing a user-defined function."
+         , "Call «UDF Name»")));
+d2138 10
+a2147 169
+      setFunctions = new DefaultMutableTreeNode("Set Functions");
+      setFunctions.add(new DefaultMutableTreeNode(new MdxFunction("AddCalculatedMembers"
+         , "Adds calculated members to a set."
+         , "AddCalculatedMembers(«Set»)")));
+      setFunctions.add(new DefaultMutableTreeNode(new MdxFunction("AllMembers"
+         , "Returns a set containing all members of a specified dimension or level, including calculated members."
+         , "«Dimension|Level».AllMembers")));
+      setFunctions.add(new DefaultMutableTreeNode(new MdxFunction("Ancestors"
+         , "Returns all the ancestors of a member at a specified distance."
+         , "Ancestors(«Member», «Numeric Expression»)")));
+      setFunctions.add(new DefaultMutableTreeNode(new MdxFunction("Ancestors"
+         , "Returns all the ancestors of a member at a specified level."
+         , "Ancestors(«Member», «Level»)")));
+      setFunctions.add(new DefaultMutableTreeNode(new MdxFunction("Ascendants"
+         , "Returns the set of the ascendants of the member, including the member itself."
+         , "Ascendants(«Member»)")));
+      setFunctions.add(new DefaultMutableTreeNode(new MdxFunction("Axis"
+         , "Returns the set associated with the main axis."
+         , "Axis(«Numeric Expression»)")));
+      setFunctions.add(new DefaultMutableTreeNode(new MdxFunction("BottomCount"
+         , "Returns a specified number of items from the bottom of a set, optionally ordering the set first."
+         , "BottomCount(«Set», «Count»[, «Numeric Expression»])")));
+      setFunctions.add(new DefaultMutableTreeNode(new MdxFunction("BottomPercent"
+         , "Sorts a set and returns the bottom n elements whose cumulative total is at least a specified percentage."
+         , "BottomPercent(«Set», «Percentage», «Numeric Expression»)")));
+      setFunctions.add(new DefaultMutableTreeNode(new MdxFunction("BottomSum"
+         , "Sorts a set and returns the bottom n elements whose cumulative total is at least a specified value."
+         , "BottomSum(«Set», «Value», «Numeric Expression»)")));
+      setFunctions.add(new DefaultMutableTreeNode(new MdxFunction("Children"
+         , "Returns the children of a member."
+         , "«Member».Children")));
+      setFunctions.add(new DefaultMutableTreeNode(new MdxFunction("Crossjoin"
+         , "Returns the cross product of two sets."
+         , "Crossjoin(«Set1», «Set2»)")));
+      setFunctions.add(new DefaultMutableTreeNode(new MdxFunction("Descendants"
+         , "Returns the set of descendants of a member at a specified level, optionally including or excluding descendants in other levels."
+         , "Descendants(«Member», [«Level»[, «Desc_flags»]])")));
+      setFunctions.add(new DefaultMutableTreeNode(new MdxFunction("Descendants"
+         , "Returns the set of descendants of a member at a specified distance from a member, optionally including or excluding descendants in other levels."
+         , "Descendants(«Member», «Distance»[, «Desc_flags»])")));
+      setFunctions.add(new DefaultMutableTreeNode(new MdxFunction("Distinct"
+         , "Eliminates duplicate tuples from a set."
+         , "Distinct(«Set»)")));
+      setFunctions.add(new DefaultMutableTreeNode(new MdxFunction("DrilldownLevel"
+         , "Drills down the members of a set, at a specified level, to one level below. Alternatively, drills down on a specified dimension in the set."
+         , "DrilldownLevel(«Set»[, {«Level» | , «Index»}])")));
+      setFunctions.add(new DefaultMutableTreeNode(new MdxFunction("DrilldownLevelBottom"
+         , "Drills down the bottom n members of a set, at a specified level, to one level below."
+         , "DrilldownLevelBottom(«Set», «Count»[, [«Level»][, «Numeric Expression»]])")));
+      setFunctions.add(new DefaultMutableTreeNode(new MdxFunction("DrilldownLevelTop"
+         , "Drills down the top n members of a set, at a specified level, to one level below."
+         , "DrilldownLevelTop(«Set», «Count»[, [«Level»][, «Numeric Expression»]])")));
+      setFunctions.add(new DefaultMutableTreeNode(new MdxFunction("DrilldownMember"
+         , "Drills down the members in a set that are present in a second specified set."
+         , "DrilldownMember(«Set1», «Set2»[, RECURSIVE])")));
+      setFunctions.add(new DefaultMutableTreeNode(new MdxFunction("DrilldownMemberBottom"
+         , "Similar to DrilldownMember, except that it includes only the bottom n children."
+         , "DrilldownMemberBottom(«Set1», «Set2», «Count»[, [«Numeric Expression»][, RECURSIVE]])")));
+      setFunctions.add(new DefaultMutableTreeNode(new MdxFunction("DrilldownMemberTop"
+         , "Similar to DrilldownMember, except that it includes only the top n children."
+         , "DrilldownMemberTop(«Set1», «Set2», «Count»[, [«Numeric Expression»][, RECURSIVE]])")));
+      setFunctions.add(new DefaultMutableTreeNode(new MdxFunction("DrillupLevel"
+         , "Drills up the members of a set that are below a specified level."
+         , "DrillupLevel(«Set»[, «Level»])")));
+      setFunctions.add(new DefaultMutableTreeNode(new MdxFunction("DrillupMember"
+         , "Drills up the members in a set that are present in a second specified set."
+         , "DrillupMember(«Set1», «Set2»)")));
+      setFunctions.add(new DefaultMutableTreeNode(new MdxFunction("Except"
+         , "Finds the difference between two sets, optionally retaining duplicates."
+         , "Except(«Set1», «Set2»[, ALL])")));
+      setFunctions.add(new DefaultMutableTreeNode(new MdxFunction("Extract"
+         , "Returns a set of tuples from extracted dimension elements. The opposite of Crossjoin."
+         , "Extract(«Set», «Dimension»[, «Dimension»...])")));
+      setFunctions.add(new DefaultMutableTreeNode(new MdxFunction("Filter"
+         , "Returns the set resulting from filtering a set based on a search condition."
+         , "Filter(«Set», «Search Condition»)")));
+      setFunctions.add(new DefaultMutableTreeNode(new MdxFunction("Generate"
+         , "Applies a set to each member of another set and joins the resulting sets by union."
+         , "Generate(«Set1», «Set2»[, ALL])")));
+      setFunctions.add(new DefaultMutableTreeNode(new MdxFunction("Generate"
+         , "Applies a set to each member of another set and joins the resulting sets by union."
+         , "Generate(«Set», «String Expression»[, «Delimiter»])")));
+      setFunctions.add(new DefaultMutableTreeNode(new MdxFunction("Head"
+         , "Returns the first specified number of elements in a set."
+         , "Head(«Set»[, «Numeric Expression»])")));
+      setFunctions.add(new DefaultMutableTreeNode(new MdxFunction("Hierarchize"
+         , "Orders the members of a set in a hierarchy."
+         , "Hierarchize(«Set»[, POST])")));
+      setFunctions.add(new DefaultMutableTreeNode(new MdxFunction("Intersect"
+         , "Returns the intersection of two input sets, optionally retaining duplicates."
+         , "Intersect(«Set1», «Set2»[, ALL])")));
+      setFunctions.add(new DefaultMutableTreeNode(new MdxFunction("LastPeriods"
+         , "Returns a set of members prior to and including a specified member."
+         , "LastPeriods(«Index»[, «Member»])")));
+      setFunctions.add(new DefaultMutableTreeNode(new MdxFunction("Members"
+         , "Returns the set of all members in a dimension, hierarchy, or level."
+         , "«Dimension|Hierarchy|Level».Members")));
+      setFunctions.add(new DefaultMutableTreeNode(new MdxFunction("Members"
+         , "Returns the set of all members in a dimension, hierarchy, or level."
+         , "Members(«String Expression»)")));
+      setFunctions.add(new DefaultMutableTreeNode(new MdxFunction("Mtd"
+         , "A shortcut function for the PeriodsToDate function that specifies the level to be Month."
+         , "Mtd([«Member»])")));
+      setFunctions.add(new DefaultMutableTreeNode(new MdxFunction("NameToSet"
+         , "Returns a set containing a single member based on a string expression containing a member name."
+         , "NameToSet(«Member Name»)")));
+      setFunctions.add(new DefaultMutableTreeNode(new MdxFunction("NonEmptyCrossjoin"
+         , "Returns the cross product of two or more sets, excluding empty members."
+         , "NonEmptyCrossjoin(«Set1», «Set2»[, «Set3»...][, «Crossjoin Set Count»])")));
+      setFunctions.add(new DefaultMutableTreeNode(new MdxFunction("Order"
+         , "Arranges members of a set, optionally preserving or breaking the hierarchy."
+         , "Order(«Set», {«String Expression» | «Numeric Expression»} [, ASC | DESC | BASC | BDESC])")));
+      setFunctions.add(new DefaultMutableTreeNode(new MdxFunction("PeriodsToDate"
+         , "Returns a set of periods (members) from a specified level starting with the first period and ending with a specified member."
+         , "PeriodsToDate([«Level»[, «Member»]])")));
+      setFunctions.add(new DefaultMutableTreeNode(new MdxFunction("Qtd"
+         , "A shortcut function for the PeriodsToDate function that specifies the level to be Quarter."
+         , "Qtd([«Member»])")));
+      setFunctions.add(new DefaultMutableTreeNode(new MdxFunction("Siblings"
+         , "Returns the siblings of a member, including the member itself."
+         , "«Member».Siblings")));
+      setFunctions.add(new DefaultMutableTreeNode(new MdxFunction("StripCalculatedMembers"
+         , "Removes calculated members from a set."
+         , "StripCalculatedMembers(«Set»)")));
+      setFunctions.add(new DefaultMutableTreeNode(new MdxFunction("StrToSet"
+         , "Constructs a set from a string expression."
+         , "StrToSet(«String Expression»)")));
+      setFunctions.add(new DefaultMutableTreeNode(new MdxFunction("Subset"
+         , "Returns a subset of elements from a set."
+         , "Subset(«Set», «Start»[, «Count»])")));
+      setFunctions.add(new DefaultMutableTreeNode(new MdxFunction("Tail"
+         , "Returns a subset from the end of a set."
+         , "Tail(«Set»[, «Count»])")));
+      setFunctions.add(new DefaultMutableTreeNode(new MdxFunction("ToggleDrillState"
+         , "Toggles the drill state of members. This function is a combination of DrillupMember and DrilldownMember."
+         , "ToggleDrillState(«Set1», «Set2»[, RECURSIVE])")));
+      setFunctions.add(new DefaultMutableTreeNode(new MdxFunction("TopCount"
+         , "Returns a specified number of items from the top of a set, optionally ordering the set first."
+         , "TopCount(«Set», «Count»[, «Numeric Expression»])")));
+      setFunctions.add(new DefaultMutableTreeNode(new MdxFunction("TopPercent"
+         , "Sorts a set and returns the top n elements whose cumulative total is at least a specified percentage."
+         , "TopPercent(«Set», «Percentage», «Numeric Expression»)")));
+      setFunctions.add(new DefaultMutableTreeNode(new MdxFunction("TopSum"
+         , "Sorts a set and returns the top n elements whose cumulative total is at least a specified value."
+         , "TopSum(«Set», «Value», «Numeric Expression»)")));
+      setFunctions.add(new DefaultMutableTreeNode(new MdxFunction("Union"
+         , "Returns the union of two sets, optionally retaining duplicates."
+         , "Union(«Set1», «Set2»[, ALL])")));
+      setFunctions.add(new DefaultMutableTreeNode(new MdxFunction("VisualTotals"
+         , "Dynamically totals child members specified in a set using a pattern for the total label in the result set."
+         , "VisualTotals(«Set», «Pattern»)")));
+      setFunctions.add(new DefaultMutableTreeNode(new MdxFunction("Wtd"
+         , "A shortcut function for the PeriodsToDate function that specifies the level to be Week."
+         , "Wtd([«Member»])")));
+      setFunctions.add(new DefaultMutableTreeNode(new MdxFunction("Ytd"
+         , "A shortcut function for the PeriodsToDate function that specifies the level to be Year."
+         , "Ytd([«Member»])")));
+
+
+
+      top.add(arrayFunctions);
+      top.add(dimensionHierarchyAndLevelFunctions);
+      top.add(logicalFunctions);
+      top.add(memberFunctions);
+      top.add(numericFunctions);
+      top.add(otherFunctions);
+      top.add(setFunctions);
+      top.add(stringFunctions);
+      top.add(tupleFunctions);
+d2153 27
+d2181 6
+d2202 4
+d2212 5
+a2216 1
+
+d2248 4
+a2251 1
+
+d2253 1
+a2253 1
+       JFrame frame = new JFrame("Testing DataSourceTree...");
+@
+

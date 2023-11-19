@@ -1,0 +1,624 @@
+head	1.10;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.10
+date	2004.05.03.09.06.45;	author michald;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	2004.03.29.06.04.55;	author michald;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	2004.03.21.07.01.13;	author michald;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	2004.03.12.16.11.27;	author michald;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	2004.03.11.07.59.00;	author michald;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	2003.12.03.06.46.45;	author michald;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2003.11.10.06.35.57;	author michald;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2003.07.30.07.46.09;	author michald;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2003.07.04.06.19.19;	author michald;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2003.05.28.15.33.34;	author michald;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.10
+log
+@N:M implementation, foundation for slowly changing dimensions
+@
+text
+@#-----------------------------------------------------
+#  MySQL specific functions
+#-----------------------------------------------------
+# $Id: DBlib.pm,v 1.9 2004/03/29 06:04:55 michald Exp $
+
+
+package DBlib;
+
+use strict;
+use DBI;
+use DBIx::Admin::TableInfo;
+
+our @@SQLErrors = ();
+my $dbh={};
+my $LogF;
+my $LogLevel;
+
+BEGIN {
+	$LogLevel = $Const::LogLevel;
+	if ($LogLevel && !$LogF) {
+		$LogF = "sql.log";
+		open (LOG,">>$LogF") || print ("\nERROR: Can't open log file $LogF, (LogLevel=$LogLevel)\n");
+		my $ofh = select(LOG); $| = 1; select ($ofh); #misto autoflush, ktery nekdy nefunguje
+	#	LOG->autoflush(1);
+	}
+}
+
+#__________________________________________________________
+#
+
+sub DBConnect {
+	my($DB, $Database, $User, $Password, $Host, $Port, $Enc, $Info) = @@_;
+
+	return if exists $dbh->{$DB};
+	$dbh->{$DB}->{Database} = $Database;
+	$dbh->{$DB}->{User} = $User;
+	$dbh->{$DB}->{Password} = $Password ? $Password : '';
+	$dbh->{$DB}->{Host} = $Host ? $Host : 'localhost';
+	$dbh->{$DB}->{Port} = $Port ? $Port : '3306';
+	$dbh->{$DB}->{Enc} = $Enc ? $Enc : 'iso-8859-2';
+	$dbh->{$DB}->{dbh} = DBI->connect("DBI:mysql:database=$dbh->{$DB}->{Database};host=$dbh->{$DB}->{Host};port=$dbh->{$DB}->{Port}",
+		$dbh->{$DB}->{User}, $dbh->{$DB}->{Password}, {AutoCommit => 1})
+		|| (&LogError($DB,undef,undef));
+	if (!@@SQLErrors) {
+		if ($LogLevel) { print LOG "\n$DB>---------- CONNECT ".&Time2SQL(time)." ----------\n" };
+	}
+	$dbh->{$DB}->{dbh}->{mysql_auto_reconnect} = 1;
+	ColectInfo($DB) if $Info;
+}
+
+#__________________________________________________________
+#
+
+sub ColectInfo {
+	my $DB=shift;
+	return if exists $dbh->{$DB}->{info};
+	my $admin = DBIx::Admin::TableInfo -> new(dbh => $dbh->{$DB}->{dbh})
+		 || (&LogError($DB,'ColectInfo'));
+	$dbh->{$DB}->{info} = $admin->info() if $admin;
+}
+
+#__________________________________________________________
+#
+
+sub IsDBConnected {
+	my $DB=shift;
+	return (ref($dbh->{$DB}->{dbh}) eq 'DBI::db') && ($dbh->{$DB}->{dbh}->ping);
+}
+
+#__________________________________________________________
+#
+
+sub CheckConnection {
+	my($DB) = shift;
+	
+	return 1 if $dbh->{$DB}->{dbh}->ping;	# connection is still open
+	
+	$dbh->{$DB}->{dbh}->disconnect;
+	$dbh->{$DB}->{dbh} = DBI->connect("DBI:mysql:database=$dbh->{$DB}->{Database};host=$dbh->{$DB}->{Host};port=$dbh->{$DB}->{Port}", $dbh->{$DB}->{User}, $dbh->{$DB}->{Password})
+		|| (&LogError($DB,undef,undef));
+	if ($dbh->{$DB}->{dbh}->ping) {
+		if ($LogLevel) { print LOG "\n$DB> Succesfully Reconnected\n" };
+		return 1;
+	} else {
+		if ($LogLevel) { print LOG "\n$DB> Reconnection Failed\n" };
+		return 0;
+	}
+}
+
+#__________________________________________________________
+#
+
+sub DBEncoding {
+	my $DB=shift;
+	return $dbh->{$DB}->{Enc};
+}
+
+#__________________________________________________________
+#
+
+sub SQLQuery {
+	my($DB,$Query) = @@_;
+	if ($LogLevel) { print LOG "\n$DB> $Query\n" };
+	$dbh->{$DB}->{dbh}->do($Query) || &LogError($DB,undef,$Query);
+}
+
+#__________________________________________________________
+#
+
+sub SQLFetchOneLineQuery {
+	my($DB, $Query) = @@_;
+	if ($LogLevel) { print LOG "\n$DB> $Query\n" };
+	my $ar = $dbh->{$DB}->{dbh}->selectrow_arrayref($Query);
+	&LogError($DB,undef,$Query) if $dbh->{$DB}->{dbh}->err;
+	return @@{$ar} if $ar
+}
+
+#__________________________________________________________
+#
+
+sub LogError {
+	my($DB,$QueryID,$Query) = @@_;
+	$QueryID='' if (!$QueryID);
+	$Query='' if (!$Query);
+	if (ref($dbh->{$DB}->{dbh})=~/^DBI/) {	# $dbh->{$DB}->{dbh} was set
+	    my $err = $dbh->{$DB}->{dbh}->errstr ? $dbh->{$DB}->{dbh}->errstr : 'Unrecognized ERROR';
+    	if ($LogLevel) { print LOG "\n$DB.$QueryID> ######### $err\n" };
+    	push (@@SQLErrors, "$DB.$QueryID> $Query <B>$err</B>" );
+	} else {
+	    if ($LogLevel) { print LOG "\n$DB> ######### Connection Failed.\n" };
+	    push (@@SQLErrors, "Connection Failed" );
+	} 
+}
+
+#__________________________________________________________
+#
+
+sub SQLPrepareQuery {
+	my($DB,$QueryID,$Query) = @@_;
+	if ($LogLevel) { print LOG "\n$DB.$QueryID> $Query\n" };
+	$dbh->{$DB}->{sth}->{$QueryID} = $dbh->{$DB}->{dbh}->prepare($Query) 
+		|| (&LogError($DB,$QueryID,$Query));
+}
+
+#__________________________________________________________
+#
+
+sub SQLExecuteQuery {
+	my($DB,$QueryID,@@val) = @@_;
+	if ($LogLevel>4) { print LOG "\n$DB.$QueryID> --- ".join(',',@@val)."\n" };
+	$dbh->{$DB}->{sth}->{$QueryID}->execute(@@val)
+		|| (&LogError($DB,$QueryID,"Execution of Values: ".join('|',@@val)));
+}
+
+#__________________________________________________________
+#
+
+sub ColumnType {
+	my($DB, $table, $column) = @@_;
+	return if !exists $dbh->{$DB}->{info}->{$table}->{columns}->{$column};
+	my $ColInf = $dbh->{$DB}->{info}->{$table}->{columns}->{$column};
+	return $ColInf->{mysql_type_name} if exists $ColInf->{mysql_type_name};
+	if ($ColInf->{TYPE_NAME} =~ /CHAR|VARCHAR/i) {
+		return "$ColInf->{TYPE_NAME}($ColInf->{COLUMN_SIZE})"
+	} else {
+		return $ColInf->{TYPE_NAME}
+	}
+}
+
+#__________________________________________________________
+#
+
+sub TableInfo {
+	my($DB, $table) = @@_;
+	return $dbh->{$DB}->{info}->{$table} if exists $dbh->{$DB}->{info}->{$table};
+}
+
+#__________________________________________________________
+#
+
+sub SQLPrepareFetch {
+	my($DB,$QueryID,$Query) = @@_;
+	if ($Query) {
+		if ($LogLevel) { print LOG "\n$DB.$QueryID> $Query\n" };
+		$dbh->{$DB}->{sth}->{$QueryID} = $dbh->{$DB}->{dbh}->prepare($Query)
+			|| (&LogError($DB,$QueryID,"Preparation of ".$Query));
+		$dbh->{$DB}->{sth}->{$QueryID}->execute
+			|| (&LogError($DB,$QueryID,"Execution of ".$Query));
+	} else { &LogError($DB,$QueryID,"Query is empty") }
+}
+
+#__________________________________________________________
+#
+
+sub SQLFetch {
+	my($DB,$QueryID) = @@_;
+	$dbh->{$DB}->{sth}->{$QueryID}->fetchrow_array
+}
+
+#__________________________________________________________
+#
+
+sub SQLFetchRef {
+	my($DB,$QueryID) = @@_;
+	$dbh->{$DB}->{sth}->{$QueryID}->fetchrow_arrayref
+}
+
+#__________________________________________________________
+#
+
+sub SQLFetchRows {	# rows affected 
+	my($DB,$QueryID) = @@_;
+	$dbh->{$DB}->{sth}->{$QueryID}->rows
+}
+
+#__________________________________________________________
+#
+
+sub LastInsertedID {	# database specific !!!
+	my($DB,$QueryID) = @@_;
+
+	my $lid=$dbh->{$DB}->{sth}->{$QueryID}->{'mysql_insertid'};
+	if ($LogLevel) { print LOG "\n$DB> Last ID = $lid\n" };
+	$lid
+}
+
+#__________________________________________________________
+#
+
+sub SQLFetchClose {
+	my($DB,$QueryID) = @@_;
+	$dbh->{$DB}->{sth}->{$QueryID}->finish;
+	delete $dbh->{$DB}->{sth}->{$QueryID}
+}
+
+#__________________________________________________________
+#
+
+sub DBDisConnect {
+	my($DB) = @@_;
+	if ($LogLevel) { print LOG "\n$DB> DISCONNECT\n" };
+	$dbh->{$DB}->{dbh}->disconnect;
+	delete $dbh->{$DB}
+}
+
+#__________________________________________________________
+#
+
+sub FixSQLString {	# database specific !!!
+	my($DB,$str) = @@_;
+	if ($str) { $dbh->{$DB}->{dbh}->quote($str) }
+	else {"''"}
+}
+
+#__________________________________________________________
+#
+
+sub Time2SQL {
+# Usage:  $syst_secs = &Time2SQL(time)
+
+	my ($t)=shift;
+	my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = localtime($t);
+
+	$year+=1900;
+	$mon++;
+	$mon=~s/^(\d)$/0$1/;
+	$mday=~s/^(\d)$/0$1/;
+	$hour=~s/^(\d)$/0$1/;
+	$min=~s/^(\d)$/0$1/;
+	$sec=~s/^(\d)$/0$1/;
+	$year."-".$mon."-".$mday." ".$hour.":".$min.":".$sec
+
+}
+
+#__________________________________________________________
+#
+
+1
+@
+
+
+1.9
+log
+@new lookup cache management
+@
+text
+@d4 1
+a4 1
+# $Id: DBlib.pm,v 1.8 2004/03/21 07:01:13 michald Exp $
+d57 3
+a59 2
+	my($admin)	= DBIx::Admin::TableInfo -> new(dbh => $dbh->{$DB}->{dbh});
+	$dbh->{$DB}->{info}	= $admin->info();
+@
+
+
+1.8
+log
+@slight modification of the Metric Filter Intersection MD presentation
+@
+text
+@d4 1
+a4 1
+# $Id: DBlib.pm,v 1.7 2004/03/12 16:11:27 michald Exp $
+d159 3
+a161 1
+	my $ColInf = $dbh->{$DB}->{info}->{$table}->{'columns'}->{$column};
+d172 8
+@
+
+
+1.7
+log
+@minor fixes and some comments
+@
+text
+@d4 1
+a4 1
+# $Id: DBlib.pm,v 1.6 2004/03/11 07:59:00 michald Exp $
+d41 2
+a42 1
+	$dbh->{$DB}->{dbh} = DBI->connect("DBI:mysql:database=$dbh->{$DB}->{Database};host=$dbh->{$DB}->{Host};port=$dbh->{$DB}->{Port}", $dbh->{$DB}->{User}, $dbh->{$DB}->{Password})
+d47 1
+@
+
+
+1.6
+log
+@initial implementation of caches in the local DB
+@
+text
+@d4 1
+a4 1
+# $Id: DBlib.pm,v 1.5 2003/12/03 06:46:45 michald Exp $
+d46 1
+a46 1
+	ColectInfo() if $Info;
+@
+
+
+1.5
+log
+@fix for selects from only the fact table
+@
+text
+@d4 1
+a4 1
+# $Id: DBlib.pm,v 1.4 2003/11/10 06:35:57 michald Exp $
+d11 1
+d13 1
+a13 1
+my @@SQLErrors = ();
+a15 1
+my $OLQid=0;	# unique id for SQLFetchOneLineQuery
+d32 1
+a32 1
+	my($DB, $Database, $User, $Password, $Host, $Port, $Enc) = @@_;
+d46 11
+d108 5
+a112 7
+	my($DB,$Query) = @@_;
+	$OLQid++;
+	my $OLQidL=$OLQid;
+	&SQLPrepareFetch($DB,$OLQidL,$Query);
+	my (@@v)=&SQLFetch($DB,$OLQidL);
+	&SQLFetchClose($DB,$OLQidL);
+	return @@v
+d122 4
+a125 7
+	if (exists($dbh->{$DB}->{dbh})) {
+	    my $err=''; 
+		if (ref($dbh->{$DB}->{dbh})=~/HASH/) {	# $dbh->{$DB}->{dbh} was set
+			($err=$dbh->{$DB}->{dbh}->errstr);
+		}
+	    if ($LogLevel) { print LOG "\n$DB.$QueryID> ######### $err\n" };
+	    push (@@SQLErrors, "$DB.$QueryID> $Query <B>$err</B>" );
+d129 1
+a129 1
+        } 
+d147 1
+a147 1
+	if ($LogLevel) { print LOG "\n$DB.$QueryID> --- ".join(',',@@val)."\n" };
+d155 13
+@
+
+
+1.4
+log
+@map graph prototype
+@
+text
+@d4 1
+a4 1
+# $Id: DBlib.pm,v 1.3 2003/07/30 07:46:09 michald Exp $
+d13 1
+a13 1
+my (%dbh, %sth, %enc);
+d16 1
+d19 2
+a20 1
+	if ($Const::LogLevel && !$LogF) {
+d22 1
+a22 1
+		open (LOG,">>$LogF") || print ("\nERROR: Can't open log file $LogF, (LogLevel=$Const::LogLevel)\n");
+d34 8
+a41 5
+	if (!$Password) {$Password=''};
+	if (!$Host) {$Host="localhost"};
+	if (!$Port) {$Port=3306};
+	if (!$Enc) {$Enc='iso-8859-2'};
+	$dbh{$DB} = DBI->connect("DBI:mysql:database=$Database;host=$Host;port=$Port", "$User", "$Password")
+d44 1
+a44 2
+		$enc{$DB} = $Enc;
+		if ($Const::LogLevel) { print LOG "\n$DB>---------- CONNECT ".&Time2SQL(time)." ----------\n" };
+d53 21
+a73 1
+	return (ref($dbh{$DB}) eq 'DBI::db');
+d81 1
+a81 1
+	return $enc{$DB};
+d89 2
+a90 2
+	if ($Const::LogLevel) { print LOG "\n$DB> $Query\n" };
+	$dbh{$DB}->do($Query) || (&LogError($DB,undef,$Query));
+d103 1
+a103 1
+	@@v
+d113 1
+a113 1
+	if (exists($dbh{$DB})) {
+d115 2
+a116 2
+		if (ref($dbh{$DB})=~/HASH/) {	# $dbh{$DB} was set
+			($err=$dbh{$DB}->errstr);
+d118 1
+a118 1
+	    if ($Const::LogLevel) { print LOG "\n$DB.$QueryID> ######### $err\n" };
+d121 1
+a121 1
+	    if ($Const::LogLevel) { print LOG "\n$DB> ######### Connection Failed.\n" };
+d131 2
+a132 2
+	if ($Const::LogLevel) { print LOG "\n$DB.$QueryID> $Query\n" };
+	$sth{$DB}{$QueryID} = $dbh{$DB}->prepare($Query) 
+d141 2
+a142 2
+	if ($Const::LogLevel) { print LOG "\n$DB.$QueryID> --- ".join(',',@@val)."\n" };
+	$sth{$DB}{$QueryID}->execute(@@val)
+d152 2
+a153 2
+		if ($Const::LogLevel) { print LOG "\n$DB.$QueryID> $Query\n" };
+		$sth{$DB}{$QueryID} = $dbh{$DB}->prepare($Query)
+d155 1
+a155 1
+		$sth{$DB}{$QueryID}->execute
+d165 1
+a165 1
+	$sth{$DB}{$QueryID}->fetchrow_array
+d173 1
+a173 1
+	$sth{$DB}{$QueryID}->fetchrow_arrayref
+d181 1
+a181 1
+	$sth{$DB}{$QueryID}->rows
+d190 2
+a191 2
+	my $lid=$sth{$DB}{$QueryID}->{'mysql_insertid'};
+	if ($Const::LogLevel) { print LOG "\n$DB> Last ID = $lid\n" };
+d200 2
+a201 2
+	$sth{$DB}{$QueryID}->finish;
+	delete $sth{$DB}{$QueryID}
+d209 3
+a211 3
+	if ($Const::LogLevel) { print LOG "\n$DB> DISCONNECT\n" };
+	$dbh{$DB}->disconnect;
+	delete $dbh{$DB}
+d219 1
+a219 1
+	if ($str) { $dbh{$DB}->quote($str) }
+@
+
+
+1.3
+log
+@creation of lookup table combinations
+@
+text
+@d4 1
+a4 1
+# $Id: $
+d18 1
+a18 1
+	if ($main::LogLevel && !$LogF) {
+d20 1
+a20 1
+		open (LOG,">>$LogF") || print ("\nERROR: Can't open log file $LogF, (LogLevel=$main::LogLevel)\n");
+d40 1
+a40 1
+		if ($main::LogLevel) { print LOG "\n$DB>---------- CONNECT ".&Time2SQL(time)." ----------\n" };
+d65 1
+a65 1
+	if ($main::LogLevel) { print LOG "\n$DB> $Query\n" };
+d94 1
+a94 1
+	    if ($main::LogLevel) { print LOG "\n$DB.$QueryID> ######### $err\n" };
+d97 1
+a97 1
+	    if ($main::LogLevel) { print LOG "\n$DB> ######### Connection Failed.\n" };
+d107 1
+a107 1
+	if ($main::LogLevel) { print LOG "\n$DB.$QueryID> $Query\n" };
+d117 1
+a117 1
+	if ($main::LogLevel) { print LOG "\n$DB.$QueryID> --- ".join(',',@@val)."\n" };
+d128 1
+a128 1
+		if ($main::LogLevel) { print LOG "\n$DB.$QueryID> $Query\n" };
+d167 1
+a167 1
+	if ($main::LogLevel) { print LOG "\n$DB> Last ID = $lid\n" };
+d185 1
+a185 1
+	if ($main::LogLevel) { print LOG "\n$DB> DISCONNECT\n" };
+@
+
+
+1.2
+log
+@some fixes for proper utf8 encoding, see README for details
+@
+text
+@d4 1
+a4 1
+# $Id $
+@
+
+
+1.1
+log
+@move of some code into separate modules
+@
+text
+@d13 1
+a13 1
+my (%dbh, %sth);
+d30 1
+a30 1
+	my($DB, $Database, $User, $Password, $Host, $Port) = @@_;
+d35 1
+d38 4
+a41 1
+	if (($main::LogLevel)&&(!@@SQLErrors)) { print LOG "\n$DB>---------- CONNECT ".&Time2SQL(time)." ----------\n" };
+d50 8
+@
+

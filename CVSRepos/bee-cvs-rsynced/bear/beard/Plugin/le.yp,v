@@ -1,0 +1,154 @@
+head	1.1;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.1
+date	2004.03.21.07.01.21;	author michald;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@slight modification of the Metric Filter Intersection MD presentation
+@
+text
+@%right   OR
+%right   AND
+%left   EQ
+%left   NEG
+
+%%
+
+input:  #empty
+	|	lexp '\n'	{ ++$_[0]->YYData->{LINE}; \@@Calc::filt }
+	|	error '\n'	{ ++$_[0]->YYData->{LINE}; $_[0]->YYErrok }
+;
+
+lexp:	soq
+	|	soe
+	|	lexp OR lexp	{
+			my @@la = 'OR';
+			for my $i ($_[1], $_[3]) {
+				if ($Calc::filt[$i][0] eq 'OR') {
+					push @@la, @@{$Calc::filt[$i]}[1..$#{$Calc::filt[$i]}];
+					splice @@Calc::filt, $i, 1;
+				} else {
+					push @@la, $i
+				}
+			}
+			push @@Calc::filt, [@@la];
+			scalar(@@Calc::filt)-1 }
+	|	lexp AND lexp	{
+			my @@la = 'AND';
+			for my $i ($_[1], $_[3]) {
+				if ($Calc::filt[$i][0] eq 'AND') {
+					push @@la, @@{$Calc::filt[$i]}[1..$#{$Calc::filt[$i]}];
+					splice @@Calc::filt, $i, 1;
+				} else {
+					push @@la, $i
+				}
+			}
+			push @@Calc::filt, [@@la];
+			scalar(@@Calc::filt)-1 }
+	|	NOT lexp %prec NEG	{
+			if ($Calc::filt[$_[2]][0] eq '.') {
+				push @@Calc::filt, ['NOT', @@{$Calc::filt[$_[2]]}[1]];
+				splice @@Calc::filt, $_[2], 1;
+			} else {
+				push @@Calc::filt, ['NOT', $_[2]]
+			}
+			scalar(@@Calc::filt)-1 }
+	|   '(' lexp ')'	{
+			push @@Calc::filt, ['()', $_[2]];
+			scalar(@@Calc::filt)-1 }
+;
+
+soq:	soe EQ soe	{
+			push @@Calc::filt, [$_[2], $_[1], $_[3]];
+			scalar(@@Calc::filt)-1 }
+	|	soe LIKE soes	{
+			push @@Calc::filt, ['LIKE', $_[1], $_[3]];
+			scalar(@@Calc::filt)-1 }
+	|	soe IN soel	{
+			$_[3]=~s/\s//g;
+			push @@Calc::filt, ['IN', $_[1], $_[3]];
+			scalar(@@Calc::filt)-1 }
+	|	soe NOTIN soel	{
+			$_[3]=~s/\s//g;
+			push @@Calc::filt, ['NOT IN', $_[1], $_[3]];
+			scalar(@@Calc::filt)-1 }
+	|	NOT soq %prec NEG	{
+			push @@Calc::filt, ['NOT', $_[2]];
+			scalar(@@Calc::filt)-1 }
+	|   soe	{ $_[1] }
+;
+
+soe:	NUM	{
+			push @@Calc::filt, ['NUM', $_[1]];
+			scalar(@@Calc::filt)-1 }
+	|   OBJ	{
+			push @@Calc::filt, ['OBJ', $_[1]];
+			scalar(@@Calc::filt)-1 }
+	|   soes	{ $_[1] }
+;
+
+soel:	LIST	{
+			push @@Calc::filt, ['LIST', $_[1]];
+			scalar(@@Calc::filt)-1 }
+;
+
+soes:	STR	{
+			push @@Calc::filt, ['STR', $_[1]];
+			scalar(@@Calc::filt)-1 }
+;
+
+
+%%
+
+our @@filt;
+
+# --------------------------------
+
+sub Clean {
+	@@filt = ();
+}
+
+# --------------------------------
+
+sub Error {
+    my($parser)=shift;
+	$parser->YYData->{ERRLINE_NO} = $parser->YYData->{LINE};
+	$parser->YYData->{ERRLINE} = $parser->YYData->{INPUT};
+}
+
+# --------------------------------
+
+sub Lexer {
+    my($parser)=shift;
+
+#	exists($parser->YYData->{LINE}) or $parser->YYData->{LINE}=1;
+	$parser->YYData->{INPUT} or return('',undef);
+
+    $parser->YYData->{INPUT}=~s/^[ \t]//;
+
+    for ($parser->YYData->{INPUT}) {
+        s/^\(((\s*(\d+|'.+?')\s*,)+(\s*(\d+|'.+?')\s*)|\s*\d+\s*|\s*'.+?'\s*)\)// && return('LIST',$1) ;
+        s/^([0-9]+(?:\.[0-9]+)?)// && return('NUM',$1);
+        s/^'(.+?)'// && return('STR',$1);
+        s/^\[(.+?)\]// && return('OBJ',$1);
+        s/^(NOT IN)// && return('NOTIN',$1);
+        s/^(AND|OR|NOT|LIKE|IN)// && return($1,$1);
+        s/^(=|>=|>|<>|<=|<)// && return('EQ',$1);
+        s/^(.)//s && return($1,$1);
+    }
+}
+
+@

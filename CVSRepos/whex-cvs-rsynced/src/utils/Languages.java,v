@@ -1,0 +1,38 @@
+head	1.1;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.1
+date	2006.01.13.12.38.15;	author igorludi;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@*** empty log message ***
+@
+text
+@package rex.utils;
+
+/**
+ * <p>Title: WHEX</p>
+ * <p>Description: </p>
+ * <p>Copyright: Copyright (c) 2003</p>
+ * <p>Company: </p>
+ * @@author igor
+ * @@version 1.0
+ */
+
+public interface Languages {
+   int HR  = 0,
+       ENG = 1;
+   int LANGUAGE_COUNT = 2;
+}@

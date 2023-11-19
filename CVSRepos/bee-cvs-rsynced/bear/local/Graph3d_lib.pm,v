@@ -1,0 +1,84 @@
+head	1.1;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.1
+date	2003.10.31.12.47.57;	author jiri_schmid;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@mod perl rocks!
+@
+text
+@#-----------------------------------------------------
+#  Graph3d Editation
+#-----------------------------------------------------
+# $Id: Graph3d.pm,v 1.1 2003/10/16 14:08:53 jiri_schmid Exp $
+
+package Graph3d_lib;
+
+use strict;
+#-----------------------------------------------------
+
+sub existsDefinition {
+my ($obj, $localTab) = (shift, shift);
+if (exists $$obj->{$localTab}) {
+	if (exists $$obj->{$localTab}->{items} && exists $$obj->{$localTab}->{quantity}) { return 1 }
+}
+return undef
+}
+
+#-----------------------------------------------------
+sub saveDTSC { #saving procedure for Diameter, Transparency, Shape and Color
+my ($q, $obj, $localTab) = (shift, shift, shift);
+my @@pole;
+my $name;
+my $add;
+delete($$obj->{$localTab}{rules}) if (exists $$obj->{$localTab}{rules});
+if ($$q->param('metric')) {
+	foreach (0..$#{$$obj->{$localTab}{items}}) {
+		undef @@pole;
+		my $id = @@{$$obj->{$localTab}{items}}[$_];
+		my $end = sprintf("%.0f",8/@@{$$obj->{$localTab}{items}});
+		for my $cnt (0..$end) {
+			$name = "view${_}$cnt";
+			push(@@pole,$$q->param($name),$$q->param("change".${_}.$cnt)) if $$q->param($name);
+			}
+		@@{$$obj->{$localTab}{rules}}[$_] = [@@pole];
+	}
+} else {
+	for my $cnt (0..5) {
+		$add = 0;
+		undef @@pole;
+		foreach (0..$#{$$obj->{$localTab}{items}}) {
+			$name = "view${cnt}_$_";
+			$add++ if $$q->param($name);
+			push(@@pole,$$q->param($name));
+		}
+		$name = "change${cnt}";
+		push(@@pole,$$q->param($name));
+		@@{$$obj->{$localTab}{rules}}[$cnt] = [@@pole] if $add > 0;
+	}
+}
+if ($$obj->{$localTab}{quantity} eq "on") {
+	$$obj->{$localTab}{interpolation} = $$q->param('interpolation');
+	$$obj->{$localTab}{max} = $$q->param('max');
+	$$obj->{$localTab}{min} = $$q->param('min');
+} else {
+$$obj->{$localTab}{interpolation} = 'constant';
+}
+$$obj->{$localTab}{default} = $$q->param('default');
+}
+
+1
+@

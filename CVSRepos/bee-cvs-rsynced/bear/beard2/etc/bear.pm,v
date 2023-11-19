@@ -1,0 +1,87 @@
+head	1.1;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.1
+date	2004.03.23.07.33.32;	author numberone;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@
+beard2/cached
+
+funkcni metoda 'start <report_id>' (krome samotneho vraceni dotazu)
+
+xml konfigurace prepsana na includovany .pm soubor
+
+do MData.pm pripravena metoda get_report a sql_gen pro cached
+@
+text
+@
+# There are no other `defaults' than these. 
+# You can't remove any parameter, only change.
+
+package Config;
+
+our %DW_db = ( # DW MySQL database
+		dsn => "dbi:SQLite:var/DW.db", 
+		user => "dataware", pass => "heslo" );
+
+1;
+
+package Config::Cached;
+
+our $socket       = "tmp/cached.sock";
+our $ident        = "bear_cached";  # syslog prefix
+our $cache_prefix = "_report_";     # cache_db tables: _report_<id>
+our $DW_prefix    = "_cache_";      #    DW_db tables: _cache_<MD5>
+
+our %cache_db = (  # local MySQL cache database (SQLite now)
+		dsn => "dbi:SQLite:var/cache.db", 
+		user => "bear_cache", pass => "heslo" );
+
+our $limit = undef; 	# return only $limit rows of report
+
+1;
+
+package Config::API;
+
+our $get_report  = "get_report"; # \%tree = get_report($report_id_from_client)
+our $sql_gen     = "sql_gen";    # sql_gen(\%tree,$md5,@@deps), returns listref:
+				 				 #  \%dw    - DW connection, see %cache_db
+				 				 #  \@@names - column names
+								 #  $CREATE - stmt with '?' placeholded name
+								 #  $SQL    - "SELECT INTO FROM" stmt
+our $fork_tag    = "from"; 		 # name of forking hash key in tree definition
+
+1;
+
+package Config::MData;
+
+our $pool = '5';
+
+1;
+
+package Config::MData_read;
+
+our $socket = "tmp/mdata-read.sock";
+
+1;
+
+package Config::MData_write;
+
+our $socket = "tmp/mdata-write.sock";
+
+1;
+
+@

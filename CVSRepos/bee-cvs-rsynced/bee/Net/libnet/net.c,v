@@ -1,0 +1,616 @@
+head	1.13;
+access;
+symbols;
+locks; strict;
+comment	@ * @;
+
+
+1.13
+date	2003.10.30.09.38.42;	author numberone;	state Exp;
+branches;
+next	1.12;
+
+1.12
+date	2003.10.29.18.49.24;	author numberone;	state Exp;
+branches;
+next	1.11;
+
+1.11
+date	2003.10.29.10.52.30;	author numberone;	state Exp;
+branches;
+next	1.10;
+
+1.10
+date	2003.10.29.08.27.19;	author numberone;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	2003.10.29.08.23.23;	author numberone;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	2003.10.29.07.08.28;	author numberone;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	2003.10.29.07.08.00;	author numberone;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	2003.10.29.06.59.08;	author numberone;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	2003.10.27.16.24.04;	author numberone;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2003.10.23.07.59.14;	author numberone;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2003.09.12.09.29.52;	author numberone;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2003.08.22.12.54.25;	author numberone;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2003.06.03.13.15.39;	author numberone;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.13
+log
+@net->port instead of net->listen
+@
+text
+@#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
+#include "net.h"
+#include "sys.h"
+
+// htonl functions
+#ifdef WIN32
+#include<winsock.h>
+#else
+#include <netinet/in.h>
+#endif
+
+// for select()
+#ifndef WIN32
+#include <sys/time.h>
+#include <sys/types.h>
+#include <unistd.h>
+#include <sys/select.h>
+#endif
+
+fd_set g_fds;
+int    g_maxfd;
+
+
+#define PERROR(fx) { perror(fx); exit(1); }
+
+#define BUFF_SIZE_INITIAL	8192
+#define BUFF_SIZE_INC		4096
+
+
+// base constructor
+Net create_net(int sys_type,int sock,char *peer,char* auth,void *data) {
+	Net net;
+
+	net = calloc(1,sizeof(*net));
+	net->sock = sock;
+	net->blocking = 1;
+
+	net_watch(net->sock); // add to select()
+	
+	net->peer = peer ? strdup(peer) : NULL;
+	net->auth = auth ? strdup(auth) : NULL;
+	net->data = data;
+
+	// empty, but existing buffer
+	// we will realloc() it later
+	net->buff_len = BUFF_SIZE_INITIAL;
+	net->buffer = malloc(net->buff_len);
+
+	DEBUG("creating NET(sock=%d)\n",net->sock);
+
+	switch(sys_type) {
+
+	case NET_SYS_INET:
+		net->sys_read   = (void*)inet_read;
+		net->sys_write  = (void*)inet_write;
+		net->sys_close  = (void*)inet_close;
+		net->sys_block  = (void*)inet_block;
+		net->sys_accept = (void*)inet_accept;
+		break;
+
+	case NET_SYS_UNIX:
+		net->sys_read   = (void*)unix_read;
+		net->sys_write  = (void*)unix_write;
+		net->sys_close  = (void*)unix_close;
+		net->sys_block  = (void*)unix_block;
+		net->sys_accept = NULL;
+		break;
+	
+	case NET_SYS_SSL:
+		net->sys_read   = (void*)ssl_read;
+		net->sys_write  = (void*)ssl_write;
+		net->sys_close  = (void*)ssl_close;
+		net->sys_block  = (void*)ssl_block;
+		net->sys_accept = (void*)ssl_accept;
+		break;
+
+	default:
+		exit(6); // !!!
+	}
+	return net;
+}
+
+Bool net_block(Net net,Bool block) {
+	if(block != net->blocking) {
+		DEBUG("blocking(%d->%d on sock=%d)\n",net->blocking,block,net->sock);
+		net->sys_block(net,block);
+		net->blocking = block ? 1 : 0;
+	}
+	return net->blocking;
+}
+
+
+// 'constructor'
+// returns NULL on error
+Net net_accept(Net net,Bool wait) {
+	net_block(net,wait);
+	if(!net->sys_accept) return NULL; // can't do accept on this type
+	return net->sys_accept(net);
+}
+
+typedef unsigned int UINT32;
+
+// returns 0 on error or length on success
+// fix: it dies on error instead of returing 0
+int net_write(Net net,void *chunk,int len) {
+	int			err;
+	UINT32		len32;
+
+	net_block(net,1);
+
+	if(!len) exit(3); // fix: write EINVAL
+
+	len32 	= htonl(len);
+	err = net->sys_write(net,&len32,sizeof(len32));
+	if(err == -1) PERROR("write32()");
+
+	DEBUG("writing %d bytes\n",len);
+	err = net->sys_write(net,chunk,len);
+	if(err == -1) PERROR("write()");
+
+	return len;
+	return 0;
+}
+
+
+
+// return chunk
+// huh, not in-site, too much malloc/memcpy/free :-(
+// returns 
+// NULL and 0 in *len on idle, 
+// NULL and negative number (NET_PEEK_* constant) in *len on error
+// data/length on success, caller must free() data
+void* net_read(Net net,int *len) {
+	void* buffer;
+
+	if(!len) exit(3); // be polite, write something!! (EINVAL)
+
+	*len = net_peek(net);
+
+	// error, closed or idle
+	if(*len <= 0) return null;
+
+	buffer = malloc(*len);
+	memcpy(buffer, net->buffer+4, (*len));
+
+	// shrink buffer
+	net->real_len -= (4 + (*len));
+	memmove(net->buffer, net->buffer+4+(*len), net->real_len);
+
+	DEBUG("%d bytes read\n",(*len));
+	return buffer;
+}
+
+char* net_peer(Net net) { return net->peer; }
+char* net_auth(Net net) { return net->auth; }
+
+static msg_size(Net net,int len) {
+	UINT32	header;
+
+	if(!net->buffer) return NET_PEEK_IDLE;
+
+	if(net->real_len < 4) return (len < 0) ? NET_PEEK_ERROR : NET_PEEK_IDLE;
+
+	header = *((UINT32*)(void*)net->buffer);
+	header = ntohl(header);
+
+	// null-sized messages not supported
+	if(!header) return NET_PEEK_ERROR;
+
+	if(4 + header <= (unsigned)net->real_len) return header;
+
+	return (len < 0) ? NET_PEEK_ERROR : NET_PEEK_IDLE;
+}
+
+// returns error -2, closed -1, idle 0, ready $msglen
+// => msg can NOT have 0 bytes length! 
+// actually it's net_peek who is doing real sys_read()
+int net_peek(Net net) {
+	int 	len;
+
+	net_block(net,0);
+
+	if(!net->buffer) return NET_PEEK_CLOSED;
+
+	// ensure we have enough space 
+	if(net->buff_len - net->real_len < BUFF_SIZE_INC)
+		net->buffer = realloc(net->buffer, 
+							  net->buff_len += BUFF_SIZE_INC );
+
+	// read to the end of buffer
+	len = net->sys_read(net,net->buffer   + net->real_len,
+						    net->buff_len - net->real_len );
+	net->real_len += (len < 0) ? 0 : len;
+
+	if(len < 0 && net->real_len == 0) return NET_PEEK_CLOSED;
+
+	DEBUG("peek: len=%d, buff_len=%d, real_len=%d",
+					len,net->buff_len,net->real_len);
+
+	return msg_size(net,len);
+/*	if(len < 0) {
+		// unexcepted end, fix: errno==EIO ??
+		if(len != -1) return NET_PEEK_ERROR;
+		if(net->real_len == 0) return NET_PEEK_CLOSED;
+		if(net->real_len <  4) return NET_PEEK_ERROR;
+		// if(4 + header < net->real_len) 
+//		return NET_PEEK_ERROR;
+	}
+
+	return (4 + header > net->real_len) ? NET_PEEK_IDLE : header; */
+}
+
+
+void net_close(Net net) {
+	net->sys_close(net);
+	DEBUG("closing sock=%d\n",net->sock);
+	if(net->buffer) free(net->buffer);
+	net->buffer	= null; // fuse
+
+	net_release(net->sock);
+	
+	net->sock	= 0;	// fuse 
+	if(net->peer) free(net->peer);
+	if(net->auth) free(net->auth);
+	free(net);
+}
+
+Bool net_init(char *certfile,char* keyfile,char* password) {
+	if(!inet_init()) return 0;
+	if(!ssl_init(certfile,keyfile,password)) return 0;
+
+	FD_ZERO(&g_fds);
+	g_maxfd = 0;
+	
+	return 1;
+}
+
+// sigfault on m$ - malloc/free seems to diff in net.c and Net.xs
+void net_free(void *buffer) { free(buffer); }
+
+int net_watch(int fd) {
+	FD_SET(fd,&g_fds);
+	if(fd > g_maxfd) g_maxfd = fd;
+	return 1;
+}
+
+int net_release(int fd) {
+	FD_CLR(fd,&g_fds);
+	return 1;
+}
+
+int net_select(Net net[],int micro) {
+	fd_set rfds;
+	struct timeval timeout;
+	int	   ret;
+
+	timeout.tv_sec  = micro / 1000000;
+	timeout.tv_usec = micro % 1000000;
+
+	rfds = g_fds;
+	ret = select(g_maxfd + 1, &rfds, NULL, NULL, &timeout);
+	if(ret == -1) NETERROR("select()");
+	return ret;
+}
+
+int net_port(Net net) {
+	return net->port;
+}
+
+@
+
+
+1.12
+log
+@windoze fails..
+@
+text
+@d268 2
+a269 2
+int net_listen(Net net) {
+	return net->listen;
+@
+
+
+1.11
+log
+@automatic port allocation, net->listen returns port number
+@
+text
+@d257 1
+a257 1
+	int	   maxsock = 0;
+d263 3
+a265 1
+	return select(g_maxfd + 1, &rfds, NULL, NULL, &timeout);
+@
+
+
+1.10
+log
+@compile-time warnings removed
+@
+text
+@a30 5
+//#define DEBUG(format,args...)
+#define QUIET 
+#define DEBUG 
+#define PRINT 
+
+d266 3
+@
+
+
+1.9
+log
+@debug prints removed
+@
+text
+@d262 1
+a262 1
+	int	   sock,maxsock = 0;
+@
+
+
+1.8
+log
+@Net - warnings free
+@
+text
+@d34 1
+a34 1
+#define PRINT printf
+@
+
+
+1.7
+log
+@Net select - win32 ready
+@
+text
+@d251 1
+d256 1
+@
+
+
+1.6
+log
+@libNet -- no warnings..
+@
+text
+@a238 1
+#ifndef WIN32
+a240 1
+#endif
+a248 1
+#ifndef WIN32
+a250 1
+#endif
+a253 1
+#ifndef WIN32
+a254 1
+#endif
+a257 4
+#ifdef WIN32
+	// not implemented
+	return -2;
+#else
+a266 15
+	
+	/*
+	FD_ZERO(&rfds);
+
+	while(*net) {
+		if(msg_size(*net) > 0) return 123456;
+//		if(net_peek(*net) > 0) return 123456;
+		sock = (*net)->sock;
+		FD_SET(sock,&rfds);
+		if(sock > maxsock) maxsock = sock;
+		net++;
+	}
+	return select(maxsock + 1,&rfds,NULL,NULL,&timeout);
+	*/
+#endif
+@
+
+
+1.5
+log
+@select() working on windows :-)
+@
+text
+@d14 1
+a14 1
+// unix select()
+d166 1
+a166 1
+	
+d239 1
+d242 1
+d251 1
+d254 1
+d258 1
+d260 1
+d264 4
+d270 2
+a271 2
+	int	   ret,maxsock = 0;
+	
+d276 16
+a291 5
+	printf("calling select:\n");
+	ret = select(g_maxfd + 1, &rfds, NULL, NULL, &timeout);
+	printf(" ...%d\n",ret);
+	if(ret == -1) NETERROR("select()");
+	return ret;
+@
+
+
+1.4
+log
+@typos
+@
+text
+@d20 1
+a23 1
+#endif
+d164 1
+a164 1
+static msg_size(Net net) {
+d166 1
+a166 2
+	int 	len;
+
+d207 1
+a207 1
+	return msg_size(net);
+a238 1
+#ifndef WIN32
+a240 1
+#endif
+a248 1
+#ifndef WIN32
+a250 1
+#endif
+a253 1
+#ifndef WIN32
+a254 1
+#endif
+a257 4
+#ifdef WIN32
+	// not implemented
+	return -2;
+#else
+d260 2
+a261 2
+	int	   sock,maxsock = 0;
+
+d266 5
+a270 16
+	return select(g_maxfd + 1, &rfds, NULL, NULL, &timeout);
+	
+	/*
+	FD_ZERO(&rfds);
+
+	while(*net) {
+		if(msg_size(*net) > 0) return 123456;
+//		if(net_peek(*net) > 0) return 123456;
+		sock = (*net)->sock;
+		FD_SET(sock,&rfds);
+		if(sock > maxsock) maxsock = sock;
+		net++;
+	}
+	return select(maxsock + 1,&rfds,NULL,NULL,&timeout);
+	*/
+#endif
+@
+
+
+1.3
+log
+@user@@pass
+@
+text
+@d295 1
+@
+
+
+1.2
+log
+@net - select
+@
+text
+@d45 1
+a45 4
+#ifndef WIN32
+	FD_SET(net->sock,&g_fds);
+	if(net->sock > g_maxfd) g_maxfd = net->sock;
+#endif
+d228 1
+a228 3
+#ifndef WIN32
+	FD_CLR(net->sock,&g_fds);
+#endif
+d250 13
+@
+
+
+1.1
+log
+@bee-0.9.1 -- version merge
+@
+text
+@d21 1
+a21 2
+fd_set g_rfds;
+fd_set g_wfds;
+d46 1
+a46 2
+	FD_SET(net->sock,&g_rfds);
+	FD_SET(net->sock,&g_wfds);
+d232 1
+a232 2
+	FD_CLR(net->sock,&g_rfds);
+	FD_CLR(net->sock,&g_wfds);
+d246 2
+a247 2
+	FD_ZERO(&g_rfds);
+	FD_ZERO(&g_wfds);
+d268 4
+d283 1
+@
+

@@ -1,0 +1,182 @@
+head	1.3;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.3
+date	2004.06.15.10.11.40;	author numberone;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2004.06.08.15.11.59;	author numberone;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2004.05.11.10.50.39;	author tuco80;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.3
+log
+@
+new Prepare API
+
+This breaks compatibility with old .bee code, because every stream
+input/output must be initialized first, bee has to call ->prepare()
+method on stream objects in .bee code before calling ->put or ->get.
+
+Or, instead of ->prepare(), bee can call general ->prepare_sql($cmd),
+or, in the future, methods like ->prepare_select($table,$cols,$where,..),
+->prepare_update(...), ->prepare_delete(...)
+
+Next new method, execute(), is same as put() for UPDATE or DELETE.
+But note that in order to do SELECT, we need to call DBI's execute().
+Method prepare() with no arguments call's execute() for as.
+
+So, correct is:
+
+$input->prepare()
+$input->fetch, fetch, fetch, ..
+
+$input->prepare_sql("SELECT ...") or die "no SQL stream"
+$input->exeucte() # !
+$input->fetch, fetch, fetch, ..
+
+$input->prepare_sql("UPDATE ...") or die "no SQL stream"
+$input->execute(..), execute, excute (or put())
+
+All stream .bee input/output variables have following methods:
+
+prepare()         -- prepare and execute DBI statement
+prepare_sql($cmd) -- prepare DBI statement
+execute()         -- execute DBI statement
+put()             -- execute DBI statement or write to stream
+fetch()           -- fetch from DBI statement or read to stream
+table()           -- returns table name, from URL
+fields()          -- returns list of fields, from URL
+@
+text
+@<?xml version="1.0" encoding="ISO-8859-2"?>
+<script lang="perl" name='gen15'>
+
+<input name="i" type='scalar' />
+
+<output name="out1" type='stream' arity="1" />
+<output name="out2" type='stream' arity="1" />
+<output name="out3" type='stream' arity="1" />
+<output name="out4" type='stream' arity="1" />
+<output name="out5" type='stream' arity="1" />
+<output name="out6" type='stream' arity="1" />
+<output name="out7" type='stream' arity="1" />
+<output name="out8" type='stream' arity="1" />
+<output name="out9" type='stream' arity="1" />
+<output name="out10" type='stream' arity="1" />
+<output name="out11" type='stream' arity="1" />
+<output name="out12" type='stream' arity="1" />
+<output name="out13" type='stream' arity="1" />
+<output name="out14" type='stream' arity="1" />
+<output name="out15" type='stream' arity="1" />
+
+<code>
+<![CDATA[
+
+print "gen15: hello\n";
+
+out1->prepare();
+out2->prepare();
+out3->prepare();
+out4->prepare();
+out5->prepare();
+out6->prepare();
+out7->prepare();
+out8->prepare();
+out9->prepare();
+out10->prepare();
+out11->prepare();
+out12->prepare();
+out13->prepare();
+out14->prepare();
+out15->prepare();
+
+while($i--) {
+#	my $a = 'a' x ($i & 63);
+#	$out1->put($i,$a);
+	$out1->put(1);
+	$out2->put(1);
+	$out3->put(1);
+	$out4->put(1);
+	$out5->put(1);
+	$out6->put(1);
+	$out7->put(1);
+	$out8->put(1);
+	$out9->put(1);
+	$out10->put(0);
+	$out11->put(1);
+	$out12->put(1);
+	$out13->put(1);
+	$out14->put(1);
+	$out15->put(1);
+}
+
+]]>
+</code>
+
+</script>
+
+@
+
+
+1.2
+log
+@
+Prepare API
+
+every bee must call ->prepare() before ->put()/->fetch()
+
+or they can call ->prepare_sql("SELECT/INSERT ...")
+
+->put() is identical to new ->execute()
+@
+text
+@d27 16
+@
+
+
+1.1
+log
+@Examples for buffering debug
+@
+text
+@d25 1
+a25 1
+print "gen: hello\n";
+d28 17
+a44 17
+	my $x = 'a' x ($i % 1024);
+	$out1->put($x.$x);
+	$out2->put($x.$x);
+	$out3->put($x.$x);
+	$out4->put($x.$x);
+	$out5->put($x.$x);
+	$out6->put($x.$x);
+	$out7->put($x.$x);
+	$out8->put($x.$x);
+	$out9->put($x.$x);
+	$out10->put($x.$x);
+	$out11->put($x.$x);
+	$out12->put($x.$x);
+	$out13->put($x.$x);
+	$out14->put($x.$x);
+	$out15->put($x.$x);
+#	print "gen2: $i \"$x\"\n" if(($i % 1000) == 0);
+@
+

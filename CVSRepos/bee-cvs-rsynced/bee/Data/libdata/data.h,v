@@ -1,0 +1,631 @@
+head	1.16;
+access;
+symbols;
+locks; strict;
+comment	@ * @;
+
+
+1.16
+date	2004.08.04.15.12.58;	author numberone;	state Exp;
+branches;
+next	1.15;
+
+1.15
+date	2004.05.13.12.51.29;	author numberone;	state Exp;
+branches;
+next	1.14;
+
+1.14
+date	2004.05.13.12.31.55;	author numberone;	state Exp;
+branches;
+next	1.13;
+
+1.13
+date	2004.05.13.07.56.09;	author numberone;	state Exp;
+branches;
+next	1.12;
+
+1.12
+date	2004.05.12.14.33.40;	author numberone;	state Exp;
+branches;
+next	1.11;
+
+1.11
+date	2004.05.11.18.08.46;	author numberone;	state Exp;
+branches;
+next	1.10;
+
+1.10
+date	2004.05.10.13.14.58;	author numberone;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	2004.05.08.10.49.53;	author numberone;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	2004.04.30.14.12.16;	author numberone;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	2003.10.29.12.26.14;	author numberone;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	2003.10.27.15.08.04;	author numberone;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	2003.09.15.08.20.07;	author numberone;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2003.08.11.06.58.06;	author numberone;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2003.07.09.09.43.20;	author numberone;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2003.07.08.17.55.32;	author numberone;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2003.07.07.11.06.24;	author numberone;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.16
+log
+@
+Development moved to cobra server,
+
+only working releases will be uploaded to the public
+@
+text
+@/*
+ * C<Data> is library for transfering streams of rows between processes
+ * or network. 
+ *
+ * Uses TCP/IP or UNIX sockets, will use blowfish and gzip, I hope :-)
+ *
+ * Copyright (c) 2003 Martin Sarfy <sarfy@@instrat.cz> */
+
+#ifndef HEADER_DATA_H_INCLUDED
+#define HEADER_DATA_H_INCLUDED
+
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+#ifndef null
+#define null 0L
+#endif
+
+#define LEN_NO_0     0
+#define LEN_NO_MAX   199
+#define LEN_STR_0    200
+#define LEN_STR_MAX  240
+#define LEN_RESERVED 241
+#define LEN_INT16    242
+#define LEN_INT32    243
+#define LEN_STR32    244
+#define LEN_UNDEF    245
+// 246-254 are free
+#define LEN_ENDOFROW 255
+
+/* length byte codes: */
+/*
+#define LEN_RESERVED 0
+// 1-127 -- length
+#define LEN_MAXLEN	 127
+// next 4 bytes with length, network order
+#define LEN_32BIT	 128
+// reserved 0
+#define LEN_RSVD0	 129
+// 130..139 => 0..9 numbers
+#define LEN_0		 130
+#define LEN_9		 139
+// 140..149 => 00..09 STRINGS !
+#define LEN_00		 140
+#define LEN_09		 149
+// 140..239 => 00..99 numbers
+#define LEN_10		 150
+#define LEN_99		 239
+// reserved range: 240-252
+#define LEN_EMPTY	 253
+#define LEN_UNDEF 	 254
+// row separator
+#define LEN_ENDOFROW 255
+//
+#define LEN_NO_MAX   99
+#define LEN_INT32    238
+*/
+
+#ifndef byte
+typedef unsigned char byte;
+#endif
+
+// FIX: comment!!
+#define DATA_CHUNKS_MASK 0x3f
+
+struct DataStruct {
+	int	  sock;
+
+	int	  serversock; // used as send/recv flag too
+	void* addr;
+	int   addr_len;
+
+	char* xinu; // unix. but when I type name 'unix', gcc says:
+				// error: parse error before numeric constant :-)
+	int   port; // TCP listen port or 0 if UNIX socket
+
+	void* send_buff;
+	int   send_size;
+	int   send_pool;
+	int   send_len;
+
+	void* recv_buff;
+	void* recv_end;
+	int   recv_pool;
+	void* recv_row;
+	void* recv_ptr;
+
+	int   io_sent;
+	int   io_received;
+
+	// blowfish key
+	// bzip table
+	// peer name ?
+
+	struct DataStruct * next;
+};
+
+typedef struct DataStruct * Data;
+
+void  data_init(char* arg);
+/* if unix_prefix != NULL, create unix-socket
+ * if port == 0, find any empty port number (actualy, kernel do this)
+ * todo: bzip, blowfish */
+Data  data_listen(char* unix_prefix,int port); 
+/* tout -- timeout, only -1 (forever) and 0 (don't wait) are implemented */
+int   data_accept(Data server,int tout);
+/* if port == 0, connect to unix-socket named host_unix
+ * todo: bzip, blowfish  */
+Data  data_connect(const char *host_unix,int port);
+
+int   data_port(Data data); /* accessors */
+char* data_unix(Data data);
+
+int   data_recv(Data data);  // rets 0 -- int, !0 -- string
+int   data_extract(Data data,int *p_n,void **p_a);
+void  data_move(Data data);
+
+//void  data_send(Data data,const char *buffer,int len);
+void data_send_init(Data data,int cols);
+void data_send_string(Data data,void *a,size_t len);
+void data_send_int(Data data,int n);
+int  data_send_flush(Data data);
+
+void data_close(Data data);
+
+#ifdef __cplusplus
+}
+#endif
+
+
+#endif
+
+
+@
+
+
+1.15
+log
+@
+libData
+
+  protocol enhancement. do not send 32bit SIZE header,
+  but terminate using 1 byte ENDOFROW code.
+@
+text
+@d107 2
+a108 1
+int   data_accept(Data server);
+@
+
+
+1.14
+log
+@
+libData:
+
+  better bandwidth utilization:
+
+  0-199 ints: 1 byte
+  short ints: 1 + 2
+  32bit ints: 1 + 4
+  strings with length n < 40: 1 + n
+  strings n >= 40: 1 + 4 + n
+@
+text
+@d25 6
+a30 7
+// 241-244 reserved
+#define LEN_INT16    246
+#define LEN_INT32    247
+#define LEN_STR32    248
+#define LEN_UNDEF    249
+#define LEN_RESERVED 254
+// not used now: (for a while, we will use it again)
+@
+
+
+1.13
+log
+@
+working bufferred (!) version of libData.
+
+handle data as chunks of 256 rows, sends them using one send(),
+reads with one recv(). this solves locking problem, while is
+still efficient enough.
+
+path-17x100k @@ 18s
+
+todo: send(n) may return <n, we should repeat { send }
+@
+text
+@d21 13
+d35 1
+d57 4
+d67 1
+a67 1
+#define DATA_CHUNKS_MASK 0xff
+d116 3
+a118 3
+int  data_recv(Data data,byte** p_buff,int *p_len);
+byte* data_extract(Data data,byte *ptr,void **string,int *string_len);
+void data_move(Data data,byte* ptr);
+d122 2
+a123 1
+void data_send_append(Data data,char *col,int len);
+@
+
+
+1.12
+log
+@
+-unbuffered.{xs,c,h}
+  -- uses 1 syscall per row for sending, 2 syscalls p.r. for receiving
+
+-buffered.{xs,c,h}
+  -- sends data in 4096b chunks, low number of send()/recv() calls
+  -- generaly doesn't work because of buffer-locking in some scenarios
+
+benchmarks (put($i,'a' x ($i % 64))):
+
+         unbuff     buffered
+path     1M @@ 43s   -failed-
+bench    1M @@ 17s   1M @@ 9s
+@
+text
+@d47 4
+a50 1
+		
+d52 1
+a52 1
+	int	sock;
+d54 3
+a56 3
+	int	 serversock; // used as send/recv flag too
+	void *addr;
+	int  addr_len;
+d60 15
+a74 1
+	int port;   // TCP listen port or 0 if UNIX socket
+d79 2
+@
+
+
+1.11
+log
+@
+Support for UNIX sockets in Data library. Runs 2 times faster now :-)
+
+inet: 1M @@ 95s
+
+unix: 1M @@ 47s
+
+Creates pipe in "/tmp/.bee-$$-".(i++), removes them after connection
+success (pipe still work)
+@
+text
+@d51 1
+a51 1
+	int	serversock;
+d55 3
+a57 3
+	char* xinu; // unix. but when I type 'unix', gcc says:
+				// error: parse error before numeric constant
+	int port;   // TCP listen port or -1 if UNIX socket
+@
+
+
+1.10
+log
+@
+8 hours of debugging, several bugs solved.
+
+path-17x100k successed now.
+
+calls one send() and min. 2 recv() per row
+
+speed: 1000000 x put("") in 38s (70k rps)
+       path-17x100k in 120s (833 rps)
+
+needs modifications to work under windows
+@
+text
+@d2 2
+a3 1
+ * C<Net> is nonblocking, autoflushing communication endpoint. 
+d5 1
+a5 3
+ * C<Net::INET> is connection over TCP/IP network, C<Net::UNIX> is for
+ * unix socket based communication and C<Net::SSL> is TCP/IP using
+ * OpenSSL layer.
+a49 1
+	int port;
+d52 6
+a57 1
+	void *sin;
+d66 12
+a77 5
+void data_init(char* arg);
+Data data_listen(int port); /* bzip, blowfish */
+int  data_accept(Data server);
+int  data_port(Data data);;
+Data data_connect(const char *host,int port); /* bzip, blowfish */
+@
+
+
+1.9
+log
+@
+My last libData patch didn't solve bug, and was 5x slower..
+
+reverting to previous version of libData.. :-(
+@
+text
+@d45 4
+a48 1
+
+a58 9
+
+	void *buffer;
+	int	 pool;
+	int	 len;
+	int	 offset; // pro Data.xs -- cast bufferu jsme uz mozna vratili
+
+	void *send_buff;
+	int	 send_pool;
+	int  send_len;
+d63 1
+d68 4
+a71 3
+int  data_recv(Data data);
+int  data_is_row(Data data);
+int	 data_extract(Data data,void **buff,int *len);
+d76 1
+a76 1
+void data_send_flush(Data data);
+d87 1
+@
+
+
+1.8
+log
+@
+new libData solving cycles in bee communication graph (i hope).
+@
+text
+@d45 1
+a45 4
+#ifndef byte
+typedef unsigned char byte;
+#endif
+		
+d56 9
+d73 3
+a75 4
+
+int  data_recv(Data data,byte** p_buff,int *p_len);
+byte* data_extract(Data data,byte *ptr,void **string,int *string_len);
+void data_move(Data data,byte* ptr);
+d80 1
+a80 1
+int  data_send_flush(Data data);
+@
+
+
+1.7
+log
+@Data -- automatic port allocation
+@
+text
+@d45 4
+a48 1
+
+a58 9
+
+	void *buffer;
+	int	 pool;
+	int	 len;
+	int	 offset; // pro Data.xs -- cast bufferu jsme uz mozna vratili
+
+	void *send_buff;
+	int	 send_pool;
+	int  send_len;
+d67 4
+a70 3
+int  data_recv(Data data);
+int  data_is_row(Data data);
+int	 data_extract(Data data,void **buff,int *len);
+d75 1
+a75 1
+void data_send_flush(Data data);
+@
+
+
+1.6
+log
+@shit, i copied Data to Net subdir, this is fix
+@
+text
+@d71 1
+@
+
+
+1.5
+log
+@data -- implementation
+@
+text
+@d78 1
+a78 1
+void data_send_alloc(Data data,char *col,int len);
+d81 1
+@
+
+
+1.4
+log
+@merging Data to cvs
+@
+text
+@d22 24
+d48 5
+d57 8
+a64 3
+	char *buffer;
+	int	 buff_len;
+	int	 real_len;
+d69 11
+a79 4
+Data  data_listen(int port); /* bzip, blowfish */
+Data  data_connect(const char *host,int port); /* bzip, blowfish */
+char *data_recv(Data data,int *len);
+void  data_send(Data data,const char *buffer,int len);
+@
+
+
+1.3
+log
+@send/recv bugs in buffers, minimum syscalls
+@
+text
+@a21 24
+/* length byte codes: */
+#define LEN_RESERVED 0
+// 1-127 -- length
+#define LEN_MAXLEN	 127
+// next 4 bytes with length, network order
+#define LEN_32BIT	 128
+// reserved 0
+#define LEN_RSVD0	 129
+// 130..139 => 0..9 numbers
+#define LEN_0		 130
+#define LEN_9		 139
+// 140..149 => 00..09 STRINGS !
+#define LEN_00		 140
+#define LEN_09		 149
+// 140..239 => 00..99 numbers
+#define LEN_10		 150
+#define LEN_99		 239
+// reserved range: 240-252
+#define LEN_EMPTY	 253
+#define LEN_UNDEF 	 254
+// row separator
+#define LEN_ENDOFROW 255
+
+
+a23 5
+	int port;
+
+	int	serversock;
+	void *sin;
+
+d28 3
+a30 8
+	void *buffer;
+	int	 pool;
+	int	 len;
+	int	 offset; // pro Data.xs -- cast bufferu jsme uz mozna vratili
+
+	void *send_buff;
+	int	 send_pool;
+	int  send_len;
+d35 4
+a38 11
+Data data_listen(int port); /* bzip, blowfish */
+int  data_accept(Data server);
+Data data_connect(const char *host,int port); /* bzip, blowfish */
+int  data_recv(Data data);
+int  data_is_row(Data data);
+int	 data_extract(Data data,void **buff,int *len);
+
+//void  data_send(Data data,const char *buffer,int len);
+void data_send_init(Data data,int cols);
+void data_send_alloc(Data data,char *col,int len);
+void data_send_flush(Data data);
+@
+
+
+1.2
+log
+@send/recv, in C, optimized, LEN_ code, small integers
+@
+text
+@d60 1
+d62 3
+a64 1
+	int	offset; // pro Data.xs -- cast bufferu jsme uz mozna vratili
+@
+
+
+1.1
+log
+@Data module added (empty)
+@
+text
+@d22 24
+d48 5
+d57 5
+a61 3
+	char *buffer;
+	int	 buff_len;
+	int	 real_len;
+d66 11
+a76 4
+Data  data_listen(int port); /* bzip, blowfish */
+Data  data_connect(const char *host,int port); /* bzip, blowfish */
+char *data_recv(Data data,int *len);
+void  data_send(Data data,const char *buffer,int len);
+@
+

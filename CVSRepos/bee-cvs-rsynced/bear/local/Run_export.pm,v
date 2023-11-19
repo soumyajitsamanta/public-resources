@@ -1,0 +1,129 @@
+head	1.2;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2003.11.28.13.03.23;	author jiri_schmid;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2003.11.25.16.47.06;	author jiri_schmid;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@MD5 hashing implemented, sorting menus implemented etc...
+@
+text
+@#-----------------------------------------------------
+#  Rendering of the Report in Grid format
+#-----------------------------------------------------
+# $Id: Run_export.pm,v 1.1 2003/11/25 16:47:06 jiri_schmid Exp $
+
+package Run_export;
+
+use strict;
+use XML::Simple;
+require "local/Local.pm";
+
+#---------------------------------------------------
+sub export2Txt() {
+my ($variables, $data) = (shift,shift);	# ptr to data hash
+
+open(RT,">$$variables->{file}") || &Local::ErrorDie(" ERROR: can't write into report-disk-cache.");
+binmode(RT,":utf8"); # do not remove !!!
+print RT "\x{feff}"; # print the UTF8 flag in the very beginning of file
+my @@rowArray = ();
+
+my $groupCols = (exists $$data->{row}[0]) ? ($#{$$data->{row}[0]} > 0) ? @@{$$data->{row}[0]} : 1 : 1;
+my $groupRows = (exists $$data->{col}[0]) ? ($#{$$data->{col}[0]} > 0) ? @@{$$data->{col}[0]} : 1 : 1;
+for (my $row = 0;$row < $groupRows; $row++) {
+	@@rowArray = ();
+	for (my $col = 0; $col < $groupCols; $col++) {
+		push(@@rowArray,"");
+	}
+	for (my $col = 0; $col < @@{$$data->{col}}; $col++) {
+		push(@@rowArray,$$data->{col}[$col][$row]);
+	}
+	print RT join("\t",@@rowArray);
+	print RT "\n";
+}
+my $rowCells = ($#{$$data->{row}} > -1) ? (exists $$data->{c}) ? $#{$$data->{row}} : 0 : undef;
+my $dataCells = ($#{$$data->{col}} > -1) ? (exists $$data->{c}) ? $#{$$data->{col}} : 0 : undef;
+foreach my $row (0..$rowCells) {
+	@@rowArray = ();
+	foreach my $col (0..$groupCols-1) {
+		push(@@rowArray,$$data->{row}[$row][$col]);
+	}
+	foreach my $dataCol (0..$dataCells) { 
+		push(@@rowArray,$$data->{c}{$row}{$dataCol});
+	}
+	print RT join("\t",@@rowArray);
+	print RT "\n";
+}
+close RT;
+}
+#---------------------------------------------------
+sub export2XML {
+my ($variables, $data) = (shift,shift);	# ptr to data hash
+my $PData = new XML::Simple(rootname=>'report');
+my $fh = new FileHandle;
+
+my $exXml = {};
+my @@rowArray = ();
+foreach my $row (sort (keys %{$$data->{c}})) {
+	@@rowArray = ();
+	foreach my $col (sort (keys %{$$data->{c}{$row}})) {
+		push(@@rowArray,$$data->{c}{$row}{$col});
+	}
+	$exXml->{content}{data}[$row] = [@@rowArray];
+}
+$exXml->{content}{rows} = $$data->{row};
+$exXml->{content}{collumns} = $$data->{col};
+
+@@rowArray = ();
+foreach my $row (sort (keys %{$$data->{rowHeader}})) {
+	push(@@rowArray,$$data->{rowHeader}{$row}{name});
+}
+$exXml->{definitions}{rows} = [@@rowArray];
+
+@@rowArray = ();
+foreach my $col (sort (keys %{$$data->{colHeader}})) {
+	push(@@rowArray,$$data->{colHeader}{$col}{name})
+}
+$exXml->{definitions}{collumns} = [@@rowArray];
+
+
+open($fh,">$$variables->{file}") ||  &Local::ErrorDie(" ERROR: can't write into report-disk-cache.");
+binmode($fh,":utf8");
+my $out=$PData->XMLout($exXml, noattr=>0, outputfile=>$fh, xmldecl=>'<?xml version="1.0" encoding="UTF-8" standalone="yes"?>');
+close($fh);
+}
+
+1
+@
+
+
+1.1
+log
+@added export files
+@
+text
+@d4 1
+a4 1
+# $Id: Run_grid.pm,v 1.12 2003/11/25 12:10:44 jiri_schmid Exp $
+d69 1
+a69 1
+	push(@@rowArray,$$data->{rowHeader}{$row}{name})
+@
+

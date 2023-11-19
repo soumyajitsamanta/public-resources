@@ -1,0 +1,36 @@
+head	1.1;
+access;
+symbols
+	jpivot_1_8_0:1.1
+	focus_1_6_0:1.1.0.2
+	wcf_1_7_0:1.1
+	wcf_1_6_0:1.1
+	sourceforge_sync:1.1;
+locks; strict;
+comment	@# @;
+expand	@k@;
+
+
+1.1
+date	2006.01.06.07.03.26;	author zapodot;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@Added Norwegian translation
+@
+text
+@#tableproperties.xml
+tableproperties.cancel=Avbryt
+tableproperties.columns=Kolonner
+tableproperties.paging=Tillat sidebryting
+tableproperties.ok=OK
+tableproperties.pagesize=Side størrelse
+tableproperties.rowperpage=Rader / side
+@

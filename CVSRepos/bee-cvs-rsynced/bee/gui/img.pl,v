@@ -1,0 +1,231 @@
+head	1.5;
+access;
+symbols
+	start:1.1.1.1 vendor:1.1.1;
+locks; strict;
+comment	@# @;
+
+
+1.5
+date	2003.11.07.15.10.36;	author tuco80;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2003.11.07.10.25.34;	author tuco80;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2003.10.30.14.14.37;	author tuco80;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2003.01.21.18.18.56;	author numberone;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2002.09.24.01.34.16;	author michald;	state Exp;
+branches
+	1.1.1.1;
+next	;
+
+1.1.1.1
+date	2002.09.24.01.34.16;	author michald;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.5
+log
+@Notation problems :-S
+@
+text
+@#-----------------------------------------------------
+# Image Definitions
+#-----------------------------------------------------
+# $Id: img.pl,v 1.4 2003/11/07 10:25:34 tuco80 Exp $
+
+$Img{BEE} = $top->Pixmap(-file => "$PWD/img/bee.xpm");
+
+# Toolbar
+$Img{DELETE} = $top->Pixmap(-file => "$PWD/img/delete_16.xpm");
+$Img{NEW} = $top->Pixmap(-file => "$PWD/img/new_16.xpm");
+$Img{R_ARR} = $top->Pixmap(-file => "$PWD/img/rightArr.xpm");
+$Img{L_ARR} = $top->Pixmap(-file => "$PWD/img/leftArr.xpm");
+$Img{U_ARR} = $top->Pixmap(-file => "$PWD/img/upArr.xpm");
+$Img{D_ARR} = $top->Pixmap(-file => "$PWD/img/downArr.xpm");
+$Img{PRINT} = $top->Pixmap(-file => "$PWD/img/print_16.xpm");
+$Img{SAVE} = $top->Pixmap(-file => "$PWD/img/save_16.xpm");
+$Img{OPEN} = $top->Pixmap(-file => "$PWD/img/open_16.xpm");
+$Img{REFRESH} = $top->Pixmap(-file => "$PWD/img/refresh.xpm");
+$Img{PROP} = $top->Pixmap(-file => "$PWD/img/properties.xpm");
+$Img{SELECT} = $top->Pixmap(-file => "$PWD/img/yes_12.xpm");
+$Img{UNSELECT} = $top->Pixmap(-file => "$PWD/img/no_12.xpm");
+
+#Tree List
+$Img{COL} = $top->Pixmap(-file => "$PWD/img/column.xpm");
+$Img{SRC} = $top->Pixmap(-file => "$PWD/img/source.xpm");
+$Img{TAB} = $top->Pixmap(-file => "$PWD/img/table.xpm");
+$Img{DB_VIEW} = $top->Pixmap(-file => "$PWD/img/view.xpm");
+$Img{ETL_VIEW} = $top->Pixmap(-file => "$PWD/img/view.xpm");
+$Img{HOST} = $top->Pixmap(-file => "$PWD/img/computer.xpm");
+$Img{DIR} = $top->Pixmap(-file => "$PWD/img/folder.xpm");
+$Img{TRAN} = $top->Pixmap(-file => "$PWD/img/trans.xpm");
+$Img{TRAN_I} = $top->Pixmap(-file => "$PWD/img/transI.xpm");
+$Img{TRAN_O} = $top->Pixmap(-file => "$PWD/img/transO.xpm");
+$Img{TRIG} = $top->Pixmap(-file => "$PWD/img/triger.xpm");
+$Img{CONST} = $top->Pixmap(-file => "$PWD/img/const.xpm");
+$Img{LAYER} = $top->Pixmap(-file => "$PWD/img/layer.xpm");
+$Img{LAYER_SEL} = $top->Pixmap(-file => "$PWD/img/layer_sel.xpm");
+$Img{CONN} = $top->Pixmap(-file => "$PWD/img/connection.xpm");
+$Img{REL} = $top->Pixmap(-file => "$PWD/img/rel.xpm");
+$Img{SIGNAL} = $top->Pixmap(-file => "$PWD/img/sig.xpm");
+$Img{ATTR} = $top->Pixmap(-file => "$PWD/img/attr.xpm");
+$Img{FACT} = $top->Pixmap(-file => "$PWD/img/fact.xpm");
+$Img{FILE} = $top->Pixmap(-file => "$PWD/img/file.xpm");
+
+1
+@
+
+
+1.4
+log
+@Path to images is absolute now, running task does chdir
+@
+text
+@d4 1
+a4 1
+# $Id: img.pl,v 1.3 2003/10/30 14:14:37 tuco80 Exp $
+d6 1
+a6 1
+$Img{BEE} = $top->Pixmap(-file => '$PWD/img/bee.xpm');
+d9 13
+a21 13
+$Img{DELETE} = $top->Pixmap(-file => '$PWD/img/delete_16.xpm');
+$Img{NEW} = $top->Pixmap(-file => '$PWD/img/new_16.xpm');
+$Img{R_ARR} = $top->Pixmap(-file => '$PWD/img/rightArr.xpm');
+$Img{L_ARR} = $top->Pixmap(-file => '$PWD/img/leftArr.xpm');
+$Img{U_ARR} = $top->Pixmap(-file => '$PWD/img/upArr.xpm');
+$Img{D_ARR} = $top->Pixmap(-file => '$PWD/img/downArr.xpm');
+$Img{PRINT} = $top->Pixmap(-file => '$PWD/img/print_16.xpm');
+$Img{SAVE} = $top->Pixmap(-file => '$PWD/img/save_16.xpm');
+$Img{OPEN} = $top->Pixmap(-file => '$PWD/img/open_16.xpm');
+$Img{REFRESH} = $top->Pixmap(-file => '$PWD/img/refresh.xpm');
+$Img{PROP} = $top->Pixmap(-file => '$PWD/img/properties.xpm');
+$Img{SELECT} = $top->Pixmap(-file => '$PWD/img/yes_12.xpm');
+$Img{UNSELECT} = $top->Pixmap(-file => '$PWD/img/no_12.xpm');
+d24 20
+a43 20
+$Img{COL} = $top->Pixmap(-file => '$PWD/img/column.xpm');
+$Img{SRC} = $top->Pixmap(-file => '$PWD/img/source.xpm');
+$Img{TAB} = $top->Pixmap(-file => '$PWD/img/table.xpm');
+$Img{DB_VIEW} = $top->Pixmap(-file => '$PWD/img/view.xpm');
+$Img{ETL_VIEW} = $top->Pixmap(-file => '$PWD/img/view.xpm');
+$Img{HOST} = $top->Pixmap(-file => '$PWD/img/computer.xpm');
+$Img{DIR} = $top->Pixmap(-file => '$PWD/img/folder.xpm');
+$Img{TRAN} = $top->Pixmap(-file => '$PWD/img/trans.xpm');
+$Img{TRAN_I} = $top->Pixmap(-file => '$PWD/img/transI.xpm');
+$Img{TRAN_O} = $top->Pixmap(-file => '$PWD/img/transO.xpm');
+$Img{TRIG} = $top->Pixmap(-file => '$PWD/img/triger.xpm');
+$Img{CONST} = $top->Pixmap(-file => '$PWD/img/const.xpm');
+$Img{LAYER} = $top->Pixmap(-file => '$PWD/img/layer.xpm');
+$Img{LAYER_SEL} = $top->Pixmap(-file => '$PWD/img/layer_sel.xpm');
+$Img{CONN} = $top->Pixmap(-file => '$PWD/img/connection.xpm');
+$Img{REL} = $top->Pixmap(-file => '$PWD/img/rel.xpm');
+$Img{SIGNAL} = $top->Pixmap(-file => '$PWD/img/sig.xpm');
+$Img{ATTR} = $top->Pixmap(-file => '$PWD/img/attr.xpm');
+$Img{FACT} = $top->Pixmap(-file => '$PWD/img/fact.xpm');
+$Img{FILE} = $top->Pixmap(-file => '$PWD/img/file.xpm');
+@
+
+
+1.3
+log
+@Added FILE image to hash
+@
+text
+@d4 1
+a4 1
+# $Id: img.pl,v 1.2 2003/01/21 18:18:56 numberone Exp $
+d6 1
+a6 1
+$Img{BEE} = $top->Pixmap(-file => 'img/bee.xpm');
+d9 13
+a21 13
+$Img{DELETE} = $top->Pixmap(-file => 'img/delete_16.xpm');
+$Img{NEW} = $top->Pixmap(-file => 'img/new_16.xpm');
+$Img{R_ARR} = $top->Pixmap(-file => 'img/rightArr.xpm');
+$Img{L_ARR} = $top->Pixmap(-file => 'img/leftArr.xpm');
+$Img{U_ARR} = $top->Pixmap(-file => 'img/upArr.xpm');
+$Img{D_ARR} = $top->Pixmap(-file => 'img/downArr.xpm');
+$Img{PRINT} = $top->Pixmap(-file => 'img/print_16.xpm');
+$Img{SAVE} = $top->Pixmap(-file => 'img/save_16.xpm');
+$Img{OPEN} = $top->Pixmap(-file => 'img/open_16.xpm');
+$Img{REFRESH} = $top->Pixmap(-file => 'img/refresh.xpm');
+$Img{PROP} = $top->Pixmap(-file => 'img/properties.xpm');
+$Img{SELECT} = $top->Pixmap(-file => 'img/yes_12.xpm');
+$Img{UNSELECT} = $top->Pixmap(-file => 'img/no_12.xpm');
+d24 20
+a43 20
+$Img{COL} = $top->Pixmap(-file => 'img/column.xpm');
+$Img{SRC} = $top->Pixmap(-file => 'img/source.xpm');
+$Img{TAB} = $top->Pixmap(-file => 'img/table.xpm');
+$Img{DB_VIEW} = $top->Pixmap(-file => 'img/view.xpm');
+$Img{ETL_VIEW} = $top->Pixmap(-file => 'img/view.xpm');
+$Img{HOST} = $top->Pixmap(-file => 'img/computer.xpm');
+$Img{DIR} = $top->Pixmap(-file => 'img/folder.xpm');
+$Img{TRAN} = $top->Pixmap(-file => 'img/trans.xpm');
+$Img{TRAN_I} = $top->Pixmap(-file => 'img/transI.xpm');
+$Img{TRAN_O} = $top->Pixmap(-file => 'img/transO.xpm');
+$Img{TRIG} = $top->Pixmap(-file => 'img/triger.xpm');
+$Img{CONST} = $top->Pixmap(-file => 'img/const.xpm');
+$Img{LAYER} = $top->Pixmap(-file => 'img/layer.xpm');
+$Img{LAYER_SEL} = $top->Pixmap(-file => 'img/layer_sel.xpm');
+$Img{CONN} = $top->Pixmap(-file => 'img/connection.xpm');
+$Img{REL} = $top->Pixmap(-file => 'img/rel.xpm');
+$Img{SIGNAL} = $top->Pixmap(-file => 'img/sig.xpm');
+$Img{ATTR} = $top->Pixmap(-file => 'img/attr.xpm');
+$Img{FACT} = $top->Pixmap(-file => 'img/fact.xpm');
+$Img{FILE} = $top->Pixmap(-file => 'img/file.xpm');
+@
+
+
+1.2
+log
+@con.xpm renamed to connection.xpm because of m$ device name conflict :-/
+@
+text
+@d4 1
+a4 1
+# $Id: img.pl,v 1.1.1.1 2002/09/24 01:34:16 michald Exp $
+d43 1
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d4 1
+a4 1
+# $Id: img.pl,v 1.5 2002/09/04 18:19:34 michal Exp $
+d38 1
+a38 1
+$Img{CONN} = $top->Pixmap(-file => 'img/con.xpm');
+@
+
+
+1.1.1.1
+log
+@Initial public release of BEE Project.
+@
+text
+@@

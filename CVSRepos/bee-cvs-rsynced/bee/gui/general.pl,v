@@ -1,0 +1,446 @@
+head	1.7;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.7
+date	2003.12.22.10.02.44;	author tuco80;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	2003.12.04.13.13.38;	author tuco80;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	2003.12.03.16.23.21;	author tuco80;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2003.11.25.13.04.09;	author tuco80;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2003.11.25.10.26.16;	author tuco80;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2003.11.24.14.53.56;	author tuco80;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2003.11.20.16.48.03;	author tuco80;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.7
+log
+@Added rules for the logical model
+@
+text
+@=pod
+	File: pollinate.pl
+	
+	Description:
+				This file takes care of creating
+	the general prperties tab (where properties
+	are independent of the specific objects in the
+	project, like the project itself, and regular
+	expressions for facts), and handling the 
+	events on it.
+	
+	Date of Creation: 18.11.03 -- 14:07 (GMT+2)
+	copyright (c) Insight Strategy, a. s., 2003
+	
+	Author: Daniel Badilla Navarro -- tuco80@@yahoo.com
+	
+	Created For:  The Bee Project
+				  Insight Strategy, a.s.
+				  Fisova 9
+				  602 00 Brno
+				  Ceska Republika 
+=cut
+
+# $Id: general.pl,v 1.6 2003/12/04 13:13:38 tuco80 Exp $
+
+use strict;
+use warnings;
+require "const.def";
+
+use vars qw($mainTabs $QuestionFont $Project $Layer $top 
+			$TabsFont $VisibleLayer $ProjectFile $lastPath 
+			$PWD $lang $tSchemaC $TreeList);
+			
+			
+			
+
+sub CreateGenPage{
+	my $page = shift;
+	my (@@plt)=(-expand => "yes",
+		    -fill => "both",
+		    -padx => 5, -pady => 5,
+		    -side => "top");
+	my $note = $page->NoteBook(-ipadx => 6, -ipady => 6, -font=>$TabsFont)->pack(@@plt);
+	#prepare the project properties page
+	my $proj = $note->add("proj", -label => "Project", -underline => 0);
+	my $radLab = $lang eq 'en' ? "Language" :  "Jazyk";
+	my $radios = $proj->LabFrame(-label => $radLab, -labelside => "acrosstop", -width => 40)->pack(-anchor=>"nw",-side=>'left',-padx=>5,-pady=>3);
+    my $r1 = $radios->Radiobutton(
+            -variable => \$lang,
+	    	-text => 'EN',
+            -relief   => 'flat',
+            -value    => 'en',
+			-command => sub{$radios->configure(-label => 'Language');&changeLang()}
+        )->grid(-row => 0, -column => 0, -sticky => 'w');
+	my $r2 = $radios->Radiobutton(
+            -variable => \$lang,
+	    	-text => 'CZ',
+            -relief   => 'flat',
+            -value    => 'cz',
+			-command => sub{$radios->configure(-label => 'Jazyk');&changeLang()}
+        )->grid(-row => 0, -column => 1, -sticky => 'w');
+	$lang eq 'en' ? $r1->select : $r2->select;
+	
+	#prepare the logical model properties page
+	my $logic = $note->add("logic", -label => "Logical Model", -underline => 0);
+	my $frameS = $logic->LabFrame(-label => "Search Pattern", -labelside=>"acrosstop")->pack(-anchor=>"nw",-side=>'left',-padx => 5,-pady=>3);	
+	my $search = $frameS->Entry(qw/-relief sunken -width 40/, -textvariable=> \ $::ltSearch, -background=>'white')->pack;
+	my $frameP = $logic->LabFrame(-label => "Specific Name Structure", -labelside=>"acrosstop")->pack(-anchor=>"nw",-side=>'left',-padx => 5,-pady=>3);	
+	my $pattern = $frameP->Entry(qw/-relief sunken -width 40/, -textvariable=> \ $::ltName, -background=>'white')->pack;
+	my $frameID = $logic->LabFrame(-label => "Key Column Name", -labelside=>"acrosstop")->pack(-anchor=>"nw",-side=>'left',-padx => 5,-pady=>3);	
+	my $idEntry = $frameID->Entry(qw/-relief sunken -width 40/, -textvariable=> \ $::ltKeyName, -background=>'white')->pack;
+	
+	$frameID->form(-top => 5, -left => 5);
+	$frameS->form(-top => $frameID, -left => 5);
+    $frameP->form(-top => $frameS, -left => 5);
+	
+	#prepare the physical model properties page
+	my $physic = $note->add("physic", -label => "Physical Model", -underline => 2);
+	
+}
+
+sub changeLang{
+	my ($x1,$y1,$xnew,$ynew,$p,$id);
+	foreach my $lay (keys %{$Layer}){
+		$TreeList->entryconfigure("_LAYER/$lay",-text => $Project->{'gui-layer'}->{$lay}->{name}->{$lang});
+		foreach my $obj(keys %{$Layer->{$lay}}){
+			unless ($obj=~/^_HREL|^_REL|^_CONN|^_SIGNAL/) {
+				($p,$id)=&Path2ProjHash($obj);
+				($xnew,$ynew)=split(' ',$p->{$id}->{'gui-presentation'}->{$lay}->{coord}->{$lang});
+				if ($obj=~/^_LOBJ\/_FACT/){
+					$Layer->{$lay}->{$obj}->name($p->{$id}->{name}->{$lang});
+					$TreeList->entryconfigure($obj,-text => $p->{$id}->{name}->{$lang});
+					if ($lay ne $VisibleLayer){
+						$Layer->{$lay}->{$obj}->coords($xnew,$ynew,$xnew,$ynew);
+					}
+					else{
+						($x1,$y1)=$Layer->{$lay}->{$obj}->coords();
+						$Layer->{$lay}->{$obj}->move($tSchemaC,$xnew-$x1, $ynew-$y1);
+						$Layer->{$lay}->{$obj}->clear();
+						$Layer->{$lay}->{$obj}->draw($tSchemaC);	
+					}	
+				}
+				elsif($obj=~/^_LOBJ\/_ATTR/){
+	    			my @@role; 
+					my ($color_a, $color_r);
+					my $gr = $p->{$id}->{group};
+					my $n = ($p->{$id}->{name}->{$lang}) ? $p->{$id}->{name}->{$lang}: "\[$id\]";
+					if ($gr) { 
+					  my ($path);
+					  # each attribute is generated into each role
+					  undef @@role;		      
+					  foreach (keys %{$Project->{group}->{$gr}->{role}}) {
+		    			 $path='/'.$gr.'/'.$obj.'/';
+		    			 $TreeList->entryconfigure("_LOBJ/_ATTR/__G.$gr/__R.$obj/$id", -text => $n);  			 
+		    			 push(@@role, $Project->{group}->{$gr}->{role}->{$obj}->{name}->{$lang});
+					  }
+					  # attribute has only group; not any role
+					  $TreeList->entryconfigure("_LOBJ/_ATTR/__G.$gr/$id", -text => $n) if ($#role<0);
+					  $color_a=$Project->{group}->{$gr}->{color_a};
+					  $color_r=$Project->{group}->{$gr}->{color_r};		 
+					}
+					else {		  
+					  $color_a=$unSortAttr;
+					  $color_r=$unSortAttr;
+
+					  $TreeList->entryconfigure("_LOBJ/_ATTR/$id", -text => $n);
+
+					}
+					$Layer->{$lay}->{$obj}->clear;
+					undef $Layer->{$lay}->{$obj};
+					$Layer->{$lay}->{$obj} = DBLogObj->new($id,$n,$p->{$id}->{description}->{$lang},$xnew,$ynew,$color_a,$color_r,'ATTR');
+					my $order=1;
+		    	    foreach my $rol(@@role)  {
+		        	   $Layer->{$lay}->{$obj}->addRole($rol,$order++);
+		    	    }
+					if ($lay eq $VisibleLayer){
+						$Layer->{$lay}->{$obj}->draw($tSchemaC);	
+					}
+					
+				}
+				else{
+					if ($lay ne $VisibleLayer){
+						$Layer->{$lay}->{$obj}->coords($xnew,$ynew,$xnew,$ynew);
+					}
+					else{
+						($x1,$y1)=$Layer->{$lay}->{$obj}->coords();
+						$Layer->{$lay}->{$obj}->move($tSchemaC,$xnew-$x1, $ynew-$y1);
+					}
+				}
+			}
+		}
+	}
+	foreach (keys %{ $Project->{hrelation} }) {
+		# Relations		
+		my $tr=$_;
+		my $pr=$Project->{hrelation}->{$tr};
+		my $n = ($pr->{name}) ? $pr->{name} : "\[$tr\]";
+		foreach (keys %{ $pr->{'gui-presentation'}}) {						
+			my ($from, $to);
+
+			if (exists ($Project->{attr}->{$pr->{from}->{content}})) {
+			  $from = "_LOBJ/_ATTR/$pr->{from}->{content}";
+			}
+			else {
+			  $from = "_LOBJ/_FACT/$pr->{from}->{content}";
+			  $Layer->{$_}->{$from}->delRelation($tr);
+			}
+			if (exists ($Project->{attr}->{$pr->{to}->{content}})) {
+			  $to =	"_LOBJ/_ATTR/$pr->{to}->{content}";
+			}
+			else {
+			  $to = "_LOBJ/_FACT/$pr->{to}->{content}";
+			  $Layer->{$_}->{$to}->delRelation($tr);
+			}		
+			$Layer->{$_}->{"_HREL/$tr"}->clear;	
+			my $l=DBConn->new($tr,$pr->{name},$pr->{description},'HREL',$from,$to,$Layer->{$_},$Project->{hrelation}->{$tr}->{from}->{cardinality},$Project->{hrelation}->{$tr}->{to}->{cardinality},$Project->{hrelation}->{$tr}->{from}->{optional},$Project->{hrelation}->{$tr}->{to}->{optional});
+			if ($l) {
+			   undef $Layer->{$_}->{"_HREL/$tr"};
+			   $Layer->{$_}->{"_HREL/$tr"}=$l ; 
+			} 
+			if ($_ eq $VisibleLayer){
+				$Layer->{$_}->{"_HREL/$tr"}->draw($tSchemaC);
+			}
+
+		}
+	}	
+	foreach (keys %{ $Project->{group} }) {
+		my $gr = $_;
+		$TreeList->entryconfigure("_LOBJ/_ATTR/__G.$gr",  -text => $Project->{group}->{$_}->{name}->{$lang});	       
+		foreach (keys %{ $Project->{group}->{$_}->{role}}) {
+		  $TreeList->entryconfigure("_LOBJ/_ATTR/__G.$gr/__R.$_",  -text => $Project->{group}->{$gr}->{role}->{$_}->{name}->{$lang});
+		}
+	}
+}
+
+1;
+
+@
+
+
+1.6
+log
+@Bug related to Language changing was not yet fixed! It is now
+@
+text
+@d24 1
+a24 1
+# $Id: general.pl,v 1.5 2003/12/03 16:23:21 tuco80 Exp $
+a43 1
+	
+d66 10
+a79 4
+	#my $colores = $top->ColorEditor(-title => 'Prueba');
+	#$colores->Show();
+	
+	#$proj
+a193 2
+	#&ClearLayer(\$Layer,$tSchemaC);
+	#&ShowLayer(\$Layer,$tSchemaC);
+@
+
+
+1.5
+log
+@Fixed bug with language changing
+@
+text
+@d24 1
+a24 1
+# $Id: general.pl,v 1.4 2003/11/25 13:04:09 tuco80 Exp $
+d81 3
+a83 3
+		foreach (keys %{$Layer->{$lay}}){
+			unless ($_=~/^_REL|^_CONN|^_SIGNAL|^_HREL/) {
+				($p,$id)=&Path2ProjHash($_);
+d85 3
+a87 3
+				if ($_=~/^_LOBJ\/_FACT/){
+					$Layer->{$lay}->{$_}->name($p->{$id}->{name}->{$lang});
+					$TreeList->entryconfigure($_,-text => $p->{$id}->{name}->{$lang});
+d89 1
+a89 1
+						$Layer->{$lay}->{$_}->coords($xnew,$ynew,$xnew,$ynew);
+d92 4
+a95 4
+						($x1,$y1)=$Layer->{$lay}->{$_}->coords();
+						$Layer->{$lay}->{$_}->move($tSchemaC,$xnew-$x1, $ynew-$y1);
+						$Layer->{$lay}->{$_}->clear();
+						$Layer->{$lay}->{$_}->draw($tSchemaC);	
+d98 1
+a98 1
+				elsif($_=~/^_LOBJ\/_ATTR/){
+d108 3
+a110 3
+		    			 $path='/'.$gr.'/'.$_.'/';
+		    			 $TreeList->entryconfigure("_LOBJ/_ATTR/__G.$gr/__R.$_/$id", -text => $n);  			 
+		    			 push(@@role, $Project->{group}->{$gr}->{role}->{$_}->{name}->{$lang});
+d124 3
+a126 3
+					$Layer->{$lay}->{$_}->clear;
+					undef $Layer->{$lay}->{$_};
+					$Layer->{$lay}->{$_} = DBLogObj->new($id,$n,$p->{$id}->{description}->{$lang},$xnew,$ynew,$color_a,$color_r,'ATTR');
+d129 1
+a129 1
+		        	   $Layer->{$lay}->{$_}->addRole($rol,$order++);
+a130 28
+					foreach (keys %{ $Project->{hrelation} }) {
+						# Relations		
+						my $tr=$_;
+						my $pr=$Project->{hrelation}->{$tr};
+						my $n = ($pr->{name}) ? $pr->{name} : "\[$tr\]";
+						foreach (keys %{ $pr->{'gui-presentation'}}) {						
+							my ($from, $to);
+
+							if (exists ($Project->{attr}->{$pr->{from}->{content}})) {
+							  $from = "_LOBJ/_ATTR/$pr->{from}->{content}";
+							}
+							else {
+							  $from = "_LOBJ/_FACT/$pr->{from}->{content}";
+							}
+							if (exists ($Project->{attr}->{$pr->{to}->{content}})) {
+							  $to =	"_LOBJ/_ATTR/$pr->{to}->{content}";
+							}
+							else {
+							  $to = "_LOBJ/_FACT/$pr->{to}->{content}";
+							}
+							my $l=DBConn->new($tr,$pr->{name},$pr->{description},'HREL',$from,$to,$Layer->{$_},$Project->{hrelation}->{$tr}->{from}->{cardinality},$Project->{hrelation}->{$tr}->{to}->{cardinality},$Project->{hrelation}->{$tr}->{from}->{optional},$Project->{hrelation}->{$tr}->{to}->{optional});
+							if ($l) {
+							   undef $Layer->{$_}->{"_HREL/$tr"};
+							   $Layer->{$_}->{"_HREL/$tr"}=$l ; 
+							} 
+							
+						}
+					}	
+d132 1
+a132 1
+						$Layer->{$lay}->{$_}->draw($tSchemaC);	
+d138 1
+a138 1
+						$Layer->{$lay}->{$_}->coords($xnew,$ynew,$xnew,$ynew);
+d141 2
+a142 2
+						($x1,$y1)=$Layer->{$lay}->{$_}->coords();
+						$Layer->{$lay}->{$_}->move($tSchemaC,$xnew-$x1, $ynew-$y1);
+d148 34
+@
+
+
+1.4
+log
+@Finished language changing
+@
+text
+@d24 1
+a24 1
+# $Id: general.pl,v 1.3 2003/11/25 10:26:16 tuco80 Exp $
+d124 1
+d130 29
+a158 1
+		    	    }	
+d162 1
+@
+
+
+1.3
+log
+@Fixed bug in language changing, still small detail missing
+@
+text
+@d24 1
+a24 1
+# $Id: general.pl,v 1.2 2003/11/24 14:53:56 tuco80 Exp $
+d99 24
+a122 4
+					$Layer->{$lay}->{$_}->name($p->{$id}->{name}->{$lang});
+					#$TreeList->entryconfigure($_,-text => $p->{$id}->{name}->{$lang});
+					if ($lay ne $VisibleLayer){
+						$Layer->{$lay}->{$_}->coords($xnew,$ynew,$xnew,$ynew);
+d124 7
+a130 4
+					else{
+						($x1,$y1)=$Layer->{$lay}->{$_}->coords();
+						$Layer->{$lay}->{$_}->move($tSchemaC,$xnew-$x1, $ynew-$y1);
+						$Layer->{$lay}->{$_}->clear();
+d144 7
+@
+
+
+1.2
+log
+@Environment changes accordingly with language selection
+@
+text
+@d24 1
+a24 1
+# $Id: general.pl,v 1.1 2003/11/20 16:48:03 tuco80 Exp $
+d85 1
+a85 1
+				if ($_=~/^_LOBJ\/_ATTR/ || $_=~/^_LOBJ\/_FACT/){
+d97 13
+@
+
+
+1.1
+log
+@Position is language dependant
+@
+text
+@d24 1
+a24 1
+# $Id: Exp $
+d32 1
+a32 1
+			$PWD $lang $tSchemaC);
+d54 1
+a54 1
+			-command => sub{&changeLang()}
+d61 1
+a61 1
+			-command => sub{&changeLang()}
+d80 1
+d85 12
+a96 2
+				if ($lay ne $VisibleLayer){
+					#$Layer->{$lay}->{$_}->coords($xnew,$ynew,$xnew,$ynew);
+d99 7
+a105 3
+					($x1,$y1)=$Layer->{$lay}->{$_}->coords();
+					print "\nTenemos x=",$xnew-$x1," y=",$ynew-$y1, " para $_";
+					$Layer->{$lay}->{$_}->move($tSchemaC,$xnew-$x1, $ynew-$y1);
+a106 1
+				
+@
+

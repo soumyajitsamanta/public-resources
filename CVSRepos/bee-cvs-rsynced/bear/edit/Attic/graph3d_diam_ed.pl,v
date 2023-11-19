@@ -1,0 +1,761 @@
+head	1.19;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.19
+date	2003.10.31.12.47.57;	author jiri_schmid;	state dead;
+branches;
+next	1.18;
+
+1.18
+date	2003.10.17.11.36.16;	author jiri_schmid;	state Exp;
+branches;
+next	1.17;
+
+1.17
+date	2003.10.16.14.08.53;	author jiri_schmid;	state Exp;
+branches;
+next	1.16;
+
+1.16
+date	2003.09.11.16.23.06;	author jiri_schmid;	state Exp;
+branches;
+next	1.15;
+
+1.15
+date	2003.09.01.12.40.08;	author jiri_schmid;	state Exp;
+branches;
+next	1.14;
+
+1.14
+date	2003.08.13.14.22.03;	author jiri_schmid;	state Exp;
+branches;
+next	1.13;
+
+1.13
+date	2003.08.05.08.39.25;	author jiri_schmid;	state Exp;
+branches;
+next	1.12;
+
+1.12
+date	2003.08.05.08.02.11;	author jiri_schmid;	state Exp;
+branches;
+next	1.11;
+
+1.11
+date	2003.08.04.08.12.54;	author jiri_schmid;	state Exp;
+branches;
+next	1.10;
+
+1.10
+date	2003.08.01.13.07.14;	author jiri_schmid;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	2003.07.31.14.34.42;	author jiri_schmid;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	2003.07.29.12.28.34;	author jiri_schmid;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	2003.07.29.07.59.42;	author jiri_schmid;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	2003.07.28.13.39.58;	author jiri_schmid;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	2003.07.25.10.53.21;	author jiri_schmid;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2003.07.24.10.37.52;	author jiri_schmid;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2003.07.23.11.44.56;	author jiri_schmid;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2003.07.23.08.08.58;	author jiri_schmid;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2003.07.22.15.17.20;	author jiri_schmid;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.19
+log
+@mod perl rocks!
+@
+text
+@#-----------------------------------------------------
+#  Grid Editation
+#-----------------------------------------------------
+# $Id: graph3d_diam_ed.pl,v 1.18 2003/10/17 11:36:16 jiri_schmid Exp $
+
+use strict;
+
+#-----------------------------------------------------
+sub generateContent() {
+my($variables, $lang, $obj) = (shift, shift, shift);
+my $saved = $$variables->{saved} if exists $$variables->{saved};
+my $localTab = $$variables->{localTab};
+my ($fill, $itemsType);
+print "<br><table class='page_skeleton'><tr class='page_skeleton'><td class='page_skeleton_ex' align='center'>";
+if (&existsDefinition($obj,$localTab)) {
+if (@@{$$obj->{$localTab}{items}} == 0) {
+	print "<span style='padding: 15px; line-height: 30px'>$$lang->{'Report Qualitative'}</span>";
+} else {
+my ($disable, $constant, $selected, $print, $check);
+if ($$obj->{$localTab}{quantity} eq "off") {
+$disable = "disabled='disabled'";
+$constant = 1;
+} else {
+$print = 1;
+$check = "onchange='checkNum(this)'";
+}
+print <<END;
+	<table style='text-align:left; width:100%'>
+	<tr>	<th style='white-space:nowrap'>$$lang->{'Graph3d default'}</td>
+		<td><input onchange='checkNum(this)' type='text' name='default' size='15' value="$$obj->{$localTab}{default}"/></td>
+		<td style='width:100%'>&nbsp;%</td>
+	</tr>
+	<tr>	<th style='white-space:nowrap'>$$lang->{'Graph3d interpolation'}</td>
+		<td><select size='1' name='interpolation' style='width:100%' $disable>
+
+END
+	foreach ('constant','linear') {
+		my $name = "Graph3d $_";
+		my $selected = ($constant) ? ($_ eq 'constant') ? " selected='selected'" : "" : ($$obj->{$localTab}{interpolation} eq $_) ? " selected='selected'" : "";
+		print "<option value='$_'$selected>$$lang->{$name}</option>";
+	}
+	print "</select></td><td>&nbsp</td></tr>";
+	if ($print) {
+		print "<tr><th style='white-space:nowrap'>$$lang->{'Min'}</th><td><input $check type='text' name='min' id='inputmin' style='width:100%' value='$$obj->{$localTab}{min}'/></td><td>&nbsp;</td></tr>";
+		print "<tr><th style='white-space:nowrap'>$$lang->{'Max'}</th><td><input $check type='text' name='max' id='inputmax' style='width:100%' value='$$obj->{$localTab}{max}'/></td><td>&nbsp;</td></tr>";
+	}
+	my @@ids;
+	print "<tr><td colspan='3'><hr/></td></tr>";
+	my $name = "Graph3d Item$localTab";
+	print "<tr><th style='text-align:left' colspan='2'>$$lang->{$name}</th><td style='text-align:right'><img class='cursor' src='$$variables->{skinPath}img/delete.$$variables->{imgType}' title=\"$$lang->{'Delete Active'}\" onclick='emptyBin()'></td></tr></table>";	
+	print "<table style='text-align:left; width:100%''>";
+	if (SOAP->GetObjectType(${$$obj->{$localTab}{items}}[$#{$$obj->{$localTab}{items}}]) =~ /metric/) {
+		$itemsType = "<input type='hidden' value='1' name='metric'>";
+		foreach (0..$#{$$obj->{$localTab}{items}}) {
+		print "<tr><td colspan='3'><hr/></td></tr>";
+			my $id = @@{$$obj->{$localTab}{items}}[$_];
+			my $end = sprintf("%.0f",8/@@{$$obj->{$localTab}{items}});
+			my $rowspan = $end+2;
+			print "<tr><td style='text-align:center' rowspan='$rowspan'><span id='$id'>$id</span>:</td><td style='text-align:center'>$$lang->{'Graph3d Interval'}</td><td style='text-align:center'>$$lang->{'Graph3d Size'}</td></tr>";
+				for my $cnt (0..$end) {
+				my $index1 = $cnt * 2;
+				my $index2 = $cnt * 2 + 1;
+				print "<tr><td><input type='text' style='width:100%' name='view${_}$cnt' value='$$obj->{$localTab}{rules}[$_][$index1]' onfocus='setBin(this)'/></td><td><input type='text' style='width:100%' value='$$obj->{$localTab}{rules}[$_][$index2]' name='change${_}$cnt' onfocus='setBin(this)'></td></tr>";
+				}
+			push(@@ids,$id);
+		}
+	} else {
+		print "<tr>";
+		foreach (0..$#{$$obj->{$localTab}{items}}) {
+			my $id = @@{$$obj->{$localTab}{items}}[$_];
+			push(@@ids,$id);
+			print "<td style='text-align:center'><span class='cursor' title=\"$$lang->{'Elements show'}\" id='$id' onclick='loadElement(this)'>$id</span>:</td>"; 
+		}
+		print "<td style='text-align:center'>$$lang->{'Graph3d Size'}(%)</td></tr>";
+		my $plusOne = @@{$$obj->{$localTab}{items}};
+		for my $cnt (0..5) {
+			print "<tr>";
+			foreach (0..$#{$$obj->{$localTab}{items}}) {
+				print "<td><input type='text' style='width:100%' name='view${cnt}_${_}' value=\"$$obj->{$localTab}{rules}[$cnt][$_]\" onfocus='setBin(this)' onclick='addValue(this)'/></td>"; 
+				}
+			print "<td><input type='text' style='width:100%' value='$$obj->{$localTab}{rules}[$cnt][$plusOne]' name='change${cnt}' onfocus='setBin(this)'></td>";
+			print "</tr>";
+		}
+	}
+	print "</tr></table>";
+	print "<input type='hidden' id='ids' value='".join("|",@@ids)."'/>";
+	$fill = "fillAxis(true);";
+print <<END;
+	</td>
+	</tr>	
+	<tr class="page_skeleton">
+	<td class="page_skeleton">
+		<table class="neutral_100">
+		<tr><td align="center">
+			<table class="buttons" cellpading="0" cellspacing="0">
+			<tr>	<td class="buttons"><input type="submit" name="Action" value="$$lang->{'Save'}" /></td>
+				<td class="buttons">
+						<input type="submit" name="Action" value="$$lang->{'Save As'}" onclick="return readName();"/>
+						<input type="hidden" name="saveAsName" id="saveAsName" value="" />
+				</td>
+				<td class="buttons"><input type="reset" name="reset" value="$$lang->{'Reset'}" /></td>
+			</tr>
+			</table>
+		</td></tr>
+		</table>
+	</td></tr>
+END
+}
+}
+print <<END;
+</td></tr>
+</table>
+	$itemsType
+<script type="text/javascript" src="js/graph3d.js"></script>	
+<script type="text/javascript">
+	var msg="$$lang->{'New Save Part1'}$$lang->{'New Graph3d Save'}$$lang->{'New Save Part2'}";
+	var saveAsMsg = "$$lang->{SaveAsMsg}$$lang->{'New Graph3d'}";
+	reloadTree($saved);
+	$fill
+</script>
+END
+}
+
+#---------------------------------------------------
+
+sub set_next_param {
+my ($o,$variables) = (shift,shift);
+&saveDTSC($o,$$variables->{localTab});
+}
+
+1
+@
+
+
+1.18
+log
+@last changes-fixies coresponding mod-perl stage 1
+@
+text
+@d4 1
+a4 1
+# $Id: graph3d_diam_ed.pl,v 1.17 2003/10/16 14:08:53 jiri_schmid Exp $
+@
+
+
+1.17
+log
+@mod-perl implementation stage 1, rebuilding global vars in .pl to global pointers
+@
+text
+@d4 1
+a4 1
+# $Id: graph3d_diam_ed.pl,v 1.16 2003/09/11 16:23:06 jiri_schmid Exp $
+d94 1
+a94 1
+		<tr><td align="right">
+d97 4
+@
+
+
+1.16
+log
+@minor code changes and visual improvments
+@
+text
+@d4 1
+a4 1
+# $Id: graph3d_diam_ed.pl,v 1.15 2003/09/01 12:40:08 jiri_schmid Exp $
+a6 8
+use CGI qw( :standard );
+use CGI::Pretty;
+
+require "const.def";
+require "local_lib.pl";
+
+
+use vars qw($Obj $descr_w $use_lang $saved $lang $localTab $skinPath $imgType);
+d10 4
+a13 1
+	my ($fill, $itemsType);
+d15 3
+a17 3
+if (&existsDefinition) {
+if (@@{$Obj->{$localTab}{items}} == 0) {
+	print "<span style='padding: 15px; line-height: 30px'>$lang->{'Report Qualitative'}</span>";
+d20 1
+a20 1
+if ($Obj->{$localTab}{quantity} eq "off") {
+d29 2
+a30 2
+	<tr>	<th style='white-space:nowrap'>$lang->{'Graph3d default'}</td>
+		<td><input onchange='checkNum(this)' type='text' name='default' size='15' value="$Obj->{$localTab}{default}"/></td>
+d33 1
+a33 1
+	<tr>	<th style='white-space:nowrap'>$lang->{'Graph3d interpolation'}</td>
+d39 2
+a40 2
+		my $selected = ($constant) ? ($_ eq 'constant') ? " selected='selected'" : "" : ($Obj->{$localTab}{interpolation} eq $_) ? " selected='selected'" : "";
+		print "<option value='$_'$selected>$lang->{$name}</option>";
+d44 2
+a45 2
+		print "<tr><th style='white-space:nowrap'>$lang->{'Min'}</th><td><input $check type='text' name='min' id='inputmin' style='width:100%' value='$Obj->{$localTab}{min}'/></td><td>&nbsp;</td></tr>";
+		print "<tr><th style='white-space:nowrap'>$lang->{'Max'}</th><td><input $check type='text' name='max' id='inputmax' style='width:100%' value='$Obj->{$localTab}{max}'/></td><td>&nbsp;</td></tr>";
+d50 1
+a50 1
+	print "<tr><th style='text-align:left' colspan='2'>$lang->{$name}</th><td style='text-align:right'><img class='cursor' src='${skinPath}img/delete.$imgType' title=\"$lang->{'Delete Active'}\" onclick='emptyBin()'></td></tr></table>";	
+d52 1
+a52 1
+	if (SOAP->GetObjectType(${$Obj->{$localTab}{items}}[$#{$Obj->{$localTab}{items}}]) =~ /metric/) {
+d54 1
+a54 1
+		foreach (0..$#{$Obj->{$localTab}{items}}) {
+d56 2
+a57 2
+			my $id = @@{$Obj->{$localTab}{items}}[$_];
+			my $end = sprintf("%.0f",8/@@{$Obj->{$localTab}{items}});
+d59 1
+a59 1
+			print "<tr><td style='text-align:center' rowspan='$rowspan'><span id='$id'>$id</span>:</td><td style='text-align:center'>$lang->{'Graph3d Interval'}</td><td style='text-align:center'>$lang->{'Graph3d Size'}</td></tr>";
+d63 1
+a63 1
+				print "<tr><td><input type='text' style='width:100%' name='view${_}$cnt' value='$Obj->{$localTab}{rules}[$_][$index1]' onfocus='setBin(this)'/></td><td><input type='text' style='width:100%' value='$Obj->{$localTab}{rules}[$_][$index2]' name='change${_}$cnt' onfocus='setBin(this)'></td></tr>";
+d69 2
+a70 2
+		foreach (0..$#{$Obj->{$localTab}{items}}) {
+			my $id = @@{$Obj->{$localTab}{items}}[$_];
+d72 1
+a72 1
+			print "<td style='text-align:center'><span class='cursor' title=\"$lang->{'Elements show'}\" id='$id' onclick='loadElement(this)'>$id</span>:</td>"; 
+d74 2
+a75 2
+		print "<td style='text-align:center'>$lang->{'Graph3d Size'}(%)</td></tr>";
+		my $plusOne = @@{$Obj->{$localTab}{items}};
+d78 2
+a79 2
+			foreach (0..$#{$Obj->{$localTab}{items}}) {
+				print "<td><input type='text' style='width:100%' name='view${cnt}_${_}' value=\"$Obj->{$localTab}{rules}[$cnt][$_]\" onfocus='setBin(this)' onclick='addValue(this)'/></td>"; 
+d81 1
+a81 1
+			print "<td><input type='text' style='width:100%' value='$Obj->{$localTab}{rules}[$cnt][$plusOne]' name='change${cnt}' onfocus='setBin(this)'></td>";
+d96 2
+a97 2
+			<tr>	<td class="buttons"><input type="submit" name="Action" value="$lang->{'Save'}" /></td>
+				<td class="buttons"><input type="reset" name="reset" value="$lang->{'Reset'}" /></td>
+d112 2
+a113 2
+	var msg="$lang->{'New Save Part1'}$lang->{'New Graph3d Save'}$lang->{'New Save Part2'}";
+	var saveAsMsg = "$lang->{SaveAsMsg}$lang->{'New Graph3d'}";
+d123 2
+a124 1
+&saveDTSC;
+@
+
+
+1.15
+log
+@skins implemented. mozilla skin - temporarily copy msie content
+@
+text
+@d4 1
+a4 1
+# $Id: graph3d_diam_ed.pl,v 1.14 2003/08/13 14:22:03 jiri_schmid Exp $
+d36 1
+a36 1
+		<td style='width:100%'>&nbsp;</td>
+d79 1
+a79 1
+		print "<td style='text-align:center'>$lang->{'Graph3d Size'}</td></tr>";
+@
+
+
+1.14
+log
+@code clearing and improvment
+@
+text
+@d4 1
+a4 1
+# $Id: graph3d_diam_ed.pl,v 1.13 2003/08/05 08:39:25 jiri_schmid Exp $
+d14 1
+a14 1
+use vars qw($Obj $descr_w $use_lang $saved $lang $localTab);
+d55 1
+a55 1
+	print "<tr><th style='text-align:left' colspan='2'>$lang->{$name}</th><td style='text-align:right'><img class='cursor' src='img/delete.gif' title=\"$lang->{'Delete Active'}\" onclick='emptyBin()'></td></tr></table>";	
+@
+
+
+1.13
+log
+@minor code simplification
+@
+text
+@d4 1
+a4 1
+# $Id: graph3d_diam_ed.pl,v 1.12 2003/08/05 08:02:11 jiri_schmid Exp $
+a17 1
+	my $cgi = shift;
+@
+
+
+1.12
+log
+@bug fixies
+@
+text
+@d4 1
+a4 1
+# $Id: graph3d_diam_ed.pl,v 1.11 2003/08/04 08:12:54 jiri_schmid Exp $
+d129 1
+a129 40
+# remove this two lines, after datas cleard from old keys (sizes and intervals)
+delete $Obj->{$localTab}{sizes} if exists $Obj->{$localTab}{sizes};
+delete $Obj->{$localTab}{intervals} if exists $Obj->{$localTab}{intervals};
+delete $Obj->{$localTab}{rules} if exists $Obj->{$localTab}{rules};
+my @@pole;
+my $name;
+my $add;
+if (param('metric')) {
+	foreach (0..$#{$Obj->{$localTab}{items}}) {
+		undef @@pole;
+		my $id = @@{$Obj->{$localTab}{items}}[$_];
+		my $end = sprintf("%.0f",8/@@{$Obj->{$localTab}{items}});
+		for my $cnt (0..$end) {
+			$name = "view${_}$cnt";
+			push(@@pole,param($name),param("change".${_}.$cnt)) if param($name);
+			}
+		@@{$Obj->{$localTab}{rules}}[$_] = [@@pole];
+	}
+} else {
+	for my $cnt (0..5) {
+		$add = 0;
+		undef @@pole;
+		foreach (0..$#{$Obj->{$localTab}{items}}) {
+			$name = "view${cnt}_$_";
+			$add++ if param($name);
+			push(@@pole,param($name));
+		}
+		$name = "change${cnt}";
+		push(@@pole,param($name));
+		@@{$Obj->{$localTab}{rules}}[$cnt] = [@@pole] if $add > 0;
+	}
+}
+if ($Obj->{$localTab}{quantity} eq "on") {
+	$Obj->{$localTab}{interpolation} = param('interpolation');
+	$Obj->{$localTab}{max} = param('max');
+	$Obj->{$localTab}{min} = param('min');
+} else {
+$Obj->{$localTab}{interpolation} = 'constant';
+}
+$Obj->{$localTab}{default} = param('default');
+@
+
+
+1.11
+log
+@changes depending on implemntation of right pane on graph3d page done
+@
+text
+@d4 1
+a4 1
+# $Id: graph3d_diam_ed.pl,v 1.10 2003/08/01 13:07:14 jiri_schmid Exp $
+d85 1
+a85 1
+				print "<td><input type='text' style='width:100%' name='view${cnt}_${_}' value='$Obj->{$localTab}{rules}[$cnt][$_]' onfocus='setBin(this)' onclick='addValue(this)'/></td>"; 
+@
+
+
+1.10
+log
+@graph3d relevant changes made to cooperate with right pane, multiple metric not alowed yet
+@
+text
+@d4 1
+a4 1
+# $Id: graph3d_diam_ed.pl,v 1.9 2003/07/31 14:34:42 jiri_schmid Exp $
+d19 1
+a19 1
+	my $fill;
+d50 2
+a51 2
+		print "<tr><th style='white-space:nowrap'>Minimum:</th><td><input $check type='text' name='min' id='inputmin' style='width:100%' value='$Obj->{$localTab}{min}'/></td><td>&nbsp;</td></tr>";
+		print "<tr><th style='white-space:nowrap'>Maximum:</th><td><input $check type='text' name='max' id='inputmax' style='width:100%' value='$Obj->{$localTab}{max}'/></td><td>&nbsp;</td></tr>";
+d56 18
+a73 10
+	print "<tr><th style='text-align:left' colspan='2'>$lang->{$name}</th><td style='text-align:right'><img class='cursor' src='img/delete.gif' title=\"$lang->{'Delete Active'}\" onclick='emptyBin()'></td></tr>";
+	print "</table><table style='text-align:left'><tr>";
+	foreach (0..$#{$Obj->{$localTab}{items}}) {
+		my $id = @@{$Obj->{$localTab}{items}}[$_];
+		push(@@ids,$id);
+		print "<td style='text-align:center'><span class='cursor' title=\"$lang->{'Elements show'}\" id='$id' onclick='loadElement(this)'>$id</span>:</td>"; 
+	}
+	print "<td style='text-align:center'>$lang->{'Graph3d Size'}</td></tr>";
+	my $plusOne = @@{$Obj->{$localTab}{items}};
+	for my $cnt (0..5) {
+d76 14
+a89 4
+			print "<td><input type='text' style='width:100%' name='view${cnt}_${_}' value='$Obj->{$localTab}{rules}[$cnt][$_]' onfocus='setBin(this)' onclick='addValue(this)'/></td>"; 
+			}
+		print "<td><input type='text' style='width:100%' value='$Obj->{$localTab}{rules}[$cnt][$plusOne]' name='change${cnt}' onfocus='setBin(this)'></td>";
+		print "</tr>";
+d91 1
+a91 1
+	print "</table>";
+d115 1
+a131 1
+
+a132 1
+for my $cnt (0..5) {
+d135 2
+a136 1
+my $add = 0;
+d138 19
+a156 2
+		$name = "view${cnt}_$_";
+		$add++ if param($name);
+d158 1
+a159 3
+$name = "change${cnt}";
+push(@@pole,param($name));
+@@{$Obj->{$localTab}{rules}}[$cnt] = [@@pole] if $add > 0;
+@
+
+
+1.9
+log
+@right pane implementation aproaching final stage
+@
+text
+@d4 1
+a4 1
+# $Id: graph3d_diam_ed.pl,v 1.8 2003/07/29 12:28:34 jiri_schmid Exp $
+d54 1
+a54 1
+	print "<tr><td colspan='3'><hr/></td></tr></table><table style='text-align:left'>";
+d56 13
+a68 8
+	print "<tr><th style='text-align:left'>$lang->{$name}</th><td style='text-align:center'>$lang->{'Graph3d Interval'}</td><td style='text-align:center'>$lang->{'Graph3d Size'}</td></tr>";
+	foreach my $cnt (0..$#{$Obj->{$localTab}{items}}) {
+	print "<tr><td colspan='3'><hr/></td></tr>";
+		my $id = @@{$Obj->{$localTab}{items}}[$cnt];
+		my $end = sprintf("%.0f",9/@@{$Obj->{$localTab}{items}});
+		print "<tr><td><span class='cursor' id='$id' onclick='loadElement(this)'>$id</span>: <img class='cursor' src='img/delete.gif' title=\"$lang->{'Delete Active'}\" onclick='emptyBin()'></td><td><input type='text' style='width:100%' name='view$cnt' value='${$Obj->{$localTab}{intervals}}[$cnt]' $check/></td><td><input type='text' onchange='checkNum(this)' style='width:100%' value='${$Obj->{$localTab}{sizes}}[$cnt]' name='size$cnt'></td></tr>";
+			for (1..$end) {
+			print "<tr><td>&nbsp;&nbsp;rozsah $_</td><td><input type='text' style='width:100%' name='view${cnt}_${_}' value='' onfocus='setBin(this)' onclick='addValue(this)'/></td><td><input type='text' style='width:100%' value='' name='size${cnt}_${_}' onfocus='setBin(this)'></td></tr>";
+d70 2
+a71 1
+		push(@@ids,$id);
+a72 1
+	print "<tr><td><input type='hidden' id='ids' value='".join("|",@@ids)."'/></td></tr>";
+d74 1
+d110 9
+d120 3
+a122 4
+		my $name = "view$_";
+		@@{$Obj->{$localTab}{intervals}}[$_] = param($name);
+		$name = "size$_";
+		@@{$Obj->{$localTab}{sizes}}[$_] = param($name);
+d124 12
+a135 8
+	if ($Obj->{$localTab}{quantity} eq "on") {
+		$Obj->{$localTab}{interpolation} = param('interpolation');
+		$Obj->{$localTab}{max} = param('max');
+		$Obj->{$localTab}{min} = param('min');
+	} else {
+	$Obj->{$localTab}{interpolation} = 'constant';
+	}
+	$Obj->{$localTab}{default} = param('default');
+@
+
+
+1.8
+log
+@right frame implemented
+@
+text
+@d4 1
+a4 1
+# $Id: graph3d_diam_ed.pl,v 1.7 2003/07/29 07:59:42 jiri_schmid Exp $
+d61 1
+a61 1
+		print "<tr><td id='$id'>$id :</td><td><input type='text' style='width:100%' name='view$cnt' value='${$Obj->{$localTab}{intervals}}[$cnt]' $check/></td><td><input type='text' onchange='checkNum(this)' style='width:100%' value='${$Obj->{$localTab}{sizes}}[$cnt]' name='size$cnt'></td></tr>";
+d63 1
+a63 1
+			print "<tr><td>&nbsp;&nbsp;rozsah $_</td><td><input type='text' style='width:100%' name='view${cnt}_${_}' value=''/></td><td><input type='text' style='width:100%' value='${cnt}_${_}' name='size${cnt}_${_}'></td></tr>";
+@
+
+
+1.7
+log
+@minor interface and code improvments
+@
+text
+@d4 1
+a4 1
+# $Id: graph3d_diam_ed.pl,v 1.6 2003/07/28 13:39:58 jiri_schmid Exp $
+d57 1
+a57 1
+	foreach (0..$#{$Obj->{$localTab}{items}}) {
+d59 1
+a59 1
+		my $id = @@{$Obj->{$localTab}{items}}[$_];
+d61 1
+a61 1
+		print "<tr><td id='$id'>$id :</td><td><input type='text' style='width:100%' name='view$_' value='${$Obj->{$localTab}{intervals}}[$_]' $check/></td><td><input type='text' onchange='checkNum(this)' style='width:100%' value='${$Obj->{$localTab}{sizes}}[$_]' name='size$_'></td></tr>";
+d63 1
+a63 1
+			print "<tr><td>&nbsp;&nbsp;rozsah $_ $end</td><td><input type='text' style='width:100%' name='rozsah$_' value=''/></td><td><input type='text' style='width:100%' value='' name='size$_'></td></tr>";
+@
+
+
+1.6
+log
+@minor code improvments
+@
+text
+@d4 1
+a4 1
+# $Id: graph3d_diam_ed.pl,v 1.5 2003/07/25 10:53:21 jiri_schmid Exp $
+d54 1
+a54 2
+	print "<tr><td colspan='3'><hr/></td></tr></table>";
+	print "<table style='text-align:left'>";
+d58 1
+d60 1
+d62 3
+a71 4
+	<td rowspan='2'>&nbsp</td>
+	<td rowspan='2'>
+	<iframe class="formatIframe" id='iframe' frameborder='0' src="elements.cgi?Lang=$use_lang" width='100%' height='100%'></iframe>
+	</td>	
+@
+
+
+1.5
+log
+@switching tab bug fixed
+@
+text
+@d4 1
+a4 1
+# $Id: graph3d_diam_ed.pl,v 1.4 2003/07/24 10:37:52 jiri_schmid Exp $
+d36 1
+a36 1
+		<td><input onchange='checkNum(this)' type='text' name='default' style='width:100%' value="$Obj->{$localTab}{default}"/></td>
+d67 6
+a72 1
+	</td></tr>	
+@
+
+
+1.4
+log
+@next tab implmented
+@
+text
+@d4 1
+a4 1
+# $Id: graph3d_diam_ed.pl,v 1.3 2003/07/23 11:44:56 jiri_schmid Exp $
+d21 1
+a21 1
+if (exists $Obj->{$localTab}){
+@
+
+
+1.3
+log
+@next tab implemented on graph3d page
+@
+text
+@d4 1
+a4 1
+# $Id: graph3d_diam_ed.pl,v 1.2 2003/07/23 08:08:58 jiri_schmid Exp $
+d25 1
+a25 1
+my ($disable, $constant, $selected, $print);
+d31 1
+d50 2
+a51 2
+		print "<tr><th style='white-space:nowrap'>Minimum:</th><td><input onchange='checkNum(this)' type='text' name='min' id='inputmin' style='width:100%' value='$Obj->{$localTab}{min}'/></td><td>&nbsp;</td></tr>";
+		print "<tr><th style='white-space:nowrap'>Maximum:</th><td><input onchange='checkNum(this)' type='text' name='max' id='inputmax' style='width:100%' value='$Obj->{$localTab}{max}'/></td><td>&nbsp;</td></tr>";
+d60 1
+a60 1
+		print "<tr><td id='$id'>$id :</td><td><input type='text' style='width:100%' name='view$_' value='${$Obj->{$localTab}{intervals}}[$_]' onchange='checkNum(this)'/></td><td><input type='text' style='width:100%' value='${$Obj->{$localTab}{sizes}}[$_]' name='size$_'></td></tr>";
+@
+
+
+1.2
+log
+@some XML::Simple-In reconfiguration
+@
+text
+@d4 1
+a4 1
+# $Id: graph3d_diam_ed.pl,v 1.1 2003/07/22 15:17:20 jiri_schmid Exp $
+d21 1
+d33 4
+a36 3
+	<table style='text-align:left'>
+	<tr>	<th>$lang->{'Graph3d default'}</td>
+		<td><input onchange='checkNum(this)' type='text' name='default' size="$descr_w" value="$Obj->{$localTab}{default}"/></td>
+d38 2
+a39 2
+	<tr>	<th>$lang->{'Graph3d interpolation'}</td>
+		<td><select size='1' name='interpolation' style="width:100%" $disable>
+d47 1
+a47 1
+	print "</select></td></tr>";
+d49 2
+a50 2
+		print "<tr><th>Minimum:</th><td><input onchange='checkNum(this)' type='text' name='min' id='inputmin' size='$descr_w' value='$Obj->{$localTab}{min}'/></td></tr>";
+		print "<tr><th>Maximum:</th><td><input onchange='checkNum(this)' type='text' name='max' id='inputmax' size='$descr_w' value='$Obj->{$localTab}{max}'/></td></tr>";
+d53 4
+a56 2
+	print "<tr><td colspan='2'><hr/></td></tr>";
+	print "<tr><th style='text-align:left'>$lang->{'Graph3d Itemdiameter'}</th><td style='text-align:center'>$lang->{'Graph3d Interval'}</td></tr>";
+d59 1
+a59 1
+		print "<tr><td id='$id'>$id :</td><td><input type='text' name='$id' id='input$id' size='$descr_w' value='${$Obj->{$localTab}{intervals}}[$_]' onchange='checkNum(this)'/></td></tr>";
+d63 1
+a65 1
+</table>
+d72 1
+a72 1
+			<tr>	<td class="buttons"><input type="submit" name="Action" value="$lang->{'Save'}" onclick="" /></td>
+d81 1
+d99 4
+a102 1
+		@@{$Obj->{$localTab}{intervals}}[$_] = param(${$Obj->{$localTab}{items}}[$_]);
+@
+
+
+1.1
+log
+@added files defining tabs on graph3d page
+@
+text
+@d4 1
+a4 1
+# $Id: graph3d_def_ed.pl,v 1.2 2003/07/11 16:00:53 jiri_schmid Exp $
+d34 1
+a34 1
+		<td><input type='text' name='default' size="$descr_w" value="$Obj->{$localTab}{default}"/></td>
+d47 2
+a48 2
+		print "<tr><th>Minimum:</th><td><input type='text' name='min' id='inputmin' size='$descr_w' value='$Obj->{$localTab}{min}'/></td></tr>";
+		print "<tr><th>Maximum:</th><td><input type='text' name='max' id='inputmax' size='$descr_w' value='$Obj->{$localTab}{max}'/></td></tr>";
+@
+

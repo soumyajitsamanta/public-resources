@@ -1,0 +1,370 @@
+head	1.2;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2005.06.28.12.26.34;	author igorludi;	state dead;
+branches;
+next	1.1;
+
+1.1
+date	2005.06.28.11.35.03;	author igorludi;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@*** empty log message ***
+@
+text
+@package rex.graphics;
+
+import javax.swing.JPanel;
+import javax.swing.BoxLayout;
+import javax.swing.JLabel;
+import rex.utils.AppColors;
+import java.util.Calendar;
+import java.util.TimeZone;
+import javax.swing.Box;
+
+import rex.utils.*;
+import javax.swing.Timer;
+import java.text.NumberFormat;
+import javax.swing.Action;
+import javax.swing.AbstractAction;
+import java.awt.event.ActionEvent;
+import java.awt.Graphics;
+import javax.swing.SwingUtilities;
+import java.awt.Rectangle;
+import javax.swing.ImageIcon;
+import javax.swing.JComponent;
+import java.awt.Dimension;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
+
+/**
+ * <p>Title: WHEX</p>
+ * <p>Description: </p>
+ * <p>Copyright: Copyright (c) 2003</p>
+ * <p>Company: </p>
+ * @@author igor
+ * @@version 1.0
+ */
+
+public class StatusBar extends JPanel{
+   private JLabel
+        status
+      , progress
+      , dataCellsNo
+      , clientTime
+      , serverTime
+//      , timeDate
+      , memUsage;
+//   Calendar calendar;
+   javax.swing.Timer timer;
+   private boolean stopProgressing;
+   private long clientStart, clientStop, serverStart, serverStop;
+   private static long MB = 1024*1024;
+   private static ImageIcon[][] progressIcon;
+   public static int JOB_TYPE_NORMAL
+                   , JOB_TYPE_CRITICAL;
+
+   static {
+     JOB_TYPE_NORMAL   = 0;
+     JOB_TYPE_CRITICAL = 1;
+     progressIcon = new ImageIcon[2][12];
+     // filenames are composed of pbar + first index + second index
+     progressIcon[0][0] = S.getAppIcon("pbar01.gif");
+     progressIcon[0][1] = S.getAppIcon("pbar02.gif");
+     progressIcon[0][2] = S.getAppIcon("pbar03.gif");
+     progressIcon[0][3] = S.getAppIcon("pbar04.gif");
+     progressIcon[0][4] = S.getAppIcon("pbar05.gif");
+     progressIcon[0][5] = S.getAppIcon("pbar06.gif");
+     progressIcon[0][6] = S.getAppIcon("pbar07.gif");
+     progressIcon[0][7] = S.getAppIcon("pbar08.gif");
+     progressIcon[0][8] = S.getAppIcon("pbar09.gif");
+     progressIcon[0][9] = S.getAppIcon("pbar010.gif");
+     progressIcon[0][10] = S.getAppIcon("pbar011.gif");
+     progressIcon[0][11] = S.getAppIcon("pbar012.gif");
+
+     progressIcon[1][0] = S.getAppIcon("pbar11.gif");
+     progressIcon[1][1] = S.getAppIcon("pbar12.gif");
+     progressIcon[1][2] = S.getAppIcon("pbar13.gif");
+     progressIcon[1][3] = S.getAppIcon("pbar14.gif");
+     progressIcon[1][4] = S.getAppIcon("pbar15.gif");
+     progressIcon[1][5] = S.getAppIcon("pbar16.gif");
+     progressIcon[1][6] = S.getAppIcon("pbar17.gif");
+     progressIcon[1][7] = S.getAppIcon("pbar18.gif");
+     progressIcon[1][8] = S.getAppIcon("pbar19.gif");
+     progressIcon[1][9] = S.getAppIcon("pbar110.gif");
+     progressIcon[1][10] = S.getAppIcon("pbar111.gif");
+     progressIcon[1][11] = S.getAppIcon("pbar112.gif");
+
+   }
+
+
+
+
+   public StatusBar() {
+      this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
+      this.setBorder(AppColors.STATUS_BAR_BORDER);
+      this.setOpaque(true);
+      this.setBackground(AppColors.STATUS_BAR_BACKGROUND);
+
+      status = new JLabel("Ready.");
+      status.setPreferredSize(new Dimension(Short.MAX_VALUE , 20));
+      status.setBorder(AppColors.STATUS_BAR_STATUS_MESSAGE_BORDER);
+
+      progress = new JLabel(" "); //progressIcon[0]
+      progress.setBorder(AppColors.STATUS_BAR_PROGRESSBAR_BORDER);
+      progress.setMinimumSize(new Dimension(95, 20));
+      progress.setPreferredSize(new Dimension(95, 20));
+//      S.out("progressIcon[0].getIconWidth() = " + progressIcon[0].getIconWidth()
+//             + "progressIcon[0].getIconHeight()=" + progressIcon[0].getIconHeight());
+
+      dataCellsNo = new JLabel("No data cells.");
+      dataCellsNo.setBorder(AppColors.STATUS_BAR_DATA_CELLS_NO_BORDER);
+
+      clientTime = new JLabel("Client time:00:00:00");
+      clientTime.setBorder(AppColors.STATUS_BAR_TIME_BORDER);
+
+      serverTime = new JLabel("Server time:00:00:00");
+      serverTime.setBorder(AppColors.STATUS_BAR_TIME_BORDER );
+
+      memUsage = new JLabel();
+      memUsage.setBorder(AppColors.STATUS_BAR_MEM_USAGE_BORDER);
+      refreshMemUsage();
+
+      this.add(status);
+      this.add(Box.createHorizontalGlue());
+      this.add(progress);
+      this.add(dataCellsNo);
+      this.add(clientTime);
+      this.add(serverTime);
+      this.add(memUsage);
+      JLabel runGC = new JLabel(S.getAppIcon("garbage_can.gif"));
+      runGC.setBorder(AppColors.STATUS_BAR_RUN_GC_BORDER);
+      runGC.setMaximumSize(new Dimension(30, 18));
+      runGC.addMouseListener(new MouseAdapter(){
+         public void mousePressed(MouseEvent e){
+            setStatus("Running garbage collector.");
+            Runtime.getRuntime().gc();
+            refreshMemUsage();
+            setStatus("Ready.");
+         }
+      });
+      this.add(runGC);
+//      this.add(timeDate);
+//      updateTimeDate();
+//      calendar = Calendar.getInstance();
+   }
+
+//   private void updateTimeDate(){
+//      timeDate.setText("" + Calendar.getInstance(TimeZone.getDefault()).getTime());
+//   }
+   public void startClientClock(){
+      clientStart = Calendar.getInstance().getTimeInMillis();
+//      S.out("clientStart=" + clientStart);
+      if(timer == null) {
+           stopProgressing = false;
+//           timer = new javax.swing.Timer(18, createTickAction());
+//           timer.start();
+//           S.out("started ticking");
+       }
+
+   }
+   public void stopClientClock(){
+      clientStop = Calendar.getInstance().getTimeInMillis() - clientStart;
+//      S.out("clientStop=" + clientStop);
+      calculateTimeDiff("Client time:", clientTime, clientStop);
+      stopProgressing = true;
+   }
+   public void startServerClock(){
+      serverStart = Calendar.getInstance().getTimeInMillis();
+//      S.out("serverStart=" + serverStart);
+   }
+   public void stopServerClock(){
+      serverStop = Calendar.getInstance().getTimeInMillis() - serverStart;
+//      S.out("serverStop=" + serverStop);
+      calculateTimeDiff("Server time:", serverTime, serverStop);
+
+   }
+   private void calculateTimeDiff(String prefix, JLabel lab, long diff){
+      NumberFormat nf = NumberFormat.getInstance();
+      nf.setMinimumIntegerDigits(2);
+      lab.setText(""
+                   + prefix
+                   + nf.format(diff/(1000*60))
+                   + ":"
+                   + nf.format(((diff/1000)%60))
+                   + ":"
+                   + nf.format((diff%1000)));
+   }
+   public void setStatus(String _status){
+      status.setText(_status);
+      S.out("Setting status:\t" + _status);
+//      status.repaint();
+      paintComponentImmediately(status);
+//      S.out("Runtime.getRuntime().freeMemory()=" + Runtime.getRuntime().freeMemory()/(1024*1024)
+//                + "\nRuntime.getRuntime().totalMemory()=" + Runtime.getRuntime().totalMemory()/(1024*1024)
+//                + "\nRuntime.getRuntime().maxMemory()=" + Runtime.getRuntime().maxMemory()/(1024*1024));
+      refreshMemUsage();
+//      this.repaint();
+//      this.revalidate();
+   }
+   private void refreshMemUsage(){
+      memUsage.setText(Runtime.getRuntime().totalMemory()/MB
+                 + "/"
+                 + Runtime.getRuntime().maxMemory()/MB
+                 + "MB");
+   }
+   public void setProgressText(String p){
+      progress.setText(p);
+      progress.repaint();
+      this.getRootPane().repaint();
+   }
+   public String getProgressText(){
+      return progress.getText();
+
+   }
+
+   public void setDataCellsNumber(int rowNum, int colNum){
+      dataCellsNo.setText("Data cells:" + rowNum + "x" + colNum + "=" + rowNum*colNum + " cells.");
+   }
+
+   private void paintComponentImmediately(JComponent c){
+   //   c.setVisible(true);
+      Rectangle progressRect = c.getBounds();
+//      c.x = 0;
+//      c.y = 0;
+      progressRect.x=0;
+      progressRect.y=0;
+//      S.out("progressRect = " + progressRect);
+      c.paintImmediately(progressRect);
+   }
+//   public Action createTickAction() {
+//      return new AbstractAction("tick action") {
+//         public void actionPerformed(ActionEvent e) {
+//            S.out("check stopProgressing = " + stopProgressing);
+//            if (!stopProgressing) {
+//               progress.setText(progress.getText() + "*");
+//               S.out("tick!");
+//            }
+//            else {
+//               if (timer != null) {
+//                  timer.stop();
+//                  timer = null;
+//                  S.out("stopped ticking!");
+//               }
+//            }
+//         }
+//      };
+//   }
+//   public void progressJob0(Runnable job){
+//      final Runnable job2 = job;
+//      final SwingWorker worker = new SwingWorker() {
+//        public Object construct() {
+//            job2.run();
+//            return null;
+//        }
+//      };
+//      worker.start();
+//      for(int i=0; i<10; i++){
+//         try{Thread.sleep(500);}catch(Exception e){}
+//         progress.setText(progress.getText() + "Z");
+//         S.out(progress.getText());
+//        // progress.setVisible(true);
+//      }
+
+//   }
+   public void progressJob(Runnable job, int jobType){
+      Thread jobThread = new Thread(job);
+      progress.setIcon(progressIcon[jobType][0]);
+      jobThread.start();
+      int loop = 0;
+      while (jobThread.isAlive()) {
+         try {
+            // first progress fast, then slow down:
+            // (last step is ~ minute)
+            jobThread.join((int)Math.exp((loop>5)? loop: 0) + 100);
+         }
+         catch (InterruptedException e) {
+            throw new RuntimeException(e);
+         }
+         loop = (loop + 1)%12;
+         progress.setIcon(progressIcon[jobType][loop]);
+         paintComponentImmediately(progress);
+      }
+// should I leave this out?
+      for(; loop<12; loop++){
+         progress.setIcon(progressIcon[jobType][loop]);
+         paintComponentImmediately(progress);
+      }
+      progress.setIcon(null);
+   }
+//   class Tick extends Thread{
+//     StatusBar curr;
+//     Tick(StatusBar _curr){
+//        super();
+//        curr = _curr;
+//     }
+//     public void run(){
+//       curr.setProgressText("PROGRESS:");
+//       while(!stopProgressing){
+//         curr.setProgressText(curr.getProgressText() + "*");
+//         S.out(progress.getText());
+//         try{
+//            sleep(50);
+//         }catch (InterruptedException e) {
+//            //throw new RuntimeException(e);
+//         }
+//       }
+//       StatusBar.this.setProgressText("DONE!");
+//       S.out("this.hashCode()=" + StatusBar.this.hashCode());
+//       S.out("curr.hashCode()=" + curr.hashCode());
+//     }
+//   }
+//   public void progressJob(Runnable job){
+//     Thread t = new Tick(this);
+//     stopProgressing = false;
+//     t.start();
+//     job.run();
+//     stopProgressing = true;
+//     try{
+//        t.join();
+//     }catch (InterruptedException e) {
+//        throw new RuntimeException(e);
+//     }
+//
+//     S.out("this.hashCode()=" + this.hashCode());
+//   }
+//   public void paintComponent(Graphics g) {
+//      S.out("painting status bar");
+//      S.paintBackground(g, this);
+//      super.paintComponent(g);
+//   }
+
+
+
+}
+@
+
+
+1.1
+log
+@first time commit
+@
+text
+@@
+

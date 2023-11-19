@@ -1,0 +1,132 @@
+head	1.2;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2005.06.28.13.38.28;	author igorludi;	state dead;
+branches;
+next	1.1;
+
+1.1
+date	2005.06.28.11.35.03;	author igorludi;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@*** empty log message ***
+@
+text
+@package rex.graphics.mdxeditor;
+
+
+import rex.utils.*;
+import javax.swing.JPanel;
+import javax.swing.JLabel;
+
+import java.awt.Color;
+//import rex.metadata.Query;
+import java.awt.Graphics;
+import rex.graphics.CubeExplorer;
+import javax.swing.Box;
+import javax.swing.BorderFactory;
+import java.awt.BorderLayout;
+import javax.swing.BoxLayout;
+
+
+/**
+ * <p>Title: WHEX</p>
+ * <p>Description: </p>
+ * <p>Copyright: Copyright (c) 2003</p>
+ * <p>Company: </p>
+ * @@author igor
+ * @@version 1.0
+ */
+public class MdxResultPage extends JPanel{
+
+//   private Query q;
+   private CubeExplorer ce;
+   private EmptyMdxResultTable ert;
+   private boolean current;
+   private boolean cubeExplorerIsDisplayed;
+
+   public MdxResultPage() {
+      ert = new EmptyMdxResultTable();
+      this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+      this.add(ert);
+      cubeExplorerIsDisplayed = false;
+      setOpaque(false);
+      current = false;
+      this.setBorder(BorderFactory.createLineBorder(Color.RED, 1));
+   }
+   public MdxResultPage(CubeExplorer ceToDisplay) {
+      ce = ceToDisplay;
+      this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+      this.add(ce);
+      this.add(Box.createVerticalGlue());
+      cubeExplorerIsDisplayed = true;
+      setOpaque(false);
+      current = false;
+      this.setBorder(BorderFactory.createLineBorder(Color.RED, 1));
+   }
+
+   public void refreshDisplay(){
+//      S.out("current=");
+      if (current){
+         // this happens when users removes last dimension (on some axis) from query:
+         // than we have to go back to EmptyResultTable
+         if (cubeExplorerIsDisplayed) {
+            cubeExplorerIsDisplayed = false;
+            this.removeAll();
+            if (ert == null) {
+               ert = new EmptyMdxResultTable();
+            }
+            this.add(ert);
+         }
+//            ert.refreshDisplay();
+         this.repaint();
+         this.revalidate();
+      }
+   }
+   public void paintComponent(Graphics g) {
+      S.paintBackground(g, this);
+      super.paintComponent(g);
+   }
+   public void setCurrent(boolean isCurrent){
+      current = isCurrent;
+   }
+   public boolean isCurrent(){
+      return current;
+   }
+   public void setCubeExplorer(CubeExplorer ceToDisplay){
+      ce = ceToDisplay;
+      cubeExplorerIsDisplayed = true;
+      this.removeAll();
+      this.add(ce);
+      this.add(Box.createVerticalGlue());
+   }
+   public CubeExplorer getCubeExplorer(){
+      return ce;
+   }
+
+
+
+}
+@
+
+
+1.1
+log
+@first time commit
+@
+text
+@@
+

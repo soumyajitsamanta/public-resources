@@ -1,0 +1,88 @@
+head	1.1;
+access;
+symbols
+	jpivot_1_8_0:1.1
+	focus_1_6_0:1.1.0.6
+	wcf_1_7_0:1.1
+	wcf_1_6_0:1.1
+	jpivot_1_5_0:1.1.0.4
+	Root_jpivot_1_5_0:1.1
+	mondrian_xmla_2005_08_25:1.1.0.2
+	sourceforge_sync:1.1;
+locks; strict;
+comment	@# @;
+
+
+1.1
+date	2005.07.05.14.04.32;	author avix;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@initial version
+@
+text
+@package com.tonbeller.wcf.web;
+
+import org.xml.sax.SAXException;
+
+import com.meterware.httpunit.GetMethodWebRequest;
+import com.meterware.httpunit.WebForm;
+import com.meterware.httpunit.WebResponse;
+import com.meterware.httpunit.WebTable;
+import com.tonbeller.wcf.log.LogHandler;
+
+public class LogTest extends HttpUnitTestCase {
+
+  public LogTest(String name) {
+    super(name);
+  }
+
+  public void testForm() throws Exception {
+    wc.sendRequest(new GetMethodWebRequest(servletUrl + "/logdemo.jsp"));
+
+    WebForm wf;
+    
+    // Logging fuer Errors aktivieren
+    wf = wc.getCurrentPage().getFormWithID("logform");
+    wf.setParameter("logConfs", String.valueOf(LogHandler.ERROR_STDOUT.hashCode()));
+    wf.submit(wf.getSubmitButtonWithID("logdemo.ok"));
+    assertLogLevel("ERROR", wc.getCurrentPage());
+    
+    // Logging fuer alle Meldungen
+    wf = wc.getCurrentPage().getFormWithID("logform");
+    wf.setParameter("logConfs", String.valueOf(LogHandler.DEBUG_STDOUT.hashCode()));
+    wf.submit(wf.getSubmitButtonWithID("logdemo.ok"));
+    assertLogLevel("DEBUG", wc.getCurrentPage());
+    
+    // Logging abschalten
+    wf = wc.getCurrentPage().getFormWithID("logform");
+    wf.setParameter("logConfs", String.valueOf(LogHandler.NOLOG.hashCode()));
+    wf.submit(wf.getSubmitButtonWithID("logdemo.ok"));
+    assertLogLevel("OFF", wc.getCurrentPage());
+    
+  }
+  /**
+   * Method assertLogLevel.
+   * @@param ref
+   * @@param webResponse
+   */
+  private void assertLogLevel(String ref, WebResponse webResponse) {
+    try {
+      WebTable tab = webResponse.getTables()[0];
+      assertEquals(ref, tab.getCellAsText(1,1));
+    }
+    catch (SAXException e) {
+      e.printStackTrace();
+      fail(e.toString());
+    }
+  }
+
+}
+@

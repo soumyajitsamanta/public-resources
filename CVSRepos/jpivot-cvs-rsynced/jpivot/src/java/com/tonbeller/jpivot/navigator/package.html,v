@@ -1,0 +1,53 @@
+head	1.1;
+access;
+symbols
+	jpivot_1_8_0:1.1
+	focus_1_6_0:1.1.0.6
+	jpivot_1_7_0:1.1
+	jpivot_1_6_0:1.1
+	jpivot_1_5_0:1.1.0.4
+	Root_jpivot_1_5_0:1.1
+	mondrian_xmla_2005_08_25:1.1.0.2
+	sourceforge_sync:1.1;
+locks; strict;
+comment	@# @;
+expand	@k@;
+
+
+1.1
+date	2005.07.05.14.19.56;	author avix;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@initial version
+@
+text
+@<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<body bgcolor="white">
+
+UI for slicing and dicing. 
+<p>
+The user can
+<ul>
+  <li>map hierarchies to axes, e.g. display measures on columns and crossjoin(products, customers) on rows</li>
+  <li>select individual members for the slicer, e.g. set a filter on year 1998</li>
+  <li>select multiple members for display on an axis, e.g. instead of all customers show only customer A and C.</li>
+</ul>
+
+<h2>Classdiagram</h2>
+
+<img src="doc-files/classdiagram.gif">
+
+<p>
+The packages member and hierarchy are independent of each other.
+</body>
+</html>
+@

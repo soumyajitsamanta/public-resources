@@ -1,0 +1,61 @@
+head	1.2;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2006.01.13.12.21.31;	author igorludi;	state dead;
+branches;
+next	1.1;
+
+1.1
+date	2005.10.18.14.04.41;	author igorludi;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@*** empty log message ***
+@
+text
+@package rex.graphics.mdxeditor.mdxbuilder.nodes;
+
+import java.awt.datatransfer.DataFlavor;
+import java.io.Serializable;
+
+public class MBTFromNode extends DefaultMBTAxisNode implements Serializable{
+   String cubeName;
+   public MBTFromNode(String _cubeName) {
+      super("FROM " + _cubeName , false);
+      cubeName = _cubeName;
+   }
+
+   public String[] getPopUpActionList(){ return null;}
+
+   public String getMdx(String indent){
+      if (cubeName.trim().startsWith("[")){
+         return indent + "FROM " + cubeName;
+      }else{
+         return indent + "FROM [" + cubeName + "]";
+      }
+
+   }
+   public  boolean acceptDrop(DataFlavor f){return false;} /* cannot drop onto this node */
+}
+@
+
+
+1.1
+log
+@*** empty log message ***
+@
+text
+@@
+

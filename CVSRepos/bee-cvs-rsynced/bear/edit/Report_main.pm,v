@@ -1,0 +1,299 @@
+head	1.8;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.8
+date	2004.03.04.14.43.16;	author jiri_schmid;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	2004.01.27.15.37.12;	author jiri_schmid;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	2004.01.27.13.35.21;	author jiri_schmid;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	2004.01.20.13.06.08;	author jiri_schmid;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2003.12.12.12.12.16;	author jiri_schmid;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2003.11.18.14.38.40;	author jiri_schmid;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2003.11.14.11.45.36;	author jiri_schmid;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2003.10.31.12.47.57;	author jiri_schmid;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.8
+log
+@fixing bugs and improving useability and performance
+@
+text
+@#-----------------------------------------------------
+#  Report Editation
+#-----------------------------------------------------
+# $Id: Report_main.pm,v 1.7 2004/01/27 15:37:12 jiri_schmid Exp $
+
+package Report_main;
+
+use strict;
+
+#-----------------------------------------------------
+
+sub generateContent {
+my($variables, $lang, $obj, $q) = (shift, shift, shift, shift);
+my $shortCut = $Const::wb_const->{$$variables->{wb}};
+my $saved = $$variables->{saved} if exists $$variables->{saved};
+my $saveRun = $$variables->{saveRun} if exists $$variables->{saveRun};
+my $localizations = {};
+my $name = &Local::LocalizedObj($$obj->{name}, "$$lang->{'Undef Local'}", $$variables->{useLang}, $$variables->{defaultLang});
+(my $desc = &Local::LocalizedObj($$obj->{description}, undef, $$variables->{useLang}, $$variables->{defaultLang})) =~ s/\\n/\n/g;
+print <<END;
+<br />
+<table class="page_skeleton">
+<tr class="page_skeleton">
+<td class="page_skeleton">
+	<table class="neutral">
+	<tr><td class="neutral_bold">$$lang->{'Name'}</td></tr>
+	<tr><td align="center">
+		<span class='nowrap'>
+		<input value="$name" onchange="object_changed()" type="text" name="name" id="NAME" size="$shortCut->{nameWidth}" maxlength="100"/>
+		<select name="langSpec" id="langSpec" onchange="tmpChangeLocal()">
+END
+foreach (keys %{$Const::languages}) {
+	$localizations->{$_}{name} = &Local::LocalizedObj($$obj->{name}, "$$lang->{'Undef Local'}", $_, $$variables->{defaultLang});
+	$localizations->{$_}{desc} = &Local::ScriptStringView(&Local::LocalizedObj($$obj->{description}, undef, $_, $$variables->{defaultLang}));
+	my $selected = ($$variables->{useLang} eq $_) ? " selected='selected'" : '';
+	print "<option value='$_'$selected>$_</option>";
+}
+print <<END;
+		</select>
+		</span>	</td></tr>
+	<tr><td><hr></td></tr>
+	<tr><td class="neutral_bold">$$lang->{'Description'}</td></tr>
+	<tr><td align="center"><textarea onchange="object_changed()" cols="$shortCut->{descriptionWidth}" rows="$Const::descriptionRows" name="desc" id="DESC">$desc</textarea></td></tr>
+	<tr><td><hr /></td></tr>
+	<tr><td align='center'>
+		<table>
+		<tr><td align='center'>
+			<table class='buttons' style='width:100%'>
+			<tr>
+			<td class="buttons"><input id='SAVE' type="submit" style='width:100%' name="Action" value="$$lang->{'Save'}" onclick="return check_name()"/></td>
+			<td class="buttons">	<input type="submit" style='width:100%' name="Action" value="$$lang->{'Save As'}" onclick="return readName();"/>
+						<input type="hidden" name="saveAsName" id="saveAsName" value="" /></td>
+			<td class="buttons"><input type="button" style='width:100%' name="reset" value="$$lang->{'Reset'}" onclick="subst_item_id()" /></td>
+			</tr>
+			</table>
+		</td></tr>
+		<tr><td align='center'>
+			<table class='buttons'>
+			<tr>
+			<td class='buttons'><input type="button" value="$$lang->{'Report Run'}" onclick="run_result()"/></td>
+			<td class='buttons'>
+				<select name="report_open_in" id="report_open_in">
+END
+my @@open_result = ('_default','_blank','_one','_collect');	#set values for open_in parameter used in user preferences
+my $hlp = "";					#clear from previus text content
+my $open = $q->param('report_open_in');
+if ($$variables->{hidden}{'open_in'} eq '_self') {
+	pop @@open_result;
+	push @@open_result,'_self';
+}
+my $selected;
+foreach (@@open_result) {
+ $selected = ($_ eq $open) ? " selected='selected'" : "";
+ $hlp .= "<option value=\"$_\"$selected>".$$lang->{"Prefer OpenR $_"}."</option>";
+}
+print $hlp;
+print <<END;
+				</select>
+			</td>
+			</tr>
+			</table>
+		</td></tr>
+		</table>
+	</td></tr>
+	</table>
+</td></tr>
+</table>
+<script type="text/javascript">
+	var localItem = "$$lang->{'Report Local'}"; $saveRun
+	var saveAsMsg = "$$lang->{SaveAsMsg}$$lang->{'New Report'}";
+	reloadTree($saved);
+	var msg="$$lang->{'New Save Part1'}$$lang->{'New Report Save'}$$lang->{'New Save Part2'}";
+END
+	foreach my $langVar (keys %{$localizations}) {
+		my @@langVar = ();
+		foreach (keys %{$localizations->{$langVar}}) {
+			push (@@langVar,"$_:\"$localizations->{$langVar}{$_}\"");
+		}
+		print "	var $langVar = {".join(",",@@langVar)."};\n";
+	}
+
+print "</script>";
+
+}
+
+1
+@
+
+
+1.7
+log
+@micro bug fix
+@
+text
+@d4 1
+a4 1
+# $Id: Report_main.pm,v 1.6 2004/01/27 13:35:21 jiri_schmid Exp $
+d19 1
+a19 1
+my $desc = &Local::LocalizedObj($$obj->{description}, undef, $$variables->{useLang}, $$variables->{defaultLang});
+d33 2
+a34 4
+	$name = &Local::LocalizedObj($$obj->{name}, "$$lang->{'Undef Local'}", $_, $$variables->{defaultLang});
+	$localizations->{$_}{name} = $name;
+	my $desc = &Local::LocalizedObj($$obj->{description}, undef, $_, $$variables->{defaultLang});
+	$localizations->{$_}{desc} = $desc;
+@
+
+
+1.6
+log
+@dynamic param fix, description fix
+@
+text
+@d4 1
+a4 1
+# $Id: Report_main.pm,v 1.5 2004/01/20 13:06:08 jiri_schmid Exp $
+a31 1
+my $desc;
+@
+
+
+1.5
+log
+@collected reports tab implementation started
+@
+text
+@d4 1
+a4 1
+# $Id: Report_main.pm,v 1.4 2003/12/12 12:12:16 jiri_schmid Exp $
+d19 2
+a20 1
+print <<END ;
+d36 1
+a36 1
+	$desc = &Local::LocalizedObj($$obj->{description}, undef, $_, $$variables->{defaultLang});
+@
+
+
+1.4
+log
+@found a fixed bug manipulating dynamic params in grid
+@
+text
+@d4 1
+a4 1
+# $Id: Report_main.pm,v 1.3 2003/11/18 14:38:40 jiri_schmid Exp $
+d66 1
+a66 1
+my @@open_result = ('_default','_blank','_one','_self');	#set values for open_in parameter used in user preferences
+d69 4
+@
+
+
+1.3
+log
+@auto save when changing tabs implemented
+@
+text
+@d4 1
+a4 1
+# $Id: Report_main.pm,v 1.2 2003/11/14 11:45:36 jiri_schmid Exp $
+d35 1
+a35 1
+	$desc = &Local::LocalizedObj($$obj->{description}, "--", $_, $$variables->{defaultLang});
+@
+
+
+1.2
+log
+@question for dynamic param implemented
+@
+text
+@d4 1
+a4 1
+# $Id: Report_main.pm,v 1.1 2003/10/31 12:47:57 jiri_schmid Exp $
+d18 1
+a18 1
+my $name = &Local::LocalizedObj($$obj->{name}, "undefined name", $$variables->{useLang}, $$variables->{defaultLang});
+d33 1
+a33 1
+	$name = &Local::LocalizedObj($$obj->{name}, "no $_ name", $_, $$variables->{defaultLang});
+d35 1
+a35 1
+	$desc = &Local::LocalizedObj($$obj->{description}, "no $_ description", $_, $$variables->{defaultLang});
+d52 1
+a52 1
+			<td class="buttons"><input type="submit" style='width:100%' name="Action" value="$$lang->{'Save'}" onclick="return check_name()"/></td>
+@
+
+
+1.1
+log
+@mod perl rocks!
+@
+text
+@d4 1
+a4 1
+# $Id: report_main_ed.pl,v 1.31 2003/10/16 15:29:18 jiri_schmid Exp $
+d17 2
+a18 1
+
+d28 1
+a28 1
+		<input value="" onchange="object_changed()" type="text" name="name" id="NAME" size="$shortCut->{nameWidth}" maxlength="100"/>
+d31 1
+d33 6
+a38 3
+	my $lcL = lc($_);
+	my $name = &Local::LocalizedObj($$obj->{name}, "no name", $lcL, $$variables->{DefaultLang});
+	print "<option value='$name'>$_</option>";
+d45 1
+a45 1
+	<tr><td align="center"><textarea onchange="object_changed()" cols="$shortCut->{descriptionWidth}" rows="$Const::descriptionRows" name="desc" id="DESC"></textarea></td></tr>
+d87 1
+a87 1
+	var localItem = "$$lang->{'Report Local'}"; subst_item_id(); $saveRun
+a90 1
+</script>
+d92 10
+@
+

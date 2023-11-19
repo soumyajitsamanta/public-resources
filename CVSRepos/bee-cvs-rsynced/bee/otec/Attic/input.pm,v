@@ -1,0 +1,396 @@
+head	1.6;
+access;
+symbols
+	start:1.1.1.1 vendor:1.1.1;
+locks; strict;
+comment	@# @;
+
+
+1.6
+date	2003.02.07.21.17.33;	author numberone;	state dead;
+branches;
+next	1.5;
+
+1.5
+date	2003.02.05.15.39.46;	author numberone;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2002.09.29.13.46.47;	author numberone;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2002.09.29.12.58.33;	author numberone;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2002.09.26.07.52.42;	author numberone;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2002.09.24.01.40.59;	author michald;	state Exp;
+branches
+	1.1.1.1;
+next	;
+
+1.1.1.1
+date	2002.09.24.01.40.59;	author michald;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.6
+log
+@removing old 'otec'
+@
+text
+@# $Id: input.pm,v 1.5 2003/02/05 15:39:46 numberone Exp $
+
+package input;
+
+use inout;
+
+use lib '.';
+use common;
+
+use lib '../lib';
+use Net;
+
+use Data::Dumper;
+use strict;
+
+
+sub new {
+	my $pkg    = shift;
+	die "$pkg unsupported now\n";
+}
+
+sub listen {
+	input::stream::bee::listen();
+}
+
+sub init {
+	my ($type,$input) = @@_;
+
+#	foreach(@@$input) {
+#		if(ref eq 'input::stream::select') { $_->init() }
+#	}
+}
+
+sub close {
+	my ($type,$input) = @@_;
+	for(my $i=0;$i<@@$type;$i++) {
+		undef $input->[$i]; # close handle, disconnect dbi, ..
+	}
+}
+
+
+# ==============================================================
+
+# type input::script::source
+# (script - what script assumes vs. script::source - what is connected)
+
+# package input::signal;
+# package input::scalar;
+# package input::array;
+# package input::stream::file;
+# package input::stream::select;
+# package input::stream::bee;
+# package input::table::file;     # same as output::table::file
+# package input::table::dbi;      # same as output::table::dbi
+# package input::dbi;             # same as output::dbi
+
+
+
+# ==============================================================
+
+package input::scalar;
+
+sub new {
+	my($pkg,$url,$arg) = @@_;
+	return $arg->{content};
+}
+
+
+# ==============================================================
+
+package input::array;
+
+sub new {
+	my($pkg,$url,$arg) = @@_;
+	die unless ref $arg->{element} ne 'ARRAY';
+	return [$arg->{element},''];
+}
+
+
+# ==============================================================
+
+# fix: merge common input/output classes to inout:: usign url2 mapping
+
+package input::dbi;
+
+use Data::Dumper;
+use inout;
+
+sub new { 
+	my($pkg,$url,$arg) = @@_;
+	my $db = common::database($url,$arg->{auth});
+	return [[$db,@@{$arg->{arg}}],''];
+}
+
+    
+# ==============================================================
+
+package input::stream::bee;
+
+use Data::Dumper;
+
+my $otec_port = 2330; # fix: $main::port
+
+my @@listen = (); # to what listen
+my @@data_p = (); # where to store 
+
+sub new {
+	my($pkg,$url,$arg,$data_p) = @@_;
+
+	my $server = undef; # find available port/socket-file to listen
+	my $return = undef;
+
+	# fix: carefuly: we can have multiple ip's, be after masquarade..
+
+	if($arg->{ihost} eq $arg->{ohost} and $arg->{iport} == $arg->{oport}) {
+
+		# fix: use UNIX sockets!
+
+#		my $tmp = `mktemp -u`; chomp($tmp); # FIX: move to lib!!!!
+#		$server = Net->server('UNIX','/tmp/pokus') or die;
+#		$return = { unix=>$tmp };
+
+		my $port = $otec_port; # todo: from config range
+		until($server = Net->server("INET",++$port)) { }
+		$return = { host=>$arg->{ihost}, port=>$port }; # fix: 'host:port' ?
+
+	} else {
+		my $port = $otec_port; # todo: from config range
+		until($server = Net->server("INET",++$port)) { }
+		$return->{host} = $arg->{ihost};
+		$return->{port} = $port;
+
+		# todo: bf, zip
+		$return->{zip}  = $arg->{zip};
+		$return->{bf}   = $arg->{bf};
+	}
+
+	push @@listen,$server; # add to listen objects
+	push @@data_p,$data_p; # save pointer to input[num]
+
+	return [undef,$return];
+}
+
+
+sub listen {
+	for(my $i=0;$i<=@@listen;$i++) {
+		next unless($listen[$i]);
+
+		my $net = $listen[$i]->accept(0);
+		next unless($net);
+
+		my $input = bless { 
+				net   => $net, 
+				stats => 0,
+			}, __PACKAGE__;
+
+		${$data_p[$i]} = $input;
+
+		$listen[$i] = undef;
+		$data_p[$i] = undef;
+	}
+
+	@@listen = grep defined $_, @@listen;
+	@@data_p = grep defined $_, @@data_p;
+}
+
+# should be rewritten to optimized C
+sub fetch {
+	my $input = shift;
+
+	my $peek;
+	until(($peek = $input->{net}->peek())) { }
+	return () if($peek < 0);
+
+	my $line = $input->{net}->read();
+
+	my @@array = ();
+	my $offset = 0;
+	while($offset < length($line)) {
+		my $length = unpack("C",substr($line,$offset++,1));
+		if($length < 192) {
+			# ok
+		} elsif($length == 255) {
+			push @@array,undef;
+			next;
+		} elsif($length == 254) {
+			$length = unpack("N",substr($line,$offset,4));
+			$offset += 4;
+		}
+		push @@array, substr($line,$offset,$length);
+		$offset += $length;
+	}
+
+	return @@array;
+}
+
+
+# ==============================================================
+
+package input::stream::file;
+
+use Data::Dumper;
+use inout;
+
+sub new {
+	my($pkg,$url,$arg) = @@_;
+
+	my $table = new inout::file($url,$arg);
+	$table->open(0);
+
+	# rebless: allow only fetch
+	return bless $table,$pkg;
+}
+
+sub fetch { inout::file::fetch(@@_); }
+
+
+
+# ==============================================================
+
+package input::stream::select;
+
+use DBI;
+
+sub new {
+	my($pkg,$url,$arg) = @@_;
+
+	my $dbi = new inout::table($url,$arg);
+	$dbi->open(0);
+	return bless $dbi,$pkg;
+
+#	my $db = common::database($url,$arg->{auth});
+
+#	my $cmd;
+#	if($arg->{view} and not $url->{table}) {
+#		$cmd = $arg->{view};
+#	} elsif($url->{table} and not $arg->{view}) {
+#		die unless @@{$url->{fields}};
+#		$cmd = "SELECT ".(join(",",@@{$url->{fields}})).
+#				" FROM ".$url->{table};
+#	} else {
+#		die "view xor table must be specified in ".__PACKAGE__;
+#	}
+
+#	my $sth = $db->prepare($cmd);
+#	$sth->execute();
+
+#	return bless {
+#			dbi => $db,
+#			sth => $sth,
+#	}, __PACKAGE__;
+}
+
+#sub fetch { shift->{sth}->fetchrow_array }
+
+sub fetch { inout::table::fetch(@@_) }
+
+1;
+
+@
+
+
+1.5
+log
+@SSL to INET - for testing...
+@
+text
+@d1 1
+a1 1
+# $Id: input.pm,v 1.4 2002/09/29 13:46:47 numberone Exp $
+@
+
+
+1.4
+log
+@common::database lib
+@
+text
+@d1 1
+a1 1
+# $Id: input.pm,v 1.3 2002/09/29 12:58:33 numberone Exp $
+d171 3
+a173 3
+	until(my $peek = $input->{net}->peek()) {
+		return () unless defined $peek;
+	}
+@
+
+
+1.3
+log
+@tablequery
+@
+text
+@d1 1
+a1 1
+# $Id: input.pm,v 1.2 2002/09/26 07:52:42 numberone Exp $
+d7 3
+d91 1
+a91 1
+	my $db = inout::database($url,$arg->{auth});
+d232 1
+a232 1
+#	my $db = inout::database($url,$arg->{auth});
+@
+
+
+1.2
+log
+@version merging with my cvs
+@
+text
+@d1 1
+a1 1
+# $Id: input.pm,v 1.1.1.1 2002/09/24 01:40:59 michald Exp $
+d88 1
+a88 1
+	my $db = inout::database($url);
+d229 1
+a229 1
+#	my $db = inout::database($url);
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d1 1
+a1 1
+# $Id: input.pm,v 1.4 2002/08/25 18:12:22 martin Exp $
+d256 1
+@
+
+
+1.1.1.1
+log
+@Initial public release of BEE Project.
+@
+text
+@@

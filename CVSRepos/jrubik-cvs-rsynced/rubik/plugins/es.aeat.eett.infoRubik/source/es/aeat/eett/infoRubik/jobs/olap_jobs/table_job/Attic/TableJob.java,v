@@ -1,0 +1,238 @@
+head	1.2;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2008.05.17.15.40.41;	author fsaz;	state dead;
+branches;
+next	1.1;
+
+1.1
+date	2005.11.28.15.34.24;	author fsaz;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@borrando viejos
+@
+text
+@/*
+ * Created on 16-abr-2005
+ *
+ * TableJob.java
+ *
+ */
+package es.aeat.eett.infoRubik.jobs.olap_jobs.table_job;
+
+import java.io.File;
+import java.io.StringReader;
+import java.util.ResourceBundle;
+
+import javax.xml.transform.Templates;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+import javax.xml.transform.stream.StreamSource;
+
+import org.apache.commons.logging.LogFactory;
+import org.java.plugin.PluginManager;
+import org.jdom.Attribute;
+import org.jdom.Document;
+import org.jdom.Element;
+
+import com.tonbeller.jpivot.olap.model.OlapException;
+import com.tonbeller.jpivot.olap.model.OlapModel;
+import com.tonbeller.jpivot.olap.navi.MdxQuery;
+
+import es.aeat.eett.infoRubik.InfoRugikPlugin;
+import es.aeat.eett.infoRubik.jobs.job_core.Job;
+import es.aeat.eett.rubik.core.RubikMdx;
+import es.aeat.eett.rubik.core.RubikPlugin;
+import es.aeat.eett.rubik.core.tableSetting.TableSetting;
+import es.aeat.eett.rubik.core.util.JDomUtil;
+import es.aeat.eett.rubik.core.util.Misc;
+import es.aeat.eett.rubik.export.xml.TableRubikDom;
+import es.aeat.eett.rubik.menu.MenuManager;
+import es.aeat.eett.rubik.menu.MenuPlugin;
+import es.aeat.eett.rubik.tableRubik.TableRubikPlugin;
+import es.aeat.eett.workbench.core.PluginEvent;
+
+
+/**
+ * @@author f00992
+ */
+public class TableJob implements  Job {
+    private static final ResourceBundle localizationResources =
+        ResourceBundle.getBundle("es.aeat.eett.infoRubik.jobs.olap_jobs.table_job.locale.LocalizationBundle");
+    private static final String CAPTION=localizationResources.getString("PluginCaption");
+    private static final String EXTENSION_ID=InfoRugikPlugin.PLUGIN_ID+"@@TableJobFactory";
+    private RubikMdx rm=null;
+    private File fileJob=null;
+    private static TableSetting tableSetting=null;
+    private static OlapModel olapModel=null;
+    private static MenuManager menuManager=null;
+    private static RubikPlugin rubikPlugin =null;
+    private static InfoRugikPlugin infoRugikPlugin=null;
+
+    
+	/**
+	 * @@return Returns the eXTENSION_ID.
+	 */
+	public static String getEXTENSION_ID() {
+		return EXTENSION_ID;
+	}
+    TableJob() throws Exception{
+    	if(tableSetting==null){
+	        PluginManager pm = PluginManager.lookup(TableJob.class);
+	        rubikPlugin = ((RubikPlugin) pm
+	        		.getPlugin(RubikPlugin.PLUGIN_ID));
+	        tableSetting=rubikPlugin.getTableSetting();
+	        olapModel=rubikPlugin.getOlapModel();
+	        MenuPlugin menuPlugin = ((MenuPlugin) pm
+	        		.getPlugin(MenuPlugin.PLUGIN_ID));
+	        menuManager=menuPlugin.getMenuManager();
+	        infoRugikPlugin = ((InfoRugikPlugin) pm
+	        		.getPlugin(InfoRugikPlugin.PLUGIN_ID));
+    	}
+    }
+    TableJob(File fileJob) throws Exception{
+        this();
+        this.fileJob=fileJob;
+    }
+    public void ini()  throws Exception{
+		try {
+			olapModel.getResult();
+		} catch (RuntimeException e1) {
+			throw new Exception("El modelo no esta inizializado.");
+		} catch (OlapException e) {
+			throw new Exception("El modelo no esta inizializado.");
+		}
+		MdxQuery md=(MdxQuery)olapModel.getExtension(MdxQuery.ID);
+	    rm= new RubikMdx(md.getMdxQuery(), rubikPlugin.getRubikConnection());
+	    menuManager.executeMdx(rm);
+    }
+    public void show(){
+    	PluginEvent pEvent=new PluginEvent(this, TableRubikPlugin.EXT_UNIQUE_ID);
+    	infoRugikPlugin.fireViewMainShow( pEvent);
+    }
+	public String getCaption() {
+		return CAPTION;
+	}
+	public Element getRootElement() {
+		if(rm!=null){
+			Element ejob = new Element(Job.KEY_JOB);
+			Attribute a = new Attribute(Job.KEY_EXTENSION_ID, EXTENSION_ID);
+			ejob.setAttribute(a);
+			a=new Attribute(Job.KEY_CAPTION_PLUGIN, getCaption());
+			ejob.setAttribute(a);
+			ejob.addContent(rm.getRootElement());
+			ejob.addContent(tableSetting.getElementConfiTable());
+			if(fileJob!=null){
+				Element eDeploy=getDeployElement();
+				if(eDeploy!=null)
+					ejob.addContent(eDeploy);
+			}
+			return ejob;
+		}else if(fileJob!=null){
+			Document document;
+			try {
+				document = new JDomUtil().JDomChk(fileJob, Job.KEY_JOB);
+				return document.getRootElement();
+			} catch (Exception e) {
+				 LogFactory.getLog(TableJob.class).warn(
+	                    "Parser failed "+EXTENSION_ID, e);    		
+				return null;
+			}
+
+		}else{
+			return null;
+		}
+	}
+	private Element getDeployElement(){
+    	Element eDeploy=null;
+    	if(fileJob!=null){
+			Document document;
+			try {
+				document = new JDomUtil().JDomChk(fileJob, Job.KEY_JOB);
+				Element eRoot=document.getRootElement();
+	    		if(eRoot!=null)
+	    			eDeploy=eRoot.getChild(Job.KEY_DEPLOY);
+			} catch (Exception e) {
+				 LogFactory.getLog(TableJob.class).warn(
+	                    "failed load deploy "+EXTENSION_ID, e);    		
+			}
+    	}
+    	return eDeploy;
+
+	}
+	private boolean loadRootElement(Element rootElement) {
+		rm=new RubikMdx();
+		return rm.loadRootElement(rootElement);
+	}
+	private void loadFile() throws Exception{
+	    Document document = new JDomUtil().JDomChk(fileJob, Job.KEY_JOB);
+	    Element eRoot=document.getRootElement();
+	    Element eRm=eRoot.getChild(RubikMdx.RUBIK_MDX);
+	    rm=new RubikMdx();
+	    rm.loadRootElement(eRm);
+	    Element eConfi=eRoot.getChild(TableSetting.CONFI_TABLE);
+	    tableSetting.load(eConfi);
+	}
+	public void run() throws Exception{
+	    if(fileJob!=null){
+	        loadFile();
+	    }
+	    menuManager.executeMdx(rm);
+		 if(fileJob!=null){
+		     rm=null;
+		 }
+	}
+	public void createFileOut( File fileOut) throws Exception {
+		TableRubikDom tableRubikDom=TableRubikDom.getInstance();
+		if (fileOut!=null){
+			//TODO Falta result is empty
+			tableRubikDom.confiSpan();
+			org.w3c.dom.Document document= tableRubikDom.getTableComponent().render(null);
+			TransformerFactory tf = TransformerFactory.newInstance();
+			StringReader input = new StringReader(Misc.PRETTY_PRINTER_ISO_8859_1);
+			Templates templates = tf.newTemplates(new StreamSource(input));
+			templates.newTransformer().transform(new DOMSource(document), new StreamResult(fileOut));
+		}else{
+			//throw new UnsupportedOperationException("fileOut is null");
+		    throw new Exception("fileOut is null");
+		}
+	}
+
+
+    /**
+     * @@return Returns the fileJob.
+     */
+    public File getFileJob() {
+        return fileJob;
+    }
+    /**
+     * @@param fileJob The fileJob to set.
+     */
+    public void setFileJob(File fileJob) {
+        this.fileJob = fileJob;
+    }
+}
+@
+
+
+1.1
+log
+@*** empty log message ***
+@
+text
+@@
+

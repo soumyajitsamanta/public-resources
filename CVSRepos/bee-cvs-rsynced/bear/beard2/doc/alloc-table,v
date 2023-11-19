@@ -1,0 +1,60 @@
+head	1.1;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.1
+date	2004.03.01.16.16.48;	author numberone;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@
+Added beard2 -- new bear daemon source tree.
+
+mdata subsystem works, some docs, some tests, etc.
+
+cached in progress
+@
+text
+@
+sub alloc-table(), detail:
+
+		BEGIN
+		SELECT id FROM #cache WHERE def = $def;
+		# jestli naleznes, zrus transakci a vrat $id;
+
+		# vyhledej volnou tabulku vhodne velikosti
+		foreach($size >= $cols) {
+			if(SELECT $id FROM #free-$size LIMIT 1) {
+				DELETE FROM #free-$size WHERE id = $id;
+				last;
+			}
+		}
+		die unless $id; # todo: sleep(), reread, try-again
+
+		INSERT ($id,$report-id,$def) INTO #cache;
+		COMMIT;
+
+		# upozorni pokud dochazeji tabulky
+		my $count = SELECT count(*) from free-$size;
+		if($count < THRESHOLD and not $warned) {
+			kill($ppid,SIGUSR1);
+			$warned = 1; # flag zrusime pri signalu od rodice
+		}
+
+
+		# hangup if not $id
+		najdi velikosti nejvhodnejsi tabulku
+		- atomicky smaz z #free-? a pridej do #cache
+		- pokud se nepovede protoze PK uz existuje, vrat chybu a $id
+
+@

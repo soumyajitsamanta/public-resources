@@ -1,0 +1,2696 @@
+head	1.41;
+access;
+symbols
+	start:1.1.1.1 vendor:1.1.1;
+locks; strict;
+comment	@# @;
+
+
+1.41
+date	2003.02.26.13.21.32;	author jiri_schmid;	state dead;
+branches;
+next	1.40;
+
+1.40
+date	2003.02.25.16.46.02;	author jiri_schmid;	state Exp;
+branches;
+next	1.39;
+
+1.39
+date	2003.02.25.13.57.40;	author jiri_schmid;	state Exp;
+branches;
+next	1.38;
+
+1.38
+date	2003.02.25.09.18.01;	author jiri_schmid;	state Exp;
+branches;
+next	1.37;
+
+1.37
+date	2003.02.24.15.31.10;	author jiri_schmid;	state Exp;
+branches;
+next	1.36;
+
+1.36
+date	2003.02.21.13.33.41;	author jiri_schmid;	state Exp;
+branches;
+next	1.35;
+
+1.35
+date	2003.02.21.09.28.57;	author jiri_schmid;	state Exp;
+branches;
+next	1.34;
+
+1.34
+date	2003.02.20.14.44.49;	author jiri_schmid;	state Exp;
+branches;
+next	1.33;
+
+1.33
+date	2003.02.19.16.06.49;	author jiri_schmid;	state Exp;
+branches;
+next	1.32;
+
+1.32
+date	2003.02.19.13.11.14;	author jiri_schmid;	state Exp;
+branches;
+next	1.31;
+
+1.31
+date	2003.02.17.16.16.53;	author jiri_schmid;	state Exp;
+branches;
+next	1.30;
+
+1.30
+date	2003.02.11.16.06.58;	author jiri_schmid;	state Exp;
+branches;
+next	1.29;
+
+1.29
+date	2003.02.06.12.57.51;	author jiri_schmid;	state Exp;
+branches;
+next	1.28;
+
+1.28
+date	2003.01.23.16.43.02;	author spanhel;	state Exp;
+branches;
+next	1.27;
+
+1.27
+date	2003.01.23.09.47.23;	author spanhel;	state Exp;
+branches;
+next	1.26;
+
+1.26
+date	2003.01.21.14.17.55;	author spanhel;	state Exp;
+branches;
+next	1.25;
+
+1.25
+date	2003.01.20.18.23.45;	author spanhel;	state Exp;
+branches;
+next	1.24;
+
+1.24
+date	2003.01.16.17.20.19;	author spanhel;	state Exp;
+branches;
+next	1.23;
+
+1.23
+date	2003.01.03.11.22.03;	author michald;	state Exp;
+branches;
+next	1.22;
+
+1.22
+date	2002.11.26.12.44.36;	author spanhel;	state Exp;
+branches;
+next	1.21;
+
+1.21
+date	2002.11.22.16.15.40;	author spanhel;	state Exp;
+branches;
+next	1.20;
+
+1.20
+date	2002.11.01.11.49.39;	author spanhel;	state Exp;
+branches;
+next	1.19;
+
+1.19
+date	2002.10.25.14.03.20;	author spanhel;	state Exp;
+branches;
+next	1.18;
+
+1.18
+date	2002.10.23.11.17.36;	author michald;	state Exp;
+branches;
+next	1.17;
+
+1.17
+date	2002.10.05.17.32.02;	author michald;	state Exp;
+branches;
+next	1.16;
+
+1.16
+date	2002.10.02.16.53.03;	author michald;	state Exp;
+branches;
+next	1.15;
+
+1.15
+date	2002.10.02.12.27.13;	author spanhel;	state Exp;
+branches;
+next	1.14;
+
+1.14
+date	2002.10.02.11.14.03;	author michald;	state Exp;
+branches;
+next	1.13;
+
+1.13
+date	2002.10.01.14.56.11;	author spanhel;	state Exp;
+branches;
+next	1.12;
+
+1.12
+date	2002.09.30.14.39.57;	author spanhel;	state Exp;
+branches;
+next	1.11;
+
+1.11
+date	2002.09.30.13.56.49;	author michald;	state Exp;
+branches;
+next	1.10;
+
+1.10
+date	2002.09.30.13.18.53;	author spanhel;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	2002.09.30.11.53.29;	author spanhel;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	2002.09.30.10.02.21;	author michald;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	2002.09.29.09.08.21;	author michald;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	2002.09.26.17.34.11;	author spanhel;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	2002.09.25.17.42.27;	author spanhel;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2002.09.25.07.59.27;	author spanhel;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2002.09.24.13.02.50;	author spanhel;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2002.09.24.09.07.22;	author michald;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2002.09.24.01.56.48;	author michald;	state Exp;
+branches
+	1.1.1.1;
+next	;
+
+1.1.1.1
+date	2002.09.24.01.56.48;	author michald;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.41
+log
+@huge javascript optimalization, also files moved to directory js
+@
+text
+@/**************************************************************************
+	Copyright (c) 2001 Geir Landrö (drop@@destroydrop.com)
+	JavaScript Tree - www.destroydrop.com/hugi/javascript/tree/
+	Version 0.96	
+
+	This script can be used freely as long as all copyright messages are
+	intact.
+**************************************************************************/
+//$Id: tree2.js,v 1.40 2003/02/25 16:46:02 jiri_schmid Exp $
+
+
+// Arrays for nodes and icons
+// var nodes		= new Array();;
+
+var icons		= new Array(6);
+var LM			= -1;	// last modified node
+var count		= 0;   // count of c
+var last=-3;
+var cnt;
+var MM;
+var GID = "-1"; // global variable for active node
+
+// Loads all icons that are used in the tree
+function preloadIcons() {
+	icons[0] = new Image();	icons[0].src = "img/tree/plus.gif";
+	icons[1] = new Image();	icons[1].src = "img/tree/plusbottom.gif";
+	icons[2] = new Image();	icons[2].src = "img/tree/minus.gif";
+	icons[3] = new Image();	icons[3].src = "img/tree/minusbottom.gif";
+	icons[4] = new Image();	icons[4].src = "img/tree/folder.gif";
+	icons[5] = new Image();	icons[5].src = "img/tree/folderopen.gif";
+}
+
+// Create the tree
+function createTree(nodes, projName, startNode, openNode, opno, mark) {
+        // startNode - display only part of tree, that defined from NodeId
+	// OpenNode - specify NodeId, that will be roll out
+	last=openNode;
+	MM=mark;
+	if (nodes.length > 0) {
+		preloadIcons(); // load icons
+		if (startNode == null) startNode = 0;		
+		if (openNode != 0 || openNode != null) { setOpenNodes(openNode,nodes, opno);}
+		if (startNode !=0) {
+    		  var nodeValues = nodes[getArrayId(startNode,nodes)].split("|");
+ 		  document.write("<a href=\"" + nodeValues[3] + "\" onmouseover=\"window.status='" + nodeValues[2] +  "';return true;\"><img src=\"img/tree/folderopen.gif\" align=\"absbottom\" alt=\"\" />" + nodeValues[2] + "</a><br />");
+		} 
+		else document.write("<img src=\"img/tree/base.gif\" align=\"top\" alt=\"\" /><img src=\"img/tree/empty.gif\" align=\"top\" alt=\"\" />"+projName+"<br />");	
+		var recursedNodes = new Array();
+		addNode(startNode, recursedNodes, nodes, opno);
+	} // end if 
+}
+// Returns the position of a node in the array
+function getArrayId(node, nn) {
+	for (i=0; i<nn.length; i++) {
+		var nodeValues = nn[i].split("|");
+		if (nodeValues[0]==node) return i;
+	}
+}
+
+// Puts in array nodes that will be open
+function setOpenNodes(openNode,nn,on) {
+	for (i=0; i<nn.length; i++) {
+		var nodeValues = nn[i].split("|");
+		if (nodeValues[0]==openNode) {
+			on.push(nodeValues[0]);
+			setOpenNodes(nodeValues[1],nn,on);
+		}
+	} 
+}
+// Checks if a node is open
+function isNodeOpen(node, on) {
+	for (i=0; i<on.length; i++)
+		if (on[i]==node) return true;
+	return false;
+}
+// Checks if a node has any children
+function hasChildNode(parentNode, nn) {
+	for (i=0; i< nn.length; i++) {
+		var nodeValues = nn[i].split("|");
+		if (nodeValues[1] == parentNode) return true;
+	}
+	return false;
+}
+// Checks if a node is the last sibling
+function lastSibling (node, parentNode, nn) {
+	var lastChild = 0;
+	for (i=0; i< nn.length; i++) {
+		var nodeValues = nn[i].split("|");
+		if (nodeValues[1] == parentNode)
+			lastChild = nodeValues[0];
+	}
+	if (lastChild==node) return true;
+	return false;
+}
+// Adds a new node in the tree
+function addNode(parentNode, recursedNodes, nds, onn) {        
+	for (var i = 0; i < nds.length; i++) {
+		var nodeValues = nds[i].split("|");
+		if (nodeValues[1] == parentNode) {  // which part of tree should by shown
+			
+			var ls	= lastSibling(nodeValues[0], nodeValues[1],nds);
+			var hcn	= hasChildNode(nodeValues[0],nds);
+			var ino = isNodeOpen(nodeValues[0], onn);
+
+			// Write out line & empty icons
+			for (g=0; g<recursedNodes.length;g++) {
+				if (recursedNodes[g] == 1) document.write("<img src=\"img/tree/line.gif\" align=\"absbottom\" alt=\"\" />");
+				else  document.write("<img src=\"img/tree/empty.gif\" align=\"absbottom\" alt=\"\" />");
+			}
+
+			// put in array line & empty icons
+			if (ls) recursedNodes.push(0);
+			else recursedNodes.push(1);
+
+			// Write out join icons
+			if (hcn) {
+				if (ls) {
+					document.write("<a href=\"javascript: oc('" + nodeValues[0] + "', 1,'"+nodeValues[3]+"');\"><img id=\"join" + nodeValues[0] + "\" src=\"img/tree/");
+					 	if (ino) document.write("minus");
+						else document.write("plus");
+					document.write("bottom.gif\" align=\"absbottom\" alt=\"Open/Close node\" /></a>");
+				} else {
+					document.write("<a href=\"javascript: oc('"+nodeValues[0]+"', 0,'"+nodeValues[3]+"');\"><img id=\"join" + nodeValues[0] + "\" src=\"img/tree/");
+						if (ino) document.write("minus");
+						else document.write("plus");
+					document.write(".gif\" align=\"absbottom\" alt=\"Open/Close node\" /></a>");
+				}
+			} 
+			else {
+				if (ls) document.write("<img src=\"img/tree/join.gif\" align=\"absbottom\" alt=\"\" />");
+				else document.write("<img src=\"img/tree/joinbottom.gif\" align=\"absbottom\" alt=\"\" />");
+			}
+
+			// Start link
+			//document.write("<span class=\"cursor\"id=00&&22" + nodeValues[0] + ">");
+			document.write("<span id=00&&22" + nodeValues[0] + " style='cursor:default'>");
+			var id	= nodeValues[0];
+			var prnt = nodeValues[1];
+			var it_name = nodeValues[2];
+			var typ = nodeValues[3];	
+			
+			// different clicking in tree in fold and edit tab
+			// in fold tab double click jump to edit tab 
+         		// in edit tab double click jump nothing and one click change edit IFRAME //
+ 
+                      //  document.write("<a name=" + nodeValues[2]+" target=\"_top\" onclick=\"click_item('"+ id+ "'," + it_name +",'"+typ +"');window.status='"+nodeValues[2]+"';return true;\" ondblclick=\"jump('"+typ +"');return true;\" >");
+                        document.write("<a name=" + it_name+" target=\"_top\" ondblclick=\"hide_me();check_quit();jump('"+id+"');return true;\" onclick=\"click_item('"+ id+ "','"+it_name +"','"+ prnt+"','"+typ +"'); show_me_ex('"+id+"');window.status='"+it_name+"';return true;\" >");
+			// information about actual item in the tree
+			// Write out folder & page icons
+			if (typ=="D") {
+		   	  document.write("<img id=\"icon" + id + "\" src=\"img/tree/folder")
+			  if (ino) document.write("open");
+			  document.write(".gif\" align=\"absbottom\" alt=\"Folder\" />");
+			} 
+			else {  // find correct icon for
+			 switch (typ) {		           
+			 case "G": {document.write("<img id='icon" + id + "' name='" + it_name + "|" + typ + "' src='img/tree/grid.gif' border=0 align='absbottom' alt='Grid'/>");break;}
+			 case "M": {document.write("<img id='icon" + id + "' name='" + it_name + "|" + typ + "' src='img/tree/metric.gif' border=0 align='absbottom' alt='Metric'/>");break;}
+			 case "Fi": {document.write("<img id='icon" + id + "' name='" + it_name + "|" + typ + "' src='img/tree/filter.gif' border=0 align='absbottom' alt='Filter'/>");break;}
+			 case "R": {document.write("<img id='icon" + id + "' name='" + it_name + "|" + typ + "' src='img/tree/report.gif' border=0 align='absbottom' alt='Report'/>");break;}
+			 case "A": {document.write("<img id='icon" + id + "' name='" + it_name + "|" + typ + "' src='img/tree/attr.gif' border=0 align='absbottom' alt='Attribute'/>");break;}
+			 case "Fa": {document.write("<img id='icon" + id + "' name='" + it_name + "|" + typ + "' src='img/tree/fact.gif' border=0 align='absbottom' alt='Fact'\>");break;}
+			 case "Fo": {document.write("<img id='icon" + id + "' name='" + it_name + "|" + typ + "' src='img/tree/format.gif' border=0 align='absbottom' alt='Format'/>");break;}
+			 case "Af": {document.write("<img id='icon" + id + "' name='" + it_name + "|" + typ + "' src='img/tree/attr_form.gif' border=0 align='absbottom' alt='Attribute Form'/>");break;}
+				}
+			}			
+			// Write out node name
+			//document.write("&nbsp;&nbsp;");
+			document.write("<span id=" + nodeValues[0] +  " title=\""+nodeValues[4]+"\" >");
+			document.write("&nbsp;&nbsp;" + nodeValues[2] + "&nbsp;&nbsp;</span>"); // vypis jmena polozky
+			// End link
+			document.write("</a><br /></span>");
+
+			// If node has children write out divs and go deeper
+			if (hcn) {
+				document.write("<div id=\"div" + id + "\"");
+					if (!ino) {document.write("style='display: none;'>");}
+					else document.write(">");
+				addNode(nodeValues[0], recursedNodes, nds, onn);
+				document.write("</div>");
+			}
+			
+			// remove last line or empty icon 
+			recursedNodes.pop();
+		}
+	}
+}
+// Opens or closes a node
+function oc(node, bottom, iconT) {
+
+
+	var theDiv 	= document.getElementById("div" + node);
+	var theJoin	= document.getElementById("join" + node);
+	var theIcon 	= document.getElementById("icon" + node);
+	if (theDiv != "undefined" ) {
+	  if (theDiv.style.display == 'none') {
+		  if (bottom==1)  theJoin.src = icons[3].src;
+		  else  theJoin.src = icons[2].src;
+		  if (iconT=="D") theIcon.src = icons[5].src;
+		  theDiv.style.display = '';
+	  } else {
+		  if (bottom==1) theJoin.src = icons[1].src;
+		  else theJoin.src = icons[0].src;
+		  if (iconT=="D") theIcon.src = icons[4].src;
+		  theDiv.style.display = 'none';
+	  }
+        }
+}
+// Push and pop not implemented in IE(crap!    don´t know about NS though)
+if(!Array.prototype.push) {
+	function array_push() {
+		for(var i=0;i<arguments.length;i++)
+			this[this.length]=arguments[i];
+		return this.length;
+	}
+	Array.prototype.push = array_push;
+}
+if(!Array.prototype.pop) {
+	function array_pop(){
+		lastElement = this[this.length-1];
+		this.length = Math.max(this.length-1,0);
+		return lastElement;
+	}
+	Array.prototype.pop = array_pop;
+
+  //get_path(last,-1,0);
+}
+
+//*****************************************************************
+function get_type(item_id){
+return (document.getElementById("icon"+item_id)) ? document.getElementById("icon"+item_id).name.match(/[^\|]*$/) : "";
+}
+
+function highlight(item_id){
+var old_item = document.getElementById("passive_id");
+if (old_item.value == item_id) return;
+if (old_item.value == 0)
+ {
+ old_item.value = item_id;
+ document.getElementById(item_id).style.backgroundColor="#eef94a"; // new item, became yellow
+ }
+else
+ { document.getElementById(item_id).style.backgroundColor="#eef94a";  // choosed item became yellow color, the old one will became the old one
+   document.getElementById(old_item.value).style.backgroundColor=document.getElementById("00&&22"+GID).style.backgroundColor;
+   old_item.value = item_id;
+   }
+GID=item_id;
+}
+
+function jump(a) {    //a = tree item ID, needed beacause of highliting after dbclick 
+if (a == 0) return;
+highlight(a);
+var typ = get_type(a);
+document.act_it.act_it.value=a;
+document.getElementById("active_id").value=a;
+GID = a; set_cookie("id");
+  if (MM=="ed") {
+      if (typ=="D" || typ=="G" || typ=="Fi" || typ=="R" || typ=="A" || typ=="Af" || typ=="Fa" || typ=="Fo" || typ=="M") {
+         parent.frames[1].location.replace("edit_obj.cgi?item_id="+a);
+	 parent.document.getElementById("tree_iframe").name=typ;
+      }	 
+  }
+  if (MM=="foo") 
+      if (typ=="G" || typ=="Fi" || typ=="R" || typ=="A" || typ=="Af" || typ=="Fa" || typ=="Fo" || typ=="M") {
+         parent.location.replace("edit_obj.cgi");
+      }
+}
+
+function click_item(a,b,c,d) {
+   // a ... node id, b .... name ,c ... parent, d = type of id   
+   if (d=="D") oc(a,1,d); // roll out the directory    || d=="A"
+   if (MM=="ed") { 
+     var node = find_item(Tree0,c);
+	document.act_it.act_it.text=b+"|"+d+"|" + node[2]; // set name of active item in tree, important for *_ed.pl
+   } 
+}
+
+// finds node id "n" in tree "tt"
+function find_item(tt,n) {
+  var k;
+  var item;
+  for (k=0;k<tt.length;k++) {
+     item = tt[k].split("|"); //one item from tree in format "id|parent|name|type|description"
+     if (item[0]==n) return item;   // item was found 
+  }
+  return -1; //item wasn't found
+}
+
+function id_exist(idd,nn) {  // if exist ID of node in actual tree
+  var len = nn.length;
+  var i;
+  var item;
+  for (i=0;i<len;i++){
+    item = nn[i].split("|");
+    if (item[0]==idd) {
+      return true; //find node with idd
+    }  
+  }  
+  return false;
+}
+
+function id2name(idd,tree) {  // convert id to name from tree
+  var len = tree.length;
+  var i;
+  var item;
+  for (i=0;i<len;i++){
+    item = tree[i].split("|");
+    if (item[0]==idd) {
+      return item[2]; //find node with idd
+    }  
+  }  
+  return "ndf";
+}
+
+function set_fid() {
+   GID = get_cookie("id");   
+   set_cookie("fid");}
+
+function set_cookie(prm) {
+  document.cookie = prm+"="+GID;}
+
+function get_cookie(name_cookie) {
+var rgxp = new RegExp(name_cookie+"[^;]*");	//set regular expresion appropiate to find cookie by its name
+var cook = String(document.cookie.match(rgxp));	//get right cookie
+cook = cook.replace(/[\s]/g,""); 		//clear from white space
+return cook.match(/[^=]*$/); 			//return ID
+}
+@
+
+
+1.40
+log
+@removed unused functions from attr.js, language fixies in tabs.cgi and linked files
+@
+text
+@d9 1
+a9 1
+//$Id: tree2.js,v 1.39 2003/02/25 13:57:40 jiri_schmid Exp $
+@
+
+
+1.39
+log
+@cookie with id enabled
+@
+text
+@d9 1
+a9 1
+//$Id: tree2.js,v 1.38 2003/02/25 09:18:01 jiri_schmid Exp $
+d259 1
+a259 1
+         parent.frames[1].location.replace(URL[0]+"?item_id="+a);
+d265 1
+a265 1
+         parent.location.replace(URL[0]);
+a276 1
+
+@
+
+
+1.38
+log
+@added checking of unsaved-changed item, when traying to start editing another one
+@
+text
+@d9 1
+a9 1
+//$Id: tree2.js,v 1.37 2003/02/24 15:31:10 jiri_schmid Exp $
+d256 1
+d321 1
+a321 1
+  document.cookie = prm+"=" + GID;}
+d324 4
+a327 22
+  var items=document.cookie.split(";");
+  var k;  
+  var itb="ndf";
+  var ita;
+  for (k=0;k<items.length;k++) {
+    var aa = items[k].split("=");
+    if (aa[1]==null && items.length==1) {}  // first run no cookies
+    else {       
+       // white spaceses
+	     ita=aa[0];
+	     itb=aa[1];
+	     if (aa[0].charAt(0)==" ") ita = aa[0].slice(1,aa[0].length);
+	     if (aa[0].charAt(aa[0].length-1)==" ") ita = aa[0].slice(0,aa[0].length-1);
+
+            if (ita==name_cookie) {
+	       if (aa[1].charAt(1)==" ") itb = aa[1].slice(1,aa[1].length);
+	       if (aa[1].charAt(aa[1].length-1)==" ") itb = aa[1].slice(0,aa[1].length-1);
+	       return itb;
+       }
+    }
+  } 
+  return itb;
+@
+
+
+1.37
+log
+@new bugs just found fixed, some visual changes
+@
+text
+@d9 1
+a9 1
+//$Id: tree2.js,v 1.36 2003/02/21 13:33:41 jiri_schmid Exp $
+d147 1
+a147 1
+                        document.write("<a name=" + it_name+" target=\"_top\" ondblclick=\"hide_me();jump('"+id+"');return true;\" onclick=\"click_item('"+ id+ "','"+it_name +"','"+ prnt+"','"+typ +"'); show_me_ex('"+id+"');window.status='"+it_name+"';return true;\" >");
+@
+
+
+1.36
+log
+@IE saving ULTRA BUG fixed, hope we fullfunctional on IE v. 5.0 and above| 6.0 tested
+@
+text
+@d9 1
+a9 1
+//$Id: tree2.js,v 1.35 2003/02/21 09:28:57 jiri_schmid Exp $
+d270 1
+a270 1
+   if (d=="D" || d=="R" ) oc(a,1,d); // roll out the directory    || d=="A"
+@
+
+
+1.35
+log
+@IE save bug fixed / grid - new uknown bug when saving found, not fixed yet
+@
+text
+@d9 1
+a9 1
+//$Id: tree2.js,v 1.34 2003/02/20 14:44:49 jiri_schmid Exp $
+d195 1
+a195 1
+	if (theDiv != undefined ) {
+@
+
+
+1.34
+log
+@save item bug and delete item bug fixed
+@
+text
+@d9 1
+a9 1
+//$Id: tree2.js,v 1.33 2003/02/19 16:06:49 jiri_schmid Exp $
+d147 1
+a147 1
+                        document.write("<a name=" + nodeValues[2]+" target=\"_top\" ondblclick=\"hide_me();jump('"+id+"');return true;\" onclick=\"click_item('"+ id+ "','"+it_name +"','"+ prnt+"','"+typ +"'); show_me_ex('"+id+"'); window.status='"+nodeValues[2]+"';return true;\" >");
+d150 2
+a151 2
+			if (nodeValues[3]=="D") {
+		   	  document.write("<img id=\"icon" + nodeValues[0] + "\" src=\"img/tree/folder")
+d155 11
+a165 9
+			else {  // find correct icon for		           
+			 if (nodeValues[3]=="G") document.write("<img id='icon" + id + "' name='" + it_name + "|" + typ + "' src='img/tree/grid.gif' border=0 align='absbottom' alt='Grid'\"/>");   			 
+			 if (nodeValues[3]=="M") document.write("<img id='icon" + id + "' name='" + it_name + "|" + typ + "' src='img/tree/metric.gif' border=0 align='absbottom' alt='Metric'\"/>");
+			 if (nodeValues[3]=="Fi") document.write("<img id='icon" + id + "' name='" + it_name + "|" + typ + "' src='img/tree/filter.gif' border=0 align='absbottom' alt='Filter'\"/>");
+			 if (nodeValues[3]=="R") document.write("<img id='icon" + id + "' name='" + it_name + "|" + typ + "' src='img/tree/report.gif' border=0 align='absbottom' alt='Report'\"/>");
+			 if (nodeValues[3]=="A") document.write("<img id='icon" + id + "' name='" + it_name + "|" + typ + "' src='img/tree/attr.gif' border=0 align='absbottom' alt='Attribute'\"/>");
+			 if (nodeValues[3]=="Fa") document.write("<img id='icon" + id + "' name='" + it_name + "|" + typ + "' src='img/tree/fact.gif' border=0 align='absbottom' alt='Fact'\"/>");
+			 if (nodeValues[3]=="Fo") document.write("<img id='icon" + id + "' name='" + it_name + "|" + typ + "' src='img/tree/format.gif' border=0 align='absbottom' alt='Format'\"/>");
+			 if (nodeValues[3]=="Af") document.write("<img id='icon" + id + "' name='" + it_name + "|" + typ + "' src='img/tree/attr_form.gif' border=0 align='absbottom' alt='Attribute Form'\"/>");
+d168 3
+a170 15
+			document.write("&nbsp;&nbsp;");
+			/*if (GID)
+			 {if (GID == id) { // first running - set yellow active item according cookie
+  			     document.write("<span id=" + nodeValues[0] +  " style='background-color : #eef94a' title=\""+nodeValues[4]+"\">");	
+
+   			     if (MM=="ed") {
+				     var node = find_item(Tree0,prnt);
+			     		document.act_it.act_it.text=it_name+"|"+typ+"|" + node[2];}
+					};
+			}
+			else */
+			     document.write("<span id=" + nodeValues[0] +  " title=\""+nodeValues[4]+"\" >");
+			     
+			document.write("&nbsp;&nbsp;" + nodeValues[2] + "&nbsp;&nbsp;"); // vypis jmena polozky
+    		        document.write("</span>");
+d176 3
+a178 3
+				document.write("<div id=\"div" + nodeValues[0] + "\"");
+					if (!ino) document.write(" style=\"display: none;\"");
+				document.write(">");
+a253 1
+  //set_cookie("id");
+a269 2
+//removed to jump
+
+a271 1
+     // jump(d);  // on the right IFRAME show edit HTML page for active object
+a314 24
+/*function clear_tree(nn) {
+  var aux = nn.split(",");
+  len = aux.length;
+  var i;
+  var item;
+  for (i=0;i<len;i++){
+    item = aux[i].split("|");
+    var LMi = document.getElementById(item[0]);  
+    if (LMi!= undefined) LMi.style.backgroundColor=document.getElementById("00&&22"+item[0]).style.backgroundColor;
+  }  
+}*/
+
+/*function clear_tree1(nn) {
+ 
+  var len = nn.length;
+  var i;
+  var item;
+  for (i=0;i<len;i++){
+    item = nn[i].split("|");
+    var LMi = document.getElementById(item[0]);  
+    if (LMi!= undefined) LMi.style.backgroundColor=document.getElementById("00&&22"+item[0]).style.backgroundColor;
+  }  
+}*/
+
+d317 1
+a317 2
+   set_cookie("fid");
+}
+d320 1
+a320 3
+  document.cookie = prm+"=" + GID;
+
+}
+@
+
+
+1.33
+log
+@activating of new items fullfunctional, deleting also
+@
+text
+@d9 1
+a9 1
+//$Id: tree2.js,v 1.32 2003/02/19 13:11:14 jiri_schmid Exp $
+d250 1
+a250 1
+ document.getElementById(item_id).style.backgroundColor="#eef94a"; // new actual item, became yellow
+d266 1
+@
+
+
+1.32
+log
+@opening the new item after its creating almost fullfunctional
+@
+text
+@d9 1
+a9 1
+//$Id: tree2.js,v 1.31 2003/02/17 16:16:53 jiri_schmid Exp $
+d21 1
+a21 1
+//var GID= "-1"; // global variable for active node
+d147 1
+a147 1
+                        document.write("<a name=" + nodeValues[2]+" target=\"_top\" ondblclick=\"hide_me();jump('"+id+"');return true;\" onclick=\"click_item('"+ id+ "','"+it_name +"','"+ prnt+"','"+typ +"'); show_me_ex('"+id+"','"+typ+"'); window.status='"+nodeValues[2]+"';return true;\" >");
+d167 2
+a168 1
+			if (get_cookie("fid")==id) { // first running - set yellow active item according cookie
+d173 2
+a174 4
+				     //document.act_it.act_it.value=it_name+"|"+typ+"|" + node[2]; // set name of active item in tree, important for *_ed.pl
+			     		document.act_it.act_it.text=it_name+"|"+typ+"|" + node[2];      
+ 		             }
+
+d176 1
+a176 1
+			else 
+d245 12
+a256 10
+var item = get_cookie("id");
+if (item == "ndf")
+ { var LMi = document.getElementById(item_id);  // new actual item, became yellow
+   LMi.style.backgroundColor="#eef94a"; } //set new active item
+ else if (item!= item_id) 
+ 	{ var LMi = document.getElementById(item_id);  // new actual item, became yellow
+	  var LMi_old = document.getElementById(item);  //old actual item, became gray     
+	  LMi.style.backgroundColor="#eef94a"; //set new active item
+	  if (LMi_old != undefined) { LMi_old.style.backgroundColor=document.getElementById("00&&22"+GID).style.backgroundColor;} // deactive old item      
+   	};
+a257 1
+set_cookie("id");
+d261 1
+d264 1
+a264 1
+  set_cookie("id");
+d268 1
+a268 1
+         parent.frames[1].location.replace(URL[0]);
+@
+
+
+1.31
+log
+@finally deleting of tree items is woking properly
+@
+text
+@d9 1
+a9 1
+//$Id: tree2.js,v 1.30 2003/02/11 16:06:58 jiri_schmid Exp $
+d42 1
+a42 1
+		if (openNode != 0 || openNode != null) setOpenNodes(openNode,nodes, opno);	
+d147 1
+a147 1
+                        document.write("<a name=" + nodeValues[2]+" target=\"_top\" ondblclick=\"hide_me();jump('"+id+"','"+typ +"');return true;\" onclick=\"click_item('"+ id+ "','"+it_name +"','"+ prnt+"','"+typ +"'); show_me_ex('"+id+"','"+typ+"'); window.status='"+nodeValues[2]+"';return true;\" >");
+d241 3
+d245 18
+a262 16
+function jump(a,typ) {    //a = tree item ID, needed beacause of highliting after dbclick 
+//add from click_item -- begin
+var item=get_cookie("fid");
+   //  ******  active or deactive item in tree ********************** 
+   if (item!= a) { // click on new item in tree 
+      var LMi = document.getElementById(a);  // new actual item, became yellow
+      var LMi_old = document.getElementById(item);  //old actual item, became gray     
+      LMi.style.backgroundColor="#eef94a"; //set new active item
+      if (LMi_old != undefined) {
+         	LMi_old.style.backgroundColor=document.getElementById("00&&22"+GID).style.backgroundColor; // deactive old item      
+      }	
+   }
+  GID=a;
+  set_cookie("fid");
+//add from click_item -- end
+
+a276 19
+/* actualy disabled function 
+this function have to be called before show_me() in this cases
+ 1) when show_me() is used insted of show_by_text()
+ 2) when show_me() is assigned with Atribut facts elements
+// set active item in input "act_id" in form "act_id"
+function reset_name(EID,b,c,d) {
+  // b .... name ,c ... parent, d = type of id   // a  
+  if (MM=="ed") { 
+     // jump(d);  // on the right IFRAME show edit HTML page for active object
+     var node = find_item(Tree0,c);
+     var hlp = EID.name.split("|");
+     if (hlp[0].indexOf(".") < 0)
+      {
+     hlp[0] = node[2] + "." + hlp[0];
+     EID.name = hlp[0] + "|" + hlp[1];
+      }
+   } 
+}*/
+
+d371 9
+a379 7
+       ita=aa[0];
+       itb=aa[1];
+       if (aa[0].charAt(0)==" ") ita = aa[0].slice(1,aa[0].length);
+       if (aa[0].charAt(aa[0].length-1)==" ") ita = aa[0].slice(0,aa[0].length-1);
+       if (aa[1].charAt(1)==" ") itb = aa[1].slice(1,aa[1].length);
+       if (aa[1].charAt(aa[1].length-1)==" ") itb = aa[1].slice(0,aa[1].length-1);
+       if (ita==name_cookie) return itb;
+d382 1
+@
+
+
+1.30
+log
+@large rebuilding of format_ed.pl and linked files format[|_css|_graph].html,
+@
+text
+@d9 1
+a9 1
+//$Id: tree2.js,v 1.29 2003/02/06 12:57:51 jiri_schmid Exp $
+d172 2
+a173 2
+				     document.act_it.act_it.value=it_name+"|"+typ+"|" + node[2]; // set name of active item in tree, important for *_ed.pl
+				     document.act_it.act_it.text=it_name+"|"+typ+"|" + node[2];      
+d259 1
+d299 1
+a299 2
+     document.act_it.act_it.value=b+"|"+d+"|" + node[2]; // set name of active item in tree, important for *_ed.pl
+     document.act_it.act_it.text=b+"|"+d+"|" + node[2];      
+@
+
+
+1.29
+log
+@some visual and control improvments
+@
+text
+@d9 1
+a9 1
+//$Id: tree2.js,v 1.28 2003/01/23 16:43:02 spanhel Exp $
+d242 3
+a244 3
+function jump(item_id,typ) {    //item_id needed beacause of highliting after dbclick
+//start of removed script from click_item()
+  var item=get_cookie("fid");
+d246 2
+a247 2
+   if (item!= item_id) { // click on new item in tree 
+      var LMi = document.getElementById(item_id);  // new actual item, became yellow
+d254 1
+a254 1
+  GID=item_id;
+d256 2
+a257 1
+//end of removed script from click_item()
+a268 1
+
+d273 1
+a273 1
+ 1) when show_me() is used insted of show_me_ex()
+d292 1
+a292 2
+
+/* part of script removed by jiri schmid to jump(), highliting of anoother item than the edited one is needless */
+@
+
+
+1.28
+log
+@added object metric in grid_ed.pl
+@
+text
+@d9 1
+a9 1
+//$Id: tree2.js,v 1.27 2003/01/23 09:47:23 spanhel Exp $
+d147 1
+a147 1
+                        document.write("<a name=" + nodeValues[2]+" target=\"_top\" onclick=\"click_item('"+ id+ "','"+it_name +"','"+ prnt +"','"+typ +"');window.status='"+nodeValues[2]+"';return true;\" ondblclick=\"jump('"+typ +"');return true;\" >");
+d156 8
+a163 8
+			 if (nodeValues[3]=="G") document.write("<img id='icon" + nodeValues[0] + "' name='" + nodeValues[2] + "|" + nodeValues[3] + "' src='img/tree/grid.gif' border=0 align='absbottom' alt='Grid' onclick=show_me(this);return true;\"/>");   			 
+			 if (nodeValues[3]=="M") document.write("<img id='icon" + nodeValues[0] + "' name='" + nodeValues[2] + "|" + nodeValues[3] + "' src='img/tree/metric.gif' border=0 align='absbottom' alt='Metric' onclick=show_me(this);return true;\"/>");
+			 if (nodeValues[3]=="Fi") document.write("<img id='icon" + nodeValues[0] + "' name='" + nodeValues[2] + "|" + nodeValues[3] + "' src='img/tree/filter.gif' border=0 align='absbottom' alt='Filter' onclick=show_me(this);return true;\"'/>");
+			 if (nodeValues[3]=="R") document.write("<img id='icon" + nodeValues[0] + "' name='" + nodeValues[2] + "|" + nodeValues[3] + "' src='img/tree/report.gif' border=0 align='absbottom' alt='Report' onclick=show_me(this);return true;\"/>");
+			 if (nodeValues[3]=="A") document.write("<img id='icon" + nodeValues[0] + "' name='" + nodeValues[2] + "|" + nodeValues[3] + "' src='img/tree/attr.gif' border=0 align='absbottom' alt='Attribute' onclick=show_me(this);return true;\"/>");
+			 if (nodeValues[3]=="Fa") document.write("<img id='icon" + nodeValues[0] + "' name='" + nodeValues[2] + "|" + nodeValues[3] + "' src='img/tree/fact.gif' border=0 align='absbottom' alt='Fact' onclick=show_me(this);return true;\"/>");
+			 if (nodeValues[3]=="Fo") document.write("<img id='icon" + nodeValues[0] + "' name='" + nodeValues[2] + "|" + nodeValues[3] + "' src='img/tree/format.gif' border=0 align='absbottom' alt='Format' onclick=show_me(this);return true;\"/>");
+			 if (nodeValues[3]=="Af") document.write("<img id='icon" + nodeValues[0] + "' name='" + nodeValues[2] + "|" + nodeValues[3] + "' src='img/tree/attr_form.gif' border=0 align='absbottom' alt='Attribute Form' onclick=\"reset_name(this,'" + it_name + "','"+ prnt +"','"+ typ + "');show_me(this);return true;\" />");
+d178 1
+a178 1
+			     document.write("<span id=" + nodeValues[0] +  " title=\""+nodeValues[4]+"\">");
+d242 15
+a256 1
+function jump(typ) {     
+d271 4
+a274 1
+
+d288 1
+a288 2
+}
+
+d292 4
+a295 13
+   var item=get_cookie("fid");
+   //  ******  active or deactive item in tree ********************** 
+   if (item!= a) { // click on new item in tree 
+      var LMi = document.getElementById(a);  // new actual item, became yellow
+      var LMi_old = document.getElementById(item);  //old actual item, became gray     
+      LMi.style.backgroundColor="#eef94a"; //set new active item
+      if (LMi_old != undefined) {
+         	LMi_old.style.backgroundColor=document.getElementById("00&&22"+GID).style.backgroundColor; // deactive old item      
+      }	
+   }
+   GID=a;
+   set_cookie("fid");
+   if (d=="D" || d=="R" || d=="A") oc(a,1,d); // roll out the directory    
+a314 29
+
+/*/////////////// SMAZAT NENI POTREBA ////////////////////////////////////
+function get_path(a,b,c,d) {
+// a ... node id, b ... parent id, c ... click, d = type of id 
+  
+  if (GID!="-1") {
+    // this state will occure first runnig 
+    // not firt time run - nothing to get white and
+    // last modified not eq actual node
+    if (GID != a) {			       
+      var LMi = document.getElementById(GID);
+      if (LMi!=undefined) {        
+	if ((a==-1)) LMi.style.backgroundColor="#eef94a"
+	else LMi.style.backgroundColor=document.getElementById("00&&22"+GID).style.backgroundColor;
+      }  
+    } 
+  } 
+  // clik on item in tree 
+  if (c) GID=a;     
+  if (a!=-1) {
+  
+    var pok = document.getElementById(a);	
+    pok.style.backgroundColor="#eef94a";	//set bgcolor for highlighted item
+    set_cookie("fid"); //fold_id, important for copy, delete ... from fold.cgi 
+    set_cookie("id"); //fold_id, important for copy, delete ... from fold.cgi 
+  }
+  if (d=="D" || d=="R" || d=="A") oc(a,1,d);  
+}
+*/
+@
+
+
+1.27
+log
+@removed ID used by Drag and Drop
+@
+text
+@a0 1
+
+d9 1
+a9 1
+//$Id: tree2.js,v 1.26 2003/01/21 14:17:55 spanhel Exp $
+d167 10
+a176 3
+			if (get_cookie("id")==id) { // first running - set yellow active item according cookie
+  			  document.write("<span id=" + nodeValues[0] +  " style='background-color : #eef94a' title=\""+nodeValues[4]+"\">");	
+			  }
+d178 2
+a179 1
+			  document.write("<span id=" + nodeValues[0] +  " title=\""+nodeValues[4]+"\">");
+d243 1
+d254 1
+d276 1
+a276 1
+   var item=get_cookie("id");
+d282 3
+a284 1
+      if (LMi_old != undefined) LMi_old.style.backgroundColor=document.getElementById("00&&22"+GID).style.backgroundColor; // deactive old item      
+d287 1
+a287 1
+   set_cookie("id");
+@
+
+
+1.26
+log
+@load metadata to grid_ed.pl
+@
+text
+@d10 1
+a10 1
+//$Id: tree2.js,v 1.25 2003/01/20 18:23:45 spanhel Exp $
+d157 8
+a164 8
+			 if (nodeValues[3]=="G") document.write("<img id='icon" + nodeValues[0] + "' name='" + nodeValues[0] + "|" + nodeValues[2] + "|" + nodeValues[3] + "' src='img/tree/grid.gif' border=0 align='absbottom' alt='Grid' onclick=show_me(this);return true;\"/>");   			 
+			 if (nodeValues[3]=="M") document.write("<img id='icon" + nodeValues[0] + "' name='" + nodeValues[0] + "|" + nodeValues[2] + "|" + nodeValues[3] + "' src='img/tree/metric.gif' border=0 align='absbottom' alt='Metric' onclick=show_me(this);return true;\"/>");
+			 if (nodeValues[3]=="Fi") document.write("<img id='icon" + nodeValues[0] + "' name='" + nodeValues[0] + "|" + nodeValues[2] + "|" + nodeValues[3] + "' src='img/tree/filter.gif' border=0 align='absbottom' alt='Filter' onclick=show_me(this);return true;\"'/>");
+			 if (nodeValues[3]=="R") document.write("<img id='icon" + nodeValues[0] + "' name='" + nodeValues[0] + "|" + nodeValues[2] + "|" + nodeValues[3] + "' src='img/tree/report.gif' border=0 align='absbottom' alt='Report' onclick=show_me(this);return true;\"/>");
+			 if (nodeValues[3]=="A") document.write("<img id='icon" + nodeValues[0] + "' name='" + nodeValues[0] + "|" + nodeValues[2] + "|" + nodeValues[3] + "' src='img/tree/attr.gif' border=0 align='absbottom' alt='Attribute' onclick=show_me(this);return true;\"/>");
+			 if (nodeValues[3]=="Fa") document.write("<img id='icon" + nodeValues[0] + "' name='" + nodeValues[0] + "|" + nodeValues[2] + "|" + nodeValues[3] + "' src='img/tree/fact.gif' border=0 align='absbottom' alt='Fact' onclick=show_me(this);return true;\"/>");
+			 if (nodeValues[3]=="Fo") document.write("<img id='icon" + nodeValues[0] + "' name='" + nodeValues[0] + "|" + nodeValues[2] + "|" + nodeValues[3] + "' src='img/tree/format.gif' border=0 align='absbottom' alt='Format' onclick=show_me(this);return true;\"/>");
+			 if (nodeValues[3]=="Af") document.write("<img id='icon" + nodeValues[0] + "' name='" + nodeValues[0] + "|" + nodeValues[2] + "|" + nodeValues[3] + "' src='img/tree/attr_form.gif' border=0 align='absbottom' alt='Attribute Form' onclick=\"reset_name(this,'" + it_name + "','"+ prnt +"','"+ typ + "');show_me(this);return true;\" />");
+d256 1
+a256 1
+     if (hlp[1].indexOf(".") < 0)
+d258 2
+a259 2
+     hlp[1] = node[2] + "." + hlp[1];
+     EID.name = hlp[0] + "|" + hlp[1] + "|" + hlp[2];
+@
+
+
+1.25
+log
+@reduce number of tabs
+@
+text
+@d10 1
+a10 1
+//$Id: tree2.js,v 1.24 2003/01/16 17:20:19 spanhel Exp $
+d256 2
+d260 1
+@
+
+
+1.24
+log
+@change edit.cgi - tree and object edit desided into two iframes
+@
+text
+@d10 1
+a10 1
+//$Id: tree2.js,v 1.22 2002/11/26 12:44:36 spanhel Exp $
+d148 1
+a148 1
+                        document.write("<a name=" + nodeValues[2]+" target=\"_top\" onclick=\"click_item('"+ id+ "','"+ it_name+ "','"+ prnt +"','"+typ +"');window.status='"+nodeValues[2]+"';return true;\" ondblclick=\"jump('"+typ +"');return true;\" >");
+d157 8
+a164 8
+			 if (nodeValues[3]=="G") document.write("<img id='icon" + nodeValues[0] + "' name='" + nodeValues[0] + "|" + nodeValues[2] + "|" + nodeValues[3] + "' src='img/tree/grid.gif' border=0 align='absbottom' alt='Grid' onclick='show_me(this);return true;'/>");
+   			 if (nodeValues[3]=="M") document.write("<img id='icon" + nodeValues[0] + "' name='" + nodeValues[0] + "|" + nodeValues[2] + "|" + nodeValues[3] + "' src='img/tree/metric.gif' border=0 align='absbottom' alt='Metric' onclick='show_me(this);return true;'/>");
+			 if (nodeValues[3]=="Fi") document.write("<img id='icon" + nodeValues[0] + "' name='" + nodeValues[0] + "|" + nodeValues[2] + "|" + nodeValues[3] + "'src='img/tree/filter.gif' border=0 align='absbottom' alt='Filter' onclick='show_me(this);return true;'/>");
+			 if (nodeValues[3]=="R") document.write("<img id='icon" + nodeValues[0] + "' name='" + nodeValues[0] + "|" + nodeValues[2] + "|" + nodeValues[3] + "'src='img/tree/report.gif' border=0 align='absbottom' alt='Report' onclick='show_me(this);return true;'/>");
+			 if (nodeValues[3]=="A") document.write("<img id='icon" + nodeValues[0] + "' name='" + nodeValues[0] + "|" + nodeValues[2] + "|" + nodeValues[3] + "'src='img/tree/attr.gif' border=0 align='absbottom' alt='Attribute' onclick='show_me(this);return true;'/>");
+			 if (nodeValues[3]=="Af") document.write("<img id='icon" + nodeValues[0] + "' name='" + nodeValues[0] + "|" + nodeValues[2] + "|" + nodeValues[3] + "'src='img/tree/attr_form.gif' border=0 align='absbottom' alt='Attribute Form' onclick='show_me(this);return true;'/>");
+			 if (nodeValues[3]=="Fa") document.write("<img id='icon" + nodeValues[0] + "' name='" + nodeValues[0] + "|" + nodeValues[2] + "|" + nodeValues[3] + "'src='img/tree/fact.gif' border=0 align='absbottom' alt='Fact' onclick='show_me(this);return true;'/>");
+			 if (nodeValues[3]=="Fo") document.write("<img id='icon" + nodeValues[0] + "' name='" + nodeValues[0] + "|" + nodeValues[2] + "|" + nodeValues[3] + "'src='img/tree/format.gif' border=0 align='absbottom' alt='Format' onclick='show_me(this);return true;'/>");
+d169 1
+a169 1
+  			  document.write("<span id=" + nodeValues[0] +  " style='background-color : #eef94a' title=\""+nodeValues[4]+"\">");		
+d239 1
+a239 1
+	 parent.frames[1].name=typ;
+d249 13
+d274 1
+a274 1
+   if (d=="D" || d=="R" || d=="A") oc(a,1,d); // roll out the directory
+d280 1
+a280 1
+   }  
+@
+
+
+1.23
+log
+@hard connection to test project in *_ed.pl wa removed
+@
+text
+@d1 391
+a391 349
+
+/**************************************************************************
+	Copyright (c) 2001 Geir Landrö (drop@@destroydrop.com)
+	JavaScript Tree - www.destroydrop.com/hugi/javascript/tree/
+	Version 0.96	
+
+	This script can be used freely as long as all copyright messages are
+	intact.
+**************************************************************************/
+//$Id: tree2.js,v 1.22 2002/11/26 12:44:36 spanhel Exp $
+
+
+// Arrays for nodes and icons
+// var nodes		= new Array();;
+
+var icons		= new Array(6);
+var LM			= -1;	// last modified node
+var count		= 0;   // count of c
+var last=-3;
+var cnt;
+//var GID= "-1"; // global variable for active node
+
+function getMouseXY(e) {
+  if (IE) { // grab the x-y pos.s if browser is IE
+    tempX = event.clientX + document.body.scrollLeft
+    tempY = event.clientY + document.body.scrollTop
+  } else {  // grab the x-y pos.s if browser is NS
+    tempX = e.pageX
+    tempY = e.pageY
+  }  
+  // catch possible negative values in NS4
+  if (tempX < 0){tempX = 0}
+  if (tempY < 0){tempY = 0}  
+  // show the position values in the form named Show
+  // in the text fields named MouseX and MouseY
+  return true;
+} 
+
+
+// Loads all icons that are used in the tree
+function preloadIcons() {
+	icons[0] = new Image();	icons[0].src = "img/tree/plus.gif";
+	icons[1] = new Image();	icons[1].src = "img/tree/plusbottom.gif";
+	icons[2] = new Image();	icons[2].src = "img/tree/minus.gif";
+	icons[3] = new Image();	icons[3].src = "img/tree/minusbottom.gif";
+	icons[4] = new Image();	icons[4].src = "img/tree/folder.gif";
+	icons[5] = new Image();	icons[5].src = "img/tree/folderopen.gif";
+}
+
+// Create the tree
+function createTree(nodes, projName, startNode, openNode, opno) {
+        // startNode - display only part of tree, that defined from NodeId
+	// OpenNode - specify NodeId, that will be roll out
+	last=openNode;
+	if (nodes.length > 0) {
+		preloadIcons(); // load icons
+		if (startNode == null) startNode = 0;		
+		if (openNode != 0 || openNode != null) setOpenNodes(openNode,nodes, opno);	
+		if (startNode !=0) {
+    		  var nodeValues = nodes[getArrayId(startNode,nodes)].split("|");
+ 		  document.write("<a href=\"" + nodeValues[3] + "\" onmouseover=\"window.status='" + nodeValues[2] +  "';return true;\"><img src=\"img/tree/folderopen.gif\" align=\"absbottom\" alt=\"\" />" + nodeValues[2] + "</a><br />");
+		} 
+		else document.write("<img src=\"img/tree/base.gif\" align=\"top\" alt=\"\" /><img src=\"img/tree/empty.gif\" align=\"top\" alt=\"\" />"+projName+"<br />");
+	
+		var recursedNodes = new Array();
+		addNode(startNode, recursedNodes, nodes, opno);
+	} // end if 
+  get_path(-1,-1,0,"gggg");
+}
+// Returns the position of a node in the array
+function getArrayId(node, nn) {
+	for (i=0; i<nn.length; i++) {
+		var nodeValues = nn[i].split("|");
+		if (nodeValues[0]==node) return i;
+	}
+}
+
+// Puts in array nodes that will be open
+function setOpenNodes(openNode,nn,on) {
+	for (i=0; i<nn.length; i++) {
+		var nodeValues = nn[i].split("|");
+		if (nodeValues[0]==openNode) {
+			on.push(nodeValues[0]);
+			setOpenNodes(nodeValues[1],nn,on);
+		}
+	} 
+}
+// Checks if a node is open
+function isNodeOpen(node, on) {
+	for (i=0; i<on.length; i++)
+		if (on[i]==node) return true;
+	return false;
+}
+// Checks if a node has any children
+function hasChildNode(parentNode, nn) {
+	for (i=0; i< nn.length; i++) {
+		var nodeValues = nn[i].split("|");
+		if (nodeValues[1] == parentNode) return true;
+	}
+	return false;
+}
+// Checks if a node is the last sibling
+function lastSibling (node, parentNode, nn) {
+	var lastChild = 0;
+	for (i=0; i< nn.length; i++) {
+		var nodeValues = nn[i].split("|");
+		if (nodeValues[1] == parentNode)
+			lastChild = nodeValues[0];
+	}
+	if (lastChild==node) return true;
+	return false;
+}
+// Adds a new node in the tree
+function addNode(parentNode, recursedNodes, nds, onn) {        
+	for (var i = 0; i < nds.length; i++) {
+		var nodeValues = nds[i].split("|");
+		if (nodeValues[1] == parentNode) {  // which part of tree should by shown
+			
+			var ls	= lastSibling(nodeValues[0], nodeValues[1],nds);
+			var hcn	= hasChildNode(nodeValues[0],nds);
+			var ino = isNodeOpen(nodeValues[0], onn);
+
+			// Write out line & empty icons
+			for (g=0; g<recursedNodes.length;g++) {
+				if (recursedNodes[g] == 1) document.write("<img src=\"img/tree/line.gif\" align=\"absbottom\" alt=\"\" />");
+				else  document.write("<img src=\"img/tree/empty.gif\" align=\"absbottom\" alt=\"\" />");
+			}
+
+			// put in array line & empty icons
+			if (ls) recursedNodes.push(0);
+			else recursedNodes.push(1);
+
+			// Write out join icons
+			if (hcn) {
+				if (ls) {
+					document.write("<a href=\"javascript: oc('" + nodeValues[0] + "', 1,'"+nodeValues[3]+"');\"><img id=\"join" + nodeValues[0] + "\" src=\"img/tree/");
+					 	if (ino) document.write("minus");
+						else document.write("plus");
+					document.write("bottom.gif\" align=\"absbottom\" alt=\"Open/Close node\" /></a>");
+				} else {
+					document.write("<a href=\"javascript: oc('"+nodeValues[0]+"', 0,'"+nodeValues[3]+"');\"><img id=\"join" + nodeValues[0] + "\" src=\"img/tree/");
+						if (ino) document.write("minus");
+						else document.write("plus");
+					document.write(".gif\" align=\"absbottom\" alt=\"Open/Close node\" /></a>");
+				}
+			} 
+			else {
+				if (ls) document.write("<img src=\"img/tree/join.gif\" align=\"absbottom\" alt=\"\" />");
+				else document.write("<img src=\"img/tree/joinbottom.gif\" align=\"absbottom\" alt=\"\" />");
+			}
+
+			// Start link
+			document.write("<span id=00&&22" + nodeValues[0] + ">");
+			var id	=nodeValues[0];
+			var child=nodeValues[1];
+			var typ = nodeValues[3];
+			var click=1;
+			document.write("<a name=" + nodeValues[2]+" target=\"_top\" onclick=\"get_path('"+ id+ "','" + child + "'," + click +",'"+typ +"');window.status='"+nodeValues[2]+"';return true;\" ondblclick=\"jump('"+typ +"');return true;\" >");
+			// information about actual item in the tree
+			// Write out folder & page icons
+			if (nodeValues[3]=="D") {
+		   	  document.write("<img id=\"icon" + nodeValues[0] + "\" src=\"img/tree/folder")
+			  if (ino) document.write("open");
+			  document.write(".gif\" align=\"absbottom\" alt=\"Folder\" />");
+			} 
+			else {  // find correct icon for		           
+			   if (nodeValues[3]=="G") document.write("<img id=\"icon" + nodeValues[0] + "\" src=\"img/tree/grid.gif\" border=0 align=\"absbottom\" alt=\"Grid\" />");
+   			   if (nodeValues[3]=="M") document.write("<img id=\"icon" + nodeValues[0] + "\" src=\"img/tree/metric.gif\" border=0 align=\"absbottom\" alt=\"Metric\" />");
+			   if (nodeValues[3]=="Fi") document.write("<img id=\"icon" + nodeValues[0] + "\" src=\"img/tree/filter.gif\" border=0 align=\"absbottom\" alt=\"Filter\" />");
+			   if (nodeValues[3]=="R") document.write("<img id=\"icon" + nodeValues[0] + "\" src=\"img/tree/report.gif\" border=0 align=\"absbottom\" alt=\"Report\" />");
+			   if (nodeValues[3]=="A") document.write("<img id=\"icon" + nodeValues[0] + "\" src=\"img/tree/attr.gif\" border=0 align=\"absbottom\" alt=\"Attribute\" />");
+			   if (nodeValues[3]=="Af") document.write("<img id=\"icon" + nodeValues[0] + "\" src=\"img/tree/attr_form.gif\" border=0 align=\"absbottom\" alt=\"AttributeForm\" />");
+			   if (nodeValues[3]=="Fa") document.write("<img id=\"icon" + nodeValues[0] + "\" src=\"img/tree/fact.gif\" border=0 align=\"absbottom\" alt=\"Fact\" />");
+			   if (nodeValues[3]=="Fo") document.write("<img id=\"icon" + nodeValues[0] + "\" src=\"img/tree/format.gif\" border=0 align=\"absbottom\" alt=\"Format\" />");
+			}			
+			// Write out node name
+			document.write("&nbsp;&nbsp;");
+			document.write("<span id=" + nodeValues[0] + " title=\""+nodeValues[4]+"\">");		
+                        document.write("&nbsp;&nbsp;" + nodeValues[2] + "&nbsp;&nbsp;"); // vypis jmena polozky
+    		        document.write("</span>");
+			// End link
+			document.write("</a><br /></span>");
+
+			// If node has children write out divs and go deeper
+			if (hcn) {
+				document.write("<div id=\"div" + nodeValues[0] + "\"");
+					if (!ino) document.write(" style=\"display: none;\"");
+				document.write(">");
+				addNode(nodeValues[0], recursedNodes, nds, onn);
+				document.write("</div>");
+			}
+			
+			// remove last line or empty icon 
+			recursedNodes.pop();
+		}
+	}
+}
+// Opens or closes a node
+function oc(node, bottom, iconT) {
+
+
+	var theDiv 	= document.getElementById("div" + node);
+	var theJoin	= document.getElementById("join" + node);
+	var theIcon 	= document.getElementById("icon" + node);
+	if (theDiv != undefined ) {
+	  if (theDiv.style.display == 'none') {
+		  if (bottom==1)  theJoin.src = icons[3].src;
+		  else  theJoin.src = icons[2].src;
+		  if (iconT=="D") theIcon.src = icons[5].src;
+		  theDiv.style.display = '';
+	  } else {
+		  if (bottom==1) theJoin.src = icons[1].src;
+		  else theJoin.src = icons[0].src;
+		  if (iconT=="D") theIcon.src = icons[4].src;
+		  theDiv.style.display = 'none';
+	  }
+        }
+}
+// Push and pop not implemented in IE(crap!    don´t know about NS though)
+if(!Array.prototype.push) {
+	function array_push() {
+		for(var i=0;i<arguments.length;i++)
+			this[this.length]=arguments[i];
+		return this.length;
+	}
+	Array.prototype.push = array_push;
+}
+if(!Array.prototype.pop) {
+	function array_pop(){
+		lastElement = this[this.length-1];
+		this.length = Math.max(this.length-1,0);
+		return lastElement;
+	}
+	Array.prototype.pop = array_pop;
+
+  //get_path(last,-1,0);
+}
+
+
+//*****************************************************************
+
+// Main function to retrieve mouse x-y pos.s
+
+function get_path(a,b,c,d) {
+// a ... node id, b ... parent id, c ... click, d = type of id 
+  if (GID!="-1") {
+    // this state will occure first runnig 
+    // not firt time run - nothing to get white and
+    // last modified not eq actual node
+
+    if (GID != a) {			       
+      var LMi = document.getElementById(GID);
+      if (LMi!=undefined) {        
+        if ((a==-1)) LMi.style.backgroundColor="#eef94a"
+	else LMi.style.backgroundColor=document.getElementById("00&&22"+GID).style.backgroundColor;
+      }  
+    } 
+  } 
+  // clik on item in tree 
+  if (c) GID=a;     
+  if (a!=-1) {
+    var pok = document.getElementById(a);	
+    pok.style.backgroundColor="#eef94a";	//set bgcolor for highlighted item
+    set_cookie("fid"); //fold_id, important for copy, delete ... from fold.cgi 
+  }
+  if (d=="D" || d=="R" || d=="A") oc(a,1,d);  
+}
+
+function jump(d) {     
+  if (d=="D") parent.location.replace(URL[0]);
+  if (d=="G") parent.location.replace(URL[1]);
+  if (d=="Fi") parent.location.replace(URL[2]);
+  if (d=="R") parent.location.replace(URL[3]);
+  if (d=="A") parent.location.replace(URL[4]);
+  if (d=="Af")  parent.location.replace(URL[4]);
+  if (d=="Fa") parent.location.replace(URL[5]);
+  if (d=="Fo") parent.location.replace(URL[6]);
+  if (d=="M") parent.location.replace(URL[7]);  
+}
+
+
+function id_exist(idd,nn) {  // if exist ID of node in actual tree
+  var len = nn.length;
+  var i;
+  var item;
+  for (i=0;i<len;i++){
+    item = nn[i].split("|");
+    if (item[0]==idd) {
+      return true; //find node with idd
+    }  
+  }  
+  return false;
+}
+
+function clear_tree(nn) {
+  var aux = nn.split(",");
+  len = aux.length;
+  var i;
+  var item;
+  for (i=0;i<len;i++){
+    item = aux[i].split("|");
+    var LMi = document.getElementById(item[0]);  
+    if (LMi!= undefined) LMi.style.backgroundColor=document.getElementById("00&&22"+item[0]).style.backgroundColor;
+  }  
+}
+
+function clear_tree1(nn) {
+ 
+  var len = nn.length;
+  var i;
+  var item;
+  for (i=0;i<len;i++){
+    item = nn[i].split("|");
+    var LMi = document.getElementById(item[0]);  
+    if (LMi!= undefined) LMi.style.backgroundColor=document.getElementById("00&&22"+item[0]).style.backgroundColor;
+  }  
+}
+
+function set_fid() {
+   GID = get_cookie();
+   set_cookie("fid");
+}
+
+function set_cookie(prm) {
+  document.cookie = prm+"=" + GID;
+//  alert("Set cookie "+GID);
+}
+
+function get_cookie() {
+  var items=document.cookie.split(";");
+  var k;  
+  var itb="ndf";
+  var ita;
+  for (k=0;k<items.length;k++) {
+    var aa = items[k].split("=");
+    if (aa[1]==null && items.length==1) {}  // first run no cookies
+    else {       
+       // white spaceses
+       ita=aa[0];
+       itb=aa[1];
+       if (aa[0].charAt(0)==" ") ita = aa[0].slice(1,aa[0].length);
+       if (aa[0].charAt(aa[0].length-1)==" ") ita = aa[0].slice(0,aa[0].length-1);
+       if (aa[1].charAt(1)==" ") itb = aa[1].slice(1,aa[1].length);
+       if (aa[1].charAt(aa[1].length-1)==" ") itb = aa[1].slice(0,aa[1].length-1);
+       if (ita=="id") return itb;
+       }
+    }
+  return itb;
+}
+@
+
+
+1.22
+log
+@two types of format grid and graph
+@
+text
+@d1 349
+a349 349
+
+/**************************************************************************
+	Copyright (c) 2001 Geir Landrö (drop@@destroydrop.com)
+	JavaScript Tree - www.destroydrop.com/hugi/javascript/tree/
+	Version 0.96	
+
+	This script can be used freely as long as all copyright messages are
+	intact.
+**************************************************************************/
+//$Id: tree2.js,v 1.21 2002/11/22 16:15:40 spanhel Exp $
+
+
+// Arrays for nodes and icons
+// var nodes		= new Array();;
+
+var icons		= new Array(6);
+var LM			= -1;	// last modified node
+var count		= 0;   // count of c
+var last=-3;
+var cnt;
+//var GID= "-1"; // global variable for active node
+
+function getMouseXY(e) {
+  if (IE) { // grab the x-y pos.s if browser is IE
+    tempX = event.clientX + document.body.scrollLeft
+    tempY = event.clientY + document.body.scrollTop
+  } else {  // grab the x-y pos.s if browser is NS
+    tempX = e.pageX
+    tempY = e.pageY
+  }  
+  // catch possible negative values in NS4
+  if (tempX < 0){tempX = 0}
+  if (tempY < 0){tempY = 0}  
+  // show the position values in the form named Show
+  // in the text fields named MouseX and MouseY
+  return true;
+} 
+
+
+// Loads all icons that are used in the tree
+function preloadIcons() {
+	icons[0] = new Image();	icons[0].src = "img/tree/plus.gif";
+	icons[1] = new Image();	icons[1].src = "img/tree/plusbottom.gif";
+	icons[2] = new Image();	icons[2].src = "img/tree/minus.gif";
+	icons[3] = new Image();	icons[3].src = "img/tree/minusbottom.gif";
+	icons[4] = new Image();	icons[4].src = "img/tree/folder.gif";
+	icons[5] = new Image();	icons[5].src = "img/tree/folderopen.gif";
+}
+
+// Create the tree
+function createTree(nodes, projName, startNode, openNode, opno) {
+        // startNode - display only part of tree, that defined from NodeId
+	// OpenNode - specify NodeId, that will be roll out
+	last=openNode;
+	if (nodes.length > 0) {
+		preloadIcons(); // load icons
+		if (startNode == null) startNode = 0;		
+		if (openNode != 0 || openNode != null) setOpenNodes(openNode,nodes, opno);	
+		if (startNode !=0) {
+    		  var nodeValues = nodes[getArrayId(startNode,nodes)].split("|");
+ 		  document.write("<a href=\"" + nodeValues[3] + "\" onmouseover=\"window.status='" + nodeValues[2] +  "';return true;\"><img src=\"img/tree/folderopen.gif\" align=\"absbottom\" alt=\"\" />" + nodeValues[2] + "</a><br />");
+		} 
+		else document.write("<img src=\"img/tree/base.gif\" align=\"top\" alt=\"\" /><img src=\"img/tree/empty.gif\" align=\"top\" alt=\"\" />"+projName+"<br />");
+	
+		var recursedNodes = new Array();
+		addNode(startNode, recursedNodes, nodes, opno);
+	} // end if 
+  get_path(-1,-1,0,"gggg");
+}
+// Returns the position of a node in the array
+function getArrayId(node, nn) {
+	for (i=0; i<nn.length; i++) {
+		var nodeValues = nn[i].split("|");
+		if (nodeValues[0]==node) return i;
+	}
+}
+
+// Puts in array nodes that will be open
+function setOpenNodes(openNode,nn,on) {
+	for (i=0; i<nn.length; i++) {
+		var nodeValues = nn[i].split("|");
+		if (nodeValues[0]==openNode) {
+			on.push(nodeValues[0]);
+			setOpenNodes(nodeValues[1],nn,on);
+		}
+	} 
+}
+// Checks if a node is open
+function isNodeOpen(node, on) {
+	for (i=0; i<on.length; i++)
+		if (on[i]==node) return true;
+	return false;
+}
+// Checks if a node has any children
+function hasChildNode(parentNode, nn) {
+	for (i=0; i< nn.length; i++) {
+		var nodeValues = nn[i].split("|");
+		if (nodeValues[1] == parentNode) return true;
+	}
+	return false;
+}
+// Checks if a node is the last sibling
+function lastSibling (node, parentNode, nn) {
+	var lastChild = 0;
+	for (i=0; i< nn.length; i++) {
+		var nodeValues = nn[i].split("|");
+		if (nodeValues[1] == parentNode)
+			lastChild = nodeValues[0];
+	}
+	if (lastChild==node) return true;
+	return false;
+}
+// Adds a new node in the tree
+function addNode(parentNode, recursedNodes, nds, onn) {        
+	for (var i = 0; i < nds.length; i++) {
+		var nodeValues = nds[i].split("|");
+		if (nodeValues[1] == parentNode) {  // which part of tree should by shown
+			
+			var ls	= lastSibling(nodeValues[0], nodeValues[1],nds);
+			var hcn	= hasChildNode(nodeValues[0],nds);
+			var ino = isNodeOpen(nodeValues[0], onn);
+
+			// Write out line & empty icons
+			for (g=0; g<recursedNodes.length;g++) {
+				if (recursedNodes[g] == 1) document.write("<img src=\"img/tree/line.gif\" align=\"absbottom\" alt=\"\" />");
+				else  document.write("<img src=\"img/tree/empty.gif\" align=\"absbottom\" alt=\"\" />");
+			}
+
+			// put in array line & empty icons
+			if (ls) recursedNodes.push(0);
+			else recursedNodes.push(1);
+
+			// Write out join icons
+			if (hcn) {
+				if (ls) {
+					document.write("<a href=\"javascript: oc('" + nodeValues[0] + "', 1,'"+nodeValues[3]+"');\"><img id=\"join" + nodeValues[0] + "\" src=\"img/tree/");
+					 	if (ino) document.write("minus");
+						else document.write("plus");
+					document.write("bottom.gif\" align=\"absbottom\" alt=\"Open/Close node\" /></a>");
+				} else {
+					document.write("<a href=\"javascript: oc('"+nodeValues[0]+"', 0,'"+nodeValues[3]+"');\"><img id=\"join" + nodeValues[0] + "\" src=\"img/tree/");
+						if (ino) document.write("minus");
+						else document.write("plus");
+					document.write(".gif\" align=\"absbottom\" alt=\"Open/Close node\" /></a>");
+				}
+			} 
+			else {
+				if (ls) document.write("<img src=\"img/tree/join.gif\" align=\"absbottom\" alt=\"\" />");
+				else document.write("<img src=\"img/tree/joinbottom.gif\" align=\"absbottom\" alt=\"\" />");
+			}
+
+			// Start link
+			document.write("<span id=00&&22" + nodeValues[0] + ">");
+			var id	=nodeValues[0];
+			var child=nodeValues[1];
+			var typ = nodeValues[3];
+			var click=1;
+			document.write("<a name=" + nodeValues[2]+" target=\"_top\" onclick=\"get_path('"+ id+ "','" + child + "'," + click +",'"+typ +"');window.status='"+nodeValues[2]+"';return true;\" ondblclick=\"jump('"+typ +"');return true;\" >");
+			// information about actual item in the tree
+			// Write out folder & page icons
+			if (nodeValues[3]=="D") {
+		   	  document.write("<img id=\"icon" + nodeValues[0] + "\" src=\"img/tree/folder")
+			  if (ino) document.write("open");
+			  document.write(".gif\" align=\"absbottom\" alt=\"Folder\" />");
+			} 
+			else {  // find correct icon for		           
+			   if (nodeValues[3]=="G") document.write("<img id=\"icon" + nodeValues[0] + "\" src=\"img/tree/grid.gif\" border=0 align=\"absbottom\" alt=\"Grid\" />");
+   			   if (nodeValues[3]=="M") document.write("<img id=\"icon" + nodeValues[0] + "\" src=\"img/tree/metric.gif\" border=0 align=\"absbottom\" alt=\"Metric\" />");
+			   if (nodeValues[3]=="Fi") document.write("<img id=\"icon" + nodeValues[0] + "\" src=\"img/tree/filter.gif\" border=0 align=\"absbottom\" alt=\"Filter\" />");
+			   if (nodeValues[3]=="R") document.write("<img id=\"icon" + nodeValues[0] + "\" src=\"img/tree/report.gif\" border=0 align=\"absbottom\" alt=\"Report\" />");
+			   if (nodeValues[3]=="A") document.write("<img id=\"icon" + nodeValues[0] + "\" src=\"img/tree/attr.gif\" border=0 align=\"absbottom\" alt=\"Attribute\" />");
+			   if (nodeValues[3]=="Af") document.write("<img id=\"icon" + nodeValues[0] + "\" src=\"img/tree/attr_form.gif\" border=0 align=\"absbottom\" alt=\"AttributeForm\" />");
+			   if (nodeValues[3]=="Fa") document.write("<img id=\"icon" + nodeValues[0] + "\" src=\"img/tree/fact.gif\" border=0 align=\"absbottom\" alt=\"Fact\" />");
+			   if (nodeValues[3]=="Fo") document.write("<img id=\"icon" + nodeValues[0] + "\" src=\"img/tree/format.gif\" border=0 align=\"absbottom\" alt=\"Format\" />");
+			}			
+			// Write out node name
+			document.write("&nbsp;&nbsp;");
+			document.write("<span id=" + nodeValues[0] + " title=\""+nodeValues[4]+"\">");		
+                        document.write("&nbsp;&nbsp;" + nodeValues[2] + "&nbsp;&nbsp;"); // vypis jmena polozky
+    		        document.write("</span>");
+			// End link
+			document.write("</a><br /></span>");
+
+			// If node has children write out divs and go deeper
+			if (hcn) {
+				document.write("<div id=\"div" + nodeValues[0] + "\"");
+					if (!ino) document.write(" style=\"display: none;\"");
+				document.write(">");
+				addNode(nodeValues[0], recursedNodes, nds, onn);
+				document.write("</div>");
+			}
+			
+			// remove last line or empty icon 
+			recursedNodes.pop();
+		}
+	}
+}
+// Opens or closes a node
+function oc(node, bottom, iconT) {
+
+
+	var theDiv 	= document.getElementById("div" + node);
+	var theJoin	= document.getElementById("join" + node);
+	var theIcon 	= document.getElementById("icon" + node);
+	if (theDiv != undefined ) {
+	  if (theDiv.style.display == 'none') {
+		  if (bottom==1)  theJoin.src = icons[3].src;
+		  else  theJoin.src = icons[2].src;
+		  if (iconT=="D") theIcon.src = icons[5].src;
+		  theDiv.style.display = '';
+	  } else {
+		  if (bottom==1) theJoin.src = icons[1].src;
+		  else theJoin.src = icons[0].src;
+		  if (iconT=="D") theIcon.src = icons[4].src;
+		  theDiv.style.display = 'none';
+	  }
+        }
+}
+// Push and pop not implemented in IE(crap!    don´t know about NS though)
+if(!Array.prototype.push) {
+	function array_push() {
+		for(var i=0;i<arguments.length;i++)
+			this[this.length]=arguments[i];
+		return this.length;
+	}
+	Array.prototype.push = array_push;
+}
+if(!Array.prototype.pop) {
+	function array_pop(){
+		lastElement = this[this.length-1];
+		this.length = Math.max(this.length-1,0);
+		return lastElement;
+	}
+	Array.prototype.pop = array_pop;
+
+  //get_path(last,-1,0);
+}
+
+
+//*****************************************************************
+
+// Main function to retrieve mouse x-y pos.s
+
+function get_path(a,b,c,d) {
+// a ... node id, b ... parent id, c ... click, d = type of id 
+  if (GID!="-1") {
+    // this state will occure first runnig 
+    // not firt time run - nothing to get white and
+    // last modified not eq actual node
+
+    if (GID != a) {			       
+      var LMi = document.getElementById(GID);
+      if (LMi!=undefined) {        
+        if ((a==-1)) LMi.style.backgroundColor="#eef94a"
+	else LMi.style.backgroundColor=document.getElementById("00&&22"+GID).style.backgroundColor;
+      }  
+    } 
+  } 
+  // clik on item in tree 
+  if (c) GID=a;     
+  if (a!=-1) {
+    var pok = document.getElementById(a);	
+    pok.style.backgroundColor="#eef94a";	//set bgcolor for highlighted item
+    set_cookie("fid"); //fold_id, important for copy, delete ... from fold.cgi 
+  }
+  if (d=="D" || d=="R" || d=="A") oc(a,1,d);  
+}
+
+function jump(d) {     
+  if (d=="D") parent.location.replace(URL[0]);
+  if (d=="G") parent.location.replace(URL[1]);
+  if (d=="Fi") parent.location.replace(URL[2]);
+  if (d=="R") parent.location.replace(URL[3]);
+  if (d=="A") parent.location.replace(URL[4]);
+  if (d=="Af")  parent.location.replace(URL[4]);
+  if (d=="Fa") parent.location.replace(URL[5]);
+  if (d=="Fo") parent.location.replace(URL[6]);
+  if (d=="M") parent.location.replace(URL[7]);  
+}
+
+
+function id_exist(idd,nn) {  // if exist ID of node in actual tree
+  var len = nn.length;
+  var i;
+  var item;
+  for (i=0;i<len;i++){
+    item = nn[i].split("|");
+    if (item[0]==idd) {
+      return true; //find node with idd
+    }  
+  }  
+  return false;
+}
+
+function clear_tree(nn) {
+  var aux = nn.split(",");
+  len = aux.length;
+  var i;
+  var item;
+  for (i=0;i<len;i++){
+    item = aux[i].split("|");
+    var LMi = document.getElementById(item[0]);  
+    if (LMi!= undefined) LMi.style.backgroundColor=document.getElementById("00&&22"+item[0]).style.backgroundColor;
+  }  
+}
+
+function clear_tree1(nn) {
+ 
+  var len = nn.length;
+  var i;
+  var item;
+  for (i=0;i<len;i++){
+    item = nn[i].split("|");
+    var LMi = document.getElementById(item[0]);  
+    if (LMi!= undefined) LMi.style.backgroundColor=document.getElementById("00&&22"+item[0]).style.backgroundColor;
+  }  
+}
+
+function set_fid() {
+   GID = get_cookie();
+   set_cookie("fid");
+}
+
+function set_cookie(prm) {
+  document.cookie = prm+"=" + GID;
+//  alert("Set cookie "+GID);
+}
+
+function get_cookie() {
+  var items=document.cookie.split(";");
+  var k;  
+  var itb="ndf";
+  var ita;
+  for (k=0;k<items.length;k++) {
+    var aa = items[k].split("=");
+    if (aa[1]==null && items.length==1) {}  // first run no cookies
+    else {       
+       // white spaceses
+       ita=aa[0];
+       itb=aa[1];
+       if (aa[0].charAt(0)==" ") ita = aa[0].slice(1,aa[0].length);
+       if (aa[0].charAt(aa[0].length-1)==" ") ita = aa[0].slice(0,aa[0].length-1);
+       if (aa[1].charAt(1)==" ") itb = aa[1].slice(1,aa[1].length);
+       if (aa[1].charAt(aa[1].length-1)==" ") itb = aa[1].slice(0,aa[1].length-1);
+       if (ita=="id") return itb;
+       }
+    }
+  return itb;
+}
+@
+
+
+1.21
+log
+@object duplicity - fold.cgi
+@
+text
+@d10 1
+a10 1
+//$Id: tree2.js,v 1.20 2002/11/01 11:49:39 spanhel Exp $
+d319 5
+d349 1
+a349 1
+  }
+@
+
+
+1.20
+log
+@added dynamic tree for edit html pages, created format_ed.pl (CSS), changed cookie ID (edit.cgi)
+@
+text
+@d10 1
+a10 1
+//$Id: tree2.js,v 1.19 2002/10/25 14:03:20 spanhel Exp $
+d250 1
+d253 1
+a253 1
+      if (LMi!=undefined) {
+d258 1
+a258 1
+   } 
+d264 1
+d319 2
+a320 2
+function set_cookie() {
+  document.cookie = "id=" + GID;
+@
+
+
+1.19
+log
+@edit pages created
+@
+text
+@d10 1
+a10 1
+//$Id: tree2.js,v 1.18 2002/10/23 11:17:36 michald Exp $
+d21 1
+a21 1
+var GID= "-1"; // global variable for active node
+@
+
+
+1.18
+log
+@minor fixes
+@
+text
+@d10 1
+a10 1
+//$Id: tree2.js,v 1.17 2002/10/05 17:32:02 michald Exp $
+d61 1
+a61 1
+ 		  document.write("<a href=\"" + nodeValues[3] + "\" onmouseover=\"window.status='" + nodeValues[2] +  "';return true;\" onmouseout=\"window.status=' ';return true;\"><img src=\"img/tree/folderopen.gif\" align=\"absbottom\" alt=\"\" />" + nodeValues[2] + "</a><br />");
+d158 1
+a158 1
+			document.write("<a name=" + nodeValues[2]+" target=\"_top\" onclick=\"get_path('"+ id+ "','" + child + "'," + click +",'"+typ +"');window.status='"+nodeValues[2]+"';return true;\" ondblclick=\"jump('"+typ +"');return true;\" onmouseout=\"window.status=' ';return true;\">");
+d205 13
+a217 11
+	if (theDiv.style.display == 'none') {
+		if (bottom==1)  theJoin.src = icons[3].src;
+		else  theJoin.src = icons[2].src;
+		if (iconT=="D") theIcon.src = icons[5].src;
+		theDiv.style.display = '';
+	} else {
+		if (bottom==1) theJoin.src = icons[1].src;
+		else theJoin.src = icons[0].src;
+		if (iconT=="D") theIcon.src = icons[4].src;
+		theDiv.style.display = 'none';
+	}
+d264 1
+a264 1
+  if (d=="D" || d=="R") oc(a,1,d);  
+d273 1
+@
+
+
+1.17
+log
+@grid edit window
+@
+text
+@d10 1
+a10 1
+//$Id: tree2.js,v 1.16 2002/10/02 16:53:03 michald Exp $
+d266 1
+a266 1
+  if (d=="D") location.replace(URL[0]);
+d268 6
+a273 6
+  if (d=="Fi") location.replace(URL[2]);
+  if (d=="R") location.replace(URL[3]);
+  if (d=="A") location.replace(URL[4]);
+  if (d=="Fa") location.replace(URL[5]);
+  if (d=="Fo") location.replace(URL[6]);
+  if (d=="M") location.replace(URL[7]);  
+@
+
+
+1.16
+log
+@create new object implementation
+@
+text
+@d10 1
+a10 1
+//$Id: tree2.js,v 1.15 2002/10/02 12:27:13 spanhel Exp $
+d267 1
+a267 1
+  if (d=="G") location.replace(URL[1]);
+d315 2
+a316 1
+  document.cookie = "id=" + GID;	
+@
+
+
+1.15
+log
+@url links added
+@
+text
+@d10 1
+a10 1
+//$Id: tree2.js,v 1.14 2002/10/02 11:14:03 michald Exp $
+a21 1
+var URL = new Array(8);
+a39 12
+// preloads URLs
+function preloadURL() {
+  var path="/bear/"
+  URL[0]  = path + "folder.html";	// "D"	
+  URL[1]  = path + "grid.html"; 	// "G"
+  URL[2]  = path + "filter.html"; 	// "Fi"
+  URL[3]  = path + "report.html"; 	// "R"
+  URL[4]  = path + "attr.html"; 	// "A"
+  URL[5]  = path + "fact.html"; 	// "Fa"
+  URL[6]  = path + "format.html"; 	// "Fo"
+  URL[7]  = path + "metric.html"; 	// "M"    
+}  
+a56 1
+		preloadURL();
+@
+
+
+1.14
+log
+@Create New Objects functionality
+@
+text
+@d10 1
+a10 1
+//$Id: tree2.js,v 1.13 2002/10/01 14:56:11 spanhel Exp $
+a16 1
+var url_items		= new Array(2);
+d22 1
+d40 13
+d64 1
+a64 1
+function createTree(nodes, projName, startNode, openNode, urll, opno) {
+a66 2
+//	nodes = arrName;	
+	url_items = urll;
+d70 1
+d279 9
+a287 5
+function jump(d) {   
+  if (d=="R") parent.location.replace(URL[1])       
+  else {
+       if (d!="D") parent.location.replace(URL[0]);
+  }
+d289 1
+@
+
+
+1.13
+log
+@tree added global ID node
+@
+text
+@d10 1
+a10 1
+//$Id: tree2.js,v 1.12 2002/09/30 14:39:57 spanhel Exp $
+d70 1
+a70 1
+  get_path(-1,-1,0,"gggg",nodes);
+d160 1
+a160 1
+			document.write("<a name=" + nodeValues[2]+" target=\"_top\" onclick=\"get_path('"+ id+ "','" + child + "'," + click +",'"+typ +"','"+ nds +"');window.status='"+nodeValues+"';return true;\" ondblclick=\"jump('"+typ +"');return true;\" onmouseout=\"window.status=' ';return true;\">");
+d244 1
+a244 1
+function get_path(a,b,c,d,ndn) {
+@
+
+
+1.12
+log
+@tree changes
+@
+text
+@d10 1
+a10 1
+//$Id: tree2.js,v 1.11 2002/09/30 13:56:49 michald Exp $
+d15 1
+a15 1
+var openNodes	 	= new Array();   // list of nodes which are open
+d22 1
+d51 1
+a51 1
+function createTree(arrName, projName, startNode, openNode, urll) {
+d54 1
+a54 1
+	nodes = arrName;	
+d56 1
+a56 1
+	last=openNode;	
+d60 1
+a60 1
+		if (openNode != 0 || openNode != null) setOpenNodes(openNode);	
+d62 1
+a62 1
+    		  var nodeValues = nodes[getArrayId(startNode)].split("|");
+d68 1
+a68 1
+		addNode(startNode, recursedNodes);
+d70 1
+a70 1
+  get_path(-1,-1,0);
+d73 3
+a75 3
+function getArrayId(node) {
+	for (i=0; i<nodes.length; i++) {
+		var nodeValues = nodes[i].split("|");
+d81 3
+a83 3
+function setOpenNodes(openNode) {
+	for (i=0; i<nodes.length; i++) {
+		var nodeValues = nodes[i].split("|");
+d85 2
+a86 2
+			openNodes.push(nodeValues[0]);
+			setOpenNodes(nodeValues[1]);
+d91 3
+a93 3
+function isNodeOpen(node) {
+	for (i=0; i<openNodes.length; i++)
+		if (openNodes[i]==node) return true;
+d97 3
+a99 3
+function hasChildNode(parentNode) {
+	for (i=0; i< nodes.length; i++) {
+		var nodeValues = nodes[i].split("|");
+d105 1
+a105 1
+function lastSibling (node, parentNode) {
+d107 2
+a108 2
+	for (i=0; i< nodes.length; i++) {
+		var nodeValues = nodes[i].split("|");
+d116 3
+a118 3
+function addNode(parentNode, recursedNodes) {        
+	for (var i = 0; i < nodes.length; i++) {
+		var nodeValues = nodes[i].split("|");
+d121 3
+a123 3
+			var ls	= lastSibling(nodeValues[0], nodeValues[1]);
+			var hcn	= hasChildNode(nodeValues[0]);
+			var ino = isNodeOpen(nodeValues[0]);
+a154 2
+
+//			document.write("<a name=ff onmousemove=\"window.status='g hgfhfg hg';return true;\">");
+d160 1
+a160 11
+			//document.write("<a href=\"" + nodeValues[3] + "\" onmouseover=\"window.status='" + nodeValues[2] + "';return true;\" onmouseout=\"window.status=' ';return true;\">");
+//			if (nodeValues[0]==last) {
+
+//			}
+//			  if (cnt=1) document.write( "<a href=\"" + url_items[0] + "\" target=\"_top\" onclick=\"get_path("+ id+ "," + child + "," + click+");window.status='"+nodeValues+"';return true;\" onmouseout=\"window.status=' ';return true;\">");
+//			  else document.write("<a name=" + nodeValues[2]+" target=\"_top\" onclick=\"get_path("+ id+ "," + child + "," + click + ");window.status='"+nodeValues+"';return true;\" onmouseout=\"window.status=' ';return true;\">");
+//			  
+//			}
+//			else 
+			document.write("<a name=" + nodeValues[2]+" target=\"_top\" onclick=\"get_path('"+ id+ "','" + child + "'," + click	+",'"+typ +"');window.status='"+nodeValues+"';return true;\" ondblclick=\"jump('"+typ +"');return true;\" onmouseout=\"window.status=' ';return true;\">");
+//			document.write( "<a href=\"" + url_items[0] + "\" target=\"_top\" onclick=\"get_path("+ id+ "," + child + "," + click+");window.status='"+nodeValues+"';return true;\" onmouseout=\"window.status=' ';return true;\">");
+a161 1
+
+a162 1
+
+d168 1
+a168 2
+			else {  // find correct icon for
+		           
+a176 1
+
+a178 1
+
+d180 2
+a181 11
+			document.write("<span id=" + nodeValues[0] + " title=\""+nodeValues[4]+"\">");
+
+			
+                        //if (nodeValues[3]=="D" || nodeValues[3]=="R") {  // name ofdirectory as link		   			  
+			//  document.write("<a href=\"javascript: oc(" + nodeValues[0] + ", 1,'"+nodeValues[3]+"');\" onclick=\"get_path("+id+"," + child + "," + click + ",'"+typ +"');window.status='"+nodeValues+"';return true;\">");
+ 			//  document.write("&nbsp;&nbsp;" + nodeValues[2] + "&nbsp;&nbsp;"); // vypis jmena polozky
+			//  document.write("</a>");
+		//	}
+	//		else {
+			  document.write("&nbsp;&nbsp;" + nodeValues[2] + "&nbsp;&nbsp;"); // vypis jmena polozky
+	//		}
+a182 1
+
+a183 1
+			//document.write("</a><br /></div>");
+a184 2
+//			document.write("</a>");
+			
+d191 1
+a191 1
+				addNode(nodeValues[0], recursedNodes);
+d244 1
+a244 1
+function get_path(a,b,c,d) {
+d246 2
+a247 27
+  var i=a;            
+  var items=document.cookie.split(";");
+  var k  
+  var find=0;
+  for (k=0;k<items.length;k++) {
+    var aa = items[k].split("=");
+    if (aa[1]==null && items.length==1) {}  // first run no cookies
+    else {
+    var ita;
+    var itb;    
+    // white spaceses
+    ita=aa[0];
+    itb=aa[1];
+    if (aa[0].charAt(0)==" ") ita = aa[0].slice(1,aa[0].length);
+    if (aa[0].charAt(aa[0].length-1)==" ") ita = aa[0].slice(0,aa[0].length-1);
+    if (aa[1].charAt(1)==" ") itb = aa[1].slice(1,aa[1].length);
+    if (aa[1].charAt(aa[1].length-1)==" ") itb = aa[1].slice(0,aa[1].length-1);
+    if (ita=="id") {             
+      last = itb;  // last  node id 
+      find = 1;   // node id was found
+    }
+//    if (ita=="count") cnt = itb;
+    }
+  }
+  
+  if (find != 0) { 
+     // this state will occure first runnig 
+d250 10
+a259 32
+
+//    var xx= id_exist(last);
+//    alert(nodes);
+//    alert("last + id_exist " + last +"|"+ xx);
+//    if (xx) {    
+       if (last != a) {			       
+	 var LMi = document.getElementById(last);
+	 //first run 
+	 if ((last!=-1) && (a==-1)) LMi.style.backgroundColor="#eef94a"
+	 else {
+           //LMi.style.backgroundColor= last_bgc
+	   
+	   LMi.style.backgroundColor=document.getElementById("00&&22"+last).style.backgroundColor;
+	 }
+       } 
+     }
+//     else clear_tree();     
+//  } 
+
+  if (c) { // clik on item in tree
+//    if (cnt==null) cnt=0;
+//    if (last==a) {
+//      cnt++;	
+//      document.cookie = "count=" + cnt;		// why is count stored in cookie???
+//    }
+//    else {
+//      cnt=1;     
+//      document.cookie = "count=" + cnt;	
+//    }
+    last=a;  
+  }
+
+a261 1
+//    last_bgc=pok.style.backgroundColor;
+a262 3
+    //******* COOKIE ************
+    document.cookie = "id=" + a;	
+    //******* COOKIE ************
+d264 1
+a264 15
+
+  if (d=="D" || d=="R") oc(a,1,d);
+  
+/*  if (cnt==2) {
+     document.cookie = "count=1";	
+     if (d=="R") {
+       parent.location.replace(URL[1])
+       
+     }  
+     else {
+       if (d!="D") parent.location.replace(URL[0]);
+     }
+  }*/
+
+
+d274 2
+a275 2
+function id_exist(idd) {  // if exist ID of node in actual tree
+  var len = nodes.length;
+d279 1
+a279 1
+    item = nodes[i].split("|");
+d287 15
+a301 2
+function clear_tree() {
+  var len = nodes.length;
+d305 1
+a305 1
+    item = nodes[i].split("|");
+d307 1
+a307 1
+    LMi.style.backgroundColor=document.getElementById("00&&22"+item[0]).style.backgroundColor;
+d310 26
+@
+
+
+1.11
+log
+@add new icon
+@
+text
+@d10 1
+a10 1
+//$Id: tree2.js,v 1.10 2002/09/30 13:18:53 spanhel Exp $
+d14 1
+a14 1
+var nodes		= new Array();;
+d125 1
+a125 1
+			for (g=0; g<recursedNodes.length; g++) {
+d304 5
+a308 1
+    if (id_exist(last)) {    
+d315 1
+d320 2
+a321 2
+     else clear_tree();     
+  } 
+@
+
+
+1.10
+log
+@fix - select relevant node
+@
+text
+@d10 1
+a10 1
+//$Id: tree2.js,v 1.9 2002/09/30 11:53:29 spanhel Exp $
+d186 5
+a190 4
+			   if (nodeValues[3]=="R") document.write("<img id=\"icon" + nodeValues[0] + "\" src=\"img/tree/report.gif\" border=0 align=\"absbottom\" alt=\"Report\" />");			   			   
+			   if (nodeValues[3]=="A") document.write("<img id=\"icon" + nodeValues[0] + "\" src=\"img/tree/attr.gif\" border=0 align=\"absbottom\" alt=\"Attribute\" />");			   			   
+			   if (nodeValues[3]=="Fa") document.write("<img id=\"icon" + nodeValues[0] + "\" src=\"img/tree/fact.gif\" border=0 align=\"absbottom\" alt=\"Fact\" />");			   			   
+			   if (nodeValues[3]=="Fo") document.write("<img id=\"icon" + nodeValues[0] + "\" src=\"img/tree/format.gif\" border=0 align=\"absbottom\" alt=\"Format\" />");			   			   
+@
+
+
+1.9
+log
+@tree - string id
+@
+text
+@d10 1
+a10 1
+//$Id: tree2.js,v 1.8 2002/09/30 10:02:21 michald Exp $
+d273 2
+a274 2
+  var i=a;          
+  
+d303 12
+a314 10
+    if (last != a) {			       
+      var LMi = document.getElementById(last);
+      //first run 
+      if ((last!=-1) && (a==-1)) LMi.style.backgroundColor="#eef94a"
+      else {
+        //LMi.style.backgroundColor= last_bgc
+	LMi.style.backgroundColor=document.getElementById("00&&22"+last).style.backgroundColor;
+	
+      }
+    }    
+d360 24
+@
+
+
+1.8
+log
+@client metadata connection, client tree presentation
+@
+text
+@d10 2
+a11 1
+//$Id: tree2.js,v 1.4 2002/09/25 07:59:27 spanhel Exp $
+d137 1
+a137 1
+					document.write("<a href=\"javascript: oc(" + nodeValues[0] + ", 1,'"+nodeValues[3]+"');\"><img id=\"join" + nodeValues[0] + "\" src=\"img/tree/");
+d142 1
+a142 1
+					document.write("<a href=\"javascript: oc("+nodeValues[0]+", 0,'"+nodeValues[3]+"');\"><img id=\"join" + nodeValues[0] + "\" src=\"img/tree/");
+d147 2
+a148 1
+			} else {
+d155 1
+d170 1
+a170 1
+			document.write("<a name=" + nodeValues[2]+" target=\"_top\" onclick=\"get_path("+ id+ "," + child + "," + click	+",'"+typ +"');window.status='"+nodeValues+"';return true;\" ondblclick=\"jump('"+typ +"');return true;\" onmouseout=\"window.status=' ';return true;\">");
+d176 1
+a176 1
+			if (hcn && nodeValues[3]=="D") {
+d196 1
+d211 2
+@
+
+
+1.7
+log
+@update of tabs structure
+@
+text
+@d1 1
+a19 1
+var last_bgc="#eef94a";	// original bgcolor of highlighted item 
+d54 1
+a54 1
+	LM=openNode;
+d153 1
+a153 1
+			document.write("<span id=0022" + nodeValues[0] + ">");
+d160 1
+a160 1
+//			alert ("last again");
+d167 1
+a167 1
+			document.write("<a name=" + nodeValues[2]+" target=\"_top\" onclick=\"get_path("+ id+ "," + child + "," + click	+",'"+typ +"');window.status='"+nodeValues+"';return true;\" onmouseout=\"window.status=' ';return true;\">");
+d182 1
+a182 1
+			   if (nodeValues[3]=="F") document.write("<img id=\"icon" + nodeValues[0] + "\" src=\"img/tree/filter.gif\" border=0 align=\"absbottom\" alt=\"Filter\" />");
+d184 3
+d192 1
+a192 2
+		        // document.write("<span id=0011" + nodeValues[0] + ">");
+			document.write("<span id=" + nodeValues[0] + ">");
+d289 1
+a289 1
+    if (ita=="count") cnt = itb;
+d299 7
+a305 2
+      LMi.style.backgroundColor=last_bgc;	 //restore bgcolor
+//      LMi.style.backgroundColor=document.bgColor;	 
+d310 9
+a318 9
+    if (cnt==null) cnt=0;
+    if (last==a) {
+      cnt++;	
+      document.cookie = "count=" + cnt;		// why is count stored in cookie???
+    }
+    else {
+      cnt=1;     
+      document.cookie = "count=" + cnt;	
+    }
+d324 1
+a324 1
+	last_bgc=pok.style.backgroundColor;
+d333 1
+a333 1
+  if (cnt==2) {
+d342 2
+a343 1
+  }
+d345 1
+d347 5
+@
+
+
+1.6
+log
+@html edit pages
+@
+text
+@d19 1
+d297 1
+a298 1
+      LMi.style.backgroundColor="#8db4c6";	 
+d306 1
+a306 1
+      document.cookie = "count=" + cnt;	
+d317 2
+a318 1
+    pok.style.backgroundColor="#eef94a";
+@
+
+
+1.5
+log
+@report.html + fixed tree errors
+@
+text
+@a289 4
+  
+
+
+
+a302 1
+//    if (find==0) 
+@
+
+
+1.4
+log
+@tree changes
+@
+text
+@d9 1
+a9 1
+//$Id: tree2.js,v 1.3 2002/09/24 13:02:50 spanhel Exp $
+d18 1
+a18 1
+var last;
+d67 1
+a67 1
+  get_path(openNode,-1,0);
+d265 1
+a268 1
+  
+d270 5
+a274 2
+    var ax = items[k].split("=");
+    var tr;    
+d276 8
+a283 4
+    if (ax[0].charAt(0)==" ") tr = ax[0].slice(1,ax[0].length);
+    if (ax[0].charAt(ax[0].length-1)==" ") tr = ax[0].slice(0,ax[0].length-1);
+    if (tr=="id") {
+      last = ax[1];  // last  node id 
+d286 2
+a287 1
+    if (tr=="count") cnt = ax[1];
+d290 16
+a305 1
+  if (c) {
+d307 1
+d315 2
+a316 11
+    }  
+  }
+
+
+  if (find != 0) { // this state will occure first runnig 
+    // not firt time run - nothing to get white and
+    // last modified not eq actual node
+    if (last != a) {			       
+      var LMi = document.getElementById(last);
+      LMi.style.backgroundColor=document.bgColor;	 
+    }    
+a319 1
+
+d331 4
+a334 1
+     if (d=="R") parent.location.replace(URL[1])
+@
+
+
+1.3
+log
+@tree folder change
+@
+text
+@d9 1
+a9 1
+//$Id: tree2.js,v 1.2 2002/09/24 09:07:22 michald Exp $
+d18 2
+d53 1
+d67 1
+a67 2
+
+  get_path(openNode,0);
+a113 1
+
+a114 1
+//		document.write(document.path.path.text=");
+d155 2
+d158 10
+a167 2
+//			document.write("<a name=" + nodeValues[2]+" target=\"mainFrame\" onclick=\"get_path("+ id+ "," + child + ");window.status='"+nodeValues+"';return true;\" onmouseout=\"window.status=' ';return true;\">");
+			document.write( "<a href=\"" + url_items[0] + "\" target=\"_top\" onclick=\"get_path("+ id+ "," + child + ");window.status='"+nodeValues+"';return true;\" onmouseout=\"window.status=' ';return true;\">");
+d171 1
+d173 3
+a175 3
+				document.write("<img id=\"icon" + nodeValues[0] + "\" src=\"img/tree/folder")
+					if (ino) document.write("open");
+				document.write(".gif\" align=\"absbottom\" alt=\"Folder\" />");
+d191 6
+a196 7
+                        if (nodeValues[3]=="D" || nodeValues[3]=="R") {  // name ofdirectory as link
+   			  
+			  document.write("<a href=\"javascript: oc(" + nodeValues[0] + ", 1,'"+nodeValues[3]+"');\" onclick=\"get_path("+ id+ "," + child + ");window.status='"+nodeValues+"';return true;\">");
+ 			  document.write("&nbsp;&nbsp;" + nodeValues[2] + "&nbsp;&nbsp;"); // vypis jmena polozky
+			  document.write("</a>");
+			}
+			else {
+d198 1
+a198 1
+			}
+d204 1
+d221 2
+d227 2
+a228 2
+		if (bottom==1) theJoin.src = icons[3].src;
+		else theJoin.src = icons[2].src;
+d254 2
+d258 1
+d263 60
+a322 1
+function get_path(a,b) {
+a323 29
+//   if (b>0) { // not folder    
+    // var i="0011"+ a;     
+	var i=a;     
+    // alert("id " + a);
+     if (a==LM) count++;
+     if (LM==0) count=1;
+         
+     // not firt time run - nothing to get white and
+     // last modified not eq actual node
+     if ((LM != -1) && (LM != a)) {		
+	// alert("jo")	;
+       //       var LMi = document.getElementById("0011"+ LM);
+       var LMi = document.getElementById(LM);
+       LMi.style.backgroundColor=document.bgColor;	 
+//       document.cookie="id=";	
+     }
+     
+     if (a!=LM) {	
+	
+       var pok = document.getElementById(i);	
+ //      alert(pok);
+       pok.style.backgroundColor="#eef94a";
+       LM = a;  //new last modified nodes       
+       count=1;
+       //******* COOKIE ************
+	document.cookie = "id=" + a;	
+       //******* COOKIE ************
+     }     
+//  }  
+@
+
+
+1.2
+log
+@minor fixes
+@
+text
+@d9 1
+a9 1
+//$Id$
+d15 2
+a16 1
+var LM			= 0;	// last modified node
+d46 1
+a46 1
+function createTree(arrName, projName, startNode, openNode) {
+d50 1
+d53 2
+a54 3
+		if (startNode == null) startNode = 0;
+		if (openNode != 0 || openNode != null) setOpenNodes(openNode);
+	
+d65 1
+a65 2
+
+
+d155 3
+a157 2
+			
+			document.write("<a name=" + nodeValues[2]+" target=\"mainFrame\" onclick=\"get_path("+ id+ "," + child + ");window.status='"+nodeValues+"';return true;\" onmouseout=\"window.status=' ';return true;\">");
+d180 9
+a188 1
+                        document.write("&nbsp;&nbsp;" + nodeValues[2] + "&nbsp;&nbsp;"); // vypis jmena polozky
+a212 1
+        //alert("click1");	
+d249 1
+a249 1
+   if (b>0) { // not folder    
+d252 1
+d255 6
+a260 3
+     
+     if (LM > 0) {		
+//       var LMi = document.getElementById("0011"+ LM);
+d263 1
+a263 1
+       document.cookie="id=";	
+d267 1
+d269 1
+d277 1
+a277 1
+  }  
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d9 1
+@
+
+
+1.1.1.1
+log
+@Initial release of Bear ROLAP Portal
+@
+text
+@@

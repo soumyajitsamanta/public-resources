@@ -1,0 +1,1148 @@
+head	1.13;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.13
+date	2004.06.30.10.51.27;	author tuco80;	state Exp;
+branches;
+next	1.12;
+
+1.12
+date	2004.04.17.13.24.27;	author tuco80;	state Exp;
+branches;
+next	1.11;
+
+1.11
+date	2004.04.08.14.41.13;	author tuco80;	state Exp;
+branches;
+next	1.10;
+
+1.10
+date	2004.01.14.13.20.25;	author tuco80;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	2003.11.26.13.30.37;	author tuco80;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	2003.11.10.15.11.41;	author tuco80;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	2003.11.07.15.38.54;	author tuco80;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	2003.11.06.12.28.24;	author tuco80;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	2003.11.03.20.38.24;	author tuco80;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2003.10.27.13.02.34;	author tuco80;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2003.10.24.14.34.30;	author tuco80;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2003.10.24.12.41.03;	author tuco80;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2003.10.24.09.35.47;	author tuco80;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.13
+log
+@added a comment
+@
+text
+@=pod
+	File: pollinate.pl
+	
+	Description:
+				Used to run a synchronized 
+	block, export it from GUI to a runnable
+	XML .schema script and all its dependant
+	.bee scripts for transformations	and,
+	in the future (as of 23.10.03) run a
+	complete set of synchronized blocks,
+	(or ETL process, i.e. the entire project
+	in the GUI) 
+	
+	Date of Creation: 23.10.03 -- 15:26 (GMT+2)
+	copyright (c) Insight Strategy, a. s., 2003
+	
+	Author: Daniel Badilla Navarro -- tuco80@@yahoo.com
+	
+	Created For:  The Bee Project
+				  Insight Strategy, a.s.
+				  Fisova 9
+				  602 00 Brno
+				  Ceska Republika 
+=cut
+
+# $Id: pollinate.pl,v 1.12 2004/04/17 13:24:27 tuco80 Exp $
+
+use strict;
+use warnings;
+use Data::Dumper;
+use XML::Simple;
+
+require "const.def";
+
+use vars qw($mainTabs $QuestionFont $Project $Layer $top
+			$VisibleLayer $ProjectFile $lastPath $PWD);
+
+my $taskNote;
+my $old = 0;
+my $output=undef;
+my $task;
+my $taskPath;
+my $savePath;
+
+#these two are meant to be for later
+#when each script run will have
+#a different tab for its output
+#so that they do not get mixed
+#that is if we can run more than one
+#script at a time!!
+
+my @@outTabs;
+my $tabIndex = 1;
+#-----------^^^
+
+
+
+
+
+sub CreateTaskPage{
+	#my ($t) = @@_;
+	$taskNote = shift;
+	my (@@plt)=(-expand => "yes",-fill => "both",-padx => 5, -pady => 5, -side => "top");	#pack param for tabs
+	#$taskNote = $t->NoteBook(-ipadx => 6, -ipady => 6, -font=>$TabsFont)->pack(@@plt);
+	#$output; = $taskNote->add
+	$output = $taskNote->Scrolled(qw/ROText -wrap no -scrollbars se/)->pack(@@plt);   
+	#$taskScroll->Scrolled(qw/ROText -wrap no -scrollbars se/, -background=>'white')->pack;
+	#$taskScroll->form(-top => 5, -left => 5);
+}
+
+#-----------------------------------------------------
+=pod
+	This part is to convert the project hash
+	that is used in the program, to a hash such
+	that it has the form we can later save into
+	an xml file readable by the libbee (martin sarfy)
+	and execute the scripts, creating the dads and the bees
+	necessary for the process to take place.
+	
+	The out put of this process will be a *.scheme file 
+	(being the name chose by the user) which will be the 
+	main task (or one single synchronized block which as of
+	this stage is a whole but it will only be a part in 
+	the future) script file, and also n amount of *.bee
+	script files (the names come from the ID of each 
+	transformation in the current $Project variable) which
+	will be pointed to by the main taks script and loaded
+	or read to produce the bee.
+=cut
+
+sub SaveScheme {
+	# Save project data
+	my $fn=shift;
+	my $pwd=shift;
+	my $PData = new XML::Simple(rootname=>'task', keeproot=>0, forcearray=>[qw/otec src dest dad input output link bee arg/]);
+	my $SMaker = new XML::Simple(rootname => 'script', keeproot=>0, forcearray=>[qw/input code output/]);
+	my $conversion = {};
+	my $reference = {};
+	my $script;
+	my @@indexes;
+	my ($h,$t,$i,$l)=0;
+	
+	#my $in = $PData->XMLin("apache.scheme");
+	#print Dumper($in);
+	#First, go through all the hosts, creating a dad in each one
+	foreach my $host (keys %{$Project->{host}}){
+		$conversion->{dad}[$h]->{host}= $host;
+		$conversion->{dad}[$h]->{port}='2333';
+		
+=pod  
+	  #*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+	  #Esto (todo el pod) es para transformar todo el proyecto, 
+	  #pero por lo pronto, para poder representar cada
+	  #bloque, solo vamos a convertir la capa actual (ActiveLayer)
+	  #*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+	  #Translation:
+	  #All of this pod is to export the whole project
+	  #but for now we only export one gui Layer (which comes
+	  #to be one synchronized block) so we read only ActiveLayer.
+		foreach my $transf (keys %{$Project->{host}->{$host}->{transformation}}){
+			$conversion->{dad}[$h]->{bee}[$t]->{name}=$transf;
+			$conversion->{dad}[$h]->{bee}[$t]->{script}="$transf.bee";
+			foreach my $input (keys %{$Project->{host}->{$host}->{transformation}->{$transf}->{input}}){
+				my $length = $Project->{$host}->{transformation}->{$transf}->{input}->{$input}->{length};
+				my $inString;
+				foreach my $conn (sort byInField keys %{$Project->{connection}}){
+					my $to = $Project->{connection}->{$conn}->{to};
+					if ($to=~m/_TRAN/){
+						my ($tid,$attr,$fpos)=($to=~m|^.*/([^/]+)/([^/-]+)-(\d+)$|);
+						unless($fpos){$fpos=1;}
+						#print "\n esto es lo que agarro $tid  $attr  $fpos";
+						if(($tid eq $transf) && ($attr eq $input)){
+							#now we know that $input's field number $fpos (in $transf)
+							#comes from $conn's "from" value
+							my $from = $Project->{connection}->{$conn}->{from};
+							if ($from =~m/_TRAN/){
+								#when it comes from a transformation
+								#the arity does not matter!!!
+								#That's for v 1.0 only though, so
+								#this has to be changed when in v. 2.0 it does
+								my ($fh,$ft,$fo) = ($from=~m|^([\w.]+)/_TRAN/(\w+)/(\w+)[-\d]+$|);
+								#print "\n host:$fh  tran:$ft  output:$fo";
+								$conversion->{link}[$l]->{src}->{bee}=$ft;
+								$conversion->{link}[$l]->{src}->{output}=$ft;
+								$conversion->{link}[$l]->{dest}->{bee}=$ft;
+								$conversion->{link}[$l]->{dest}->{input}=$i++;
+							}
+						}
+					}
+				}
+			}
+			$t++;
+		}
+=cut
+		#we will later want to know which place
+		#does a specific host have in dad[]
+		$reference->{$host}=$h;
+		$indexes[$h]=0;
+		$h++;
+		#$t=0;
+			
+	}#foreach host
+	foreach my $object (keys %{$Layer->{$VisibleLayer}}){
+		print "\nestamos en: $object\n";
+		if ($object=~m/_TRAN/){
+			my $tranID = $Layer->{$VisibleLayer}->{$object}->id();
+			my @@rels =  @@{$Layer->{$VisibleLayer}->{$object}->relation()};
+			#print @@rels;
+			if (@@rels){
+				our $inputs = {};
+				our $outputs = {};
+				$script = {};
+				my ($ho,$tr)=($tranID=~m|^([\w.]+)/_TRAN/(\w+)$|);
+				foreach my $rel(sort {$a->fieldTo <=> $b->fieldTo} @@rels){
+					#print ("\n field numer:" ,$rel->fieldTo);
+					my $toObj = $rel->to_obj();
+					if($tranID eq $toObj){
+						#Here we know that this connection goes to one of the inputs
+						#of this transformation (bee)
+						print "\nEsta es en input: $toObj";
+						my $in_ord = $Layer->{$VisibleLayer}->{$object}->getAttrOrd($rel->to_id);
+						#print ("\n Looking for order of attribute", $rel->to_id);
+						#unless ($in_ord){print "\n in_ord esta indefinido! wata foc???";}
+						unless(exists $inputs->{$toObj}->{$in_ord}->{source}){
+							$inputs->{$toObj}->{$in_ord}->{source} = $rel->from_obj;
+							$Project->{host}->{$ho}->{transformation}->{$tr}->{input}->{$rel->to_id}->{type}='stream';
+						}#unless exists
+						if ($rel->from_obj =~m/_CONST/){
+							$inputs->{$toObj}->{$in_ord}->{$rel->fieldTo}= $Layer->{$VisibleLayer}->{$rel->from_obj}->value();
+							$Project->{host}->{$ho}->{transformation}->{$tr}->{input}->{$rel->to_id}->{type}='scalar';
+						}#if const
+						else{
+							$inputs->{$toObj}->{$in_ord}->{$rel->fieldTo}= $rel->from_id;
+						}#else (if const)						
+						#$inputs->{$rel->to_id}[$rel->fieldTo]= $toObj;
+						#Put the info in the script hash
+						$script->{input}[$in_ord-1]->{name}=$Project->{host}->{$ho}->{transformation}->{$tr}->{input}->{$rel->to_id}->{name}||$rel->to_id();
+						$script->{input}[$in_ord-1]->{type}=$Project->{host}->{$ho}->{transformation}->{$tr}->{input}->{$rel->to_id}->{type}||'';
+						$script->{input}[$in_ord-1]->{arity}=$Project->{host}->{$ho}->{transformation}->{$tr}->{input}->{$rel->to_id}->{length}||1;
+
+					}#if tranid eq obj
+					else{
+						#if that relation is not an input on this object
+						#for sure it's an output!
+						
+						#WATCH IT!!  $toObj is now the FROM! not the to.
+						#it's just unnecesary to create yet another variable!
+						$toObj = $rel->from_obj;
+						print "\nEsta es en output: $toObj";
+						my $out_ord = $Layer->{$VisibleLayer}->{$object}->getAttrOrd($rel->from_id);
+						if($rel->to_obj =~m/_CONST/){
+							$outputs->{$toObj}->{$out_ord}->{$rel->fieldFrom}= $Layer->{$VisibleLayer}->{$rel->to_obj}->value();
+							$Project->{host}->{$ho}->{transformation}->{$tr}->{output}->{$rel->from_id}->{type}='scalar';
+						}#if const
+						else{
+							unless(exists $outputs->{$toObj}->{$out_ord}->{dest}){
+								$outputs->{$toObj}->{$out_ord}->{dest} = $rel->to_obj;
+								$Project->{host}->{$ho}->{transformation}->{$tr}->{output}->{$rel->from_id}->{type}='stream';
+							}#unless exists
+							$outputs->{$toObj}->{$out_ord}->{$rel->fieldFrom}= $rel->to_id;
+						}#else (if const)
+						
+						#Put the info in the script hash
+						$script->{output}[$out_ord-1]->{name}=$Project->{host}->{$ho}->{transformation}->{$tr}->{output}->{$rel->from_id}->{name}||$rel->from_id();
+						$script->{output}[$out_ord-1]->{type}=$Project->{host}->{$ho}->{transformation}->{$tr}->{output}->{$rel->from_id}->{type}||'';
+						$script->{output}[$out_ord-1]->{arity}=$Project->{host}->{$ho}->{transformation}->{$tr}->{output}->{$rel->from_id}->{length}||1;
+					}#else (tran id eq obj)
+				}#foreach rel
+				foreach our $bee (keys %{$inputs}){
+					print "\nBee is: $bee";
+					my ($temphost,$beename)=($bee=~m|^([\w.]+)/_TRAN/(\w+)$|);
+					my $nam = $Project->{host}->{$temphost}->{transformation}->{$beename}->{name};
+					print "\nSacamos: bee $beename en $temphost";
+					my $ptr = $reference->{$temphost};
+					our $t=$indexes[$reference->{$temphost}];
+					$conversion->{dad}[$ptr]->{bee}->{$beename}->{name}=$nam;
+					$conversion->{dad}[$ptr]->{bee}->{$beename}->{script}="$nam.bee";
+					foreach our $in (keys %{$inputs->{$bee}}){
+						$i = 0;
+						my $inStr = undef;
+						sub byInFields{
+							my $ret = 0;
+							if($a eq 'source'){$ret=1}
+							elsif($b eq 'source'){$ret=-1}
+							else{$ret=$a<=>$b}
+							return $ret;
+						}
+						foreach my $field (sort byInFields keys %{$inputs->{$bee}->{$in}}){
+							print "\nEstamos en field # $field";
+							my $at = $inputs->{$bee}->{$in}->{$field};
+							unless($i){
+								print "\n Luego de push t vale: $t";
+								print ("\n Viene de:",$inputs->{$bee}->{$in}->{source});
+								if ($inputs->{$bee}->{$in}->{source} =~m/_TRAN/){
+									#We need not to prepare the string here
+									#just create a link.
+									my $sr = $inputs->{$bee}->{$in}->{source};
+									my ($ho,$tr)=($sr=~m|^([\w.]+)/_TRAN/(\w+)$|);
+									$conversion->{link}[$l]->{src}[0]->{bee}=$Project->{host}->{$ho}->{transformation}->{$tr}->{name};
+									$conversion->{link}[$l]->{src}[0]->{output}=$Layer->{$VisibleLayer}->{$sr}->getAttrOrd($at);
+									$conversion->{link}[$l]->{dest}[0]->{bee}=$nam;
+									$conversion->{link}[$l]->{dest}[0]->{input}=$in;	
+									$l++;
+									last;
+								}#if source eq tran
+								elsif($inputs->{$bee}->{$in}->{source} =~m/_CONST/){
+									print "\nSource es una constante!!";
+									$conversion->{dad}[$ptr]->{bee}->{$beename}->{input}[$in-1]->{input}=$in;
+									$conversion->{dad}[$ptr]->{bee}->{$beename}->{input}[$in-1]->{url}="scalar://";
+									$conversion->{dad}[$ptr]->{bee}->{$beename}->{input}[$in-1]->{content}=$inputs->{$bee}->{$in}->{$field};
+									$indexes[$reference->{$temphost}]=++$t;	
+									last;
+																		
+								}#elsif source eq const
+								elsif($inputs->{$bee}->{$in}->{source} =~m/_FILE/){
+									my ($ho,$src)=($inputs->{$bee}->{$in}->{source}=~m|^([\w.]+)/_FILE/(\w+)$|);
+									print "\nSource es un archivo!!";
+									$conversion->{dad}[$ptr]->{bee}->{$beename}->{input}[$in-1]->{input}=$in;
+									$conversion->{dad}[$ptr]->{bee}->{$beename}->{input}[$in-1]->{url}="dir://localhost".$Project->{host}->{$ho}->{file}->{$src}->{'src-conn'}->{'src-name'}->{content};
+									$indexes[$reference->{$temphost}]=++$t;	
+									last;
+																		
+								}#elsif source eq file
+								else{
+									#There's no other posible source!
+									#It HAS to be a table at this point.
+									my ($ho,$src,$tbl)=($inputs->{$bee}->{$in}->{source}=~m|^([\w.]+)/(\w+)/(\w+)$|);
+									$inStr = "$Project->{host}->{$ho}->{source}->{$src}->{'src-conn'}->{driver}://";
+									$inStr .= "$Project->{host}->{$ho}->{source}->{$src}->{'src-conn'}->{user}->{content}:";
+									$inStr .= "$Project->{host}->{$ho}->{source}->{$src}->{'src-conn'}->{password}->{content}@@";
+									$inStr .= "$ho:";
+									$inStr .= "$Project->{host}->{$ho}->{source}->{$src}->{'src-conn'}->{port}->{content}/";
+									$inStr .= "$src/$tbl:";
+								}#else (source eq const)
+								$i++;
+							}#unless i
+							if ($field eq 'source'){last;}
+							if($i == $field){
+								print "\n OK, ponemos esto: $at";
+								$inStr = $inStr."$at:";
+							}#if i eq field
+							else{
+								print "\nHay que rellenar de $i hasta $field";
+								#$i = $field;
+								for(;$i<=$field;$i++){$inStr = $inStr.":";print "\n llenamos hasta $i";}#for i->field
+							}#else (i eq field)
+							$i++;
+						}
+						#Now we put this input in $conversion
+						if ($inStr){
+							$conversion->{dad}[$ptr]->{bee}->{$beename}->{input}[$in-1]->{input}=$in;
+							$conversion->{dad}[$ptr]->{bee}->{$beename}->{input}[$in-1]->{url}=$inStr;
+						}#if inStr
+						$indexes[$reference->{$temphost}]=++$t;	
+						
+						#And now we put the input in the script hash
+						#$script->{input}[$in-1]->{name}=$Project->{host}->{$temphost}->{transformation}->{$beename}->{
+					}#foreach in
+					#now we create the script for this bee
+					print "\nVamos a crear $pwd/$nam.bee";
+					$script->{code}[0]= "\n<![CDATA[\n";
+					$script->{code}[0]= $script->{code}[0].$Project->{host}->{$temphost}->{transformation}->{$beename}->{proc}->{content}."\n]]>\n";
+					$script->{lang}= $Project->{host}->{$temphost}->{transformation}->{$beename}->{proc}->{language};
+					$script->{name}= $nam;
+					$SMaker->XMLout($script, xmldecl=>1, noattr=>0, outputfile=>"$pwd/$nam.bee", noescape=>1);
+
+				}#foreach bee
+				
+				#Now basicly the same but for the outputs
+				foreach our $bee (keys %{$outputs}){
+					print "\nBee in output is: $bee";
+					my ($temphost,$beename)=($bee=~m|^([\w.]+)/_TRAN/(\w+)$|);
+					my $nam = $Project->{host}->{$temphost}->{transformation}->{$beename}->{name};
+					print "\nSacamos en out: bee $nam en $temphost";
+					my $ptr = $reference->{$temphost};
+					#$t=$indexes[$reference->{$temphost}];
+					$conversion->{dad}[$ptr]->{bee}->{$beename}->{name}=$nam;
+					$conversion->{dad}[$ptr]->{bee}->{$beename}->{script}="$nam.bee";
+					foreach our $out (keys %{$outputs->{$bee}}){
+						$i = 0;
+						my $outStr = undef;
+						sub byOutFields{
+							my $ret = 0;
+							my ($uno,$dos);
+							if($a eq 'dest'){$ret=1}
+							elsif($b eq 'dest'){$ret=-1}
+							else{$ret=$a<=>$b}
+							return $ret;
+						}
+						foreach my $field (sort byOutFields keys %{$outputs->{$bee}->{$out}}){
+							print "\nEstamos en field # $field";
+							my $at = $outputs->{$bee}->{$out}->{$field};
+							unless($i){
+								#print "\n Luego de push t vale: $t";
+								print ("\n Va hacia:",$outputs->{$bee}->{$out}->{dest});
+								if ($outputs->{$bee}->{$out}->{dest} =~m/_TRAN/){
+									#We need not to prepare the string here
+									#just create a link.
+									#my $sr = $outputs->{$bee}->{$out}->{dest};
+									#my ($ho,$tr)=($sr=~m|^([\w.]+)/_TRAN/(\w+)$|);
+									#$conversion->{link}[$l]->{src}[0]->{bee}=$tr;
+									#$conversion->{link}[$l]->{src}[0]->{output}=$Layer->{$VisibleLayer}->{$sr}->getAttrOrd($at);
+									#$conversion->{link}[$l]->{dest}[0]->{bee}=$beename;
+									#$conversion->{link}[$l]->{dest}[0]->{input}=$in;	
+									#$l++;
+									last;
+								}#if source eq tran
+								elsif($outputs->{$bee}->{$out}->{dest} =~m/_CONST/){
+									#This shouldn't actually occur, but I'll
+									#leave it for the development phase, it
+									#might catch a bug.
+									print "\nDest es una constante!! Que pasa?";									
+								}#elsif source eq const
+								elsif($outputs->{$bee}->{$out}->{dest} =~m/_FILE/){
+									my ($ho,$src)=($outputs->{$bee}->{$out}->{dest}=~m|^([\w.]+)/_FILE/(\w+)$|);
+									print "\nDest es un archivo!!";
+									$conversion->{dad}[$ptr]->{bee}->{$beename}->{output}[$out-1]->{output}=$out;
+									$conversion->{dad}[$ptr]->{bee}->{$beename}->{output}[$out-1]->{url}="dir://localhost".$Project->{host}->{$ho}->{file}->{$src}->{'src-conn'}->{'src-name'}->{content};
+									$indexes[$reference->{$temphost}]=++$t;	
+									last;
+																		
+								}#elsif source eq file
+								else{
+									#There's no other posible source!
+									#It HAS to be a table at this point.
+									my $temp;
+									my ($ho,$src,$tbl)=($outputs->{$bee}->{$out}->{dest}=~m|^([\w.]+)/(\w+)/(\w+)$|);
+									$outStr = "$Project->{host}->{$ho}->{source}->{$src}->{'src-conn'}->{driver}";
+									$outStr .= "://"."$Project->{host}->{$ho}->{source}->{$src}->{'src-conn'}->{user}->{content}:";
+									$outStr .= "$Project->{host}->{$ho}->{source}->{$src}->{'src-conn'}->{password}->{content}@@";
+									$outStr .= $ho.":";
+									$outStr .= "$Project->{host}->{$ho}->{source}->{$src}->{'src-conn'}->{port}->{content}/";
+									$outStr .= "$src/$tbl:";
+								}#else (source eq const)
+								$i++;
+							}#unless i
+							if ($field eq 'dest'){last;}
+							if($i == $field){
+								print "\n OK, ponemos esto: $at";
+								$outStr .= "$at:";
+							}#if i eq field
+							else{
+								print "\nHay que rellenar de $i hasta $field";
+								#$i = $field;
+								for(;$i<=$field;$i++){$outStr .= ":";print "\n llenamos hasta $i";}#for i->field
+								print "\n OK, ponemos esto: $at";
+								$outStr .= "$at:";
+							}#else (i eq field)
+							$i++;
+						}
+						#Now we put this output in $conversion
+						if ($outStr){
+							$conversion->{dad}[$ptr]->{bee}->{$beename}->{output}[$out-1]->{output}=$out;
+							$conversion->{dad}[$ptr]->{bee}->{$beename}->{output}[$out-1]->{url}=$outStr;
+						}#if outStr
+						#$indexes[$reference->{$temphost}]=++$t;	
+						
+						#And now we put the input in the script hash
+						#$script->{input}[$in-1]->{name}=$Project->{host}->{$temphost}->{transformation}->{$beename}->{
+					}#foreach out
+					#now we create the script for this bee
+					print "\nVamos a crear $pwd/$nam.bee";
+					$script->{code}[0]= "\n<![CDATA[\n"; 
+					$script->{code}[0]= $script->{code}[0].$Project->{host}->{$temphost}->{transformation}->{$beename}->{proc}->{content}."\n]]>\n";
+					$script->{lang}= $Project->{host}->{$temphost}->{transformation}->{$beename}->{proc}->{language};
+					$script->{name}= $nam;
+					$SMaker->XMLout($script, xmldecl=>1, noattr=>0, outputfile=>"$pwd/$nam.bee", noescape=>1);
+
+				}#foreach bee				
+			}#if @@rels
+			else{
+				#This means the bee has nothing connected to it
+				#so we might as well ignore it, as it has no effect
+				#print "\n me cago!";}
+				#my $rel;
+			
+			}#else (@@rels)
+		}#if obj eq tran
+	}#foreach obj	
+	my $out=$PData->XMLout($conversion, noattr=>0, outputfile=>$fn, xmldecl=>1);
+	return $fn;
+}#end sub savescheme
+
+	
+
+=pod This one is to be used when exporting the whole project
+sub byInField{
+	my $toA = $Project->{connection}->{$a}->{to};
+	my $toB = $Project->{connection}->{$b}->{to};
+	
+	my ($lineA) = ($toA =~/.+-(\d)/);
+	my ($lineB) = ($toB =~/.+-(\d)/);
+	#print "\nestos son lineaA y lineaB: $toA $toB";
+	unless($lineA){$lineA = 1;}
+	unless($lineB){$lineB = 1};
+	return  $lineA <=> $lineB;
+}
+
+=cut	
+	
+
+sub SaveProjAsScheme {
+	my $pn='Project.scheme';
+	my $pwd=$PWD;
+	if ($ProjectFile) {
+		($pwd,$pn)=($ProjectFile=~/(.*)\/(.*)$/);
+		$pn=~s/\.xml/\.scheme/;
+	};
+	my($LoadDialog) = $top->FileDialog(-Title =>'Export Project',
+                                                   -Create => 1,
+						   -Path => $savePath ? $savePath : $lastPath ? $lastPath : $pwd,
+						   -File => $pn,
+						   -FPat => '*.scheme',
+						   -ShowAll => 'NO');
+	my $fn = $LoadDialog->Show();
+	return 0 if (!$fn);
+	if ($fn!~/.+\.scheme/) {$fn.='.scheme'};
+	($pwd,$pn)=($fn=~/(.*)\/(.*)$/);
+	my $ans='Yes';
+	if (-e $fn) {
+		if (-w $fn) {
+			$ans = $top->messageBox(-icon    => 'question',
+                            -type => 'YesNo', -default => 'No',
+			    			-font => $QuestionFont,
+                            -message => "File $fn Exists. Owerwrite?");
+		} 
+		else {
+			$top->messageBox(-icon    => 'error',
+                            -type => 'OK', -default => 'OK',
+						    -font => $QuestionFont,
+                            -message => "ERROR: File $fn is not writable");
+			return 0;
+		}
+	} else {
+		open (F,">$fn"); close (F);	#test if posible to create $fn
+	}
+	$savePath = $pwd;	
+	if ($ans eq 'Yes') {
+		if (-w $fn) {	# Save
+			&SaveScheme($fn, $pwd);
+		} else {
+			$top->messageBox(-icon    => 'error',
+                            -type => 'OK', -default => 'OK',
+						    -font => $QuestionFont,
+                            -message => "ERROR Creating File $fn");
+			return 0;
+		}
+	}
+	return 1;
+}
+
+=pod
+	*-------------------------------
+	*Run sychronized block!!!
+	*-------------------------------
+	
+	There are three possibilities: 
+	
+	1- Choose "Run Project" in the menu
+	   which will automatically export
+	   the current layer, and then run that script.
+	   
+	2- Choose "Run Project" in the menu which
+	   will open a file choose dialog, and then
+	   the user can choose which script to run
+	   even scripts not belonging to the project
+	   being currently run.
+	   
+	3- Have both options available, one called
+	   "Run Block" which will automatically export
+	   and  run $ActiveLayer.  And have also
+	   "Run Script" wich will open the file dialog.
+	   I chose this option on 20.10.03!!
+	   
+	   
+	I think that in the future, there can be
+	three options, run block, execute project
+	and run script, depending on how difficult
+	it is to select only one block in the project
+	and run it in the new version.
+
+=cut
+
+
+sub RunScript{
+	my $pn='Project.scheme';
+	my $pwd=$PWD;
+	if ($ProjectFile) {
+		($pwd,$pn)=($ProjectFile=~/(.*)\/(.*)$/);
+		$pn=~s/\.xml/\.scheme/;
+	};
+	my $path;
+	my($LoadDialog) = $top->FileDialog(-Title =>'Run Script',
+                                                   -Create => 1,
+						   -Path => $taskPath ? $taskPath : $lastPath ? $lastPath : $pwd,
+						   -File => $pn,
+						   -FPat => '*.scheme',
+						   -ShowAll => 'NO');
+	my $fn = $LoadDialog->Show();
+
+	return 0 if (!$fn);
+	($pwd,$pn)=($fn=~/(.*)\/(.*)$/);
+	#print "\nAqui va el path?? $pwd\n\n";
+	$taskPath = $pwd;
+	my $ans='Yes';
+	if (-e $fn) {
+=pod	This is the old way to do it!!
+		it works, but locks the gui
+		until task.pl is done, plus
+		the output goes to stdout.
+=cut
+		if ($old){
+			#$old is just to know if we want to do it the old
+			#way or the new way, it's only while i develop
+			#the "nice" (new) way to do it, so that I'm able to
+			#test it one or the other way with almost no changes at all.
+			my @@comm = ("../client/task.pl", $pwd, $pn);
+			my $cmd = "cd ../client && ./task.pl $pwd $pn &";
+	#		system (@@comm) == 0 #`../client/task.pl $fn`;
+        	system($cmd) == 0
+				or print "\nNo funca esta picha!";
+		}#if $old
+		else{
+=pod		
+		Instead, we want the user to be able to keep
+		working in the gui while task.pl is working
+		in the background, and have the output
+		redirected, so that we can show it to the
+		user in a tab, probably inside a scrolled
+		so that errors and all other messages can
+		be reviewed for debugging/cofirmation
+		purposes.
+		
+		For that we create a file handle, which
+		is actually a PID, that way the GUI
+		won't lock up, and we can redirect the
+		output, so that we can catch it and put
+		it in the tab that we want.  This has to
+		be done with fileevent though, otherwise
+		the application will get locked up again!!
+=cut
+			if(chdir("$PWD/../client")){
+				#we are assuming that $PWD is the absolute path for beetl.pl
+				#and that it NEVER gets changed, (it doesn't as of 7.11.03)
+				#so adjust properly if there are any changes to it.
+				#It's also assumed that task.pl is in $PWD/../client of course!!
+				my $pid;
+				$output->insert('end', "\n**********************************************");
+				$output->insert('end', "\nTask: $pn\nLocation:$pwd");
+				$output->insert('end', "\nTask Output:\n");
+				$output->yview('end');
+				$pid = open (TASK, "./task.pl $pwd $pn |") or $output->insert('end', "\nCan't fork!!");
+				$top->fileevent(\*TASK,'readable',sub{
+													my $line;
+													if ($line = <TASK>){
+														$output->insert('end',$line);
+														$output->yview('end');
+													}
+													elsif (eof TASK){
+														$top->fileevent(\*TASK, 'readable', "");
+														kill ('TERM',$pid);
+														chdir($PWD);
+													}
+												});
+			}
+			else{
+				$top->messageBox(-icon    => 'error',
+                        		-type => 'OK', -default => 'OK',
+								-font => $QuestionFont,
+                        		-message => "ERROR: can't change to task processing directory\nTask NOT processed!");
+				
+				$output->insert('end', "\nTask $pn NOT Processed");
+				$output->insert('end', "\n**********************************************");
+				return 0;
+			}
+
+		}#else (if $old)
+
+	}#if -e $fn
+	else {
+		$top->messageBox(-icon    => 'error',
+                        -type => 'OK', -default => 'OK',
+						-font => $QuestionFont,
+                        -message => "ERROR: File $fn does not exist");
+		return 0;
+	}#else (if -e $fn)
+}
+
+
+sub RunBlock{
+
+}
+
+
+
+#-----------------------------------------------------
+1
+@
+
+
+1.12
+log
+@Fixed bug for inputs/outputs of arity > 10
+@
+text
+@d26 1
+a26 1
+# $Id: pollinate.pl,v 1.11 2004/04/08 14:41:13 tuco80 Exp $
+d116 4
+@
+
+
+1.11
+log
+@Fixed notation bug (dbi:MySQL -> dbi-mysql)
+@
+text
+@d26 1
+a26 1
+# $Id: pollinate.pl,v 1.10 2004/01/14 13:20:25 tuco80 Exp $
+d166 2
+a167 2
+				my $inputs = {};
+				my $outputs = {};
+d225 1
+a225 1
+				foreach my $bee (keys %{$inputs}){
+d231 1
+a231 1
+					$t=$indexes[$reference->{$temphost}];
+d234 1
+a234 1
+					foreach my $in (keys %{$inputs->{$bee}}){
+d237 8
+a244 1
+						foreach my $field (sort keys %{$inputs->{$bee}->{$in}}){
+d326 1
+a326 1
+				foreach my $bee (keys %{$outputs}){
+d335 1
+a335 1
+					foreach my $out (keys %{$outputs->{$bee}}){
+d338 9
+a346 1
+						foreach my $field (sort keys %{$outputs->{$bee}->{$out}}){
+@
+
+
+1.10
+log
+@Added Fail message to Task output
+@
+text
+@d26 1
+a26 1
+# $Id: pollinate.pl,v 1.9 2003/11/26 13:30:37 tuco80 Exp $
+d278 5
+a282 5
+									$inStr = $inStr."$Project->{host}->{$ho}->{source}->{$src}->{'src-conn'}->{user}->{content}:";
+									$inStr = $inStr."$Project->{host}->{$ho}->{source}->{$src}->{'src-conn'}->{password}->{content}@@";
+									$inStr = $inStr.$ho.":";
+									$inStr = $inStr."$Project->{host}->{$ho}->{source}->{$src}->{'src-conn'}->{port}->{content}/";
+									$inStr = $inStr."$src/$tbl:";
+d369 6
+a374 7
+									$temp = "$Project->{host}->{$ho}->{source}->{$src}->{'src-conn'}->{driver}";
+									$temp=~s/\:/\-/;
+									$outStr = "$temp://"."$Project->{host}->{$ho}->{source}->{$src}->{'src-conn'}->{user}->{content}:";
+									$outStr = $outStr."$Project->{host}->{$ho}->{source}->{$src}->{'src-conn'}->{password}->{content}@@";
+									$outStr = $outStr.$ho.":";
+									$outStr = $outStr."$Project->{host}->{$ho}->{source}->{$src}->{'src-conn'}->{port}->{content}/";
+									$outStr = $outStr."$src/$tbl:";
+d381 1
+a381 1
+								$outStr = $outStr."$at:";
+d386 1
+a386 1
+								for(;$i<=$field;$i++){$outStr = $outStr.":";print "\n llenamos hasta $i";}#for i->field
+d388 1
+a388 1
+								$outStr = $outStr."$at:";
+@
+
+
+1.9
+log
+@Fixed some fatal bugs
+@
+text
+@d26 1
+a26 1
+# $Id: pollinate.pl,v 1.8 2003/11/10 15:11:41 tuco80 Exp $
+d388 2
+d613 3
+@
+
+
+1.8
+log
+@Fixed bug in creation of links
+@
+text
+@d26 1
+a26 1
+# $Id: pollinate.pl,v 1.7 2003/11/07 15:38:54 tuco80 Exp $
+d357 1
+a357 1
+									print "\nSource es un archivo!!";
+d402 1
+a402 1
+=pod					print "\nVamos a crear $pwd/$beename.bee";
+d406 3
+a408 3
+					$script->{name}= $beename;
+					$SMaker->XMLout($script, xmldecl=>1, noattr=>0, outputfile=>"$pwd/$beename.bee", noescape=>1);
+=cut
+d477 1
+a477 1
+	$taskPath = $pwd;	
+d532 1
+d544 1
+a544 1
+	$savePath = $pwd;
+@
+
+
+1.7
+log
+@Support for files complete. Naming of bees,ins,outs to name, not ID
+@
+text
+@d26 1
+a26 1
+# $Id: pollinate.pl,v 1.6 2003/11/06 12:28:24 tuco80 Exp $
+d248 1
+a248 1
+									$conversion->{link}[$l]->{src}[0]->{bee}=$tr;
+d250 1
+a250 1
+									$conversion->{link}[$l]->{dest}[0]->{bee}=$beename;
+@
+
+
+1.6
+log
+@+Color changing for Groups, +Property edition for groups/roles
+@
+text
+@d26 1
+a26 1
+# $Id: pollinate.pl,v 1.5 2003/11/03 22:11:09 tuco80 Exp $
+d42 2
+d182 1
+d186 1
+d193 1
+a193 1
+						$script->{input}[$in_ord-1]->{name}=$rel->to_id();
+d209 1
+d214 1
+d220 1
+a220 1
+						$script->{output}[$out_ord-1]->{name}=$rel->from_id();
+d228 1
+d232 2
+a233 2
+					$conversion->{dad}[$ptr]->{bee}->{$beename}->{name}=$beename;
+					$conversion->{dad}[$ptr]->{bee}->{$beename}->{script}="$beename.bee";
+a255 3
+									#This shouldn't actually occur, but I'll
+									#leave it for the development phase, it
+									#might catch a bug.
+d264 9
+d309 1
+a309 1
+					print "\nVamos a crear $pwd/$beename.bee";
+d313 2
+a314 2
+					$script->{name}= $beename;
+					$SMaker->XMLout($script, xmldecl=>1, noattr=>0, outputfile=>"$pwd/$beename.bee", noescape=>1);
+d322 2
+a323 1
+					print "\nSacamos en out: bee $beename en $temphost";
+d326 2
+a327 2
+					$conversion->{dad}[$ptr]->{bee}->{$beename}->{name}=$beename;
+					$conversion->{dad}[$ptr]->{bee}->{$beename}->{script}="$beename.bee";
+d355 9
+d451 1
+a451 1
+						   -Path => $lastPath ? $lastPath : $pwd,
+d476 2
+a477 1
+	}	
+d534 1
+a534 1
+						   -Path => $lastPath ? $lastPath : $PWD,
+d542 2
+a543 2
+	print "\nAqui va el path?? $pwd\n\n";
+	unless($lastPath eq $pwd){$lastPath = $pwd;}
+d581 5
+a585 1
+			if(chdir("../client")){
+d601 1
+a601 1
+														chdir("../gui");
+a603 20
+				
+=pod
+				if ($fileHand=open (TASK, "< ../gui/proj03.xml")){
+					#open (TASK, "apache.scheme");  open(TASK,"./task.pl $pwd $pn|")
+					#$outTabs[$tabIndex++] = $taskNote->add("outtab$tabIndex",-label => "$pn", -labelside=>"acrosstop");				
+					$output->insert('end', "\n**********************************************");
+					$output->insert('end', "\nTask: $pn\nLocation:$pwd");
+					$output->insert('end', "\nTask Output:\n");
+					
+																#while(<TASK>){$output->insert('end',"$_\n");}
+																#close TASK or $output->insert('end',"Error closing: $! $?\n");
+				}
+				else{
+					$output->insert('end', "\n**********************************************");
+					$output->insert('end', "\nTask: $pn\nLocation:$pwd");
+					$output->insert('end', "\nTask Output:\n");
+					$output->insert('end', "\nTask could NOT be processed!\n");
+				}
+
+=cut
+d630 1
+a630 14
+sub catchOutput{
+	my ($pid)=@@_;
+	my $line;
+	$output->insert('end',"Hay algo mas que leer, vamos por $tabIndex\n");
+	$tabIndex++;
+	if ($line = <$task>){
+		$output->insert('end',$line);
+		$output->yview('end');
+	}
+	elsif (eof $task){
+		$top->fileevent($task, 'readable', "");
+		kill ('TERM',$pid);
+	}
+}
+@
+
+
+1.5
+log
+@Fixed creation of scripts
+@
+text
+@d26 1
+d29 1
+d638 1
+@
+
+
+1.4
+log
+@Output of task.pl captured without locking GUI
+@
+text
+@d90 2
+a91 1
+	my $PData = new XML::Simple(rootname=>'task', keeproot=>0, KeyAttr=>'bee',forcearray=>[qw/otec src dest dad input output link bee arg/]);
+d176 3
+a182 3
+							unless(exists $inputs->{$toObj}->{$in_ord}->{source}){
+								$inputs->{$toObj}->{$in_ord}->{source} = $rel->from_obj;
+							}#unless exists
+d250 7
+a256 1
+									print "\nSource es una constante!! Que pasa?";									
+d294 1
+d299 2
+a300 1
+					$SMaker->XMLout($script, xmldecl=>1, noattr=>0, outputfile=>"$beename.bee", noescape=>1);
+d337 1
+a337 1
+									print "\nSource es una constante!! Que pasa?";									
+d375 4
+a378 3
+					}#foreach in
+=pod					#now we create the script for this bee
+					$script->{code}[0]= "\n<![CDATA[\n";
+d382 1
+a382 1
+					$SMaker->XMLout($script, xmldecl=>1, noattr=>0, outputfile=>"$beename.bee", noescape=>1);
+d426 1
+a426 1
+						   -Path => $lastPath ? $lastPath : $PWD,
+a430 1
+
+d433 1
+d454 1
+a454 1
+			&SaveScheme($fn);
+d571 1
+a574 5
+				
+				#while (<TASK>){
+				#	$output->insert('end', "\n$_");
+				#}
+				#close TASK or $output->insert('end',"\nSe despicho Tere! $! $?");
+d592 1
+a593 1
+
+d602 1
+@
+
+
+1.3
+log
+@Two options out=0 doesnt block nor capture output, out=1 capture output but block
+@
+text
+@d33 1
+a33 1
+use vars qw($mainTabs $QuestionFont $Project $Layer 
+d39 1
+d546 1
+a546 1
+				my $fileHand;
+d550 19
+a568 5
+				open TASK, "./task.pl $pwd $pn |" or $output->insert('end', "\nCan't fork!!");
+				while (<TASK>){
+					$output->insert('end', "\n$_");
+				}
+				close TASK or $output->insert('end',"\nSe despicho Tere! $! $?");
+d614 2
+d618 8
+@
+
+
+1.2
+log
+@Scripts can be run, but GUI is locked while processing
+@
+text
+@d37 2
+d46 1
+a46 1
+my $tabIndex = 0;
+d48 1
+d51 1
+a51 2
+my $output;
+my $old = 1;
+d520 1
+a520 1
+			my $cmd = "cd ../client && ./task.pl $pwd $pn";
+d545 1
+a545 2
+				open(TASK,"task.pl $pwd $pn |");
+				#$outTabs[$tabIndex++] = $taskNote->add("outtab$tabIndex",-label => "$pn", -labelside=>"acrosstop");				
+d549 24
+a572 1
+				#$output->fileevent(TASK,readable,sub{&catchOutput(TASK)});
+d598 4
+a601 1
+sub catchOutput {}
+@
+
+
+1.1
+log
+@Code moved pollinate.pl seems to be working correctly
+@
+text
+@d36 28
+a504 1
+	if ($fn!~/.+\.scheme/) {$fn.='.scheme'};
+d511 14
+a524 9
+		
+		my @@comm = ("../client/task.pl", $pwd, $pn);
+		my $cmd = "cd ../client && ./task.pl $pwd $pn";
+#		system (@@comm) == 0 #`../client/task.pl $fn`;
+        system($cmd) == 0
+			or print "\nNo funca esta picha!";
+		
+		
+		
+d542 16
+a557 11
+		if(chdir("./client")){
+			open(TASK,"task.pl $pwd $pn |");
+			
+		}
+		else{
+			$top->messageBox(-icon    => 'error',
+                        	-type => 'OK', -default => 'OK',
+							-font => $QuestionFont,
+                        	-message => "ERROR: can't change to task processing directory\nTask NOT processed!");
+			return 0;
+		}
+d559 1
+a559 1
+	}
+d566 1
+a566 1
+	}
+d573 2
+@
+

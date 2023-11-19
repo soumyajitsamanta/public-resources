@@ -1,0 +1,2149 @@
+head	1.22;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.22
+date	2004.05.18.12.47.32;	author tuco80;	state Exp;
+branches;
+next	1.21;
+
+1.21
+date	2004.02.17.12.35.05;	author tuco80;	state Exp;
+branches;
+next	1.20;
+
+1.20
+date	2004.02.10.16.36.16;	author tuco80;	state Exp;
+branches;
+next	1.19;
+
+1.19
+date	2003.12.18.12.26.57;	author tuco80;	state Exp;
+branches;
+next	1.18;
+
+1.18
+date	2003.11.11.14.10.05;	author tuco80;	state Exp;
+branches;
+next	1.17;
+
+1.17
+date	2003.11.07.15.38.53;	author tuco80;	state Exp;
+branches;
+next	1.16;
+
+1.16
+date	2003.11.06.12.28.24;	author tuco80;	state Exp;
+branches;
+next	1.15;
+
+1.15
+date	2003.11.04.12.02.13;	author tuco80;	state Exp;
+branches;
+next	1.14;
+
+1.14
+date	2003.10.30.12.31.05;	author tuco80;	state Exp;
+branches;
+next	1.13;
+
+1.13
+date	2003.10.24.12.44.10;	author tuco80;	state Exp;
+branches;
+next	1.12;
+
+1.12
+date	2003.10.01.08.20.59;	author tuco80;	state Exp;
+branches;
+next	1.11;
+
+1.11
+date	2003.10.01.07.39.11;	author spanhel;	state Exp;
+branches;
+next	1.10;
+
+1.10
+date	2003.08.29.11.45.22;	author tuco80;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	2003.08.22.09.34.49;	author spanhel;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	2003.08.19.14.32.16;	author spanhel;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	2003.08.19.08.27.14;	author spanhel;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	2003.08.18.07.11.30;	author spanhel;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	2003.08.14.11.55.59;	author tuco80;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2003.08.06.11.10.05;	author tuco80;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2003.08.05.15.21.56;	author tuco80;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2003.08.04.11.22.29;	author tuco80;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2003.08.01.09.18.59;	author spanhel;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.22
+log
+@Support for diferent bee types. (Not exported to .schema files yet though)
+@
+text
+@#-----------------------------------------------------
+# Connection Object
+#-----------------------------------------------------
+# $Id
+
+package Edit;
+use base Tk::Canvas;
+use Data::Dumper;
+use warnings;
+
+use DSI;
+use strict;
+use ShopCard;
+
+my (@@pl)  = (-pady => 5,-padx => 10);	#pack param
+my (@@plt) = (-expand => "yes",
+	      -fill => "both",
+	      -padx => 5, -pady => 5,
+	      -side => "top");	#pack param for tabs
+sub new {
+
+	my $proto = shift;
+	my ($type, $place, $sel, $tree, $objs) = @@_;	
+	my $class = ref($proto) || $proto;
+	my $self  = {};        
+		
+	#We do not know what data to select from the project yet,
+	#so we do it later, in the if, when we know what we're 
+	#talking about!  Same happens with the id (right?? :~s )
+	#$self->{DATA} = $objs;
+	#$self->{ID} = $id;
+	
+	#We do however need to keep the project somewhere
+	#for the time being, then we decide what part
+	#we are interested in and then keep only that.
+	$self->{PROJ} = $objs;
+	$self->{TREE} = $tree;
+	$self->{SEL} = $sel;
+	$self->{TYPE} = $type;
+	$self->{PLACE} = $place;		
+	
+	bless ($self, $class);
+	return $self;
+
+}
+
+##############################################
+## methods to access per-object data        ##
+##                                          ##
+## With args, they set the value.  Without  ##
+## any, they only retrieve it/them.         ##
+##############################################
+
+sub draw {
+   my $self = shift;
+   if ($self->{TYPE} eq 'REL') {
+      &draw_rel($self);
+   } 
+   elsif ($self->{TYPE} eq 'CONN'){
+   		($self->{ID}=$self->{SEL})=~s|^_CONN/||;
+		$self->{DATA}=\${$self->{PROJ}}->{connection};
+		&AdmTabHeader($self);
+   }
+   elsif ($self->{TYPE} eq 'CONST'){
+	&draw_const($self);
+   }
+   elsif ($self->{TYPE} eq 'SIGNAL'){
+   	($self->{ID}=$self->{SEL})=~s|^_SIGNAL/||;
+	$self->{DATA}=\${$self->{PROJ}}->{signal};
+	&AdmTabHeader($self);
+   }	
+   elsif ($self->{TYPE} eq 'TRIG'){
+   	($self->{ID}=$self->{SEL})=~s|^_TRIG/||;
+	$self->{DATA}=\${$self->{PROJ}}->{trigger};
+	&AdmTabHeader($self);
+   }		
+   elsif ($self->{TYPE} eq 'ATTR'){
+	&draw_attr($self);
+	
+   }
+   elsif ($self->{TYPE} eq 'FACT'){
+   	&draw_fact($self);
+   }
+   elsif ($self->{TYPE} eq 'TRAN'){
+	#Here we need more than just the name and description
+	#tab, we need some other tabs so we'll do that in another
+	#subroutine to keep this one as simple as possible.
+	draw_tran($self);		
+   }
+   elsif ($self->{TYPE} eq 'TRAN_I'){
+	my ($host,$tr,$col) = ($self->{SEL}=~m|^([\w.]+)/_TRAN/(\w+)/(\w+)$|);
+	$self->{ID}=$col;
+	$self->{DATA}=\${$self->{PROJ}}->{host}->{$host}->{transformation}->{$tr}->{input};
+	&AdmTabHeader($self);
+   }
+   elsif ($self->{TYPE} eq 'TRAN_O'){
+   	my ($host,$tr,$col) = ($self->{SEL}=~m|^([\w.]+)/_TRAN/(\w+)/(\w+)$|);
+	$self->{ID}=$col;
+	$self->{DATA}=\${$self->{PROJ}}->{host}->{$host}->{transformation}->{$tr}->{output};
+	&AdmTabHeader($self);
+   }
+   elsif ($self->{TYPE} eq 'HOST'){
+   	draw_host($self);
+   }
+   elsif ($self->{TYPE} eq 'SRC'){
+   	draw_src($self);
+   }
+   elsif ($self->{TYPE} eq 'TAB'){	
+   	draw_tab($self);
+   }
+   elsif ($self->{TYPE} eq 'VIEW'){
+   	draw_view($self);
+   }
+   elsif ($self->{TYPE} eq 'COL'){
+   	draw_col($self);
+   }
+   elsif ($self->{TYPE} eq 'VCOL'){
+   	my ($host,$src,$v,$col)=($self->{SEL}=~m|^([\w.]+)/(\w+)/(\w+)/(\w+)$|);
+	$self->{DATA}=\${$self->{PROJ}}->{host}->{$host}->{source}->{$src}->{view}->{$v}->{column};
+	$self->{ID}=$col;
+	&AdmTabHeader($self);	
+   }
+   elsif ($self->{TYPE} eq 'LAYER'){
+	$self->{DATA}=\${$self->{PROJ}}->{'gui-layer'};
+	($self->{ID}=$self->{SEL})=~s|^_LAYER/||;		
+	&AdmTabHeader($self);
+   }
+   elsif ($self->{TYPE} eq 'DIR/_ATTR'){
+   	draw_dir_attr($self);
+   }
+   elsif ($self->{TYPE} eq 'DIR/_FACT'){
+   	draw_dir_fact($self);
+   }
+   elsif ($self->{TYPE} eq 'DIR/_TRIG'){
+   	draw_dir_trig($self);
+   }
+   elsif ($self->{TYPE} eq 'DIR/_TRAN'){
+   	draw_dir_tran($self);
+   }
+   elsif ($self->{TYPE} eq 'DIR/_CONST'){
+   	draw_dir_const($self);
+   }
+   elsif ($self->{TYPE} eq 'GROUP'){
+   	draw_group($self);
+   }
+   elsif ($self->{TYPE} eq 'ROLE'){
+   	draw_role($self);
+   }
+   else{
+   		print("Se hizo click en objeto desconocido: ",$self->{TYPE},"\n");
+   }
+}
+
+sub AdmTabHeader {	#shows name/description    
+    my $sel = shift;
+    my $AdmTab = $sel->{PLACE};	# project hash, id, proc for additional updates after button press 
+    my (@@pl)  = (-pady => 5,-padx => 10);	#pack param
+    my ($frameN, $frameD, $nam, $radios, $radLab, $lang, $sc);
+    $frameN = $AdmTab->LabFrame(-label => "Name", -labelside=>"acrosstop")->pack(-anchor=>"nw",-side=>'left',-padx => 5,-pady=>3);	
+	$frameD = $AdmTab->LabFrame(-label => "Description", -labelside=>"acrosstop")->pack(-anchor=>"nw",-side=>'left',-padx => 5,-pady=>3);   
+    if ($sel->{SEL}=~/^_LOBJ\/_ATTR/ || $sel->{SEL}=~/^_LOBJ\/_FACT/ || $sel->{SEL}=~/^_LAYER/)  {
+       # only attrs layers and facts have following hash:
+       #  ->' 'attr'  'name' => {'en' => 'Year','cz' => 'Rok' }
+	   $radLab = $::lang eq 'en' ? "Language" :  "Jazyk";
+	   $lang = $::lang;
+	   $radios = $AdmTab->LabFrame(-label => $radLab, -labelside => "acrosstop", -width => 40)->pack(-anchor=>"nw",-side=>'left',-padx=>5,-pady=>3);
+	   my $r1 = $radios->Radiobutton(
+            	-variable => \$lang,
+	    		-text => 'EN',
+            	-relief   => 'flat',
+            	-value    => 'en',
+				-command => sub{
+								$nam->configure(-textvariable => \ ${$sel->{DATA}}->{$sel->{ID}}->{name}->{en});
+								$sc->delete('0.0','end');
+								$sc->insert('0.0',${$sel->{DATA}}->{$sel->{ID}}->{description}->{en});
+							}
+        	)->grid(-row => 0, -column => 0, -sticky => 'w');
+		my $r2 = $radios->Radiobutton(
+            	-variable => \$lang,
+	    		-text => 'CZ',
+            	-relief   => 'flat',
+            	-value    => 'cz',
+				-command => sub{
+								$nam->configure(-textvariable => \ ${$sel->{DATA}}->{$sel->{ID}}->{name}->{cz});
+								$sc->delete('0.0','end');
+								$sc->insert('0.0',${$sel->{DATA}}->{$sel->{ID}}->{description}->{cz});
+							}
+        	)->grid(-row => 0, -column => 1, -sticky => 'w');
+       $nam = $frameN->Entry(qw/-relief sunken -width 40/, -textvariable=>\ ${$sel->{DATA}}->{$sel->{ID}}->{name}->{$::lang}, -background=>'white')->pack;
+	   $nam->bind('<Key>' => sub {
+				   &main::updateName($sel->{SEL},${$sel->{DATA}}->{$sel->{ID}}->{name}->{$lang}) if $lang eq $::lang;
+				   ${$sel->{TREE}}->entryconfigure($sel->{SEL},-text => ${$sel->{DATA}}->{$sel->{ID}}->{name}->{$::lang});
+				   #print "\nID es: $sel->{ID}";
+			   });
+	   $sc = $frameD->Scrolled(qw/Text -setgrid true -height 5 -width 40 -wrap word -scrollbars e/, -background=>'white')->pack;
+	   $sc->insert('0.0', ${$sel->{DATA}}->{$sel->{ID}}->{description}->{$lang});
+	   $sc->bind('<Leave>' => sub {
+				   (${$sel->{DATA}}->{$sel->{ID}}->{description}->{$lang}=$sc->get('0.0','end'))=~s/[\n]+$//;
+			   });
+		$::lang eq 'en' ? $r1->select : $r2->select;
+    }
+    else {
+       $nam = $frameN->Entry(qw/-relief sunken -width 40/, -textvariable=>\ ${$sel->{DATA}}->{$sel->{ID}}->{name}, -background=>'white')->pack;
+	   $nam->bind('<Key>' => sub {
+				   ${$sel->{TREE}}->entryconfigure($sel->{SEL},-text => ${$sel->{DATA}}->{$sel->{ID}}->{name});
+				   &main::updateName($sel->{SEL},${$sel->{DATA}}->{$sel->{ID}}->{name});
+			   });
+		my $sc = $frameD->Scrolled(qw/Text -setgrid true -height 5 -width 40 -wrap word -scrollbars e/, -background=>'white')->pack;
+		$sc->insert('0.0', ${$sel->{DATA}}->{$sel->{ID}}->{description});
+		$sc->bind('<Leave>' => sub {
+				   (${$sel->{DATA}}->{$sel->{ID}}->{description}=$sc->get('0.0','end'))=~s/[\n]+$//;
+			   });
+    }  
+    my $frameID = $AdmTab->Label( -text => $sel->{SEL}, -relief => 'groove', -background=>'LightGoldenrod')->pack(@@pl);
+    $frameID->form(-top => 5, -left => 5);
+	if ($radios){
+		$radios->form(-top => $frameID, -left => 5);
+    	$frameN->form(-top => $radios, -left => 5);
+    	$frameD->form(-top => $frameN, -left => 5);
+	}
+	else{
+		$frameN->form(-top => $frameID, -left => 5);
+    	$frameD->form(-top => $frameN, -left => 5);
+	}
+    return $frameD;
+    
+	
+}
+
+sub draw_attr{
+	my $self = shift;
+	my $tab = $self->{PLACE};
+	if ($self->{SEL}=~/^_LOBJ\/_ATTR/) {
+  	   ($self->{ID}=$self->{SEL})=~s/^_LOBJ\/_ATTR\/\S*\/\S*\/|^_LOBJ\/_ATTR\/\S*\/|^_LOBJ\/_ATTR\///;
+	}			
+	$self->{DATA}=\${$self->{PROJ}}->{attr};	
+	my $frameD = &AdmTabHeader($self);
+	my $framePK = $tab->LabFrame(-label => "Primary Key(s)", -labelside=>"acrosstop")->pack(-anchor=>"nw",-side=>'left',-padx => 5,-pady=>3);	
+	my $frameFK = $tab->LabFrame(-label => "Foreign Key(s)", -labelside=>"acrosstop")->pack(-anchor=>"nw",-side=>'left',-padx => 5,-pady=>3);	
+	foreach (0 .. $#{${$self->{DATA}}->{$self->{ID}}->{pk}}){
+		$framePK->Entry(qw/-relief sunken -width 40/, -textvariable=>\ ${$self->{DATA}}->{$self->{ID}}->{pk}[$_], -background=>'white')->grid(-row => $_, -column => 0, -sticky => 'w');
+	}
+	$framePK->form(-top => $frameD, -left => 5);
+	foreach (0 .. $#{${$self->{DATA}}->{$self->{ID}}->{fk}}){
+		$frameFK->Entry(qw/-relief sunken -width 40/, -textvariable=>\ ${$self->{DATA}}->{$self->{ID}}->{fk}[$_], -background=>'white')->grid(-row => $_, -column => 0, -sticky => 'w');
+	}
+	$frameFK->form(-top => $framePK, -left => 5);
+	
+
+}
+
+sub draw_fact{
+	my $self = shift;
+	my $tab = $self->{PLACE};
+	($self->{ID}=$self->{SEL})=~s|^_LOBJ/_FACT/||;
+	$self->{DATA}=\${$self->{PROJ}}->{fact};
+	my $frameD = &AdmTabHeader($self);
+	my $framePK = $tab->LabFrame(-label => "Expresion", -labelside=>"acrosstop")->pack(-anchor=>"nw",-side=>'left',-padx => 5,-pady=>3);	
+	foreach (0 .. $#{${$self->{DATA}}->{$self->{ID}}->{expr}}){
+		$framePK->Entry(qw/-relief sunken -width 40/, -textvariable=>\ ${$self->{DATA}}->{$self->{ID}}->{expr}[$_], -background=>'white')->grid(-row => $_, -column => 0, -sticky => 'w');
+	}
+	$framePK->form(-top => $frameD, -left => 5);
+}
+
+sub draw_rel{
+	my $self = shift;
+	($self->{ID}=$self->{SEL})=~s|^_REL/||;
+    $self->{DATA}= exists(${$self->{PROJ}}->{relation}->{$self->{ID}}) ? \${$self->{PROJ}}->{relation} : \${$self->{PROJ}}->{hrelation};
+	my $frameD = &AdmTabHeader($self);
+	my $labRad = $::lang eq 'en' ? "Cardinality" :  "Kardinalita";
+	my $optLab = $::lang eq 'en' ? "Optionality" :  "?Optionality?";
+	my $from = ${$self->{DATA}}->{$self->{ID}}->{from}->{cardinality};
+	my $to = ${$self->{DATA}}->{$self->{ID}}->{to}->{cardinality};
+	my $toOpt = ${$self->{DATA}}->{$self->{ID}}->{to}->{optional};
+	my $fromOpt = ${$self->{DATA}}->{$self->{ID}}->{from}->{optional};
+	my $frameC = $self->{PLACE}->LabFrame(-label => $labRad, -labelside => "acrosstop", -width => 40)->pack(-anchor=>"nw",-side=>'left',-padx=>5,-pady=>3);
+	my $r1 = $frameC->Radiobutton(
+            -variable => \$from,
+	    	-text => '1-',
+            -relief   => 'flat',
+            -value    => '1'
+        )->grid(-row => 0, -column => 0, -sticky => 'w');
+	my $r2 = $frameC->Radiobutton(
+            -variable => \$from,
+	    	-text => 'N-',
+            -relief   => 'flat',
+            -value    => 'N'
+        )->grid(-row => 1, -column => 0, -sticky => 'w');
+	my $r3 = $frameC->Radiobutton(
+            -variable => \$to,
+	    	-text => '-1',
+            -relief   => 'flat',
+            -value    => '1'
+        )->grid(-row => 0, -column => 1, -sticky => 'e');
+	my $r4 = $frameC->Radiobutton(
+            -variable => \$to,
+	    	-text => '-N',
+            -relief   => 'flat',
+            -value    => 'N'
+        )->grid(-row => 1, -column => 1, -sticky => 'e');
+	$from eq 'N' ? $r2->select : $r1->select;
+	$to eq 'N' ? $r4->select : $r3->select;
+	my $frameO = $self->{PLACE}->LabFrame(-label => $optLab, -labelside => "acrosstop", -width => 40)->pack(-anchor=>"nw",-side=>'left',-padx=>5,-pady=>3);
+	$r1 = $frameO->Radiobutton(
+            -variable => \$fromOpt,
+	    	-text => 'True',
+            -relief   => 'flat',
+            -value    => 'true'
+        )->grid(-row => 0, -column => 0, -sticky => 'w');
+	$r2 = $frameO->Radiobutton(
+            -variable => \$fromOpt,
+	    	-text => 'False',
+            -relief   => 'flat',
+            -value    => 'false'
+        )->grid(-row => 1, -column => 0, -sticky => 'w');
+	$r3 = $frameO->Radiobutton(
+            -variable => \$toOpt,
+	    	-text => 'True',
+            -relief   => 'flat',
+            -value    => 'true'
+        )->grid(-row => 0, -column => 1, -sticky => 'e');
+	$r4 = $frameO->Radiobutton(
+            -variable => \$toOpt,
+	    	-text => 'False',
+            -relief   => 'flat',
+            -value    => 'false'
+        )->grid(-row => 1, -column => 1, -sticky => 'e');
+	$fromOpt eq 'false' ? $r2->select : $r1->select;
+	$toOpt eq 'false' ? $r4->select : $r3->select;
+	$self->{PLACE}->bind('<Leave>' => sub {
+											#Update Project hash
+											${$self->{DATA}}->{$self->{ID}}->{to}->{cardinality}   = $to;
+											${$self->{DATA}}->{$self->{ID}}->{from}->{cardinality} = $from;
+											${$self->{DATA}}->{$self->{ID}}->{to}->{optional} = $toOpt;
+											${$self->{DATA}}->{$self->{ID}}->{from}->{optional} = $fromOpt;
+											#redraw the object if needed, so that
+											#the changes can be visualized.
+											my $obj = '';
+											foreach my $lay (keys %{$::Layer}){
+												foreach (keys %{$::Layer->{$lay}}){
+													if ($::Layer->{$lay}->{$_}->id eq $self->{ID}){
+														$::Layer->{$lay}->{$_}->cardinality($from, $to);
+														$::Layer->{$lay}->{$_}->optionality($from, $to);
+														$obj = $_;
+														last;
+													}
+												}
+											}
+											if (exists($::Layer->{$::VisibleLayer}->{$obj})){
+												$::Layer->{$::VisibleLayer}->{$obj}->clear;
+												$::Layer->{$::VisibleLayer}->{$obj}->draw($::tSchemaC);
+											}
+													
+											
+										});
+	$frameC->form(-top => $frameD, -left => 5);
+	$frameO->form(-top => $frameD, -left => $frameC);
+	
+}
+
+sub draw_const{
+	my $self = shift;
+	($self->{ID}=$self->{SEL})=~s|^_CONST/||;
+	$self->{DATA}=\${$self->{PROJ}}->{const};
+	my $frameD = &AdmTabHeader($self);
+	my $frameV = $self->{PLACE}->LabFrame(-label => "Value", -labelside=>"acrosstop")->pack(-anchor=>"nw",-side=>'left',-padx => 5,-pady=>5);
+	my $d = $frameV->Entry(qw/-relief sunken -width 40/, -textvariable => \ ${$self->{DATA}}->{$self->{ID}}->{data}, -background=>'white')->pack;
+	$d->bind('<Key>' => sub{&main::updateValue($self->{SEL},${$self->{DATA}}->{$self->{ID}}->{data})});
+	$frameV->form(-top =>$frameD, -left => 5);
+}
+
+sub draw_tran{
+    #here we create all the tabs needed and set them up.
+    my $sel = shift;
+    my ($host);
+	my ($frameID,$frameC,$frameL,$sc);
+    ($host,$sel->{ID})=($sel->{SEL}=~m|^([\w.]+)/_TRAN/(\w+)$|);
+    $sel->{DATA}=\${$sel->{PROJ}}->{host}->{$host}->{transformation};
+    my $AdmTab = $sel->{PLACE};	# project hash, id, proc for additional updates after button press 
+    my $admTabs = $AdmTab->NoteBook(-ipadx => 6, -ipady => 6, -font=>$::TabsFont)->pack(@@plt);
+    my $Tab1=$admTabs->add("tbl1", -label => "Admin", -underline => 0);
+    my $Tab2=$admTabs->add("tbl2", -label => "Input", -underline => 0);
+    my $Tab3=$admTabs->add("tbl3", -label => "Output", -underline => 0);
+    my $Tab4=$admTabs->add("tbl4", -label => "Triger", -underline => 0);
+    my $Tab5=$admTabs->add("tbl5", -label => "Status", -underline => 0);
+	my $Tab6=$admTabs->add("tbl6", -label => "Code", -underline => 0);
+    $sel->{PLACE}= $Tab1;
+    $frameID = &AdmTabHeader($sel);
+	my $typeRad = $Tab1->LabFrame(-label=>"Type", -labelside=>"acrosstop")->pack(-anchor=>'e',-padx=>10,-pady=>5);
+	my $r1=$typeRad->Radiobutton(
+            -variable => \${$sel->{DATA}}->{$sel->{ID}}->{type},
+	    	-text => 'DBI',
+            -relief   => 'flat',
+            -value    => 'DBI',
+        )->grid(-row => 0, -column => 0, -sticky => 'w');
+	my $r2=$typeRad->Radiobutton(
+            -variable => \${$sel->{DATA}}->{$sel->{ID}}->{type},
+	    	-text => 'Explicit',
+            -relief   => 'flat',
+            -value    => 'Explicit',
+        )->grid(-row => 0, -column => 1, -sticky => 'w');
+	my $r3=$typeRad->Radiobutton(
+            -variable => \${$sel->{DATA}}->{$sel->{ID}}->{type},
+	    	-text => 'Implicit',
+            -relief   => 'flat',
+            -value    => 'Implicit',
+        )->grid(-row => 0, -column => 2, -sticky => 'w');
+	${$sel->{DATA}}->{$sel->{ID}}->{type} eq "DBI" ? $r1->select 
+			: ${$sel->{DATA}}->{$sel->{ID}}->{type} eq "Explicit" ? $r2->select
+					: $r3->select;
+	$typeRad->form(-top => $frameID, -left => 5);
+	$typeRad->bind('<Leave>' => sub {
+									#redraw the object if needed, so that
+									#the changes can be visualized.
+									my $obj = '';
+									#print "\n Ejecuta callback";
+									foreach my $lay (keys %{$::Layer}){
+										foreach (keys %{$::Layer->{$lay}}){
+											#print "\n Compara: $::Layer->{$lay}->{$_}->id  con $sel->{ID}";
+											my $tempid = $::Layer->{$lay}->{$_}->id;
+											$tempid=~s/^[\w.]+\/_TRAN\/(\w+)$/$1/;
+											#$tempid=$1 || "";
+											#print "\n$tempid";
+											if ($tempid eq $sel->{ID}){
+												$::Layer->{$lay}->{$_}->connType(${$sel->{DATA}}->{$sel->{ID}}->{type});
+												$obj = $_;
+												#print "\nEncontro la vara";
+												last;
+											}
+										}
+									}
+									if (exists($::Layer->{$::VisibleLayer}->{$obj})){
+										$::Layer->{$::VisibleLayer}->{$obj}->clear;
+										$::Layer->{$::VisibleLayer}->{$obj}->draw($::tSchemaC);
+										#print "\n Ok hizo match";
+									}
+
+
+								});
+	#Now we format the rest of the tabs
+	#Inputs tab
+	$frameID = $Tab2->Label( -text => $sel->{SEL}, -relief => 'groove', -background=>'LightGoldenrod')->pack(@@pl);
+    $frameID->form(-top => 5, -left => 5);
+	
+	#Outputs Tab
+	$frameID = $Tab3->Label( -text => $sel->{SEL}, -relief => 'groove', -background=>'LightGoldenrod')->pack(@@pl);
+    $frameID->form(-top => 5, -left => 5);
+	
+	#Trigger Tab
+	$frameID = $Tab4->Label( -text => $sel->{SEL}, -relief => 'groove', -background=>'LightGoldenrod')->pack(@@pl);
+    $frameID->form(-top => 5, -left => 5);
+	
+	#Status Tab
+	$frameID = $Tab5->Label( -text => $sel->{SEL}, -relief => 'groove', -background=>'LightGoldenrod')->pack(@@pl);
+    $frameID->form(-top => 5, -left => 5);
+	
+	#Code tab
+	$frameID = $Tab6->Label( -text => $sel->{SEL}, -relief => 'groove', -background=>'LightGoldenrod')->pack(@@pl);
+	$frameL = $Tab6->LabFrame(-label => "Code Language", -labelside=>"acrosstop")->pack(-anchor=>"nw",-side=>'left',-padx => 5);
+	$frameL->Entry(qw/-relief sunken -width 40/, -textvariable=>\ ${$sel->{DATA}}->{$sel->{ID}}->{proc}->{language}, -background=>'white')->pack;
+    #$nam->bind('<Key>' => sub {
+	#		   ${$sel->{TREE}}->entryconfigure($sel->{SEL},-text => ${$sel->{DATA}}->{$sel->{ID}}->{proc}->{language});
+	#		   &main::updateName($sel->{ID},${$sel->{DATA}}->{$sel->{ID}}->{name});
+	#	   });
+	$frameC = $Tab6->LabFrame(-label => "Transformation Code", -labelside=>"acrosstop")->pack(-anchor=>"nw",-side=>'left',-padx => 5);   
+    $sc = $frameC->Scrolled(qw/Text -setgrid true -height 25 -width 95 -wrap word -scrollbars se/, -background=>'white')->pack;
+    $sc->insert('0.0', ${$sel->{DATA}}->{$sel->{ID}}->{proc}->{content});
+	$sc->bind('<Leave>' => sub {
+			   ${$sel->{DATA}}->{$sel->{ID}}->{proc}->{content}=$sc->get('0.0','end');
+		});
+	$frameID->form(-top => 5, -left => 5);
+	$frameL->form(-top => $frameID, -left => 5);
+	$frameC->form(-top => $frameL, -left => 5);
+    
+}
+
+sub draw_host{
+    my $sel = shift;
+    $sel->{ID}=$sel->{SEL};
+    $sel->{DATA}=\${$sel->{PROJ}}->{host};
+    my $AdmTab = $sel->{PLACE};	# project hash, id, proc for additional updates after button press 
+    my $admTabs = $AdmTab->NoteBook(-ipadx => 6, -ipady => 6, -font=>$::TabsFont)->pack(@@plt);
+    my $Tab1=$admTabs->add("tbl1", -label => "Admin", -underline => 0);
+    my $Tab2=$admTabs->add("tbl2", -label => "Data Sources", -underline => 0);
+    my $Tab3=$admTabs->add("tbl3", -label => "Transformations", -underline => 0);
+    $sel->{PLACE}= $Tab1;
+    &AdmTabHeader($sel);
+}
+
+sub draw_src{
+    my $sel = shift;
+    my ($host,$src)=($sel->{SEL}=~m|^([\w.]+)/(\w+)$|);
+    $sel->{ID}=$src;
+    $sel->{DATA}=\${$sel->{PROJ}}->{host}->{$host}->{source};
+    my $AdmTab = $sel->{PLACE};	# project hash, id, proc for additional updates after button press
+    my $admTabs = $AdmTab->NoteBook(-ipadx => 6, -ipady => 6, -font=>$::TabsFont)->pack(@@plt);
+    my $Tab1=$admTabs->add("tbl1", -label => "Admin", -underline => 0);
+    my $Tab2=$admTabs->add("tbl2", -label => "Tables", -underline => 0);
+    my $Tab3=$admTabs->add("tbl3", -label => "DBMS Views", -underline => 0);
+    my $Tab4=$admTabs->add("tbl4", -label => "ETL Views", -underline => 0);
+    $sel->{PLACE}= $Tab1;
+    &AdmTabHeader($sel);
+
+    #  A ver si esta vara funca!! ->
+    my $vTabs = $Tab2->NoteBook(-ipadx => 6, -ipady => 6, -font=>$::TabsFont)->pack(@@plt);
+    my $vT1=$vTabs->add("vt", -label => "All\nLayers", -underline => 0, -raisecmd => sub{});
+    my $all = ShopCard->new($vT1,$::top,'Tables',\&DSI::GetTableList,\&DSI::UpdSelectedTables,$sel->{SEL}, ${$sel->{DATA}}->{$sel->{ID}}->{table},$sel->{PROJ},\$sel->{TREE},\$::Layer,\$::tSchemaC,$::defLayer);
+    $all->show();
+    $all->AddButton('L','REFRESH','Refresh Available Tables',\&prop::RefObj);
+    $all->AddButton('R','SELECT','Use selection of Tables',\&prop::UseObj);
+    my $i=0;
+    foreach my $tr (keys %{ ${$sel->{PROJ}}->{'gui-layer'} }) {
+	    # tr - id of layer
+	    $i++;
+	    my ($vT,$all,$s);
+	    ($s = ${$sel->{PROJ}}->{'gui-layer'}->{$tr}->{name}->{$::lang}) =~ s/(\w{3})\s(\w{3})/$1\n$2/g;			  
+	    $vT = $vTabs->add("vt$i", -label => $s,-raisecmd => sub{
+			 					    $all->ShowSelObj(${$sel->{DATA}}->{$sel->{ID}}->{table}, $tr);
+								    $all->ShowAvObj(${$sel->{DATA}}->{$sel->{ID}}->{table});										   						
+								    });				                     
+	    $all = ShopCard->new($vT,$::top,'Tables',undef,\&DSI::UpdSelectedTables,$sel->{SEL}, ${$sel->{DATA}}->{$sel->{ID}}->{table},$sel->{PROJ},\$sel->{TREE},\$::Layer,\$::tSchemaC,$tr);
+	    $all->show();
+	    $all->AddButton('R','SELECT','Use selection of Tables',\&prop::UseObj);		
+
+    }
+    my $conn='!Connected';
+    my $DBConB; 
+    my $stat;
+    $DBConB = $AdmTab->Button(-text => "$conn", 
+			      -padx => 10, 
+			      -image    => $AdmTab->Pixmap(-file => 'img/stop.xpm'),
+			      -command => sub {		 						                                																										
+						  if ($stat) {
+ 						    $stat = &DSI::DisConnect2DB($src);
+						    $DBConB->configure('image'=> $AdmTab->Pixmap(-file => 'img/stop.xpm'));								
+						  } 
+						  else {
+						    $stat = &DSI::Connect2DB($host,$src,$sel->{PROJ});
+						    $DBConB->configure('image'=> $AdmTab->Pixmap(-file => 'img/run.xpm'));  
+						  }
+					       })->pack();
+}
+
+sub draw_tab{
+    my $sel = shift;
+    my ($host,$src,$tbl)=($sel->{SEL}=~m|^([\w.]+)/(\w+)/(\w+)$|);
+    my $Project = ${$sel->{PROJ}};
+    $sel->{ID}=$tbl;
+    $sel->{DATA}=\${$sel->{PROJ}}->{host}->{$host}->{source}->{$src}->{table};
+    my $AdmTab = $sel->{PLACE};	# project hash, id, proc for additional updates after button press 
+    my $admTabs = $AdmTab->NoteBook(-ipadx => 6, -ipady => 6, -font=>$::TabsFont)->pack(@@plt);
+    my $Tab1=$admTabs->add("tbl1", -label => "Admin", -underline => 0);
+    my $Tab2=$admTabs->add("tbl2", -label => "Columns", -underline => 0);
+    my $Tab3=$admTabs->add("tbl3", -label => "Indexes", -underline => 0);
+    my $Tab4=$admTabs->add("tbl4", -label => "Data", -underline => 0);
+    $sel->{PLACE} = $Tab1;
+    &AdmTabHeader($sel);
+    my $vTabs = $Tab2->NoteBook(-ipadx => 6, -ipady => 6, -font=>$::TabsFont)->pack(@@plt);
+    my $vT1=$vTabs->add("vt", -label => "All\nLayers", -underline => 0);
+    my $all = ShopCard->new($vT1,$::top,'Columns',\&DSI::GetColumnList,\&DSI::UpdSelectedColumns,$sel->{SEL}, ${$sel->{DATA}}->{$sel->{ID}}->{column},$sel->{PROJ},\$sel->{TREE},\$::Layer,\$::tSchemaC,$::defLayer);
+    $all->show();
+    $all->AddButton('L','REFRESH','Refresh Available Columns',\&prop::RefObj);
+    $all->AddButton('R','SELECT','Use selection of Columns',\&prop::UseObj);		
+
+    my $i=0;
+    foreach my $tr (keys %{ $Project->{'gui-layer'} }) {
+	    $i++;			
+	    my ($vT,$all,$s);
+	    ($s = $Project->{'gui-layer'}->{$tr}->{name}->{$::lang}) =~ s/(\w{3})\s(\w{3})/$1\n$2/g;
+	    $vT=$vTabs->add("vt$i", -label => $s,-raisecmd => sub{
+			 					    $all->ShowSelObj(${$sel->{DATA}}->{$sel->{ID}}->{column}, $tr);
+								    $all->ShowAvObj(${$sel->{DATA}}->{$sel->{ID}}->{column});										   						
+								    });
+	    $all = ShopCard->new($vT,$::top,'Columns',undef,\&DSI::UpdSelectedColumns,$sel->{SEL}, ${$sel->{DATA}}->{$sel->{ID}}->{column},$sel->{PROJ},\$sel->{TREE},\$::Layer,\$::tSchemaC,$tr);
+	    $all->show();
+	    $all->AddButton('R','SELECT','Use selection of Columns',\&prop::UseObj);
+    }
+    my $conn='!Connected';
+    my $DBConB; 
+    my $stat;
+    $DBConB = $AdmTab->Button(-text => "$conn", 
+			      -padx => 10, 
+			      -image    => $AdmTab->Pixmap(-file => 'img/stop.xpm'),
+			      -command => sub {		 						                                																										
+						  if ($stat) {
+ 						    $stat = &DSI::DisConnect2DB($src);
+						    $DBConB->configure('image'=> $AdmTab->Pixmap(-file => 'img/stop.xpm'));								
+						  } 
+						  else {
+						    $stat = &DSI::Connect2DB($host,$src,\$Project);
+						    $DBConB->configure('image'=> $AdmTab->Pixmap(-file => 'img/run.xpm'));  
+						  }
+
+					       })->pack();		
+   my $vTabs4 = $Tab4->NoteBook(-ipadx => 6, -ipady => 6, -font=>$::TabsFont)->pack(@@plt);				       
+   my $fr = $vTabs4->LabFrame(-label => "Data View", -labelside=>"acrosstop")->pack(-anchor=>"nw",-side=>'left',-padx => 5, pady => 10);      					       
+   my $limit = 10;
+   $fr->Entry(qw/-relief sunken -width 10/, -textvariable=>\ $limit, -background=>'white')->pack;
+   #my $lab = $fr->Label( -text => "Data View", -relief => 'groove', -background=>'LightGoldenrod')->pack(@@pl);
+   my $list = $fr->Scrolled(qw/Text -setgrid true -height 25 -width 80 -wrap word -scrollbars e/, -background=>'white')->pack;   
+   my $D = $fr->Button(     -padx => 10, 
+			      -text    => 'Get Lines',
+			      -command => sub { my $l;
+			      			my $t = DSI::GetSourceLine($tbl,$src,$limit);
+						$list->delete('0.0','end');
+						foreach (keys(%{${$sel->{DATA}}->{$tbl}->{column}})) {
+						  $l = $l.${$sel->{DATA}}->{$tbl}->{column}->{$_}->{name}."\t";
+						}
+						$list->insert('0.0',$l."\n\n");
+						$l='';
+						foreach (sort (keys(%{$$t}))) {
+						   my $arr = $$t->{$_};
+						   $l='';
+						   foreach (@@$arr) {						
+						     $l = $l.$_."\t";
+						   }
+						   $list->insert('end',$l."\n");
+						}
+ 
+ 						   
+
+					       })->pack();
+
+        #$sc->insert('0.0', ${$sel->{DATA}}->{$sel->{ID}}->{description}->{$::lang});
+}
+
+
+
+sub draw_view{
+    my $sel = shift;
+    my ($host,$src,$v)=($sel->{SEL}=~m|^([\w.]+)/(\w+)/(\w+)$|);
+    my $Project = ${$sel->{PROJ}};
+    $sel->{ID}=$v;
+    $sel->{DATA}=\${$sel->{PROJ}}->{host}->{$host}->{source}->{$src}->{view};
+    my $AdmTab = $sel->{PLACE};	# project hash, id, proc for additional updates after button press 
+    my $admTabs = $AdmTab->NoteBook(-ipadx => 6, -ipady => 6, -font=>$::TabsFont)->pack(@@plt);
+    my $Tab1=$admTabs->add("tbl1", -label => "Admin", -underline => 0);
+    my $Tab2=$admTabs->add("tbl2", -label => "Columns", -underline => 0);
+    my $Tab3=$admTabs->add("tbl3", -label => "Input", -underline => 0);
+    my $Tab4=$admTabs->add("tbl4", -label => "Data", -underline => 0);
+    $sel->{PLACE} = $Tab1;
+    &AdmTabHeader($sel);
+    my $vTabs = $Tab2->NoteBook(-ipadx => 6, -ipady => 6, -font=>$::TabsFont)->pack(@@plt);
+    my $vT1=$vTabs->add("vt", -label => "All\nLayers", -underline => 0);
+    my $all = ShopCard->new($vT1,$::top,'Columns',\&DSI::GetColumnList,\&DSI::UpdSelectedColumns,$sel->{SEL}, ${$sel->{DATA}}->{$sel->{ID}}->{column},$sel->{PROJ},\$sel->{TREE},\$::Layer,\$::tSchemaC,$::defLayer);
+    $all->show();
+    $all->AddButton('L','REFRESH','Refresh Available Columns',\&prop::RefObj);
+    $all->AddButton('R','SELECT','Use selection of Columns',\&prop::UseObj);		
+
+    my $i=0;
+    foreach my $tr (keys %{ $Project->{'gui-layer'} }) {
+	    $i++;			
+	    my ($vT,$all,$s);
+	    ($s = $Project->{'gui-layer'}->{$tr}->{name}->{$::lang}) =~ s/(\w{3})\s(\w{3})/$1\n$2/g;
+	    $vT=$vTabs->add("vt$i", -label => $s,-raisecmd => sub{
+			 					    $all->ShowSelObj(${$sel->{DATA}}->{$sel->{ID}}->{column}, $tr);
+								    $all->ShowAvObj(${$sel->{DATA}}->{$sel->{ID}}->{column});										   						
+								    });
+	    $all = ShopCard->new($vT,$::top,'Columns',undef,\&DSI::UpdSelectedColumns,$sel->{SEL}, ${$sel->{DATA}}->{$sel->{ID}}->{column},$sel->{PROJ},\$sel->{TREE},\$::Layer,\$::tSchemaC,$tr);
+	    $all->show();
+	    $all->AddButton('R','SELECT','Use selection of Columns',\&prop::UseObj);
+    }
+    my $conn='!Connected';
+    my $DBConB; 
+    my $stat;
+    $DBConB = $AdmTab->Button(-text => "$conn", 
+			      -padx => 10, 
+			      -image    => $AdmTab->Pixmap(-file => 'img/stop.xpm'),
+			      -command => sub {		 						                                																										
+						  if ($stat) {
+ 						    $stat = &DSI::DisConnect2DB($src);
+						    $DBConB->configure('image'=> $AdmTab->Pixmap(-file => 'img/stop.xpm'));								
+						  } 
+						  else {
+						    $stat = &DSI::Connect2DB($host,$src,\$Project);
+						    $DBConB->configure('image'=> $AdmTab->Pixmap(-file => 'img/run.xpm'));  
+						  }
+
+					       })->pack();
+}
+
+sub draw_col{
+    my $sel = shift;
+    my ($host,$src,$tbl,$col)=($sel->{SEL}=~m|^([\w.]+)/(\w+)/(\w+)/(\w+)$|);
+    $sel->{ID}=$col;
+    $sel->{DATA}=\${$sel->{PROJ}}->{host}->{$host}->{source}->{$src}->{table}->{$tbl}->{column};
+    my $AdmTab = $sel->{PLACE};	# project hash, id, proc for additional updates after button press 
+    my $admTabs = $AdmTab->NoteBook(-ipadx => 6, -ipady => 6, -font=>$::TabsFont)->pack(@@plt);
+    my $Tab1=$admTabs->add("tbl1", -label => "Admin", -underline => 0);
+    my $Tab2=$admTabs->add("tbl2", -label => "Data", -underline => 0);
+    $sel->{PLACE} = $Tab1;
+    &AdmTabHeader($sel);
+}
+
+
+sub draw_dir_attr{
+    my $sel = shift;
+    my $AdmTab = $sel->{PLACE};	# project hash, id, proc for additional updates after button press 
+    my $vTabs = $AdmTab->NoteBook(-ipadx => 6, -ipady => 6, -font=>$::TabsFont)->pack(@@plt);
+    my $vT1=$vTabs->add("vt", -label => "All\nLayers", -underline => 0);
+    my $all = ShopCard->new($vT1,$::top,'Attributes',\&prop::GetAttr,\&prop::UpdAttr,$sel->{SEL}, ${$sel->{PROJ}}->{'attr'},$sel->{PROJ},\$sel->{TREE},\$::Layer,\$::tSchemaC,$::defLayer);
+    $all->show($::lang);
+    $all->AddButton('L','REFRESH','Refresh Available Attributes',\&prop::RefObj);
+    $all->AddButton('R','SELECT','Use selection of Attributes',\&prop::UseObj);
+    my $i=0;
+    foreach my $tr (keys %{ ${$sel->{PROJ}}->{'gui-layer'}}) {
+	    # tr - id of layer
+	    $i++;
+	    my ($vT,$all,$s);
+	    ($s = ${$sel->{PROJ}}->{'gui-layer'}->{$tr}->{name}->{$::lang}) =~ s/(\w{3})\s(\w{3})/$1\n$2/g;			  
+	    $vT = $vTabs->add("vt$i", -label => $s,-raisecmd => sub{
+			 					    $all->ShowSelObj(${$sel->{PROJ}}->{'attr'}, $tr,$::lang);
+								    $all->ShowAvObj(${$sel->{PROJ}}->{'attr'},$::lang);										   						
+								    });				                     
+	    $all = ShopCard->new($vT,$::top,'Attributes',\&prop::GetAttr,\&prop::UpdAttr,$sel->{SEL}, ${$sel->{PROJ}}->{'attr'},$sel->{PROJ},\$sel->{TREE},\$::Layer,\$::tSchemaC,$tr);
+	    $all->show();	
+	    $all->AddButton('R','SELECT','Use selection of Attributes',\&prop::UseObj);		
+
+    }
+} 
+
+sub draw_dir_fact{
+	my $sel = shift;
+    my $AdmTab = $sel->{PLACE};	# project hash, id, proc for additional updates after button press 
+    my $vTabs = $AdmTab->NoteBook(-ipadx => 6, -ipady => 6, -font=>$::TabsFont)->pack(@@plt);
+    my $vT1=$vTabs->add("vt", -label => "All\nLayers", -underline => 0);
+	my $all = ShopCard->new($vT1,$::top,'Facts',\&prop::GetFact,\&prop::UpdFact,$sel->{SEL}, ${$sel->{PROJ}}->{'fact'},$sel->{PROJ},\$sel->{TREE},\$::Layer,\$::tSchemaC,$::defLayer);
+    $all->show($::lang);
+    $all->AddButton('L','REFRESH','Refresh Available Facts',\&prop::RefObj);
+    $all->AddButton('R','SELECT','Use selection of Facts',\&prop::UseObj);
+    my $i=0;
+    foreach my $tr (keys %{ ${$sel->{PROJ}}->{'gui-layer'}}) {
+	    # tr - id of layer
+	    $i++;
+	    my ($vT,$all,$s);
+	    ($s = ${$sel->{PROJ}}->{'gui-layer'}->{$tr}->{name}->{$::lang}) =~ s/(\w{3})\s(\w{3})/$1\n$2/g;			  
+	    $vT = $vTabs->add("vt$i", -label => $s,-raisecmd => sub{
+			 					    $all->ShowSelObj(${$sel->{PROJ}}->{'fact'}, $tr,$::lang);
+								    $all->ShowAvObj(${$sel->{PROJ}}->{'fact'},$::lang);										   						
+								    });				                     
+	    $all = ShopCard->new($vT,$::top,'Attributes',\&prop::GetFact,\&prop::UpdFact,$sel->{SEL}, ${$sel->{PROJ}}->{'fact'},$sel->{PROJ},\$sel->{TREE},\$::Layer,\$::tSchemaC,$tr);
+            $all->show();	
+	    $all->AddButton('R','SELECT','Use selection of Facts',\&prop::UseObj);
+    }
+}
+
+sub draw_dir_trig{
+    my $sel = shift;
+    my $Project = ${$sel->{PROJ}};
+    $sel->{DATA}=\${$sel->{PROJ}}->{trigger};
+    my $AdmTab = $sel->{PLACE};	# project hash, id, proc for additional updates after button press 
+    my $vTabs = $AdmTab->NoteBook(-ipadx => 6, -ipady => 6, -font=>$::TabsFont)->pack(@@plt);
+    my $vT1=$vTabs->add("vt", -label => "All\nLayers", -underline => 0);
+    my $all = ShopCard->new($vT1,$::top,'Triggers',\&prop::GetTrig,\&prop::UpdTrig,$sel->{SEL}, ${$sel->{DATA}},$sel->{PROJ},\$sel->{TREE},\$::Layer,\$::tSchemaC,$::defLayer);
+    $all->show();
+    $all->AddButton('L','REFRESH','Refresh Available Triggers',\&prop::RefObj);
+    $all->AddButton('R','SELECT','Use selection of Triggers',\&prop::UseObj);		
+    my $i=0;
+    foreach my $tr (keys %{ $Project->{'gui-layer'} }) {
+	    $i++;			
+	    my ($vT,$all,$s);
+	    ($s = $Project->{'gui-layer'}->{$tr}->{name}->{$::lang}) =~ s/(\w{3})\s(\w{3})/$1\n$2/g;
+	    $vT=$vTabs->add("vt$i", -label => $s,-raisecmd => sub{
+			 					    $all->ShowSelObj(${$sel->{DATA}}, $tr);
+								    $all->ShowAvObj(${$sel->{DATA}});										   						
+								    });
+	    $all = ShopCard->new($vT,$::top,'Triggers',undef,\&prop::UpdTrig,$sel->{SEL}, ${$sel->{DATA}},$sel->{PROJ},\$sel->{TREE},\$::Layer,\$::tSchemaC,$tr);
+	    $all->show();
+	    $all->AddButton('R','SELECT','Use selection of Triggers',\&prop::UseObj);
+    }    
+}
+
+sub draw_dir_tran{
+    #here we create all the tabs needed and set them up.
+    my $sel = shift;
+    my ($host);
+    ($host)=($sel->{SEL}=~m|^([\w.]+)/_TRAN$|);
+    $sel->{DATA}=\${$sel->{PROJ}}->{host}->{$host}->{transformation};
+    my $AdmTab = $sel->{PLACE};	# project hash, id, proc for additional updates after button press 
+    my $vTabs = $AdmTab->NoteBook(-ipadx => 6, -ipady => 6, -font=>$::TabsFont)->pack(@@plt);
+    my $vT1=$vTabs->add("vt", -label => "All\nLayers", -underline => 0);
+    my $all = ShopCard->new($vT1,$::top,'Transformations',\&prop::GetTrans,\&prop::UpdTrans,$sel->{SEL}, ${$sel->{DATA}},$sel->{PROJ},\$sel->{TREE},\$::Layer,\$::tSchemaC,$::defLayer);
+    $all->show();
+    $all->AddButton('L','REFRESH','Refresh Available Transformations',\&porp::RefObj);
+    $all->AddButton('R','SELECT','Use selection of Transformations',\&prop::UseObj);
+    my $i=0;
+    foreach my $tr (keys %{ ${$sel->{PROJ}}->{'gui-layer'}}) {
+	    # tr - id of layer
+	    $i++;
+	    my ($vT,$all,$s);
+	    ($s = ${$sel->{PROJ}}->{'gui-layer'}->{$tr}->{name}->{$::lang}) =~ s/(\w{3})\s(\w{3})/$1\n$2/g;			  
+	    $vT = $vTabs->add("vt$i", -label => $s,-raisecmd => sub{
+			 					    $all->ShowSelObj(${$sel->{DATA}}, $tr);
+								    $all->ShowAvObj(${$sel->{DATA}});										   						
+								    });				                     
+	    $all = ShopCard->new($vT,$::top,'Transformations',\&prop::GetTrans,\&prop::UpdTrans,$sel->{SEL}, ${$sel->{DATA}},$sel->{PROJ},\$sel->{TREE},\$::Layer,\$::tSchemaC,$tr);
+            $all->show();	
+	    $all->AddButton('R','SELECT','Use selection of Transformations',\&prop::UseObj);
+    }
+}
+
+sub draw_dir_const{
+    my $sel = shift;
+    my $Project = ${$sel->{PROJ}};
+    $sel->{DATA}=\${$sel->{PROJ}}->{const};
+    my $AdmTab = $sel->{PLACE};	# project hash, id, proc for additional updates after button press 
+    my $vTabs = $AdmTab->NoteBook(-ipadx => 6, -ipady => 6, -font=>$::TabsFont)->pack(@@plt);
+    my $vT1=$vTabs->add("vt", -label => "All\nLayers", -underline => 0);
+    my $all = ShopCard->new($vT1,$::top,'Constants',\&prop::GetConst,\&prop::UpdConst,$sel->{SEL}, ${$sel->{DATA}},$sel->{PROJ},\$sel->{TREE},\$::Layer,\$::tSchemaC,$::defLayer);
+    $all->show();
+    $all->AddButton('L','REFRESH','Refresh Available Constants',\&prop::RefObj);
+    $all->AddButton('R','SELECT','Use selection of Constants',\&prop::UseObj);		
+
+    my $i=0;
+    foreach my $tr (keys %{ $Project->{'gui-layer'} }) {
+	    $i++;			
+	    my ($vT,$all,$s);
+	    ($s = $Project->{'gui-layer'}->{$tr}->{name}->{$::lang}) =~ s/(\w{3})\s(\w{3})/$1\n$2/g;
+	    $vT=$vTabs->add("vt$i", -label => $s,-raisecmd => sub{
+			 					    $all->ShowSelObj(${$sel->{DATA}}, $tr);
+								    $all->ShowAvObj(${$sel->{DATA}});										   						
+								    });
+	    $all = ShopCard->new($vT,$::top,'Constants',undef,\&prop::UpdConst,$sel->{SEL}, ${$sel->{DATA}},$sel->{PROJ},\$sel->{TREE},\$::Layer,\$::tSchemaC,$tr);
+	    $all->show();
+	    $all->AddButton('R','SELECT','Use selection of Constants',\&prop::UseObj);
+    }
+}
+
+sub draw_group{
+	my $self = shift;
+	my $Project = ${$self->{PROJ}};
+	my ($labID, $sample, $butOK, $butCancel);
+	($self->{ID}) = ($self->{SEL}=~m|__G\.(.+)$|);
+	$self->{DATA} = \${$self->{PROJ}}->{group};
+	my $AdmTab = $self->{PLACE};	# project hash, id, proc for additional updates after button press 
+    my $admTabs = $AdmTab->NoteBook(-ipadx => 6, -ipady => 6, -font=>$::TabsFont)->pack(@@plt);
+    my $Tab1=$admTabs->add("tbl1", -label => "Admin", -underline => 0);
+    my $Tab2=$admTabs->add("tbl2", -label => "Color", -underline => 0);
+    $self->{PLACE}= $Tab1;
+	&AdmTabHeader($self);
+	
+	$labID = $Tab2->Label( -text => $self->{SEL}, -relief => 'groove', -background=>'LightGoldenrod')->pack(@@pl);
+	$butOK = $Tab2->Button(-text => 'OK', -font => $::ButtonFont)->pack(@@pl);
+	$butCancel = $Tab2->Button(-text => 'Reset', -font => $::ButtonFont)->pack(@@pl);
+	my $colorListFA = $Tab2->LabFrame(-label => "Attribute", -labelside=>"acrosstop")->pack(-anchor=>"nw",-side=>'left',-padx => 5,-pady=>3);	
+	my $colorListFR = $Tab2->LabFrame(-label => "Role", -labelside=>"acrosstop")->pack(-anchor=>"nw",-side=>'left',-padx => 5,-pady=>3);	
+	my $colorFrame = $Tab2->LabFrame(-label => "Sample", -labelside=>"acrosstop")->pack(-anchor=>"nw",-side=>'left',-padx => 55,-pady=>3);	
+	my $colorCanvas = $colorFrame->Canvas(-width => 150, -height => 60);
+	$colorCanvas->pack(qw/-side left -fill both/);
+	$sample = DBLogObj->new('TEMPID',${$self->{DATA}}->{$self->{ID}}->{color_a},"",7,7,${$self->{DATA}}->{$self->{ID}}->{color_a},${$self->{DATA}}->{$self->{ID}}->{color_r},'ATTR');
+	$sample->addRole(${$self->{DATA}}->{$self->{ID}}->{color_r},1);
+	$sample->draw($colorCanvas);
+	#my $rect = $colorCanvas->createRectangle(-1,-1,100,100, -fill => ${$self->{DATA}}->$self->{ID}->{color_r});
+	my $colorListA = $colorListFA->Scrolled(qw/Listbox -width 20 -height 16 -setgrid 1 -scrollbars e -selectmode single/);
+	$colorListA->pack(qw/-side left -fill none/);
+	$colorListA->bind('<ButtonRelease-1>' => sub {
+									$sample->change_color_attr($colorListA->get('anchor'));
+									$sample->name($colorListA->get('active'));
+									$sample->clear;
+									$sample->draw($colorCanvas);
+								});
+	my $colorListR = $colorListFR->Scrolled(qw/Listbox -width 20 -height 16 -setgrid 1 -scrollbars e -selectmode single/);
+	$colorListR->pack(qw/-side right -fill none/);
+	$colorListR->bind('<ButtonRelease-1>' => sub {
+									$sample->change_color_role($colorListR->get('active'),'Edit.pm');
+									$sample->clear;
+									$sample->draw($colorCanvas);
+								});
+	foreach(qw/gray60 gray70 gray80 gray85 gray90
+			gray95 snow1 snow2 snow3 snow4 seashell1 seashell2 seashell3 seashell4
+			AntiqueWhite1 AntiqueWhite2 AntiqueWhite3 AntiqueWhite4 bisque1
+			bisque2 bisque3 bisque4 PeachPuff1 PeachPuff2 PeachPuff3 PeachPuff4
+			NavajoWhite1 NavajoWhite2 NavajoWhite3 NavajoWhite4 LemonChiffon1
+			LemonChiffon2 LemonChiffon3 LemonChiffon4 cornsilk1 cornsilk2
+			cornsilk3 cornsilk4 ivory1 ivory2 ivory3 ivory4 honeydew1 honeydew2
+			honeydew3 honeydew4 LavenderBlush1 LavenderBlush2 LavenderBlush3
+			LavenderBlush4 MistyRose1 MistyRose2 MistyRose3 MistyRose4 azure1
+			azure2 azure3 azure4 SlateBlue1 SlateBlue2 SlateBlue3 SlateBlue4
+			RoyalBlue1 RoyalBlue2 RoyalBlue3 RoyalBlue4 blue1 blue2 blue3 blue4
+			DodgerBlue1 DodgerBlue2 DodgerBlue3 DodgerBlue4 SteelBlue1 SteelBlue2
+			SteelBlue3 SteelBlue4 DeepSkyBlue1 DeepSkyBlue2 DeepSkyBlue3
+			DeepSkyBlue4 SkyBlue1 SkyBlue2 SkyBlue3 SkyBlue4 LightSkyBlue1
+			LightSkyBlue2 LightSkyBlue3 LightSkyBlue4 SlateGray1 SlateGray2
+			SlateGray3 SlateGray4 LightSteelBlue1 LightSteelBlue2 LightSteelBlue3
+			LightSteelBlue4 LightBlue1 LightBlue2 LightBlue3 LightBlue4 LightCyan1
+			LightCyan2 LightCyan3 LightCyan4 PaleTurquoise1 PaleTurquoise2
+			PaleTurquoise3 PaleTurquoise4 CadetBlue1 CadetBlue2 CadetBlue3
+			CadetBlue4 turquoise1 turquoise2 turquoise3 turquoise4 cyan1 cyan2
+			cyan3 cyan4 DarkSlateGray1 DarkSlateGray2 DarkSlateGray3
+			DarkSlateGray4 aquamarine1 aquamarine2 aquamarine3 aquamarine4
+			DarkSeaGreen1 DarkSeaGreen2 DarkSeaGreen3 DarkSeaGreen4 SeaGreen1
+			SeaGreen2 SeaGreen3 SeaGreen4 PaleGreen1 PaleGreen2 PaleGreen3
+			PaleGreen4 SpringGreen1 SpringGreen2 SpringGreen3 SpringGreen4 green1
+			green2 green3 green4 chartreuse1 chartreuse2 chartreuse3 chartreuse4
+			OliveDrab1 OliveDrab2 OliveDrab3 OliveDrab4 DarkOliveGreen1
+			DarkOliveGreen2 DarkOliveGreen3 DarkOliveGreen4 khaki1 khaki2 khaki3
+			khaki4 LightGoldenrod1 LightGoldenrod2 LightGoldenrod3 LightGoldenrod4
+			LightYellow1 LightYellow2 LightYellow3 LightYellow4 yellow1 yellow2
+			yellow3 yellow4 gold1 gold2 gold3 gold4 goldenrod1 goldenrod2
+			goldenrod3 goldenrod4 DarkGoldenrod1 DarkGoldenrod2 DarkGoldenrod3
+			DarkGoldenrod4 RosyBrown1 RosyBrown2 RosyBrown3 RosyBrown4 IndianRed1
+			IndianRed2 IndianRed3 IndianRed4 sienna1 sienna2 sienna3 sienna4
+			burlywood1 burlywood2 burlywood3 burlywood4 wheat1 wheat2 wheat3
+			wheat4 tan1 tan2 tan3 tan4 chocolate1 chocolate2 chocolate3 chocolate4
+			firebrick1 firebrick2 firebrick3 firebrick4 brown1 brown2 brown3
+			brown4 salmon1 salmon2 salmon3 salmon4 LightSalmon1 LightSalmon2
+			LightSalmon3 LightSalmon4 orange1 orange2 orange3 orange4 DarkOrange1
+			DarkOrange2 DarkOrange3 DarkOrange4 coral1 coral2 coral3 coral4
+			tomato1 tomato2 tomato3 tomato4 OrangeRed1 OrangeRed2 OrangeRed3
+			OrangeRed4 red1 red2 red3 red4 DeepPink1 DeepPink2 DeepPink3 DeepPink4
+			HotPink1 HotPink2 HotPink3 HotPink4 pink1 pink2 pink3 pink4 LightPink1
+			LightPink2 LightPink3 LightPink4 PaleVioletRed1 PaleVioletRed2
+			PaleVioletRed3 PaleVioletRed4 maroon1 maroon2 maroon3 maroon4
+			VioletRed1 VioletRed2 VioletRed3 VioletRed4 magenta1 magenta2 magenta3
+			magenta4 orchid1 orchid2 orchid3 orchid4 plum1 plum2 plum3 plum4
+			MediumOrchid1 MediumOrchid2 MediumOrchid3 MediumOrchid4 DarkOrchid1
+			DarkOrchid2 DarkOrchid3 DarkOrchid4 purple1 purple2 purple3 purple4
+			MediumPurple1 MediumPurple2 MediumPurple3 MediumPurple4/){
+				$colorListA->insert('end',$_);
+				$colorListR->insert('end',$_);
+	}#end for
+	$butOK->bind('<ButtonRelease-1>' => sub{ 
+								${$self->{DATA}}->{$self->{ID}}->{color_a}= $colorListA->get('anchor');
+								${$self->{DATA}}->{$self->{ID}}->{color_r}= $colorListR->get('anchor');
+								#print "\n va para el for!";
+								foreach my $attr(keys %{$Project->{attr}}){
+									#print "\n Attr actual es: $attr";
+									my $group = $Project->{attr}->{$attr}->{group} || '';
+									if ($group eq $self->{ID}){
+										#print "\nAtributo $attr esta en el grupo";
+										foreach my $lay (keys %{$Project->{attr}->{$attr}->{'gui-presentation'}}){
+											$::Layer->{$lay}->{"_LOBJ/_ATTR/$attr"}->change_color_attr($colorListA->get('anchor'));
+											$::Layer->{$lay}->{"_LOBJ/_ATTR/$attr"}->change_color_role($colorListR->get('anchor'));
+											if ($::VisibleLayer eq $lay){
+												$::Layer->{$lay}->{"_LOBJ/_ATTR/$attr"}->clear;
+												$::Layer->{$lay}->{"_LOBJ/_ATTR/$attr"}->draw($::tSchemaC);
+												#print "\natributo $attr esta en Visible Layer";
+											}
+										}
+									}
+								}
+								$::mainTabs->raise('schema')
+							});
+	$butCancel->bind('<ButtonRelease-1>' => sub{						
+												$sample->change_color_attr(${$self->{DATA}}->{$self->{ID}}->{color_a});
+												$sample->name(${$self->{DATA}}->{$self->{ID}}->{color_a});
+												$sample->change_color_role(${$self->{DATA}}->{$self->{ID}}->{color_r},'Edit.pm');
+												$sample->clear;
+												$sample->draw($colorCanvas);
+											});
+    $labID->form(-top => 5, -left => 5);
+	$colorFrame->form(-top => $labID, -left => 95);
+	$colorListFA->form(-top => $colorFrame, -left => 5);
+	$colorListFR->form(-top => $colorFrame, -left => $colorListFA);
+	$butOK->form(-top => $colorListFA, -left => 95);
+	$butCancel->form(-top => $colorListFA, -left => $colorListFA);
+    
+}
+
+sub draw_role {	#shows name/description    
+	my $sel = shift;
+	my $AdmTab = $sel->{PLACE};	 
+	my $group;
+	($group,$sel->{ID}) = ($sel->{SEL}=~m|__G\.(\w+)/__R\.(\w+)$|); 
+	$sel->{DATA}= \${$sel->{PROJ}}->{group}->{$group}->{role};
+	my (@@pl)  = (-pady => 5,-padx => 10);	#pack param
+	my ($frameN, $frameD, $nam, $radios, $radLab, $lang, $sc);
+	$frameN = $AdmTab->LabFrame(-label => "Name", -labelside=>"acrosstop")->pack(-anchor=>"nw",-side=>'left',-padx => 5,-pady=>3);	
+	$radLab = $::lang eq 'en' ? "Language" :  "Jazyk";
+	$lang = $::lang;
+	$radios = $AdmTab->LabFrame(-label => $radLab, -labelside => "acrosstop", -width => 40)->pack(-anchor=>"nw",-side=>'left',-padx=>5,-pady=>3);
+	my $r1 = $radios->Radiobutton(
+		-variable => \$lang,
+		-text => 'EN',
+    	-relief   => 'flat',
+    	-value    => 'en',
+		-command => sub{
+						$nam->configure(-textvariable => \ ${$sel->{DATA}}->{$sel->{ID}}->{name}->{en});
+					}
+	)->grid(-row => 0, -column => 0, -sticky => 'w');
+	my $r2 = $radios->Radiobutton(
+    	-variable => \$lang,
+		-text => 'CZ',
+    	-relief   => 'flat',
+    	-value    => 'cz',
+		-command => sub{
+						$nam->configure(-textvariable => \ ${$sel->{DATA}}->{$sel->{ID}}->{name}->{cz});
+					}
+	)->grid(-row => 0, -column => 1, -sticky => 'w');
+	$nam = $frameN->Entry(qw/-relief sunken -width 40/, -textvariable=>\ ${$sel->{DATA}}->{$sel->{ID}}->{name}->{$::lang}, -background=>'white')->pack;
+	$nam->bind('<Key>' => sub {
+		   &main::updateName($sel->{ID},${$sel->{DATA}}->{$sel->{ID}}->{name}->{$lang});
+		   ${$sel->{TREE}}->entryconfigure($sel->{SEL},-text => ${$sel->{DATA}}->{$sel->{ID}}->{name}->{$::lang});
+		   #print "\nID es: $sel->{ID}";
+	   });
+
+	$::lang eq 'en' ? $r1->select : $r2->select;
+	
+	my $frameID = $AdmTab->Label( -text => $sel->{SEL}, -relief => 'groove', -background=>'LightGoldenrod')->pack(@@pl);
+    $frameID->form(-top => 5, -left => 5);
+	$radios->form(-top => $frameID, -left => 5);
+	$frameN->form(-top => $radios, -left => 5);
+	
+    
+	
+}
+
+1;
+
+
+
+
+
+
+
+
+
+
+
+
+@
+
+
+1.21
+log
+@+ Expression Handling(add/edit) for Facts
+@
+text
+@d388 52
+a439 2
+    &AdmTabHeader($sel);
+	
+@
+
+
+1.20
+log
+@+ Editing of primary and foreign keys for attributes
+@
+text
+@d82 1
+a82 3
+   	($self->{ID}=$self->{SEL})=~s|^_LOBJ/_FACT/||;
+	$self->{DATA}=\${$self->{PROJ}}->{fact};
+	&AdmTabHeader($self);
+d252 13
+@
+
+
+1.19
+log
+@ShopCard displays Names, not IDs
+@
+text
+@d78 2
+a79 5
+	if ($self->{SEL}=~/^_LOBJ\/_ATTR/) {
+  	   ($self->{ID}=$self->{SEL})=~s/^_LOBJ\/_ATTR\/\S*\/\S*\/|^_LOBJ\/_ATTR\/\S*\/|^_LOBJ\/_ATTR\///;
+	}			
+	$self->{DATA}=\${$self->{PROJ}}->{attr};	
+	&AdmTabHeader($self);
+d232 22
+d662 1
+a662 1
+my $sel = shift;
+d666 1
+a666 1
+my $all = ShopCard->new($vT1,$::top,'Facts',\&prop::GetFact,\&prop::UpdFact,$sel->{SEL}, ${$sel->{PROJ}}->{'fact'},$sel->{PROJ},\$sel->{TREE},\$::Layer,\$::tSchemaC,$::defLayer);
+@
+
+
+1.18
+log
+@+ Editing of relation's cardinality and optionality
+@
+text
+@d196 1
+a196 1
+				   &main::updateName($sel->{ID},${$sel->{DATA}}->{$sel->{ID}}->{name}->{$lang});
+d211 1
+a211 1
+				   &main::updateName($sel->{ID},${$sel->{DATA}}->{$sel->{ID}}->{name});
+d338 1
+a338 1
+	$d->bind('<Key>' => sub{&main::updateValue($self->{ID},${$self->{DATA}}->{$self->{ID}}->{data})});
+d622 1
+a622 1
+    $all->show();
+d632 2
+a633 2
+			 					    $all->ShowSelObj(${$sel->{PROJ}}->{'attr'}, $tr);
+								    $all->ShowAvObj(${$sel->{PROJ}}->{'attr'});										   						
+d648 1
+a648 1
+    $all->show();
+d658 2
+a659 2
+			 					    $all->ShowSelObj(${$sel->{PROJ}}->{'fact'}, $tr);
+								    $all->ShowAvObj(${$sel->{PROJ}}->{'fact'});										   						
+@
+
+
+1.17
+log
+@Support for files complete. Naming of bees,ins,outs to name, not ID
+@
+text
+@d57 1
+a57 3
+      ($self->{ID}=$self->{SEL})=~s|^_REL/||;
+      $self->{DATA}=\${$self->{PROJ}}->{relation}; 
+      &AdmTabHeader($self);
+d60 3
+a62 3
+   	($self->{ID}=$self->{SEL})=~s|^_CONN/||;
+	$self->{DATA}=\${$self->{PROJ}}->{connection};
+	&AdmTabHeader($self);
+d65 1
+a65 3
+	($self->{ID}=$self->{SEL})=~s|^_CONST/||;
+	$self->{DATA}=\${$self->{PROJ}}->{const};
+	&AdmTabHeader($self);	
+d230 1
+a230 6
+    if ($sel->{TYPE} eq 'CONST'){
+		my $frameV = $AdmTab->LabFrame(-label => "Value", -labelside=>"acrosstop")->pack(-anchor=>"nw",-side=>'left',-padx => 5,-pady=>5);
+		my $d = $frameV->Entry(qw/-relief sunken -width 40/, -textvariable => \ ${$sel->{DATA}}->{$sel->{ID}}->{data}, -background=>'white')->pack;
+		$d->bind('<Key>' => sub{&main::updateValue($sel->{ID},${$sel->{DATA}}->{$sel->{ID}}->{data})});
+		$frameV->form(-top =>$frameD, -left => 5);
+    }
+d235 107
+d838 1
+a838 2
+			MediumPurple1 MediumPurple2 MediumPurple3 MediumPurple4 thistle1
+			thistle2 thistle3 thistle4/){
+@
+
+
+1.16
+log
+@+Color changing for Groups, +Property edition for groups/roles
+@
+text
+@a12 3
+#use prop;
+
+use vars qw($TabsFont $lang $Layer $Project $VisibleLayer $tSchemaC );
+@
+
+
+1.15
+log
+@Fixed mistake in AdmTabHeader
+@
+text
+@d9 1
+d15 1
+a15 1
+use vars qw($TabsFont $lang $Layer $VisibleLayer $tSchemaC);
+d155 5
+a159 2
+   elsif ($self->{TYPE} eq 'DIR/_GROUP'){
+   	draw_dir_group($self);
+d652 180
+@
+
+
+1.14
+log
+@Added support for language specific changes
+@
+text
+@d154 3
+d224 9
+a232 3
+	$radios->form(-top => $frameID, -left => 5);
+    $frameN->form(-top => $radios, -left => 5);
+    $frameD->form(-top => $frameN, -left => 5);
+a233 1
+		my $d =${$sel->{DATA}}->{$sel->{ID}}->{data};
+d235 2
+a236 1
+		$frameV->Entry(qw/-relief sunken -width 40/, -textvariable => \$d, -background=>'white')->pack;
+@
+
+
+1.13
+log
+@+ Editing of Transformation's code
+@
+text
+@d163 3
+a165 2
+    my ($frameN, $frameD, $nam);             
+    $frameN = $AdmTab->LabFrame(-label => "Name", -labelside=>"acrosstop")->pack(-anchor=>"nw",-side=>'left',-padx => 5);
+d169 25
+d196 1
+a198 1
+				   &main::updateName($sel->{ID},${$sel->{DATA}}->{$sel->{ID}}->{name}->{$::lang});
+d200 6
+d213 2
+a214 12
+    }
+
+    $frameD = $AdmTab->LabFrame(-label => "Description", -labelside=>"acrosstop")->pack(-anchor=>"nw",-side=>'left',-padx => 5);   
+    my $sc = $frameD->Scrolled(qw/Text -setgrid true -height 5 -width 40 -wrap word -scrollbars e/, -background=>'white')->pack;
+    if ($sel->{SEL}=~/^_LOBJ\/_ATTR/ || $sel->{SEL}=~/^_LOBJ\/_FACT/ || $sel->{SEL}=~/^_LAYER/)  {
+        $sc->insert('0.0', ${$sel->{DATA}}->{$sel->{ID}}->{description}->{$::lang});
+		$sc->bind('<Leave>' => sub {
+				   ${$sel->{DATA}}->{$sel->{ID}}->{description}->{$::lang}=$sc->get('0.0','end');
+			   });
+    }
+    else {
+        $sc->insert('0.0', ${$sel->{DATA}}->{$sel->{ID}}->{description});
+d216 1
+a216 1
+				   ${$sel->{DATA}}->{$sel->{ID}}->{description}=$sc->get('0.0','end');
+d218 1
+a218 1
+    }   
+d221 2
+a222 1
+    $frameN->form(-top => $frameID, -left => 5);
+d226 1
+a226 1
+		my $frameV = $AdmTab->LabFrame(-label => "Value", -labelside=>"acrosstop")->pack(-anchor=>"nw",-side=>'left',-padx => 5);
+@
+
+
+1.12
+log
+@Fixed bug in name/desc editing.  +Deletion of objects from visible layer (Del) or project (Shift-Del)
+@
+text
+@d14 1
+a14 1
+use vars qw($TabsFont $lang);
+d171 2
+a172 1
+			       
+d179 1
+a179 1
+			       
+d215 1
+d225 1
+d228 36
+@
+
+
+1.11
+log
+@log. model
+@
+text
+@d163 1
+a163 1
+    my ($frameN, $frameD);            
+d166 7
+a172 4
+       # only attrs and facts have following hash:
+       #  ->' 'attr'  'name' => {'$toolbaren' => 'Year','cz' => 'Rok' },                                
+       #print Dumper($sel->{ID});       
+       $frameN->Entry(qw/-relief sunken -width 40/, -textvariable=>\ ${$sel->{DATA}}->{$sel->{ID}}->{name}->{$::lang}, -background=>'white')->pack;
+d175 5
+a179 1
+       $frameN->Entry(qw/-relief sunken -width 40/, -textvariable=>\ ${$sel->{DATA}}->{$sel->{ID}}->{name}, -background=>'white')->pack;
+d183 1
+a183 1
+    my $sc = $frameD->Scrolled(qw/Text -setgrid true -height 5 -width 40 -wrap word -scrollbars e/, -background=>'white')->pack;   
+d185 4
+a188 1
+	$sc->insert('0.0', ${$sel->{DATA}}->{$sel->{ID}}->{description}->{$::lang});
+d192 3
+d201 4
+a204 4
+	my $d =${$sel->{DATA}}->{$sel->{ID}}->{data};
+	my $frameV = $AdmTab->LabFrame(-label => "Value", -labelside=>"acrosstop")->pack(-anchor=>"nw",-side=>'left',-padx => 5);
+	$frameV->Entry(qw/-relief sunken -width 40/, -textvariable => \$d, -background=>'white')->pack;
+	$frameV->form(-top =>$frameD, -left => 5);
+d206 2
+a207 5
+    $sc->bind('<Leave>' => sub {
+			       main::GetHistory();
+           		       prop::UpDateTree();
+			       ${$sel->{DATA}}->{$sel->{ID}}->{description}=$sc->get('0.0','end');
+			   });
+@
+
+
+1.10
+log
+@Deletion of objects almost complete
+@
+text
+@d165 1
+a165 1
+    if ($sel->{SEL}=~/^_LOBJ\/_ATTR/ || $sel->{SEL}=~/^_LOBJ\/_FACT/)  {
+d168 1
+a168 1
+       #print Dumper($sel->{ID});
+d177 2
+a178 2
+    if ($sel->{SEL}=~/^_LOBJ\/_ATTR/ || $sel->{SEL}=~/^_LOBJ\/_FACT/)  {
+        $sc->insert('0.0', ${$sel->{DATA}}->{$sel->{ID}}->{description}->{$::lang});
+d256 1
+a256 1
+	    ($s = ${$sel->{PROJ}}->{'gui-layer'}->{$tr}->{name}) =~ s/(\w{3})\s(\w{3})/$1\n$2/g;			  
+d309 1
+a309 1
+	    ($s = $Project->{'gui-layer'}->{$tr}->{name}) =~ s/(\w{3})\s(\w{3})/$1\n$2/g;
+d394 1
+a394 1
+	    ($s = $Project->{'gui-layer'}->{$tr}->{name}) =~ s/(\w{3})\s(\w{3})/$1\n$2/g;
+d450 1
+a450 1
+	    ($s = ${$sel->{PROJ}}->{'gui-layer'}->{$tr}->{name}) =~ s/(\w{3})\s(\w{3})/$1\n$2/g;			  
+d476 1
+a476 1
+	    ($s = ${$sel->{PROJ}}->{'gui-layer'}->{$tr}->{name}) =~ s/(\w{3})\s(\w{3})/$1\n$2/g;			  
+d502 1
+a502 1
+	    ($s = $Project->{'gui-layer'}->{$tr}->{name}) =~ s/(\w{3})\s(\w{3})/$1\n$2/g;
+d531 1
+a531 1
+	    ($s = ${$sel->{PROJ}}->{'gui-layer'}->{$tr}->{name}) =~ s/(\w{3})\s(\w{3})/$1\n$2/g;			  
+d558 1
+a558 1
+	    ($s = $Project->{'gui-layer'}->{$tr}->{name}) =~ s/(\w{3})\s(\w{3})/$1\n$2/g;
+@
+
+
+1.9
+log
+@fix bug - drag and drop
+@
+text
+@d110 1
+a110 1
+	$self->{DATA}=\${$self->{PROJ}}->{host}->{$host}->{transformation}->{$tr}->{outut};
+@
+
+
+1.8
+log
+@view data
+@
+text
+@d85 3
+a87 9
+  	   ($self->{ID}=$self->{SEL})=~s|^_LOBJ/_ATTR/||;
+	}
+	else {
+            print 'yyyy';
+	}
+	
+	
+	print Dumper($self->{ID}, 'aaa');
+	$self->{DATA}=\${$self->{PROJ}}->{attr};
+d163 1
+a163 2
+    my ($frameN, $frameD);
+
+d168 1
+a168 1
+       print Dumper($sel->{ID});
+@
+
+
+1.7
+log
+@changes in loading fyz. and log. model
+@
+text
+@d342 30
+d373 2
+@
+
+
+1.6
+log
+@fixed the selection of hrelation
+@
+text
+@d84 9
+a92 1
+   	($self->{ID}=$self->{SEL})=~s|^_LOBJ/_ATTR/.*/||;
+d105 1
+a105 3
+	draw_tran($self);
+	
+	
+d175 2
+a176 1
+       $frameN->Entry(qw/-relief sunken -width 40/, -textvariable=>\ ${$sel->{DATA}}->{$sel->{ID}}->{name}->{$lang}, -background=>'white')->pack;
+d185 1
+a185 1
+        $sc->insert('0.0', ${$sel->{DATA}}->{$sel->{ID}}->{description}->{$lang});
+d444 1
+a444 1
+    $all->AddButton('L','REFRESH','Refresh Available Facts',\&porp::RefObj);
+@
+
+
+1.5
+log
+@Added ShopCard for View, trig, transf & const. (only hrelation not selectable)
+@
+text
+@d42 1
+a42 4
+	$self->{PLACE} = $place;
+	
+	
+	
+a137 10
+=pod	
+		This is the original code from prop.pl.
+		Got rid of Tab2, it didn't seem to be doing anything.
+		my $admTabs = $AdmTab->NoteBook(-ipadx => 6, -ipady => 6, -font=>$TabsFont)->pack(@@plt);
+		my $Tab1=$admTabs->add("tbl1", -label => "Admin", -underline => 0);
+		#my $Tab2=$admTabs->add("tbl2", -label => "New Layer", -underline => 0);		
+		$PropData{_P}=$Project->{'gui-layer'};
+		($PropData{_ID}=$SLSel)=~s|^_LAYER/||;		
+		&AdmTabHeader($Tab1);
+=cut
+d159 377
+a535 439
+	 sub AdmTabHeader {	#shows name/description    
+	    #print("esto lo hace edit.pl\n");
+	    my $sel = shift;
+	    my $AdmTab = $sel->{PLACE};	# project hash, id, proc for additional updates after button press 
+	    #$AdmTab->focusFollowsMouse;  # set focus to object under the mouse 
+	    my (@@pl)  = (-pady => 5,-padx => 10);	#pack param
+	    my ($frameN, $frameD);
+
+	    $frameN = $AdmTab->LabFrame(-label => "Name", -labelside=>"acrosstop")->pack(-anchor=>"nw",-side=>'left',-padx => 5);
+	    if ($sel->{SEL}=~/^_LOBJ\/_ATTR/ || $sel->{SEL}=~/^_LOBJ\/_FACT/)  {
+	       # only attrs and facts have following hash:
+	       #  ->' 'attr'  'name' => {'$toolbaren' => 'Year','cz' => 'Rok' },                                
+	       $frameN->Entry(qw/-relief sunken -width 40/, -textvariable=>\ ${$sel->{DATA}}->{$sel->{ID}}->{name}->{$lang}, -background=>'white')->pack;
+	    }
+	    else {
+	       $frameN->Entry(qw/-relief sunken -width 40/, -textvariable=>\ ${$sel->{DATA}}->{$sel->{ID}}->{name}, -background=>'white')->pack;
+	    }
+
+	    $frameD = $AdmTab->LabFrame(-label => "Description", -labelside=>"acrosstop")->pack(-anchor=>"nw",-side=>'left',-padx => 5);   
+	    my $sc = $frameD->Scrolled(qw/Text -setgrid true -height 5 -width 40 -wrap word -scrollbars e/, -background=>'white')->pack;   
+	    if ($sel->{SEL}=~/^_LOBJ\/_ATTR/ || $sel->{SEL}=~/^_LOBJ\/_FACT/)  {
+		$sc->insert('0.0', ${$sel->{DATA}}->{$sel->{ID}}->{description}->{$lang});
+	    }
+	    else {
+		$sc->insert('0.0', ${$sel->{DATA}}->{$sel->{ID}}->{description});
+	    }   
+	    my $frameID = $AdmTab->Label( -text => $sel->{SEL}, -relief => 'groove', -background=>'LightGoldenrod')->pack(@@pl);
+	    $frameID->form(-top => 5, -left => 5);
+	    $frameN->form(-top => $frameID, -left => 5);
+	    $frameD->form(-top => $frameN, -left => 5);
+	    if ($sel->{TYPE} eq 'CONST'){
+	    	#*** From prop.pl //modified!!
+		#print Dumper('-');
+		#print Dumper(${$sel->{DATA}});
+		#		print Dumper('-');
+		
+		my $d =${$sel->{DATA}}->{$sel->{ID}}->{data};
+		my $frameV = $AdmTab->LabFrame(-label => "Value", -labelside=>"acrosstop")->pack(-anchor=>"nw",-side=>'left',-padx => 5);
+		$frameV->Entry(qw/-relief sunken -width 40/, -textvariable => \$d, -background=>'white')->pack;
+		##print "all good2\n";
+		$frameV->form(-top =>$frameD, -left => 5);
+		#print "all good 3\n";
+	    }
+	    $sc->bind('<Leave>' => sub {
+                                	 #${$sel->{TREE}}->add('_REL/lu_status#statusgroup_id@@lu_statusgroup#id', -text => ${$sel->{DATA}}->{$sel->{ID}}->{name} , -image => $Img{REL}, -data => 'REL');
+					 # ${$sel->{TREE}}->delete(-entry => '_REL/lu_status#statusgroup_id@@lu_statusgroup#id');
+					 ${$sel->{DATA}}->{$sel->{ID}}->{description}=$sc->get('0.0','end');
+				       });
+	 }
+	 
+	 sub draw_tran{
+	 	#here we create all the tabs needed and set them up.
+		my $sel = shift;
+		my ($host);
+		($host,$sel->{ID})=($sel->{SEL}=~m|^([\w.]+)/_TRAN/(\w+)$|);
+		$sel->{DATA}=\${$sel->{PROJ}}->{host}->{$host}->{transformation};
+		my $AdmTab = $sel->{PLACE};	# project hash, id, proc for additional updates after button press 
+		my $admTabs = $AdmTab->NoteBook(-ipadx => 6, -ipady => 6, -font=>$::TabsFont)->pack(@@plt);
+		my $Tab1=$admTabs->add("tbl1", -label => "Admin", -underline => 0);
+		my $Tab2=$admTabs->add("tbl2", -label => "Input", -underline => 0);
+		my $Tab3=$admTabs->add("tbl3", -label => "Output", -underline => 0);
+		my $Tab4=$admTabs->add("tbl4", -label => "Triger", -underline => 0);
+		my $Tab5=$admTabs->add("tbl5", -label => "Status", -underline => 0);
+		$sel->{PLACE}= $Tab1;
+		&AdmTabHeader($sel);
+	}
+	
+	sub draw_host{
+		my $sel = shift;
+		$sel->{ID}=$sel->{SEL};
+		$sel->{DATA}=\${$sel->{PROJ}}->{host};
+		my $AdmTab = $sel->{PLACE};	# project hash, id, proc for additional updates after button press 
+		my $admTabs = $AdmTab->NoteBook(-ipadx => 6, -ipady => 6, -font=>$::TabsFont)->pack(@@plt);
+		my $Tab1=$admTabs->add("tbl1", -label => "Admin", -underline => 0);
+		my $Tab2=$admTabs->add("tbl2", -label => "Data Sources", -underline => 0);
+		my $Tab3=$admTabs->add("tbl3", -label => "Transformations", -underline => 0);
+		$sel->{PLACE}= $Tab1;
+		&AdmTabHeader($sel);
+	}
+	
+	sub draw_src{
+		my $sel = shift;
+		my ($host,$src)=($sel->{SEL}=~m|^([\w.]+)/(\w+)$|);
+		$sel->{ID}=$src;
+		$sel->{DATA}=\${$sel->{PROJ}}->{host}->{$host}->{source};
+		my $AdmTab = $sel->{PLACE};	# project hash, id, proc for additional updates after button press
+		my $admTabs = $AdmTab->NoteBook(-ipadx => 6, -ipady => 6, -font=>$::TabsFont)->pack(@@plt);
+		my $Tab1=$admTabs->add("tbl1", -label => "Admin", -underline => 0);
+		my $Tab2=$admTabs->add("tbl2", -label => "Tables", -underline => 0);
+		my $Tab3=$admTabs->add("tbl3", -label => "DBMS Views", -underline => 0);
+		my $Tab4=$admTabs->add("tbl4", -label => "ETL Views", -underline => 0);
+		$sel->{PLACE}= $Tab1;
+		&AdmTabHeader($sel);
+		
+		#  A ver si esta vara funca!! ->
+		my $vTabs = $Tab2->NoteBook(-ipadx => 6, -ipady => 6, -font=>$::TabsFont)->pack(@@plt);
+		my $vT1=$vTabs->add("vt", -label => "All\nLayers", -underline => 0, -raisecmd => sub{});
+		my $all = ShopCard->new($vT1,$::top,'Tables',\&DSI::GetTableList,\&DSI::UpdSelectedTables,$sel->{SEL}, ${$sel->{DATA}}->{$sel->{ID}}->{table},\$sel->{PROJ},\$sel->{TREE},\$::Layer,\$::tSchemaC,$::defLayer);
+		$all->show();
+		$all->AddButton('L','REFRESH','Refresh Available Tables',\&prop::RefObj);
+		$all->AddButton('R','SELECT','Use selection of Tables',\&prop::UseObj);
+                my $i=0;
+		foreach my $tr (keys %{ ${$sel->{PROJ}}->{'gui-layer'} }) {
+			# tr - id of layer
+			$i++;
+			my ($vT,$all,$s);
+			($s = ${$sel->{PROJ}}->{'gui-layer'}->{$tr}->{name}) =~ s/(\w{3})\s(\w{3})/$1\n$2/g;			  
+			$vT = $vTabs->add("vt$i", -label => $s,-raisecmd => sub{
+			 							$all->ShowSelObj(${$sel->{DATA}}->{$sel->{ID}}->{table}, $tr);
+										$all->ShowAvObj(${$sel->{DATA}}->{$sel->{ID}}->{table});										   						
+										});				                     
+			$all = ShopCard->new($vT,$::top,'Tables',undef,\&DSI::UpdSelectedTables,$sel->{SEL}, ${$sel->{DATA}}->{$sel->{ID}}->{table},\$sel->{PROJ},\$sel->{TREE},\$::Layer,\$::tSchemaC,$tr);
+			$all->show();
+	        	$all->AddButton('R','SELECT','Use selection of Tables',\&prop::UseObj);		
+			
+		}
+
+		#my $DBTl = $AdmTab->Label(-text => "Source Type:", -anchor => 'e', -justify => 'right');
+		#my @@dbn= (keys %{$DBTypes->{database}});
+		#my $DBT = $AdmTab->Optionmenu(-options => \@@dbn, -variable => \$DBTypeSel, -command=>sub{
+		
+#													});
+                my $conn='!Connected';
+		my $DBConB; 
+ 		my $stat;
+		$DBConB = $AdmTab->Button(-text => "$conn", 
+					  -padx => 10, 
+					  -image    => $AdmTab->Pixmap(-file => 'img/stop.xpm'),
+					  -command => sub {		 						                                																										
+							      if ($stat) {
+ 								$stat = &DSI::DisConnect2DB($src);
+								$DBConB->configure('image'=> $AdmTab->Pixmap(-file => 'img/stop.xpm'));								
+							      } 
+							      else {
+								$stat = &DSI::Connect2DB($host,$src,\$sel->{PROJ});
+								$DBConB->configure('image'=> $AdmTab->Pixmap(-file => 'img/run.xpm'));  
+							      }
+								  
+							   })->pack();
+		# <- hasta aqui el descule! 
+	}
+	
+	sub draw_tab{
+		my $sel = shift;
+		my ($host,$src,$tbl)=($sel->{SEL}=~m|^([\w.]+)/(\w+)/(\w+)$|);
+		my $Project = ${$sel->{PROJ}};
+		$sel->{ID}=$tbl;
+		$sel->{DATA}=\${$sel->{PROJ}}->{host}->{$host}->{source}->{$src}->{table};
+		my $AdmTab = $sel->{PLACE};	# project hash, id, proc for additional updates after button press 
+		my $admTabs = $AdmTab->NoteBook(-ipadx => 6, -ipady => 6, -font=>$::TabsFont)->pack(@@plt);
+		my $Tab1=$admTabs->add("tbl1", -label => "Admin", -underline => 0);
+		my $Tab2=$admTabs->add("tbl2", -label => "Columns", -underline => 0);
+		my $Tab3=$admTabs->add("tbl3", -label => "Indexes", -underline => 0);
+		my $Tab4=$admTabs->add("tbl4", -label => "Data", -underline => 0);
+		$sel->{PLACE} = $Tab1;
+		&AdmTabHeader($sel);
+		my $vTabs = $Tab2->NoteBook(-ipadx => 6, -ipady => 6, -font=>$::TabsFont)->pack(@@plt);
+		my $vT1=$vTabs->add("vt", -label => "All\nLayers", -underline => 0);
+		my $all = ShopCard->new($vT1,$::top,'Columns',\&DSI::GetColumnList,\&DSI::UpdSelectedColumns,$sel->{SEL}, ${$sel->{DATA}}->{$sel->{ID}}->{column},$sel->{PROJ},\$sel->{TREE},\$::Layer,\$::tSchemaC,$::defLayer);
+		$all->show();
+		$all->AddButton('L','REFRESH','Refresh Available Columns',\&prop::RefObj);
+        	$all->AddButton('R','SELECT','Use selection of Columns',\&prop::UseObj);		
+         
+		my $i=0;
+		foreach my $tr (keys %{ $Project->{'gui-layer'} }) {
+			$i++;			
+			my ($vT,$all,$s);
+			($s = $Project->{'gui-layer'}->{$tr}->{name}) =~ s/(\w{3})\s(\w{3})/$1\n$2/g;
+			$vT=$vTabs->add("vt$i", -label => $s,-raisecmd => sub{
+			 							$all->ShowSelObj(${$sel->{DATA}}->{$sel->{ID}}->{column}, $tr);
+										$all->ShowAvObj(${$sel->{DATA}}->{$sel->{ID}}->{column});										   						
+										});
+			$all = ShopCard->new($vT,$::top,'Columns',undef,\&DSI::UpdSelectedColumns,$sel->{SEL}, ${$sel->{DATA}}->{$sel->{ID}}->{column},$sel->{PROJ},\$sel->{TREE},\$::Layer,\$::tSchemaC,$tr);
+			$all->show();
+			$all->AddButton('R','SELECT','Use selection of Columns',\&prop::UseObj);
+		}
+		my $conn='!Connected';
+		my $DBConB; 
+ 		my $stat;
+		$DBConB = $AdmTab->Button(-text => "$conn", 
+					  -padx => 10, 
+					  -image    => $AdmTab->Pixmap(-file => 'img/stop.xpm'),
+					  -command => sub {		 						                                																										
+							      if ($stat) {
+ 								$stat = &DSI::DisConnect2DB($src);
+								$DBConB->configure('image'=> $AdmTab->Pixmap(-file => 'img/stop.xpm'));								
+							      } 
+							      else {
+								$stat = &DSI::Connect2DB($host,$src,\$Project);
+								$DBConB->configure('image'=> $AdmTab->Pixmap(-file => 'img/run.xpm'));  
+							      }
+								  
+							   })->pack();		
+	}
+	
+	sub draw_view{
+		my $sel = shift;
+		my ($host,$src,$v)=($sel->{SEL}=~m|^([\w.]+)/(\w+)/(\w+)$|);
+		my $Project = ${$sel->{PROJ}};
+		$sel->{ID}=$v;
+		$sel->{DATA}=\${$sel->{PROJ}}->{host}->{$host}->{source}->{$src}->{view};
+		my $AdmTab = $sel->{PLACE};	# project hash, id, proc for additional updates after button press 
+	 	my $admTabs = $AdmTab->NoteBook(-ipadx => 6, -ipady => 6, -font=>$::TabsFont)->pack(@@plt);
+		my $Tab1=$admTabs->add("tbl1", -label => "Admin", -underline => 0);
+		my $Tab2=$admTabs->add("tbl2", -label => "Columns", -underline => 0);
+		my $Tab3=$admTabs->add("tbl3", -label => "Input", -underline => 0);
+		my $Tab4=$admTabs->add("tbl4", -label => "Data", -underline => 0);
+		#$PropData{_P}=$Project->{host}->{$host}->{source}->{$src}->{view};
+		#$PropData{_ID}=$v;
+		$sel->{PLACE} = $Tab1;
+		&AdmTabHeader($sel);
+		
+		#Cambios a partir de aqui
+		##########################
+		my $vTabs = $Tab2->NoteBook(-ipadx => 6, -ipady => 6, -font=>$::TabsFont)->pack(@@plt);
+		my $vT1=$vTabs->add("vt", -label => "All\nLayers", -underline => 0);
+		my $all = ShopCard->new($vT1,$::top,'Columns',\&DSI::GetColumnList,\&DSI::UpdSelectedColumns,$sel->{SEL}, ${$sel->{DATA}}->{$sel->{ID}}->{column},$sel->{PROJ},\$sel->{TREE},\$::Layer,\$::tSchemaC,$::defLayer);
+		$all->show();
+		$all->AddButton('L','REFRESH','Refresh Available Columns',\&prop::RefObj);
+        	$all->AddButton('R','SELECT','Use selection of Columns',\&prop::UseObj);		
+         
+		my $i=0;
+		foreach my $tr (keys %{ $Project->{'gui-layer'} }) {
+			$i++;			
+			my ($vT,$all,$s);
+			($s = $Project->{'gui-layer'}->{$tr}->{name}) =~ s/(\w{3})\s(\w{3})/$1\n$2/g;
+			$vT=$vTabs->add("vt$i", -label => $s,-raisecmd => sub{
+			 							$all->ShowSelObj(${$sel->{DATA}}->{$sel->{ID}}->{column}, $tr);
+										$all->ShowAvObj(${$sel->{DATA}}->{$sel->{ID}}->{column});										   						
+										});
+			$all = ShopCard->new($vT,$::top,'Columns',undef,\&DSI::UpdSelectedColumns,$sel->{SEL}, ${$sel->{DATA}}->{$sel->{ID}}->{column},$sel->{PROJ},\$sel->{TREE},\$::Layer,\$::tSchemaC,$tr);
+			$all->show();
+			$all->AddButton('R','SELECT','Use selection of Columns',\&prop::UseObj);
+		}
+		my $conn='!Connected';
+		my $DBConB; 
+ 		my $stat;
+		$DBConB = $AdmTab->Button(-text => "$conn", 
+					  -padx => 10, 
+					  -image    => $AdmTab->Pixmap(-file => 'img/stop.xpm'),
+					  -command => sub {		 						                                																										
+							      if ($stat) {
+ 								$stat = &DSI::DisConnect2DB($src);
+								$DBConB->configure('image'=> $AdmTab->Pixmap(-file => 'img/stop.xpm'));								
+							      } 
+							      else {
+								$stat = &DSI::Connect2DB($host,$src,\$Project);
+								$DBConB->configure('image'=> $AdmTab->Pixmap(-file => 'img/run.xpm'));  
+							      }
+								  
+							   })->pack();
+		#hasta aca los cambios
+		#######################
+	}
+	
+	sub draw_col{
+		my $sel = shift;
+		my ($host,$src,$tbl,$col)=($sel->{SEL}=~m|^([\w.]+)/(\w+)/(\w+)/(\w+)$|);
+		$sel->{ID}=$col;
+		$sel->{DATA}=\${$sel->{PROJ}}->{host}->{$host}->{source}->{$src}->{table}->{$tbl}->{column};
+		my $AdmTab = $sel->{PLACE};	# project hash, id, proc for additional updates after button press 
+		my $admTabs = $AdmTab->NoteBook(-ipadx => 6, -ipady => 6, -font=>$::TabsFont)->pack(@@plt);
+		my $Tab1=$admTabs->add("tbl1", -label => "Admin", -underline => 0);
+		my $Tab2=$admTabs->add("tbl2", -label => "Data", -underline => 0);
+		#$PropData{_P}=$Project->{host}->{$host}->{source}->{$src}->{table}->{$tbl}->{column};
+		#$PropData{_ID}=$col;
+		$sel->{PLACE} = $Tab1;
+		&AdmTabHeader($sel);
+	}
+	
+	
+	sub draw_dir_attr{
+		my $sel = shift;
+		my $AdmTab = $sel->{PLACE};	# project hash, id, proc for additional updates after button press 
+=pod		my $Project = $sel->{PROJ};
+		my $vTabs = $AdmTab->NoteBook(-ipadx => 6, -ipady => 6, -font=>$::TabsFont)->pack(@@plt);
+		my $vT1=$vTabs->add("vt", -label => "All\nLayers", -underline => 0);
+         	my $all = ShopCard->new($vT1,$::top,'Attributes',\&prop::GetAttr,\&prop::UpdAttr,$sel->{SEL}, $Project->{'attr'},\$Project,\$sel->{TREE},\$::Layer,\$::tSchemaC,$::defLayer);
+		$all->show();
+		$all->AddButton('L','REFRESH','Refresh Available Attributes',\&prop::RefObj);
+		$all->AddButton('R','SELECT','Use selection of Attributes',\&prop::UseObj);
+		my $i=0;
+		foreach my $tr (keys %{ $Project->{'gui-layer'} }) {
+			# tr - id of layer
+			$i++;
+			my ($vT,$all,$s);
+			($s = $Project->{'gui-layer'}->{$tr}->{name}) =~ s/(\w{3})\s(\w{3})/$1\n$2/g;			  
+			$vT = $vTabs->add("vt$i", -label => $s,-raisecmd => sub{
+			 							$all->ShowSelObj($Project->{'attr'}, $tr);
+										$all->ShowAvObj($Project->{'attr'});										   						
+										});				                     
+		        $all = ShopCard->new($vT,$::top,'Attributes',\&prop::GetAttr,\&prop::UpdAttr,$sel->{SEL}, $Project->{'attr'},\$Project,\$sel->{TREE},\$::Layer,\$::tSchemaC,$tr);
+		        $all->show();	
+		        $all->AddButton('R','SELECT','Use selection of Attributes',\&prop::UseObj);		
+			
+=cut
+		my $vTabs = $AdmTab->NoteBook(-ipadx => 6, -ipady => 6, -font=>$::TabsFont)->pack(@@plt);
+		my $vT1=$vTabs->add("vt", -label => "All\nLayers", -underline => 0);
+         	my $all = ShopCard->new($vT1,$::top,'Attributes',\&prop::GetAttr,\&prop::UpdAttr,$sel->{SEL}, ${$sel->{PROJ}}->{'attr'},$sel->{PROJ},\$sel->{TREE},\$::Layer,\$::tSchemaC,$::defLayer);
+		$all->show();
+		$all->AddButton('L','REFRESH','Refresh Available Attributes',\&prop::RefObj);
+		$all->AddButton('R','SELECT','Use selection of Attributes',\&prop::UseObj);
+		my $i=0;
+		foreach my $tr (keys %{ ${$sel->{PROJ}}->{'gui-layer'}}) {
+			# tr - id of layer
+			$i++;
+			my ($vT,$all,$s);
+			($s = ${$sel->{PROJ}}->{'gui-layer'}->{$tr}->{name}) =~ s/(\w{3})\s(\w{3})/$1\n$2/g;			  
+			$vT = $vTabs->add("vt$i", -label => $s,-raisecmd => sub{
+			 							$all->ShowSelObj(${$sel->{PROJ}}->{'attr'}, $tr);
+										$all->ShowAvObj(${$sel->{PROJ}}->{'attr'});										   						
+										});				                     
+		        $all = ShopCard->new($vT,$::top,'Attributes',\&prop::GetAttr,\&prop::UpdAttr,$sel->{SEL}, ${$sel->{PROJ}}->{'attr'},$sel->{PROJ},\$sel->{TREE},\$::Layer,\$::tSchemaC,$tr);
+		        $all->show();	
+		        $all->AddButton('R','SELECT','Use selection of Attributes',\&prop::UseObj);		
+			
+		}
+	} 
+	
+	sub draw_dir_fact{
+  	    my $sel = shift;
+		my $AdmTab = $sel->{PLACE};	# project hash, id, proc for additional updates after button press 
+		my $vTabs = $AdmTab->NoteBook(-ipadx => 6, -ipady => 6, -font=>$::TabsFont)->pack(@@plt);
+		my $vT1=$vTabs->add("vt", -label => "All\nLayers", -underline => 0);
+        my $all = ShopCard->new($vT1,$::top,'Facts',\&prop::GetFact,\&prop::UpdFact,$sel->{SEL}, ${$sel->{PROJ}}->{'fact'},$sel->{PROJ},\$sel->{TREE},\$::Layer,\$::tSchemaC,$::defLayer);
+		$all->show();
+		$all->AddButton('L','REFRESH','Refresh Available Facts',\&porp::RefObj);
+		$all->AddButton('R','SELECT','Use selection of Facts',\&prop::UseObj);
+		my $i=0;
+		foreach my $tr (keys %{ ${$sel->{PROJ}}->{'gui-layer'}}) {
+			# tr - id of layer
+			$i++;
+			my ($vT,$all,$s);
+			($s = ${$sel->{PROJ}}->{'gui-layer'}->{$tr}->{name}) =~ s/(\w{3})\s(\w{3})/$1\n$2/g;			  
+			$vT = $vTabs->add("vt$i", -label => $s,-raisecmd => sub{
+			 							$all->ShowSelObj(${$sel->{PROJ}}->{'fact'}, $tr);
+										$all->ShowAvObj(${$sel->{PROJ}}->{'fact'});										   						
+										});				                     
+		        $all = ShopCard->new($vT,$::top,'Attributes',\&prop::GetFact,\&prop::UpdFact,$sel->{SEL}, ${$sel->{PROJ}}->{'fact'},$sel->{PROJ},\$sel->{TREE},\$::Layer,\$::tSchemaC,$tr);
+         		$all->show();	
+		        $all->AddButton('R','SELECT','Use selection of Facts',\&prop::UseObj);
+		}
+	}
+	
+	sub draw_dir_trig{
+		my $sel = shift;
+		#($sel->{ID}=$sel->{SEL})=~s|^_TRIG/||;
+		#my ($host,$src,$v)=($sel->{SEL}=~m|^([\w.]+)/(\w+)/(\w+)$|);
+		my $Project = ${$sel->{PROJ}};
+		#$sel->{ID}=$v;
+		$sel->{DATA}=\${$sel->{PROJ}}->{trigger};
+		#$sel->{DATA}=\${$sel->{PROJ}}->{host}->{$host}->{source}->{$src}->{view};
+		my $AdmTab = $sel->{PLACE};	# project hash, id, proc for additional updates after button press 
+	 	#my $admTabs = $AdmTab->NoteBook(-ipadx => 6, -ipady => 6, -font=>$::TabsFont)->pack(@@plt);
+	
+		#cambios
+		my $vTabs = $AdmTab->NoteBook(-ipadx => 6, -ipady => 6, -font=>$::TabsFont)->pack(@@plt);
+		my $vT1=$vTabs->add("vt", -label => "All\nLayers", -underline => 0);
+		my $all = ShopCard->new($vT1,$::top,'Triggers',\&prop::GetTrig,\&prop::UpdTrig,$sel->{SEL}, ${$sel->{DATA}},$sel->{PROJ},\$sel->{TREE},\$::Layer,\$::tSchemaC,$::defLayer);
+		$all->show();
+		$all->AddButton('L','REFRESH','Refresh Available Triggers',\&prop::RefObj);
+        	$all->AddButton('R','SELECT','Use selection of Triggers',\&prop::UseObj);		
+         
+		my $i=0;
+		foreach my $tr (keys %{ $Project->{'gui-layer'} }) {
+			$i++;			
+			my ($vT,$all,$s);
+			($s = $Project->{'gui-layer'}->{$tr}->{name}) =~ s/(\w{3})\s(\w{3})/$1\n$2/g;
+			$vT=$vTabs->add("vt$i", -label => $s,-raisecmd => sub{
+			 							$all->ShowSelObj(${$sel->{DATA}}, $tr);
+										$all->ShowAvObj(${$sel->{DATA}});										   						
+										});
+			$all = ShopCard->new($vT,$::top,'Triggers',undef,\&prop::UpdTrig,$sel->{SEL}, ${$sel->{DATA}},$sel->{PROJ},\$sel->{TREE},\$::Layer,\$::tSchemaC,$tr);
+			$all->show();
+			$all->AddButton('R','SELECT','Use selection of Triggers',\&prop::UseObj);
+		}
+		#hasta aca los cambios
+		#######################
+	
+	}
+	
+	sub draw_dir_tran{
+		#here we create all the tabs needed and set them up.
+		my $sel = shift;
+		my ($host);
+		#($host)=($sel->{SEL}=~m|^([\w.]+)/$|);
+		#($host)=($sel->{SEL}=~m|^([^\/]*)/$|);
+		($host)=($sel->{SEL}=~m|^([\w.]+)/_TRAN$|);
+		#print("este el el host:  ", $host, "\n");
+		$sel->{DATA}=\${$sel->{PROJ}}->{host}->{$host}->{transformation};
+		my $AdmTab = $sel->{PLACE};	# project hash, id, proc for additional updates after button press 
+		my $vTabs = $AdmTab->NoteBook(-ipadx => 6, -ipady => 6, -font=>$::TabsFont)->pack(@@plt);
+		my $vT1=$vTabs->add("vt", -label => "All\nLayers", -underline => 0);
+        my $all = ShopCard->new($vT1,$::top,'Transformations',\&prop::GetTrans,\&prop::UpdTrans,$sel->{SEL}, ${$sel->{DATA}},$sel->{PROJ},\$sel->{TREE},\$::Layer,\$::tSchemaC,$::defLayer);
+		$all->show();
+		$all->AddButton('L','REFRESH','Refresh Available Transformations',\&porp::RefObj);
+		$all->AddButton('R','SELECT','Use selection of Transformations',\&prop::UseObj);
+		my $i=0;
+		foreach my $tr (keys %{ ${$sel->{PROJ}}->{'gui-layer'}}) {
+			# tr - id of layer
+			$i++;
+			my ($vT,$all,$s);
+			($s = ${$sel->{PROJ}}->{'gui-layer'}->{$tr}->{name}) =~ s/(\w{3})\s(\w{3})/$1\n$2/g;			  
+			$vT = $vTabs->add("vt$i", -label => $s,-raisecmd => sub{
+			 							$all->ShowSelObj(${$sel->{DATA}}, $tr);
+										$all->ShowAvObj(${$sel->{DATA}});										   						
+										});				                     
+		        $all = ShopCard->new($vT,$::top,'Transformations',\&prop::GetTrans,\&prop::UpdTrans,$sel->{SEL}, ${$sel->{DATA}},$sel->{PROJ},\$sel->{TREE},\$::Layer,\$::tSchemaC,$tr);
+         		$all->show();	
+		        $all->AddButton('R','SELECT','Use selection of Transformations',\&prop::UseObj);
+		}
+	}
+	
+	sub draw_dir_const{
+		my $sel = shift;
+		my $Project = ${$sel->{PROJ}};
+		$sel->{DATA}=\${$sel->{PROJ}}->{const};
+		my $AdmTab = $sel->{PLACE};	# project hash, id, proc for additional updates after button press 
+		my $vTabs = $AdmTab->NoteBook(-ipadx => 6, -ipady => 6, -font=>$::TabsFont)->pack(@@plt);
+		my $vT1=$vTabs->add("vt", -label => "All\nLayers", -underline => 0);
+		my $all = ShopCard->new($vT1,$::top,'Constants',\&prop::GetConst,\&prop::UpdConst,$sel->{SEL}, ${$sel->{DATA}},$sel->{PROJ},\$sel->{TREE},\$::Layer,\$::tSchemaC,$::defLayer);
+		$all->show();
+		$all->AddButton('L','REFRESH','Refresh Available Constants',\&prop::RefObj);
+        	$all->AddButton('R','SELECT','Use selection of Constants',\&prop::UseObj);		
+         
+		my $i=0;
+		foreach my $tr (keys %{ $Project->{'gui-layer'} }) {
+			$i++;			
+			my ($vT,$all,$s);
+			($s = $Project->{'gui-layer'}->{$tr}->{name}) =~ s/(\w{3})\s(\w{3})/$1\n$2/g;
+			$vT=$vTabs->add("vt$i", -label => $s,-raisecmd => sub{
+			 							$all->ShowSelObj(${$sel->{DATA}}, $tr);
+										$all->ShowAvObj(${$sel->{DATA}});										   						
+										});
+			$all = ShopCard->new($vT,$::top,'Constants',undef,\&prop::UpdConst,$sel->{SEL}, ${$sel->{DATA}},$sel->{PROJ},\$sel->{TREE},\$::Layer,\$::tSchemaC,$tr);
+			$all->show();
+			$all->AddButton('R','SELECT','Use selection of Constants',\&prop::UseObj);
+		}
+	}
+@
+
+
+1.4
+log
+@Edit.pm does all prop.pl used to do
+@
+text
+@d158 12
+a169 1
+   
+d173 1
+a173 1
+	    print("esto lo hace edit.pl\n");
+d370 1
+d383 42
+d516 10
+d527 84
+a610 1
+		
+@
+
+
+1.3
+log
+@changes in Edit.pm (prop.pl now prop.pm)
+@
+text
+@d263 1
+a263 1
+		foreach my $tr (keys %{ $sel->{PROJ}->{'gui-layer'} }) {
+d267 1
+a267 1
+			($s = $sel->{PROJ}->{'gui-layer'}->{$tr}->{name}) =~ s/(\w{3})\s(\w{3})/$1\n$2/g;			  
+d306 1
+d317 37
+d359 2
+d376 2
+d421 1
+a421 1
+		foreach my $tr (keys %{ ${$sel->{PROJ}->{'gui-layer'}}}) {
+d425 1
+a425 1
+			($s = $sel->{PROJ}->{'gui-layer'}->{$tr}->{name}) =~ s/(\w{3})\s(\w{3})/$1\n$2/g;			  
+d447 1
+a447 1
+		foreach my $tr (keys %{ ${$sel->{PROJ}}->{'gui-layer'} }) {
+@
+
+
+1.2
+log
+@Changes in Edit.pm and prop.pl, to have the admin tab created in Edit.pm and not in prop.pl
+@
+text
+@d9 2
+d12 10
+a21 1
+my $lang = 'cz';
+d25 1
+a25 1
+	my ($type, $place, $sel, $id, $tree, $objs) = @@_;	
+d28 11
+a38 3
+	#$self->{OBJ} = %obj;
+	$self->{ID} = $id;
+	$self->{DATA} = $objs;
+d43 4
+d62 2
+d67 3
+a69 1
+   	&AdmTabHeader($self);
+d72 2
+d77 3
+a79 1
+   	&AdmTabHeader($self);
+d82 3
+a84 1
+   	&AdmTabHeader($self);
+d87 3
+a89 1
+   	&AdmTabHeader($self);
+d92 3
+a94 1
+   	&AdmTabHeader($self);
+d97 6
+a102 1
+   	&AdmTabHeader($self);
+d105 4
+a108 1
+   	&AdmTabHeader($self);
+d111 4
+a114 1
+   	&AdmTabHeader($self);
+d117 1
+a117 1
+   	&AdmTabHeader($self);
+d120 1
+a120 1
+   	&AdmTabHeader($self);
+d123 13
+a135 1
+   	&AdmTabHeader($self);
+d137 22
+d210 212
+@
+
+
+1.1
+log
+@added Edit.pm package
+@
+text
+@d40 37
+a76 1
+   }  
+d79 49
+a127 35
+sub AdmTabHeader {	#shows name/description    
+   my $sel = shift;
+   my $AdmTab = $sel->{PLACE};	# project hash, id, proc for additional updates after button press 
+   #$AdmTab->focusFollowsMouse;  # set focus to object under the mouse 
+   my (@@pl)  = (-pady => 5,-padx => 10);	#pack param
+   my ($frameN, $frameD);
+
+   $frameN = $AdmTab->LabFrame(-label => "Name", -labelside=>"acrosstop")->pack(-anchor=>"nw",-side=>'left',-padx => 5);
+   if ($sel->{SEL}=~/^_LOBJ\/_ATTR/ || $sel->{SEL}=~/^_LOBJ\/_FACT/)  {
+      # only attrs and facts have following hash:
+      #  ->' 'attr'  'name' => {'$toolbaren' => 'Year','cz' => 'Rok' },                                
+      $frameN->Entry(qw/-relief sunken -width 40/, -textvariable=>\ ${$sel->{DATA}}->{$sel->{ID}}->{name}->{$lang}, -background=>'white')->pack;
+   }
+   else {
+      $frameN->Entry(qw/-relief sunken -width 40/, -textvariable=>\ ${$sel->{DATA}}->{$sel->{ID}}->{name}, -background=>'white')->pack;
+   }
+             
+   $frameD = $AdmTab->LabFrame(-label => "Description", -labelside=>"acrosstop")->pack(-anchor=>"nw",-side=>'left',-padx => 5);   
+   my $sc = $frameD->Scrolled(qw/Text -setgrid true -height 5 -width 40 -wrap word -scrollbars e/, -background=>'white')->pack;   
+   if ($sel->{SEL}=~/^_LOBJ\/_ATTR/ || $sel->{SEL}=~/^_LOBJ\/_FACT/)  {
+       $sc->insert('0.0', ${$sel->{DATA}}->{$sel->{ID}}->{description}->{$lang});
+   }
+   else {
+       $sc->insert('0.0', ${$sel->{DATA}}->{$sel->{ID}}->{description});
+   }   
+   my $frameID = $AdmTab->Label( -text => $sel->{SEL}, -relief => 'groove', -background=>'LightGoldenrod')->pack(@@pl);
+   $frameID->form(-top => 5, -left => 5);
+   $frameN->form(-top => $frameID, -left => 5);
+   $frameD->form(-top => $frameN, -left => 5);
+   $sc->bind('<Leave>' => sub {
+                                #${$sel->{TREE}}->add('_REL/lu_status#statusgroup_id@@lu_statusgroup#id', -text => ${$sel->{DATA}}->{$sel->{ID}}->{name} , -image => $Img{REL}, -data => 'REL');
+				# ${$sel->{TREE}}->delete(-entry => '_REL/lu_status#statusgroup_id@@lu_statusgroup#id');
+				${$sel->{DATA}}->{$sel->{ID}}->{description}=$sc->get('0.0','end');
+			      });
+}
+d130 11
+@
+

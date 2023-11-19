@@ -1,0 +1,42 @@
+head	1.1;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.1
+date	2006.01.13.12.27.35;	author igorludi;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@*** empty log message ***
+@
+text
+@package rex.graphics;
+
+import rex.metadata.resultelements.Member;
+import rex.metadata.QueryElement;
+import rex.graphics.filtertree.*;
+
+public interface IViewer {
+
+   public void refreshQuery();
+
+   public FilterTreeModel addMemberToFilter(Member filterMember);
+
+   public void dropFilterTree(FilterTree filterToDrop);
+
+   public void enableTreeElements(QueryElement elementToEnable);
+
+   public void refreshFilterDisplay();
+
+}
+@

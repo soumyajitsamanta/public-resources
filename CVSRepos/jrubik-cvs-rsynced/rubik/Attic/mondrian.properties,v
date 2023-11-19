@@ -1,0 +1,79 @@
+head	1.2;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2008.05.17.15.43.49;	author fsaz;	state dead;
+branches;
+next	1.1;
+
+1.1
+date	2005.11.28.14.02.36;	author fsaz;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@borrando viejos
+@
+text
+@# $Id: mondrian.properties,v 1.1 2005/11/28 14:02:36 fsaz Exp $
+# This software is subject to the terms of the Common Public License
+# Agreement, available at the following URL:
+# http://www.opensource.org/licenses/cpl.html.
+# Copyright (C) 2001-2003 Kana Software, Inc. and others.
+# All Rights Reserved.
+# You must accept the terms of that agreement to use this software.
+# jhyde, 31 October, 2001
+
+###############################################################################
+
+mondrian.jdbcDrivers=com.mysql.jdbc.Driver,org.hsqldb.jdbcDriver
+
+###############################################################################
+# Diagnostics & tuning
+
+# Set to 1 or higher to print out SQL statements.
+# Set to 2 or higher to print cache activity.
+mondrian.trace.level=0
+
+# Set to 1 to flush the cache after each query (will harm performance).
+#mondrian.rolap.RolapResult.flushAfterEachQuery=1
+
+# Set to 1 to print the contents of the cache after each query.
+#mondrian.rolap.RolapResult.printCacheables=1
+
+# The size of the cache. Units are intended to be bytes, but are somewhat
+# arbitrary.
+#mondrian.rolap.CachePool.costLimit=10000
+#mondrian.rolap.CachePool.costLimit=104857600
+#mondrian.rolap.CachePool.costLimit=209715200
+mondrian.rolap.CachePool.costLimit=314572800
+
+
+# Set the number of members above which a dimension is considered to be too
+# large to hold everything in memory.
+#mondrian.rolap.LargeDimensionThreshold=100
+
+###############################################################################
+@
+
+
+1.1
+log
+@*** empty log message ***
+@
+text
+@d1 1
+a1 1
+# $Id: mondrian.properties,v 1.1 2005/03/29 11:18:45 f00992x1 Exp $
+@
+

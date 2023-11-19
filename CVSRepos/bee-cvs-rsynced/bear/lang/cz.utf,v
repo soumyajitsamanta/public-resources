@@ -1,0 +1,3952 @@
+head	1.158;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.158
+date	2004.05.07.16.08.30;	author vacula;	state Exp;
+branches;
+next	1.157;
+
+1.157
+date	2004.05.07.15.13.55;	author vasekd;	state Exp;
+branches;
+next	1.156;
+
+1.156
+date	2004.05.03.16.22.40;	author michald;	state Exp;
+branches;
+next	1.155;
+
+1.155
+date	2004.04.26.18.08.53;	author vasekd;	state Exp;
+branches;
+next	1.154;
+
+1.154
+date	2004.04.22.15.57.39;	author vacula;	state Exp;
+branches;
+next	1.153;
+
+1.153
+date	2004.04.16.15.39.57;	author vacula;	state Exp;
+branches;
+next	1.152;
+
+1.152
+date	2004.04.15.13.22.43;	author jiri_schmid;	state Exp;
+branches;
+next	1.151;
+
+1.151
+date	2004.04.14.12.21.33;	author jiri_schmid;	state Exp;
+branches;
+next	1.150;
+
+1.150
+date	2004.03.21.07.01.21;	author michald;	state Exp;
+branches;
+next	1.149;
+
+1.149
+date	2004.03.18.15.34.50;	author jiri_schmid;	state Exp;
+branches;
+next	1.148;
+
+1.148
+date	2004.03.16.15.29.12;	author jiri_schmid;	state Exp;
+branches;
+next	1.147;
+
+1.147
+date	2004.03.11.07.59.01;	author michald;	state Exp;
+branches;
+next	1.146;
+
+1.146
+date	2004.03.04.14.43.16;	author jiri_schmid;	state Exp;
+branches;
+next	1.145;
+
+1.145
+date	2004.02.25.16.05.07;	author jiri_schmid;	state Exp;
+branches;
+next	1.144;
+
+1.144
+date	2004.02.23.12.09.29;	author jiri_schmid;	state Exp;
+branches;
+next	1.143;
+
+1.143
+date	2004.02.20.12.41.12;	author jiri_schmid;	state Exp;
+branches;
+next	1.142;
+
+1.142
+date	2004.02.18.16.19.17;	author jiri_schmid;	state Exp;
+branches;
+next	1.141;
+
+1.141
+date	2004.02.18.14.20.23;	author vacula;	state Exp;
+branches;
+next	1.140;
+
+1.140
+date	2004.02.12.16.24.27;	author jiri_schmid;	state Exp;
+branches;
+next	1.139;
+
+1.139
+date	2004.02.11.16.06.05;	author jiri_schmid;	state Exp;
+branches;
+next	1.138;
+
+1.138
+date	2004.02.10.14.47.24;	author jiri_schmid;	state Exp;
+branches;
+next	1.137;
+
+1.137
+date	2004.02.05.08.54.01;	author jiri_schmid;	state Exp;
+branches;
+next	1.136;
+
+1.136
+date	2004.01.29.13.20.52;	author jiri_schmid;	state Exp;
+branches;
+next	1.135;
+
+1.135
+date	2004.01.20.13.06.08;	author jiri_schmid;	state Exp;
+branches;
+next	1.134;
+
+1.134
+date	2004.01.16.11.56.31;	author jiri_schmid;	state Exp;
+branches;
+next	1.133;
+
+1.133
+date	2004.01.14.15.32.51;	author jiri_schmid;	state Exp;
+branches;
+next	1.132;
+
+1.132
+date	2004.01.12.16.31.18;	author jiri_schmid;	state Exp;
+branches;
+next	1.131;
+
+1.131
+date	2004.01.12.13.50.25;	author jiri_schmid;	state Exp;
+branches;
+next	1.130;
+
+1.130
+date	2004.01.12.13.42.03;	author michald;	state Exp;
+branches;
+next	1.129;
+
+1.129
+date	2004.01.07.16.27.05;	author jiri_schmid;	state Exp;
+branches;
+next	1.128;
+
+1.128
+date	2003.12.18.15.17.22;	author jiri_schmid;	state Exp;
+branches;
+next	1.127;
+
+1.127
+date	2003.12.18.12.59.54;	author jiri_schmid;	state Exp;
+branches;
+next	1.126;
+
+1.126
+date	2003.12.15.15.16.03;	author jiri_schmid;	state Exp;
+branches;
+next	1.125;
+
+1.125
+date	2003.12.12.12.12.16;	author jiri_schmid;	state Exp;
+branches;
+next	1.124;
+
+1.124
+date	2003.12.10.12.23.12;	author jiri_schmid;	state Exp;
+branches;
+next	1.123;
+
+1.123
+date	2003.12.10.09.31.28;	author jiri_schmid;	state Exp;
+branches;
+next	1.122;
+
+1.122
+date	2003.12.08.14.58.37;	author jiri_schmid;	state Exp;
+branches;
+next	1.121;
+
+1.121
+date	2003.12.04.15.28.12;	author jiri_schmid;	state Exp;
+branches;
+next	1.120;
+
+1.120
+date	2003.12.03.16.38.20;	author jiri_schmid;	state Exp;
+branches;
+next	1.119;
+
+1.119
+date	2003.12.02.16.22.53;	author jiri_schmid;	state Exp;
+branches;
+next	1.118;
+
+1.118
+date	2003.11.28.07.06.10;	author michald;	state Exp;
+branches;
+next	1.117;
+
+1.117
+date	2003.11.27.16.41.09;	author jiri_schmid;	state Exp;
+branches;
+next	1.116;
+
+1.116
+date	2003.11.26.12.08.16;	author vacula;	state Exp;
+branches;
+next	1.115;
+
+1.115
+date	2003.11.25.14.56.12;	author vacula;	state Exp;
+branches;
+next	1.114;
+
+1.114
+date	2003.11.20.14.06.46;	author vacula;	state Exp;
+branches;
+next	1.113;
+
+1.113
+date	2003.11.18.14.38.40;	author jiri_schmid;	state Exp;
+branches;
+next	1.112;
+
+1.112
+date	2003.11.14.11.45.36;	author jiri_schmid;	state Exp;
+branches;
+next	1.111;
+
+1.111
+date	2003.11.12.12.44.27;	author jiri_schmid;	state Exp;
+branches;
+next	1.110;
+
+1.110
+date	2003.11.09.19.07.38;	author vacula;	state Exp;
+branches;
+next	1.109;
+
+1.109
+date	2003.11.07.13.40.49;	author jiri_schmid;	state Exp;
+branches;
+next	1.108;
+
+1.108
+date	2003.10.31.12.47.57;	author jiri_schmid;	state Exp;
+branches;
+next	1.107;
+
+1.107
+date	2003.10.16.14.08.53;	author jiri_schmid;	state Exp;
+branches;
+next	1.106;
+
+1.106
+date	2003.10.13.14.43.23;	author jiri_schmid;	state Exp;
+branches;
+next	1.105;
+
+1.105
+date	2003.10.03.09.37.56;	author jiri_schmid;	state Exp;
+branches;
+next	1.104;
+
+1.104
+date	2003.10.03.09.09.58;	author jiri_schmid;	state Exp;
+branches;
+next	1.103;
+
+1.103
+date	2003.10.02.14.44.55;	author jiri_schmid;	state Exp;
+branches;
+next	1.102;
+
+1.102
+date	2003.10.01.15.29.38;	author jiri_schmid;	state Exp;
+branches;
+next	1.101;
+
+1.101
+date	2003.10.01.05.38.29;	author michald;	state Exp;
+branches;
+next	1.100;
+
+1.100
+date	2003.09.30.19.39.28;	author michald;	state Exp;
+branches;
+next	1.99;
+
+1.99
+date	2003.09.30.15.46.41;	author jiri_schmid;	state Exp;
+branches;
+next	1.98;
+
+1.98
+date	2003.09.29.06.52.09;	author jiri_schmid;	state Exp;
+branches;
+next	1.97;
+
+1.97
+date	2003.09.26.13.53.10;	author jiri_schmid;	state Exp;
+branches;
+next	1.96;
+
+1.96
+date	2003.09.26.12.21.32;	author jiri_schmid;	state Exp;
+branches;
+next	1.95;
+
+1.95
+date	2003.09.26.11.16.31;	author jiri_schmid;	state Exp;
+branches;
+next	1.94;
+
+1.94
+date	2003.09.26.08.33.12;	author jiri_schmid;	state Exp;
+branches;
+next	1.93;
+
+1.93
+date	2003.09.26.06.50.42;	author jiri_schmid;	state Exp;
+branches;
+next	1.92;
+
+1.92
+date	2003.09.25.15.04.17;	author jiri_schmid;	state Exp;
+branches;
+next	1.91;
+
+1.91
+date	2003.09.25.11.53.46;	author jiri_schmid;	state Exp;
+branches;
+next	1.90;
+
+1.90
+date	2003.09.24.14.59.18;	author jiri_schmid;	state Exp;
+branches;
+next	1.89;
+
+1.89
+date	2003.09.22.14.42.47;	author jiri_schmid;	state Exp;
+branches;
+next	1.88;
+
+1.88
+date	2003.09.19.10.24.59;	author jiri_schmid;	state Exp;
+branches;
+next	1.87;
+
+1.87
+date	2003.09.18.14.10.50;	author jiri_schmid;	state Exp;
+branches;
+next	1.86;
+
+1.86
+date	2003.09.17.15.40.59;	author jiri_schmid;	state Exp;
+branches;
+next	1.85;
+
+1.85
+date	2003.09.17.14.51.14;	author jiri_schmid;	state Exp;
+branches;
+next	1.84;
+
+1.84
+date	2003.09.17.11.41.25;	author jiri_schmid;	state Exp;
+branches;
+next	1.83;
+
+1.83
+date	2003.09.16.14.37.53;	author jiri_schmid;	state Exp;
+branches;
+next	1.82;
+
+1.82
+date	2003.09.15.10.46.12;	author jiri_schmid;	state Exp;
+branches;
+next	1.81;
+
+1.81
+date	2003.09.11.16.23.06;	author jiri_schmid;	state Exp;
+branches;
+next	1.80;
+
+1.80
+date	2003.09.09.09.41.30;	author jiri_schmid;	state Exp;
+branches;
+next	1.79;
+
+1.79
+date	2003.09.03.15.10.47;	author jiri_schmid;	state Exp;
+branches;
+next	1.78;
+
+1.78
+date	2003.09.01.12.40.09;	author jiri_schmid;	state Exp;
+branches;
+next	1.77;
+
+1.77
+date	2003.08.28.09.26.16;	author jiri_schmid;	state Exp;
+branches;
+next	1.76;
+
+1.76
+date	2003.08.26.15.35.45;	author jiri_schmid;	state Exp;
+branches;
+next	1.75;
+
+1.75
+date	2003.08.25.15.09.20;	author jiri_schmid;	state Exp;
+branches;
+next	1.74;
+
+1.74
+date	2003.08.20.14.23.46;	author jiri_schmid;	state Exp;
+branches;
+next	1.73;
+
+1.73
+date	2003.08.19.13.05.58;	author jiri_schmid;	state Exp;
+branches;
+next	1.72;
+
+1.72
+date	2003.08.14.16.26.57;	author jiri_schmid;	state Exp;
+branches;
+next	1.71;
+
+1.71
+date	2003.08.13.13.16.29;	author jiri_schmid;	state Exp;
+branches;
+next	1.70;
+
+1.70
+date	2003.08.12.14.09.49;	author jiri_schmid;	state Exp;
+branches;
+next	1.69;
+
+1.69
+date	2003.08.12.11.09.35;	author jiri_schmid;	state Exp;
+branches;
+next	1.68;
+
+1.68
+date	2003.08.12.09.19.19;	author jiri_schmid;	state Exp;
+branches;
+next	1.67;
+
+1.67
+date	2003.08.07.08.02.21;	author jiri_schmid;	state Exp;
+branches;
+next	1.66;
+
+1.66
+date	2003.08.06.15.22.33;	author jiri_schmid;	state Exp;
+branches;
+next	1.65;
+
+1.65
+date	2003.08.05.12.49.47;	author jiri_schmid;	state Exp;
+branches;
+next	1.64;
+
+1.64
+date	2003.08.04.14.17.41;	author jiri_schmid;	state Exp;
+branches;
+next	1.63;
+
+1.63
+date	2003.08.04.08.12.54;	author jiri_schmid;	state Exp;
+branches;
+next	1.62;
+
+1.62
+date	2003.08.01.13.07.15;	author jiri_schmid;	state Exp;
+branches;
+next	1.61;
+
+1.61
+date	2003.07.31.14.34.43;	author jiri_schmid;	state Exp;
+branches;
+next	1.60;
+
+1.60
+date	2003.07.31.12.16.00;	author jiri_schmid;	state Exp;
+branches;
+next	1.59;
+
+1.59
+date	2003.07.30.15.30.47;	author jiri_schmid;	state Exp;
+branches;
+next	1.58;
+
+1.58
+date	2003.07.29.12.28.34;	author jiri_schmid;	state Exp;
+branches;
+next	1.57;
+
+1.57
+date	2003.07.25.10.53.23;	author jiri_schmid;	state Exp;
+branches;
+next	1.56;
+
+1.56
+date	2003.07.25.09.28.51;	author jiri_schmid;	state Exp;
+branches;
+next	1.55;
+
+1.55
+date	2003.07.24.10.37.52;	author jiri_schmid;	state Exp;
+branches;
+next	1.54;
+
+1.54
+date	2003.07.23.11.44.56;	author jiri_schmid;	state Exp;
+branches;
+next	1.53;
+
+1.53
+date	2003.07.22.15.13.08;	author jiri_schmid;	state Exp;
+branches;
+next	1.52;
+
+1.52
+date	2003.07.22.08.48.01;	author jiri_schmid;	state Exp;
+branches;
+next	1.51;
+
+1.51
+date	2003.07.21.10.51.42;	author jiri_schmid;	state Exp;
+branches;
+next	1.50;
+
+1.50
+date	2003.07.18.10.51.02;	author jiri_schmid;	state Exp;
+branches;
+next	1.49;
+
+1.49
+date	2003.07.11.16.00.53;	author jiri_schmid;	state Exp;
+branches;
+next	1.48;
+
+1.48
+date	2003.07.10.13.00.05;	author jiri_schmid;	state Exp;
+branches;
+next	1.47;
+
+1.47
+date	2003.07.09.09.28.10;	author jiri_schmid;	state Exp;
+branches;
+next	1.46;
+
+1.46
+date	2003.07.08.07.12.06;	author jiri_schmid;	state Exp;
+branches;
+next	1.45;
+
+1.45
+date	2003.07.07.14.17.14;	author jiri_schmid;	state Exp;
+branches;
+next	1.44;
+
+1.44
+date	2003.07.04.14.29.33;	author jiri_schmid;	state Exp;
+branches;
+next	1.43;
+
+1.43
+date	2003.07.02.13.44.34;	author jiri_schmid;	state Exp;
+branches;
+next	1.42;
+
+1.42
+date	2003.06.24.15.17.43;	author jiri_schmid;	state Exp;
+branches;
+next	1.41;
+
+1.41
+date	2003.06.19.14.59.45;	author jiri_schmid;	state Exp;
+branches;
+next	1.40;
+
+1.40
+date	2003.06.12.08.44.36;	author jiri_schmid;	state Exp;
+branches;
+next	1.39;
+
+1.39
+date	2003.06.02.12.09.11;	author jiri_schmid;	state Exp;
+branches;
+next	1.38;
+
+1.38
+date	2003.06.02.09.33.46;	author jiri_schmid;	state Exp;
+branches;
+next	1.37;
+
+1.37
+date	2003.05.29.08.19.19;	author jiri_schmid;	state Exp;
+branches;
+next	1.36;
+
+1.36
+date	2003.05.28.15.44.22;	author jiri_schmid;	state Exp;
+branches;
+next	1.35;
+
+1.35
+date	2003.05.28.10.40.38;	author jiri_schmid;	state Exp;
+branches;
+next	1.34;
+
+1.34
+date	2003.05.28.07.34.21;	author jiri_schmid;	state Exp;
+branches;
+next	1.33;
+
+1.33
+date	2003.05.26.15.30.40;	author jiri_schmid;	state Exp;
+branches;
+next	1.32;
+
+1.32
+date	2003.05.26.15.01.41;	author jiri_schmid;	state Exp;
+branches;
+next	1.31;
+
+1.31
+date	2003.05.21.11.39.46;	author jiri_schmid;	state Exp;
+branches;
+next	1.30;
+
+1.30
+date	2003.05.19.14.18.36;	author jiri_schmid;	state Exp;
+branches;
+next	1.29;
+
+1.29
+date	2003.05.16.12.58.12;	author jiri_schmid;	state Exp;
+branches;
+next	1.28;
+
+1.28
+date	2003.05.16.11.28.26;	author jiri_schmid;	state Exp;
+branches;
+next	1.27;
+
+1.27
+date	2003.05.15.13.47.43;	author jiri_schmid;	state Exp;
+branches;
+next	1.26;
+
+1.26
+date	2003.05.15.11.36.11;	author jiri_schmid;	state Exp;
+branches;
+next	1.25;
+
+1.25
+date	2003.05.13.15.19.00;	author jiri_schmid;	state Exp;
+branches;
+next	1.24;
+
+1.24
+date	2003.05.08.15.35.52;	author jiri_schmid;	state Exp;
+branches;
+next	1.23;
+
+1.23
+date	2003.05.08.07.42.46;	author michald;	state Exp;
+branches;
+next	1.22;
+
+1.22
+date	2003.05.07.13.11.51;	author jiri_schmid;	state Exp;
+branches;
+next	1.21;
+
+1.21
+date	2003.05.06.15.08.15;	author jiri_schmid;	state Exp;
+branches;
+next	1.20;
+
+1.20
+date	2003.05.06.09.21.01;	author jiri_schmid;	state Exp;
+branches;
+next	1.19;
+
+1.19
+date	2003.05.01.09.15.32;	author jiri_schmid;	state Exp;
+branches;
+next	1.18;
+
+1.18
+date	2003.04.30.14.45.51;	author jiri_schmid;	state Exp;
+branches;
+next	1.17;
+
+1.17
+date	2003.04.30.09.53.41;	author jiri_schmid;	state Exp;
+branches;
+next	1.16;
+
+1.16
+date	2003.04.25.11.27.34;	author jiri_schmid;	state Exp;
+branches;
+next	1.15;
+
+1.15
+date	2003.04.18.13.22.38;	author jiri_schmid;	state Exp;
+branches;
+next	1.14;
+
+1.14
+date	2003.04.16.11.18.16;	author jiri_schmid;	state Exp;
+branches;
+next	1.13;
+
+1.13
+date	2003.04.14.11.06.11;	author jiri_schmid;	state Exp;
+branches;
+next	1.12;
+
+1.12
+date	2003.04.10.14.21.44;	author jiri_schmid;	state Exp;
+branches;
+next	1.11;
+
+1.11
+date	2003.04.07.15.29.05;	author jiri_schmid;	state Exp;
+branches;
+next	1.10;
+
+1.10
+date	2003.04.04.12.27.11;	author jiri_schmid;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	2003.03.26.13.54.25;	author jiri_schmid;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	2003.03.21.05.52.29;	author michald;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	2003.03.18.09.34.21;	author jiri_schmid;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	2003.03.14.09.23.53;	author jiri_schmid;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	2003.03.12.16.32.56;	author jiri_schmid;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2003.03.11.16.17.23;	author jiri_schmid;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2003.03.11.11.05.47;	author jiri_schmid;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2003.03.11.10.01.45;	author jiri_schmid;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2003.03.10.16.14.27;	author jiri_schmid;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.158
+log
+@new attributes of graphs
+@
+text
+@#!/usr/bin/perl
+# *****************************************************************
+# *  Czech localization of all text items
+# *****************************************************************
+#  $Id: cz.utf,v 1.157 2004/05/07 15:13:55 vasekd Exp $
+
+#package cz;
+
+use strict;
+use utf8;
+
+$Const::RLang->{cz} = {
+	sort => 'třídit',
+	export=>'exportovat',
+	up=>'drill up',
+	down=>'drill down',
+	pivotX=>'pivot na osu X',
+	pivotY=>'pivot na osu Y',
+};
+
+$Const::lang->{cz} = {
+		'Edit'=>'Editace',  # tab_cgi
+		'LDM'=>'LDM',  # Logical Data Model
+		'Result'=>'Výsledek',
+		'Debug'=>'Ladění',
+		'Preferences'=>'Preference',
+		'Admin'=>'Administrace',
+		'Modified'=>'Derivované reporty',
+		'Collected'=>'Spuštěné reporty',
+		'Name'=>'Jméno:',
+		'Description'=>'Popis:',
+		'Help'=>'Nápověda',
+		'Project'=>'Projekt:',
+		'Save'=>'Uložit', # all *_ed.pl
+		'Save As'=>'Uložit jako',
+		'Save As Filter'=>'Uložit jako Filtr',
+		'Save As Grid'=>'Uložit jako Šablonu',
+		'Save As Format'=>'Uložit jako Formát',
+		'Save As Graph3d'=>'Uložit jako Šablonu 3d grafu',
+		'Save and Run'=>'Uložit a spustit',
+		'Save and Return'=>'Uložit a zpět',
+		'Reset'=>'Obnovit',
+		'Reload'=>'Znovu nahrát',
+		'Rights'=>'Přístupová práva',
+		'right'=>'Práva',
+		'Read'=>'Číst',
+		'Write'=>'Měnit',
+		'Duplicate'=>'Duplikovat',
+		'Execute'=>'Spouštět',
+		'Clear all'=>'Vymazat vše',
+		'Run'=>'Spustit',
+		'Return'=>'Zpět',
+		'Read Only'=>'(jen pro čtení)',
+		'Logical Model'=>'Logický model',
+		'Undef Local'=>'Nedefinovaná lokalizace',
+		'Left'=>'Přesunout vlevo',
+		'Right'=>'Přesunout vpravo',
+		'Up'=>'Přesunout výš',
+		'Down'=>'Přesunout níž',
+
+		'Help None'=>'Nápověda není dostupná.',
+
+		'Forbidden Object'=>'Přístup k objektu nepovolen pro:',
+		'Forbidden Tab'=>'Přístup ke stránce nepovolen:',
+		'Forbidden R'=>'čtení',
+		'Forbidden W'=>'zápis',
+		'Forbidden E'=>'spuštění',
+		'Forbidden D'=>'duplikování',
+		'Forbidden C'=>'změnu oprávnění',
+
+		'Collect List'=>'Reporty',
+
+		'Run Param'=>'Dynamické parametry reportu',
+		'Run Min'=>'min',
+		'Run Max'=>'max',
+		'Run Object'=>'Parametry definičního objektu',
+		'Run Others'=>'Dynamické parametry použité v reportu',
+		'Run Error'=>'Nepovolený obsah parametru',
+		'Run Submit'=>'Použít parametry',
+		'Run Ready'=>'jsou již nastaveny',
+		'Run Reset'=>'Změnit dříve nastavené parametry',
+		'Run Prev'=>'Změnit předchozí parametry',
+
+		'Derivated'=>'Derivované reporty',
+		'Derivated Name'=>'Derivovaný report',
+		'Derivated Date'=>'Datum',
+		'Derivated Modif'=>'Modifikace',
+		'Derivated Original'=>'Jméno výchozího reportu',
+
+		'Access list'=>'Administrace:',
+		'Access user'=>'Detail uživatele:',
+		'Access group'=>'Detail skupiny:',
+		'Access role'=>'Detail role:',
+		'Access login'=>'Přihlašovací jméno:',
+		'Access passwd'=>'Heslo:',
+		'Access memberOFgroup'=>'Je členem skupiny:',
+		'Access Contain Group'=>'Obsahuje skupiny:',
+		'Access Contain User'=>'Obsahuje uživatele:',
+		'Access Tabs'=>'Záložky',
+		'Access View'=>'Povolit',
+
+		'Prefer Title'=>'Beard preference:',
+		'Prefer Language'=>'Lokalizace:',
+		'Prefer Cookie'=>'Použít cookie:',
+		'Prefer SQL Access'=>'Přístup k SQL:',
+		'Prefer SQL Access none'=>'Nepovolen',
+		'Prefer SQL Access view'=>'Prohlížení',
+		'Prefer SQL Access edit'=>'Editace',
+		'Prefer Project'=>'Projekt:',
+		'Prefer Open Result'=>'Zobrazení výsledku:',
+		'Prefer OpenR _blank'=>'Nová okna',
+		'Prefer OpenR _one'=>'Nové okno',
+		'Prefer OpenR _self'=>'Záložky',
+		'Prefer OpenR _default'=>'Implicitní volba',
+		'Prefer OpenR _collect'=>'Společná záložka',
+		'Prefer Length'=>'Viditelné znaky záložky:',
+		'Prefer Width'=>'Šířka postranních panelů:',
+		'Prefer Base'=>'Základní nastavení',
+		'Prefer Report'=>'Nastavení reportu',
+		'Prefer Ext'=>'Rozšiřující nastavení',
+		'Prefer Skin'=>'Vzhled',
+		'Prefer treewidth'=>'Editace',
+		'Prefer collectwidth'=>'Spuštěné reporty',
+		'Prefer derivatewidth'=>'Derivované reporty',
+		'Prefer Tabs'=>'Zobrazit záložky',
+		'Prefer deny'=>'Zakázat',
+		'Prefer allow'=>'Povolit',
+
+		'New Grid'=>'Nová Šablona',    # create new  object
+		'New Grid Save'=>'šablony.',
+		'New Graph3d'=>'Nová Šablona 3D',
+		'New Graph3d Save'=>'šablony 3d grafu.',
+		'New Metric'=>'Nová Metrika',
+		'New Metric Save'=>'metriky.',
+		'New Format'=>'Nový Formát',
+		'New Format Save'=>'formátu.',
+		'New Format3d'=>'Nový Formát 3D',
+		'New Format3d Save'=>'formátu 3D.',
+		'New Format2d'=>'Nový Formát 2D',
+		'New Format2d Save'=>'formátu 2D.',
+		'New Format2d_map'=>'Nový Formát 2D_mapa',
+		'New Format2d_map Save'=>'formátu 2D_mapa.',
+		'New Report'=>'Nový Report',
+		'New Param'=>'Nový Dynamický parametr',
+		'New Param Save'=>'parametru.',
+		'New Report Save'=>'reportu.',
+		'New Filter'=>'Nový Filtr',
+		'New Filter Save'=>'filtru.',
+		'New Save Part1'=>'Pravděpodobně jste nezměněnily jméno ',
+		'New Save Part2'=>'\nZadejte nové jméno nyní:',
+		'New Duplicate'=>'(Kopie)',
+		'New User'=>'Nový uživatel',
+		'New Group'=>'Nová skupina',
+		'New Role'=>'Nová role',
+
+		'Tabs Duplicate'=>'Kopie objektu',
+		'Tabs Delete'=>'Smazat objekt',
+		'Tabs Removed Report'=>'Odstraněno vlastníkem reportu: ',
+
+		'Rights Remove'=>'Odstranit uložená práva',
+		'Rights Remove Title'=>'Odstranit z objektu uložená práva.',
+		'Rights Change'=>'Může měnit oprávnění objektů',
+		'Rights Change Title'=>'Povolit členům role měnit oprávnění pro každý objekt zvlášť',
+		'Rights Allow'=>'Práva - povolit',
+		'Rights Deny'=>'Práva - zakázat',
+		'Rights Recover'=>'Nastav implicitní',
+		'Rights Local' => 'všechna nastavení práv jsou uložena společně s objektem',
+		'Rights Global' => 'všechna nastavení práv jsou přebírána z výchozí role',
+
+		'Folder'=>'Adresář', # folder_ed.pl
+
+		'Attr'=>'Atribut', # attr_ed.pl
+		'Attr desc'=>'Popis',
+		'Attr rights'=>'Práva',
+
+		'Fact'=>'Fakt', # fact_ed.pl
+		'Fact desc'=>'Popis',
+		'Fact rights'=>'Práva',
+
+		'Report'=>'Report', # report_ed.pl
+		'Report Filter'=>'Filtr', # report_ed.pl
+		'Report Format'=>'Formát', # report_ed.pl
+		'Report Grid'=>'Šablona', # report_ed.pl
+		'Report Run'=>'SPUSTIT report v:',
+		'Report SQL'=>'Definice SQL',
+		'Report filter'=>'Filtr',
+		'Report grid'=>'Vnořená šablona',
+		'Report format'=>'Formát',
+		'Report graph3d'=>'Vnořená 3D šablona',
+		'Report object'=>'Šablona',
+		'Report desc'=>'Popis',
+		'Report sql'=>'SQL',
+		'Report def'=>'Základní definice',
+		'Report rights'=>'Práva',
+		'Report Global Edit'=>'Editovat globální',
+		'Report Local Edit'=>'Vytvořit lokální zkopírováním globálního a editovat',
+		'Report New Local'=>'Vytvořit a editovat',
+		'Report No Filter'=>' (je shodný s globálním filtrem uvedeným v hlavním přehledu)',
+		'Report No Format'=>' (je shodný s globálním formátem uvedeným v hlavním přehledu)',
+		'Report No Grid'=>' (je shodná s globální šablonou uvedenou v hlavním přehledu)',
+		'Report No Graph3d'=>' (je shodná s globální šablonou 3D grafem uvedeným v hlavním přehledu)',
+		'Report Local'=>'Lokální',
+		'Report Use'=>'Použij:',
+		'Report Default SQL'=>'generované SQL',
+		'Report Edited SQL'=>'vlastní SQL',
+		'Report Unspec Grid'=>'Nespecifikovaná šablona.',
+		'Report Qualitative'=>'Žádná další nastavení nejsou k dispozici.',
+		'Report Create Grid'=>'Vytvořit formát tabulky',
+		'Report Create G2D'=>'Vytvořit formát 2D grafu',
+		'Report Create G3D'=>'Vytvořit formát 3D grafu',
+
+		'Grid'=>'Šablona', # grid_ed.pl
+		'Grid Data'=>'Data grid:',
+		'Grid Pages'=>'Stránkování:',
+		'Grid Table'=>'Data reportu:',
+		'Grid Table_col'=>'Sloupce:',
+		'Grid Table_row'=>'Řádky:',
+		'Grid Table_cell'=>'Metriky:',
+		'Grid Table end'=>'Umístit na konec',
+		'Grid Remove MG'=>'Přemístěte skupinu metrik a opakujte akci.',
+		'Grid desc'=>'Popis',
+		'Grid def'=>'Základní definice',
+		'Grid rights'=>'Práva',
+		'Grid Metrics'=>'Skupina metrik',
+
+		'Filter'=>'Filtr', # filter_ed.pl
+		'Filter expresion'=>'Definice filtru:',
+		'Filter desc'=>'Popis',
+		'Filter def'=>'Základní definice',
+		'Filter rights'=>'Práva',
+
+		'Metric'=>'Metrika', # metric_ed.pl
+		'Metric expresion',=>'Definice metriky:',
+		'Metric Filter'=>'Filtr:', # report_ed.pl
+		'Agregation level'=>'Agregační úroveň:',
+		'Metric Intersect'=>'Použít filtr:',
+		'Metric Intersect non-rel'=>'jen nerelační',
+		'Metric Intersect all'=>'všechny',
+		'Metric Intersect metric'=>'metriky',
+		'Metric Intersect report'=>'reportu',
+		'Metric Intersect type Title'=>'Průnik s částmi filtru reportu, které nejsou v přímé relaci s filtrem metriky. Není zatím implementováno.',
+		'Metric Intersect report Title'=>'Průnik s filtrem specifikovaným v reportu',
+		'Metric Intersect metric Title'=>'Průnik s filtrem specifikovaným v metrice',
+		'Metric none'=>'není',
+		'Metric report'=>'report',
+		'Metric specific'=>'specifikovaná',
+		'Metric Rule'=>'Typ agregace:',
+		'Metric none Title'=>'Bez agregační úrovně.',
+		'Metric report Title'=>'Aggregace na hlavní úrovni reportu.',
+		'Metric specific Title'=>'Agregace na specifikované úrovni.',
+		'Metric Output'=>'Formát výstupu',
+		'Metric desc'=>'Popis',
+		'Metric def'=>'Základní definice',
+		'Metric rights'=>'Práva',
+
+		'Format'=>'Formát', # format_ed.pl
+		'Format radio_btn css',=>'Šablona',
+		'Format radio_btn graph',=>'Graf',
+		'Format radio_btn vrml'=>'3D Graf',
+		'Format css',=>'Styl šablony:',
+		'Format graph',=>'Styl grafu:',
+		'Format vrml',=>'Styl 3D grafu:',
+		'Format desc'=>'Popis',
+		'Format def'=>'Definice',
+		'Format header'=>'Popis záhlaví:',
+		'Format innerTable'=>'úplný',
+		'Format outerTable'=>'samostatný',
+		'Format innerRow'=>'pouze řádky',
+		'Format innerCol'=>'pouze sloupce',
+		'Format noneHeader'=>'nezobrazovat',
+		'Format desc'=>'Popis',
+		'Format def'=>'Základní definice',
+		'Format rights'=>'Práva',
+		'Format line'=>'Linky',
+		'Format fonts'=>'Font',
+  	'Format color'=>'Barva',
+  	'Format width'=>'Šířka',
+  	'Format style'=>'Styl',
+  	'Format align'=>'Zarovnání',
+		'Format january'=>'Leden',
+		'Format february'=>'Únor',
+		'Format march'=>'Březen',
+		'Format perif'=>'PERIFÉRIE',
+		'Format keyb'=>'Klávesnice',
+    'Format mouse'=>'Myši',
+    'Format mechanics'=>'MECHANIKA',
+    'Format group'=>'Skupina',
+    'Format subgroup'=>'Podskupina',
+    'Format month'=>'Měsíc',
+    'Format year'=>'Rok',
+    'Format product'=>'Výrobek',
+    'Format quarter'=>'Kvartál',
+    'Format left'=>'vlevo',
+    'Format center'=>'na střed',
+    'Format right'=>'vpravo',
+    'Format none'=>'žádné',
+    'Format hidden'=>'skrytý',
+    'Format dotted'=>'tečkovaný',
+    'Format dashed'=>'čarkovaný',
+    'Format solid'=>'plný',
+    'Format double'=>'dvojitý',
+    'Format groove'=>'žlábkovaný',
+    'Format ridge'=>'hřbetnatý',
+    'Format inset'=>'vlisovaný',
+    'Format outset'=>'vystouplý',
+
+    'Format3d'=>'Formát 3D grafu',
+		'Format3d desc'=>'Popis',
+		'Format3d def'=>'Základní definice',
+		'Format3d rights'=>'Práva',
+
+		'Format2d'=>'Formát 2D grafu',
+		'Format2d desc'=>'Popis',
+		'Format2d def'=>'Základní definice',
+		'Format2d layout'=>'Rozvržení',
+		'Format2d objects'=>'Objekty',
+		'Format2d ax_X'=>'Osa X',
+		'Format2d ax_Y'=>'Osa Y',
+		'Format2d legend' => 'Legenda',
+		'Format2d colors'=>'Barvy',
+		'Format2d logo'=>'Logo',
+		'Format2d map'=>'Mapa',
+		'Format2d rights'=>'Práva',
+		'Format2d Sets'=>'Data tvoří',
+		'Format2d Row'=>'řádky',
+		'Format2d Col'=>'sloupce',
+		'Format2d Size'=>'Velikost grafu',
+		'Format2d Width'=>'šířka',
+		'Format2d Height'=>'výška',
+		'Format2d Res'=>'Rozlišení obrazovky',
+		'Format2d Margin'=>'Odsazení',
+		'Format2d Margin Border'=>'od okraje',
+		'Format2d l_margin'=>'levé',
+		'Format2d r_margin'=>'pravé',
+		'Format2d t_margin'=>'horní',
+		'Format2d b_margin'=>'dolní',
+		'Format2d Text'=>'textů os',
+		'Format2d margin'=>'odsazení',
+		'Format2d axis_space'=>'mezera mezi osou a popisky osy',
+		'Format2d text_space'=>'mezera mezi názvem osy a popisky osy',
+		'Format2d Label'=>'Texty - Popisky',
+		'Format2d label'=>'název osy',
+		'Format2d axislabel'=>'popisek osy',
+		'Format2d y_label_position'=>'dole (0) .. nahoře (1)',
+		'Format2d x_label_position'=>'vlevo (0) .. vpravo (1)',
+		'Format2d x_labels_vertical'=>'vertikálně',
+		'Format2d Grid'=>'Šablona grafu',
+		'Format2d x_ticks'=>'vykreslit',
+		'Format2d x_long_ticks'=>'mřížka v celé délce grafu',
+		'Format2d y_long_ticks'=>'mřížka v celé délce grafu',
+		'Format2d y_plot_values'=>'vykreslit',
+		'Format2d x_plot_values'=>'vykreslit',
+		'Format2d y_label_skip_part1'=>'zobrazit každý',
+		'Format2d y_label_skip_part2'=>' prvek',
+		'Format2d y_tick_offset_part1'=>'začít od',
+		'Format2d y_tick_offset_part2'=>'prvku',
+		'Format2d x_label_skip_part1'=>'zobrazit každý',
+		'Format2d x_label_skip_part2'=>' prvek',
+		'Format2d x_tick_offset_part1'=>'začít od',
+		'Format2d x_tick_offset_part2'=>'prvku',
+		'Format2d Colors of graph'=>'Barvy grafu',
+		'Format2d bgclr'=>'pozadí',
+		'Format2d fgclr'=>'osy',
+		'Format2d boxclr'=>'plocha grafu',
+		'Format2d labelclr'=>'popisky',
+		'Format2d textclr'=>'texty',
+		'Format2d Items'=>'Prvky grafu',
+		'Format2d Logo'=>"Logo",
+		'Format2d Logo use'=>"Použít logo",
+		'Format2d Logo Use'=>"použít",
+		'Format2d Logo Pos'=>"pozice",
+		'Format2d transparent'=>'průhledné',
+		'Format2d Color'=>'Barva',
+		'Format2d Data item'=>'prvek',
+		'Format2d Data'=>'datové prvky',
+		'Format2d use map' => "Použít mapu",
+		'Format2d color' => "Definice barvy",
+		'Format2d addition' => "Pro hodnoty menší než",
+		'Format2d interval' => "Hraniční bod",
+		'Format2d title' => "titulek grafu",
+		'Format2d labels' => "názvy os",
+		'Format2d axislabels' => "popisky os",
+		'Format2d font' => "písmo",
+		'Format2d fontsize' => "velikost",
+		'Format2d color' => "barva",
+		'Format2d show' => "zobrazit",
+		'Format2d box' => "box",
+		'Format2d position' => "umístění",
+		'Format2d Axis ticks' => "Mřížka osy",
+		'Format2d Axis ticks length' => "délka mřížky",
+		'Format2d amplitude axis' => "rozsah osy",
+		'Format2d compute' => "automaticky",
+		'Format2d min' => "minimum",
+		'Format2d max' => "maximum",
+		'Format2d legend_placement' => 'umístění',
+		'Format2d legend_placement_BL' => 'dole-vlevo',
+		'Format2d legend_placement_BC' => 'dole-uprostřed',
+		'Format2d legend_placement_BR' => 'dole-vpravo',
+		'Format2d legend_placement_RT' => 'vpravo-nahoře',
+		'Format2d legend_placement_RC' => 'vpravo-uprostřed',
+		'Format2d legend_placement_RB' => 'vpravo-dole',
+		'Format2d legend_spacing' => 'odsazení',
+		'Format2d legend_marker' => 'značka',
+		'Format2d legend_marker_width' => 'šířka',
+		'Format2d legend_marker_height' => 'výška',
+		'Format2d lg_cols' => 'sloupce',
+		'Format2d number_cols' => 'počet',
+		'Format2d Data type' => 'typ',
+		'Format2d Data color' => 'barva',
+		'Format2d Data Shadows' => 'Stíny',
+		'Format2d Data shadow_depth' => 'šířka',
+		'Format2d left' => 'vlevo',
+		'Format2d center' => 'uprostřed',
+		'Format2d right' => 'vpravo',
+		'Format2d top' => 'nahoře',
+		'Format2d bottom' => 'dole',
+		'Format2d y_tick_number' => 'počet hodnot',
+		'Format2d galery' => 'Galerie',
+		'Format2d Axis distance' => "Mezera mezi bar grafy",
+		'Format2d Axis distance length' => "velikost",
+
+		'Graph3d'=>'Šablona 3D grafu',
+		'Graph3d Pages'=>'Stránování:',
+		'Graph3d end'=>'Umístit na konec',
+		'Graph3d Table'=>'Data 3D Grafu:',
+		'Graph3d y'=>'Osa Y',
+		'Graph3d x'=>'Osa X',
+		'Graph3d z'=>'Osa Z',
+		'Graph3d rights'=>'Práva',
+		'Graph3d Itemx'=>'Položky osy X:',	
+		'Graph3d Itemy'=>'Položky osy Y:',
+		'Graph3d Itemz'=>'Položky osy Z:',
+		'Graph3d Interval'=>'Změnit zobrazení pro:',
+		'Graph3d Axis Interval'=>'Zobrazit interval od - do:',
+		'Graph3d Size'=>'Definice změny:',
+		'Graph3d Itemdiameter'=>'Položky průměru:',	
+		'Graph3d Itemtransparency'=>'Položky průhlednosti:',
+		'Graph3d Itemshape'=>'Položky tvaru:',
+		'Graph3d Itemcolor'=>'Položky barvy:',	
+		'Graph3d diameter'=>'Průměr',
+		'Graph3d transparency'=>'Průhlednost',
+		'Graph3d shape'=>'Tvar',
+		'Graph3d color'=>'Barva',
+		'Graph3d desc'=>'Popis',
+		'Graph3d def'=>'Základní definice',
+		'Graph3d Quantity'=>'Kvantitativní data',
+		'Graph3d QDescr'=>'Data atributů se zobrazí v kvantitaivním kontextu, jinak v kontextu kvalitativním.',
+		'Graph3d default'=>'Implicitní hodnota:',
+		'Graph3d interpolation'=>'Typ interpolace:',
+		'Graph3d linear'=>'lineární',
+		'Graph3d constant'=>'konstantní',
+		'Graph3d min'=>'Minimum:',
+		'Graph3d max'=>'Maximum:',
+		'Graph3d view'=>"Zobrazit:",
+		'Graph3d red'=>"R:",
+		'Graph3d green'=>"G:",
+		'Graph3d blue'=>"B:",
+
+		'Param'=>'Dynamický parametr',
+		'Param desc'=>'Popis',
+		'Param def'=>'Základní definice',
+		'Param rights'=>'Práva',
+		'Param Items'=>'Počet parametrů',
+		'Param Item'=>'Parametry',
+		'Param max'=>'maximum',
+		'Param min'=>'minimum',
+		'Param Type'=>'Typ parametrů',
+		'Param object'=>'objekty',
+		'Param element'=>'elementy',
+		'Param common'=>'obecné hodnoty',
+		'Param date'=>'datum',
+		'Param Attr'=>'atribut',
+		'Param Form'=>'forma',
+		'Param Element'=>'elementy atributu',
+		'Param Def'=>'podmínka',
+		'Param List'=>'seznam hodnot',
+		'Param Regular'=>'regulární výraz',
+		'Param q'=>'Otázka',
+		'Param Q'=>'Pokládaná otázka',
+		'Param Q Help'=>'Nápověda - Vysvětlení otázky',
+		'Param 1use'=>'Vybírané hodnoty',
+		'Param lock'=>'uzamknout při prvním užití',
+		'Param default'=>'nastavit jako výchozí',
+		'Param reset'=>'vždy nastavit',
+		'Param Share'=>'sdílet mezi reporty',
+
+		'Day'=>'Den',
+		'Month'=>'Měsíc',
+		'Year'=>'Rok',
+		'Constrain'=>'Definice podmínky',
+		'Short Constrain'=>'',
+		'Short Day'=>'D',
+		'Short Month'=>'M',
+		'Short Year'=>'R',
+		'Separator'=>'Oddělovač',
+		'Short Separator'=>'.',
+
+		'Role'=>'Role',
+		'Role desc'=>'Popis',
+		'Role def'=>'Práva',
+		'Role Rights'=>'Práva role',
+
+		'Elements'=>'Položky atributu:',
+		'Elements oc'=>'Zobrazit/skrýt položky atributů.',
+		'Elements reduce'=>"Vkládaný atribut omezit výběrem",
+		'Elements reduce info'=>"Vyberte elementy a vložte nový atribut do této plochy.",
+		'Elements except'=>"Vkládaný atribut omezit nevybranými položkami",
+		'Elements except info'=>"Vybrané elementy nebudou zahrnuty do nově generovaného seznamu.",
+		'Elements move'=>"Přenést vybrané prvky",
+		'Elements show'=>"Zobrazit elementy",
+		'Elements fact'=>"Atributy sloučit přes fakt:",
+		'Elements exceed'=>'Byl překročen limit zobrazení.',
+		'Elements limit'=>'Náhodně bylo vybráno 1001 prvků',
+
+		'Loading'=>"Zpracovávám Váš požadavek...",
+		'Saved'=>"Data byla uložena.",
+		'Result_remove'=>'Chcete odstranit ze seznamu špuštěných reportů výsledek reportu',
+		'Derivated_remove'=>'Chcete odstranit ze seznamu derivovaných reportů výsledek reportu',
+		'Edit New'=>'Editovat položku',
+		'Copy'=>'Kopírovat',
+		'Delete'=>'Smazat',
+		'Delete Active'=>'Smaže aktivní položku',
+		'SaveAsMsg'=>'Zadejte jméno položky: ',
+		'Save EN Name'=>'Zadejte anglický název položky: ',
+		'Continue'=>'Změny nebyly uloženy, přesto změnit záložku?',
+		'Max'=>'Maximum:',
+		'Min'=>'Minimum:',
+};
+
+$Const::Msg->{cz} = { #javascript localizations
+	'Forbidden' => 'Tato operace není povolena.',
+	'Rights' => 'Nemáte dostatečná oprávnění pro danou opearci.',
+	'IdMiss' => 'Chybí identifikátor kopírovaného objektu (objekt nebyl vybrán?)',
+	'newInfQ' =>'Změny nebyly uloženy, přesto vytvořit novou položku?',
+	'treeInfQ' =>"Změny nebyly uloženy, přesto přejít na zvolenou položku?",
+	'doubleInfQ' =>"Změny nebyly uloženy, přesto duplikovat položku?",
+	'runInfQ' => "Změny nebyly uloženy, přesto spustit report?",
+	'delQ' => "Chcete trvale odstranit položku:",
+	'bracket_error' => "(chyba závorek)",
+	'syntax_error' => "Chyba syntaxe. Znak:",
+	'position' => " pozice:",
+	'mg_alert' => "Umístěte nejdříve položku Skupina Metrik.",		
+	'breaks'=>'Objekt není možné smazat, je již použit v: ',
+};
+
+# following hash has to be moved into const.def ASAP
+$Const::shapes={
+	cone=>{name=>'Kužel',id=>'CONE'},
+	box=>{name=>'Kvádr',id=>'BOX'},
+	sphere=>{name=>'Koule',id=>'SPHERE'},
+	tetra=>{name=>'Čtyřstěn',id=>'TETRA'},
+	pyramid=>{name=>'Pyramida',id=>'PYARAMID'},
+	cylinder=>{name=>'Válec',id=>'CYLINDER'},
+	line=>{name=>'Čára',id=>'LINE'}
+};
+
+1
+@
+
+
+1.157
+log
+@added new expression for editing table
+@
+text
+@d5 1
+a5 1
+#  $Id: cz.utf,v 1.155 2004/04/26 18:08:53 vasekd Exp $
+d419 2
+@
+
+
+1.156
+log
+@some fixes from Vlada
+@
+text
+@d184 1
+a184 1
+		'Report Run'=>'Spustit report v:',
+d280 26
+d307 1
+a307 1
+		'Format3d'=>'Formát 3D grafu',
+a418 2
+		'Format2d Axis distance' => 'Mezera mezi bar grafy',
+		'Format2d Axis distance length' => 'velikost',
+@
+
+
+1.155
+log
+@new format of table
+@
+text
+@d5 1
+a5 1
+#  $Id: cz.utf,v 1.154 2004/04/22 15:57:39 vacula Exp $
+d184 1
+a184 1
+		'Report Run'=>'SPUSTIT report v:',
+d393 2
+@
+
+
+1.154
+log
+@renamed datas to data
+@
+text
+@d5 1
+a5 1
+#  $Id: cz.utf,v 1.153 2004/04/16 15:39:57 vacula Exp $
+d101 1
+a101 1
+		
+d128 1
+a128 1
+						
+d155 1
+a155 1
+		
+d171 1
+a171 1
+	
+d274 6
+d285 1
+a285 1
+		
+d294 1
+@
+
+
+1.153
+log
+@new names for interface
+@
+text
+@d5 1
+a5 1
+#  $Id: cz.utf,v 1.152 2004/04/15 13:22:43 jiri_schmid Exp $
+d342 1
+a342 1
+		'Format2d Datas'=>'datové prvky',
+@
+
+
+1.152
+log
+@implemented opening object on last used tab, if possible
+@
+text
+@d5 1
+a5 1
+#  $Id: cz.utf,v 1.151 2004/04/14 12:21:33 jiri_schmid Exp $
+d141 2
+d284 4
+a287 1
+		'Format2d colors'=>'Barvy',
+d306 2
+a307 2
+		'Format2d Descr Value'=>'osa - hodnoty',
+		'Format2d Descr Label'=>'hodnoty - popisek',
+d309 2
+a310 2
+		'Format2d Label Vertical'=>'popisek osy Y',
+		'Format2d Label Horizontal'=>'popisek osy X',
+d313 1
+a313 1
+		'Format2d x_labels_vertical'=>'- hodnoty osy X vertikálně',
+d315 14
+a328 7
+		'Format2d x_long_ticks'=>'zobrazit svislé čáry',
+		'Format2d y_long_ticks'=>'zobrazit vodorovné čáry',
+		'Format2d y_plot_values'=>'zobrazit hodnoty k ose Y',
+		'Format2d x_plot_values'=>'zobrazit hodnoty k ose X',
+		'Format2d y_label_skip'=>'zobrazit jen n-té prvky na ose Y',
+		'Format2d x_label_skip'=>'zobrazit jen n-té prvky na ose X',
+		'Format2d x_tick_offset'=>'- začít na ose X od prvku',
+d330 2
+a331 2
+		'Format2d fgclr'=>'popředí',
+		'Format2d axislabelclr'=>'popisky os',
+a333 1
+		'Format2d borderclr'=>'ohraničení',
+d338 2
+a339 2
+		'Format2d Logo Pos'=>"Pozice",
+		'Format2d Transparent'=>'průhledné pozadí',
+d347 39
+d420 3
+a422 3
+		'Graph3d red'=>"Červená:",
+		'Graph3d green'=>"Zelená:",
+		'Graph3d blue'=>"Modrá:",
+@
+
+
+1.151
+log
+@added help tab
+@
+text
+@d5 1
+a5 1
+#  $Id: cz.utf,v 1.150 2004/03/21 07:01:21 michald Exp $
+d171 1
+a171 1
+		'Attr attr'=>'Popis',
+d175 1
+a175 1
+		'Fact fact'=>'Popis',
+d189 1
+a189 1
+		'Report report'=>'Popis',
+d219 1
+a219 1
+		'Grid grid'=>'Popis',
+d226 1
+a226 1
+		'Filter filter'=>'Popis',
+d250 1
+a250 1
+		'Metric metric'=>'Popis',
+d261 1
+a261 1
+		'Format format'=>'Popis',
+d269 1
+a269 1
+		'Format format'=>'Popis',
+d274 1
+a274 1
+		'Format3d format3d'=>'Popis',
+d279 1
+a279 1
+		'Format2d format2d'=>'Popis',
+d359 1
+a359 1
+		'Graph3d graph3d'=>'Popis',
+d375 1
+a375 1
+		'Param param'=>'Popis',
+d414 1
+a414 1
+		'Role urole'=>'Popis',
+@
+
+
+1.150
+log
+@slight modification of the Metric Filter Intersection MD presentation
+@
+text
+@d5 1
+a5 1
+#  $Id: cz.utf,v 1.149 2004/03/18 15:34:50 jiri_schmid Exp $
+d22 2
+a23 2
+		'Edit'=>'Editace',  # tab_cgi	        
+		'LDM'=>'LDM',  # Logical Data Model	        
+d32 1
+d61 2
+@
+
+
+1.149
+log
+@hash name change
+@
+text
+@d5 1
+a5 1
+#  $Id: cz.utf,v 1.148 2004/03/16 15:29:12 jiri_schmid Exp $
+d232 7
+a238 7
+		'Metric type'=>'jen nerelační',
+		'Metric all'=>'všechny',
+		'Metric metrics'=>'metriky',
+		'Metric reports'=>'reportu',
+		'Metric type Title'=>'Průnik s částmi filtru reportu, které nejsou v přímé relaci s filtrem metriky. Není zatím implementováno.',
+		'Metric reports Title'=>'Průnik s filtrem specifikovaným v reportu',
+		'Metric metrics Title'=>'Průnik s filtrem specifikovaným v metrice',
+@
+
+
+1.148
+log
+@filter and aggregation level handling rules on metric page changed
+@
+text
+@d5 1
+a5 1
+#  $Id: cz.utf,v 1.147 2004/03/11 07:59:01 michald Exp $
+d232 1
+a232 1
+		'Metric non_rel'=>'jen nerelační',
+d236 1
+a236 1
+		'Metric non_rel Title'=>'Průnik s částmi filtru reportu, které nejsou v přímé relaci s filtrem metriky. Není zatím implementováno.',
+@
+
+
+1.147
+log
+@initial implementation of caches in the local DB
+@
+text
+@d5 1
+a5 1
+#  $Id: cz.utf,v 1.146 2004/03/04 14:43:16 jiri_schmid Exp $
+d231 2
+a232 2
+		'Metric Intersect'=>'Průnik:',
+		'Metric non_rel'=>'nerelační',
+d234 2
+a235 1
+		'Metric na'=>'není',
+d237 2
+a238 2
+		'Metric all Title'=>'Průnik s filtrem specifikovaným v reportu.',
+		'Metric na Title'=>'Průnik nepovolen.',
+d242 1
+a242 1
+		'Metric Rule'=>'Agregace:',
+@
+
+
+1.146
+log
+@fixing bugs and improving useability and performance
+@
+text
+@d5 1
+a5 1
+#  $Id: cz.utf,v 1.145 2004/02/25 16:05:07 jiri_schmid Exp $
+d235 1
+a235 1
+		'Metric non_rel Title'=>'Průnik s nerelační částí filtru reportu.',
+@
+
+
+1.145
+log
+@fixed rights logic and folder XML definition files are specific for each project now
+@
+text
+@d5 1
+a5 1
+#  $Id: cz.utf,v 1.144 2004/02/23 12:09:29 jiri_schmid Exp $
+d423 2
+@
+
+
+1.144
+log
+@fixed access tree creation depending on ACL
+@
+text
+@d5 1
+a5 1
+#  $Id: cz.utf,v 1.143 2004/02/20 12:41:12 jiri_schmid Exp $
+d61 1
+a61 1
+		'Forbidden Tab'=>'Přístup ke stránce nepovolen.',
+@
+
+
+1.143
+log
+@rights for edit page finished
+@
+text
+@d5 1
+a5 1
+#  $Id: cz.utf,v 1.142 2004/02/18 16:19:17 jiri_schmid Exp $
+d162 3
+a164 3
+		'Rights Local' => 'všechna práva jsou uložena společně s objektem',
+		'Rights Global' => 'všechna práva jsou přebírána z výchozí role',
+		
+d412 1
+@
+
+
+1.142
+log
+@rights implemented
+@
+text
+@d5 1
+a5 1
+#  $Id: cz.utf,v 1.141 2004/02/18 14:20:23 vacula Exp $
+d66 1
+d161 3
+a163 1
+		'Rights Recover'=>'Ulož implicitní',
+d438 14
+a451 2
+$Const::local->{cz} = {		#javascript localizations
+	'Remove Derivat'=>'Přejete si odstranit derivovaný report',
+a453 13
+$Const::js->{cz} = {		#javascript localizations
+		'newInfQ' =>"Změny nebyly uloženy, přesto vytvořit novou položku?",
+		'treeInfQ' =>"Změny nebyly uloženy, přesto přejít na zvolenou položku?",
+		'doubleInfQ' =>"Změny nebyly uloženy, přesto duplikovat položku?",
+		'runInfQ' => "Změny nebyly uloženy, přesto spustit report?",
+		'delQ' => "Chcete trvale odstranit položku:",
+		'bracket error' => "(chyba závorek)",
+		'syntax error' => "Chyba syntaxe.\nznak:",
+		'position' => " pozice:",
+		'mg_alert' => "Umístěte nejdříve položku Skupina Metrik.",		
+		'breaks'=>'Objekt není možné smazat, je již použit v: ',
+}; 
+
+@
+
+
+1.141
+log
+@fix min and max
+@
+text
+@d5 1
+a5 1
+#  $Id: cz.utf,v 1.140 2004/02/12 16:24:27 jiri_schmid Exp $
+d60 7
+d122 2
+d160 1
+@
+
+
+1.140
+log
+@prototype of tabs hidding implemented
+@
+text
+@d5 1
+a5 1
+#  $Id: cz.utf,v 1.139 2004/02/11 16:06:05 jiri_schmid Exp $
+d421 2
+a422 2
+		'Max'=>'Minimum:',
+		'Min'=>'Maximum:',
+@
+
+
+1.139
+log
+@local format improvment and started implementation of tabs selection
+@
+text
+@d5 1
+a5 1
+#  $Id: cz.utf,v 1.138 2004/02/10 14:47:24 jiri_schmid Exp $
+d88 2
+@
+
+
+1.138
+log
+@mod perl fixies, functionality improvment
+@
+text
+@d5 1
+a5 1
+#  $Id: cz.utf,v 1.137 2004/02/05 08:54:01 jiri_schmid Exp $
+d44 1
+a44 1
+		'Right'=>'Práva',
+d109 4
+a112 3
+		'Prefer treewidth'=>'editace',
+		'Prefer collectwidth'=>'spuštěné reporty',
+		'Prefer derivatewidth'=>'derivované reporty',
+d186 1
+a186 1
+		'Report Unspec Format'=>'Nespecifikovaný typ objektu mapování.',
+d188 3
+@
+
+
+1.137
+log
+@derivated reports redesigned
+@
+text
+@d5 1
+a5 1
+#  $Id: cz.utf,v 1.136 2004/01/29 13:20:52 jiri_schmid Exp $
+d433 1
+@
+
+
+1.136
+log
+@collected tab implemented
+@
+text
+@d5 1
+a5 1
+#  $Id: cz.utf,v 1.135 2004/01/20 13:06:08 jiri_schmid Exp $
+d109 3
+d406 2
+a407 1
+		'Result_remove'=>'Opravdu chcete odstranit výsledek reportu:',
+@
+
+
+1.135
+log
+@collected reports tab implementation started
+@
+text
+@d5 1
+a5 1
+#  $Id: cz.utf,v 1.134 2004/01/16 11:56:31 jiri_schmid Exp $
+d60 2
+@
+
+
+1.134
+log
+@dp page imrpovment, dp rules code fixies
+@
+text
+@d5 1
+a5 1
+#  $Id: cz.utf,v 1.133 2004/01/14 15:32:51 jiri_schmid Exp $
+d29 1
+d100 1
+@
+
+
+1.133
+log
+@DP rules fixies
+@
+text
+@d5 1
+a5 1
+#  $Id: cz.utf,v 1.132 2004/01/12 16:31:18 jiri_schmid Exp $
+d54 4
+@
+
+
+1.132
+log
+@dynamic param managing rules implentation started
+@
+text
+@d5 1
+a5 1
+#  $Id: cz.utf,v 1.131 2004/01/12 13:50:25 jiri_schmid Exp $
+d59 1
+a59 1
+		'Run Others'=>'Dynamické parametry dalších složek reportu',
+@
+
+
+1.131
+log
+@dynamic param fixations
+@
+text
+@d5 1
+a5 1
+#  $Id: cz.utf,v 1.130 2004/01/12 13:42:03 michald Exp $
+d60 1
+a60 1
+		'Run Error'=>'Nepovolený typ parametru',
+@
+
+
+1.130
+log
+@add limit to list of the elements
+@
+text
+@d5 1
+a5 1
+#  $Id: cz.utf,v 1.129 2004/01/07 16:27:05 jiri_schmid Exp $
+d59 1
+a59 1
+		'Run Filter'=>'Parametry filtru',
+@
+
+
+1.129
+log
+@added icons and improved controling dynamic params
+@
+text
+@d5 1
+a5 1
+#  $Id: cz.utf,v 1.128 2003/12/18 15:17:22 jiri_schmid Exp $
+d387 1
+a387 1
+		'Elements except'=>"Vkládaný atribut omezit nevýbranými položkami",
+@
+
+
+1.128
+log
+@visual improvment
+@
+text
+@d5 1
+a5 1
+#  $Id: cz.utf,v 1.127 2003/12/18 12:59:54 jiri_schmid Exp $
+d64 1
+@
+
+
+1.127
+log
+@defining of dynamic params within use rules implemented
+@
+text
+@d5 1
+a5 1
+#  $Id: cz.utf,v 1.126 2003/12/15 15:16:03 jiri_schmid Exp $
+d63 1
+@
+
+
+1.126
+log
+@interface for setting of dynamic params implemented
+@
+text
+@d5 1
+a5 1
+#  $Id: cz.utf,v 1.125 2003/12/12 12:12:16 jiri_schmid Exp $
+d62 1
+d360 5
+@
+
+
+1.125
+log
+@found a fixed bug manipulating dynamic params in grid
+@
+text
+@d5 1
+a5 1
+#  $Id: cz.utf,v 1.124 2003/12/10 12:23:12 jiri_schmid Exp $
+d54 8
+@
+
+
+1.124
+log
+@code a visual improvments, removing of derivated reports implemented
+@
+text
+@d5 1
+a5 1
+#  $Id: cz.utf,v 1.123 2003/12/10 09:31:28 jiri_schmid Exp $
+d178 1
+d391 1
+a391 1
+$Const::local->{cz} = {
+d395 1
+a395 1
+$Const::js->{cz} = {
+@
+
+
+1.123
+log
+@minor code improvments
+@
+text
+@d5 1
+a5 1
+#  $Id: cz.utf,v 1.122 2003/12/08 14:58:37 jiri_schmid Exp $
+a377 1
+		'Result_changed'=>'Tento report byl nově vygenerován uživatelem',
+d390 3
+@
+
+
+1.122
+log
+@reading of privatemd implemented, derivated reports are no longer in tree generated
+@
+text
+@d5 1
+a5 1
+#  $Id: cz.utf,v 1.121 2003/12/04 15:28:12 jiri_schmid Exp $
+d218 1
+a218 1
+		'Format innerTable'=>'vložený',
+@
+
+
+1.121
+log
+@starting implementation of history of derivated (modified) reports
+@
+text
+@d5 1
+a5 1
+#  $Id: cz.utf,v 1.120 2003/12/03 16:38:20 jiri_schmid Exp $
+d54 6
+@
+
+
+1.120
+log
+@grid renaming in czech localization
+@
+text
+@d5 1
+a5 1
+#  $Id: cz.utf,v 1.119 2003/12/02 16:22:53 jiri_schmid Exp $
+d28 1
+@
+
+
+1.119
+log
+@fixed some generating bugs when creating HTML output
+@
+text
+@d5 1
+a5 1
+#  $Id: cz.utf,v 1.118 2003/11/28 07:06:10 michald Exp $
+d34 1
+a34 1
+		'Save As Grid'=>'Uložit jako Mřížku',
+d36 1
+a36 1
+		'Save As Graph3d'=>'Uložit jako 3d graf',
+d84 4
+a87 4
+		'New Grid'=>'Nová Mřížka',    # create new  object
+		'New Grid Save'=>'mřížky.',
+		'New Graph3d'=>'Nový Graf 3D',
+		'New Graph3d Save'=>'grafu 3d.',
+d150 2
+a151 2
+		'Report No Grid'=>' (je shodná s globální mřížkou uvedenou v hlavním přehledu)',
+		'Report No Graph3d'=>' (je shodný s globálním 3D grafem uvedeným v hlavním přehledu)',
+d159 1
+a159 1
+		'Grid'=>'Mřížka', # grid_ed.pl
+d202 1
+a202 1
+		'Format radio_btn css',=>'Mřížka',
+d205 1
+a205 1
+		'Format css',=>'Styl mřížky:',
+d256 1
+a256 1
+		'Format2d Grid'=>'Mřížka grafu',
+d284 1
+a284 1
+		'Graph3d'=>'3D graf',
+@
+
+
+1.118
+log
+@report/metric filter join
+@
+text
+@d5 1
+a5 1
+#  $Id: cz.utf,v 1.117 2003/11/27 16:41:09 jiri_schmid Exp $
+d137 1
+a137 1
+		'Report grid'=>'Lokální mřížka',
+d139 1
+a139 1
+		'Report graph3d'=>'Lokální 3D graf',
+@
+
+
+1.117
+log
+@something like drill implemeted
+@
+text
+@d5 1
+a5 1
+#  $Id: cz.utf,v 1.116 2003/11/26 12:08:16 vacula Exp $
+d133 1
+a133 1
+		'Report Grid'=>'Objekt mapování', # report_ed.pl
+@
+
+
+1.116
+log
+@minor changes in Format2d map
+@
+text
+@d5 1
+a5 1
+#  $Id: cz.utf,v 1.115 2003/11/25 14:56:12 vacula Exp $
+d136 1
+a136 1
+		'Report filter'=>'Lokální filtr',
+d138 1
+a138 1
+		'Report format'=>'Lokální formát',
+d140 1
+a140 1
+		'Report object'=>'Lokální definice mapování',
+@
+
+
+1.115
+log
+@format 2d map
+@
+text
+@d5 1
+a5 1
+#  $Id: cz.utf,v 1.114 2003/11/20 14:06:46 vacula Exp $
+a279 1
+		'Format2d interval' => "Definice hraničních bodů",
+d281 2
+@
+
+
+1.114
+log
+@fix bug on horizontal and vertical lines in 2d graphs
+@
+text
+@d5 1
+a5 1
+#  $Id: cz.utf,v 1.113 2003/11/18 14:38:40 jiri_schmid Exp $
+d280 1
+a280 1
+		'Format2d interval' => "Definice intervalu",
+@
+
+
+1.113
+log
+@auto save when changing tabs implemented
+@
+text
+@d5 1
+a5 1
+#  $Id: cz.utf,v 1.112 2003/11/14 11:45:36 jiri_schmid Exp $
+d257 2
+a258 2
+		'Format2d x_long_ticks'=>'zobrazit vodorovné čáry',
+		'Format2d y_long_ticks'=>'zobrazit svislé čáry',
+@
+
+
+1.112
+log
+@question for dynamic param implemented
+@
+text
+@d5 1
+a5 1
+#  $Id: cz.utf,v 1.111 2003/11/12 12:44:27 jiri_schmid Exp $
+d52 1
+@
+
+
+1.111
+log
+@ldm multiimages implemented
+@
+text
+@d5 1
+a5 1
+#  $Id: cz.utf,v 1.110 2003/11/09 19:07:38 vacula Exp $
+d338 3
+@
+
+
+1.110
+log
+@added graph 2d map
+@
+text
+@d5 1
+a5 1
+#  $Id: cz.utf,v 1.109 2003/11/07 13:40:49 jiri_schmid Exp $
+d51 1
+@
+
+
+1.109
+log
+@tested a fixed saving of all objects
+@
+text
+@d5 1
+a5 1
+#  $Id: cz.utf,v 1.108 2003/10/31 12:47:57 jiri_schmid Exp $
+d229 1
+d277 3
+@
+
+
+1.108
+log
+@mod perl rocks!
+@
+text
+@d5 1
+a5 1
+#  $Id: cz.utf,v 1.107 2003/10/16 14:08:53 jiri_schmid Exp $
+d227 1
+a227 1
+		'Format2d color'=>'Barvy',
+@
+
+
+1.107
+log
+@mod-perl implementation stage 1, rebuilding global vars in .pl to global pointers
+@
+text
+@d1 1
+d5 5
+a9 1
+#  $Id: cz.utf,v 1.106 2003/10/13 14:43:23 jiri_schmid Exp $
+d12 1
+a12 1
+our $RLang = {
+d21 1
+a21 1
+our $lang={
+d375 1
+a375 1
+our %js = (
+d380 1
+a380 1
+	        'delQ' => "Chcete trvale odstranit položku:",
+d385 1
+a385 1
+          ); 
+d388 1
+a388 1
+our $Shapes={
+d398 1
+@
+
+
+1.106
+log
+@description tab defined under two files, bug fixies
+@
+text
+@d4 1
+a4 1
+#  $Id: cz.utf,v 1.105 2003/10/03 09:37:56 jiri_schmid Exp $
+d123 1
+a123 1
+		'Report Edit'=>'Report', # report_ed.pl
+d152 1
+a152 1
+		'Grid Edit'=>'Mřížka', # grid_ed.pl
+d165 1
+a165 1
+		'Filter Edit'=>'Filtr', # filter_ed.pl
+d171 1
+a171 1
+		'Metric Edit'=>'Metrika', # metric_ed.pl
+d194 1
+a194 1
+		'Format Edit'=>'Formát', # format_ed.pl
+d213 1
+a213 1
+		'Format3d Edit'=>'Formát 3D grafu',
+d218 1
+a218 1
+		'Format2d Edit'=>'Formát 2D grafu',
+d272 1
+a272 1
+		'Graph3d Edit'=>'3D graf',
+d309 1
+a309 1
+		'Param Edit'=>'Dynamický parametr',
+@
+
+
+1.105
+log
+@param - common impleneted
+@
+text
+@d4 1
+a4 1
+#  $Id: cz.utf,v 1.103 2003/10/02 14:44:55 jiri_schmid Exp $
+d45 1
+d113 1
+a113 1
+		'Folder (read only)'=>'Adresář (pouze ke čtení)', # folder_ed.pl
+d115 1
+a115 1
+		'Attr'=>'Atribut (pouze ke čtení)', # attr_ed.pl
+d119 1
+a119 1
+		'Fact'=>'Fakt (pouze ke čtení)', # fact_ed.pl
+@
+
+
+1.104
+log
+@param - date implemented
+@
+text
+@d326 1
+@
+
+
+1.103
+log
+@parameters - elements implemented
+@
+text
+@d4 1
+a4 1
+#  $Id: cz.utf,v 1.101 2003/10/01 05:38:29 michald Exp $
+d324 13
+@
+
+
+1.102
+log
+@prompt implemented
+@
+text
+@d312 2
+a313 1
+		'Param Items'=>'Počet prvků',
+d319 5
+a323 2
+		'Param string'=>'text',
+		'Param number'=>'číslo',
+@
+
+
+1.101
+log
+@basic impl. of LDM preview
+@
+text
+@d4 1
+a4 1
+#  $Id: cz.utf,v 1.100 2003/09/30 19:39:28 michald Exp $
+d89 2
+d307 13
+@
+
+
+1.100
+log
+@moving tabs definition out from the language def files
+@
+text
+@d4 1
+a4 1
+#  $Id: cz.utf,v 1.99 2003/09/30 15:46:41 jiri_schmid Exp $
+d348 1
+@
+
+
+1.99
+log
+@elements handling changes, format2d colors changes
+@
+text
+@d4 1
+a4 1
+#  $Id: cz.utf,v 1.98 2003/09/29 06:52:09 jiri_schmid Exp $
+d18 1
+a356 33
+
+our $Tabs={
+#	H=>{name=>'Home',bg=>'006600',cgi=>'home.shtml',img=>'home'},
+#	F=>{name=>'Folders',bg=>'660000',cgi=>'fold.cgi',img=>'edit'},
+	R=>{name=>$lang->{'Result'},bg=>'006666',cgi=>'run.cgi',img=>'table'},
+	D=>{name=>$lang->{'Debug'},bg=>'666666',cgi=>'debug.cgi',img=>'debug'},
+	P=>{name=>$lang->{'Preferences'},bg=>'cc9900',cgi=>'prefer.cgi',img=>'prefer'},
+	A=>{name=>$lang->{'Admin'},bg=>'0099CC',cgi=>'admin.cgi',img=>'admin'},
+	E=>{name=>$lang->{'Edit'},bg=>'003c9b',cgi=>'edit.cgi',img=>'fold'},
+};
+
+our @@Tabs=('E','P','A','D'); #have to be set manualy to define order of tabs
+
+our $TabsDef={
+	G=>{name=>$lang->{'New Grid'},id=>'NewGrid',cgi=>'edit.cgi?Action=NewGrid&',img=>'grid',target=>'body'},
+	G3=>{name=>$lang->{'New Graph3d'},id=>'NewGraph3d',cgi=>'edit.cgi?Action=NewGraph3d&',img=>'graph3d',target=>'body'},
+	Fi=>{name=>$lang->{'New Filter'},id=>'NewFilter',cgi=>'edit.cgi?Action=NewFilter&',img=>'filter',target=>'body'},
+	R=>{name=>$lang->{'New Report'},id=>'NewReport',cgi=>'edit.cgi?Action=NewReport&',img=>'report',target=>'body'},
+	Fo=>{name=>$lang->{'New Format'},id=>'NewFormat',cgi=>'edit.cgi?Action=NewFormat&',img=>'format',target=>'body'},
+	F3=>{name=>$lang->{'New Format3d'},id=>'NewFormat3d',cgi=>'edit.cgi?Action=NewFormat3d&',img=>'format3d',target=>'body'},
+	F2=>{name=>$lang->{'New Format2d'},id=>'NewFormat2d',cgi=>'edit.cgi?Action=NewFormat2d&',img=>'format2d',target=>'body'},
+	M=>{name=>$lang->{'New Metric'},id=>'NewMetric',cgi=>'edit.cgi?Action=NewMetric&',img=>'metric',target=>'body'},
+	Cop=>{name=>$lang->{'Tabs Duplicate'},id=>'Duplicate',cgi=>'edit.cgi?',img=>'copy',target=>'body'},	
+	Del=>{name=>$lang->{'Tabs Delete'},id=>'Remove',cgi=>'edit.cgi?',img=>'delete',target=>'body'},
+	UU=>{name=>$lang->{'New User'},id=>'NewUser',cgi=>'admin.cgi?Action=NewUser',img=>'single',target=>'body'},
+	UR=>{name=>$lang->{'New Role'},id=>'NewRole',cgi=>'admin.cgi?Action=NewRole',img=>'role',target=>'body'},
+	UG=>{name=>$lang->{'New Group'},id=>'NewGroup',cgi=>'admin.cgi?Action=NewGroup',img=>'group',target=>'body'}
+
+};
+
+our @@TabsEdit=('M','Fi','Fo','F2','F3','G','G3','R','|','Cop','Del');
+
+our @@TabsAdmin=('UU','UG','UR','|','Cop','Del');
+@
+
+
+1.98
+log
+@minor improvments a bug fix
+@
+text
+@d4 1
+a4 1
+#  $Id: cz.utf,v 1.97 2003/09/26 13:53:10 jiri_schmid Exp $
+d263 4
+@
+
+
+1.97
+log
+@logo page implemented
+@
+text
+@d4 1
+a4 1
+#  $Id: cz.utf,v 1.93 2003/09/26 06:50:42 jiri_schmid Exp $
+d259 2
+a260 1
+		'Format2d Logo'=>"Logo grafu",
+@
+
+
+1.96
+log
+@format2d added logo page, minor visual improvments on layout, color page
+@
+text
+@d259 3
+@
+
+
+1.95
+log
+@format2d color tab implemented
+@
+text
+@d219 1
+@
+
+
+1.94
+log
+@formta2d layout final stage of implementation
+@
+text
+@d251 7
+@
+
+
+1.93
+log
+@added new localized items
+@
+text
+@d4 1
+a4 1
+#  $Id: cz.utf,v 1.92 2003/09/25 15:04:17 jiri_schmid Exp $
+d242 1
+a242 1
+		'Format2d x_labels_vertical'=>'hodnoty osy X vertikálně',
+d244 7
+a250 7
+		'Format2d x_long_ticks'=>'Zobrazit vodorovné čáry',
+		'Format2d y_long_ticks'=>'Zobrazit svislé čáry',
+		'Format2d y_plot_values'=>'Zobrazit hodnoty k ose Y',
+		'Format2d x_plot_values'=>'Zobrazit hodnoty k ose X',
+		'Format2d y_label_skip'=>'Zobrazit jen n-té prvky na ose Y',
+		'Format2d x_label_skip'=>'Zobrazit jen n-té prvky na ose X',
+		'Format2d x_tick_offset'=>'Začít na ose X od prvku',
+@
+
+
+1.92
+log
+@operational commit for martin
+@
+text
+@d4 1
+a4 1
+#  $Id: cz.utf,v 1.90 2003/09/24 14:59:18 jiri_schmid Exp $
+d237 1
+a237 1
+		'Format2d Label'=>'Texty os',
+d240 2
+a241 2
+		'Format2d Label vertical'=>'dole .. nahoře',
+		'Format2d Label horizontal'=>'vlevo .. vpravo',
+d248 3
+@
+
+
+1.91
+log
+@operational commit for vladis
+@
+text
+@d217 2
+d227 21
+@
+
+
+1.90
+log
+@graph2d improvments
+@
+text
+@d4 1
+a4 1
+#  $Id: cz.utf,v 1.89 2003/09/22 14:42:47 jiri_schmid Exp $
+d221 4
+@
+
+
+1.89
+log
+@report menu localized
+@
+text
+@d4 1
+a4 1
+#  $Id: cz.utf,v 1.88 2003/09/19 10:24:59 jiri_schmid Exp $
+d218 3
+@
+
+
+1.88
+log
+@tabs implemented everywhere
+@
+text
+@d4 1
+a4 1
+#  $Id: cz.utf,v 1.87 2003/09/18 14:10:50 jiri_schmid Exp $
+d6 10
+@
+
+
+1.87
+log
+@tabs imlemented almost everywhere
+@
+text
+@d4 1
+a4 1
+#  $Id: cz.utf,v 1.85 2003/09/17 14:51:14 jiri_schmid Exp $
+a14 1
+		'Role'=>'Role',
+d101 7
+a107 3
+		'Attribut (read only)'=>'Atribut (pouze ke čtení)', # attr_ed.pl
+		
+		'Fact (read only)'=>'Fakt (pouze ke čtení)', # fact_ed.pl
+d245 4
+@
+
+
+1.86
+log
+@report tab changes
+@
+text
+@d144 3
+d150 3
+d173 3
+d192 3
+d197 3
+d202 3
+@
+
+
+1.85
+log
+@tabed rights on graph3d and report
+@
+text
+@d4 1
+a4 1
+#  $Id: cz.utf,v 1.84 2003/09/17 11:41:25 jiri_schmid Exp $
+d57 1
+a57 1
+		'Prefer OpenR _self'=>'Záložkách',
+d117 1
+a117 1
+		'Report report'=>'Hlavní přehled',
+d119 1
+@
+
+
+1.84
+log
+@bug fixies
+@
+text
+@d4 1
+a4 1
+#  $Id: cz.utf,v 1.83 2003/09/16 14:37:53 jiri_schmid Exp $
+d16 19
+d57 1
+a57 1
+		'Prefer OpenR _self'=>'V záložkách',
+a91 20
+						
+		'Save'=>'Uložit', # all *_ed.pl
+		'Save As'=>'Uložit jako',
+		'Save As Filter'=>'Uložit jako Filtr',
+		'Save As Grid'=>'Uložit jako Mřížku',
+		'Save As Format'=>'Uložit jako Formát',
+		'Save As Graph3d'=>'Uložit jako 3d graf',
+		'Save and Run'=>'Uložit a spustit',
+		'Save and Return'=>'Uložit a zpět',
+		'Reset'=>'Obnovit',
+		'Reload'=>'Znovu nahrát',
+		'Rights'=>'Přístupová práva',
+		'Right'=>'Práva',
+		'Read'=>'Číst',
+		'Write'=>'Měnit',
+		'Duplicate'=>'Duplikovat',
+		'Execute'=>'Spouštět',
+		'Clear all'=>'Vymazat vše',
+		'Run'=>'Spustit',
+		'Return'=>'Zpět',
+d110 1
+a110 1
+		'Report Open_in'=>'Report zobrazit v:',
+d119 1
+d194 1
+@
+
+
+1.83
+log
+@rights page user improvments, unbelieveble IE bug fixed
+@
+text
+@d4 1
+a4 1
+#  $Id: cz.utf,v 1.82 2003/09/15 10:46:12 jiri_schmid Exp $
+d76 4
+@
+
+
+1.82
+log
+@acl changes implemented
+@
+text
+@d4 1
+a4 1
+#  $Id: cz.utf,v 1.81 2003/09/11 16:23:06 jiri_schmid Exp $
+d107 1
+a107 1
+		'Report Open_in'=>'zobrazit v:',
+@
+
+
+1.81
+log
+@minor code changes and visual improvments
+@
+text
+@d4 1
+a4 1
+#  $Id: cz.utf,v 1.80 2003/09/09 09:41:30 jiri_schmid Exp $
+a89 2
+		'Rights Force'=>'Uložit i nezměněná práva',
+		'Rights Force Title'=>'Uložit práva do objektu, i když nebyla změněna vzhledem k implicitním hodnotám.',
+d91 1
+a91 3
+		'Rights Remove Title'=>'Odstranit z objektu uložená práva a svázat jej s implicitními hodnotami.',
+		'Rights Lock'=>'Blokovat nesvázané role',
+		'Rights Lock Title'=>'Blokovat automatikcé připojení rolí nesvázaných s objektem.',
+d94 2
+a95 2
+		'Rights Include'=>'Svázat',
+		'Rights Include Title'=>'Uložit práva společně s objektem, jinak používat implicitní',
+@
+
+
+1.80
+log
+@ACL for facts and attrs implemented
+@
+text
+@d4 1
+a4 1
+#  $Id: cz.utf,v 1.79 2003/09/03 15:10:47 jiri_schmid Exp $
+d198 1
+@
+
+
+1.79
+log
+@implementation of right clik menu
+@
+text
+@d4 1
+a4 1
+#  $Id: cz.utf,v 1.78 2003/09/01 12:40:09 jiri_schmid Exp $
+d24 2
+a25 1
+		'Access groupContain'=>'Obsahuje uživatele a skupiny:',
+d165 1
+@
+
+
+1.78
+log
+@skins implemented. mozilla skin - temporarily copy msie content
+@
+text
+@d4 1
+a4 1
+#  $Id: cz.utf,v 1.77 2003/08/28 09:26:16 jiri_schmid Exp $
+d40 1
+a40 1
+		'Prefer Width'=>'Šířka stromu objektů:',
+@
+
+
+1.77
+log
+@tabs.cgi speed improvmnet, visual improvment on trees, rights and some other minor improvments
+@
+text
+@d4 1
+a4 1
+#  $Id: cz.utf,v 1.76 2003/08/26 15:35:45 jiri_schmid Exp $
+d41 4
+d269 7
+a275 7
+#	H=>{name=>'Home',bg=>'006600',cgi=>'home.shtml',img=>'home.png'},
+#	F=>{name=>'Folders',bg=>'660000',cgi=>'fold.cgi',img=>'edit.png'},
+	R=>{name=>$lang->{'Result'},bg=>'006666',cgi=>'run.cgi',img=>'table.png'},
+	D=>{name=>$lang->{'Debug'},bg=>'666666',cgi=>'debug.cgi',img=>'debug.png'},
+	P=>{name=>$lang->{'Preferences'},bg=>'cc9900',cgi=>'prefer.cgi',img=>'prefer.png'},
+	A=>{name=>$lang->{'Admin'},bg=>'0099CC',cgi=>'admin.cgi',img=>'admin.png'},
+	E=>{name=>$lang->{'Edit'},bg=>'003c9b',cgi=>'edit.cgi',img=>'fold.gif'},
+d281 13
+a293 13
+	G=>{name=>$lang->{'New Grid'},id=>'NewGrid',cgi=>'edit.cgi?Action=NewGrid&',img=>'grid.gif',target=>'body'},
+	G3=>{name=>$lang->{'New Graph3d'},id=>'NewGraph3d',cgi=>'edit.cgi?Action=NewGraph3d&',img=>'graph3d.gif',target=>'body'},
+	Fi=>{name=>$lang->{'New Filter'},id=>'NewFilter',cgi=>'edit.cgi?Action=NewFilter&',img=>'filter.gif',target=>'body'},
+	R=>{name=>$lang->{'New Report'},id=>'NewReport',cgi=>'edit.cgi?Action=NewReport&',img=>'report.gif',target=>'body'},
+	Fo=>{name=>$lang->{'New Format'},id=>'NewFormat',cgi=>'edit.cgi?Action=NewFormat&',img=>'format.gif',target=>'body'},
+	F3=>{name=>$lang->{'New Format3d'},id=>'NewFormat3d',cgi=>'edit.cgi?Action=NewFormat3d&',img=>'format3d.gif',target=>'body'},
+	F2=>{name=>$lang->{'New Format2d'},id=>'NewFormat2d',cgi=>'edit.cgi?Action=NewFormat2d&',img=>'format2d.gif',target=>'body'},
+	M=>{name=>$lang->{'New Metric'},id=>'NewMetric',cgi=>'edit.cgi?Action=NewMetric&',img=>'metric.gif',target=>'body'},
+	Cop=>{name=>$lang->{'Tabs Duplicate'},id=>'Duplicate',cgi=>'edit.cgi?',img=>'copy.gif',target=>'body'},	
+	Del=>{name=>$lang->{'Tabs Delete'},id=>'Remove',cgi=>'edit.cgi?',img=>'delete.gif',target=>'body'},
+	UU=>{name=>$lang->{'New User'},id=>'NewUser',cgi=>'admin.cgi?Action=NewUser',img=>'single.gif',target=>'body'},
+	UR=>{name=>$lang->{'New Role'},id=>'NewRole',cgi=>'admin.cgi?Action=NewRole',img=>'role.gif',target=>'body'},
+	UG=>{name=>$lang->{'New Group'},id=>'NewGroup',cgi=>'admin.cgi?Action=NewGroup',img=>'group.gif',target=>'body'}
+@
+
+
+1.76
+log
+@rights improvment, create delete duplicate rule implemented
+@
+text
+@d4 1
+a4 1
+#  $Id: cz.utf,v 1.75 2003/08/25 15:09:20 jiri_schmid Exp $
+d72 1
+d287 3
+a289 3
+	U=>{name=>$lang->{'New User'},id=>'NewUser',cgi=>'admin.cgi?Action=NewUser',img=>'single.gif',target=>'body'},
+	Ro=>{name=>$lang->{'New Role'},id=>'NewRole',cgi=>'admin.cgi?Action=NewRole',img=>'role.gif',target=>'body'},
+	G=>{name=>$lang->{'New Group'},id=>'NewGroup',cgi=>'admin.cgi?Action=NewGroup',img=>'group.gif',target=>'body'}
+d295 1
+a295 1
+our @@TabsAdmin=('U','G','Ro','|','Cop','Del');
+@
+
+
+1.75
+log
+@object acl, owner, modifier, datetime creation and modification implemented
+@
+text
+@d4 1
+a4 1
+#  $Id: cz.utf,v 1.74 2003/08/20 14:23:46 jiri_schmid Exp $
+d61 3
+d78 1
+d88 6
+a252 18
+our $Access = {
+	'groups' => {
+		'~name' => 'Skupiny',
+		'~content' => 'group',
+		'~desc' => 'Skupiny uživatelu',
+	},
+	'users' => {
+		'~name' => 'Uživatelé',
+		'~content' => 'user',
+		'~desc' => 'user - error',
+	},
+	'roles' => {
+		'~name' => 'Role',
+		'~desc' => 'Role a roličky',
+		'~content' => 'role',
+	}
+};
+
+d275 1
+a275 1
+our $TabsF={
+d286 4
+d292 1
+a292 2
+our @@TabsF=('M','G','Fo','F2','G3','F3','Fi','R','|','Cop','Del');
+
+d294 1
+@
+
+
+1.74
+log
+@access object implemented
+@
+text
+@d4 1
+a4 1
+#  $Id: cz.utf,v 1.73 2003/08/19 13:05:58 jiri_schmid Exp $
+d79 5
+@
+
+
+1.73
+log
+@formats2d implemented
+@
+text
+@d4 1
+a4 1
+#  $Id: cz.utf,v 1.72 2003/08/14 16:26:57 jiri_schmid Exp $
+d15 1
+d163 1
+a163 1
+		'Format3d Edit'=>'Formát 2D grafu',
+d237 18
+@
+
+
+1.72
+log
+@icons rebuilding
+@
+text
+@d4 1
+a4 1
+#  $Id: cz.utf,v 1.71 2003/08/13 13:16:29 jiri_schmid Exp $
+d51 2
+d161 2
+d266 1
+d272 1
+a272 1
+our @@TabsF=('M','G','Fo','G3','F3','Fi','R','|','Cop','Del');
+@
+
+
+1.71
+log
+@setting up rights inetrface for each object implemnted
+@
+text
+@d4 1
+a4 1
+#  $Id: cz.utf,v 1.70 2003/08/12 14:09:49 jiri_schmid Exp $
+d250 1
+a250 1
+	E=>{name=>$lang->{'Edit'},bg=>'000066',cgi=>'edit.cgi',img=>'fold.gif'},
+@
+
+
+1.70
+log
+@left pane is colapsible now
+@
+text
+@d4 1
+a4 1
+#  $Id: cz.utf,v 1.69 2003/08/12 11:09:35 jiri_schmid Exp $
+d67 6
+a72 1
+		'Reload'=>'Reload',
+d75 1
+@
+
+
+1.69
+log
+@minor changes
+@
+text
+@d4 1
+a4 1
+#  $Id: cz.utf,v 1.68 2003/08/12 09:19:19 jiri_schmid Exp $
+d16 1
+a16 1
+		'Access list'=>'Beard administrace:',
+@
+
+
+1.68
+log
+@ACL implementation, datas moved into beard"s caches
+@
+text
+@d4 1
+a4 1
+#  $Id: cz.utf,v 1.67 2003/08/07 08:02:21 jiri_schmid Exp $
+d14 1
+@
+
+
+1.67
+log
+@elements negation implemented
+@
+text
+@d4 1
+a4 1
+#  $Id: cz.utf,v 1.66 2003/08/06 15:22:33 jiri_schmid Exp $
+d18 1
+a18 1
+		'Access rule'=>'Detail role:',
+@
+
+
+1.66
+log
+@user ACL implementation started
+@
+text
+@d4 1
+a4 1
+#  $Id: cz.utf,v 1.65 2003/08/05 12:49:47 jiri_schmid Exp $
+d190 1
+a190 1
+		'Elements reduce'=>"Vkládaný atribut omezit výběrem.",
+d192 2
+@
+
+
+1.65
+log
+@fact input field on right pane implemented
+@
+text
+@d4 1
+a4 1
+#  $Id: cz.utf,v 1.64 2003/08/04 14:17:41 jiri_schmid Exp $
+d15 8
+a22 1
+		'Admin Title'=>'Beard administrace:',
+@
+
+
+1.64
+log
+@UI improvments
+@
+text
+@d4 1
+a4 1
+#  $Id: cz.utf,v 1.63 2003/08/04 08:12:54 jiri_schmid Exp $
+d187 1
+@
+
+
+1.63
+log
+@changes depending on implemntation of right pane on graph3d page done
+@
+text
+@d4 1
+a4 1
+#  $Id: cz.utf,v 1.62 2003/08/01 13:07:15 jiri_schmid Exp $
+d177 3
+@
+
+
+1.62
+log
+@graph3d relevant changes made to cooperate with right pane, multiple metric not alowed yet
+@
+text
+@d4 1
+a4 1
+#  $Id: cz.utf,v 1.61 2003/07/31 14:34:43 jiri_schmid Exp $
+d176 1
+d196 2
+@
+
+
+1.61
+log
+@right pane implementation aproaching final stage
+@
+text
+@d4 1
+a4 1
+#  $Id: cz.utf,v 1.60 2003/07/31 12:16:00 jiri_schmid Exp $
+d182 1
+@
+
+
+1.60
+log
+@right pane stage 3
+@
+text
+@d4 1
+a4 1
+#  $Id: cz.utf,v 1.59 2003/07/30 15:30:47 jiri_schmid Exp $
+d190 1
+@
+
+
+1.59
+log
+@right pane implementation stage 2
+@
+text
+@d4 1
+a4 1
+#  $Id: cz.utf,v 1.58 2003/07/29 12:28:34 jiri_schmid Exp $
+d181 2
+a182 1
+		
+@
+
+
+1.58
+log
+@right frame implemented
+@
+text
+@d4 1
+a4 1
+#  $Id: cz.utf,v 1.57 2003/07/25 10:53:23 jiri_schmid Exp $
+d179 2
+@
+
+
+1.57
+log
+@switching tab bug fixed
+@
+text
+@d4 1
+a4 1
+#  $Id: cz.utf,v 1.56 2003/07/25 09:28:51 jiri_schmid Exp $
+d176 3
+@
+
+
+1.56
+log
+@minor bug fixies and code improvment
+@
+text
+@d4 1
+a4 1
+#  $Id: cz.utf,v 1.55 2003/07/24 10:37:52 jiri_schmid Exp $
+d226 1
+a226 1
+	G3=>{name=>$lang->{'New Graph 3d'},id=>'NewGraph3d',cgi=>'edit.cgi?Action=NewGraph3d&',img=>'graph3d.gif',target=>'body'},
+@
+
+
+1.55
+log
+@next tab implmented
+@
+text
+@d4 1
+a4 1
+#  $Id: cz.utf,v 1.54 2003/07/23 11:44:56 jiri_schmid Exp $
+d203 1
+a203 1
+	clone=>{name=>'Kužel',id=>'CLONE'},
+@
+
+
+1.54
+log
+@next tab implemented on graph3d page
+@
+text
+@d4 1
+a4 1
+#  $Id: cz.utf,v 1.53 2003/07/22 15:13:08 jiri_schmid Exp $
+d156 2
+a157 2
+		'Graph3d Interval'=>'Interval zobrazení:',
+		'Graph3d Size'=>'Interval velikostí:',
+d201 10
+@
+
+
+1.53
+log
+@new tabs on graph3d page implemented
+@
+text
+@d4 1
+a4 1
+#  $Id: cz.utf,v 1.52 2003/07/22 08:48:01 jiri_schmid Exp $
+d157 1
+@
+
+
+1.52
+log
+@axis tabs on 3dgraph page implented
+@
+text
+@d4 1
+a4 1
+#  $Id: cz.utf,v 1.51 2003/07/21 10:51:42 jiri_schmid Exp $
+d150 3
+a152 3
+		'Graph3d y'=>'Osa Y:',
+		'Graph3d x'=>'Osa X:',
+		'Graph3d z'=>'Osa Z:',
+d157 8
+a164 4
+		'Graph3d Diam'=>'Průměr:',
+		'Graph3d Trans'=>'Průhlednost:',
+		'Graph3d Shape'=>'Tvar:',
+		'Graph3d Color'=>'Barva:',
+d169 6
+@
+
+
+1.51
+log
+@report and format scripts fixies, GUI improvment
+@
+text
+@d4 1
+a4 1
+#  $Id: cz.utf,v 1.50 2003/07/18 10:51:02 jiri_schmid Exp $
+d94 1
+d150 7
+a156 3
+		'Graph3d yAxis'=>'Osa Y:',
+		'Graph3d xAxis'=>'Osa X:',
+		'Graph3d zAxis'=>'Osa Z:',
+@
+
+
+1.50
+log
+@format3d implemented, format changed all dependencies fixed
+@
+text
+@d4 1
+a4 1
+#  $Id: cz.utf,v 1.49 2003/07/11 16:00:53 jiri_schmid Exp $
+d93 1
+d165 1
+a165 1
+		'Edit New'=>'Vytvořit/Editovat položku',
+@
+
+
+1.49
+log
+@graph3d next stage
+@
+text
+@d4 1
+a4 1
+#  $Id: cz.utf,v 1.48 2003/07/10 13:00:05 jiri_schmid Exp $
+d41 2
+d57 1
+d72 1
+a72 1
+		'Report Grid'=>'Mřížka', # report_ed.pl
+d78 2
+d88 1
+d140 3
+a142 1
+		'Format none'=>'nezobrazovat',
+d175 1
+a175 1
+		'treeInfQ' =>"Změny nebyly uloženy, přesto přejít na jinou položku?",
+d203 1
+d209 1
+a209 1
+our @@TabsF=('M','G','G3','Fi','Fo','R','|','Cop','Del');
+@
+
+
+1.48
+log
+@tabed graph3d implemnted, code improvment
+@
+text
+@d4 1
+a4 1
+#  $Id: cz.utf,v 1.47 2003/07/09 09:28:10 jiri_schmid Exp $
+a90 1
+		'Grid Pages_end'=>'Umístit na konec',
+a92 1
+		'Grid Table_col_end'=>'Umístit na konec',
+a93 1
+		'Grid Table_row_end'=>'Umístit na konec',
+d95 1
+a95 3
+		'Grid Table_cell_end'=>'Umístit na konec',
+		'Graph3d graph3d'=>'Description',
+		'Graph3d def'=>'Definition',
+d138 1
+a138 1
+		'Graph3d Pages_end'=>'Umístit na konec',
+d140 7
+a146 6
+		'Graph3d Table_y'=>'Osa Y:',
+		'Graph3d Table_y_end'=>'Umístit na konec',
+		'Graph3d Table_x'=>'Osa X:',
+		'Graph3d Table_x_end'=>'Umístit na konec',
+		'Graph3d Table_z'=>'Osa Z:',
+		'Graph3d Table_z_end'=>'Umístit na konec',
+d148 3
+a150 1
+		'Graph3d def'=>'Definice',
+@
+
+
+1.47
+log
+@major manipulating functions for graph3d definition implemented
+@
+text
+@d4 1
+a4 1
+#  $Id: cz.utf,v 1.46 2003/07/08 07:12:06 jiri_schmid Exp $
+d72 5
+a76 5
+		'Report Lfilter'=>'Lokální filtr',
+		'Report Lgrid'=>'Lokální mřížka',
+		'Report Lformat'=>'Lokální formát',
+		'Report Lreport'=>'Hlavní přehled',
+		'Report Lsql'=>'SQL',
+d99 2
+d142 1
+a142 1
+		'Graph3d Pages'=>'Stránky:',
+d151 2
+a152 1
+		'Graph3d Replace MG'=>'Replace metrics group first and repeat action.',
+@
+
+
+1.46
+log
+@utf8 implementation in last stage
+@
+text
+@d4 1
+a4 1
+#  $Id: cz.utf,v 1.45 2003/07/07 14:17:14 jiri_schmid Exp $
+d140 10
+@
+
+
+1.45
+log
+@utf8 may work properly
+@
+text
+@d4 2
+a5 2
+#  $Id: cz.utf,v 1.44 2003/07/04 14:29:33 jiri_schmid Exp $
+
+@
+
+
+1.44
+log
+@utf8 handling fixed
+@
+text
+@d4 1
+a4 1
+#  $Id: cz.utf,v 1.43 2003/07/02 13:44:34 jiri_schmid Exp $
+d35 2
+a36 2
+		'New Graph 3d'=>'Nový Graf 3D',
+		'New Graph 3d Save'=>'graf 3d.',
+d138 2
+@
+
+
+1.43
+log
+@header descriptions finally implemented
+@
+text
+@d4 1
+a4 1
+#  $Id: cz.utf,v 1.42 2003/06/24 15:17:43 jiri_schmid Exp $
+d35 2
+d178 1
+d187 1
+a187 1
+our @@TabsF=('M','G','Fi','Fo','R','|','Cop','Del');
+@
+
+
+1.42
+log
+@metric mData change, minor code improvment
+@
+text
+@d4 1
+a4 1
+#  $Id: cz.utf,v 1.41 2003/06/19 14:59:45 jiri_schmid Exp $
+d130 6
+@
+
+
+1.41
+log
+@huge improvment on format page
+@
+text
+@d4 1
+a4 1
+#  $Id: cz.utf,v 1.40 2003/06/12 08:44:36 jiri_schmid Exp $
+d106 14
+@
+
+
+1.40
+log
+@create HTML report on artificial datas implemented
+@
+text
+@d4 1
+a4 1
+#  $Id: cz.utf,v 1.39 2003/06/02 12:09:11 jiri_schmid Exp $
+d110 2
+a111 1
+		'Format css',=>'Kaskádový styl:',
+d113 3
+@
+
+
+1.39
+log
+@code improvment, bug fixies
+@
+text
+@d4 1
+a4 1
+#  $Id: cz.utf,v 1.38 2003/06/02 09:33:46 jiri_schmid Exp $
+d130 1
+@
+
+
+1.38
+log
+@user interface dialogs improvment
+@
+text
+@d4 1
+a4 1
+#  $Id: cz.utf,v 1.37 2003/05/29 08:19:19 jiri_schmid Exp $
+d128 1
+a128 1
+		'treeInfQ' =>"Změny nebyly uloženy, přesto změnit položku?",
+@
+
+
+1.37
+log
+@little bug fix
+@
+text
+@d4 1
+a4 1
+#  $Id: cz.utf,v 1.36 2003/05/28 15:44:22 jiri_schmid Exp $
+d127 3
+a129 2
+		'saveQ'=> "Data byla změněna!!! Přejete si uložit data, než začnete editovat jinou položku?",
+	        'infQ' =>"Data byla zaslána na server.",
+@
+
+
+1.36
+log
+@control dialog when changing tabs implemnted
+@
+text
+@d4 1
+a4 1
+#  $Id: cz.utf,v 1.35 2003/05/28 10:40:38 jiri_schmid Exp $
+d122 1
+a122 1
+		'Continue'=>'Neuložili jste změny, chcete přesto pokračovat?',
+@
+
+
+1.35
+log
+@code-improvment bug removed
+@
+text
+@d4 1
+a4 1
+#  $Id: cz.utf,v 1.34 2003/05/28 07:34:21 jiri_schmid Exp $
+d122 1
+@
+
+
+1.34
+log
+@cvs add/remove changes
+@
+text
+@d4 1
+a4 1
+#  $Id: cz.utf,v 1.33 2003/05/26 15:30:40 jiri_schmid Exp $
+d113 1
+a113 1
+		'Loading'=>"Já na tom dělám...já na tom makám...",
+d138 1
+a138 1
+#	R=>{name=>$lang->{'Result'},bg=>'006666',cgi=>'run.cgi',img=>'table.png'},
+@
+
+
+1.33
+log
+@saving under EN name, when undefined implemented
+@
+text
+@d4 1
+a4 1
+#  $Id: cz.utf,v 1.32 2003/05/26 15:01:41 jiri_schmid Exp $
+d21 3
+a23 3
+		'Prefer SQL Access none'=>'nepovolen',
+		'Prefer SQL Access view'=>'prohlížení',
+		'Prefer SQL Access edit'=>'editace',
+@
+
+
+1.32
+log
+@saving under non-selected language implemented
+@
+text
+@d4 1
+a4 1
+#  $Id: cz.utf,v 1.31 2003/05/21 11:39:46 jiri_schmid Exp $
+d121 1
+@
+
+
+1.31
+log
+@visual and code improvment
+@
+text
+@d4 1
+a4 1
+#  $Id: cz.utf,v 1.30 2003/05/19 14:18:36 jiri_schmid Exp $
+a135 1
+	E=>{name=>$lang->{'Edit'},bg=>'000066',cgi=>'edit.cgi',img=>'fold.gif'},
+d137 1
+a137 1
+	R=>{name=>$lang->{'Result'},bg=>'006666',cgi=>'run.cgi',img=>'table.png'},
+d140 2
+a141 1
+	A=>{name=>$lang->{'Admin'},bg=>'0099CC',cgi=>'admin.cgi',img=>'admin.png'}
+d144 1
+a144 1
+our @@Tabs=('E','P','A','D');
+@
+
+
+1.30
+log
+@very minor fixies and code improvmetns
+@
+text
+@d4 1
+a4 1
+#  $Id: cz.utf,v 1.29 2003/05/16 12:58:12 jiri_schmid Exp $
+d31 1
+@
+
+
+1.29
+log
+@save as implemented everywhere
+@
+text
+@d4 1
+a4 1
+#  $Id: cz.utf,v 1.28 2003/05/16 11:28:26 jiri_schmid Exp $
+d96 1
+@
+
+
+1.28
+log
+@report page - save as functionality implemented
+@
+text
+@d4 1
+a4 1
+#  $Id: cz.utf,v 1.27 2003/05/15 13:47:43 jiri_schmid Exp $
+d72 1
+a72 1
+		'Report Lmain'=>'Hlavní přehled',
+@
+
+
+1.27
+log
+@found a fixed bug, code improvment
+@
+text
+@d4 1
+a4 1
+#  $Id: cz.utf,v 1.26 2003/05/15 11:36:11 jiri_schmid Exp $
+d118 1
+@
+
+
+1.26
+log
+@report - sql tab implemented
+@
+text
+@d4 1
+a4 1
+#  $Id: cz.utf,v 1.25 2003/05/13 15:19:00 jiri_schmid Exp $
+d144 5
+a148 5
+	G=>{name=>$lang->{'New Grid'},id=>'New_Grid',cgi=>'edit.cgi?Action=NewGrid&',img=>'grid.gif',target=>'body'},
+	Fi=>{name=>$lang->{'New Filter'},id=>'New_Filter',cgi=>'edit.cgi?Action=NewFilter&',img=>'filter.gif',target=>'body'},
+	R=>{name=>$lang->{'New Report'},id=>'New_Report',cgi=>'edit.cgi?Action=NewReport&',img=>'report.gif',target=>'body'},
+	Fo=>{name=>$lang->{'New Format'},id=>'New_Format',cgi=>'edit.cgi?Action=NewFormat&',img=>'format.gif',target=>'body'},
+	M=>{name=>$lang->{'New Metric'},id=>'New_Metric',cgi=>'edit.cgi?Action=NewMetric&',img=>'metric.gif',target=>'body'},
+@
+
+
+1.25
+log
+@new report page seems to be fullfunctional, javascript code huge improvment
+@
+text
+@d4 1
+a4 1
+#  $Id: cz.utf,v 1.24 2003/05/08 15:35:52 jiri_schmid Exp $
+d68 1
+a68 1
+		'Report SQL'=>'SQL reportu',
+d81 3
+a83 4
+
+		'Use'=>'Použij',
+		'Default SQL'=>'default SQL',
+		'Edited SQL'=>'editované SQL',
+d116 2
+@
+
+
+1.24
+log
+@report huge improvment
+@
+text
+@d4 1
+a4 1
+#  $Id: cz.utf,v 1.23 2003/05/08 07:42:46 michald Exp $
+d69 1
+a69 1
+		'Report Lfilter'=>'Lokální filter',
+d74 7
+@
+
+
+1.23
+log
+@customization of report SQL
+@
+text
+@d4 1
+a4 1
+#  $Id: cz.utf,v 1.22 2003/05/07 13:11:51 jiri_schmid Exp $
+d69 5
+@
+
+
+1.22
+log
+@bug fixies, code improvment
+@
+text
+@d4 1
+a4 1
+#  $Id: cz.utf,v 1.21 2003/05/06 15:08:15 jiri_schmid Exp $
+d20 4
+d68 5
+@
+
+
+1.21
+log
+@bug fixies, code improvment
+@
+text
+@d4 1
+a4 1
+#  $Id: cz.utf,v 1.20 2003/05/06 09:21:01 jiri_schmid Exp $
+d95 1
+@
+
+
+1.20
+log
+@loading user pref from cache, tabs length implemented
+@
+text
+@d4 1
+a4 1
+#  $Id: cz.utf,v 1.19 2003/05/01 09:15:32 jiri_schmid Exp $
+d44 1
+@
+
+
+1.19
+log
+@closing window when removing resutl tab implemented
+@
+text
+@d4 1
+a4 1
+#  $Id: cz.utf,v 1.18 2003/04/30 14:45:51 jiri_schmid Exp $
+d26 1
+@
+
+
+1.18
+log
+@removing results implemented, minor code improvment
+@
+text
+@d4 1
+a4 1
+#  $Id: cz.utf,v 1.17 2003/04/30 09:53:41 jiri_schmid Exp $
+d92 1
+a92 1
+		'Result_remove'=>'Chcete odstranit report:',
+@
+
+
+1.17
+log
+@tabs for results implemented
+@
+text
+@d4 1
+a4 1
+#  $Id: cz.utf,v 1.16 2003/04/25 11:27:34 jiri_schmid Exp $
+d92 1
+@
+
+
+1.16
+log
+@switching among projects implemented
+@
+text
+@d4 1
+a4 1
+#  $Id: cz.utf,v 1.15 2003/04/18 13:22:38 jiri_schmid Exp $
+d23 2
+a24 2
+		'Prefer OpenR _self'=>'Aktivní okno',
+		'Prefer OpenR _one'=>'Jedno nové okno',
+d90 2
+d115 1
+a115 1
+our @@Tabs=('E','R','P','A','D');
+@
+
+
+1.15
+log
+@added disk-cache html/ for generated tree/tree.html and loading alert
+@
+text
+@d4 1
+a4 1
+#  $Id: cz.utf,v 1.14 2003/04/16 11:18:16 jiri_schmid Exp $
+d20 1
+@
+
+
+1.14
+log
+@id substitution implemented in all of *_ed.pl
+@
+text
+@d4 1
+a4 1
+#  $Id: cz.utf,v 1.13 2003/04/14 11:06:11 jiri_schmid Exp $
+d87 2
+@
+
+
+1.13
+log
+@new item localization implemented, prompt for changing name when saving under server side generated name
+@
+text
+@d4 1
+a4 1
+#  $Id: cz.utf,v 1.12 2003/04/10 14:21:44 jiri_schmid Exp $
+d36 1
+a36 1
+		'New Save Part1'=>'Nezměněnily jste jméno ',
+d38 1
+@
+
+
+1.12
+log
+@metric, filter, report substitutes IDs by javascript, metric & filter resets the original expresion
+@
+text
+@d4 1
+a4 1
+#  $Id: cz.utf,v 1.10 2003/04/04 12:27:11 jiri_schmid Exp $
+d26 13
+a38 5
+		'Tabs NGrid'=>'Nová Mřížka',    # create new  object
+		'Tabs NMetric'=>'Nová Metrika',
+		'Tabs NFormat'=>'Nový Formát',
+		'Tabs NReport'=>'Nový Report',
+		'Tabs NFilter'=>'Nový Filtr',
+d112 5
+a116 5
+	G=>{name=>$lang->{'Tabs NGrid'},id=>'New_Grid',cgi=>'edit.cgi?Action=NewGrid&',img=>'grid.gif',target=>'body'},
+	Fi=>{name=>$lang->{'Tabs NFilter'},id=>'New_Filter',cgi=>'edit.cgi?Action=NewFilter&',img=>'filter.gif',target=>'body'},
+	R=>{name=>$lang->{'Tabs NReport'},id=>'New_Report',cgi=>'edit.cgi?Action=NewReport&',img=>'report.gif',target=>'body'},
+	Fo=>{name=>$lang->{'Tabs NFormat'},id=>'New_Format',cgi=>'edit.cgi?Action=NewFormat&',img=>'format.gif',target=>'body'},
+	M=>{name=>$lang->{'Tabs NMetric'},id=>'New_Metric',cgi=>'edit.cgi?Action=NewMetric&',img=>'metric.gif',target=>'body'},
+@
+
+
+1.11
+log
+@metric checker error messages localized
+@
+text
+@@
+
+
+1.10
+log
+@syntax checker for metric may be the right one
+@
+text
+@d4 1
+a4 1
+#  $Id: cz.utf,v 1.9 2003/03/26 13:54:25 jiri_schmid Exp $
+d85 3
+@
+
+
+1.9
+log
+@total remake of format, files formatXXX.html repalced by format.cgi because of languge mutations
+@
+text
+@d4 1
+a4 1
+#  $Id: cz.utf,v 1.8 2003/03/21 05:52:29 michald Exp $
+d83 1
+a83 1
+	        'infQ' =>"Data byla zasílána na server.",
+@
+
+
+1.8
+log
+@minor fixes
+@
+text
+@d4 1
+a4 1
+#  $Id: cz.utf,v 1.7 2003/03/18 09:34:21 jiri_schmid Exp $
+d76 2
+@
+
+
+1.7
+log
+@language bug fixed
+@
+text
+@d4 1
+a4 1
+#  $Id: cz.utf,v 1.6 2003/03/14 09:23:53 jiri_schmid Exp $
+d91 1
+a91 1
+#	D=>{name=>$lang->{'Debug'},bg=>'666666',cgi=>'debug.cgi',img=>'debug.png'},
+d96 1
+a96 1
+our @@Tabs=('E','R','P','A');
+@
+
+
+1.6
+log
+@solved problem with CZ chars, by forced 8bit operating XML-UTF8 files, removed unused images
+@
+text
+@d4 1
+a4 1
+#  $Id: cz.utf,v 1.5 2003/03/12 16:32:56 jiri_schmid Exp $
+d43 1
+a43 1
+		'Attribut (read only)'=>'Atribut (pouze ke čtení) cz', # attr_ed.pl
+d74 1
+a74 1
+		'Format radio_btn css',=>'CSS',
+@
+
+
+1.5
+log
+@user prefernce - open result in: implemented
+@
+text
+@d4 1
+a4 1
+#  $Id: cz.utf, 2003/03/11 16:17:05 jiri_schmid Exp $
+d24 1
+d51 1
+d99 5
+a103 5
+	G=>{name=>$lang->{'Tabs NGrid'},id=>'New_Grid',cgi=>'edit.cgi?Action=NewGrid&',img=>'grid_new.gif',target=>'body'},
+	Fi=>{name=>$lang->{'Tabs NFilter'},id=>'New_Filter',cgi=>'edit.cgi?Action=NewFilter&',img=>'filter_new.gif',target=>'body'},
+	R=>{name=>$lang->{'Tabs NReport'},id=>'New_Report',cgi=>'edit.cgi?Action=NewReport&',img=>'report_new.gif',target=>'body'},
+	Fo=>{name=>$lang->{'Tabs NFormat'},id=>'New_Format',cgi=>'edit.cgi?Action=NewFormat&',img=>'format_new.gif',target=>'body'},
+	M=>{name=>$lang->{'Tabs NMetric'},id=>'New_Metric',cgi=>'edit.cgi?Action=NewMetric&',img=>'metric_new.gif',target=>'body'},
+@
+
+
+1.4
+log
+@fixed wrong calling of index.cgi, some unused variables removed
+@
+text
+@d4 1
+a4 1
+# $Id
+d38 1
+d64 1
+a64 1
+		'Filter expresion'=>'Definice Filtru:',
+d67 1
+a67 1
+		'Metric expresion',=>'Definice Metriky:',
+d78 2
+a79 2
+		'saveQ'=> "Data byla změněna!!! Přejete si uložit data, než začnete editovat novou položku?",
+	        'infQ' =>"Data jsou zasílána na server!",
+d102 2
+a103 2
+	Cop=>{name=>$lang->{'Tabs Duplicate'},id=>'Duplicate',cgi=>'edit.cgi',img=>'copy.gif',target=>'body'},	
+	Del=>{name=>$lang->{'Tabs Delete'},id=>'Remove',cgi=>'edit.cgi',img=>'delete.gif',target=>'body'},
+@
+
+
+1.3
+log
+@language bug in prefer.cgi fixed
+@
+text
+@d88 1
+a88 1
+	D=>{name=>$lang->{'Debug'},bg=>'666666',cgi=>'debug.cgi',img=>'debug.png'},
+d93 1
+a93 1
+our @@Tabs=('E','R','D','P','A');
+@
+
+
+1.2
+log
+@unused directories mye be removed, minor language changes for more compatibility
+@
+text
+@d21 3
+a23 3
+		'Prefer OpenR new'=>'Nov� okna',
+		'Prefer OpenR self'=>'Aktivní okno',
+		'Prefer OpenR one'=>'Jedno nové okno',
+@
+
+
+1.1
+log
+@charset fixed
+@
+text
+@d21 1
+a21 1
+		'Prefer OpenR new'=>'Nová okna',
+@
+

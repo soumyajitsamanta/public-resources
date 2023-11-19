@@ -1,0 +1,365 @@
+head	1.5;
+access;
+symbols
+	jpivot_1_8_0:1.2
+	focus_1_6_0:1.2.0.2
+	jpivot_1_7_0:1.2
+	jpivot_1_6_0:1.2
+	jpivot_1_5_0:1.1.0.4
+	Root_jpivot_1_5_0:1.1
+	mondrian_xmla_2005_08_25:1.1.0.2
+	sourceforge_sync:1.2;
+locks; strict;
+comment	@# @;
+expand	@k@;
+
+
+1.5
+date	2010.07.27.10.07.10;	author uramisten;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2010.07.26.12.58.25;	author uramisten;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2010.07.26.12.54.10;	author uramisten;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2006.11.09.13.25.43;	author avix;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2005.07.05.14.19.46;	author avix;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.5
+log
+@Handle Calculated members properly as leaf nodes. Added explicit check for children since level check is insufficient (All has children, but calculated members at root level do/may not). It is conceivable that a calculated member may have another calcualted member under it - using parentMember specification, thus the explicit check.  Display properly in both navigator and table without expand/drilldown icons as expected.
+Changes marked by //ADVR tag
+// TODO: How are ragged hierarchies currently handled? I assume that a similar problem may exist for non-calc members in a hierarchy with leaf nodes at different levels (noChildLevel is currently set at max distance from root, and used as a check)
+@
+text
+@/*
+ * ====================================================================
+ * This software is subject to the terms of the Common Public License
+ * Agreement, available at the following URL:
+ *   http://www.opensource.org/licenses/cpl.html .
+ * Copyright (C) 2003-2004 TONBELLER AG.
+ * All Rights Reserved.
+ * You must accept the terms of that agreement to use this software.
+ * ====================================================================
+ *
+ * 
+ */
+package com.tonbeller.jpivot.table;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+import com.tonbeller.jpivot.olap.model.Axis;
+import com.tonbeller.jpivot.olap.model.Hierarchy;
+import com.tonbeller.jpivot.olap.model.Member;
+import com.tonbeller.jpivot.olap.model.Position;
+import com.tonbeller.jpivot.olap.model.Visitor;
+import com.tonbeller.jpivot.olap.navi.MemberTree;
+
+/**
+ * Decorates an Axis by adding the parents of all members.
+ * Every Position will contain an equal number of members, 
+ * where some of them will be the same. For example, an
+ * axis in the result contains 2 members in 1 hierarchy
+ * <p>
+ * <table>
+ *   <tr><th>   </th><th>Revenue</th></tr>
+ *   <tr><td>USA</td><td>1000</td></tr>
+ *   <tr><td>CA </td><td>100</td></tr>
+ * </table>
+ * <p>
+ * will become
+ * <p>
+ * <table>
+ *   <tr><th>   </th><th>    </th><th>Revenue</th></tr>
+ *   <tr><td>USA</td><td>USA</td><td>1000</td></tr>
+ *   <tr><td>USA</td><td>CA  </td><td>100</td></tr>
+ * </table>
+ * 
+ * <p>
+ * If the all member is not visible on the axis, its not added as a parent, because
+ * this would not add information. Otherwise its added like other parent members too. 
+ * @@author av
+ */
+
+public class LevelAxisDecorator implements Axis {
+  Axis axis;
+  MemberTree tree;
+  int[] levelCount; 
+  boolean[] skipAllMember;
+  int totalLevelCount;
+
+  List positions;
+
+  /**
+   * Constructor for LevelAxisDecorator.
+   */
+  public LevelAxisDecorator(Axis axis, MemberTree tree) {
+    this.axis = axis;
+    this.tree = tree;
+    computeLevelCount();
+    makePositions();
+  }
+
+  /**
+   * for each hierarchy of the underlying axis compute the
+   * number of levels (maxRootDistance - minRootDistance).
+   */
+  void computeLevelCount() {
+    Hierarchy[] hiers = axis.getHierarchies();
+    int hierarchyCount = axis.getHierarchies().length;
+    levelCount = new int[hierarchyCount];
+    skipAllMember = new boolean[hierarchyCount];
+    for (int i = 0; i < hiers.length; i++) {
+      levelCount[i] = Integer.MIN_VALUE;
+      skipAllMember[i] = hiers[i].hasAll();
+    }
+
+    Iterator it = axis.getPositions().iterator();
+    while (it.hasNext()) {
+      Position p = (Position) it.next();
+      Member[] members = p.getMembers();
+
+      for (int i = 0; i < members.length; i++) {
+        int count = members[i].getRootDistance() + 1;
+        //ADVR 2010.07.26
+        // if we have calculated members in the root, increase count for that item.
+        // otherwise count=0 if All not present, which means that if no non-calculated
+        // members are present, axis members will not be added in correctly and will
+        // not render
+        if (count==1 && !members[i].isAll()) {
+            System.out.println("adjusted depth for :"+members[i].getLabel());
+            count++;
+        }
+        levelCount[i] = Math.max(levelCount[i], count);
+        if (members[i].isAll())
+          skipAllMember[i] = false;
+      }
+    }
+
+    // if the ALL member is not on the axis, we will not add it
+    for (int i = 0; i < hierarchyCount; i++) {
+      if (skipAllMember[i])
+        levelCount[i] -= 1;
+    }
+
+    // the number of members per position is the sum of all deltas
+    totalLevelCount = 0;
+    for (int i = 0; i < hierarchyCount; i++)
+      totalLevelCount += levelCount[i];
+  }
+
+  void makePositions() {
+    positions = new ArrayList();
+    Iterator it = axis.getPositions().iterator();
+    while (it.hasNext()) {
+      Position p = (Position) it.next();
+      positions.add(makePosition(p));
+    }
+  }
+
+  private Position makePosition(Position source) {
+    Member[] members = source.getMembers();
+    Member[] result = new Member[totalLevelCount];
+    int offset = 0;
+    for (int i = 0; i < members.length; i++) {
+      int totalCount = levelCount[i];
+      int memberCount = members[i].getRootDistance() + 1;
+      if (skipAllMember[i])
+        memberCount -= 1;
+      addParents(result, offset, totalCount, memberCount, members[i]);
+      offset += totalCount;
+    }
+    return new MyPosition(source, result);
+  }
+
+  /**
+   * adds members to result array from right to left, starting at offset
+   * @@param result the array to add the members to
+   * @@param offset the offset in the array
+   * @@param totalCount number of positions to fill in the array
+   * @@param memberCount the number of different members to add, rest will be padded
+   * @@param member start member
+   */
+  private void addParents(Member[] result, int offset, int totalCount, int memberCount, Member member) {
+    int fillCount = totalCount - memberCount;
+    // fill from right to left because we want the parents to appear left
+    offset = offset + totalCount - 1;
+    for (int i = 0; i < fillCount; i++)
+      result[offset--] = member;
+
+    for (int i = 0; i < memberCount; i++) {
+      result[offset--] = member;
+      member = tree.getParent(member);
+    }
+  }
+
+  /**
+   * @@see com.tonbeller.jpivot.olap.model.Axis#getPositions()
+   */
+  public List getPositions() {
+    return positions;
+  }
+
+  /**
+   * returns the hierarchies of the underlying axis.
+   * @@see com.tonbeller.jpivot.olap.model.Axis#getHierarchies()
+   */
+  public Hierarchy[] getHierarchies() {
+    return axis.getHierarchies();
+  }
+
+  /**
+   * @@see com.tonbeller.jpivot.olap.model.impl.AxisDecorator#getAxis()
+   */
+  public Axis getAxis() {
+    return axis;
+  }
+
+  public Object getRootDecoree() {
+    return axis.getRootDecoree();
+  }
+
+  private static class MyPosition implements Position {
+    Position position;
+    Member[] members;
+
+    MyPosition(Position position, Member[] members) {
+      this.position = position;
+      this.members = members;
+    }
+
+    /**
+     * @@see com.tonbeller.jpivot.olap.model.impl.PositionDecorator#getPosition()
+     */
+    public Position getPosition() {
+      return position;
+    }
+
+    /**
+     * @@see com.tonbeller.jpivot.olap.model.Position#getMembers()
+     */
+    public Member[] getMembers() {
+      return members;
+    }
+
+    public Object getRootDecoree() {
+      return position.getRootDecoree();
+    }
+
+    /**
+     * @@see com.tonbeller.jpivot.olap.model.Visitable#accept(Visitor)
+     */
+    public void accept(Visitor visitor) {
+      visitor.visitPosition(this);
+    }
+
+  }
+
+  /**
+   * @@see com.tonbeller.jpivot.olap.model.Visitable#accept(Visitor)
+   */
+  public void accept(Visitor visitor) {
+    visitor.visitAxis(this);
+  }
+
+}
+@
+
+
+1.4
+log
+@sorry... found problem with solution. - withdrawn (currently commented out)
+@
+text
+@d89 1
+d92 9
+a100 6
+//        //ADVR 2010.07.26
+//        // if we have calculated members in the root, increase count for that item.
+//        // otherwise count=0 if All not present, which means that if no non-calculated
+//        // members are present, axis members will not be added in correctly and will
+//        // not render
+//        if (count==1 && !members[i].isAll()) count++;
+@
+
+
+1.3
+log
+@change to computeLevelCount()
+         if we have calculated members in the root (lvl=0), increase count for that item.
+         otherwise count=0 if All not present, which means that if no non-calculated
+         members are present on the hierarchy, axis members will not be added in correctly and will
+         not render
+@
+text
+@d91 6
+a96 6
+        //ADVR 2010.07.26
+        // if we have calculated members in the root, increase count for that item.
+        // otherwise count=0 if All not present, which means that if no non-calculated
+        // members are present, axis members will not be added in correctly and will
+        // not render
+        if (count==1 && !members[i].isAll()) count++;
+@
+
+
+1.2
+log
+@synchronized with tonbeller cvs
+@
+text
+@d91 6
+@
+
+
+1.1
+log
+@initial version
+@
+text
+@d46 3
+d55 2
+a56 1
+  int[] levelCount; // max(rootDistance) + 1
+d76 1
+d79 2
+a80 1
+    for (int i = 0; i < hierarchyCount; i++)
+d82 2
+d92 2
+d97 6
+d118 1
+a118 1
+  Position makePosition(Position source) {
+d123 6
+a128 3
+      int count = levelCount[i];
+      addParents(result, offset, count, members[i]);
+      offset += count;
+d133 9
+a141 2
+  void addParents(Member[] result, int offset, int totalCount, Member member) {
+    int memberCount = member.getRootDistance() + 1;
+@
+

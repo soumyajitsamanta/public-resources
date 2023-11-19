@@ -1,0 +1,256 @@
+head	1.2;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2004.03.23.07.33.32;	author numberone;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2004.03.01.16.16.48;	author numberone;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@
+beard2/cached
+
+funkcni metoda 'start <report_id>' (krome samotneho vraceni dotazu)
+
+xml konfigurace prepsana na includovany .pm soubor
+
+do MData.pm pripravena metoda get_report a sql_gen pro cached
+@
+text
+@
+
+proces cached:
+
+	cache_init: 
+		pokud neexistuje #cache tabulka, creatni ji
+		# TODO: smazni vsechny #_report_* tabulky -- budou postupne dotahany z DW MySQL
+		# FIX: smazni z #cache zaznamy, ktere odkazuji na neexistujici DW MySQL tabulky - nejde
+
+	vytvor socket
+	daemonizuj
+	fork-on-accept
+
+cached on accept:
+	nacti od klienta "report <id>", "start <id>", nebo "kill <id>" request
+
+	report: 'neexistuje', 'status' @@cache-status, 'data' @@report-rows
+	start:  posle hned 'status' nebo 'data', nebo vytuhne a pote posle 'ok, done'
+	kill:   'ok, done'
+
+
+start:
+	z mdata_read zjisti $tree - report definici
+XX:
+	jestli mame dependencies:
+		pro kazdou se forkni a bud skoc na XX nebo delej waitpid
+	select(tree);
+
+select:
+	INSERT (md5($tree),report_id,NULL,NULL,NULL)
+
+	udelej si db konekci do DW MySQL
+
+	pred poslanim SELECT statementu:
+	zjisti SESSION_ID, NOW(), updatni .sid a .start #cache
+	posli select
+	updatni .time = NOW() - .start, .sid = NULL
+
+
+databaze cache.db:
+
+	#cache
+		md5	   - PKEY, md5(freeze($tree)), nazev DW MySQL tabulky je #_cache_<md5>
+		report - cache se zrovna vytvari kvuli reportu .report(_id)
+		sid    - z DW MySQL, NULL pokud je done, u killu procesy odejdou na SIG_PIPE.
+		start  - timestart spusteni SELECTu/JOINu, pro 'progress', NULL pokud jsme nezacali
+		time   - cas, jak dlouho SELECT/JOIN trval, pro GC
+
+@
+
+
+1.1
+log
+@
+Added beard2 -- new bear daemon source tree.
+
+mdata subsystem works, some docs, some tests, etc.
+
+cached in progress
+@
+text
+@a1 2
+process REPORT: 
+	otevri sqlite .db
+d3 1
+a3 1
+	while(accept()) {
+d5 4
+a8 4
+		pokud jsme byli preruseni signalem {
+			sqlite_reopen();
+			next;
+		}
+d10 3
+a12 1
+		vytvor definici REPORTu
+d14 2
+a15 2
+		# $def je PK, uspech pokud neni kolize
+		alloc-table($def,$columns); 
+d17 3
+a19 5
+		jestli report najdes {
+			jestli je hotovy vrat report()
+			           jinak vrat progress()
+			ukonci obsluhu klienta
+		}
+a20 1
+		vygeneruj SELECTy
+d22 6
+a27 5
+		foreach(SELECT) {
+			# pokud neni nastartovany
+			if($s = alloc-table($SELECT,$columns))
+				nastartuj $SELECT do $s
+		}
+d29 2
+a30 1
+		print CLIENT "vytvari se REPORT, bude trvat ..."
+d32 1
+a32 2
+		cekej na dokonceni SELECTu
+		vygeneruj a spust SQL-JOIN  # stmt jde vytvorit i driv
+d34 4
+a37 99
+		vrat report();  # unless SIGPIPE?
+	}
+
+
+funkce alloc-table($report-id, $def, $cols):
+ * alokuj z poolu vhodnou tabulku
+
+	BEGIN
+	najdi $def v #cache
+	vrat $found-id jestli najdes
+
+	najdi free tabulku vhodne velikosti
+	smaz z #free, pridej (id,def) do #cache
+	COMMIT
+
+	pokud je v #free malo tabulek
+		upozorni rodice (pokud si ho jeste neupozornil)
+	vrat $new-id
+
+
+[COPY FROM] process SELECT:
+ * COPY je nejrychlejsi, ale blokuje pristup ostatnim - kopirujeme po blocich
+ * z MySQL cteme pomoci fetchrow(), chtelo by to ctenim dumpu
+
+	otevri sqlite
+	connect do mysql
+	priprav pomocny soubor $fd, namapuj ho do $mem
+
+	while(accept(CLIENT)) {
+		pokud jsme byli preruseni signalem {
+			sqlite_reopen();
+			next;
+		}
+
+		nacti z <CLIENT> ($id,$SELECT)
+		mysql->$SELECT
+
+		do {
+			$done = mysql->fetchrow(\$mem);
+
+			pokud je $mem plna nebo $done {
+				sqlite->COPY from $fd TO $id
+				vyprazdni soubor/mem
+			}
+		} until $done;
+
+		close(CLIENT);
+	}
+
+
+[INSERT] process SELECT:
+	podobne, v principu vsak velka rezie na lockovani tabulky
+
+
+servlet Bear.pm: (resici pozadavek na report)
+
+	zadej REPORT procesu pozadavek
+	nacti povinny radek se statusem;
+
+	if(progress) {
+		vypis progres a zajisti refresh $id po par sekundach; konec
+	}
+	if(vytvari-se) {
+		select(REPORT, par-sekund);  # pockej par sekund
+		pokud porad nic
+			vypis progres a zajisti refresh $id po par sekundach; konec
+	}
+	# if(done) nebo se stihnul vytvorit:
+	cti report
+
+
+process cached:
+
+	vytvor sockety, listen() na nich
+	
+	vytvor pool procesu @@rcache a @@scache
+	
+	while(1) {
+		sleep
+
+		pokud prisel signal tables-low {
+			nageneruj dalsi hromadu tabulek, vloz jejich nazvy do #free-?
+			posli signal tables-reopen foreach(@@rcache,@@scache);
+		}
+
+		pro kazde zemrele dite {   # while(waitpid(-1,WNOHANG))
+			vyskrtni z @@rcache nebo @@scache;
+			spust novy rcache nebo scache proces;
+		}
+
+		# tables-pool balancing
+		pokud je cache.db prilis velka {
+			vymaz tabulky s malymi #cache.init casy a velkymi #cache.rps pocty
+			# fix: nesmime smaznout jeste nezobrazeny report (#cache.done?)
+			# todo: ber do uvahy i cas, kdy byl report naposled pozadovan
+		}
+
+		# todo: kids-pool balancing
+	}
+a40 2
+	tabulky #free-3, #free-10, #free-30 s poolem volnych tabulek prislusne velikosti
+		id - nazev tabulky
+d43 5
+a47 11
+		id   - id reportu/selectu
+		def  - definice reportu/SELECTu
+		init - cas ktery MySQL/SQLite potrebovala k inicializaci SELECTu/JOINu
+		rps  - rows-per-second, rychlost plneni
+		# nasledujici mozna nepotrebujeme
+		done - 'init'/'progress'/'done'/'reported'
+		cols - pocet pouzitych sloupcu
+		?    - mozna nejake dalsi statistiky (kdo zahajil, kdy, ..)
+
+
+
+@
+

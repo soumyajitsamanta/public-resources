@@ -1,0 +1,80 @@
+head	1.4;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.4
+date	2003.09.10.09.08.58;	author jiri_schmid;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2003.08.21.12.02.14;	author jiri_schmid;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2003.08.18.05.50.55;	author michald;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2003.08.15.10.59.41;	author michald;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.4
+log
+@ACl changes, report outup visual improvments
+@
+text
+@<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<project>
+  <urole rights="RWED" change="on" id="r0" description="">
+    <name en="Admins" cz="Administrátoři" />
+    <uuser>admin</uuser>
+    <uuser>joe</uuser>
+  </urole>
+</project>
+@
+
+
+1.3
+log
+@description for access tree changes
+@
+text
+@d3 1
+a3 1
+  <urole description="" id="r0">
+@
+
+
+1.2
+log
+@some ACL improvement
+@
+text
+@d3 2
+a4 1
+  <urole id="r0" name="Admin" description="">
+@
+
+
+1.1
+log
+@initial ACL implementation
+@
+text
+@d3 1
+a3 1
+  <urole id="0" name="Admin" description="">
+@
+

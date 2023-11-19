@@ -1,0 +1,5172 @@
+head	1.26;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.26
+date	2004.03.16.23.47.53;	author vacula;	state dead;
+branches;
+next	1.25;
+
+1.25
+date	2003.07.15.13.43.03;	author vacula;	state Exp;
+branches;
+next	1.24;
+
+1.24
+date	2003.07.10.13.23.42;	author vacula;	state Exp;
+branches;
+next	1.23;
+
+1.23
+date	2003.07.10.08.04.59;	author vacula;	state Exp;
+branches;
+next	1.22;
+
+1.22
+date	2003.06.27.13.47.54;	author vacula;	state Exp;
+branches;
+next	1.21;
+
+1.21
+date	2003.06.20.12.52.52;	author vacula;	state Exp;
+branches;
+next	1.20;
+
+1.20
+date	2003.06.20.08.42.32;	author michald;	state Exp;
+branches;
+next	1.19;
+
+1.19
+date	2003.06.18.11.31.18;	author vacula;	state Exp;
+branches;
+next	1.18;
+
+1.18
+date	2003.06.16.08.02.03;	author vacula;	state Exp;
+branches;
+next	1.17;
+
+1.17
+date	2003.06.13.11.58.11;	author vacula;	state Exp;
+branches;
+next	1.16;
+
+1.16
+date	2003.06.10.13.37.43;	author vacula;	state Exp;
+branches;
+next	1.15;
+
+1.15
+date	2003.06.05.13.23.45;	author vacula;	state Exp;
+branches;
+next	1.14;
+
+1.14
+date	2003.06.05.13.19.49;	author vacula;	state Exp;
+branches;
+next	1.13;
+
+1.13
+date	2003.06.05.12.51.40;	author vacula;	state Exp;
+branches;
+next	1.12;
+
+1.12
+date	2003.05.30.13.24.15;	author vacula;	state Exp;
+branches;
+next	1.11;
+
+1.11
+date	2003.05.27.14.42.42;	author vacula;	state Exp;
+branches;
+next	1.10;
+
+1.10
+date	2003.05.16.13.10.27;	author vacula;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	2003.05.15.15.00.08;	author vacula;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	2003.05.13.22.47.53;	author michald;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	2003.05.13.13.36.58;	author vacula;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	2003.05.13.12.53.39;	author vacula;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	2003.04.26.14.16.59;	author vacula;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2003.04.26.14.06.33;	author vacula;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2003.04.16.15.32.21;	author vacula;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2003.04.16.15.25.50;	author vacula;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2003.03.14.12.39.38;	author vacula;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.26
+log
+@*** empty log message ***
+@
+text
+@#!/usr/bin/perl 
+
+use VRML;
+use Texture;
+use CGI qw(:standard);
+#require "../const.def";
+#use Data::Dumper;
+
+
+##############################################################################################################################################
+#----------------------------------------------------------------------------------------------------------------------------------------------
+
+ $texture_dir = param("texdir");
+ $ID = param("ID");
+ $name = param("name");
+ $form = param("form");
+ $wrldir = "wrl";
+ $http_texdir = &Texdir($texture_dir);
+
+ $column = &GetMap;
+ $format = &GetFormat;
+ $data = &GetData;
+
+ $vrml = new VRML(2);
+ $vrml->navigationinfo('EXAMINE', 1, 1, 1000);			## navigationinfo('type', speed, headlight, visibilityLimit, avatarSize)
+ $vrml->backgroundcolor('black');				## backgroundcolor('skyColor', 'groundColor')
+ $vrml->worldinfo("$name","last update: 3.07.2003");
+
+&Graph;
+
+$vrml->print(1,'gzip -f9');				## $vrml->print(1, 'gzip -f9')   		$vrml->print(mime,'pipe')
+$vrml->save("$wrldir/$ID.wrl","gzip -f9");		## $vrml->save(undef, 'gzip -f9')		$vrml->save(filename,'pipe')
+
+#---------------------------------------------------------------------------------------------------------------------------------------------
+##############################################################################################################################################
+#---------------------------------------------------------------------------------------------------------------------------------------------
+
+sub Graph {
+ %X = &DefineAxis('X');						## ----------------------------------------------------------
+ %Y = &DefineAxis('Y');						## 	definition parameters of axis			    
+ %Z = &DefineAxis('Z');						##-----------------------------------------------------------
+ %xy = &DefineLattice('xy');					##-----------------------------------------------------------				
+ %yx = &DefineLattice('yx');					##							    
+ %xz = &DefineLattice('xz');					## 	definition parameters of lattices		    
+ %zx = &DefineLattice('zx');					## 	(example: xy-> on axis 'X',tendendy 'Y') 	    
+ %yz = &DefineLattice('yz');					##							    
+ %zy = &DefineLattice('zy');					##-----------------------------------------------------------
+
+
+my $viewpointX = ($X{length}+$X{indent})*2;
+my $viewpointY = ($Y{length}+$Y{indent})/2;
+my $viewpointZ = ($Z{length}+$Z{indent})*2;
+ $vrml->viewpoint_begin;
+ $vrml->viewpoint("Start","$viewpointX $viewpointY $viewpointZ","0 1 0 45","45");
+ $vrml->viewpoint_set('0 0 0','10','45');
+ $vrml->viewpoint_end;
+
+
+$vrml->comment("------------------------------------------------------------------------");
+$vrml->comment("                            AXIS                                        ");
+$vrml->comment("------------------------------------------------------------------------");
+  if ( $X{size} != 0 and $X{length} != 0) {
+     &GenerateAxis('X');					
+  }   
+  if ( $Y{size} != 0 and $Y{length} != 0) {
+     &GenerateAxis('Y');
+  }   
+  if ( $Z{size} != 0 and $Z{length} != 0) {
+     &GenerateAxis('Z');
+  }   
+
+$vrml->comment("------------------------------------------------------------------------");
+$vrml->comment("                          LATTICES                                      ");
+$vrml->comment("------------------------------------------------------------------------");
+  &GenerateLattice('xy');									## vykresli se pricky na ose X ve smeru osy Y
+  &GenerateLattice('yx');									## vykresli se pricky na ose Y ve smeru osy X
+  &GenerateLattice('xz');
+  &GenerateLattice('zx');
+  &GenerateLattice('yz');
+  &GenerateLattice('zy');
+
+
+$vrml->comment("------------------------------------------------------------------------");
+$vrml->comment("                            OBJECTS                                     ");
+$vrml->comment("------------------------------------------------------------------------");
+if ($data) {
+my $rows = @@{$data} ;
+my $cols = @@{$data->[0]};
+my $graph = $format->{graph};
+my @@datacol = (0,0,0,0,0,0,0);
+my $base = $format->{base};
+my (@@maxdata,@@mindata,$row,$col,$diameter,$transparency,$shape,@@color);
+
+ for ($row=0;$row < $rows;$row++){
+   for ($col=0;$col<$cols;$col++) {
+    my $item = $data->[$row][$col];
+      if (exists $column->{X}{col} and $column->{X}{col} == $col) {$translation[0] = ($item - &Round($X{min},0))*($X{scale}/$X{digit});}
+      if (exists $column->{Y}{col} and $column->{Y}{col} == $col) {$translation[1] = ($item - &Round($Y{min},0))*($Y{scale}/$Y{digit});}
+      if (exists $column->{Z}{col} and $column->{Z}{col} == $col) {$translation[2] = ($item - &Round($Z{min},0))*($Z{scale}/$Z{digit});}
+      if (exists $column->{DI} and $column->{DI}{col} == $col) { 
+         $diameter = &DI($item,$datacol[$col]);
+	 $datacol[$col] = 1 if ($datacol[$col] == 0); 
+      }
+      if (exists $column->{TR} and $column->{TR}{col} == $col) { 
+         $transparency = &TR($item,$datacol[$col]); 
+	 $datacol[$col] = 1 if ($datacol[$col] == 0); 
+      }
+      if (exists $column->{SH} and $column->{SH}{col} == $col) { 
+         $shape = &SH($item,$datacol[$col]); 
+	 $datacol[$col] = 1 if ($datacol[$col] == 0); 
+      } 
+      if (exists $column->{CLR} and $column->{CLR}{col} == $col) { 
+         @@color = &CLR($item,$datacol[$col]); 
+	 $datacol[$col] = 1 if ($datacol[$col] == 0); 
+      } 
+   }
+ if ( ! $diameter ) { 
+     $diameter = $format->{default}{DI};
+ }
+ if ( ! $transparency ) { 
+    $transparency = $format->{default}{TR};
+ }
+ if ( ! $shape ) { 
+    $shape = $format->{default}{SH};
+ }
+ if ( ! @@color ) { 
+    @@color = @@{$format->{default}{CLR}};
+ }
+   
+   if ($graph eq 'Scatter'){
+      &GenerateScatter($base,$shape,$diameter,$transparency,@@color,@@translation);
+   }
+   if ($graph eq 'Histogram'){
+      &GenerateHistogram($base,$shape,$diameter,$transparency,@@color,@@translation);
+   }
+ }
+}
+
+}
+
+#---------------------------------------------------------------------------------------------------------------------------------------------
+
+sub DefineAxis {							## Definuje hash parametru potrebnych pro vykresleni kazde osy.
+my $axis = shift;
+my ($rh_axis);
+
+   $rh_axis = \%{$format->{axis}{$axis}};					## vytvori se odkaz na nej,					
+  
+  %$axis = %$rh_axis;							## Vytvorime HASH s nazvem osy a priradime odkaz na format osy.
+									## 	                             ---color,format,size----
+if ( exists $column->{$axis} ) {					## Pokud existuje klic s nazvem osy,	
+    $axis->{label} = $column->{$axis}{label};				## priradime hodnotu klice do HASHe   ---label---
+   ($axis->{scale},$axis->{digit},$axis->{min},$axis->{max}) = &Scale($axis);  ## V podprogramu ziskame ostatni polozky potrebne pro 
+ 									       ## vykreslenia pridame do vytvoreneho HASHe ---
+									       ## -length,scale,min,max----
+}
+else {
+  $axis->{scale} = 1; 
+  $axis->{digit} = 0;
+  $axis->{min}   = 0;
+  $axis->{max}   = 0;
+  $axis->{length}= 0;
+}
+
+if ($axis eq 'X') {							## pridam do HASHe translation,rotation pro osu X
+   $axis->{translation} = [$axis->{length}/2,0,0];
+   $axis->{rotation}    = [0,0,1,270];
+}
+if ($axis eq 'Y') {							## pridam do HASHe translation,rotation pro osu Y
+   $axis->{translation} = [0,$axis->{length}/2,0];
+   $axis->{rotation}    = [0,0,1,0];
+}
+if ($axis eq 'Z') {							## pridam do HASHe translation,rotation pro osu Z
+   $axis->{translation} = [0,0,$axis->{length}/2];
+   $axis->{rotation}    = [1,0,0,90];
+}
+
+return (%$axis);
+}
+
+#---------------------------------------------------------------------------------------------------------------------------------------------
+
+sub DefineLattice {						## Definuje HASH parametru potrebnych pro vykresleni pricek
+my $lattice = shift;						## Ve kterych osach se maji vykreslovat pricky (pr. xy)
+my ($axis,$tendency) = $lattice =~ /(.)(.)/ ;			## $axis = na ktere ose se vykresluje (X), $tendency = smer vykreslovani (Y)
+my ($rh_lattice);
+
+  $rh_lattice = \%{$format->{lattice}{$axis}};			## vytvori se odkaz na format 
+
+$lattice{format} = $rh_lattice;					## Odkaz se priradi do HASHe
+
+return (%lattice);
+}
+
+#---------------------------------------------------------------------------------------------------------------------------------------------
+
+sub Scale {							## meritko - dodelat !!
+my $axis = shift;
+my ($max,$min,$scale,$difference,$round,$digit);
+
+if ( $column->{$axis}{type} eq 'qualit' ) {				## Pokud existuje klic 'value' -> hodnoty osy jsou kvalitativni,
+ $max = @@{$column->{$axis}{value}};				## $max = pocet hodnot pole 'value'
+ $min = 0;				
+ $scale  = $$axis{length}/$max;					## a          'meritko' = delka osy / pocet hodnot
+ $digit = 1;							
+}
+else {
+ if ( exists $column->{$axis}{min} and exists $column->{$axis}{max} ){	## V pripade,ze existuje klic 'min'a'max'->kvantitativni 
+    $max = $column->{$axis}->{max};
+    $min = $column->{$axis}->{min};
+    $difference = $max - $min;	
+    $round = &Round($difference,1);
+    ($scale,$digit) = &ComputeScale($axis,$round);
+ }
+
+ if ( !(exists $column->{$axis}{min} ) and !( exists $column->{$axis}{max}) ) {
+    $max = &Max($axis);
+    $min = &Min($axis);
+    $difference = $max - $min;						
+    $round = &Round($difference,1);
+    ($scale,$digit) = &ComputeScale($axis,$round);
+ }
+ if ( exists $column->{$axis}{min} and !(exists $column->{$axis}{max}) ) {	
+    $max = &Max($axis);
+    $min = $column->{$axis}->{min};
+    $difference = $max - $min;						
+    $round = &Round($difference,1);
+    ($scale,$digit) = &ComputeScale($axis,$round);
+ }
+ if ( !(exists $column->{$axis}{min} ) and exists $column->{$axis}{max} ) {
+    $max = $column->{$axis}->{max};
+    $min = &Min($axis);
+    $difference = $max - $min;						
+    $round = &Round($difference,1);
+    ($scale,$digit) = &ComputeScale($axis,$round);
+ }
+}
+
+return ($scale,$digit,$min,$max); ## scale -> minimalni hodnota kroku v zavislosti na delce osy tak, aby se na osu vesly vsechny hodnoty	
+				  ## digit -> rad zpracovavanych hodnot, scale*digit udava takovy krok,aby na ose byl prijatelny pocet hodnot
+}
+
+#---------------------------------------------------------------------------------------------------------------------------------------------
+
+sub Max {							## zjisti maximum z pole vstupnich dat  
+my $axis = shift;						## do $max priradime osu na niz chceme zjistit maximum (X,Y,Z)
+my ($max,$exponent,$mantisa);
+
+my $rows = @@{$data};						## pocet radku pole
+my $col = $column->{$axis}{col};				## sloupec pole, ve kterem vyhledavat maximum
+     $max = $data->[0][$col];
+       for ($row = 0;$row < $rows;$row++) {
+          if ($data->[$row][$col] > $max ){ 
+	    $max = $data->[$row][$col];
+	  }  
+       }
+       
+return ($max);							## vrati maximum
+}
+
+#---------------------------------------------------------------------------------------------------------------------------------------------
+
+sub Min {							## zjisti minimum z pole vstupnich dat  
+my $axis = shift;						## do $min priradime osu na niz chceme zjistit minimum (X,Y,Z)
+my ($min,$exponent,$mantisa);
+
+my $rows = @@{$data};						## pocet radku pole
+my $col = $column->{$axis}{col};				## sloupec pole, ve kterem vyhledavat minimum
+     $min = $data->[0][$col]; 
+       for ($row = 0;$row < $rows;$row++) {
+          if ($data->[$row][$col] < $min ){ 
+	    $min = $data->[$row][$col];
+	  }  
+       }
+       
+return ($min);							## vrati  minimum
+}
+
+#---------------------------------------------------------------------------------------------------------------------------------------------
+
+sub Round {							## zaokrouhli zadane cislo   
+my $item = shift;						## zadane cislo
+my $sign = shift;						## sign = 0 -> zaokrouhli na nizsi , sign = 1 -> zaokrouhli na vyssi  
+my ($round,$exponent,$mantisa,$mantisa1,$mantisa2,);
+
+if ($sign == 1) {
+  if ($item <= 10) {
+     $round = $item;
+  }
+  else {
+    ($mantisa1,$mantisa2) = $item =~ /(.)(.)/ ;
+    if ($mantisa1 == 1 and $mantisa2 <= 5){
+      $mantisa = 15 ;					
+    }
+    else {
+      $mantisa = ($mantisa1 + 1).0;				## mantisa = prvni cislo z $round + 1
+    }				
+    $exponent = length($item)-2;					## rad cisla $round
+    if (  ( $item / ( 10*(eval("$mantisa1.e$exponent")) ) ) == 1 ){
+      $round = $item;
+    }
+    else {
+      $round = eval("$mantisa.e$exponent");
+    }
+  }
+} 
+
+if ($sign == 0) {
+  if ($item <= 10) {
+     $round = $item;
+  }
+  else {
+    ($mantisa1,$mantisa2) = $item =~ /(.)(.)/ ;
+      $mantisa = $mantisa1.0;				## mantisa = prvni cislo z $item 
+      $exponent = length($item)-2;					## rad cisla $round
+    if (  ( $item / ( 10*(eval("$mantisa1.e$exponent")) ) ) == 1 ){
+      $round = $item;
+    }
+    else {
+      $round = eval("$mantisa.e$exponent");
+    }
+  }
+
+} 
+
+return ($round);						## vrati zaokrouhlene cislo
+}
+
+#---------------------------------------------------------------------------------------------------------------------------------------------
+
+sub ComputeScale {				 ## urci meritko osy  (minimalni krok vykreslovani, kterym se pak nasobi zadany krok )
+my $axis = shift;							## nazev osy (X,Y,Z)
+my $round = shift;							## zaokrouhlene maximum
+my ($round1,$round2) = $round =~ /(.)(.)/ ;	## prvni 2 cisla ze zaokrouhleneho maxima
+my ($digit,$exponent,$max);
+
+if ($round < $$axis{length} ) {			 
+  $max = $round;
+  $digit = 1; 
+}
+else {
+  if ($round1 == 1){
+    $max = $round1.$round2; 
+    $exponent = length($round)-2;
+    $digit = eval("1e$exponent"); 
+  }
+  else {
+    $max = $round1;
+    $exponent = length($round)-1;
+    $digit = eval("1e$exponent"); 
+  } 
+}
+$scale = $$axis{length}/$max;
+
+return ($scale,$digit);
+}
+
+#---------------------------------------------------------------------------------------------------------------------------------------------
+
+sub GenerateAxis {							## Vykresli zadanou osu
+my $axis = shift;
+
+my @@translation = @@{$$axis{translation}};
+my @@rotation = @@{$$axis{rotation}};
+my $color = $$axis{color};
+my $format = $$axis{format};
+my $length = $$axis{length};
+
+ if ( $$axis{label} ne '' ) {
+    my $label = $$axis{label};
+    my $font  = $$axis{font};
+    my $fontsize = $$axis{fontsize};
+    $length = $$axis{length} + $$axis{indent};  
+    foreach my $trans (@@translation){
+       if ($trans != 0){
+          $trans = $length/2; 
+       }
+    }
+    if ($axis eq 'X') {
+       my @@translation = ($length+$$axis{crowfoot},-$fontsize/70,0);
+       my @@rotation = (0,0,1,0,);
+       my $coord = 0;
+       my $switch = 0;
+     &GenerateLabel(@@translation,@@rotation,$label,$color,$font,$fontsize,$coord,$switch);
+    }
+    if ($axis eq 'Y') {
+       my @@translation = ($fontsize/70,$length+$$axis{crowfoot},0);
+       my @@rotation = (0,0,1,90,);
+       my $coord = 0;
+       my $switch = 0;
+     &GenerateLabel(@@translation,@@rotation,$label,$color,$font,$fontsize,$coord,$switch);
+    }
+    if ($axis eq 'Z') {
+       my @@translation = (0,-$fontsize/70,$length+$$axis{crowfoot});
+       my @@rotation = (0,1,0,270,);
+       my $coord = 270;
+       my $switch = 0;
+     &GenerateLabel(@@translation,@@rotation,$label,$color,$font,$fontsize,$coord,$switch);
+    }
+ }
+
+ $vrml->transform_begin("t=@@translation","r=@@rotation");		## t = translation, r = rotation
+
+   if ($format eq 'cylinder'){
+     my $radius = $$axis{size}/5;
+     my $height = $length;
+     $vrml->cylinder("$radius $height","d=$color");			## cylinder('radius height', 'appearance') ->d = diffuse color
+   }
+   if ($format eq 'box'){
+     my $width = my $depth = ($$axis{size}/5) ;
+     my $height = $length ;
+     $vrml->box("$width $height $depth","d=$color");			##  box('size', 'appearance') -> d = diffuse color
+   }
+
+  $vrml->transform_end;
+
+ if ( ! $$axis{crowfoot} == 0 ) {
+   foreach my $trans (@@translation){
+     if ($trans != 0){
+       $trans += ($trans+($$axis{crowfoot}/2)); 
+     }
+   }	
+									## vykresli sipku na konci kazde osy
+   $vrml->transform_begin("t=@@translation","r=@@rotation");		## t = translation, r = rotation
+   my $radius = $$axis{size}/2.5;
+   my $height = $$axis{crowfoot}; 
+   $vrml->cone("$radius $height","d=$color");				## cone('bottom radius height', 'appearance')->d = diffuse color
+   $vrml->transform_end;
+ }
+
+}
+
+#---------------------------------------------------------------------------------------------------------------------------------------------
+
+sub GenerateLattice {						## Vykresli vsechny pricky na jedne ose v jednom smeru (pr.xy->osaX,smerY)
+my $lattice = shift;
+my ($axis,$tendency) = $lattice =~ /(.)(.)/ ;			## $axis = osa vykreslovani (X), $tendency = smer vykreslovani (Y)
+$axis = uc($axis);
+$tendency  = uc($tendency);
+my @@index = (0);
+
+my @@rotation = @@{$$tendency{rotation}};
+
+for  (my $i=0;$i < @@{$$lattice{format}};$i++ ) {
+my  $color  = $$lattice{format}[$i]{color};
+my  $format = $$lattice{format}[$i]{format};
+my  $size   = $$lattice{format}[$i]{size};
+my  $step   = $$lattice{format}[$i]{step} * $$axis{scale}; 
+my  $font   = $$lattice{format}[$i]{font};
+my $fontsize= $$lattice{format}[$i]{fontsize};
+my $label   = $$lattice{format}[$i]{label};
+my  $trans  = 0;
+
+  for (my $i=0;$i<int($$axis{length}/$step);$i++) {
+      my $sign = 0;
+      $trans = $trans + $step;	
+      foreach my $item (@@index) {
+        if ($trans == $item) { $sign = 1; }
+      } 
+       if ( $sign == 0 ){
+	  push (@@index,$trans);
+          $X = $Y = $Z = 0;
+	  $$axis = $trans;
+	  $$tendency = $$tendency{length}/2;
+	  my @@translation = ($X,$Y,$Z);
+
+          if ($size != 0) {
+             $vrml->transform_begin("t=@@translation","r=@@rotation");		## t = translation, r = rotation
+										
+             if ($format eq 'line') {						 
+                my $from = -$$tendency{length}/2;
+                my $to   = $$tendency{length}/2;
+                $vrml->line("0 $from 0", "0 $to 0", 0, "$color",);		## line('from', 'to', radius, 'appearance', 'path')
+             }
+	     if ($format eq 'cylinder'){
+                my $radius = $size/5;
+                my $height = $$tendency{length};
+                $vrml->cylinder("$radius $height","d=$color");			## cylinder('radius height','appearance')->d = diffuse color
+             }
+             if ($format eq 'box'){
+                my $width = my $depth = ($size/5) ;
+                my $height = $$tendency{length} ;
+                $vrml->box("$width $height $depth","d=$color");			##  box('size', 'appearance')->d = diffuse color
+             }
+	
+             $vrml->transform_end;
+          }
+
+	  if ($label eq 'visible') {
+             if ( $lattice eq 'xz' ) {							## pro generovani popisku osy X
+	        my (@@translation,@@rotation,$label,$coord,$switch);			
+                if (exists $column->{$axis}{value} ) {
+	           $label = $column->{$axis}{value}[$i]; 
+	        } else {
+	           $label = ( ($trans * (1/$$axis{scale})) * $$axis{digit} ) + &Round($$axis{min},0);
+	        }
+	        @@translation = ($trans-($fontsize/70),0,$$tendency{length}+$$tendency{indent});	##  @@translation 
+	        @@rotation = (1,0,0,90);								##  @@rotation
+	        $coord = 90;									## natoceni textury (0,90,180,270)
+		$switch = 1;									## zmena plochy popisku delka/vysku
+	        &GenerateLabel(@@translation,@@rotation,$label,$color,$font,$fontsize,$coord,$switch);
+	     }
+             if ( $lattice eq 'yx' ) {							## pro generovani popisku osy Y
+	        my (@@translation,@@rotation,$label,$coord,$swap);			
+                if (exists $column->{$axis}{value} ) {
+	           $label = $column->{$axis}{value}[$i]; 
+	        } else {
+	           $label = ( ($trans * (1/$$axis{scale})) * $$axis{digit} ) + &Round($$axis{min},0);
+	        }
+	        @@translation = ($$tendency{length}+$$tendency{indent},$trans-($fontsize/70),0);	##  @@translation 
+	        @@rotation = (0,0,1,0);								##  @@rotation
+	        $coord = 0;									## natoceni textury (0,90,180,270)
+		$switch = 0;									## zmena plochy popisku delka/vysku
+	        &GenerateLabel(@@translation,@@rotation,$label,$color,$font,$fontsize,$coord,$switch);
+	     }
+             if ( $lattice eq 'zx' ) {							## pro generovani popisku osy Z
+	        my (@@translation,@@rotation,$label,$coord,$swap);			
+                if (exists $column->{$axis}{value} ) {
+	           $label = $column->{$axis}{value}[$i]; 
+	        } else {
+	           $label = ( ($trans * (1/$$axis{scale})) * $$axis{digit} ) + &Round($$axis{min},0);
+	        }
+	        @@translation = ($$tendency{length}+$$tendency{indent},0,$trans+($fontsize/70));	##  @@translation 
+	        @@rotation = (1,0,0,270);							##  @@rotation
+	        $coord = 0;									## natoceni textury (0,90,180,270)
+		$switch = 0;									## zmena plochy popisku delka/vysku
+	        &GenerateLabel(@@translation,@@rotation,$label,$color,$font,$fontsize,$coord,$switch);
+	     }
+	  }
+      }
+   }
+}
+
+}
+
+#---------------------------------------------------------------------------------------------------------------------------------------------
+
+sub GenerateLabel {				## vykresli plochu se zadanym textem na zadanem miste
+my @@translation = splice(@@_,0,3);
+my @@rotation = splice(@@_,0,4);	
+my $label = shift;
+my $color = shift;
+my $font  = shift;
+my $fontsize = shift;
+my $coord = shift;
+my $switch = shift;
+
+my $width  = $fontsize/35;
+my $length = length($label)*$width;
+my $file   = &Textures($label,$color,$font,$fontsize,$texture_dir);
+my (@@coordIndex);
+
+if ( $coord == 0) {
+   @@coordIndex = (0,1,2,3,-1);
+}
+if ( $coord == 90) {
+   @@coordIndex = (2,1,0,3,-1);
+}
+if ( $coord == 180) {
+   @@coordIndex = (2,3,0,1,-1);
+}
+
+if ( $coord == 270) {
+   @@coordIndex = (1,0,3,2,-1);
+}
+if ( $switch == 1 ) {
+   my $temp = $width;
+   $width = $length;
+   $length = $temp;
+}
+
+
+## solid TRUE - vsechny plochy jednostranne
+## ccw TRUE - profil je zadan proti smeru hodinovych rucicek
+
+  $vrml->transform_begin("t=@@translation","r=@@rotation");
+  $vrml->insert("Shape {
+		geometry IndexedFaceSet {
+			solid FALSE
+			coord Coordinate  { point [ 0 0 0,
+						    $length 0 0,
+						    $length $width 0,
+					    	    0 $width 0        ] }
+			coordIndex [ @@coordIndex ]
+			texCoord TextureCoordinate {
+			   point [0 0,
+				  1 0,
+				  1 1,
+				  0 1        ]
+			}
+			texCoordIndex [ 0 1 2 3 -1]
+			}
+			appearance Appearance {
+				texture ImageTexture{url \"$http_texdir/$file.png\" 	
+							repeatS FALSE
+							repeatT FALSE}
+			} 
+	     }\n");
+  $vrml->transform_end;	     
+
+}
+
+#---------------------------------------------------------------------------------------------------------------------------------------------
+
+sub GenerateScatter {
+my $base = shift;
+my $shape = shift;
+my $diameter = shift;
+my $transparency = shift;
+my @@color = splice(@@_,0,3);
+my @@translation = @@_;
+my (@@rotation);
+
+if ( $base eq 'xz' or $base eq 'zx' ) {
+   @@rotation = (0,0,1,0);
+   for ( my $i=0;$i<=2;$i++) {
+      if ($translation[$i] eq '') {
+         $translation[$i] = 0;
+      }
+   }
+}
+if ( $base eq 'yz' or $base eq 'zy') {
+   @@rotation = (0,0,1,270);
+   for ( my $i=0;$i<=2;$i++) {
+      if ($translation[$i] eq '') {
+         $translation[$i] = 0;
+      }
+   }
+}
+if ( $base eq 'xy' or $base eq 'yx') {
+   @@rotation = (1,0,0,90);
+   for ( my $i=0;$i<=2;$i++) {
+      if ($translation[$i] eq '') {
+         $translation[$i] = 0;
+      }
+   }
+}
+
+$vrml->transform_begin("t=@@translation","r=@@rotation");				## t = translation, r = rotation
+
+  if ($shape eq 'box') {
+  my $width = my $height = my $depth = $diameter;
+  $vrml->box("$width $height $depth","d=@@color;tr=$transparency,",);
+  }
+  if ($shape eq 'sphere') {
+  my $radius = $diameter/2;
+  $vrml->sphere("$radius","d=@@color;tr=$transparency,");
+  }
+  if ($shape eq 'cylinder') {
+  my $radius = $diameter/2;
+  my $height = $diameter;
+  $vrml->cylinder("$radius $height","d=@@color;tr=$transparency,");
+  }
+  if ($shape eq 'cone') {
+  my $bottomRadius = $diameter/2;
+  my $height = $diameter;
+  $vrml->cone("$bottomRadius $height","d=@@color;tr=$transparency,");
+  }
+  if ($shape eq 'pyramid') {
+  my $width = my $height = my $depth = $diameter;
+  $vrml->pyramid("$width $height $depth","d=@@color;tr=$transparency,");
+  }
+  if ($shape eq 'line') {
+  my $from = -$diameter/2;
+  my $to = $diameter/2;
+  $vrml->line("0 $from 0", "0 $to 0", 0,"d=@@color;tr=$transparency,");
+  }
+  if ($shape eq 'quadrilateral') {
+  my $tg30 = 0.577350269;
+  my $a = $diameter/2;
+  my $b = $a * $tg30; 
+  my $c = (sqrt(($diameter*$diameter) - ($a*$a))) - $b;
+  my $d = (sqrt(($diameter*$diameter)-($c*$c)))/2;
+
+  $vrml->insert("Shape {
+  			geometry IndexedFaceSet {
+			coord Coordinate  { point [-$a -$d  $b,
+						    $a -$d  $b,
+						    0  -$d -$c,
+						    0   $d   0 ] }
+			coordIndex [ 2 1 0 -1,
+				     0 1 3 -1,
+				     1 2 3 -1,
+				     2 0 3 -1,]
+			}
+			appearance Appearance {
+				material Material { diffuseColor @@color
+						    transparency $transparency }
+			} 
+		}\n");
+  }
+  if ($shape eq 'NULL') {
+  }
+
+
+$vrml->transform_end;
+
+}
+
+#---------------------------------------------------------------------------------------------------------------------------------------------
+
+sub GenerateHistogram {
+my $base = shift;
+my $shape = shift;
+my $diameter = shift;
+my $transparency = shift;
+my @@color = splice(@@_,0,3);
+my @@translation = @@_;	
+my ($height,@@rotation);
+
+if ( $base eq 'xz' or $base eq 'zx' ) {
+   @@rotation = (0,0,1,0);
+   for ( my $i=0;$i<=2;$i++) {
+      if ($translation[$i] eq '') {
+         $translation[$i] = 0;
+      }
+   }
+   $height = ($translation[1] != 0) ? $translation[1] : $diameter;
+   $translation[1] = $height/2;
+}
+if ( $base eq 'yz' or $base eq 'zy') {
+   @@rotation = (0,0,1,270);
+   for ( my $i=0;$i<=2;$i++) {
+      if ($translation[$i] eq '') {
+         $translation[$i] = 0;
+      }
+   }
+   $height = ($translation[0] != 0) ? $translation[0] : $diameter;
+   $translation[0] = $height/2;
+}
+if ( $base eq 'xy' or $base eq 'yx') {
+   @@rotation = (1,0,0,90);
+   for ( my $i=0;$i<=2;$i++) {
+      if ($translation[$i] eq '') {
+         $translation[$i] = 0;
+      }
+   }
+   $height = ($translation[2] != 0) ? $translation[2] : $diameter;
+   $translation[2] = $height/2;
+}
+
+$vrml->transform_begin("t=@@translation","r=@@rotation");				## t = translation, r = rotation
+
+  if ($shape eq 'box') {
+  my $width =  my $depth = $diameter;
+  $vrml->box("$width $height $depth","d=@@color;tr=$transparency,");
+  }
+  if ($shape eq 'sphere') {
+  my $radius = $height/2;
+  $vrml->sphere("$radius","d=@@color;tr=$transparency,");
+  }
+  if ($shape eq 'cylinder') {
+  my $radius = $diameter/2;
+  $vrml->cylinder("$radius $height","d=@@color;tr=$transparency,");
+  }
+  if ($shape eq 'cone') {
+  my $bottomRadius = $diameter/2;
+  $vrml->cone("$bottomRadius $height","d=@@color;tr=$transparency,");
+  }
+  if ($shape eq 'pyramid') {
+  my $width =  my $depth = $diameter;
+  $vrml->pyramid("$width $height $depth","d=@@color;tr=$transparency,");
+  }
+  if ($shape eq 'line') {
+  my $from = -$height/2;
+  my $to = $height/2;
+  $vrml->line("0 $from 0", "0 $to 0", 0,"d=@@color;tr=$transparency,");
+  }
+  if ($shape eq 'quadrilateral') {
+  my $tg30 = 0.577350269;
+  my $a = $diameter/2;
+  my $b = $a * $tg30; 
+  my $c = (sqrt(($diameter*$diameter) - ($a*$a))) - $b;
+  my $d = $height/2;
+
+  $vrml->insert("Shape {
+  			geometry IndexedFaceSet {
+			coord Coordinate  { point [-$a -$d  $b,
+						    $a -$d  $b,
+						    0  -$d -$c,
+						    0   $d   0 ] }
+			coordIndex [ 2 1 0 -1,
+				     0 1 3 -1,
+				     1 2 3 -1,
+				     2 0 3 -1,]
+			}
+			appearance Appearance {
+				material Material { diffuseColor @@color
+						    transparency $transparency }
+			} 
+		}\n");
+  }
+  if ($shape eq 'NULL' or $shape eq '') {
+  }
+
+$vrml->transform_end;
+
+}
+
+#---------------------------------------------------------------------------------------------------------------------------------------------
+
+sub DI {							## Podprogram vrati hodnotu diametr (velikost) objektu
+my $item = shift;						## aktualni hodnota z pole vstupnich dat
+my $datacol = shift;
+my $maxdiameter = $format->{parameters}{maxdiameter};			## maximalni velikost (diametr) objektu
+my $mindiameter = $format->{parameters}{mindiameter};			## minimalni velikost (diametr) objektu
+my ($diameter);
+
+if ( $column->{DI}{type} eq 'qualit' ) {
+   $diameter = $column->{DI}{array}[$item];
+} 
+if ( $column->{DI}{type} eq 'quantit' ) {
+  if ($datacol == 0) {
+     ($maxdata[$column->{DI}{col}],$mindata[$column->{DI}{col}]) = &MaxMinOfData('DI');
+  }
+  if ($column->{DI}{interpolation} eq 'constant') {				
+     $diameter = &Constant($item,$maxdata[$column->{DI}{col}],$mindata[$column->{DI}{col}],'DI');
+  }										
+  if ($column->{DI}{interpolation} eq 'linear') {					
+     $diameter = &Linear($item,$maxdata[$column->{DI}{col}],$mindata[$column->{DI}{col}],'DI');
+  }
+}
+
+if ($diameter eq '') {
+  $diameter = $column->{DI}{default};
+}
+else {
+  $diameter = $mindiameter + ($diameter * ($maxdiameter - $mindiameter));
+}
+
+
+return ($diameter);
+}
+
+#---------------------------------------------------------------------------------------------------------------------------------------------
+
+sub TR {							## podprogram vrati hodnotu transparency	
+my $item = shift;						## dostane hodnotu z dat a prevede ji na transparency
+my $datacol = shift;						## $datacol = 0 -> prvni pruchod cyklu
+my $maxtransparency = $format->{parameters}{maxtransparency};
+my $mintransparency = $format->{parameters}{mintransparency};
+my ($transparency);
+
+if ( $column->{TR}{type} eq 'qualit' ) {
+   $transparency = $column->{TR}{transparency}[$item];
+} 
+if ( $column->{TR}{type} eq 'quantit' ) {
+  if ($datacol == 0) {
+     ($maxdata[$column->{TR}{col}],$mindata[$column->{TR}{col}]) = &MaxMinOfData('TR');
+  } 
+  if ($column->{TR}{interpolation} eq 'constant') {				
+     $transparency = &Constant($item,$maxdata[$column->{TR}{col}],$mindata[$column->{TR}{col}],'TR');
+  }										
+  if ($column->{TR}{interpolation} eq 'linear') {					
+     $transparency = &Linear($item,$maxdata[$column->{TR}{col}],$mindata[$column->{TR}{col}],'TR');
+  }
+}  
+  
+if ($transparency eq '') {
+  $transparency = $column->{TR}{default};
+}
+else {
+  $transparency = $mintransparency + ($transparency * ($maxtransparency - $mintransparency));
+}
+
+
+return ($transparency);
+}
+
+#---------------------------------------------------------------------------------------------------------------------------------------------
+
+sub SH {									## vrati tvar objektu (cone,box,cylinder,sphere)
+my $item = shift;
+my $datacol = shift;		
+my ($shape,$range,$index,);
+
+if ( $column->{SH}{type} eq 'qualit' ) {
+   $index = $item;
+}
+
+if ( $column->{SH}{type} eq 'quantit' )  {
+  if ($datacol == 0) {
+     ($maxdata[$column->{SH}{col}],$mindata[$column->{SH}{col}]) = &MaxMinOfData('SH');
+  }
+  if ($column->{SH}{interpolation} eq 'constant') {				
+     $shape = &Constant($item,$maxdata[$column->{SH}{col}],$mindata[$column->{SH}{col}],'SH');
+  }										
+}  
+  
+if ($shape eq '') {
+  $shape = $column->{SH}{default};
+}
+
+
+return ($shape);
+}
+
+#---------------------------------------------------------------------------------------------------------------------------------------------
+
+sub CLR {							## vrati barvu ve tvaru pole (R,G,B)
+my $item = shift;
+my $datacol = shift;						
+my ($range,@@color,$poc);
+
+if ( $column->{CLR}{type} eq 'qualit' ) {
+   @@color = $column->{CLR}{array}[$item];
+}
+
+if ( $column->{CLR}{type} eq 'quantit' ) {
+   if ($datacol == 0) {
+      ($maxdata[$column->{CLR}{col}],$mindata[$column->{CLR}{col}]) = &MaxMinOfData('CLR');
+   }
+   if ($column->{CLR}{interpolation} eq 'constant') {				
+      @@color = &Constant($item,$maxdata[$column->{CLR}{col}],$mindata[$column->{CLR}{col}],'CLR');
+   }										
+   if ($column->{CLR}{interpolation} eq 'linear') {					
+      @@color = &Linear($item,$maxdata[$column->{CLR}{col}],$mindata[$column->{CLR}{col}],'CLR');
+   }
+}
+
+
+
+return (@@color);
+}
+
+#---------------------------------------------------------------------------------------------------------------------------------------------
+
+sub MaxMinOfData {
+my $map = shift;
+my ($maxdata,$mindata);
+
+  if ( exists $column->{$map}{min} and exists $column->{$map}{max} ) {
+     $maxdata = $column->{$map}{max};
+     $mindata = $column->{$map}{min};
+  }
+  if (! exists $column->{$map}{min} and exists $column->{$map}{max} ) {
+     $maxdata = $column->{$map}{max};
+     $mindata = &Min($map);
+  }
+  if ( exists $column->{$map}{min} and ! exists $column->{$map}{max} ) {
+     $maxdata = &Max($map);
+     $mindata = $column->{$map}{min};
+  }
+  if (! exists $column->{$map}{min} and ! exists $column->{$map}{max} ) {
+     $maxdata = &Max($map);
+     $mindata = &Min($map);
+  }
+
+return ($maxdata,$mindata);
+}
+
+#---------------------------------------------------------------------------------------------------------------------------------------------
+
+sub Constant {								## vrati barvu ve tvaru pole (R,G,B) pro pripad zadani vyctu barev
+my $item = shift;
+my $maxdata = shift;
+my $mindata = shift;
+my $map = shift;
+my ($range,$index); 
+
+  if ( ! exists  $column->{$map}{interval} ) {
+    my $arrays = @@{$column->{$map}{array}};
+    $range = ($maxdata - $mindata) / $arrays;
+    for (my $i=0;$i<$arrays;$i++) {
+      if ( $item == $maxdata ) {
+         $index = $arrays -1;
+      }
+      if ( $item >= ( $mindata + ($range*$i) ) and $item < ( $mindata + ($range*($i+1)) ) ) {		
+          $index = $i;
+          last;
+      }
+    }
+  }
+  if ( exists  $column->{$map}{interval} ) {
+    my $intervals = @@{$column->{$map}{interval}}; 
+    my $arrays = @@{$column->{$map}{array}};
+    for (my $i=0;$i<$intervals;$i++) {
+      if ( $item == $maxdata ) {
+         $index = $arrays -1;
+      }
+      if ( $item >= $column->{$map}{interval}[$i][0] and $item < $column->{$map}{interval}[$i][1] ) {		
+        $index = $i;
+        last;
+      }
+    }
+  }
+
+if ($index ne '') {
+
+   if ($map eq 'DI') {
+   my $diameter = $column->{$map}{array}[$index];
+   return ($diameter);
+   }
+   if ($map eq 'TR') {
+   my $transparency = $column->{$map}{array}[$index];
+   return ($transparency);
+   }
+   if ($map eq 'SH') {
+   my $shape = $column->{$map}{array}[$index];
+   return ($shape);
+   }
+   if ($map eq 'CLR') {
+   my @@color = @@{$column->{$map}{array}[$index]};
+   return (@@color);
+   }
+   
+}
+
+}
+
+#---------------------------------------------------------------------------------------------------------------------------------------------
+
+sub Linear {					## vrati barvu ve tvaru pole (R,G,B) pro pripad zadani rozsahu barev (linearni interpolace)
+my $item = shift;
+my $maxdata = shift;
+my $mindata = shift;
+my $map = shift;
+
+  if ( ! exists  $column->{$map}{interval} ) {
+     my $arrays = @@{$column->{$map}{array}} - 1;
+     my $range = ($maxdata - $mindata)/$arrays ;
+
+     for (my $i=0;$i < $arrays;$i++ ) {
+         if ( $item >= ($mindata+(($range) * ($i))) and $item <= ($mindata+(($range) * ($i+1))) ) {
+           if ($map eq 'CLR') {
+              my $rangeR = $column->{$map}{array}[$i+1][0] - $column->{$map}{array}[$i][0];
+              my $rangeG = $column->{$map}{array}[$i+1][1] - $column->{$map}{array}[$i][1];
+              my $rangeB = $column->{$map}{array}[$i+1][2] - $column->{$map}{array}[$i][2];
+	      my $R = $column->{$map}{array}[$i][0] + ( ($item - ($mindata+($range*$i))) * ($rangeR / $range) );
+	      my $G = $column->{$map}{array}[$i][1] + ( ($item - ($mindata+($range*$i))) * ($rangeG / $range) );
+	      my $B = $column->{$map}{array}[$i][2] + ( ($item - ($mindata+($range*$i))) * ($rangeB / $range) );
+              my @@color = ($R,$G,$B);
+	      return (@@color);
+	   }
+	   else {
+               my $rangeT = $column->{$map}{array}[$i+1] - $column->{$map}{array}[$i];
+               my $ret = $column->{$map}{array}[$i] + ( ($item - ($mindata+($range*$i))) * ($rangeT / $range) );
+	       return ($ret);
+	   }
+         }
+	else { 
+	   if ($map eq 'CLR') {
+ 	      return (@@{$column->{$map}{default}}); 
+	   }
+	}
+     }
+  }
+  if ( exists  $column->{$map}{interval} ) {					
+    my $intervals = @@{$column->{$map}{interval}} ;
+    for (my $i=0;$i < $intervals;$i++ ) {
+	if ($item >= $column->{$map}{interval}[$i][0] and $item <= $column->{$map}{interval}[$i][1]) {
+          if ($map eq 'CLR') {
+            my $range = $column->{$map}{interval}[$i][1] - $column->{$map}{interval}[$i][0];
+	    my $rangeR = $column->{$map}{array}[$i+1][0] - $column->{$map}{array}[$i][0];
+            my $rangeG = $column->{$map}{array}[$i+1][1] - $column->{$map}{array}[$i][1];
+            my $rangeB = $column->{$map}{array}[$i+1][2] - $column->{$map}{array}[$i][2];
+	    my $R = $column->{$map}{array}[$i][0] + ( ( $item - $column->{$map}{interval}[$i][0] ) * ($rangeR / $range) );
+            my $G = $column->{$map}{array}[$i][1] + ( ( $item - $column->{$map}{interval}[$i][0] ) * ($rangeG / $range) );
+	    my $B = $column->{$map}{array}[$i][2] + ( ( $item - $column->{$map}{interval}[$i][0] ) * ($rangeB / $range) );
+            my @@color = ($R,$G,$B);
+	    return (@@color);
+	  }
+          else {
+            my $range = $column->{$map}{interval}[$i][1] - $column->{$map}{interval}[$i][0];
+	    my $rangeT = $column->{$map}{array}[$i+1] - $column->{$map}{array}[$i];
+	    $ret = $column->{$map}{array}[$i] + ( ( $item - $column->{$map}{interval}[$i][0] ) * ($rangeT / $range) );
+	    return ($ret);
+	  }
+	    
+	}
+	else { 
+	   if ($map eq 'CLR') {
+ 	      return (@@{$column->{$map}{default}}); 
+	   }
+	}
+    }
+  }
+
+
+}
+
+#---------------------------------------------------------------------------------------------------------------------------------------------
+
+sub Texdir {
+my $http_texdir = shift;									#/var/www/html/cache_texture_png
+my $path = $http_texdir;
+
+unless ( -e $http_texdir ) {
+       mkdir($http_texdir);
+}
+
+my $server = $ENV{SERVER_NAME};		# name of curent webserver			myson.instrat.cz
+my $root = $ENV{DOCUMENT_ROOT}; 	# document root of curent webserver 		/var/www/html
+$path =~ s/$root\///;
+
+my $http_path = "http://$server/$path";
+
+return ($http_path);
+}
+
+#---------------------------------------------------------------------------------------------------------------------------------------------
+
+sub GetFormat {
+use XML::Simple;
+my ($fn,$default,$gf,$PFormat);
+
+$fn = (-e "data/$form.xml" ) ? "data/$form.xml" : "data/default_format.xml" ;
+
+  my $PFormat = new XML::Simple(rootname=>'format',forcearray=>['x','y','z','CLR']);
+  $gf = $PFormat->XMLin($fn);
+
+return ($gf);
+} 
+
+#---------------------------------------------------------------------------------------------------------------------------------------------
+
+sub GetMap {
+use XML::Simple;
+my ($fn,$gm,$PMap);
+
+$fn = "data/map.xml";
+
+  my $PMap = new XML::Simple(rootname=>'map',forcearray=>['value','array','interval']);
+  $gm = $PMap->XMLin($fn);
+
+return ($gm);
+} 
+
+#---------------------------------------------------------------------------------------------------------------------------------------------
+
+sub GetData {
+use XML::Simple;
+my ($fn,$gd,$PData);
+
+$fn = "data/data.xml";
+
+  my $PData = new XML::Simple(rootname=>'data');
+  $gd = $PData->XMLin($fn);
+
+return ($gd);
+} 
+
+#---------------------------------------------------------------------------------------------------------------------------------------------
+
+
+__END__
+@
+
+
+1.25
+log
+@added  parameters from run.cgi
+@
+text
+@@
+
+
+1.24
+log
+@definition cache of textures
+@
+text
+@d5 2
+a6 1
+require "../beard/const.def";
+d12 14
+a25 3
+my $vrml = new VRML(2);
+# $vrml->browser('Cosmo Player 2.0','vrmlview');		## navigationinfo - type  ANY, WALK, FLY, EXAMINE, NONE
+ $vrml->navigationinfo('EXAMINE', 1, 1, 50);			## navigationinfo('type', speed, headlight, visibilityLimit, avatarSize)
+d27 21
+a47 23
+ $vrml->worldinfo("Report ID","last update: 3.07.2003");
+ 
+my $indent = 1;							## define blank space between labels and axses or lattices
+my $wrldir = "wrl";
+my $texdir = &Texdir($texture_dir);
+
+my $column = &GetMap;
+my $format = &GetFormat;
+my $data = &GetData;
+
+ %X = &DefineAxis('X');					## definuji se parametry osy,
+ %Y = &DefineAxis('Y');
+ %Z = &DefineAxis('Z');
+ %xy = &DefineLattice('xy');									## definuji se parametry v ose xy
+ %yx = &DefineLattice('yx');									## definuji se parametry v ose yx
+ %xz = &DefineLattice('xz');
+ %zx = &DefineLattice('zx');
+ %yz = &DefineLattice('yz');
+ %zy = &DefineLattice('zy');
+
+my $viewpointX = ($X{length}+$indent)*2;
+my $viewpointY = ($Y{length}+$indent)/2;
+my $viewpointZ = ($Z{length}+$indent)*2;
+d49 4
+d139 1
+a139 2
+$vrml->print(1,'gzip -f9');				## $vrml->print(1, 'gzip -f9')   		$vrml->print(mime,'pipe')
+$vrml->save("$wrldir/ID.wrl","gzip -f9");		## $vrml->save(undef, 'gzip -f9')		$vrml->save(filename,'pipe')
+a141 2
+##############################################################################################################################################
+#---------------------------------------------------------------------------------------------------------------------------------------------
+d201 1
+a201 1
+if ( exists $column->{$axis}{value} ) {				## Pokud existuje klic 'value' -> hodnoty osy jsou kvalitativni,
+d373 1
+a373 1
+    $length = $$axis{length} + $indent;  
+d497 4
+a500 4
+	        @@translation = ($trans-($fontsize/70),0,$$tendency{length}+$indent);	##  @@translation 
+	        @@rotation = (1,0,0,90);							##  @@rotation
+	        $coord = 90;								## natoceni textury (0,90,180,270)
+		$switch = 1;								## zmena plochy popisku delka/vysku
+d510 4
+a513 4
+	        @@translation = ($$tendency{length}+$indent,$trans-($fontsize/70),0);	##  @@translation 
+	        @@rotation = (0,0,1,0);							##  @@rotation
+	        $coord = 0;								## natoceni textury (0,90,180,270)
+		$switch = 0;								## zmena plochy popisku delka/vysku
+d523 4
+a526 4
+	        @@translation = ($$tendency{length}+$indent,0,$trans+($fontsize/70));	##  @@translation 
+	        @@rotation = (1,0,0,270);						##  @@rotation
+	        $coord = 0;								## natoceni textury (0,90,180,270)
+		$switch = 0;								## zmena plochy popisku delka/vysku
+d594 1
+a594 1
+				texture ImageTexture{url \"$texdir/$file.png\" 	
+d809 1
+a809 1
+if ( exists $column->{DI}{value} ) {
+d812 1
+a812 1
+if ( ! exists $column->{DI}{value} ) {
+d844 1
+a844 1
+if ( exists $column->{TR}{value} ) {
+d847 1
+a847 1
+if ( ! exists $column->{TR}{value} ) {
+d877 1
+a877 1
+if ( exists $column->{SH}{value} ) {
+d881 1
+a881 1
+if ( ! exists $column->{SH}{value} )  {
+d905 1
+a905 1
+if ( exists $column->{SH}{value} ) {
+d908 2
+a909 1
+if ( ! exists $column->{CLR}{value} ) {
+d1085 2
+a1086 2
+my $texdir = shift;									#/var/www/html/cache_texture_png
+my $path = $texdir;
+d1088 2
+a1089 2
+unless ( -e $texdir ) {
+       mkdir($texdir);
+d1107 1
+a1107 1
+$fn = (-e "data/format.xml" ) ? "data/format.xml" : "data/default_format.xml" ;
+@
+
+
+1.23
+log
+@minor changes
+@
+text
+@d5 2
+a6 1
+use Data::Dumper;
+d18 2
+a19 2
+my $wrldir='wrl';
+my $texdir = &Texdir;
+d539 1
+a539 1
+my $file   = &Textures($label,$color,$font,$fontsize);
+d1073 2
+a1074 1
+my ($server,$script,$texdir);
+d1076 9
+a1084 3
+$server = $ENV{SERVER_NAME};
+($script = $ENV{SCRIPT_NAME}) =~ s/[^\/]*$/png/;
+$texdir = "http://$server$script";
+d1086 1
+a1086 1
+return ($texdir);
+@
+
+
+1.22
+log
+@added transparency,changes in labels and textures
+@
+text
+@d10 3
+a12 3
+ $vrml = new VRML(2);
+# $vrml->browser('Cosmo Player 2.0','vrmlview');
+ $vrml->navigationinfo('ANY', 1, 1, 1000);			## navigationinfo('type', speed, headlight, visibilityLimit, avatarSize)
+d14 24
+d39 1
+a42 8
+$indent = 1;							## define blank space between labels and axses or lattices
+$wrldir='wrl';
+$texdir = &Texdir;
+
+$column = &GetMap;
+$format = &GetFormat;
+$data = &GetData;
+
+d47 9
+a55 18
+if (exists $format->{axis}{X} ) { 				## Pokud existuje format osy X,  
+   %X = &DefineAxis('X');					## definuji se parametry osy,
+   if ( $X{size} != 0 and $X{length} != 0) {
+      &GenerateAxis('X');					## osa se vykresli.
+   }   
+}     
+if (exists $format->{axis}{Y} ) {
+   %Y = &DefineAxis('Y');
+   if ( $Y{size} != 0 and $Y{length} != 0) {
+      &GenerateAxis('Y');
+   }   
+}   
+if (exists $format->{axis}{Z} ) {
+   %Z = &DefineAxis('Z');
+   if ( $Z{size} != 0 and $Z{length} != 0) {
+      &GenerateAxis('Z');
+   }   
+}     
+d60 6
+a65 32
+if (exists $format->{axis}{X} and exists $format->{axis}{Y} and exists $format->{axis}{Z}) {	## pokud existuje format os X a Y a Z
+   %xy = &DefineLattice('xy');									## definuji se parametry v ose xy
+       &GenerateLattice('xy');									## vykresli se pricky na ose X ve smeru osy Y
+   %yx = &DefineLattice('yx');									## definuji se parametry v ose yx
+       &GenerateLattice('yx');									## vykresli se pricky na ose Y ve smeru osy X
+   %xz = &DefineLattice('xz');
+       &GenerateLattice('xz');
+   %zx = &DefineLattice('zx');
+       &GenerateLattice('zx');
+   %yz = &DefineLattice('yz');
+       &GenerateLattice('yz');
+   %zy = &DefineLattice('zy');
+       &GenerateLattice('zy');
+}
+if ( exists $format->{axis}{X} and exists $format->{axis}{Y} and ! exists $format->{axis}{Z} ) { 
+    %xy = &DefineLattice('xy');									 
+    &GenerateLattice('xy');									 
+    %yx = &DefineLattice('yx');									 
+    &GenerateLattice('yx');									 
+}
+if ( exists $format->{axis}{X} and !exists $format->{axis}{Y} and exists $format->{axis}{Z} ) {
+   %xz = &DefineLattice('xz');
+   &GenerateLattice('xz');
+   %zx = &DefineLattice('zx');
+   &GenerateLattice('zx');
+}
+if ( ! exists $format->{axis}{X} and exists $format->{axis}{Y} and exists $format->{axis}{Z} ) {
+   %yz = &DefineLattice('yz');
+   &GenerateLattice('yz');
+   %zy = &DefineLattice('zy');
+   &GenerateLattice('zy');
+}
+d355 34
+d394 1
+a394 1
+     my $height = $$axis{length};
+d399 1
+a399 1
+     my $height = $$axis{length} ;
+d439 1
+a440 1
+my  $label  = "";
+d477 39
+a515 5
+          if ( $lattice eq 'xz' or $lattice eq 'yx' or $lattice eq 'zx' ) { 
+             if (exists $column->{$axis}{value} ) {
+	         $label = $column->{$axis}{value}[$i]; 
+	     } else {
+	         $label = ( ($trans * (1/$$axis{scale})) * $$axis{digit} ) + &Round($$axis{min},0);
+d517 3
+a519 5
+	     &GenerateTexture($lattice,$tendency,$trans,$label,$color,$font,$fontsize);
+	  }	
+       }  
+  }
+
+a523 1
+
+d526 6
+a531 7
+sub GenerateTexture {
+my $lattice  = shift;
+my $tendency = shift;
+my $trans    = shift;
+my $label    = shift;
+my $color    = shift;
+my $font     = shift;
+d533 2
+d536 4
+a539 1
+my (@@coordIndex,$flag,@@rotation,@@translation);
+d541 9
+a549 24
+ if ( $lattice eq 'xz' ) {							## pro generovani popisku osy X
+    @@translation = ($trans-($fontsize/70),0,$$tendency{length}+$indent);	##  meni se pouze tyto hodnoty -> @@translation 
+    @@rotation = (1,0,0,90);							##  @@rotation
+    @@coordIndex = (2,1,0,3,-1);							##  @@coordindex
+    $flag = 1;									##  $flag
+    my $file = &Textures($label,$color,$font,$fontsize);
+    &GenerateLabel($flag,@@translation,@@rotation,$label,$file,$fontsize,@@coordIndex);
+ }
+ if ( $lattice eq 'yx' ) {							## pro generovani popisku osy Y
+    @@translation = ($$tendency{length}+$indent,$trans-($fontsize/70),0);	## meni se pouze tyto hodnoty -> @@translation 
+    @@rotation = (0,0,1,0);							##  @@rotation
+    @@coordIndex = (0,1,2,3,-1);							##  @@coordindex
+    $flag = 0;									##  $flag
+    my $file = &Textures($label,$color,$font,$fontsize);
+    &GenerateLabel($flag,@@translation,@@rotation,$label,$file,$fontsize,@@coordIndex);
+ }
+ if ( $lattice eq 'zx' ) {							## pro generovani popisku osy Z
+    @@translation = ($$tendency{length}+$indent,0,$trans+($fontsize/70));	## meni se pouze tyto hodnoty -> @@translation 
+    @@rotation = (1,0,0,270);							##  @@rotation
+    @@coordIndex = (0,1,2,3,-1);							##  @@coordindex
+    $flag = 0;									##  $flag
+    my $file = &Textures($label,$color,$font,$fontsize);
+    &GenerateLabel($flag,@@translation,@@rotation,$label,$file,$fontsize,@@coordIndex);
+ }
+d551 7
+a559 18
+#---------------------------------------------------------------------------------------------------------------------------------------------
+
+sub GenerateLabel {
+my $flag = shift;
+my @@translation = splice(@@_,0,3);
+my @@rotation = splice(@@_,0,4);	
+my $string = shift;
+my $file = shift;
+my $fontsize = shift;
+my $width = $fontsize/35;
+my $length = length($string)*$width;
+my @@coordIndex = @@_;
+
+   if ($flag == 1) { 
+     my $temp = $width;
+     $width = $length;
+     $length = $temp;
+   }
+d600 1
+d602 26
+a627 1
+$vrml->transform_begin("t=@@translation");				## t = translation, r = rotation
+d631 1
+a631 1
+  $vrml->box("$width $height $depth","d=@@color;tr=$transparency",);
+d635 1
+a635 1
+  $vrml->sphere("$radius","d=@@color;tr=$transparency");
+d640 1
+a640 1
+  $vrml->cylinder("$radius $height","d=@@color;tr=$transparency");
+d645 1
+a645 1
+  $vrml->cone("$bottomRadius $height","d=@@color;tr=$transparency");
+d649 1
+a649 1
+  $vrml->pyramid("$width $height $depth","d=@@color;tr=$transparency");
+d654 1
+a654 2
+  # line('from', 'to', radius, 'appearance', 'path')
+  $vrml->line("0 $from 0", "0 $to 0", 0,"d=@@color;tr=$transparency");
+d657 1
+d659 4
+a662 1
+  my $b = sqrt( ($diameter*$diameter) - ($a*$a) ) /2;
+d665 4
+a668 4
+			coord Coordinate  { point [-$a -$a  $b,
+						    $a -$a  $b,
+						    0  -$a -$b,
+						    0   $a   0 ] }
+d699 29
+a727 22
+if ($translation[0] ne '' and $translation[1] ne '' and $translation[2] ne '' and $base eq 'xz') {
+  $height = $translation[1]; 
+  $translation[1] = $height/2;
+  @@rotation = (0,0,1,0);
+}
+if ($translation[0] eq '' and $translation[1] ne '' and $translation[2] ne '' and $base eq 'xz') {
+  $translation[0] = 0;
+  $height = $translation[1]; 
+  $translation[1] = $height/2;
+  @@rotation = (0,0,1,0);
+}
+if ($translation[0] ne '' and $translation[1] eq '' and $translation[2] ne '' and $base eq 'xz') {
+  $translation[1] = 0;
+  $height = $diameter; 
+  $translation[1] = $height/2;
+  @@rotation = (0,0,1,0);
+}
+if ($translation[0] ne '' and $translation[1] ne '' and $translation[2] eq '' and $base eq 'xz') {
+  $translation[2] = 0;
+  $height = $translation[1]; 
+  $translation[1] = $height/2;
+  @@rotation = (0,0,1,0);
+a729 1
+
+d734 5
+a738 1
+  $vrml->box("$width $height $depth","d=@@color;tr=$transparency");
+d742 1
+a742 1
+  $vrml->cylinder("$radius $height","d=@@color;tr=$transparency");
+d746 1
+a746 1
+  $vrml->cone("$bottomRadius $height","d=@@color;tr=$transparency");
+d750 1
+a750 1
+  $vrml->pyramid("$width $height $depth","d=@@color;tr=$transparency");
+d755 1
+a755 2
+  # line('from', 'to', radius, 'appearance', 'path')
+  $vrml->line("0 $from 0", "0 $to 0", 0,"d=@@color;tr=$transparency");
+d758 6
+a763 3
+  my $x = $diameter/2;
+  my $y = $height/2;
+  my $z = sqrt( ($diameter*$diameter) - ($a*$a) ) /2;
+d766 4
+a769 4
+			coord Coordinate  { point [-$x -$y  $z,
+						    $x -$y  $z,
+						    0  -$y -$z,
+						    0   $y   0 ] }
+d776 2
+a777 2
+				material Material { diffuseColor @@color 
+						    transparency $transparency  }
+d1089 1
+a1089 1
+  my $PFormat = new XML::Simple(rootname=>'format',forcearray=>['x','y','z']);
+@
+
+
+1.21
+log
+@changes in subroutines DI,TR,SH,CLR
+@
+text
+@d5 1
+a5 1
+#use Data::Dumper;
+d14 3
+a16 1
+
+d25 2
+a26 4
+				#print Dumper($data);
+				#print $data->[1][1];
+				#print $column->{X};
+				#print $format->->{lattice};
+d30 5
+a34 3
+if (exists $column->{X} ) { 					## Pokud existuje mapovani osy X,  
+   %X = &DefineAxis('X');					## definuji se parametry osy
+   &GenerateAxis('X');						## a nasledne se osa vykresli.
+d36 1
+a36 1
+if (exists $column->{Y} ) {
+d38 3
+a40 1
+   &GenerateAxis('Y');
+d42 1
+a42 1
+if (exists $column->{Z} ) {
+d44 3
+a46 1
+     &GenerateAxis('Z');
+d52 31
+a82 31
+if (exists $column->{X} and exists $column->{Y} and exists $column->{Z}) {
+   %XY = &DefineLattice('XY');
+   &GenerateLattice('XY');
+   %YX = &DefineLattice('YX');
+   &GenerateLattice('YX');
+   %XZ = &DefineLattice('XZ');
+   &GenerateLattice('XZ');
+   %ZX = &DefineLattice('ZX');
+   &GenerateLattice('ZX');
+   %YZ = &DefineLattice('YZ');
+   &GenerateLattice('YZ');
+   %ZY = &DefineLattice('ZY');
+   &GenerateLattice('ZY');
+}
+if ( exists $column->{X} and exists $column->{Y} and ! exists $column->{Z} ) {		## pokud existuje mapovani os X a Y
+    %XY = &DefineLattice('XY');								## definuji se parametry v ose XY	
+    &GenerateLattice('XY');								## vykresli se pricky na ose X ve smeru osy Y
+    %YX = &DefineLattice('YX');								## definuji se parametry v ose YX
+    &GenerateLattice('YX');								## vykresli se pricky na ose Y ve smeru osy X
+}
+if ( exists $column->{X} and !exists $column->{Y} and exists $column->{Z} ) {
+   %XZ = &DefineLattice('XZ');
+   &GenerateLattice('XZ');
+   %ZX = &DefineLattice('ZX');
+   &GenerateLattice('ZX');
+}
+if ( ! exists $column->{X} and exists $column->{Y} and exists $column->{Z} ) {
+   %YZ = &DefineLattice('YZ');
+   &GenerateLattice('YZ');
+   %ZY = &DefineLattice('ZY');
+   &GenerateLattice('ZY');
+d94 2
+a95 1
+my (@@maxdata,@@mindata,$row,$col);
+d100 3
+a102 3
+      if ($column->{X}{col} == $col) {$translation[0] = ($item - &Round($X{min},0))*($X{scale}/$X{digit});}
+      if ($column->{Y}{col} == $col) {$translation[1] = ($item - &Round($Y{min},0))*($Y{scale}/$Y{digit});}
+      if ($column->{Z}{col} == $col) {$translation[2] = ($item - &Round($Z{min},0))*($Z{scale}/$Z{digit});}
+d110 1
+a110 1
+      } 
+d120 13
+d134 1
+a134 1
+      &GenerateScatter($shape,$diameter,$transparency,@@color,@@translation);
+d137 1
+a137 1
+      &GenerateHistogram($shape,$diameter,$transparency,@@color,@@translation);
+d142 1
+a142 1
+$vrml->print(1,'gzip -f9');			##  $vrml->print(1, 'gzip -f9')   		$vrml->print(mime,'pipe')
+d153 1
+a153 1
+   $rh_axis = \%{$format->{axis}};					## vytvori se odkaz na nej,					
+d157 1
+a157 1
+if ( exists $column->{$axis}{label} ) {					## Pokud existuje klic s nazvem osy,	
+d159 10
+a169 5
+ 
+$axis->{length} = $format->{lattice}{$axis}[0]{length};
+
+($axis->{scale},$axis->{digit},$axis->{min},$axis->{max}) = &Scale($axis);  ## V podprogramu ziskame ostatni polozky potrebne pro vykresleni
+ 						                            ## a pridame do vytvoreneho HASHe ----length,scale,min,max----
+d190 1
+a190 1
+my $lattice = shift;						## Ve kterych osach se maji vykreslovat pricky (pr. XY)
+d208 2
+a209 2
+ $max = @@{$column->{$axis}{value}};
+ $min = 0;				## $max = pocet hodnot pole 'value'
+a373 1
+
+d389 6
+a394 6
+if ( ! $$axis{crowfoot} == 0 ) {
+  foreach my $trans (@@translation){
+    if ($trans != 0){
+      $trans += ($trans+($$axis{crowfoot}/2)); 
+    }
+  }	
+d396 6
+a401 6
+  $vrml->transform_begin("t=@@translation","r=@@rotation");		## t = translation, r = rotation
+  my $radius = $$axis{size}/2.5;
+  my $height = $$axis{crowfoot}; 
+  $vrml->cone("$radius $height","d=$color");				## cone('bottom radius height', 'appearance')->d = diffuse color
+  $vrml->transform_end;
+}
+d407 1
+a407 1
+sub GenerateLattice {						## Vykresli vsechny pricky na jedne ose v jednom smeru (pr.XY->osaX,smerY)
+d410 2
+d416 1
+a416 1
+for  (my $i=1;$i < @@{$$lattice{format}};$i++ ) {
+d424 1
+d433 5
+a437 5
+	 push (@@index,$trans);
+         $X = $Y = $Z = 0;
+	 $$axis = $trans;
+	 $$tendency = $$tendency{length}/2;
+	 my @@translation = ($X,$Y,$Z);
+d439 2
+a440 1
+         $vrml->transform_begin("t=@@translation","r=@@rotation");		## t = translation, r = rotation
+d442 15
+a456 15
+         if ($format eq 'line') {						 
+           my $from = -$$tendency{length}/2;
+           my $to   = $$tendency{length}/2;
+           $vrml->line("0 $from 0", "0 $to 0", 0, "$color",);			## line('from', 'to', radius, 'appearance', 'path')
+         }
+	 if ($format eq 'cylinder'){
+           my $radius = $size/5;
+           my $height = $$tendency{length};
+           $vrml->cylinder("$radius $height","d=$color");			## cylinder('radius height','appearance')->d = diffuse color
+         }
+         if ($format eq 'box'){
+           my $width = my $depth = ($size/5) ;
+           my $height = $$tendency{length} ;
+           $vrml->box("$width $height $depth","d=$color");			##  box('size', 'appearance')->d = diffuse color
+         }
+d458 13
+a470 1
+         $vrml->transform_end;
+d472 3
+a474 9
+         if ( $lattice eq 'XZ' ) {						## pro generovani popisku osy X
+	   my ($label,@@coordIndex,$flag,@@rotation,@@translation);
+	    
+	   if (exists $column->{$axis}{value} ) {
+	     $label = $column->{$axis}{value}[$i]; 
+	   }
+	   else {
+	     $label = ($trans * (1/$$axis{scale})) * $$axis{digit};
+	   }
+a475 7
+	   my $file = &Textures($label,$color,$font,$fontsize);
+	   @@translation = ($trans-($fontsize/70),0,$$tendency{length}+$indent);		##  meni se pouze tyto hodnoty -> @@translation 
+           @@rotation = (1,0,0,90);						##  @@rotation
+           @@coordIndex = (2,1,0,3,-1);						##  @@coordindex
+	   $flag = 1;								##  $flag
+           &GenerateLabel($flag,@@translation,@@rotation,$label,$file,$fontsize,@@coordIndex);
+	 }  
+d477 1
+a477 17
+         if ( $lattice eq 'YX' ) {						## pro generovani popisku osy Y
+	   my ($label,@@coordIndex,$flag,@@rotation,@@translation);
+	    
+	   if (exists $column->{$axis}{value} ) {
+	     $label = $column->{$axis}{value}[$i]; 
+	   }
+	   else {
+	     $label = ($trans * (1/$$axis{scale})) * $$axis{digit};
+	   }
+	 
+	   my $file = &Textures($label,$color,$font,$fontsize);
+	   @@translation = ($$tendency{length}+$indent,$trans-($fontsize/70),0);		## meni se pouze tyto hodnoty -> @@translation 
+           @@rotation = (0,0,1,0);						##  @@rotation
+           @@coordIndex = (0,1,2,3,-1);						##  @@coordindex
+	   $flag = 0;								##  $flag
+           &GenerateLabel($flag,@@translation,@@rotation,$label,$file,$fontsize,@@coordIndex);
+	 }  
+d479 8
+a486 17
+         if ( $lattice eq 'ZX' ) {						## pro generovani popisku osy Z
+	   my ($label,@@coordIndex,$flag,@@rotation,@@translation);
+	    
+	   if (exists $column->{$axis}{value} ) {
+	     $label = $column->{$axis}{value}[$i]; 
+	   }
+	   else {
+	     $label = ( ($trans * (1/$$axis{scale})) * $$axis{digit} ) + &Round($$axis{min},0);
+	   }
+	 
+	   my $file = &Textures($label,$color,$font,$fontsize);
+	   @@translation = ($$tendency{length}+$indent,0,$trans+($fontsize/70));		## meni se pouze tyto hodnoty -> @@translation 
+           @@rotation = (1,0,0,270);						##  @@rotation
+           @@coordIndex = (0,1,2,3,-1);						##  @@coordindex
+	   $flag = 0;								##  $flag
+           &GenerateLabel($flag,@@translation,@@rotation,$label,$file,$fontsize,@@coordIndex);
+	 }  
+d488 1
+a488 2
+       }  
+  }
+d490 24
+a513 1
+}
+a516 1
+
+d569 1
+d580 1
+a580 1
+  $vrml->box("$width $height $depth","d=@@color","tr=$transparency",);
+d584 1
+a584 1
+  $vrml->sphere("$radius","d=@@color","tr=$transparency");
+d589 1
+a589 1
+  $vrml->cylinder("$radius $height","d=@@color","tr=$transparency");
+d594 1
+a594 1
+  $vrml->cone("$bottomRadius $height","d=@@color","tr=$transparency");
+d598 1
+a598 1
+  $vrml->pyramid("$width $height $depth","d=@@color");
+d604 1
+a604 1
+  $vrml->line("0 $from 0", "0 $to 0", 0,"d=@@color");
+d621 2
+a622 1
+				material Material { diffuseColor @@color }
+d637 1
+d642 27
+a668 4
+my @@translation = @@_;
+my $base = 0.1;
+my $height = $translation[1]; # + $diameter/2;
+$translation[1] = $height/2;
+d670 1
+a670 1
+$vrml->transform_begin("t=@@translation");				## t = translation, r = rotation
+d674 1
+a674 1
+  $vrml->box("$width $height $depth","d=@@color","tr=$transparency");
+d677 2
+a678 2
+  my $radius = $diameter;
+  $vrml->cylinder("$radius $height","d=@@color","tr=$transparency");
+d681 2
+a682 2
+  my $bottomRadius = $diameter;
+  $vrml->cone("$bottomRadius $height","d=@@color","tr=$transparency");
+d686 1
+a686 1
+  $vrml->pyramid("$width $height $depth","d=@@color");
+d692 1
+a692 1
+  $vrml->line("0 $from 0", "0 $to 0", 0,"d=@@color");
+d695 3
+a697 2
+  my $a = $diameter/2;
+  my $b = sqrt( ($diameter*$diameter) - ($a*$a) ) /2;
+d700 4
+a703 4
+			coord Coordinate  { point [-$a -$a  $b,
+						    $a -$a  $b,
+						    0  -$a -$b,
+						    0   $a   0 ] }
+d710 2
+a711 1
+				material Material { diffuseColor @@color }
+d753 1
+a753 1
+#print "$item - $diameter\n";
+d788 1
+a788 1
+#print "$item - $transparency\n";
+d816 1
+a816 1
+#print "$item - $shape\n";
+d843 1
+a843 1
+#print "$item - @@color\n";
+d1023 1
+a1023 1
+  my $PFormat = new XML::Simple(rootname=>'format');
+d1037 1
+a1037 1
+  my $PMap = new XML::Simple(rootname=>'map',forcearray=>['value','diameter','transparency','shape','color','interval']);
+@
+
+
+1.20
+log
+@introduction of new directed graph structures MDga and MDgo
+@
+text
+@a17 3
+<<<<<<< work.cgi
+$texdir ='../png';
+=======
+a18 1
+>>>>>>> 1.15
+d122 1
+a122 1
+#$vrml->print(1,'gzip -f9');			##  $vrml->print(1, 'gzip -f9')   		$vrml->print(mime,'pipe')
+d676 3
+a678 2
+my $maxdiameter = $format->{axis}{maxdiameter};			## maximalni velikost (diametr) objektu
+my $mindiameter = $format->{axis}{mindiameter};			## minimalni velikost (diametr) objektu
+d680 13
+a692 21
+if ($datacol == 0) {
+   if ( exists $column->{DI}{value} ) {
+     $mindata[$column->{DI}{col}] = 0; 
+     $maxdata[$column->{DI}{col}] = @@{$column->{DI}{value}} - 1;
+   } 
+   if ( exists $column->{DI}{min} and exists $column->{DI}{max} ) {
+         $maxdata[$column->{DI}{col}] = $column->{DI}{max};
+         $mindata[$column->{DI}{col}] = $column->{DI}{min};
+   }
+   if (! exists $column->{DI}{min} and exists $column->{DI}{max} ) {
+         $maxdata[$column->{DI}{col}] = $column->{DI}{max};
+         $mindata[$column->{DI}{col}] = &Min('DI');
+   }
+   if ( exists $column->{DI}{min} and ! exists $column->{DI}{max} ) {
+         $maxdata[$column->{DI}{col}] = &Max('DI');
+         $mindata[$column->{DI}{col}] = $column->{DI}{min};
+   }
+   if (! exists $column->{DI}{min} and ! exists $column->{DI}{max} ) {
+         $maxdata[$column->{DI}{col}] = &Max('DI');
+         $mindata[$column->{DI}{col}] = &Min('DI');
+   }
+d695 6
+a700 2
+my $scale = ( ($maxdiameter - $mindiameter) / ($maxdata[$column->{DI}{col}] - $mindata[$column->{DI}{col}]) );
+my $diameter = $mindiameter + ( ($item - $mindata[$column->{DI}{col}]) * $scale );
+d702 1
+d711 2
+a717 1
+
+a718 1
+
+d720 1
+a720 16
+   if ( exists $column->{TR}{min} and exists $column->{TR}{max} ) {
+     $maxdata[$column->{TR}{col}] = $column->{TR}{max};
+     $mindata[$column->{TR}{col}] = $column->{TR}{min};
+   }
+   if (! exists $column->{TR}{min} and exists $column->{TR}{max} ) {
+     $maxdata[$column->{TR}{col}] = $column->{TR}{max};
+     $mindata[$column->{TR}{col}] = &Min('TR');
+   }
+   if ( exists $column->{TR}{min} and ! exists $column->{TR}{max} ) {
+     $maxdata[$column->{TR}{col}] = &Max('TR');
+     $mindata[$column->{TR}{col}] = $column->{TR}{min};
+   }
+   if (! exists $column->{TR}{min} and ! exists $column->{TR}{max} ) {
+     $maxdata[$column->{TR}{col}] = &Max('TR');
+     $mindata[$column->{TR}{col}] = &Min('TR');
+   }
+d722 5
+a726 50
+
+  if ( exists  $column->{TR}{interval} ) {					
+  my ($range,$rangeTR);
+
+   if ( $column->{TR}{interpolation} eq 'constant' ) {
+      my $intervals = @@{$column->{TR}{interval}} ;
+      my $transp = @@{$column->{TR}{transparency}};
+      for (my $i=0;$i < $intervals;$i++ ) {
+	if ($item >= $column->{TR}{interval}[$i][0] and $item <= $column->{TR}{interval}[$i][1]) {
+           $transparency = $column->{TR}{transparency}[$i];
+        }
+     }
+   }
+   if ( $column->{TR}{interpolation} eq 'linear' ) {
+      my $intervals = @@{$column->{TR}{interval}} ;
+      my $transp = @@{$column->{TR}{transparency}}  ;
+     for (my $i=0;$i < $intervals;$i++ ) {
+	if ($item >= $column->{TR}{interval}[$i][0] and $item <= $column->{TR}{interval}[$i][1]) {
+           my $range = $column->{TR}{interval}[$i][1] - $column->{TR}{interval}[$i][0];
+	   my $rangeTR = $column->{TR}{transparency}[$i+1] - $column->{TR}{transparency}[$i];
+	   $transparency = $column->{TR}{transparency}[$i] + ( ($item - ($column->{TR}{interval}[$i][0])) * ($rangeTR / $range) );
+	}
+     }
+   }
+
+  }
+
+  
+  if (! exists $column->{TR}{interval} ) {
+
+   if ( $column->{TR}{interpolation} eq 'constant' ) {
+      my $transp = @@{$column->{TR}{transparency}} ;
+      my $range = ($maxdata[$column->{TR}{col}] - $mindata[$column->{TR}{col}])/$transp ;
+     for (my $i=0;$i < $transp;$i++ ) {
+       if ( $item >= ($mindata[$column->{TR}{col}]+(($range) * ($i))) and $item <= ($mindata[$column->{TR}{col}]+(($range) * ($i+1))) ) {
+         $transparency = $column->{TR}{transparency}[$i] ;
+       }
+     }
+   }
+   if ( $column->{TR}{interpolation} eq 'linear' ) {
+      my $transp = @@{$column->{TR}{transparency}} -1 ;
+      my $range = ($maxdata[$column->{TR}{col}] - $mindata[$column->{TR}{col}])/$transp ;
+     for (my $i=0;$i < $transp;$i++ ) {
+       if ( $item >= ($mindata[$column->{TR}{col}]+(($range) * ($i))) and $item <= ($mindata[$column->{TR}{col}]+(($range) * ($i+1))) ) {
+         my $rangeTR = $column->{TR}{transparency}[$i+1] - $column->{TR}{transparency}[$i];
+         $transparency = $column->{TR}{transparency}[$i] + ( ($item - ($mindata[$column->{TR}{col}]+($range*$i))) * ($rangeTR / $range) );
+       }
+     }
+   }
+     
+a727 1
+
+d733 3
+d737 1
+a752 1
+  
+d754 1
+a754 16
+   if ( exists $column->{SH}{min} and exists $column->{SH}{max} ) {
+      $maxdata[$column->{SH}{col}] = $column->{SH}{max};
+      $mindata[$column->{SH}{col}] = $column->{SH}{min};
+   }
+   if (! exists $column->{SH}{min} and exists $column->{SH}{max} ) {
+      $maxdata[$column->{SH}{col}] = $column->{SH}{max};
+      $mindata[$column->{SH}{col}] = &Min('SH');
+   }
+   if ( exists $column->{SH}{min} and ! exists $column->{SH}{max} ) {
+      $maxdata[$column->{SH}{col}] = &Max('SH');
+      $mindata[$column->{SH}{col}] = $column->{SH}{min};
+   }
+   if (! exists $column->{SH}{min} and ! exists $column->{SH}{max} ) {
+      $maxdata[$column->{SH}{col}] = &Max('SH');
+      $mindata[$column->{SH}{col}] = &Min('SH');
+   }
+d756 6
+a761 33
+
+  if ( ! exists  $column->{SH}{interval} ) {
+    my $shapes = @@{$column->{SH}{shape}};  
+    $range = ($maxdata[$column->{SH}{col}] - $mindata[$column->{SH}{col}]) / $shapes; 
+    for (my $i=0;$i<$shapes;$i++) {
+      if ( $item == $maxdata[$column->{SH}{col}] ) {
+         $index = $shapes -1;
+      }
+      if ( $item >= ( $mindata[$column->{SH}{col}] + ($range*$i) ) and $item < ( $mindata[$column->{SH}{col}] + ($range*($i+1)) ) ) {		
+          $index = $i;
+          last;
+      }
+    }
+  }
+
+  if ( exists  $column->{SH}{interval} ) {
+    my $intervals = @@{$column->{SH}{interval}};  
+    for (my $i=0;$i<$intervals;$i++) {
+      if ( $item == $maxdata[$column->{SH}{col}] ) {
+         $index = $intervals -1;
+      }
+      if ( $item >= $column->{SH}{interval}[$i][0] and $item < $column->{SH}{interval}[$i][1] ) {		
+          $index = $i;
+          last;
+      }
+    }
+  }
+}
+
+if ($index ne '') {
+  $shape = $column->{SH}{shape}[$index];
+}
+else {
+d765 1
+d774 1
+a774 1
+my ($index,$range,@@color);
+d776 3
+d780 9
+a788 19
+
+  if ($datacol == 0) {
+     if ( exists $column->{CLR}{min} and exists $column->{CLR}{max} ) {
+        $maxdata[$column->{CLR}{col}] = $column->{CLR}{max};
+        $mindata[$column->{CLR}{col}] = $column->{CLR}{min};
+     }
+     if (! exists $column->{CLR}{min} and exists $column->{CLR}{max} ) {
+        $maxdata[$column->{CLR}{col}] = $column->{CLR}{max};
+        $mindata[$column->{CLR}{col}] = &Min('CLR');
+     }
+     if ( exists $column->{CLR}{min} and ! exists $column->{CLR}{max} ) {
+        $maxdata[$column->{CLR}{col}] = &Max('CLR');
+        $mindata[$column->{CLR}{col}] = $column->{CLR}{min};
+     }
+     if (! exists $column->{CLR}{min} and ! exists $column->{CLR}{max} ) {
+        $maxdata[$column->{CLR}{col}] = &Max('CLR');
+        $mindata[$column->{CLR}{col}] = &Min('CLR');
+     }
+ }
+a790 3
+if ($column->{CLR}{interpolation} eq 'constant') {				
+   @@color = &Constant($item,$maxdata[$column->{CLR}{col}],$mindata[$column->{CLR}{col}]);
+}										
+d792 2
+a793 2
+if ($column->{CLR}{interpolation} eq 'linear') {					
+   @@color = &Linear($item,$maxdata[$column->{CLR}{col}],$mindata[$column->{CLR}{col}]);
+d796 5
+d802 16
+a817 3
+if (! @@color) { 
+  @@color = @@{$column->{CLR}{default}};
+}										
+d819 1
+a819 2
+print "$item - @@color\n";
+return (@@color);
+d828 2
+a829 1
+my ($range,$index,@@color); 
+d831 4
+a834 8
+ if ( exists $column->{CLR}{value} ) {
+   $index = $item;
+ } 
+ if ( ! exists $column->{CLR}{value} ) {
+  if ( ! exists  $column->{CLR}{interval} ) {
+    my $colors = @@{$column->{CLR}{color}};
+    $range = ($maxdata - $mindata) / $colors;
+    for (my $i=0;$i<$colors;$i++) {
+d836 1
+a836 1
+         $index = $colors -1;
+d844 3
+a846 2
+  if ( exists  $column->{CLR}{interval} ) {
+    my $intervals = @@{$column->{CLR}{interval}};  
+d849 1
+a849 1
+         $index = $intervals -1;
+d851 1
+a851 1
+      if ( $item >= $column->{CLR}{interval}[$i][0] and $item < $column->{CLR}{interval}[$i][1] ) {		
+a856 1
+ }
+d858 21
+a878 1
+return (@@color);
+d887 1
+a887 1
+my ($range,$index,@@color); 
+d889 27
+a915 15
+  if ( ! exists  $column->{CLR}{interval} ) {
+     my ($rangeR,$rangeG,$rangeB,$R,$G,$B);
+     my $colors = @@{$column->{CLR}{color}} - 1;
+     $range = ($maxdata - $mindata)/$colors ;
+
+     for (my $i=0;$i < $colors;$i++ ) {
+       if ( $item >= ($mindata+(($range) * ($i))) and $item <= ($mindata+(($range) * ($i+1))) ) {
+          $rangeR = $column->{CLR}{color}[$i+1][0] - $column->{CLR}{color}[$i][0];
+          $rangeG = $column->{CLR}{color}[$i+1][1] - $column->{CLR}{color}[$i][1];
+          $rangeB = $column->{CLR}{color}[$i+1][2] - $column->{CLR}{color}[$i][2];
+	  $R = $column->{CLR}{color}[$i][0] + ( ($item - ($mindata+($range*$i))) * ($rangeR / $range) );
+	  $G = $column->{CLR}{color}[$i][1] + ( ($item - ($mindata+($range*$i))) * ($rangeG / $range) );
+	  $B = $column->{CLR}{color}[$i][2] + ( ($item - ($mindata+($range*$i))) * ($rangeB / $range) );
+          @@color = ($R,$G,$B);
+       }
+d918 2
+a919 4
+  if ( exists  $column->{CLR}{interval} ) {					
+    my ($rangeR,$rangeG,$rangeB,$R,$G,$B);
+    my $intervals = @@{$column->{CLR}{interval}} ;
+    my $colors = @@{$column->{CLR}{color}};
+d921 24
+a944 9
+	if ($item >= $column->{CLR}{interval}[$i][0] and $item <= $column->{CLR}{interval}[$i][1]) {
+           $range = $column->{CLR}{interval}[$i][1] - $column->{CLR}{interval}[$i][0];
+	   $rangeR = $column->{CLR}{color}[$i+1][0] - $column->{CLR}{color}[$i][0];
+           $rangeG = $column->{CLR}{color}[$i+1][1] - $column->{CLR}{color}[$i][1];
+           $rangeB = $column->{CLR}{color}[$i+1][2] - $column->{CLR}{color}[$i][2];
+	   $R = $column->{CLR}{color}[$i][0] + ( ( $item - $column->{CLR}{interval}[$i][0] ) * ($rangeR / $range) );
+           $G = $column->{CLR}{color}[$i][1] + ( ( $item - $column->{CLR}{interval}[$i][0] ) * ($rangeG / $range) );
+	   $B = $column->{CLR}{color}[$i][2] + ( ( $item - $column->{CLR}{interval}[$i][0] ) * ($rangeB / $range) );
+           @@color = ($R,$G,$B);
+d949 1
+a949 1
+return (@@color);
+a968 3
+
+## "default_format.xml";		 ## defaultni soubor s definici formatovani 
+## "format_scatter.xml";		 ## definice souboru - format_scatter.xml, format_histogram.xml
+@
+
+
+1.19
+log
+@changes in COLOR and TRANSPARENCY
+@
+text
+@d18 3
+d22 1
+@
+
+
+1.18
+log
+@variable size of texture
+@
+text
+@d122 1
+a122 1
+$vrml->print(1,'gzip -f9');			##  $vrml->print(1, 'gzip -f9')   		$vrml->print(mime,'pipe')
+a713 2
+#my $maxtransparency = $column->{TR}{transparency}[1];		## horni hranice viditelnosti (cim vetsi, tim min viditelne) -> 1=neviditelne
+#my $mintransparency = $column->{TR}{transparency}[0];		## spodni hranice viditelnosti (cim mensi,tim viditelnejsi) -> 0=viditelne
+d741 15
+a755 4
+    my ($range,$rangeTR);
+    my $intervals = @@{$column->{TR}{interval}} ;
+    my $transp = @@{$column->{TR}{transparency}};
+    for (my $i=0;$i < $intervals;$i++ ) {
+d757 3
+a759 8
+           $range = $column->{TR}{interval}[$i][1] - $column->{TR}{interval}[$i][0];
+	   if (exists $column->{TR}{transparency}[$i][1]) {
+	      $rangeTR = $column->{TR}{transparency}[$i][1] - $column->{TR}{transparency}[$i][0];
+	   }
+	   else {
+	      $rangeTR = 0;
+	   }
+	   $transparency = $column->{TR}{transparency}[$i][0] + ( ($item - ($mindata[$column->{TR}{col}]+($range*$i))) * ($rangeTR / $range) );
+d761 3
+a763 1
+    }
+d766 1
+a767 3
+     my ($range,$rangeTR);
+     my $transp = @@{$column->{TR}{transparency}} ;
+     $range = ($maxdata[$column->{TR}{col}] - $mindata[$column->{TR}{col}])/$transp ;
+d769 12
+d783 2
+a784 7
+	   if (exists $column->{TR}{transparency}[$i][1]) {
+	      $rangeTR = $column->{TR}{transparency}[$i][1] - $column->{TR}{transparency}[$i][0];
+	   }
+	   else {
+	      $rangeTR = 0;
+	   }
+	   $transparency = $column->{TR}{transparency}[$i][0] + ( ($item - ($mindata[$column->{TR}{col}]+($range*$i))) * ($rangeTR / $range) );
+d787 1
+d831 1
+a831 1
+  
+d833 12
+a844 1
+     $range = ($maxdata[$column->{SH}{col}] - $mindata[$column->{SH}{col}]) / @@{$column->{SH}{shape}}; 
+a845 7
+     if ($item == $maxdata[$column->{SH}{col}]) {
+        $index = ( int( ($item - $mindata[$column->{SH}{col}])/$range ) ) - 1 ;
+     }
+     else {
+        $index = int( ($item - $mindata[$column->{SH}{col}])/$range );
+     }
+  }
+d849 1
+a849 1
+      if ( $item == $maxdata ) {
+d881 2
+a882 2
+        $maxdata[$column->{SH}{col}] = $column->{CLR}{max};
+        $mindata[$column->{SH}{col}] = $column->{CLR}{min};
+d885 2
+a886 2
+        $maxdata[$column->{SH}{col}] = $column->{CLR}{max};
+        $mindata[$column->{SH}{col}] = &Min('CLR');
+d889 2
+a890 2
+        $maxdata[$column->{SH}{col}] = &Max('CLR');
+        $mindata[$column->{SH}{col}] = $column->{CLR}{min};
+d893 2
+a894 2
+        $maxdata[$column->{SH}{col}] = &Max('CLR');
+        $mindata[$column->{SH}{col}] = &Min('CLR');
+d900 1
+a900 1
+   @@color = &Constant($item,$maxdata[$column->{SH}{col}],$mindata[$column->{SH}{col}]);
+d904 6
+a909 1
+   @@color = &Linear($item,$maxdata[$column->{SH}{col}],$mindata[$column->{SH}{col}]);
+d912 1
+d929 10
+a938 7
+     $range = ($maxdata - $mindata) / @@{$column->{CLR}{color}}; 
+
+    if ($item == $maxdata) {
+      $index = ( int( ($item - $mindata)/$range ) ) - 1 ;
+    }
+    else {
+      $index = int( ($item - $mindata)/$range );
+a953 1
+@@color = @@{$column->{CLR}{color}[$index]};
+d993 3
+a995 3
+	   $R = $column->{CLR}{color}[$i][0] + ( ($item - ($mindata+($range*$i))) * ($rangeR / $range) );
+           $G = $column->{CLR}{color}[$i][1] + ( ($item - ($mindata+($range*$i))) * ($rangeG / $range) );
+	   $B = $column->{CLR}{color}[$i][2] + ( ($item - ($mindata+($range*$i))) * ($rangeB / $range) );
+d1041 1
+a1041 1
+  my $PMap = new XML::Simple(rootname=>'map');
+@
+
+
+1.17
+log
+@max,min from data or mapping
+@
+text
+@d395 2
+d442 2
+a443 2
+	   my $file = &Textures($label,$color,);
+	   @@translation = ($trans-0.2,0,$$tendency{length}+$indent);		##  meni se pouze tyto hodnoty -> @@translation 
+d447 1
+a447 1
+           &GenerateLabel($flag,@@translation,@@rotation,$label,$file,@@coordIndex);
+d460 2
+a461 2
+	   my $file = &Textures($label,$color);
+	   @@translation = ($$tendency{length}+$indent,$trans-0.2,0);		## meni se pouze tyto hodnoty -> @@translation 
+d465 1
+a465 1
+           &GenerateLabel($flag,@@translation,@@rotation,$label,$file,@@coordIndex);
+d478 2
+a479 2
+	   my $file = &Textures($label,$color);
+	   @@translation = ($$tendency{length}+$indent,0,$trans+0.2);		## meni se pouze tyto hodnoty -> @@translation 
+d483 1
+a483 1
+           &GenerateLabel($flag,@@translation,@@rotation,$label,$file,@@coordIndex);
+d502 3
+a504 2
+my $length = length($string)/2;
+my $width = 0.4;
+@
+
+
+1.16
+log
+@max,min from data , added objects line and quadrilateral
+@
+text
+@d93 3
+a95 3
+      if ($column->{X}{col} == $col) {$translation[0] = $item*($X{scale}/$X{digit});}
+      if ($column->{Y}{col} == $col) {$translation[1] = $item*($Y{scale}/$Y{digit});}
+      if ($column->{Z}{col} == $col) {$translation[2] = $item*($Z{scale}/$Z{digit});}
+d143 2
+a144 2
+($axis->{scale},$axis->{digit}) = &Scale($axis); 		  ## V podprogramu ziskame ostatni polozky potrebne pro vykresleni
+ 						                  ## a pridame do vytvoreneho HASHe           ----length,scale----
+a168 1
+if ($format->{lattice}->{$axis}) {				## Pokud je zadan format pro vykreslovani pricek
+a169 4
+}
+else {								## Pokud ne
+  $rh_lattice = \%{$ImplicitFormat{lattice}{$axis}};		## vytvori se odkaz na implicitni format
+} 
+d180 1
+a180 1
+my ($max,$scale,$difference,$round,$digit);
+d183 2
+a184 1
+ $max = @@{$column->{$axis}{value}};				## $max = pocet hodnot pole 'value'
+d190 4
+a193 3
+ #   $difference = ( $column->{$axis}->{max} ) - ( $column->{$axis}->{min} );	## pro pripad , ze min != 0
+    $difference = &Max($axis);							## zatim predpoklad min je vzdy 0
+    $round = &Round($difference);
+d198 4
+a201 3
+ #   $difference = &Max($axis) - &Min($axis);						
+    $difference = &Max($axis);								
+    $round = &Round($difference);
+d205 4
+a208 3
+ #   $difference = &Max($axis) - ( $column->{$axis}->{min} ); 
+    $difference = &Max($axis);
+    $round = &Round($difference);
+d212 4
+a215 3
+ #   $difference = ( $column->{$axis}->{max} ) - &Min($axis); 
+    $difference = &Max($axis);
+    $round = &Round($difference);
+d220 2
+a221 2
+return ($scale,$digit);		## scale -> minimalni hodnota kroku v zavislosti na delce osy tak, aby se na osu vesly vsechny hodnoty	
+				## digit -> rad zpracovavanych hodnot, scale*digit udava takovy krok,aby na ose byl prijatelny pocet hodnot
+d262 42
+a303 3
+sub Round {							## zaokrouhli zadane cislo na nejbizsi vyssi  
+my $max = shift;						## zadane cislo
+my ($round,$exponent,$mantisa,$mantisa1,$mantisa2);
+d305 1
+a305 14
+if ($max <= 10) {
+$round = $max;
+}
+else {
+($mantisa1,$mantisa2) = $max =~ /(.)(.)/ ;
+   if ($mantisa1 == 1 and $mantisa2 <= 5){
+     $mantisa = 15 ;					
+   }
+   else {
+     $mantisa = ($mantisa1 + 1).0;				## mantisa = prvni cislo z $round + 1
+   }				
+   $exponent = length($max)-2;					## rad cisla $round
+   $round = eval("$mantisa.e$exponent");
+}
+d315 2
+a316 1
+my ($round1,$round2,$digit,$exponent,$max) = $round =~ /(.)(.)/ ;	## prvni 2 cisla z maxima
+d368 1
+a368 1
+      $trans += ($trans+($$axis{crowfoot}/2)); #($trans+($$axis{length}/10)/2);
+d374 1
+a374 1
+  my $height = $$axis{crowfoot}; #$$axis{length}/10;
+d386 1
+a388 1
+my @@index =();
+d397 8
+a404 4
+  for (my $i=0;$i<int($$axis{length}/$step);$i++) {    
+      $trans = $trans + $step;
+      if ( ! $index[$trans] ){
+	 $index[$trans] = 1;
+d473 1
+a473 1
+	     $label = ($trans * (1/$$axis{scale})) * $$axis{digit};
+d484 1
+a484 2
+      }  
+
+d552 1
+a552 1
+  my $width = $height = $depth = $diameter;
+d570 1
+a570 2
+  my $width = $height = $depth = $diameter;
+  # pyramid('width height depth', 'appearance')
+d621 2
+a622 2
+  #  $vrml->box("$width $height $depth","d=$color","tr=$transparency");	##  box('size', 'appearance') -> d = diffuse color,tr = transparency
+  $vrml->box("$diameter $height $diameter","d=@@color","tr=$transparency");
+d625 2
+a626 2
+  # cylinder('radius height', 'appearance')
+  $vrml->cylinder("$diameter $height","d=@@color","tr=$transparency");
+d629 2
+a630 2
+  # cone('bottomRadius height', 'appearance')
+  $vrml->cone("$diameter $height","d=@@color","tr=$transparency");
+d633 2
+a634 2
+  # pyramid('width height depth', 'appearance')
+  $vrml->pyramid("$diameter $height $diameter","d=@@color");
+d642 19
+a667 1
+
+d709 1
+a709 1
+my $datacol = shift;						
+d830 4
+a833 1
+      if ( $item >= $column->{SH}{interval}[$i][0] and $item < $column->{SH}{interval}[$i][1] ) {		## !!!  problem u maxima
+d916 4
+a919 1
+      if ( $item >= $column->{CLR}{interval}[$i][0] and $item < $column->{CLR}{interval}[$i][1] ) {		## !!! problem pri maximu
+@
+
+
+1.15
+log
+@added functions : GetData,GetFormat,GetMap
+@
+text
+@d5 1
+a5 1
+use Data::Dumper;
+d84 1
+a84 1
+my $rows = @@{$data};
+d87 2
+d96 16
+a111 4
+      if (exists $column->{DI} and $column->{DI}{col} == $col) {$diameter = &DI($item);}
+      if (exists $column->{TR} and $column->{TR}{col} == $col) {$transparency = &TR($item);} 
+      if (exists $column->{SH} and $column->{SH}{col} == $col) {$shape = &SH($item);} 
+      if (exists $column->{CLR} and $column->{CLR}{col} == $col) {@@color = &CLR($item);} 
+a238 1
+
+a256 1
+
+d331 2
+a332 2
+     my $width = my $depth = ($$axis{size}/5) * $$axis{scale};
+     my $height = $$axis{length} * $$axis{scale};
+d381 1
+a381 1
+         if ($format eq 'line') {						 ## dodelat format box, cylinder ...
+d386 10
+d522 2
+a523 2
+  #  $vrml->box("$width $height $depth","d=$color","tr=$transparency");	##  box('size', 'appearance') -> d = diffuse color,tr = transparency
+  $vrml->box("$diameter $diameter $diameter","d=@@color","tr=$transparency",);
+d526 2
+a527 2
+  # sphere(radius, 'appearance')
+  $vrml->sphere("$diameter","d=@@color","tr=$transparency");
+d530 3
+a532 2
+  # cylinder('radius height', 'appearance')
+  $vrml->cylinder("$diameter $diameter","d=@@color","tr=$transparency");
+d535 33
+a567 2
+  # cone('bottomRadius height', 'appearance')
+  $vrml->cone("$diameter $diameter","d=@@color","tr=$transparency");
+a572 2
+## dodelat objekty : "cara" a "ctyrsten" 
+
+d603 10
+d625 1
+a627 1
+my ($maxdata,$mindata);						## maximum a minimum z hodnot v poli vstupnich dat
+d629 21
+a649 15
+if ( exists $column->{DI}{value} ) {
+  $mindata = 0; 
+  $maxdata = @@{$column->{DI}{value}} - 1;
+} 
+elsif ( exists $column->{DI}{min} and exists $column->{DI}{max} ) {
+ $maxdata = $column->{DI}{max};
+ $mindata = $column->{DI}{min};
+}
+elsif (! exists $column->{DI}{min} and exists $column->{DI}{max} ) {
+ $maxdata = $column->{DI}{max};
+ $mindata = &Min('DI');
+}
+elsif ( exists $column->{DI}{min} and ! exists $column->{DI}{max} ) {
+ $maxdata = &Max('DI');
+ $mindata = $column->{DI}{min};
+a650 7
+elsif (! exists $column->{DI}{min} and ! exists $column->{DI}{max} ) {
+ $maxdata = &Max('DI');
+ $mindata = &Min('DI');
+}
+
+my $scale = ( ($maxdiameter - $mindiameter) / ($maxdata - $mindata) );
+my $diameter = $mindiameter + ( ($item - $mindata) * $scale );
+d652 2
+d662 2
+a663 1
+my ($maxdata,$mindata,$transparency);
+d673 18
+a690 16
+ if ( exists $column->{TR}{min} and exists $column->{TR}{max} ) {
+  $maxdata = $column->{TR}{max};
+  $mindata = $column->{TR}{min};
+ }
+ if (! exists $column->{TR}{min} and exists $column->{TR}{max} ) {
+  $maxdata = $column->{TR}{max};
+  $mindata = &Min('TR');
+ }
+ if ( exists $column->{TR}{min} and ! exists $column->{TR}{max} ) {
+  $maxdata = &Max('TR');
+  $mindata = $column->{TR}{min};
+ }
+ if (! exists $column->{TR}{min} and ! exists $column->{TR}{max} ) {
+  $maxdata = &Max('TR');
+  $mindata = &Min('TR');
+ }
+d705 1
+a705 1
+	   $transparency = $column->{TR}{transparency}[$i][0] + ( ($item - ($mindata+($range*$i))) * ($rangeTR / $range) );
+d713 1
+a713 1
+     $range = ($maxdata - $mindata)/$transp ;
+d716 1
+a716 1
+       if ( $item >= ($mindata+(($range) * ($i))) and $item <= ($mindata+(($range) * ($i+1))) ) {
+d723 1
+a723 1
+	   $transparency = $column->{TR}{transparency}[$i][0] + ( ($item - ($mindata+($range*$i))) * ($rangeTR / $range) );
+d742 2
+a743 1
+my ($shape,$mindata,$maxdata,$range,$index,);
+d750 18
+a767 16
+
+  if ( exists $column->{SH}{min} and exists $column->{SH}{max} ) {
+     $maxdata = $column->{SH}{max};
+     $mindata = $column->{SH}{min};
+  }
+  if (! exists $column->{SH}{min} and exists $column->{SH}{max} ) {
+     $maxdata = $column->{SH}{max};
+     $mindata = &Min('SH');
+  }
+  if ( exists $column->{SH}{min} and ! exists $column->{SH}{max} ) {
+     $maxdata = &Max('SH');
+     $mindata = $column->{SH}{min};
+  }
+  if (! exists $column->{SH}{min} and ! exists $column->{SH}{max} ) {
+     $maxdata = &Max('SH');
+     $mindata = &Min('SH');
+d769 1
+d771 1
+a771 1
+     $range = ($maxdata - $mindata) / @@{$column->{SH}{shape}}; 
+d773 2
+a774 2
+     if ($item == $maxdata) {
+        $index = ( int( ($item - $mindata)/$range ) ) - 1 ;
+d777 1
+a777 1
+        $index = int( ($item - $mindata)/$range );
+d805 2
+a806 1
+my ($index,$maxdata,$mindata,$range,@@color);
+d809 19
+a827 16
+  if ( exists $column->{CLR}{min} and exists $column->{CLR}{max} ) {
+     $maxdata = $column->{CLR}{max};
+     $mindata = $column->{CLR}{min};
+  }
+  if (! exists $column->{CLR}{min} and exists $column->{CLR}{max} ) {
+     $maxdata = $column->{CLR}{max};
+     $mindata = &Min('CLR');
+  }
+  if ( exists $column->{CLR}{min} and ! exists $column->{CLR}{max} ) {
+     $maxdata = &Max('CLR');
+     $mindata = $column->{CLR}{min};
+  }
+  if (! exists $column->{CLR}{min} and ! exists $column->{CLR}{max} ) {
+     $maxdata = &Max('CLR');
+     $mindata = &Min('CLR');
+  }
+d831 1
+a831 1
+   @@color = &Constant($item,$maxdata,$mindata);
+d835 1
+a835 1
+   @@color = &Linear($item,$maxdata,$mindata);
+@
+
+
+1.14
+log
+@added functions : GetData,GetFormat,GetMap
+@
+text
+@d871 1
+a871 1
+$fn = (-e "data/format.xml" ) ? "data/format_scatter.xml" : "data/default_format.xml" ;
+@
+
+
+1.13
+log
+@added functions : GetData,GetFormat,GetMap
+@
+text
+@d871 1
+a871 1
+$fn = (-e "data/format_scatter.xml" ) ? "data/format_scatter.xml" : "data/default_format.xml" ;
+@
+
+
+1.12
+log
+@added linear interpolation for color
+@
+text
+@d5 1
+a5 1
+#use Data::Dumper;
+a7 40
+require "./data/scatter.pl";
+#require "./data/histogram.pl";
+#require "scatter_without_format.pl";
+
+
+# Definice ipmlicitniho formatovani grafu v pripade,ze neni zadano
+
+%ImplicitFormat = ( 'axis' =>  {'color'     => 'blue',
+			        'format'    => 'cylinder',
+				'size'      => 1,
+				'crowfoot'  => 1, }, 				## 0 | 1  nebo velikost ??
+		       
+	  'lattice'=> {'X' => [							## lettice on axis X
+	  			{ 'length' => 10,},
+		       	        { 'step'   => 1,
+			          'format' => 'line',
+	 	 	          'size'   => 1,
+	 		          'color'  => 'blue', },
+				],
+		       
+		       'Y' => [							## lettice on axis Y
+		       		{ 'length' => 10,},
+		       	        { 'step'   => 1,
+			          'format' => 'line',
+	 	 	          'size'   => 1,
+	 		          'color'  => 'blue', },
+				],
+		       
+		       'Z' => [							## lettice on axis Z
+		       		{ 'length' => 10,},
+	  			{ 'step'   => 1,
+			          'format' => 'line',
+	 	 	          'size'   => 1,
+	 		          'color'  => 'blue',},		       	       
+				],
+		       
+		      },
+	  'graph'=> 'Scatter',     # Scatter , Histogram , 
+);
+
+d18 1
+a18 1
+$texdir ='http://myson.instrat.cz/bearVV/vrml/png';
+d20 11
+a30 1
+if (exists $column{X} ) { 					## Pokud existuje mapovani osy X,  
+d34 1
+a34 1
+if (exists $column{Y} ) {
+d38 1
+a38 1
+if (exists $column{Z} ) {
+d43 4
+a46 1
+if (exists $column{X} and exists $column{Y} and exists $column{Z}) {
+d60 1
+a60 1
+if ( exists $column{X} and exists $column{Y} and ! exists $column{Z} ) {		## pokud existuje mapovani os X a Y
+d66 1
+a66 1
+if ( exists $column{X} and !exists $column{Y} and exists $column{Z} ) {
+d72 1
+a72 1
+if ( ! exists $column{X} and exists $column{Y} and exists $column{Z} ) {
+d79 8
+a86 9
+if (@@data) {
+my $rows = @@data;
+my $cols = @@{$data[0]};
+my @@translation = ();
+my $diameter = 1;
+my $transparency = 0;
+my @@color = (1,0,0);
+my $shape = 'box';
+my $graph = $format{graph};
+d90 8
+a97 8
+    my $item = $data[$row][$col];
+      if ($column{X}{col} == $col) {$translation[0] = $item*($X{scale}/$X{digit});}
+      if ($column{Y}{col} == $col) {$translation[1] = $item*($Y{scale}/$Y{digit});}
+      if ($column{Z}{col} == $col) {$translation[2] = $item*($Z{scale}/$Z{digit});}
+      if ($column{DI}{col} == $col) {$diameter = &DI($item);}
+      if ($column{TR}{col} == $col) {$transparency = &TR($item);} 
+      if ($column{SH}{col} == $col) {$shape = &SH($item);} 
+      if ($column{CLR}{col} == $col) {@@color = &CLR($item);} 
+d119 3
+a121 8
+if ($format{axis}) {							## Pokud je uzivatelsky definovan format os, 
+   $rh_axis = \%{$format{axis}};					## vytvori se odkaz na nej,					
+}
+else {									## jinak
+   $rh_axis = \%{$ImplicitFormat{axis}};				## se vytvori odkaz na implicitni format
+}
+
+ %$axis = %$rh_axis;							## Vytvorime HASH s nazvem osy a priradime odkaz na format osy.
+d123 2
+a124 2
+if ( exists $column{$axis}{label} ) {					## Pokud existuje klic s nazvem osy,	
+    $axis->{label} = $column{$axis}{label};				## priradime hodnotu klice do HASHe   ---label---
+d127 1
+a127 1
+$axis->{length} = $format{lattice}{$axis}[0]{length};
+d155 2
+a156 2
+if ($format{lattice}->{$axis}) {				## Pokud je zadan format pro vykreslovani pricek
+  $rh_lattice = \%{$format{lattice}{$axis}};			## vytvori se odkaz na format 
+d173 31
+a203 30
+if ( exists $column{$axis}{value} ) {				## Pokud existuje klic 'value' -> hodnoty osy jsou kvalitativni,
+ $max = @@{$column{$axis}{value}};				## $max = pocet hodnot pole 'value'
+ $scale  = $$axis{length}/$max;
+ $digit = 1;							## a          'meritko' = delka osy / pocet hodnot
+}
+
+elsif ( exists $column{$axis}{min} and exists $column{$axis}{max} ){	## V pripade,ze existuje klic 'min'a'max'->kvantitativni 
+#   $difference = ( $column{$axis}->{max} ) - ( $column{$axis}->{min} );	## pro pripad , ze min != 0
+   $difference = &Max($axis);							## zatim predpoklad min je vzdy 0
+   $round = &Round($difference);
+   ($scale,$digit) = &ComputeScale($axis,$round);
+}
+
+elsif ( !(exists $column{$axis}{min} ) and !( exists $column{$axis}{max}) ) {
+#   $difference = &Max($axis) - &Min($axis);						
+   $difference = &Max($axis);								
+   $round = &Round($difference);
+   ($scale,$digit) = &ComputeScale($axis,$round);
+}
+elsif ( exists $column{$axis}{min} and !(exists $column{$axis}{max}) ) {	
+#   $difference = &Max($axis) - ( $column{$axis}->{min} ); 
+   $difference = &Max($axis);
+   $round = &Round($difference);
+   ($scale,$digit) = &ComputeScale($axis,$round);
+}
+elsif ( !(exists $column{$axis}{min} ) and exists $column{$axis}{max} ) {
+#   $difference = ( $column{$axis}->{max} ) - &Min($axis); 
+   $difference = &Max($axis);
+   $round = &Round($difference);
+   ($scale,$digit) = &ComputeScale($axis,$round);
+d206 2
+a207 1
+return ($scale,$digit);
+d216 3
+a218 3
+my $rows = @@data;						## pocet radku pole
+my $col = $column{$axis}{col};					## sloupec pole, ve kterem vyhledavat maximum
+     $max = $data[0][$col];
+d220 2
+a221 2
+          if ($data[$row][$col] > $max ){ 
+	    $max = $data[$row][$col];
+d235 3
+a237 3
+my $rows = @@data;						## pocet radku pole
+my $col = $column{$axis}{col};				## sloupec pole, ve kterem vyhledavat minimum
+     $min = $data[0][$col]; 
+d239 2
+a240 2
+          if ($data[$row][$col] < $min ){ 
+	    $min = $data[$row][$col];
+d368 2
+a369 2
+ 
+         if ($format eq 'line') {
+d380 2
+a381 2
+	   if (exists $column{$axis}{value} ) {
+	     $label = $column{$axis}{value}[$i]; 
+d398 2
+a399 2
+	   if (exists $column{$axis}{value} ) {
+	     $label = $column{$axis}{value}[$i]; 
+d416 2
+a417 2
+	   if (exists $column{$axis}{value} ) {
+	     $label = $column{$axis}{value}[$i]; 
+d541 1
+a541 1
+  $vrml->box("$diameter $height $diameter","d=@@color",);
+d545 1
+a545 1
+  $vrml->cylinder("$diameter $height","d=@@color",);
+d561 113
+d676 1
+a676 1
+my ($shape,$mindata,$maxdata,$range,$index,$intervals);
+d678 1
+a678 1
+if ( exists $column{SH}{value} ) {
+d682 1
+a682 1
+else {
+d684 3
+a686 3
+  if ( exists $column{SH}{min} and exists $column{SH}{max} ) {
+     $maxdata = $column{SH}{max};
+     $mindata = $column{SH}{min};$intervals = @@{$column{SH}{interval}};
+d688 2
+a689 2
+  elsif (! exists $column{SH}{min} and exists $column{SH}{max} ) {
+     $maxdata = $column{SH}{max};$intervals = @@{$column{SH}{interval}};
+d692 1
+a692 1
+  elsif ( exists $column{SH}{min} and ! exists $column{SH}{max} ) {
+d694 1
+a694 1
+     $mindata = $column{SH}{min};$intervals = @@{$column{SH}{interval}};
+d696 1
+a696 1
+  elsif (! exists $column{SH}{min} and ! exists $column{SH}{max} ) {
+d698 1
+a698 1
+     $mindata = &Min('SH');$intervals = @@{$column{SH}{interval}};
+d700 2
+a701 2
+  if ( ! exists  $column{SH}{area} ) {
+     $range = ($maxdata - $mindata) / @@{$column{SH}{shape}}; 
+d710 6
+a715 6
+  else {
+    my $areas = @@{$column{SH}{interval}};  
+    for (my $i=0;$i<$areas;$i++) {
+      if ( $item >= $column{SH}{interval}[$i][0] and $item <= $column{SH}{interval}[$i][1] ) {
+        $index = $i;
+        last;
+d722 1
+a722 1
+  $shape = $column{SH}{shape}[$index];
+d725 1
+a725 1
+  $shape = 'NULL';
+a732 74
+sub TR {							## podprogram vrati hodnotu transparency	
+my $item = shift;						## dostane hodnotu z dat a prevede ji na transparency
+my ($maxdata,$mindata);
+my $maxtransparency = $column{TR}{transparency}[1];		## horni hranice viditelnosti (cim vetsi, tim min viditelne) -> 1=neviditelne
+my $mintransparency = $column{TR}{transparency}[0];		## spodni hranice viditelnosti (cim mensi,tim viditelnejsi) -> 0=viditelne
+
+if ( exists $column{TR}{value} ) {
+  $mindata = 0; 
+  $maxdata = @@{$column{TR}{value}} - 1;
+} 
+elsif ( exists $column{TR}{min} and exists $column{TR}{max} ) {
+ $maxdata = $column{TR}{max};
+ $mindata = $column{TR}{min};
+}
+elsif (! exists $column{TR}{min} and exists $column{TR}{max} ) {
+ $maxdata = $column{TR}{max};
+ $mindata = &Min('TR');
+}
+elsif ( exists $column{TR}{min} and ! exists $column{TR}{max} ) {
+ $maxdata = &Max('TR');
+ $mindata = $column{TR}{min};
+}
+elsif (! exists $column{TR}{min} and ! exists $column{TR}{max} ) {
+ $maxdata = &Max('TR');
+ $mindata = &Min('TR');
+}
+
+my $scale = ( ($maxtransparency - $mintransparency) / ($maxdata - $mindata) );		
+
+my $transparency = $mintransparency + ( ($item - $mindata) * $scale);
+
+
+
+return ($transparency);
+}
+
+#---------------------------------------------------------------------------------------------------------------------------------------------
+
+sub DI {							## Podprogram vrati hodnotu diametr (velikost) objektu
+my $item = shift;						## aktualni hodnota z pole vstupnich dat
+my $maxdiameter = $format{axis}{maxdiameter};			## maximalni velikost (diametr) objektu
+my $mindiameter = $format{axis}{mindiameter};			## minimalni velikost (diametr) objektu
+my ($maxdata,$mindata);						## maximum a minimum z hodnot v poli vstupnich dat
+
+if ( exists $column{DI}{value} ) {
+  $mindata = 0; 
+  $maxdata = @@{$column{DI}{value}} - 1;
+} 
+elsif ( exists $column{DI}{min} and exists $column{DI}{max} ) {
+ $maxdata = $column{DI}{max};
+ $mindata = $column{DI}{min};
+}
+elsif (! exists $column{DI}{min} and exists $column{DI}{max} ) {
+ $maxdata = $column{DI}{max};
+ $mindata = &Min('DI');
+}
+elsif ( exists $column{DI}{min} and ! exists $column{DI}{max} ) {
+ $maxdata = &Max('DI');
+ $mindata = $column{DI}{min};
+}
+elsif (! exists $column{DI}{min} and ! exists $column{DI}{max} ) {
+ $maxdata = &Max('DI');
+ $mindata = &Min('DI');
+}
+
+my $scale = ( ($maxdiameter - $mindiameter) / ($maxdata - $mindata) );
+my $diameter = $mindiameter + ( ($item - $mindata) * $scale );
+
+
+return ($diameter);
+}
+
+#---------------------------------------------------------------------------------------------------------------------------------------------
+
+d737 4
+a740 8
+if ($column{CLR}{interpolation} eq 'constant') {
+ if ( exists $column{CLR}{value} ) {
+   $index = $item;
+ } 
+ else {
+  if ( exists $column{CLR}{min} and exists $column{CLR}{max} ) {
+     $maxdata = $column{CLR}{max};
+     $mindata = $column{CLR}{min};
+d742 2
+a743 2
+  elsif (! exists $column{CLR}{min} and exists $column{CLR}{max} ) {
+     $maxdata = $column{CLR}{max};
+d746 1
+a746 1
+  elsif ( exists $column{CLR}{min} and ! exists $column{CLR}{max} ) {
+d748 1
+a748 1
+     $mindata = $column{CLR}{min};
+d750 1
+a750 1
+  elsif (! exists $column{CLR}{min} and ! exists $column{CLR}{max} ) {
+d754 9
+d764 17
+a780 2
+  if ( ! exists  $column{CLR}{interval} ) {
+     $range = ($maxdata - $mindata) / @@{$column{CLR}{color}}; 
+d789 2
+a790 2
+  else {
+    my $intervals = @@{$column{CLR}{interval}};  
+d792 1
+a792 1
+      if ( $item >= $column{CLR}{interval}[$i][0] and $item < $column{CLR}{interval}[$i][1] ) {
+d799 3
+a801 1
+@@color = @@{$column{CLR}{color}[$index]};
+d804 1
+a804 1
+if ($column{CLR}{interpolation} eq 'linear') {
+d806 5
+a810 16
+  if ( exists $column{CLR}{min} and exists $column{CLR}{max} ) {
+     $maxdata = $column{CLR}{max};
+     $mindata = $column{CLR}{min};
+  }
+  elsif (! exists $column{CLR}{min} and exists $column{CLR}{max} ) {
+     $maxdata = $column{CLR}{max};
+     $mindata = &Min('CLR');
+  }
+  elsif ( exists $column{CLR}{min} and ! exists $column{CLR}{max} ) {
+     $maxdata = &Max('CLR');
+     $mindata = $column{CLR}{min};
+  }
+  elsif (! exists $column{CLR}{min} and ! exists $column{CLR}{max} ) {
+     $maxdata = &Max('CLR');
+     $mindata = &Min('CLR');
+  }
+d812 1
+a812 1
+  if ( ! exists  $column{CLR}{interval} ) {
+d814 1
+a814 1
+     my $colors = @@{$column{CLR}{color}} - 1;
+d816 1
+d819 6
+a824 6
+          $rangeR = $column{CLR}{color}[$i+1][0] - $column{CLR}{color}[$i][0];
+          $rangeG = $column{CLR}{color}[$i+1][1] - $column{CLR}{color}[$i][1];
+          $rangeB = $column{CLR}{color}[$i+1][2] - $column{CLR}{color}[$i][2];
+	  $R = $column{CLR}{color}[$i][0] + ( ($item - ($mindata+($range*$i))) * ($rangeR / $range) );
+	  $G = $column{CLR}{color}[$i][1] + ( ($item - ($mindata+($range*$i))) * ($rangeG / $range) );
+	  $B = $column{CLR}{color}[$i][2] + ( ($item - ($mindata+($range*$i))) * ($rangeB / $range) );
+d829 17
+a845 3
+#  else {
+#    my $intervals = @@{$column{CLR}{interval}};  
+#  }
+d847 1
+d850 10
+a859 1
+return (@@color);
+d863 48
+@
+
+
+1.11
+log
+@generate texture from module Texture.pm
+@
+text
+@d8 2
+a9 2
+#require "./data/scatter.pl";
+require "./data/histogram.pl";
+d418 1
+a418 1
+	   &GenerateTexture($label,$color,);
+d423 1
+a423 1
+           &GenerateLabel($flag,@@translation,@@rotation,$label,@@coordIndex);
+d436 1
+a436 1
+	   &GenerateTexture($label,$color);
+d441 1
+a441 1
+           &GenerateLabel($flag,@@translation,@@rotation,$label,@@coordIndex);
+d454 1
+a454 1
+	   &GenerateTexture($label,$color);
+d459 1
+a459 1
+           &GenerateLabel($flag,@@translation,@@rotation,$label,@@coordIndex);
+d478 1
+d510 1
+a510 1
+				texture ImageTexture{url \"$texdir/$string.png\" 	
+d565 1
+a565 1
+my $height = $translation[1] + $diameter/2;
+d582 1
+a582 1
+  if ($shape eq 'NULL') {
+d594 1
+a594 1
+my ($mindata,$maxdata,$range,$index);
+d604 1
+a604 1
+     $mindata = $column{SH}{min};$areas = @@{$column{SH}{area}};
+d607 1
+a607 1
+     $maxdata = $column{SH}{max};$areas = @@{$column{SH}{area}};
+d612 1
+a612 1
+     $mindata = $column{SH}{min};$areas = @@{$column{SH}{area}};
+d616 1
+a616 1
+     $mindata = &Min('SH');$areas = @@{$column{SH}{area}};
+d629 1
+a629 1
+    my $areas = @@{$column{SH}{area}};  
+d631 1
+a631 1
+      if ( $item >= $column{SH}{area}[$i][0] and $item <= $column{SH}{area}[$i][1] ) {
+d639 6
+a644 1
+my $shape = $column{SH}{shape}[$index];
+d651 1
+a651 1
+sub TR {							## podprogram vrati hodnotu trasparency	
+d678 1
+a678 1
+my $scale = ( ($maxtransparency - $mintransparency) / ($maxdata - $mindata) );
+d691 2
+a692 2
+my $maxdiameter = $column{DI}{diameter}[1];			## maximalni velikost (diametr) objektu
+my $mindiameter = $column{DI}{diameter}[0];			## minimalni velikost (diametr) objektu
+d727 1
+a727 1
+my ($index,$maxdata,$mindata,$range,);
+d729 2
+a730 1
+if ( exists $column{CLR}{value} ) {
+d732 2
+a733 2
+} 
+else {
+d751 1
+a751 1
+  if ( ! exists  $column{CLR}{area} ) {
+d762 3
+a764 3
+    my $areas = @@{$column{CLR}{area}};  
+    for (my $i=0;$i<$areas;$i++) {
+      if ( $item >= $column{CLR}{area}[$i][0] and $item <= $column{CLR}{area}[$i][1] ) {
+d770 2
+d774 40
+a813 1
+my @@color = @@{$column{CLR}{color}[$index]};
+@
+
+
+1.10
+log
+@generate texture from external script unauthorized/texture.cgi
+@
+text
+@d1 1
+a1 1
+#!/usr/bin/perl -w
+d4 2
+a6 1
+use Data::Dumper;
+d8 2
+a9 2
+require "./data/scatter.pl";
+#require "histogram.pl";
+a54 2
+my $IDGen=0;	## Initialize for subroutine  IDGen 
+my $IDSt;	## Initialize for subroutine IDGen
+d58 1
+d110 1
+a110 1
+my $diameter = 0.2;
+d112 1
+a112 1
+my $color = 'red';
+a114 1
+#my $scale = 1;
+d116 1
+a116 1
+for ($row=0;$row < $rows;$row++){
+d118 1
+a118 1
+   my $item = $data[$row][$col];
+d122 4
+a125 4
+#      if ($column{map}[$col] eq 'DI') {$diameter = $scale*$item;}
+#      if ($column{map}[$col] eq 'TR') {$transparency = $item;} 
+#      if ($column{map}[$col] eq 'CLR') {$color = $item;} 
+#      if ($column{map}[$col] eq 'SH') {$shape = $item;} 
+d128 1
+a128 1
+      &GenerateScatter($shape,$diameter,$transparency,$color,@@translation);
+d131 1
+a131 1
+      &GenerateHistogram($shape,$diameter,$transparency,$color,@@translation);
+d133 1
+a133 3
+   
+}
+
+d156 2
+a157 2
+if ( exists $column{$axis}->{label} ) {					## Pokud existuje klic s nazvem osy,	
+    $axis->{label} = $column{$axis}->{label};				## priradime hodnotu klice do HASHe   ---label---
+d160 1
+a160 1
+$axis->{length} = $format{lattice}->{$axis}->[0]->{length};
+d206 2
+a207 2
+if ( exists $column{$axis}->{value} ) {				## Pokud existuje klic 'value' -> hodnoty osy jsou kvalitativni,
+ $max = @@{$column{$axis}->{value}};				## $max = pocet hodnot pole 'value'
+d212 1
+a212 1
+elsif ( exists $column{$axis}->{min} and exists $column{$axis}->{max} ){	## V pripade,ze existuje klic 'min'a'max'->kvantitativni 
+d219 1
+a219 1
+elsif ( !(exists $column{$axis}->{min} ) and !( exists $column{$axis}->{max}) ) {
+d225 1
+a225 1
+elsif ( exists $column{$axis}->{min} and !(exists $column{$axis}->{max}) ) {	
+d231 1
+a231 1
+elsif ( !(exists $column{$axis}->{min} ) and exists $column{$axis}->{max} ) {
+d248 1
+a248 1
+my $col = $column{$axis}->{col};					## sloupec pole, ve kterem vyhledavat maximum
+d267 1
+a267 1
+my $col = $column{$axis}->{col};				## sloupec pole, ve kterem vyhledavat minimum
+d383 4
+a386 4
+my  $color  = $$lattice{format}->[$i]->{color};
+my  $format = $$lattice{format}->[$i]->{format};
+my  $size   = $$lattice{format}->[$i]->{size};
+my  $step   = $$lattice{format}->[$i]->{step} * $$axis{scale}; 
+d417 2
+a418 2
+#	   &GenerateTexture($id,$label,$color);	
+	 
+a434 1
+#	   &GenerateTexture($id,$label,$color);	
+d436 1
+a452 1
+#	   &GenerateTexture($id,$label,$color);	
+d454 1
+d509 1
+a509 1
+				texture ImageTexture{url \"http://myson.instrat.cz/bearVV/vrml/unauthorized/texture.cgi?string=$string\" 	
+a519 14
+sub IDGen {	# unique ID generator
+
+	if (!$IDGen) { 
+		($IDSt=sprintf('%04x', time))=~s/.*(\w{4})$/$1/;	# lower 4char hexa presentation of current time
+		$IDSt.=sprintf('%04x', $$);							# PID
+	}
+	if ($IDGen==255) {$IDGen=0} else {$IDGen++};
+
+	return $IDSt.sprintf('%02x',$IDGen);
+
+}
+
+#---------------------------------------------------------------------------------------------------------------------------------------------
+
+d524 1
+a524 1
+my $color = shift;
+a526 1
+
+d531 1
+a531 1
+  $vrml->box("$diameter $diameter $diameter","d=$color","tr=$transparency",);
+d535 1
+a535 1
+  $vrml->sphere("$diameter","d=$color","tr=$transparency");
+d539 1
+a539 1
+  $vrml->cylinder("$diameter $diameter","d=$color","tr=$transparency");
+d543 1
+a543 1
+  $vrml->cone("$diameter $diameter","d=$color","tr=$transparency");
+d545 5
+d561 1
+a561 1
+my $color = shift;
+d563 3
+a565 1
+$translation[1] = $diameter/2;
+d571 1
+a571 1
+  $vrml->box("0.1 $diameter 0.1","d=$color",);
+d575 7
+a581 1
+  $vrml->cylinder("0.1 $diameter","d=$color",);
+d588 181
+@
+
+
+1.9
+log
+@definition length of axis in format
+@
+text
+@d17 2
+a18 1
+		       },
+d20 1
+a20 1
+	  			{ 'length'   => 10,},
+d28 1
+a28 1
+		       		{ 'length'   => 10,},
+d36 1
+a36 1
+		       		{ 'length'   => 10,},
+a57 1
+$texdir='png';
+d360 6
+a365 5
+foreach my $trans (@@translation){
+  if ($trans != 0){
+      $trans += ($trans+($$axis{length}/10)/2);
+  }
+}	
+d369 1
+a369 1
+  my $height = $$axis{length}/10;
+d372 1
+a411 1
+	   my $id = &IDGen;
+d420 1
+a420 1
+	   &GenerateTexture($id,$label,$color);	
+d426 1
+a426 1
+           &GenerateLabel($id,$flag,@@translation,@@rotation,$label,@@coordIndex);
+a429 1
+	   my $id = &IDGen;
+d438 1
+a438 1
+	   &GenerateTexture($id,$label,$color);	
+d444 1
+a444 1
+           &GenerateLabel($id,$flag,@@translation,@@rotation,$label,@@coordIndex);
+a447 1
+	   my $id = &IDGen;
+d456 1
+a456 1
+	   &GenerateTexture($id,$label,$color);	
+d462 1
+a462 1
+           &GenerateLabel($id,$flag,@@translation,@@rotation,$label,@@coordIndex);
+a476 1
+my $id = shift;
+d512 1
+a512 1
+				texture ImageTexture{url \"http://myson.instrat.cz/bearVV/vrml/png/$id.png\" 	
+a517 45
+
+}
+
+#---------------------------------------------------------------------------------------------------------------------------------------------
+
+sub GenerateTexture {
+use GD;
+use constant FONT_DIRECTORY => '/usr/X11R6/lib/X11/fonts/TTF';      ## /usr/X11R6/lib/X11/fonts/TTF    /home/vladis/test/fonts
+my $id = shift;
+my $label = shift;
+my $labelcolor = shift;
+my $directory =  FONT_DIRECTORY;
+my $font 	= "$directory/luximb.ttf"; ##"$directory/luximb.ttf";
+my $heigth 	= 20;
+my $string 	= length($label)*14;
+
+
+$im = new GD::Image($string,$heigth);   # create new image size $string x $heigth
+
+# create variable which represent individual color 
+#$white = $im->colorAllocate(255,255,255);
+$black = $im->colorAllocate(0,0,0);
+if (     $labelcolor eq 'black') {$color = $im->colorAllocate(0,0,0);  }
+  elsif ($labelcolor eq 'red')   {$color = $im->colorAllocate(255,0,0);}
+  elsif ($labelcolor eq 'green') {$color = $im->colorAllocate(0,255,0);}
+  elsif ($labelcolor eq 'blue')  {$color = $im->colorAllocate(0,0,255);}
+  elsif ($labelcolor eq 'white') {$color = $im->colorAllocate(250,250,250);return $color};
+  
+$im->transparent($black);	# set which color is transparent
+#$im->interlaced(1);
+
+# write string   
+warn "rendering $id\n";
+$im->stringTTF( $color,		# fgcolor 
+		$font,		# fontname
+		14.0,		# pointsize
+		0.0,		# angle
+		4,		# x coordinate to start drawing the string
+		16,		# y coordinate to start drawing the string
+		$label);	# string
+
+
+open (GD ,">./$texdir/$id.png");
+print GD $im->png; 
+close (GD);
+@
+
+
+1.8
+log
+@change network to local texture access
+@
+text
+@d18 2
+a19 1
+	  'lattice'=> {'X' => [
+d26 2
+a27 1
+		       'Y' => [
+d34 2
+a35 1
+		       'Z' => [
+d120 3
+a122 3
+      if ($column{X}{col} == $col) {$translation[0] = $item*$X{scale};}
+      if ($column{Y}{col} == $col) {$translation[1] = $item*$Y{scale};}
+      if ($column{Z}{col} == $col) {$translation[2] = $item*$Z{scale};}
+d163 3
+a165 1
+($axis->{length},$axis->{scale},) = &ParamOfAxis($axis); ## V podprogramu ziskame ostatni polozky potrebne pro vykresleni
+a180 1
+
+d205 1
+a205 1
+sub ParamOfAxis {				## urci delku a meritko osy , delka je zatim pocitana ze vstupnich dat od 0 ne od minima
+d207 1
+a207 1
+my ($length,$scale,$round,$difference);
+d210 3
+a212 2
+   $length = @@{$column{$axis}->{value}};			## priradime  'delka'   = pocet hodnot
+   $scale  = 1;							## a          'meritko' = 1
+d214 1
+d216 11
+a226 5
+#   $difference = ( $column{$axis}->{max} ) - ( $column{$axis}->{min} );
+   $difference = &Max($axis);
+   $round = &Round($difference) ; 
+   $scale  = &Scale($round);							##  meritko se urci v podprogramu Scale  
+   $length = $round * $scale;
+d231 2
+a232 3
+   $round = &Round($difference); 
+   $scale = &Scale($round);
+   $length = $round * $scale;							     
+a236 7
+   $round = &Round($difference); 
+   $scale = &Scale($round);
+   $length = $round * $scale;							     
+}
+elsif ( !(exists $column{$axis}->{min} ) and !( exists $column{$axis}->{max}) ) {
+#   $difference = &Max($axis) - &Min($axis);
+   $difference = &Max($axis);
+d238 1
+a238 2
+   $scale = &Scale($round);
+   $length = $round * $scale;							     
+d241 1
+a241 2
+#print "delka = $length\n";print "meritko = $scale\n";
+return ($length,$scale,);
+d247 2
+a248 2
+my $max = shift;						## do $max priradime osu na niz chceme zjistit maximum (X,Y,Z)
+my ($exponent,$mantisa);
+d251 1
+a251 1
+my $col = $column{$max}->{col};					## sloupec pole, ve kterem vyhledavat maximum
+d266 2
+a267 2
+my $min = shift;						## do $min priradime osu na niz chceme zjistit minimum (X,Y,Z)
+my ($exponent,$mantisa);
+d270 1
+a270 1
+my $col = $column{$min}->{col};					## sloupec pole, ve kterem vyhledavat minimum
+d285 2
+a286 3
+my $round = shift;						## zadane cislo
+my ($exponent,$mantisa);
+my ($mantisa1,$mantisa2) = $round =~ /(.)(.)/ ;
+d288 2
+a289 2
+if ($round < 10) {
+$round = $round;
+d292 3
+a294 4
+   $exponent = length($round)-1;				## rad cisla $round
+   if ($mantisa1 == 1){
+     $mantisa = $mantisa1.($mantisa2 + 1) ;			## mantisa = prvni 2 cisla z $round (druhe navysene o 1)
+#     $exponent = $exponent - 1;
+d297 1
+a297 1
+     $mantisa = $mantisa1 + 1;					## mantisa = prvni cislo z $round + 1
+d299 1
+a299 1
+
+d302 1
+d308 8
+a315 7
+sub Scale {							## meritko - dodelat !!
+my $scale = shift;
+my ($scale1) = $scale =~ /(.)/ ;
+my ($exponent);
+
+if ($scale < 20 ) {
+$scale = 1;
+d317 11
+a327 7
+elsif  ($scale1 == 1) {
+$exponent = length($scale)-2;				## rad cisla $scale
+$scale = 1/(eval ("1e$exponent"));
+}
+else  {
+$exponent = length($scale)-1;				## rad cisla $scale
+$scale = 1/(eval ("1e$exponent"));
+d329 1
+d331 1
+a331 1
+return ($scale);
+d383 5
+a387 5
+foreach my $form ( @@{$$lattice{format}} ) {
+my  $color  = $form->{color};
+my  $format = $form->{format};
+my  $size   = $form->{size};
+my  $step   = $form->{step};  
+d390 1
+a390 1
+  for (my $i=0;$i<int($$axis{length}/$step);$i++) {
+d417 1
+a417 1
+	     $label = $trans * (1/$$axis{scale});
+d436 1
+a436 1
+	     $label = $trans * (1/$$axis{scale});
+d455 1
+a455 1
+	     $label = $trans * (1/$$axis{scale});
+d514 1
+a514 1
+				texture ImageTexture{url \"png/$id.png\" 
+@
+
+
+1.7
+log
+@new format
+@
+text
+@d209 1
+a209 1
+elsif ( exists $column{$axis}->{min} and exists $column{$axis}->{max} ){	     ## V pripade,ze existuje klic 'min'a'max'->kvantitativni 
+d211 1
+a211 1
+   $difference = &Max($axis);;
+d507 1
+a507 1
+				texture ImageTexture{url \"http://myson.instrat.cz/bearVV/vrml/png/$id.png\" 
+@
+
+
+1.6
+log
+@new format
+@
+text
+@d16 1
+a16 1
+				'size'      => 10,
+d160 1
+a160 1
+($axis->{length},$axis->{scale},$axis->{min},$axis->{max}) = &ParamOfAxis($axis); ## V podprogramu ziskame ostatni polozky potrebne pro vykresleni
+d201 1
+a201 1
+sub ParamOfAxis {
+d210 2
+a211 1
+   $difference = ( $column{$axis}->{max} ) - ( $column{$axis}->{min} );
+d217 2
+a218 1
+   $difference = &Max($axis) - ( $column{$axis}->{min} ); 
+d224 2
+a225 1
+   $difference = ( $column{$axis}->{max} ) - &Min($axis); 
+d231 2
+a232 1
+   $difference = &Max($axis) - &Min($axis);
+d239 1
+a239 1
+return ($length,$scale,$min,$max);
+a328 1
+
+d338 1
+a338 1
+ $vrml->transform_begin("t=@@translation","r=@@rotation");			## t = translation, r = rotation
+d343 1
+a343 1
+     $vrml->cylinder("$radius $height","d=$color");				## cylinder('radius height', 'appearance') ->d = diffuse color
+d348 1
+a348 1
+     $vrml->box("$width $height $depth","d=$color");				##  box('size', 'appearance') -> d = diffuse color
+d366 1
+@
+
+
+1.5
+log
+@complete graph with textures
+@
+text
+@d5 1
+a5 4
+%column = (
+	'map'  => ["X","Y","Z","DI"],
+	'name' => ["Mesto","Rok","Prodej","Zbozi"],
+);
+d7 3
+a9 4
+%lookup = (
+	'Mesto' => ["Praha","Brno","Liberec","Ostrava","Zlin"],
+	'Rok'   => [1998,1999,2000,2001,2002],
+);
+a10 1
+@@data = (
+d12 1
+a12 100
+[ 1, 1, 268, 36,],
+[ 5, 1, 160, 13,],
+[ 2, 2,  99, 46,],
+[ 4, 3, 503, 43,],
+[ 2, 4, 241, 34,],
+[ 2, 4, 536, 40,],
+[ 2, 4, 259, 10,],
+[ 1, 4,   7, 26,],
+[ 3, 3, 269, 34,],
+[ 2, 1, 168, 13,],
+[ 1, 5,  90, 25,],
+[ 1, 2,  69, 45,],
+[ 4, 5,  82, 40,],
+[ 4, 2, 443, 34,],
+[ 5, 4, 126, 37,],
+[ 3, 2, 105, 38,],
+[ 3, 2, 414, 39,],
+[ 2, 2, 389, 21,],
+[ 2, 4, 478, 23,],
+[ 3, 1, 196, 30,],
+[ 3, 4, 281, 27,],
+[ 1, 4, 114, 42,],
+[ 3, 1, 150, 33,],
+[ 1, 2, 179, 45,],
+[ 2, 2, 447, 43,],
+[ 1, 1, 530, 23,],
+[ 2, 2, 177, 39,],
+[ 4, 3, 397, 47,],
+[ 3, 2, 270, 23,],
+[ 2, 2, 362, 24,],
+[ 1, 3, 392, 16,],
+[ 3, 3, 361, 19,],
+[ 3, 5, 262, 46,],
+[ 2, 1, 101, 14,],
+[ 2, 3, 240, 42,],
+[ 4, 5, 235, 33,],
+[ 1, 4, 112, 26,],
+[ 1, 3,  14, 35,],
+[ 3, 4, 566, 40,],
+[ 3, 1, 539, 18,],
+[ 2, 2, 236, 22,],
+[ 3, 4, 425, 23,],
+[ 2, 3,  37, 38,],
+[ 2, 2, 153, 37,],
+[ 2, 4, 313, 21,],
+[ 4, 5, 193, 34,],
+[ 4, 2, 426, 47,],
+[ 4, 2, 225, 20,],
+[ 3, 1, 304, 46,],
+[ 2, 4, 185, 19,],
+[ 2, 1, 517, 26,],
+[ 2, 2, 164, 25,],
+[ 2, 5, 527, 30,],
+[ 3, 2, 565, 13,],
+[ 1, 4, 545, 16,],
+[ 4, 3, 401, 46,],
+[ 2, 2, 348, 20,],
+[ 2, 1, 119, 34,],
+[ 3, 5,  21, 33,],
+[ 3, 2, 102, 49,],
+[ 2, 2, 271, 34,],
+[ 3, 3, 345, 28,],
+[ 3, 4, 360, 46,],
+[ 3, 3, 252, 31,],
+[ 2, 2, 469, 48,],
+[ 2, 2, 112, 31,],
+[ 3, 3,   7, 41,],
+[ 2, 4,   5, 29,],
+[ 1, 2, 247, 46,],
+[ 4, 3, 351, 41,],
+[ 4, 3, 560, 23,],
+[ 4, 3, 421, 26,],
+[ 2, 5, 294, 42,],
+[ 4, 4, 331, 32,],
+[ 2, 3, 506, 41,],
+[ 2, 2, 350, 16,],
+[ 4, 4, 560, 17,],
+[ 2, 3, 161, 15,],
+[ 1, 1, 480, 12,],
+[ 3, 3,  10, 32,],
+[ 3, 5, 445, 20,],
+[ 1, 4, 433, 39,],
+[ 2, 3, 356, 12,],
+[ 3, 2, 149, 36,],
+[ 3, 4, 108, 47,],
+[ 3, 4, 301, 24,],
+[ 4, 2, 411, 35,],
+[ 3, 4, 108, 32,],
+[ 3, 2, 198, 33,],
+[ 2, 3, 541, 10,],
+[ 2, 3, 246, 21,],
+[ 1, 2,  16, 49,],
+[ 2, 5, 253, 40,],
+[ 3, 5,  93, 21,],
+[ 2, 2,  36, 19,],
+[ 1, 3, 492, 26,],
+[ 3, 5, 145, 30,],
+[ 4, 4, 302, 24,],
+[ 3, 4, 316, 23,],
+[ 4, 2, 246, 12,],
+d14 3
+a16 5
+);
+
+%format = ( 'axis' =>  {'color'     => 'green',
+			'format'    => 'cylinder',
+			'size'      => 10,
+a32 8
+	  			{ 'step'   => 3,
+			          'format' => 'line',
+	 	 	          'size'   => 1,
+	 		          'color'  => 'green',},		       	       
+	  			{ 'step'   => 2,
+			          'format' => 'line',
+	 	 	          'size'   => 1,
+	 		          'color'  => 'red',},		       	       
+d40 1
+a40 1
+	  	       
+a42 1
+
+a44 2
+
+ $indent = 1;							## define blank space between labels and axses or lattices
+d53 48
+a100 53
+
+if ( %{$format{axis}} ) {
+
+   my $color = $format{axis}->{color};
+   my $size  = $format{axis}->{size};
+   my $format = $format{axis}->{format};
+     %X = &DefineAxis('X',$format,$size,$color);
+     &GenerateAxis(%X);
+     %Y = &DefineAxis('Y',$format,$size,$color);
+     &GenerateAxis(%Y);
+     %Z = &DefineAxis('Z',$format,$size,$color);
+     &GenerateAxis(%Z);
+}
+
+if (@@{$format{lattice}->{X}}) {
+   my $num_formats = @@{$format{lattice}->{X}};
+   for (my $i=0;$i<$num_formats;$i++) {
+      my $color = $format{lattice}->{X}->[$i]->{color};
+      my $format = $format{lattice}->{X}->[$i]->{format};
+      my $size = $format{lattice}->{X}->[$i]->{size};
+      my $step = $format{lattice}->{X}->[$i]->{step};
+      %XY = &DefineLattice('X',$color,$format,$size,$step);
+      %XZ = &DefineLattice('X',$color,$format,$size,$step);
+      &GenerateLattice('X',$i);
+	
+   }
+}
+
+if (@@{$format{lattice}->{Y}}) {
+   my $num_formats = @@{$format{lattice}->{Y}};
+   for (my $i=0;$i<$num_formats;$i++) {
+      my $color = $format{lattice}->{Y}->[$i]->{color};
+      my $format = $format{lattice}->{Y}->[$i]->{format};
+      my $size = $format{lattice}->{Y}->[$i]->{size};
+      my $step = $format{lattice}->{Y}->[$i]->{step};
+      %YX = &DefineLattice('Y',$color,$format,$size,$step);
+      %YZ = &DefineLattice('Y',$color,$format,$size,$step);
+      &GenerateLattice('Y',$i);
+	
+   }
+}
+if (@@{$format{lattice}->{Z}}) {
+   my $num_formats = @@{$format{lattice}->{Z}};
+   for (my $i=0;$i<$num_formats;$i++) {
+      my $color = $format{lattice}->{Z}->[$i]->{color};
+      my $format = $format{lattice}->{Z}->[$i]->{format};
+      my $size = $format{lattice}->{Z}->[$i]->{size};
+      my $step = $format{lattice}->{Z}->[$i]->{step};
+      %ZX = &DefineLattice('Z',$color,$format,$size,$step);
+      %ZY = &DefineLattice('Z',$color,$format,$size,$step);
+      &GenerateLattice('Z',$i);
+	
+   }
+d106 7
+a112 2
+my (@@translation,$diameter,);
+my $scale = &DiameterOfObject;
+d116 11
+a126 5
+my      $item = $data[$row][$col];
+      if ($column{map}[$col] eq 'X') {$translation[0] = $item/$X{scale};}
+      if ($column{map}[$col] eq 'Y') {$translation[1] = $item/$Y{scale};}
+      if ($column{map}[$col] eq 'Z') {$translation[2] = $item/$Z{scale};}
+      if ($column{map}[$col] eq 'DI') {$diameter = $scale*$item;}
+d128 4
+a131 1
+      &GenerateObject($diameter,@@translation);
+a135 1
+
+d137 1
+a137 1
+$vrml->save("./wrl/ID.wrl","gzip -f9");		## $vrml->save(undef, 'gzip -f9')		$vrml->save(filename,'pipe')
+d143 1
+a143 1
+sub DefineAxis {
+d145 30
+a174 5
+my $format = shift;
+my $size = shift;
+my $color = shift;
+my (%X,%Y,%Z);
+ &ParamOfAxis("$axis");
+a175 39
+  if ($axis eq 'X') {
+   %X = (
+              'translation' => [$length/2,0,0],
+	      'rotation'    => [0,0,1,-90],
+	      'size'	    => $size,
+	      'format'	    => $format,
+	      'color'	    => $color,
+	      'length'	    => $length,
+	      'label'	    => $label,
+	      'scale'	    => $scale,
+             ),
+	return (%X);	
+  }
+  if ($axis eq 'Y') {
+   %Y = (
+              'translation' => [0,$length/2,0],
+	      'rotation'    => [0,0,1,0],
+	      'size'	    => $size,
+	      'format'	    => $format,
+	      'color'	    => $color,
+	      'length'	    => $length,
+	      'label'	    => $label,
+	      'scale'	    => $scale,
+             ),
+	return (%Y);	
+  }
+  if ($axis eq 'Z') {
+   %Z = (
+              'translation' => [0,0,$length/2],
+	      'rotation'    => [1,0,0,90],
+	      'size'	    => $size,
+	      'format'	    => $format,
+	      'color'	    => $color,
+	      'length'	    => $length,
+	      'label'	    => $label,
+	      'scale'	    => $scale,
+             ),
+	return (%Z);	
+  }
+d177 1
+d182 4
+a185 31
+sub DefineLattice {
+my ($lattice,$color,$format,$size,$step) = @@_;
+my (%XY,%XZ);
+
+  if ($lattice eq 'X') {
+  %XY = %XZ = (
+               'size'	=> $size,
+	       'format'	=> $format,
+	       'color'	=> $color,
+	       'step'   => $step,
+              );
+   return (%XY,%XZ);	
+  } 
+  if ($lattice eq 'Y') {
+  %YX = %YZ = (
+               'size'	=> $size,
+	       'format'	=> $format,
+	       'color'	=> $color,
+	       'step'   => $step,
+              );
+   return (%YX,%YZ);	
+  } 
+  if ($lattice eq 'Z') {
+  %ZX = %ZY = (
+               'size'	=> $size,
+	       'format'	=> $format,
+	       'color'	=> $color,
+	       'step'   => $step,
+              );
+   return (%ZX,%ZY);	
+  } 
+d187 8
+d196 1
+d203 34
+a236 3
+my $rows = @@data;
+my $cols = @@{$column{map}};
+my (@@steps,$exponent,$digit,$max,$round_max);
+d238 1
+a238 1
+ for (my $col=0;$col < $cols;$col++){
+d240 3
+a242 1
+  if ($column{map}[$col] eq "$axis") {
+d244 3
+a246 8
+    $label = $column{name}[$col];
+    if (exists($lookup{$label})){
+       $length = @@{$lookup{$label}};
+       $scale = 1;
+    }
+    else {
+       $length = 10;
+       $max = 0;
+d252 1
+a252 9
+        @@steps = qw(1 2 2.5 5);
+        $exponent = length($max)-1;
+ 	$digit = eval("1e$exponent");
+	foreach my $item (@@steps){
+  	    $round_max = $item*$digit;
+   	    if ($round_max >= $max){ last; }
+	    if ($round_max <= $max){ $round_max = $digit*10; } 
+	} 
+	$scale = $round_max/10;
+d254 4
+a257 1
+    }
+d259 3
+a261 2
+  }
+ }
+d263 9
+a271 1
+return ($label,$length,$scale);
+d273 1
+d278 24
+a301 4
+sub DiameterOfObject {
+my $rows = @@data;
+my $cols = @@{$column{map}};
+my (@@steps,$exponent,$digit,$max);
+d303 4
+a306 1
+for (my $col=0;$col < $cols;$col++){
+d308 10
+a317 11
+  if ($column{map}[$col] eq "DI") {
+   $max = 0;
+       for ($row = 0;$row < $rows;$row++) {
+          if ($data[$row][$col] > $max ){ 
+	    $max = $data[$row][$col];
+	  }  
+       }
+        $exponent = length($max);
+ 	$digit = eval("1e$exponent");
+	$scale = 1/$digit;
+  }
+d319 1
+a320 1
+ 
+d326 21
+a346 9
+sub GenerateAxis {
+#my $axis = shift;
+my %axis_description = @@_;
+my @@rotation = @@{$axis_description{rotation}};
+my $radius = $axis_description{size}/50;
+my $height = $axis_description{length}/10;
+my $color = $axis_description{color};
+my $format = $axis_description{format};
+my @@translation = @@{$axis_description{translation}};
+d348 1
+a348 6
+  if ($format eq 'cylinder') {
+     &GenerateCylinder(%axis_description);
+  }
+  if ($format eq 'box') {
+     &GenerateBox(%axis_description);
+  }
+d352 1
+a352 1
+      $trans += ($trans+$height/2);
+d354 2
+a355 1
+}
+d357 2
+d365 1
+a365 2
+
+sub GenerateLattice {
+d367 1
+a367 185
+my $i = shift;
+my $trans = 0;
+my $item = 0; 
+
+if ($i == 0) { 
+   @@index = qw(0 0 0 0 0 0 0 0 0 0 0 0);
+}
+
+ if ($lattice eq 'X') {
+     for (my $i=0;$i<int($X{length}/$XY{step});$i++) {
+       $trans = $trans + $XY{step};
+	if ($index[$trans] == 0){
+	$index[$trans] = 1;
+
+           $XY{translation} = [$trans,$Y{length}/2,0];
+	   $XY{rotation} = [0,0,1,0];
+	   $XY{length} = $Y{length};
+	   
+            if ($XY{format} eq 'cylinder') {
+               &GenerateCylinder(%XY);
+            }  
+            if ($XY{format} eq 'box') {
+               &GenerateBox(%XY);
+            }  
+            if ($XY{format} eq 'line') {
+               &GenerateLine(%XY);
+            }
+            $XZ{translation} = [$trans,0,$Z{length}/2];
+	    $XZ{rotation} = [1,0,0,90];
+	    $XZ{length} = $Z{length};
+	    
+            if ($XZ{format} eq 'cylinder') {
+               &GenerateCylinder(%XZ);
+            }  
+            if ($XZ{format} eq 'box') {
+               &GenerateBox(%XZ);
+            }  
+            if ($XZ{format} eq 'line') {
+               &GenerateLine(%XZ);
+            }
+	    if ($X{scale} == 1) {							## definition texture
+	       my $id = &IDGen;								
+	       my $label = $lookup{$X{label}}[$trans-1];					
+	       my $color = $XY{color};
+	       &GenerateTexture($id,$label,$color);
+
+	       my @@translation = ($trans-0.2,0,$Z{length}+$indent);			## define indexed face set
+	       my @@rotation = (1,0,0,90);
+	       my $flag = 1;
+	       my @@coordIndex = (2,1,0,3,-1);				
+	       &GenerateLabel($id,$flag,@@translation,@@rotation,$label,@@coordIndex);
+	    }
+	    if ($X{scale} != 1) {							## definition texture
+	       my $id = &IDGen;								
+	       my $label = $X{scale}*$trans;
+	       my $color = $XY{color};
+	       &GenerateTexture($id,$label,$color);
+
+	       my @@translation = ($trans-0.2,0,$Z{length}+$indent);			## define indexed face set
+	       my @@rotation = (1,0,0,90);
+	       my $flag = 1;
+	       my @@coordIndex = (2,1,0,3,-1);
+	       &GenerateLabel($id,$flag,@@translation,@@rotation,$label,@@coordIndex);
+	    }
+	}
+      }	
+  }
+ if ($lattice eq 'Y') {
+     for (my $i=0;$i<int($Y{length}/$YX{step});$i++) {
+       $trans = $trans + $YX{step};
+	if ($index[$trans] == 0){
+	$index[$trans] = 1;
+
+           $YX{translation} = [$X{length}/2,$trans,0];
+	   $YX{rotation} = [0,0,1,90];
+	   $YX{length} = $X{length};
+	   
+            if ($YX{format} eq 'cylinder') {
+               &GenerateCylinder(%YX);
+            }  
+            if ($YX{format} eq 'box') {
+               &GenerateBox(%YX);
+            }  
+            if ($YX{format} eq 'line') {
+               &GenerateLine(%YX);
+            }
+            $YZ{translation} = [0,$trans,$Z{length}/2];
+	    $YZ{rotation} = [1,0,0,90];
+	    $YZ{length} = $Z{length};
+	    
+            if ($YZ{format} eq 'cylinder') {
+               &GenerateCylinder(%YZ);
+            }  
+            if ($YZ{format} eq 'box') {
+               &GenerateBox(%YZ);
+            }  
+            if ($YZ{format} eq 'line') {
+               &GenerateLine(%YZ);
+            }
+	    if ($Y{scale} == 1) {
+	       my $id = &IDGen;								
+	       my $label = $lookup{$Y{label}}[$trans-1];					
+	       my $color = $YZ{color};							
+	       &GenerateTexture($id,$label,$color);	
+
+	       my @@translation = ($X{length}+$indent,$trans-0.2,0);				
+               my @@rotation = (0,0,1,0);
+	       my $flag = 0;
+	       my @@coordIndex = (0,1,2,3,-1);
+	       &GenerateLabel($id,$flag,@@translation,@@rotation,$label,@@coordIndex);
+	    }
+	    if ($Y{scale} != 1) {
+	       my $id = &IDGen;								
+	       my $label = $Y{scale}*$trans;
+	       my $color = $YZ{color};							
+	       &GenerateTexture($id,$label,$color);	
+
+	       my @@translation = ($X{length}+$indent,$trans-0.2,0);
+               my @@rotation = (0,0,1,0);
+	       my $flag = 0;
+	       my @@coordIndex = (0,1,2,3,-1);
+	       &GenerateLabel($id,$flag,@@translation,@@rotation,$label,@@coordIndex);
+	    }
+	}
+      }	
+  }
+ if ($lattice eq 'Z') {
+     for (my $i=0;$i<int($Z{length}/$ZX{step});$i++) {
+       $trans = $trans + $ZX{step};
+	if ($index[$trans] == 0){
+	$index[$trans] = 1;
+
+           $ZX{translation} = [$X{length}/2,0,$trans];
+	   $ZX{rotation} = [0,0,1,90];
+	   $ZX{length} = $X{length};
+	   
+            if ($ZX{format} eq 'cylinder') {
+               &GenerateCylinder(%ZX);
+            }  
+            if ($ZX{format} eq 'box') {
+               &GenerateBox(%ZX);
+            }  
+            if ($ZX{format} eq 'line') {
+               &GenerateLine(%ZX);
+            }
+            $ZY{translation} = [0,$Y{length}/2,$trans];
+	    $ZY{rotation} = [0,0,1,0];
+	    $ZY{length} = $Y{length};
+	    
+            if ($ZY{format} eq 'cylinder') {
+               &GenerateCylinder(%ZY);
+            }  
+            if ($ZY{format} eq 'box') {
+               &GenerateBox(%ZY);
+            }  
+            if ($ZY{format} eq 'line') {
+               &GenerateLine(%ZY);
+            }
+	    if ($Z{scale} == 1) {
+	       my $id = &IDGen;								
+	       my $label = $lookup{$Z{label}}[$trans-1];					
+	       my $color = $ZY{color};							
+	       &GenerateTexture($id,$label,$color);	
+
+	       my @@translation = ($X{length}+$indent,0,$trans+0.2);
+               my @@rotation = (1,0,0,270);
+	       my $flag = 0;
+	       my @@coordIndex = (0,1,2,3,-1);
+	       &GenerateLabel($id,$flag,@@translation,@@rotation,$label,@@coordIndex);
+	    }
+	    if ($Z{scale} != 1) {
+	       my $id = &IDGen;								
+	       my $label = $Z{scale}*$trans;
+	       my $color = $ZY{color};							
+	       &GenerateTexture($id,$label,$color);	
+
+	       my @@translation = ($X{length}+$indent,0,$trans+0.2);
+               my @@rotation = (1,0,0,270);
+	       my $flag = 0;
+	       my @@coordIndex = (0,1,2,3,-1);
+	       &GenerateLabel($id,$flag,@@translation,@@rotation,$label,@@coordIndex);
+	    }
+	}
+      }	
+  }
+d369 2
+d372 15
+a386 2
+}
+#---------------------------------------------------------------------------------------------------------------------------------------------
+d388 9
+a396 5
+sub GenerateObject {
+my $width = $height = $depth = shift;
+my @@translation = @@_;
+#my ($height,$size,$color) = splice(@@_,0,3);
+#my $width = $depth = $size/10;
+d398 56
+a453 4
+  $vrml->transform_begin("t=@@translation");				## t = translation, r = rotation
+#  $vrml->box("$width $height $depth","d=$color","tr=$transparency");	##  box('size', 'appearance') -> d = diffuse color,tr = transparency
+$vrml->box("$width $height $depth","d=red","tr=0.5");
+  $vrml->transform_end;
+d455 1
+a455 1
+}
+d457 1
+a457 9
+#---------------------------------------------------------------------------------------------------------------------------------------------
+
+sub GenerateCylinder {
+my %description = @@_;
+my @@translation = @@{$description{translation}};
+my @@rotation = @@{$description{rotation}};
+my $radius = $description{size}/100;
+my $height = $description{length};
+my $color = $description{color};
+a458 3
+  $vrml->transform_begin("t=@@translation","r=@@rotation");			## t = translation, r = rotation
+  $vrml->cylinder("$radius $height","d=$color");				## cylinder('radius height', 'appearance') ->d = diffuse color
+  $vrml->transform_end;
+a460 14
+#---------------------------------------------------------------------------------------------------------------------------------------------
+
+sub GenerateBox {
+my %description = @@_;
+my @@translation = @@{$description{translation}};
+my @@rotation = @@{$description{rotation}};
+my $width = $depth = $description{size}/100;
+my $height = $description{length};
+my $color = $description{color};
+
+  $vrml->transform_begin("t=@@translation","r=@@rotation");			## t = translation, r = rotation
+  $vrml->box("$width $height $depth","d=$color");				##  box('size', 'appearance') -> d = diffuse color
+  $vrml->transform_end;
+
+a462 16
+#---------------------------------------------------------------------------------------------------------------------------------------------
+
+sub GenerateLine {
+my %description = @@_;
+my @@translation = @@{$description{translation}};
+my @@rotation = @@{$description{rotation}};
+my $height = $description{length};
+my $color = $description{color};
+my $from = -$height/2;
+my $to = $height/2;
+
+  $vrml->transform_begin("t=@@translation","r=@@rotation");			## t = translation, r = rotation
+  $vrml->line("0 $from 0", "0 $to 0", 0, "$color",);				## line('from', 'to', radius, 'appearance', 'path')
+  $vrml->transform_end;
+
+}
+d495 1
+a495 1
+			   point [0 0 ,
+a505 3
+			        textureTransform TextureTransform { translation 0 0
+								    rotation 0
+								    scale 1 1 }
+a509 1
+
+a524 1
+open (GD ,">./png/$id.png");
+d551 1
+d570 59
+@
+
+
+1.4
+log
+@complete graph with textures
+@
+text
+@d11 1
+a11 1
+	'Mesto' => ["Praha","Brno","Liberec","Ostrava"],
+d18 1
+a18 1
+[ 1, 1, 160, 13,],
+d31 1
+a31 1
+[ 4, 4, 126, 37,],
+@
+
+
+1.3
+log
+@complete graph with textures
+@
+text
+@d16 102
+a117 5
+	[1,1,200,30,],[4,5,864,40,],[2,3,589,30,],[2,1,1065,10],[3,4,34,10,],[1,3,564,20,],
+	[1,2,1200,30,],[4,5,1864,40,],[2,3,1589,30,],[2,1,105,10],[3,4,264,10,],[1,3,464,20,],
+	[1,3,240,30,],[4,3,84,40,],[2,4,89,30,],[2,2,65,10],[3,3,34,10,],[1,3,264,20,],
+	[1,4,280,30,],[4,5,864,40,],[2,3,59,30,],[2,2,1065,10],[3,4,74,10,],[1,4,24,20,],
+	[1,1,20,30,],[4,3,86,40,],[2,4,550,30,],[2,4,165,10],[3,4,34,10,],[1,3,254,20,],
+d245 1
+a245 1
+$vrml->print(1);			##  $vrml->print(1, 'gzip -f9')   		$vrml->print(mime,'pipe')
+d276 1
+a276 1
+	      'rotation'    => [0,0,0,0],
+d370 1
+d388 1
+a388 1
+my (@@steps,$exponent,$digit,$max,$round_max);
+d458 1
+a458 1
+	   $XY{rotation} = [0,0,0,0];
+d483 1
+a483 1
+	    if ($X{scale} == 1) {						## definition texture
+d489 1
+a489 1
+	       my @@translation = ($trans-0.2,0,$Z{length}+$indent);
+d491 3
+a493 3
+	       my $flag = 0;
+	       my @@texcoord = (2,3,0,1,-1);				## 2,3,0,1,-1 
+	       &GenerateLabel($id,$flag,@@translation,@@rotation,$label,@@texcoord);
+d495 1
+a495 1
+	    if ($X{scale} != 1) {						## definition texture
+d501 5
+a505 5
+	       my @@translation = ($trans-0.2,0,$Z{length}+$indent);
+	       my @@rotation = (1,0,0,-90);
+	       my $flag = 0;
+	       my @@texcoord = (0,1,2,3,-1);
+	       &GenerateLabel($id,$flag,@@translation,@@rotation,$label,@@texcoord);
+d548 2
+a549 2
+	       my @@translation = ($X{length}+$indent,$trans+0.2,0);
+               my @@rotation = (0,0,1,270);
+d551 2
+a552 2
+	       my @@texcoord = (3,2,1,0,-1);
+	       &GenerateLabel($id,$flag,@@translation,@@rotation,$label,@@texcoord);
+d560 2
+a561 2
+	       my @@translation = ($X{length}+$indent,$trans+0.2,0);
+               my @@rotation = (0,0,1,270);
+d563 2
+a564 2
+	       my @@texcoord = (3,2,1,0,-1);
+	       &GenerateLabel($id,$flag,@@translation,@@rotation,$label,@@texcoord);
+d589 1
+a589 1
+	    $ZY{rotation} = [0,0,0,0];
+d607 5
+a611 5
+	       my @@translation = ($X{length}+$indent,0,$trans-0.2);
+               my @@rotation = (1,0,0,90);
+	       my $flag = 1;
+	       my @@texcoord = (1,0,3,2,-1);
+	       &GenerateLabel($id,$flag,@@translation,@@rotation,$label,@@texcoord);
+d619 5
+a623 5
+	       my @@translation = ($X{length}+$indent,0,$trans-0.2);
+               my @@rotation = (1,0,0,90);
+	       my $flag = 1;
+	       my @@texcoord = (1,0,3,2,-1);
+	       &GenerateLabel($id,$flag,@@translation,@@rotation,$label,@@texcoord);
+d704 1
+a704 1
+my @@texcoord = @@_;
+d712 3
+d718 13
+a730 7
+			coord Coordinate  { point [ $width 0 0,
+						    $width $length 0,
+						    0 $length 0,
+					    	    0 0 0        ] }
+				coordIndex [ 0 1 2 3 -1 ]
+				solid FALSE
+				texCoordIndex [@@texcoord]
+d736 3
+@
+
+
+1.2
+log
+@complete graph with textures
+@
+text
+@d15 7
+a21 1
+@@data = ([1,1,200,30,],[4,5,864,40,],[2,3,589,30,],[2,1,1065,10],[3,4,34,10,],[1,3,2564,20,],);
+@
+
+
+1.1
+log
+@added work.cgi
+@
+text
+@a1 1
+use locale;
+d3 5
+a7 118
+print "Content-type:model/vrml\n\n";
+print  "#VRML V2.0 utf8 
+	Background {skyColor [0 0.5 1]}\n";
+
+############################################################## User definition ###############################################################
+
+########  definition: axis  ########
+%AXIS = ( 
+	  'X' => [ {'length'  => 6,
+	  	    'visible' => {'color'  => 'blue',
+				  'format' => 'cylinder',
+				  'size'   => 0.1,
+				  'label'  => { 'string'  => 'X',
+						'color'   => 'blue'},  
+				 },
+		   },
+		 ],
+	'Y' => [ { 'length'  => 5,
+	  	   'visible' => {'color'  => 'blue',
+				  'format' => 'cylinder',
+				  'size'   => 0.1,
+				  'label'  => { 'string'  => 'Y',
+						'color'   => 'blue'},  
+				 },
+		   },
+		 ],
+	'Z' => [ { 'length'  => 4,
+	  	   'visible' => {'color'  => 'blue',
+				  'format' => 'cylinder',
+				  'size'   => 0.1,
+				  'label'  => { 'string'  => 'Z',
+						'color'   => 'blue'},  
+				 },
+		   },
+		],	 
+				    
+);				
+
+#######  definition: lattice ########
+%XY = (
+	'tendency_X' => [ 	{'visible' => 1},
+				
+				{'color'    => 'red',
+				 'format'   => 'line',
+				 'size'     => 0.02,
+				 'step'     => 1,
+				 'label'    => [ {'visible' => 1,
+				 	          'string'  => 'smer X 1',
+						  'color'   => 'green' },
+						 {'visible' => 0,
+				 	          'string'  => 'smer X 2',
+						  'color'   => 'green' },
+						 {'visible' => 1,
+				 	          'string'  => 'smer X 3',
+						  'color'   => 'green' },
+						 {'visible' => 0,
+				 	          'string'  => 'smer X 4',
+						  'color'   => 'green' },
+						 {'visible' => 1,
+				 	          'string'  => 'smer X 5',
+						  'color'   => 'green' },
+					       ], 
+				},
+				
+				{'color'   => 'red',
+				 'format'  => 'box',
+				 'size'	   => 0.2,
+				 'step'    => 2,
+				 'label'   => [{'visible' => 1,
+					       'string'  => 'smer X 6',
+					       'color'   => 'red' },
+					       {'visible' => 1,
+					       'string'  => 'smer X 7',
+					       'color'   => 'red' },
+					      ],
+				},
+			] ,
+	'tendency_Y' => [ 	{'visible' => 1},
+				
+				{'color'    => 'red',
+				 'format'   => 'line',
+				 'size'     => 0.02,
+				 'step'     => 1,
+				 'label'    => [ {'visible' => 1,
+				 	          'string'  => 'smer Y 1',
+						  'color'   => 'green' },
+						 {'visible' => 0,
+				 	          'string'  => 'smer Y 2',
+						  'color'   => 'green' },
+						 {'visible' => 1,
+				 	          'string'  => 'smer Y 3',
+						  'color'   => 'green' },
+						 {'visible' => 0,
+				 	          'string'  => 'smer Y 4',
+						  'color'   => 'green' },
+						 {'visible' => 1,
+				 	          'string'  => 'smer Y 5',
+						  'color'   => 'green' },
+						 {'visible' => 1,
+				 	          'string'  => 'smer X 8',
+						  'color'   => 'green' },
+
+					       ], 
+				},
+				
+				{'color'   => 'red',
+				 'format'  => 'box',
+				 'size'	   => 0.2,
+				 'step'    => 2,
+				 'label'   => [{'visible' => 1,
+					       'string'  => 'smer Y 6',
+					       'color'   => 'red' },
+					       {'visible' => 1,
+					       'string'  => 'smer Y 7',
+					       'color'   => 'red' },
+					      ],
+				},
+			],
+d9 4
+a12 155
+%XZ = (
+	'tendency_X' => [ 	{'visible' => 1},
+				
+				{'color'    => 'red',
+				 'format'   => 'line',
+				 'size'     => 0.02,
+				 'step'     => 1,
+				 'label'    => [ {'visible' => 1,
+				 	          'string'  => 'smer X 1',
+						  'color'   => 'green' },
+						 {'visible' => 0,
+				 	          'string'  => 'smer X 2',
+						  'color'   => 'green' },
+						 {'visible' => 1,
+				 	          'string'  => 'smer X 3',
+						  'color'   => 'green' },
+						 {'visible' => 0,
+				 	          'string'  => 'smer X 4',
+						  'color'   => 'green' },
+						 {'visible' => 1,
+				 	          'string'  => 'smer X 5',
+						  'color'   => 'green' },
+					       ], 
+				},
+				
+				{'color'   => 'red',
+				 'format'  => 'box',
+				 'size'	   => 0.2,
+				 'step'    => 2,
+				 'label'   => [{'visible' => 1,
+					       'string'  => 'smer X 6',
+					       'color'   => 'red' },
+					       {'visible' => 1,
+					       'string'  => 'smer X 7',
+					       'color'   => 'red' },
+					      ],
+				},
+			] ,
+	'tendency_Z' => [ 	{'visible' => 1},
+				
+				{'color'    => 'red',
+				 'format'   => 'line',
+				 'size'     => 0.02,
+				 'step'     => 1,
+				 'label'    => [ {'visible' => 1,
+				 	          'string'  => 'smer Z 1',
+						  'color'   => 'green' },
+						 {'visible' => 0,
+				 	          'string'  => 'smer Z 2',
+						  'color'   => 'green' },
+						 {'visible' => 1,
+				 	          'string'  => 'smer Z 3',
+						  'color'   => 'green' },
+						 {'visible' => 0,
+				 	          'string'  => 'smer Z 4',
+						  'color'   => 'green' },
+						 {'visible' => 1,
+				 	          'string'  => 'smer Z 5',
+						  'color'   => 'green' },
+						 {'visible' => 1,
+				 	          'string'  => 'smer X 5',
+						  'color'   => 'green' },
+
+					       ], 
+				},
+				
+				{'color'   => 'red',
+				 'format'  => 'box',
+				 'size'	   => 0.2,
+				 'step'    => 2,
+				 'label'   => [{'visible' => 1,
+					       'string'  => 'smer Z 6',
+					       'color'   => 'red' },
+					       {'visible' => 1,
+					       'string'  => 'smer Z 7',
+					       'color'   => 'red' },
+					      ],
+				},
+			],
+);
+%YZ = (
+	'tendency_Y' => [ 	{'visible' => 1},
+				
+				{'color'    => 'red',
+				 'format'   => 'line',
+				 'size'     => 0.02,
+				 'step'     => 1,
+				 'label'    => [ {'visible' => 1,
+				 	          'string'  => 'smer Y 1',
+						  'color'   => 'green' },
+						 {'visible' => 0,
+				 	          'string'  => 'smer Y 2',
+						  'color'   => 'green' },
+						 {'visible' => 1,
+				 	          'string'  => 'smer Y 3',
+						  'color'   => 'green' },
+						 {'visible' => 0,
+				 	          'string'  => 'smer Y 4',
+						  'color'   => 'green' },
+						 {'visible' => 1,
+				 	          'string'  => 'smer Y 5',
+						  'color'   => 'green' },
+					       ], 
+				},
+				
+				{'color'   => 'red',
+				 'format'  => 'box',
+				 'size'	   => 0.2,
+				 'step'    => 2,
+				 'label'   => [{'visible' => 1,
+					       'string'  => 'smer Y 6',
+					       'color'   => 'red' },
+					       {'visible' => 1,
+					       'string'  => 'smer Y 7',
+					       'color'   => 'red' },
+					      ],
+				},
+			] ,
+	'tendency_Z' => [ 	{'visible' => 1},
+				
+				{'color'    => 'red',
+				 'format'   => 'line',
+				 'size'     => 0.02,
+				 'step'     => 1,
+				 'label'    => [ {'visible' => 1,
+				 	          'string'  => 'smer Z 1',
+						  'color'   => 'green' },
+						 {'visible' => 0,
+				 	          'string'  => 'smer Z 2',
+						  'color'   => 'green' },
+						 {'visible' => 1,
+				 	          'string'  => 'smer Z 3',
+						  'color'   => 'green' },
+						 {'visible' => 0,
+				 	          'string'  => 'smer Z 4',
+						  'color'   => 'green' },
+						 {'visible' => 1,
+				 	          'string'  => 'smer Z 5',
+						  'color'   => 'green' },
+					       ], 
+				},
+				
+				{'color'   => 'red',
+				 'format'  => 'box',
+				 'size'	   => 0.2,
+				 'step'    => 2,
+				 'label'   => [{'visible' => 1,
+					       'string'  => 'smer Z 6',
+					       'color'   => 'red' },
+					       {'visible' => 1,
+					       'string'  => 'smer Z 7',
+					       'color'   => 'red' },
+					      ],
+				},
+			],
+d15 1
+a15 42
+############################################################## User definition ###############################################################
+our @@red   = (1,0,0); 
+our @@green = (0,1,0);
+our @@blue  = (0,0,1);
+our @@white = (1,1,1);
+our @@black = (0,0,0);
+
+#@@color = (1,0,0);
+$indent = 0.5;										## Space between lattice and label
+
+$max_axis =  @@{$AXIS{X}};								## Maximum axis
+if ($max_axis < @@{$AXIS{Y}}){$max_axis = @@{$AXIS{Y}}};
+if ($max_axis < @@{$AXIS{Z}}){$max_axis = @@{$AXIS{Z}}};						
+
+#---- Generate axis  -----#
+for ($i=0;$i<$max_axis;$i++){  #begin of global cycle for
+   if ($AXIS{X} -> [$i]) {
+	$lengthX = ($AXIS{X} -> [$i] -> {length}); 
+	$length  = $AXIS{X} -> [$i] -> {length};
+	if ($AXIS{X} -> [$i] -> {visible} ) {
+	  $color	 = $AXIS{X} -> [$i] -> {visible} -> {color};
+	  $size 	 = $AXIS{X} -> [$i] -> {visible} -> {size}; 				## Size of axis X
+	  $step 	 = 0;									## Step value
+	  $axis 	 = "x";									## Step on axis y
+	  $max 	     	 = 1;									## Only 1 axis per cycle
+	  %translation   = ("x"=>$length/2,"y"=>0,"z"=>0);					## Translation axis X ( tendency X )
+	  %rotation      = ("x"=>0,"y"=>0,"z"=>1);		   				## Rotation axis X  ( pivot axis Z )
+		if ($AXIS{X} -> [$i] -> {visible} -> {label}){
+		  $label 	     = $AXIS{X} -> [$i] -> {visible} -> {label} -> {string};
+		  $labelcolor	     = $AXIS{X} -> [$i] -> {visible} -> {label} -> {color};
+		  %translation_label = ("x"=>$length+$indent,"y"=>0,"z"=>0);			## Translation label of axis X ( tendency X )
+	}
+	
+     if ($AXIS{X} -> [$i] -> {visible} -> {format} eq "box"){
+     &generate_box; 
+     }
+     if ($AXIS{X} -> [$i] -> {visible} -> {format} eq "cylinder"){
+     &generate_cylinder; 
+     }
+     if ($AXIS{X} -> [$i] -> {visible} -> {format} eq "line"){
+     &generate_line; 
+     }
+d17 36
+a52 28
+     }
+   }
+   if ($AXIS{Y} -> [$i]) {
+	$lengthY = ($AXIS{Y} -> [$i] -> {length}); 
+	$length  = $AXIS{Y} -> [$i] -> {length};							
+	if ($AXIS{Y} -> [$i] -> {visible} ) {
+	  $color	 = $AXIS{Y} -> [$i] -> {visible} -> {color};
+	  $size 	 = $AXIS{Y} -> [$i] -> {visible} -> {size}; 				
+	  $step 	 = 0;									
+	  $axis 	 = "y";									
+	  $max 	     	 = 1;									
+	  %translation   = ("x"=>0,"y"=>$length/2,"z"=>0);					
+	  %rotation      = ("x"=>0,"y"=>0,"z"=>0);		   				
+		if ($AXIS{Y} -> [$i] -> {visible} -> {label}){
+		  $label 	     = $AXIS{Y} -> [$i] -> {visible} -> {label} -> {string};
+		  $labelcolor	     = $AXIS{Y} -> [$i] -> {visible} -> {label} -> {color};
+		  %translation_label = ("x"=>0,"y"=>$length+$indent,"z"=>0);			
+	}
+	
+     if ($AXIS{Y} -> [$i] -> {visible} -> {format} eq "box"){
+     &generate_box; 
+     }
+     if ($AXIS{Y} -> [$i] -> {visible} -> {format} eq "cylinder"){
+     &generate_cylinder; 
+     }
+     if ($AXIS{Y} -> [$i] -> {visible} -> {format} eq "line"){
+     &generate_line; 
+     }
+a53 28
+     }
+   }
+   if ($AXIS{Z} -> [$i]) {
+	$lengthZ = ($AXIS{Z} -> [$i] -> {length}); 
+	$length = $AXIS{Z} -> [$i] -> {length};							
+	if ($AXIS{Z} -> [$i] -> {visible} ) {
+	  $color	 = $AXIS{Z} -> [$i] -> {visible} -> {color};
+	  $size 	 = $AXIS{Z} -> [$i] -> {visible} -> {size}; 				
+	  $step 	 = 0;									
+	  $axis 	 = "z";									
+	  $max 	     	 = 1;									
+	  %translation   = ("x"=>0,"y"=>0,"z"=>$length/2);					
+	  %rotation      = ("x"=>1,"y"=>0,"z"=>0);		   				
+		if ($AXIS{Z} -> [$i] -> {visible} -> {label}){
+		  $label 	     = $AXIS{Z} -> [$i] -> {visible} -> {label} -> {string};
+		  $labelcolor	     = $AXIS{Z} -> [$i] -> {visible} -> {label} -> {color};
+		  %translation_label = ("x"=>0,"y"=>0,"z"=>$length+$indent);			
+	}
+	
+     if ($AXIS{Z} -> [$i] -> {visible} -> {format} eq "box"){
+     &generate_box; 
+     }
+     if ($AXIS{Z} -> [$i] -> {visible} -> {format} eq "cylinder"){
+     &generate_cylinder; 
+     }
+     if ($AXIS{Z} -> [$i] -> {visible} -> {format} eq "line"){
+     &generate_line; 
+     }
+d55 2
+a56 2
+     }
+   }
+d58 22
+a79 38
+#---- Generate lattice  -----#
+   if ($XY{tendency_X} -> [0] -> {visible} ) {      
+     for ($i=1;$i<=(@@{$XY{tendency_X}}-1);$i++){
+
+	$length 	   = $lengthX;								## Length of lattice	
+	$color		   = $XY{tendency_X} -> [$i] -> {color};				## Color of lattice
+	$size 		   = $XY{tendency_X} -> [$i] -> {size};  				## Size of lattice
+	$step 		   = $XY{tendency_X} -> [$i] -> {step};  				## Step - value
+	$axis 		   = "y";								## Step on axis y 	
+	$max 		   = int($lengthY/$step);						## Number of lattices
+	%translation 	   = ("x"=>$length/2,"y"=>0,"z"=>0);					## Transform lattice - tendency X 
+	%rotation  	   = ("x"=>0,"y"=>0,"z"=>1);		   				## Rotation - pivot axis Z ##	
+	$stp		   = 0;
+	
+       if ($XY{tendency_X} -> [$i] -> {format} eq "box"){
+       &generate_box; 
+       }
+       if ($XY{tendency_X} -> [$i] -> {format} eq "cylinder"){
+       &generate_cylinder; 
+       }
+       if ($XY{tendency_X} -> [$i] -> {format} eq "line"){
+       &generate_line; 
+       }
+     } 
+   }
+
+   if ($XY{tendency_Y} -> [0] -> {visible} ) {      
+     for ($i=1;$i<=(@@{$XY{tendency_Y}}-1);$i++){
+ 
+	$length 	   = $lengthY;								## Length of lattice	
+	$color		   = $XY{tendency_Y} -> [$i] -> {color};				## Color of lattice
+	$size 		   = $XY{tendency_Y} -> [$i] -> {size};  				## Size of lattice
+	$step 		   = $XY{tendency_Y} -> [$i] -> {step};  				## Step - value
+	$axis 		   = "x";								## Step on axis y 	
+	$max 		   = int($lengthX/$step);						## Number of lattices
+	%translation 	   = ("x"=>0,"y"=>$length/2,"z"=>0);					## Transform lattice - tendency X 
+	%rotation  	   = ("x"=>0,"y"=>0,"z"=>0);		   				## Rotation - pivot axis Z ##	
+	$stp		   = 0;
+d81 10
+a90 23
+       if ($XY{tendency_Y} -> [$i] -> {format} eq "box"){
+       &generate_box; 
+       }
+       if ($XY{tendency_Y} -> [$i] -> {format} eq "cylinder"){
+       &generate_cylinder; 
+       }
+       if ($XY{tendency_Y} -> [$i] -> {format} eq "line"){
+       &generate_line; 
+       }
+     } 
+   }
+   if ($XZ{tendency_X} -> [0] -> {visible} ) {      
+     for ($i=1;$i<=(@@{$XZ{tendency_X}}-1);$i++){
+ 
+	$length 	   = $lengthX;								## Length of lattice	
+	$color		   = $XZ{tendency_X} -> [$i] -> {color};				## Color of lattice
+	$size 		   = $XZ{tendency_X} -> [$i] -> {size};  				## Size of lattice
+	$step 		   = $XZ{tendency_X} -> [$i] -> {step};  				## Step - value
+	$axis 		   = "z";								## Step on axis y 	
+	$max 		   = int($lengthZ/$step);						## Number of lattices
+	%translation 	   = ("x"=>$length/2,"y"=>0,"z"=>0);					## Transform lattice - tendency X 
+	%rotation  	   = ("x"=>0,"y"=>0,"z"=>1);		   				## Rotation - pivot axis Z ##	
+	$stp		   = 0;
+a91 10
+       if ($XZ{tendency_X} -> [$i] -> {format} eq "box"){
+       &generate_box; 
+       }
+       if ($XZ{tendency_X} -> [$i] -> {format} eq "cylinder"){
+       &generate_cylinder; 
+       }
+       if ($XZ{tendency_X} -> [$i] -> {format} eq "line"){
+       &generate_line; 
+       }
+     } 
+d93 1
+d95 10
+a104 12
+   if ($XZ{tendency_Z} -> [0] -> {visible} ) {      
+     for ($i=1;$i<=(@@{$XZ{tendency_Z}}-1);$i++){
+ 
+	$length 	   = $lengthZ;								## Length of lattice	
+	$color		   = $XZ{tendency_Z} -> [$i] -> {color};				## Color of lattice
+	$size 		   = $XZ{tendency_Z} -> [$i] -> {size};  				## Size of lattice
+	$step 		   = $XZ{tendency_Z} -> [$i] -> {step};  				## Step - value
+	$axis 		   = "x";								## Step on axis y 	
+	$max 		   = int($lengthX/$step);						## Number of lattices
+	%translation 	   = ("x"=>0,"y"=>0,"z"=>$length/2);					## Transform lattice - tendency X 
+	%rotation  	   = ("x"=>1,"y"=>0,"z"=>0);		   				## Rotation - pivot axis Z ##	
+	$stp		   = 0;
+a105 10
+       if ($XZ{tendency_Z} -> [$i] -> {format} eq "box"){
+       &generate_box; 
+       }
+       if ($XZ{tendency_Z} -> [$i] -> {format} eq "cylinder"){
+       &generate_cylinder; 
+       }
+       if ($XZ{tendency_Z} -> [$i] -> {format} eq "line"){
+       &generate_line; 
+       }
+     } 
+d107 11
+a117 12
+   if ($YZ{tendency_Y} -> [0] -> {visible} ) {      
+     for ($i=1;$i<=(@@{$YZ{tendency_Y}}-1);$i++){
+ 
+	$length 	   = $lengthY;								## Length of lattice	
+	$color		   = $YZ{tendency_Y} -> [$i] -> {color};				## Color of lattice
+	$size 		   = $YZ{tendency_Y} -> [$i] -> {size};  				## Size of lattice
+	$step 		   = $YZ{tendency_Y} -> [$i] -> {step};  				## Step - value
+	$axis 		   = "z";								## Step on axis y 	
+	$max 		   = int($lengthZ/$step);						## Number of lattices
+	%translation 	   = ("x"=>0,"y"=>$length/2,"z"=>0);					## Transform lattice - tendency X 
+	%rotation  	   = ("x"=>0,"y"=>0,"z"=>0);		   				## Rotation - pivot axis Z ##	
+	$stp		   = 0;
+a118 10
+       if ($YZ{tendency_Y} -> [$i] -> {format} eq "box"){
+       &generate_box; 
+       }
+       if ($YZ{tendency_Y} -> [$i] -> {format} eq "cylinder"){
+       &generate_cylinder; 
+       }
+       if ($YZ{tendency_Y} -> [$i] -> {format} eq "line"){
+       &generate_line; 
+       }
+     } 
+d120 1
+d122 13
+a134 23
+   if ($YZ{tendency_Z} -> [0] -> {visible} ) {      
+     for ($i=1;$i<=(@@{$YZ{tendency_Z}}-1);$i++){
+ 
+	$length 	   = $lengthZ;								## Length of lattice	
+	$color		   = $YZ{tendency_Z} -> [$i] -> {color};				## Color of lattice
+	$size 		   = $YZ{tendency_Z} -> [$i] -> {size};  				## Size of lattice
+	$step 		   = $YZ{tendency_Z} -> [$i] -> {step};  				## Step - value
+	$axis 		   = "y";								## Step on axis y 	
+	$max 		   = int($lengthY/$step);						## Number of lattices
+	%translation 	   = ("x"=>0,"y"=>0,"z"=>$length/2);					## Transform lattice - tendency X 
+	%rotation  	   = ("x"=>1,"y"=>0,"z"=>0);		   				## Rotation - pivot axis Z ##	
+	$stp		   = 0;
+	
+       if ($YZ{tendency_Z} -> [$i] -> {format} eq "box"){
+       &generate_box; 
+       }
+       if ($YZ{tendency_Z} -> [$i] -> {format} eq "cylinder"){
+       &generate_cylinder; 
+       }
+       if ($YZ{tendency_Z} -> [$i] -> {format} eq "line"){
+       &generate_line; 
+       }
+     } 
+d136 4
+d142 4
+a145 1
+} # end of global cycle for
+d147 90
+d238 35
+a272 13
+sub generate_box{
+ for ($lattice=1;$lattice<=$max;$lattice++){
+ $translation{$axis} += $step;
+ print  "Transform {				
+	translation $translation{x} $translation{y} $translation{z}
+	rotation $rotation{x} $rotation{y} $rotation{z} 1.5705
+		children Shape {
+		geometry Box { size $size $length $size }
+		appearance Appearance {
+			material Material { diffuseColor @@$color  }
+			}
+	}
+       }\n";
+d274 54
+d329 3
+d333 13
+a345 1
+##############################################################################################################################################
+d347 174
+a520 12
+sub generate_cylinder{
+ for ($lattice=1;$lattice<=$max;$lattice++){
+ $translation{$axis} += $step;
+ print  "Transform {				
+	translation $translation{x} $translation{y} $translation{z}
+	rotation $rotation{x} $rotation{y} $rotation{z} 1.5705
+		children Shape {
+		geometry Cylinder { radius $size
+				    height $length }
+		appearance Appearance {
+			material Material { diffuseColor @@$color  }
+			}
+d522 66
+a587 2
+       }\n";
+ }
+d590 17
+a606 1
+##############################################################################################################################################
+d608 10
+a617 16
+sub generate_line {
+$begin = -$length/2;
+$end   = $length/2;
+ for ($lattice=1;$lattice<=$max;$lattice++){
+ $translation{$axis} += $step;
+ print  "Transform{
+ 		translation $translation{x} $translation{y} $translation{z}
+		rotation $rotation{x} $rotation{y} $rotation{z} 1.5705
+ 			children Shape {
+	 	 		appearance   Appearance {
+  		  			material   Material {diffuseColor @@$color}
+		 		}
+		  		geometry IndexedLineSet {
+   		 			coord Coordinate {  point   [ 0 $begin 0, 0 $end 0 ] }
+  		 			coordIndex       [ 0 1 -1 ]
+    		 		}
+d619 54
+a672 1
+		     }\n";
+d674 13
+d689 1
+a689 1
+##############################################################################################################################################
+@
+

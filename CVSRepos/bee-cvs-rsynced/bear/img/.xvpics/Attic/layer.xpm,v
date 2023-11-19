@@ -1,0 +1,55 @@
+head	1.2;
+access;
+symbols
+	start:1.1.1.1 vendor:1.1.1;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2003.03.10.16.42.28;	author jiri_schmid;	state dead;
+branches;
+next	1.1;
+
+1.1
+date	2002.09.24.01.57.04;	author michald;	state Exp;
+branches
+	1.1.1.1;
+next	;
+
+1.1.1.1
+date	2002.09.24.01.57.04;	author michald;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@.xvpics removed
+@
+text
+@P7 332
+#IMGINFO:17x17 RGB (769 bytes)
+#END_OF_COMMENTS
+17 17 255
+I$IIÛ¶¶¶IH%IÛ¶¶Ú%I$IIÛ¶¶¶IH%IÛ¶¶Ú%I$IIÛ¶¶¶IH%IÛ¶¶Ú%I$IIÛ¶¶¶IH%IÛ¶¶Ú%Û¶¶¶I$IIÛ¶¶Ú%H%IÛÛ¶¶¶I$IIÛ¶¶Ú%H%IÛÛ¶¶¶I$IOKONKOKNKOÛ¶¶¶I$OOKNKOKNOKÚI$IIÛ*KONKOKNKOÚ$I$IOKOJOOKNKOKÚ¶(I$OOKNKOKNOKi@@¡€€I$OOKJjJjjJi`€… )Û¶¶¶I```a@@„a€€€IÛÛ¶¶€€€`€„€€ )IÛÛ¶€€ €¤€€¡€¤%I(ÛÛ¶€€ €¤€€¡ºE(II×I$IIÛ¶¶¶IH%IÛ¶¶Ú%@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@@
+
+
+1.1.1.1
+log
+@Initial release of Bear ROLAP Portal
+@
+text
+@@

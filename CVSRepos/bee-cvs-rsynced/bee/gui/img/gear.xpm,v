@@ -1,0 +1,108 @@
+head     1.1;
+branch   1.1.1;
+access   ;
+symbols  start:1.1.1.1 vendor:1.1.1;
+locks    ; strict;
+comment  @# @;
+
+
+1.1
+date     2002.09.24.01.34.25;  author michald;  state Exp;
+branches 1.1.1.1;
+next     ;
+
+1.1.1.1
+date     2002.09.24.01.34.25;  author michald;  state Exp;
+branches ;
+next     ;
+
+
+desc
+@@
+
+
+
+1.1
+log
+@Initial revision
+@
+text
+@/* XPM */
+static char * gear_xpm[] = {
+"15 15 52 1",
+" 	c None",
+".	c #000000",
+"+	c #080010",
+"@@	c #291800",
+"#	c #4A4A4A",
+"$	c #5A3900",
+"%	c #5A4218",
+"&	c #5A5A5A",
+"*	c #634200",
+"=	c #634A18",
+"-	c #636363",
+";	c #6B4A00",
+">	c #737373",
+",	c #7B5200",
+"'	c #7B7B7B",
+")	c #845200",
+"!	c #848484",
+"~	c #8C5A00",
+"{	c #8C8C8C",
+"]	c #8C8C94",
+"^	c #946300",
+"/	c #946310",
+"(	c #949494",
+"_	c #9C6300",
+":	c #9C6B29",
+"<	c #9C9C9C",
+"[	c #A5A5A5",
+"}	c #AD7300",
+"|	c #ADADAD",
+"1	c #B57300",
+"2	c #B57B10",
+"3	c #B5B5B5",
+"4	c #BD7B00",
+"5	c #BD8418",
+"6	c #BDBDBD",
+"7	c #C68400",
+"8	c #C6BDC6",
+"9	c #C6C6C6",
+"0	c #CE8C00",
+"a	c #CECECE",
+"b	c #D68C00",
+"c	c #D6D6D6",
+"d	c #D6D6DE",
+"e	c #DE9400",
+"f	c #E79C08",
+"g	c #E7A529",
+"h	c #EFEFEF",
+"i	c #F7F7F7",
+"j	c #FFAD00",
+"k	c #FFBD4A",
+"l	c #FFD68C",
+"m	c #FFE7B5",
+"    ...        ",
+" .m.mk.m..     ",
+" mjkkkkg2.     ",
+" .kkeej7.<     ",
+".mm4]+..mm ..  ",
+".jje+.m=mk.m.  ",
+"...j.mjkkkmkj  ",
+"{jb)..*4..j*.. ",
+"[.4.mmm.#>kee. ",
+"3..&jjj.!|l1_. ",
+" ||(&.jekle,.3 ",
+"  3[.je4ee044h ",
+"   6..4.ee.~.h ",
+"    |<<...'<<i ",
+"    a63<<<[|6  "};
+@
+
+
+1.1.1.1
+log
+@Initial public release of BEE Project.
+@
+text
+@@

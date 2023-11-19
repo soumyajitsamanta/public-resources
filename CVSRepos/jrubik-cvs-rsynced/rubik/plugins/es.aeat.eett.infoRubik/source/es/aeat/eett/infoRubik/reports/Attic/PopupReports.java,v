@@ -1,0 +1,171 @@
+head	1.2;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2008.05.17.15.40.41;	author fsaz;	state dead;
+branches;
+next	1.1;
+
+1.1
+date	2005.11.28.15.39.46;	author fsaz;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@borrando viejos
+@
+text
+@/*
+ * Created on 27-abr-2005
+ *
+ * PopupReports.java
+ *
+ */
+package es.aeat.eett.infoRubik.reports;
+
+import java.awt.event.ActionEvent;
+
+import javax.swing.AbstractAction;
+import javax.swing.Action;
+import javax.swing.ActionMap;
+import javax.swing.JComponent;
+import javax.swing.JPopupMenu;
+import javax.swing.JSeparator;
+import javax.swing.JTree;
+
+import org.apache.commons.logging.LogFactory;
+
+import es.aeat.eett.infoRubik.IndexFactoryInfo;
+import es.aeat.eett.infoRubik.index.index_core.Index;
+import es.aeat.eett.infoRubik.index.index_core.IndexFactory;
+
+
+/**
+ * @@author f00992
+ */
+public class PopupReports extends JPopupMenu {
+
+    /**
+     *
+     */
+    public PopupReports() {
+        iniPopup();
+    }
+
+    private void iniPopup(){
+		ActionMap am= new ActionMap();
+
+		Action a;
+
+		a=new ActionCreateReport();
+		am.put(a.getValue(Action.NAME),a);
+        add(a);
+
+		a=new ActionCreateRama();
+		am.put(a.getValue(Action.NAME),a);
+        add(a);
+
+		a=new ActionCreateLeaf();
+		am.put(a.getValue(Action.NAME),a);
+        add(a);
+
+		a=new ActionRenameNode();
+		am.put(a.getValue(Action.NAME),a);
+        add(a);
+
+		a=new ActionRemove();
+		am.put(a.getValue(Action.NAME),a);
+        add(a);
+        add(new JSeparator());
+
+        a=new ActionGenerar();
+		am.put(a.getValue(Action.NAME),a);
+        add(a);
+    	Object[] indexFactoryInfo= IndexFactoryInfo.getAll().toArray();
+    	if(indexFactoryInfo.length>0){
+	        add(new JSeparator());    		
+    	}
+    	for (int i = 0; i < indexFactoryInfo.length; i++) {
+			IndexFactoryInfo ifi=(IndexFactoryInfo) indexFactoryInfo[i];
+    		try{
+    			ActionCreateIndex actionCreateIndex= 
+    				new ActionCreateIndex(ifi.getNameIndex()
+    						, ifi.getIndexFactory());
+    			am.put(actionCreateIndex.getValue(Action.NAME)
+    					,actionCreateIndex);
+    	        add(actionCreateIndex);
+    		} catch (Exception e) {
+    			 LogFactory.getLog(PopupReports.class).error(
+                        "failed "+ifi.getId(), e);    		
+    		}
+    	}
+        //////////// import old version ///////
+        add(new JSeparator());        
+        try {
+			a=new ActionImport();
+			am.put(a.getValue(Action.NAME),a);
+	        add(a);
+		} catch (Exception e) {
+			LogFactory.getLog(PopupReports.class).error(
+                    "failed ActionImport", e);    		
+		}
+        //////////// import old version ///////
+    	
+        setActionMap(am);
+    }
+    /**
+     * @@author f00992
+     */
+    class ActionCreateIndex extends AbstractAction {
+    	private IndexFactory indexFactory=null;
+
+    	ActionCreateIndex(String name, IndexFactory indexFactory){
+    	    super();
+    	    putValue(Action.NAME, name);
+            this.indexFactory=indexFactory;
+    	}
+        public void actionPerformed(ActionEvent e) {
+            javax.swing.JPopupMenu jp=(JPopupMenu)( (JComponent)e.getSource())
+				.getParent();
+            JTree tree=(JTree) jp.getInvoker();
+            Object  lastPath =tree.getLastSelectedPathComponent();
+    		if (lastPath != null) {
+    		    ReportMutableTreeNode node=(ReportMutableTreeNode) lastPath;
+    		    ReportMutableTreeNode nReport=node.getReportRootNode();
+    		    if(nReport!=null){
+    		    	Report report=(Report) nReport.getUserObject();
+    		    	Index index=indexFactory.createIndex();
+    		    	try {
+    		    		LogFactory.getLog(ActionCreateIndex.class).info("Create Index.");    
+						index.createFileOut(report);
+					} catch (Exception e1) {
+						LogFactory.getLog(ActionCreateIndex.class).error(e1);    
+					}
+					LogFactory.getLog(ActionCreateIndex.class).info(""); //Ready
+    		    }
+    		}
+        }
+
+    }
+    
+}// Fin class PopupReports
+@
+
+
+1.1
+log
+@*** empty log message ***
+@
+text
+@@
+

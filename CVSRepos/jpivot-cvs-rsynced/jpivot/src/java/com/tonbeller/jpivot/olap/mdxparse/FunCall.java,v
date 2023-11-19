@@ -1,0 +1,354 @@
+head	1.3;
+access;
+symbols
+	jpivot_1_8_0:1.3
+	focus_1_6_0:1.1.0.6
+	jpivot_1_7_0:1.1
+	jpivot_1_6_0:1.1
+	jpivot_1_5_0:1.1.0.4
+	Root_jpivot_1_5_0:1.1
+	mondrian_xmla_2005_08_25:1.1.0.2
+	sourceforge_sync:1.1;
+locks; strict;
+comment	@# @;
+expand	@k@;
+
+
+1.3
+date	2008.03.17.11.05.19;	author avix;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2008.03.17.10.21.19;	author avix;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2005.07.05.14.19.46;	author avix;	state Exp;
+branches
+	1.1.6.1;
+next	;
+
+1.1.6.1
+date	2008.04.17.10.44.40;	author hbaier;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.3
+log
+@[ 1746254 ] Feature: FunCall.toMdx() resolves Parameters only optionally
+@
+text
+@/*
+ * ====================================================================
+ * This software is subject to the terms of the Common Public License
+ * Agreement, available at the following URL:
+ *   http://www.opensource.org/licenses/cpl.html .
+ * Copyright (C) 2003-2004 TONBELLER AG.
+ * All Rights Reserved.
+ * You must accept the terms of that agreement to use this software.
+ * ====================================================================
+ *
+ * 
+ */
+package com.tonbeller.jpivot.olap.mdxparse;
+
+import org.apache.log4j.Logger;
+
+/**
+ * @@author hh
+ *
+ */
+public class FunCall implements Exp {
+
+  static Logger logger = Logger.getLogger(FunCall.class);
+
+  // Syntactip types
+  public static final int TypeFunction = 0;
+  public static final int TypeProperty = 1; // ???
+  public static final int TypeMethod = 2;
+  public static final int TypeInfix = 3;
+  public static final int TypePrefix = 4;
+  public static final int TypeBraces = 5;
+  public static final int TypeParentheses = 6;
+  public static final int TypeCase = 7;
+  public static final int TypeMask = 0xFF;
+  public static final int TypePropertyQuoted = TypeProperty | 0x100;
+  public static final int TypePropertyAmpQuoted = TypeProperty | 0x200;
+
+  private int syntacticType;
+  private String function;
+  private Exp[] args;
+
+  ParsedQuery pQuery = null; // needed by Parameter FunCall 
+
+  public FunCall(String fun, Exp[] args) {
+    this(fun, args, TypeFunction);
+  }
+
+  public FunCall(String fun, Exp[] args, int syntacticType) {
+    this.function = fun;
+    this.args = args;
+    this.syntacticType = syntacticType;
+  }
+
+  /**
+   * format to MDX
+   */
+  public String toMdx() {
+    if ((this.isCallTo("Parameter") || this.isCallTo("ParamRef"))
+         && (pQuery.getParaMap().size() > 0)) {
+      // parameters are evaluated to MDX
+      return evaluateParameter();
+    }
+
+    StringBuffer sb = new StringBuffer();
+
+    // "+" instead of Union yields much better readable MDX
+    // however
+    // - does not work with SAP
+    // - is not compatible with Mondrian
+    /* sorry
+    if (this.isCallTo("Union")) {
+      // render Union as "+"
+      sb.append(args[0].toMdx());
+      sb.append(" + ");
+      sb.append(args[1].toMdx());
+      return sb.toString();
+    }
+    */
+    
+    boolean isFollow = false;
+
+    switch (syntacticType) {
+      case TypeFunction : // f(a, b, c)
+        sb.append(function);
+        sb.append("(");
+        for (int i = 0; i < args.length; i++) {
+          if (isFollow)
+            sb.append(", ");
+          isFollow = true;
+          sb.append(args[i].toMdx());
+        }
+        sb.append(")");
+        break;
+
+      case TypeBraces : // { a, b, c }
+        sb.append("{");
+        for (int i = 0; i < args.length; i++) {
+          if (isFollow)
+            sb.append(", ");
+          isFollow = true;
+          sb.append(args[i].toMdx());
+        }
+        sb.append("}");
+        break;
+
+      case TypeParentheses : // (a, b, c)
+        sb.append("(");
+        for (int i = 0; i < args.length; i++) {
+          if (isFollow)
+            sb.append(", ");
+          isFollow = true;
+          sb.append(args[i].toMdx());
+        }
+        sb.append(")");
+        break;
+
+      case TypePrefix : // NOT a
+        sb.append(function);
+        sb.append(" ");
+        sb.append(args[0].toMdx());
+        break;
+
+      case TypeInfix : //  a + b
+        sb.append(args[0].toMdx());
+        sb.append(" ");
+        sb.append(function);
+        sb.append(" ");
+        sb.append(args[1].toMdx());
+        break;
+
+      case TypeProperty : // a.b
+      case TypePropertyQuoted :
+      case TypePropertyAmpQuoted :
+        sb.append(args[0].toMdx());
+        sb.append(".");
+        sb.append(function);
+        break;
+
+      case TypeMethod:
+        sb.append(args[0].toMdx());
+        sb.append(".");
+        sb.append(function);
+        sb.append("(");
+        sb.append(args[1].toMdx());
+        sb.append(")");
+        break;
+
+      default :
+        throw new IllegalArgumentException("unexpected FunCall syntatic type");
+
+    }
+    return sb.toString();
+  }
+
+  /**
+   * 
+   * @@see java.lang.Object#clone()
+   */
+  public Object clone() {
+    Exp[] cloneArgs = new Exp[args.length];
+    for (int i = 0; i < cloneArgs.length; i++) {
+      cloneArgs[i] = (Exp) args[i].clone();
+    }
+    return new FunCall(function, cloneArgs, syntacticType);
+  }
+
+  /**
+   * compare function name ignoring case
+   * @@param fName
+   * @@return boolean
+   */
+  public boolean isCallTo(String fName) {
+    return (fName.compareToIgnoreCase(function) == 0);
+  }
+
+  /**
+   * Returns the args.
+   * @@return Exp[]
+   */
+  public Exp[] getArgs() {
+    return args;
+  }
+
+  /**
+   * @@return
+   */
+  public String getFunction() {
+    return function;
+  }
+
+  /**
+   * put parameter value to MDX
+   */
+  private String evaluateParameter() {
+    Literal eName = (Literal) args[0];
+    String paraName = eName.stringValue();
+    Parameter param = (Parameter) pQuery.paraMap.get(paraName.toUpperCase());
+    if (param == null) {
+      // should not occur
+      logger.error("could not find parameter " + paraName);
+      return ("Parameter( \"" + paraName + "\" )"); // MDX parse will fail here  
+    }
+    int type = param.getType();
+    if (type == Parameter.TYPE_NUMERIC) {
+      Object value = param.getOValue();
+      return value.toString(); // Integer or double
+    } else if (type == Parameter.TYPE_STRING) {
+      String str = (String) param.getOValue();
+      return "\"" + str + "\"";
+    } else {
+      // member assumed
+      String str = (String) param.getOValue();
+      return str;
+
+    }
+
+  }
+
+  /**
+   * @@see com.tonbeller.jpivot.olap.mdxparse.Exp#accept
+   */
+  public void accept(ExpVisitor visitor) {
+    visitor.visitFunCall(this);
+  }
+
+} // End FunCall
+@
+
+
+1.2
+log
+@patch from hbaier
+
+[ 1745634 ] MDX for [Membername].Levels(2) is not unparsed by toMdx()
+@
+text
+@d58 2
+a59 1
+    if (this.isCallTo("Parameter") || this.isCallTo("ParamRef")) {
+@
+
+
+1.1
+log
+@initial version
+@
+text
+@d138 9
+d148 1
+a148 1
+        System.out.println("unexpected FunCall syntatic type");
+@
+
+
+1.1.6.1
+log
+@* merged focus changes of jpivot into focus_1_6_0
+@
+text
+@d58 1
+a58 3
+	// if pQuery is null, we leave parameters as they are since we cannot resolve them
+    if ( pQuery != null && (this.isCallTo("Parameter") || this.isCallTo("ParamRef"))
+    	&& (pQuery.getParaMap().size() > 0)) {
+a137 25
+      case TypeMethod:
+    	  sb.append(args[0].toMdx());
+    	  sb.append(".");
+          sb.append(function);
+          sb.append("(");
+          sb.append(args[1].toMdx());
+          sb.append(")");
+          break;
+
+      case TypeCase:
+    	  sb.append("CASE");
+    	  int i = 0;
+    	  for(; i < args.length - 1; i += 2) {
+    		  sb.append(" WHEN ");
+    		  sb.append(args[i].toMdx());
+    		  sb.append(" THEN ");
+    		  sb.append(args[i+1].toMdx());
+    	  }
+    	  if(i == args.length - 1) {
+    		  sb.append(" ELSE ");
+    		  sb.append(args[args.length - 1].toMdx());
+    	  }
+    	  sb.append(" END");
+    	  break;
+
+a174 8
+   * replaces args with a new array of args
+   * @@param args
+   */
+  public void setArgs(Exp[] args) {
+	this.args = args;
+}
+
+/**
+a180 4
+  public void setFunction(String function) {
+	this.function = function;
+}
+
+@
+
+

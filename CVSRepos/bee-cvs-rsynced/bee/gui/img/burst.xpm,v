@@ -1,0 +1,137 @@
+head     1.1;
+branch   1.1.1;
+access   ;
+symbols  start:1.1.1.1 vendor:1.1.1;
+locks    ; strict;
+comment  @# @;
+
+
+1.1
+date     2002.09.24.01.34.22;  author michald;  state Exp;
+branches 1.1.1.1;
+next     ;
+
+1.1.1.1
+date     2002.09.24.01.34.22;  author michald;  state Exp;
+branches ;
+next     ;
+
+
+desc
+@@
+
+
+
+1.1
+log
+@Initial revision
+@
+text
+@/* XPM */
+static char * burst_xpm[] = {
+"24 24 72 1",
+" 	c None",
+".	c #D64C1D",
+"+	c #D74E1E",
+"@@	c #D74F1E",
+"#	c #DB5A20",
+"$	c #DA581F",
+"%	c #D64D1D",
+"&	c #D8511E",
+"*	c #D74D1E",
+"=	c #E68123",
+"-	c #E58022",
+";	c #DB591F",
+">	c #DB5B1F",
+",	c #DF6821",
+"'	c #D8501E",
+")	c #E37722",
+"!	c #DE6521",
+"~	c #DB5A1F",
+"{	c #F2B926",
+"]	c #F4C026",
+"^	c #F4C226",
+"/	c #EEA525",
+"(	c #D9551F",
+"_	c #DC5D20",
+":	c #EB9824",
+"<	c #EDA225",
+"[	c #D8521E",
+"}	c #D64D1E",
+"|	c #E99324",
+"1	c #F7D427",
+"2	c #F6D127",
+"3	c #F4C426",
+"4	c #E27422",
+"5	c #DA591F",
+"6	c #EFAA25",
+"7	c #F5CB27",
+"8	c #DD6420",
+"9	c #E99224",
+"0	c #F2BC26",
+"a	c #F7D227",
+"b	c #F7D327",
+"c	c #EC9F24",
+"d	c #DC5C20",
+"e	c #E88E23",
+"f	c #F6CD27",
+"g	c #F7D127",
+"h	c #E47D22",
+"i	c #E78723",
+"j	c #E47F22",
+"k	c #D74D1D",
+"l	c #E06C21",
+"m	c #F6CF27",
+"n	c #F3BE26",
+"o	c #E98F24",
+"p	c #EA9624",
+"q	c #D9541F",
+"r	c #E99024",
+"s	c #EEA725",
+"t	c #F5C827",
+"u	c #F5C927",
+"v	c #F6CE27",
+"w	c #E68623",
+"x	c #D8511F",
+"y	c #D9531F",
+"z	c #E68523",
+"A	c #EDA325",
+"B	c #DD6220",
+"C	c #E37822",
+"D	c #E99124",
+"E	c #DD6120",
+"F	c #E27222",
+"G	c #DA571F",
+"                        ",
+"                        ",
+"                        ",
+"    .                   ",
+"    ..                  ",
+"     +@@          .      ",
+"     .#$%  %   %&*      ",
+"      @@=-;>,  ')!       ",
+"       ~{]^/(_:<[       ",
+"       }|112{324        ",
+"      *561111178        ",
+"    .;90a11111bcd}.     ",
+"     [ef111111gh+       ",
+"      @@ia11111gjk       ",
+"       lm1111nop,k      ",
+"      qrstbuvw%@@(x.     ",
+"     .yq@@zABCD+   ..    ",
+"    .    E$ +FG         ",
+"         @@   +q         ",
+"         .    %.        ",
+"               .        ",
+"                        ",
+"                        ",
+"                        "};
+@
+
+
+1.1.1.1
+log
+@Initial public release of BEE Project.
+@
+text
+@@

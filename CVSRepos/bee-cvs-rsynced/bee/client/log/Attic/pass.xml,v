@@ -1,0 +1,64 @@
+head	1.2;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2003.11.06.12.08.47;	author numberone;	state dead;
+branches;
+next	1.1;
+
+1.1
+date	2003.06.03.13.16.14;	author numberone;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@renaming .xml to .scheme and .bee
+@
+text
+@<?xml version="1.0" encoding="ISO-8859-2"?>
+<script lang="perl" name="pass">
+<description>
+prvni vstup je scalar $shell, druhy je tabulka s polozkami
+jako v /etc/passwd. pocita pocet lidi pouzivajicich $shell
+a soucasne preposila login, gcos uid a shell na svuj prvni 
+vystup. na druhy vystup da na konci pocet uzivatelu
+pouzivajicich $shell
+</description>
+
+<input name="shell" type='scalar'/>
+<input name="passwd" type='stream' arity='7' />
+
+<output name="output" type='stream' arity='4' />
+<output name="count" type='scalar' />
+
+<code>
+$count = 0;
+
+while(my @@entry = $passwd->fetch) {
+	$count++ if($entry[6] eq $shell);
+	$output->put($entry[0],$entry[2],$entry[4],$entry[6]);
+}
+
+</code>
+</script>
+
+@
+
+
+1.1
+log
+@0.9.1 -- version merge
+@
+text
+@@
+

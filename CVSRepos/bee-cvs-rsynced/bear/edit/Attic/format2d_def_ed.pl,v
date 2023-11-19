@@ -1,0 +1,390 @@
+head	1.11;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.11
+date	2003.10.31.12.47.57;	author jiri_schmid;	state dead;
+branches;
+next	1.10;
+
+1.10
+date	2003.10.16.14.08.53;	author jiri_schmid;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	2003.09.26.11.16.26;	author jiri_schmid;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	2003.09.26.08.33.00;	author jiri_schmid;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	2003.09.25.15.04.16;	author jiri_schmid;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	2003.09.25.11.53.46;	author jiri_schmid;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	2003.09.24.14.59.18;	author jiri_schmid;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2003.09.22.11.52.39;	author jiri_schmid;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2003.09.22.08.08.59;	author jiri_schmid;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2003.09.19.10.23.50;	author jiri_schmid;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2003.09.18.14.10.50;	author jiri_schmid;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.11
+log
+@mod perl rocks!
+@
+text
+@#-----------------------------------------------------
+#  Format Editation
+#-----------------------------------------------------
+# $Id: format2d_def_ed.pl,v 1.10 2003/10/16 14:08:53 jiri_schmid Exp $
+
+use strict;
+
+#-----------------------------------------------------
+# print_form is called from edit.cgi
+
+sub generateContent {
+my($variables, $lang, $obj) = (shift, shift, shift);
+my $saved = $$variables->{saved} if exists $$variables->{saved};
+
+	my ($row, $col, $width, $height);
+	if ($$obj->{base}{sets} eq 'cols') {
+		$row = '';
+		$col = ' checked="checked"';
+	} else {
+		$col = '';
+		$row = ' checked="checked"';
+	}
+	$width = (defined $$obj->{base}{width}) ? $$obj->{base}{width} : "400";
+	$height = (defined $$obj->{base}{height}) ? $$obj->{base}{height} : "300";
+print <<END ;
+<br />
+<table class="page_skeleton_ex" style='width:100%'>
+<tr class="page_skeleton">
+<td class="page_skeleton_ex" style='padding: 12px 10px 10px 10px'>
+	<table>
+	<tr><td class='neutral_bold'><span class='nowrap'>$$lang->{'Format2d Sets'}:</span></td></tr>
+	<tr><td><hr /></td></tr>
+	<tr><td><span class='cursor' onclick='setThisRadio(this)'><input type='radio' name='dataset' value='rows'$row />$$lang->{'Format2d Row'}</span></td></tr>
+	<tr><td><span class='cursor' onclick='setThisRadio(this)'><input type='radio' name='dataset'value='cols'$col />$$lang->{'Format2d Col'}</span></td></tr>
+	</table>
+</td>
+<td class="page_skeleton_ex" style='width:100%' rowspan='2'>
+	<IFRAME id="formatIframe" name='format' src="format.cgi?Lang=$$variables->{useLang}&Skin=$$variables->{skin}&Type=graph2d&Form=$$obj->{form}" width="100%" height="100%" scrolling="auto" frameborder="0"></IFRAME>
+</td>
+</tr>
+<tr class="page_skeleton">
+<td class="page_skeleton_ex" style='padding: 10px'>
+	<table>
+	<tr><td class='neutral_bold' colspan='2'><span class='nowrap'>$$lang->{'Format2d Size'}:</span></td></tr>
+	<tr><td colspan='2'><hr /></td></tr>
+	<tr><td>$$lang->{'Format2d Width'}:</td><td><span class='cursor'><input type='input' style='text-align:right' name='width' size='4' value='$width' /> px</span></td></tr>
+	<tr><td>$$lang->{'Format2d Height'}:</td><td><span class='cursor'><input type='input' style='text-align:right' name='height' size='4' value='$height' /> px</span></td></tr>
+	<tr><td colspan='2'><hr size='1' noshade='noshade' /></td></tr>
+	<tr><td colspan='2'>
+		<table class='resolution'>
+		<tr><td colspan='2'><span class='nowrap'>$$lang->{'Format2d Res'}:</span></td></tr>
+		<tr><td>$$lang->{'Format2d Width'}:</td><td><span class='cursor' id='spanWIDTH'></span></td></tr>
+		<tr><td>$$lang->{'Format2d Height'}:</td><td><span class='cursor' id='spanHEIGHT'></span></td></tr>
+		</table>
+	</td></tr>
+	</table>
+</td>
+</td>
+</tr>
+<tr class="page_skeleton" >
+<td class="page_skeleton" colspan='2'>
+	<table class="neutral_100">
+		<tr><td align="center">
+		<table class="buttons" cellpading="0" cellspacing="0">
+		<tr>	<td class="buttons"><input type="submit" name="Action" value="$$lang->{'Save'}"/></td>
+				<td class="buttons">	<input type="submit" name="Action" value="$$lang->{'Save As'}" onclick="return readName();"/>
+						<input type="hidden" name="saveAsName" id="saveAsName" value="" /></td>
+			<td class="buttons"><input type="button" name="reset" value="$$lang->{'Reset'}" onclick="self.frames['format'].location.reload(true)"/></td>
+		</tr>
+		</table>
+	</td></tr>
+	</table>
+</td></tr></table>
+<script type="text/javascript">
+	var saveAsMsg = "$$lang->{SaveAsMsg}$$lang->{'New Format2d'}";
+	reloadTree($saved);
+	setResol();
+	reSetIframe();
+</script>
+END
+}
+
+#---------------------------------------------------
+sub set_next_param {
+	my $o=shift;
+	$o->{type} = param('type');
+	$o->{form} = param('form');
+	$o->{base}{sets} = param('dataset');
+	$o->{base}{width} = param('width');
+	$o->{base}{height} = param('height');
+}
+
+1
+@
+
+
+1.10
+log
+@mod-perl implementation stage 1, rebuilding global vars in .pl to global pointers
+@
+text
+@d4 1
+a4 1
+# $Id: format2d_def_ed.pl,v 1.9 2003/09/26 11:16:26 jiri_schmid Exp $
+@
+
+
+1.9
+log
+@format2d color tab implemented
+@
+text
+@d4 1
+a4 1
+# $Id: format2d_def_ed.pl,v 1.8 2003/09/26 08:33:00 jiri_schmid Exp $
+a6 7
+use CGI qw( :standard );
+use CGI::Pretty;
+
+require "const.def";
+
+use vars qw($ID $Obj $ObjT $descr_w $descr_r $name_w $lang $saved);
+
+d12 3
+d16 1
+a16 1
+	if ($Obj->{base}{sets} eq 'cols') {
+d23 2
+a24 2
+	$width = (defined $Obj->{base}{width}) ? $Obj->{base}{width} : "400";
+	$height = (defined $Obj->{base}{height}) ? $Obj->{base}{height} : "300";
+d31 1
+a31 1
+	<tr><td class='neutral_bold'><span class='nowrap'>$lang->{'Format2d Sets'}:</span></td></tr>
+d33 2
+a34 2
+	<tr><td><span class='cursor' onclick='setThisRadio(this)'><input type='radio' name='dataset' value='rows'$row />$lang->{'Format2d Row'}</span></td></tr>
+	<tr><td><span class='cursor' onclick='setThisRadio(this)'><input type='radio' name='dataset'value='cols'$col />$lang->{'Format2d Col'}</span></td></tr>
+d38 1
+a38 1
+	<IFRAME id="formatIframe" name='format' src="format.cgi?Lang=$use_lang&Skin=$skin&Type=graph2d&Form=$Obj->{form}" width="100%" height="100%" scrolling="auto" frameborder="0"></IFRAME>
+d44 1
+a44 1
+	<tr><td class='neutral_bold' colspan='2'><span class='nowrap'>$lang->{'Format2d Size'}:</span></td></tr>
+d46 2
+a47 2
+	<tr><td>$lang->{'Format2d Width'}:</td><td><span class='cursor'><input type='input' style='text-align:right' name='width' size='4' value='$width' /> px</span></td></tr>
+	<tr><td>$lang->{'Format2d Height'}:</td><td><span class='cursor'><input type='input' style='text-align:right' name='height' size='4' value='$height' /> px</span></td></tr>
+d51 3
+a53 3
+		<tr><td colspan='2'><span class='nowrap'>$lang->{'Format2d Res'}:</span></td></tr>
+		<tr><td>$lang->{'Format2d Width'}:</td><td><span class='cursor' id='spanWIDTH'></span></td></tr>
+		<tr><td>$lang->{'Format2d Height'}:</td><td><span class='cursor' id='spanHEIGHT'></span></td></tr>
+d65 2
+a66 2
+		<tr>	<td class="buttons"><input type="submit" name="Action" value="$lang->{'Save'}"/></td>
+				<td class="buttons">	<input type="submit" name="Action" value="$lang->{'Save As'}" onclick="return readName();"/>
+d68 1
+a68 1
+			<td class="buttons"><input type="button" name="reset" value="$lang->{'Reset'}" onclick="self.frames['format'].location.reload(true)"/></td>
+d75 1
+a75 1
+	var saveAsMsg = "$lang->{SaveAsMsg}$lang->{'New Format2d'}";
+@
+
+
+1.8
+log
+@formta2d layout final stage of implementation
+@
+text
+@d4 1
+a4 1
+# $Id: format2d_def_ed.pl,v 1.7 2003/09/25 15:04:16 jiri_schmid Exp $
+d33 1
+a33 1
+<td class="page_skeleton_ex" style='height:100%; padding: 12px 10px 10px 10px'>
+d36 1
+d40 7
+a46 1
+	<br />
+d49 1
+d52 1
+a61 2
+<td class="page_skeleton_ex" style='width:100%'>
+	<IFRAME id="formatIframe" name='format' src="format.cgi?Lang=$use_lang&Skin=$skin&Type=graph2d&Form=$Obj->{form}" width="100%" height="100%" scrolling="auto" frameborder="0"></IFRAME>
+@
+
+
+1.7
+log
+@operational commit for martin
+@
+text
+@d4 1
+a4 1
+# $Id: format2d_def_ed.pl,v 1.6 2003/09/25 11:53:46 jiri_schmid Exp $
+d31 1
+a31 1
+<table class="page_skeleton" style='width:100%'>
+@
+
+
+1.6
+log
+@operational commit for vladis
+@
+text
+@d4 1
+a4 1
+# $Id: format2d_def_ed.pl,v 1.5 2003/09/24 14:59:18 jiri_schmid Exp $
+d12 1
+a12 1
+use vars qw($ID $Obj $ObjT $descr_w $descr_r $name_w $lang $saved @@Languages $DefaultLanguage $use_lang $iframeHeight $all_params $skin $skinPath $imgType);
+a18 1
+	my $name = LocalizedObj($Obj->{name}, "Object #$ID", lc($use_lang), $DefaultLanguage);
+@
+
+
+1.5
+log
+@graph2d improvments
+@
+text
+@d4 1
+a4 1
+# $Id: format2d_def_ed.pl,v 1.4 2003/09/22 11:52:39 jiri_schmid Exp $
+d20 2
+a21 2
+	my ($row, $col);
+	if ($Obj->{sets} eq 'cols') {
+d28 2
+d34 19
+a52 2
+<td class="page_skeleton" style='width:100%'>
+	<IFRAME class="formatIframe" id="formatIframe" name='format' src="format.cgi?Lang=$use_lang&Skin=$skin&Type=graph2d&Form=$Obj->{form}" width="100%" height="$iframeHeight" scrolling="auto" frameborder="0"></IFRAME>
+d54 2
+a55 10
+</tr>
+<tr class="page_skeleton" >
+<td class="page_skeleton">
+	<table class='neutral_100'>
+		<tr><td>
+			<span>$lang->{'Format2d Sets'}:</span>
+			<span class='cursor' onclick='setThisRadio(this)'><input type='radio' name='dataset' value='rows'$row />$lang->{'Format2d Row'}</span>
+			<span class='cursor' onclick='setThisRadio(this)'><input type='radio' name='dataset'value='cols'$col />$lang->{'Format2d Col'}</span>
+		</td></tr>
+	</table>
+d59 1
+a59 1
+<td class="page_skeleton">
+d75 1
+d86 3
+a88 1
+	$o->{sets} = param('dataset');
+@
+
+
+1.4
+log
+@format page - visual improvment
+@
+text
+@d4 1
+a4 1
+# $Id: format2d_def_ed.pl,v 1.3 2003/09/22 08:08:59 jiri_schmid Exp $
+d20 8
+d38 11
+d74 1
+@
+
+
+1.3
+log
+@operational commit
+@
+text
+@d4 1
+a4 1
+# $Id: format2d_def_ed.pl,v 1.2 2003/09/19 10:23:50 jiri_schmid Exp $
+d25 1
+a25 1
+	<IFRAME class="formatIframe" name='format' src="format.cgi?Lang=$use_lang&Skin=$skin&Type=graph2d&Form=$Obj->{form}" width="100%" height="$iframeHeight" scrolling="auto" frameborder="0"></IFRAME>
+d45 1
+@
+
+
+1.2
+log
+@fixies
+@
+text
+@d4 1
+a4 1
+# $Id: format2d_def_ed.pl,v 1.1 2003/09/18 14:10:50 jiri_schmid Exp $
+a41 2
+<input type="hidden" value="$Obj->{form}" name="form" id="form"/>\
+<input type="hidden" value="graph3d" name="type" id="type"/>
+@
+
+
+1.1
+log
+@tabs imlemented almost everywhere
+@
+text
+@d4 1
+a4 1
+# $Id: format2d_ed.pl,v 1.6 2003/09/01 12:40:08 jiri_schmid Exp $
+d22 1
+a22 1
+<table class="page_skeleton">
+d24 2
+a25 2
+<td class="page_skeleton">
+	<IFRAME class="formatIframe" name='format' src="format.cgi?Lang=$use_lang&Skin=$skin&Type=graph2d&Form=$Obj->{form}" width="400px" height="$iframeHeight" scrolling="auto" frameborder="0"></IFRAME>
+@
+

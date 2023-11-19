@@ -1,0 +1,64 @@
+head	1.1;
+access;
+symbols
+	focus_1_6_0:1.1.0.2;
+locks; strict;
+comment	@# @;
+
+
+1.1
+date	2008.05.19.06.10.20;	author kunarief;	state dead;
+branches
+	1.1.2.1;
+next	;
+
+1.1.2.1
+date	2008.05.19.06.10.20;	author kunarief;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@file DocumentUtil.java was initially added on branch focus_1_6_0.
+@
+text
+@@
+
+
+1.1.2.1
+log
+@* adding feature for hidden member selection
+@
+text
+@a0 24
+package com.tonbeller.jpivot.util;
+
+import java.util.Iterator;
+import java.util.List;
+
+import org.w3c.dom.Element;
+
+public class DocumentUtil {
+
+	public static void removeRowsOrColumns(Element elem, List hiddenList) {
+
+		RowMemberRemover rowRemover = new RowMemberRemover();
+		ColumnMemberRemover colRemover = new ColumnMemberRemover();
+		for (Iterator iterator = hiddenList.iterator(); iterator.hasNext();) {
+			String label = (String) iterator.next();
+			rowRemover.remove(elem, label);
+		}
+		for (Iterator iterator = hiddenList.iterator(); iterator.hasNext();) {
+			String label = (String) iterator.next();
+			colRemover.remove(elem, label);
+		}
+	}
+
+}
+@
+

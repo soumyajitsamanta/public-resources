@@ -1,0 +1,204 @@
+head	1.5;
+access;
+symbols
+	jpivot_1_8_0:1.5
+	focus_1_6_0:1.5.0.2
+	wcf_1_7_0:1.5
+	wcf_1_6_0:1.5
+	jpivot_1_5_0:1.4.0.2
+	Root_jpivot_1_5_0:1.4
+	mondrian_xmla_2005_08_25:1.2.0.2
+	sourceforge_sync:1.5;
+locks; strict;
+comment	@# @;
+
+
+1.5
+date	2006.09.29.14.12.06;	author avix;	state Exp;
+branches
+	1.5.2.1;
+next	1.4;
+
+1.4
+date	2005.12.13.11.54.17;	author avix;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2005.09.14.08.22.45;	author avix;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2005.07.09.22.00.56;	author avix;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2005.07.05.14.08.04;	author avix;	state Exp;
+branches;
+next	;
+
+1.5.2.1
+date	2008.04.17.04.10.49;	author hbaier;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.5
+log
+@Update Eclipse settings
+@
+text
+@<?xml version="1.0" encoding="UTF-8"?>
+<projectDescription>
+	<name>wcf</name>
+	<comment></comment>
+	<projects>
+	</projects>
+	<buildSpec>
+		<buildCommand>
+			<name>org.eclipse.wst.common.project.facet.core.builder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+		<buildCommand>
+			<name>org.eclipse.jdt.core.javabuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+		<buildCommand>
+			<name>org.eclipse.wst.validation.validationbuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+	</buildSpec>
+	<natures>
+		<nature>org.eclipse.jem.workbench.JavaEMFNature</nature>
+		<nature>org.eclipse.jdt.core.javanature</nature>
+		<nature>org.eclipse.wst.common.modulecore.ModuleCoreNature</nature>
+		<nature>org.eclipse.wst.common.project.facet.core.nature</nature>
+	</natures>
+</projectDescription>
+@
+
+
+1.5.2.1
+log
+@* merged focus changes into focus_1_6_0
+@
+text
+@d3 1
+a3 1
+	<name>wcf-1.6.0-modified</name>
+d9 11
+a19 2
+			<name>org.eclipse.ui.externaltools.ExternalToolBuilder</name>
+			<triggers>full,incremental,</triggers>
+a20 4
+				<dictionary>
+					<key>LaunchConfigHandle</key>
+					<value>&lt;project&gt;/.externalToolBuilders/WcfModifiedBuilder.launch</value>
+				</dictionary>
+@
+
+
+1.4
+log
+@Synchronized with Tonbeller CVS:
+  * Added BEA / Websphere Support
+  * More tags in wcf tag library
+  * Bugfixes
+@
+text
+@d4 26
+a29 35
+  <comment></comment>
+  <projects>
+  </projects>
+  <buildSpec>
+    <buildCommand>
+      <name>org.eclipse.wst.common.modulecore.ComponentStructuralBuilder</name>
+      <arguments>
+      </arguments>
+    </buildCommand>
+    <buildCommand>
+      <name>org.eclipse.jdt.core.javabuilder</name>
+      <arguments>
+      </arguments>
+    </buildCommand>
+    <buildCommand>
+      <name>org.eclipse.wst.validation.validationbuilder</name>
+      <arguments>
+      </arguments>
+    </buildCommand>
+    <buildCommand>
+      <name>org.eclipse.wst.common.modulecore.ComponentStructuralBuilderDependencyResolver</name>
+      <arguments>
+      </arguments>
+    </buildCommand>
+    <buildCommand>
+      <name>org.eclipse.wst.common.modulecore.DependencyGraphBuilder</name>
+      <arguments>
+      </arguments>
+    </buildCommand>
+  </buildSpec>
+  <natures>
+    <nature>org.eclipse.jem.workbench.JavaEMFNature</nature>
+    <nature>org.eclipse.jdt.core.javanature</nature>
+    <nature>org.eclipse.wst.common.modulecore.ModuleCoreNature</nature>
+  </natures>
+@
+
+
+1.3
+log
+@Fixed Test for JDK 1.5
+Made Table Test Data time zone independent
+@
+text
+@d3 36
+a38 15
+	<name>wcf.sf</name>
+	<comment>
+  </comment>
+	<projects>
+	</projects>
+	<buildSpec>
+		<buildCommand>
+			<name>org.eclipse.jdt.core.javabuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+	</buildSpec>
+	<natures>
+		<nature>org.eclipse.jdt.core.javanature</nature>
+	</natures>
+@
+
+
+1.2
+log
+@.
+@
+text
+@d3 1
+a3 1
+	<name>WCF</name>
+@
+
+
+1.1
+log
+@initial version
+@
+text
+@d3 1
+a3 1
+	<name>wcf</name>
+@
+

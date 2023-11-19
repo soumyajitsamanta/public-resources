@@ -1,0 +1,28 @@
+head	1.1;
+access;
+symbols
+	jpivot_1_8_0:1.1
+	focus_1_6_0:1.1.0.2
+	wcf_1_7_0:1.1
+	wcf_1_6_0:1.1
+	sourceforge_sync:1.1;
+locks; strict;
+comment	@# @;
+
+
+1.1
+date	2006.03.27.12.26.42;	author zapodot;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@Norwegian translation of "test" resource file
+@
+text
+@message.key=En tekst på norsk@

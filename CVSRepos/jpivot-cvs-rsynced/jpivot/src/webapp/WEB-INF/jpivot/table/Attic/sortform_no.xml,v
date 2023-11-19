@@ -1,0 +1,120 @@
+head	1.2;
+access;
+symbols
+	focus_1_6_0:1.2.0.2
+	jpivot_1_5_0:1.1.0.4
+	Root_jpivot_1_5_0:1.1
+	mondrian_xmla_2005_08_25:1.1.0.2
+	sourceforge_sync:1.1;
+locks; strict;
+comment	@# @;
+expand	@k@;
+
+
+1.2
+date	2006.11.24.14.33.56;	author zapodot;	state dead;
+branches
+	1.2.2.1;
+next	1.1;
+
+1.1
+date	2005.07.05.14.19.50;	author avix;	state Exp;
+branches;
+next	;
+
+1.2.2.1
+date	2006.11.24.14.33.56;	author hbaier;	state dead;
+branches;
+next	1.2.2.2;
+
+1.2.2.2
+date	2008.04.17.10.45.08;	author hbaier;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@removed translated forms for Norwegian which is no longer needed
+@
+text
+@<?xml version="1.0" encoding="UTF-8"?>
+
+<xform style="twocolumn">
+  <title value="Sortering">
+    <imgButton src="wcf/form/cancel.png" action="revert" label="Close" hide="true" handler="com.tonbeller.wcf.form.ButtonHandler"/>
+  </title>
+
+  <listBox1 type="int" bookmark="false" modelReference="extensions(sortRank).sortMode" label="Sortering">
+  <listItem value="1" label="Stigende, behold hierarki"/>
+  <listItem value="2" label="Synkende, behold hierarki"/>
+  <listItem value="3" label="Stigende, bryt hierarki"/>
+  <listItem value="4" label="Synkende, bryt hierarki"/>
+  <listItem value="5" label="Topprangering"/>
+  <listItem value="6" label="Bunnrangering"/>
+  </listBox1>
+
+  <textField type="posint" bookmark="false" modelReference="extensions(sortRank).topBottomCount" label="Antall rekker i rangeringen" title="vennligst bruk et heltall"/>
+  <checkBox modelReference="rowAxisBuilder.axisConfig.propertyConfig.showProperties" label="Vis egenskaper for medlemmer"/>
+
+  <buttons>
+    <button action="validate" label="OK" handler="com.tonbeller.wcf.form.ButtonHandler" hide="true"/>
+    <button action="revert" label="Avbryt" handler="com.tonbeller.wcf.form.ButtonHandler" hide="true"/>
+  </buttons>
+</xform>
+@
+
+
+1.2.2.1
+log
+@file sortform_no.xml was added on branch focus_1_6_0 on 2008-04-17 10:45:08 +0000
+@
+text
+@d1 24
+@
+
+
+1.2.2.2
+log
+@* merged focus changes of jpivot into focus_1_6_0
+@
+text
+@a0 24
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xform style="twocolumn">
+  <title value="Sortering">
+    <imgButton src="wcf/form/cancel.png" action="revert" label="Close" hide="true" handler="com.tonbeller.wcf.form.ButtonHandler"/>
+  </title>
+
+  <listBox1 type="int" bookmark="false" modelReference="extensions(sortRank).sortMode" label="Sortering">
+  <listItem value="1" label="Stigende, behold hierarki"/>
+  <listItem value="2" label="Synkende, behold hierarki"/>
+  <listItem value="3" label="Stigende, bryt hierarki"/>
+  <listItem value="4" label="Synkende, bryt hierarki"/>
+  <listItem value="5" label="Topprangering"/>
+  <listItem value="6" label="Bunnrangering"/>
+  </listBox1>
+
+  <textField type="posint" bookmark="false" modelReference="extensions(sortRank).topBottomCount" label="Antall rekker i rangeringen" title="vennligst bruk et heltall"/>
+  <checkBox modelReference="rowAxisBuilder.axisConfig.propertyConfig.showProperties" label="Vis egenskaper for medlemmer"/>
+
+  <buttons>
+    <button action="validate" label="OK" handler="com.tonbeller.wcf.form.ButtonHandler" hide="true"/>
+    <button action="revert" label="Avbryt" handler="com.tonbeller.wcf.form.ButtonHandler" hide="true"/>
+  </buttons>
+</xform>
+@
+
+
+1.1
+log
+@initial version
+@
+text
+@@
+

@@ -1,0 +1,4550 @@
+head	1.132;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.132
+date	2004.05.06.03.21.58;	author vasekd;	state Exp;
+branches;
+next	1.131;
+
+1.131
+date	2004.04.27.10.57.04;	author vasekd;	state Exp;
+branches;
+next	1.130;
+
+1.130
+date	2004.04.26.18.08.40;	author vasekd;	state Exp;
+branches;
+next	1.129;
+
+1.129
+date	2004.04.16.16.10.36;	author vacula;	state Exp;
+branches;
+next	1.128;
+
+1.128
+date	2004.04.15.13.22.23;	author jiri_schmid;	state Exp;
+branches;
+next	1.127;
+
+1.127
+date	2004.04.15.08.41.56;	author jiri_schmid;	state Exp;
+branches;
+next	1.126;
+
+1.126
+date	2004.02.25.16.05.02;	author jiri_schmid;	state Exp;
+branches;
+next	1.125;
+
+1.125
+date	2004.02.24.10.21.34;	author jiri_schmid;	state Exp;
+branches;
+next	1.124;
+
+1.124
+date	2004.02.20.12.41.02;	author jiri_schmid;	state Exp;
+branches;
+next	1.123;
+
+1.123
+date	2004.02.18.16.19.06;	author jiri_schmid;	state Exp;
+branches;
+next	1.122;
+
+1.122
+date	2004.02.16.14.55.19;	author jiri_schmid;	state Exp;
+branches;
+next	1.121;
+
+1.121
+date	2004.02.10.14.46.54;	author jiri_schmid;	state Exp;
+branches;
+next	1.120;
+
+1.120
+date	2004.01.27.13.35.15;	author jiri_schmid;	state Exp;
+branches;
+next	1.119;
+
+1.119
+date	2004.01.23.09.13.12;	author jiri_schmid;	state Exp;
+branches;
+next	1.118;
+
+1.118
+date	2003.12.12.12.12.06;	author jiri_schmid;	state Exp;
+branches;
+next	1.117;
+
+1.117
+date	2003.12.04.12.15.12;	author jiri_schmid;	state Exp;
+branches;
+next	1.116;
+
+1.116
+date	2003.12.02.16.22.28;	author jiri_schmid;	state Exp;
+branches;
+next	1.115;
+
+1.115
+date	2003.11.27.16.40.57;	author jiri_schmid;	state Exp;
+branches;
+next	1.114;
+
+1.114
+date	2003.11.24.10.43.40;	author vacula;	state Exp;
+branches;
+next	1.113;
+
+1.113
+date	2003.11.20.16.34.03;	author jiri_schmid;	state Exp;
+branches;
+next	1.112;
+
+1.112
+date	2003.11.19.09.46.40;	author jiri_schmid;	state Exp;
+branches;
+next	1.111;
+
+1.111
+date	2003.11.19.09.26.14;	author jiri_schmid;	state Exp;
+branches;
+next	1.110;
+
+1.110
+date	2003.11.18.14.38.34;	author jiri_schmid;	state Exp;
+branches;
+next	1.109;
+
+1.109
+date	2003.11.14.11.45.31;	author jiri_schmid;	state Exp;
+branches;
+next	1.108;
+
+1.108
+date	2003.11.11.14.03.03;	author jiri_schmid;	state Exp;
+branches;
+next	1.107;
+
+1.107
+date	2003.11.09.20.31.45;	author vacula;	state Exp;
+branches;
+next	1.106;
+
+1.106
+date	2003.11.07.13.40.44;	author jiri_schmid;	state Exp;
+branches;
+next	1.105;
+
+1.105
+date	2003.11.07.09.35.05;	author jiri_schmid;	state Exp;
+branches;
+next	1.104;
+
+1.104
+date	2003.11.05.10.44.47;	author jiri_schmid;	state Exp;
+branches;
+next	1.103;
+
+1.103
+date	2003.11.04.15.18.54;	author jiri_schmid;	state Exp;
+branches;
+next	1.102;
+
+1.102
+date	2003.10.31.12.47.54;	author jiri_schmid;	state Exp;
+branches;
+next	1.101;
+
+1.101
+date	2003.10.17.11.36.08;	author jiri_schmid;	state Exp;
+branches;
+next	1.100;
+
+1.100
+date	2003.10.16.15.29.08;	author jiri_schmid;	state Exp;
+branches;
+next	1.99;
+
+1.99
+date	2003.10.16.14.08.51;	author jiri_schmid;	state Exp;
+branches;
+next	1.98;
+
+1.98
+date	2003.10.13.14.43.16;	author jiri_schmid;	state Exp;
+branches;
+next	1.97;
+
+1.97
+date	2003.10.07.05.47.57;	author michald;	state Exp;
+branches;
+next	1.96;
+
+1.96
+date	2003.10.01.15.29.37;	author jiri_schmid;	state Exp;
+branches;
+next	1.95;
+
+1.95
+date	2003.09.29.15.37.41;	author jiri_schmid;	state Exp;
+branches;
+next	1.94;
+
+1.94
+date	2003.09.26.12.21.29;	author jiri_schmid;	state Exp;
+branches;
+next	1.93;
+
+1.93
+date	2003.09.25.15.03.59;	author jiri_schmid;	state Exp;
+branches;
+next	1.92;
+
+1.92
+date	2003.09.22.11.52.27;	author jiri_schmid;	state Exp;
+branches;
+next	1.91;
+
+1.91
+date	2003.09.19.10.24.58;	author jiri_schmid;	state Exp;
+branches;
+next	1.90;
+
+1.90
+date	2003.09.18.14.10.45;	author jiri_schmid;	state Exp;
+branches;
+next	1.89;
+
+1.89
+date	2003.09.17.15.40.51;	author jiri_schmid;	state Exp;
+branches;
+next	1.88;
+
+1.88
+date	2003.09.17.14.51.09;	author jiri_schmid;	state Exp;
+branches;
+next	1.87;
+
+1.87
+date	2003.09.16.14.37.43;	author jiri_schmid;	state Exp;
+branches;
+next	1.86;
+
+1.86
+date	2003.09.09.09.41.30;	author jiri_schmid;	state Exp;
+branches;
+next	1.85;
+
+1.85
+date	2003.09.01.12.40.05;	author jiri_schmid;	state Exp;
+branches;
+next	1.84;
+
+1.84
+date	2003.08.28.09.26.11;	author jiri_schmid;	state Exp;
+branches;
+next	1.83;
+
+1.83
+date	2003.08.26.15.35.41;	author jiri_schmid;	state Exp;
+branches;
+next	1.82;
+
+1.82
+date	2003.08.25.15.09.09;	author jiri_schmid;	state Exp;
+branches;
+next	1.81;
+
+1.81
+date	2003.08.22.16.00.53;	author jiri_schmid;	state Exp;
+branches;
+next	1.80;
+
+1.80
+date	2003.08.21.14.23.28;	author jiri_schmid;	state Exp;
+branches;
+next	1.79;
+
+1.79
+date	2003.08.20.14.23.41;	author jiri_schmid;	state Exp;
+branches;
+next	1.78;
+
+1.78
+date	2003.08.19.13.05.55;	author jiri_schmid;	state Exp;
+branches;
+next	1.77;
+
+1.77
+date	2003.08.13.14.22.00;	author jiri_schmid;	state Exp;
+branches;
+next	1.76;
+
+1.76
+date	2003.08.13.13.16.25;	author jiri_schmid;	state Exp;
+branches;
+next	1.75;
+
+1.75
+date	2003.08.06.15.22.29;	author jiri_schmid;	state Exp;
+branches;
+next	1.74;
+
+1.74
+date	2003.08.01.13.07.11;	author jiri_schmid;	state Exp;
+branches;
+next	1.73;
+
+1.73
+date	2003.07.29.12.28.26;	author jiri_schmid;	state Exp;
+branches;
+next	1.72;
+
+1.72
+date	2003.07.24.12.14.56;	author jiri_schmid;	state Exp;
+branches;
+next	1.71;
+
+1.71
+date	2003.07.23.11.44.52;	author jiri_schmid;	state Exp;
+branches;
+next	1.70;
+
+1.70
+date	2003.07.22.15.13.03;	author jiri_schmid;	state Exp;
+branches;
+next	1.69;
+
+1.69
+date	2003.07.22.08.47.56;	author jiri_schmid;	state Exp;
+branches;
+next	1.68;
+
+1.68
+date	2003.07.21.10.51.39;	author jiri_schmid;	state Exp;
+branches;
+next	1.67;
+
+1.67
+date	2003.07.18.10.50.59;	author jiri_schmid;	state Exp;
+branches;
+next	1.66;
+
+1.66
+date	2003.07.14.11.52.23;	author jiri_schmid;	state Exp;
+branches;
+next	1.65;
+
+1.65
+date	2003.07.10.12.59.59;	author jiri_schmid;	state Exp;
+branches;
+next	1.64;
+
+1.64
+date	2003.07.09.15.30.14;	author jiri_schmid;	state Exp;
+branches;
+next	1.63;
+
+1.63
+date	2003.07.08.08.24.43;	author jiri_schmid;	state Exp;
+branches;
+next	1.62;
+
+1.62
+date	2003.07.08.07.12.02;	author jiri_schmid;	state Exp;
+branches;
+next	1.61;
+
+1.61
+date	2003.07.07.14.17.10;	author jiri_schmid;	state Exp;
+branches;
+next	1.60;
+
+1.60
+date	2003.07.04.14.29.27;	author jiri_schmid;	state Exp;
+branches;
+next	1.59;
+
+1.59
+date	2003.06.30.09.14.30;	author jiri_schmid;	state Exp;
+branches;
+next	1.58;
+
+1.58
+date	2003.06.26.09.31.40;	author jiri_schmid;	state Exp;
+branches;
+next	1.57;
+
+1.57
+date	2003.06.23.08.31.12;	author jiri_schmid;	state Exp;
+branches;
+next	1.56;
+
+1.56
+date	2003.06.21.16.13.05;	author michald;	state Exp;
+branches;
+next	1.55;
+
+1.55
+date	2003.06.20.16.21.19;	author jiri_schmid;	state Exp;
+branches;
+next	1.54;
+
+1.54
+date	2003.06.19.14.59.41;	author jiri_schmid;	state Exp;
+branches;
+next	1.53;
+
+1.53
+date	2003.06.16.08.33.02;	author jiri_schmid;	state Exp;
+branches;
+next	1.52;
+
+1.52
+date	2003.06.13.15.35.07;	author jiri_schmid;	state Exp;
+branches;
+next	1.51;
+
+1.51
+date	2003.06.13.13.08.10;	author jiri_schmid;	state Exp;
+branches;
+next	1.50;
+
+1.50
+date	2003.06.13.11.32.49;	author jiri_schmid;	state Exp;
+branches;
+next	1.49;
+
+1.49
+date	2003.06.12.08.44.21;	author jiri_schmid;	state Exp;
+branches;
+next	1.48;
+
+1.48
+date	2003.06.04.11.22.27;	author jiri_schmid;	state Exp;
+branches;
+next	1.47;
+
+1.47
+date	2003.06.04.07.50.41;	author jiri_schmid;	state Exp;
+branches;
+next	1.46;
+
+1.46
+date	2003.06.03.15.26.37;	author jiri_schmid;	state Exp;
+branches;
+next	1.45;
+
+1.45
+date	2003.05.28.15.44.12;	author jiri_schmid;	state Exp;
+branches;
+next	1.44;
+
+1.44
+date	2003.05.28.07.34.14;	author jiri_schmid;	state Exp;
+branches;
+next	1.43;
+
+1.43
+date	2003.05.27.14.12.05;	author jiri_schmid;	state Exp;
+branches;
+next	1.42;
+
+1.42
+date	2003.05.26.15.30.27;	author jiri_schmid;	state Exp;
+branches;
+next	1.41;
+
+1.41
+date	2003.05.26.15.01.23;	author jiri_schmid;	state Exp;
+branches;
+next	1.40;
+
+1.40
+date	2003.05.21.11.39.42;	author jiri_schmid;	state Exp;
+branches;
+next	1.39;
+
+1.39
+date	2003.05.16.12.57.57;	author jiri_schmid;	state Exp;
+branches;
+next	1.38;
+
+1.38
+date	2003.05.16.11.28.22;	author jiri_schmid;	state Exp;
+branches;
+next	1.37;
+
+1.37
+date	2003.05.15.12.01.28;	author jiri_schmid;	state Exp;
+branches;
+next	1.36;
+
+1.36
+date	2003.05.14.14.28.18;	author jiri_schmid;	state Exp;
+branches;
+next	1.35;
+
+1.35
+date	2003.05.13.15.18.56;	author jiri_schmid;	state Exp;
+branches;
+next	1.34;
+
+1.34
+date	2003.05.08.15.35.44;	author jiri_schmid;	state Exp;
+branches;
+next	1.33;
+
+1.33
+date	2003.05.08.07.42.43;	author michald;	state Exp;
+branches;
+next	1.32;
+
+1.32
+date	2003.05.07.13.11.47;	author jiri_schmid;	state Exp;
+branches;
+next	1.31;
+
+1.31
+date	2003.05.05.06.41.42;	author michald;	state Exp;
+branches;
+next	1.30;
+
+1.30
+date	2003.05.01.12.17.12;	author michald;	state Exp;
+branches;
+next	1.29;
+
+1.29
+date	2003.05.01.09.31.44;	author jiri_schmid;	state Exp;
+branches;
+next	1.28;
+
+1.28
+date	2003.04.30.09.53.35;	author jiri_schmid;	state Exp;
+branches;
+next	1.27;
+
+1.27
+date	2003.04.23.14.38.57;	author jiri_schmid;	state Exp;
+branches;
+next	1.26;
+
+1.26
+date	2003.04.18.14.52.55;	author jiri_schmid;	state Exp;
+branches;
+next	1.25;
+
+1.25
+date	2003.04.18.13.22.10;	author jiri_schmid;	state Exp;
+branches;
+next	1.24;
+
+1.24
+date	2003.04.16.11.18.06;	author jiri_schmid;	state Exp;
+branches;
+next	1.23;
+
+1.23
+date	2003.04.11.15.25.10;	author jiri_schmid;	state Exp;
+branches;
+next	1.22;
+
+1.22
+date	2003.04.10.14.19.09;	author jiri_schmid;	state Exp;
+branches;
+next	1.21;
+
+1.21
+date	2003.03.14.09.23.43;	author jiri_schmid;	state Exp;
+branches;
+next	1.20;
+
+1.20
+date	2003.03.12.16.32.43;	author jiri_schmid;	state Exp;
+branches;
+next	1.19;
+
+1.19
+date	2003.03.11.10.01.29;	author jiri_schmid;	state Exp;
+branches;
+next	1.18;
+
+1.18
+date	2003.03.10.16.13.55;	author jiri_schmid;	state Exp;
+branches;
+next	1.17;
+
+1.17
+date	2003.03.10.10.28.36;	author jiri_schmid;	state Exp;
+branches;
+next	1.16;
+
+1.16
+date	2003.03.07.16.18.35;	author jiri_schmid;	state Exp;
+branches;
+next	1.15;
+
+1.15
+date	2003.03.06.14.48.56;	author jiri_schmid;	state Exp;
+branches;
+next	1.14;
+
+1.14
+date	2003.03.04.10.19.13;	author spanhel;	state Exp;
+branches;
+next	1.13;
+
+1.13
+date	2003.03.03.16.43.56;	author jiri_schmid;	state Exp;
+branches;
+next	1.12;
+
+1.12
+date	2003.03.03.13.23.26;	author spanhel;	state Exp;
+branches;
+next	1.11;
+
+1.11
+date	2003.02.26.13.21.32;	author jiri_schmid;	state Exp;
+branches;
+next	1.10;
+
+1.10
+date	2003.02.25.09.18.01;	author jiri_schmid;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	2003.02.24.15.31.09;	author jiri_schmid;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	2003.02.21.09.28.57;	author jiri_schmid;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	2003.02.20.14.44.49;	author jiri_schmid;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	2003.02.19.16.06.47;	author jiri_schmid;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	2003.02.14.09.56.47;	author michald;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2003.01.30.06.36.20;	author michald;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2003.01.23.16.43.01;	author spanhel;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2003.01.21.11.02.56;	author spanhel;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2003.01.18.12.23.06;	author michald;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.132
+log
+@fixed many bugs in difinition of new format
+@
+text
+@#!/usr/bin/perl
+#-----------------------------------------------------
+#  Display edit object in IFRAME
+#-----------------------------------------------------
+# $Id: edit_obj.cgi,v 1.131 2004/04/27 10:57:04 vasekd Exp $
+
+use strict;
+my $run_mod_perl = defined(&Apache::RequestRec::BINMODE);	# are we running under mod_perl?
+if ($run_mod_perl) { Apache::RequestRec::BINMODE(':utf8') } else { binmode STDOUT,':utf8' }
+
+use CGI qw( :standard );
+use CGI::Pretty;
+use XML::Simple;
+require "const/Const.pm";
+require "local/Local.pm";
+
+# ---- init SOAP ---------
+#-------------------------
+our $load = 1;
+if ($load) {	# ensure require will be performed only once in case of mod_perl execution
+	eval "use SOAP::Lite +autodispatch => 
+		uri => 'Bear', 
+		proxy => ['http://$Const::bearHost:$Const::bearPort/', 
+		options => {compress_threshold => $Const::compressThreshold}]; 
+		1"
+	or ( &Local::ErrorDie("ERROR in eval of \"use SOAP::Lite ...\".") );
+	undef $load;
+}
+my $q = new CGI;
+
+# --- test SOAP connection ---
+#-----------------------------
+my $serverVerbName="SOAP Server http://$Const::bearHost:$Const::bearPort/,opitons->compress:$Const::compressThreshold ";
+if (! eval "SOAP::Lite->self->fault") {
+	&Local::ErrorDie('ERROR: '.$serverVerbName.' not responding<br><form><input type="submit" name="Refresh" value="Refresh" /></form>');
+}
+#*SOAP::Serializer::as_string = \&SOAP::Serializer::as_base64;	#reducing number of XML::Parser char() callbaks  for every single portion of processed stream (e.g. \n)
+
+# --- determine user and his preferences ---
+#-------------------------------------------
+my $ID = $q->param('item_id');
+my $user = $q->remote_user();
+my @@localTabs;
+my $variables = {};
+$variables->{useLang} = ($q->param('Lang')) ? $q->param('Lang') : $q->param('active_lang'); #active lang defined in *_ed.pl
+$variables->{skin} = ($q->param('Skin')) ? $q->param('Skin') : ($q->param('skin')) ? $q->param('skin') : "";
+$variables->{skinPath} = ($variables->{skin}) ? "skins/$variables->{skin}/" : "";
+$variables->{allParams} = ($q->param('all_params')) ? $q->param('all_params') : "Lang=".$q->param('Lang')."&Cook=".$q->param('Cook')."&Open=".$q->param('Open')."&Proj=".$q->param('Proj')."&Skin=$variables->{skin}";
+$variables->{imgType} = 'png';#&Local::getImageType("$Const::myPath$variables->{skinPath}img/");
+$variables->{defaultLang} = $Const::defaultLanguage;
+$variables->{id} = $ID;
+$variables->{user} = $user;
+$variables->{proj} = $q->param('Proj');
+$variables->{wb} = $q->user_agent()=~/MSIE/ ? 'msie' : 'mozilla';
+$variables->{cookie} = $q->param('Cook');
+$variables->{lastTab} = $q->param('Last');
+
+my $use_enc = $Const::languages->{$variables->{useLang}}->{enc};
+
+# --- load message dictionary ---
+#---------------------------------
+require "lang/$variables->{useLang}.utf";
+
+# --- start of page ---
+print $q->header(-charset=>$use_enc);
+my @@CAR;
+if ($q->param('Action')) {
+	if ($q->param('Action') =~ /$Const::lang->{$variables->{useLang}}->{'Save'}|$Const::lang->{$variables->{useLang}}->{'Save and Run'}|/) {
+		@@CAR = ('W');	#check permissons for writing
+		push @@CAR,'C' if $q->param('source_tab') eq 'rights'; #check rights to change rights when saving on tab rights
+	} elsif ($q->param('Action') eq $Const::lang->{$variables->{useLang}}->{'Save As'}) {
+		@@CAR = ('D');	#check permissons for duplicating
+	}
+} elsif ($q->param('Recover')) {
+	@@CAR = ('W','C');	#restore default rights
+} else {
+	@@CAR = ('R');	#check permissons for reading
+}
+my $CA = SOAP->CheckAccess('E',$user,$q->param('Proj'),$ID,@@CAR);
+if ($CA == 2) {
+print $q->start_html(
+	-title=>"Edit",
+	-id=>'editBody',
+	-lang=>$Const::languages->{ $variables->{useLang} }->{lang},
+	-encoding=>$use_enc,
+	-head=>meta({ -http_equiv => 'Content-Type', -content => "text/html; charset=$use_enc" }),
+	-style=>{-src=>"$variables->{skinPath}css.css"},
+	-script=>[{-language=>'JAVASCRIPT', -src=>'js/dad.js'},
+		  {-language=>'JAVASCRIPT', -src=>'js/attr.js'}],
+	-onload=>"init_var(); hide_load(); return true;",
+	-onclick=>"hide_me()",
+	-onresize=>'initOffset();'
+);
+
+# --- set local metadata structure and pointers ---
+
+my ($fullObj, $objType, $objSubType, $obj);	#ptr to main part of data structure
+$fullObj = {};
+$obj = {};
+($objType,$objSubType) = &Local::loadMetadata($ID,\$fullObj,\$obj);
+print <<END;
+<script type="text/javascript">
+	var mg="$Const::MetricsIdent->{name}";
+	var mg_type="$Const::MetricsIdent->{nick}";
+	var mg_local="$Const::lang->{$variables->{useLang}}{'Grid Metrics'}";
+	var justSaved = false;
+	var saveEnName = "$Const::lang->{$variables->{useLang}}{'Save EN Name'}";
+	var use_cookie = "$variables->{cookie}";
+</script>
+END
+# --- load functions for show and save specific for each particular object type ---
+my @@loadTabs;
+my $format2d;
+if ( $objSubType eq 'map' ) {
+	$format2d = ['desc','def','layout','legend','objects','galery','rights',];
+}
+else {
+	$format2d = ['desc','def','layout','ax_X','ax_Y','legend','objects','galery','rights',];
+}
+
+my $objectTabs = {
+	attr => ['desc','rights'],
+	fact => ['desc','rights'],
+	filter => ['desc','def','rights'],
+	param => ['desc','def','q','rights'],
+	format => ['desc','def','rights'],
+	format3d => ['desc','def','rights'],
+	metric => ['desc','def','rights'],
+	grid => ['desc','def','rights'],
+	urole => ['desc','def'],
+	format2d => $format2d,
+	#format2d => ['desc','def','layout','colors','logo','map','rights',],
+	graph3d => ['desc','def','x','y','z','diameter','transparency','shape','color','rights'],
+	report => ['desc','def','filter','object','format','sql','rights'],
+};
+
+if ($q->param('Action')) { #when saving it is neccessary load previous and following package (tab)
+	@@loadTabs = ($q->param('source_tab') eq $q->param('target_tab')) ? $q->param('target_tab') : ($q->param('source_tab'),$q->param('target_tab'));
+} else {
+	@@loadTabs = ($q->param('target_tab')) ? $q->param('target_tab') : (grep /^$variables->{lastTab}$/,@@{$objectTabs->{$objType}}) ? $variables->{lastTab} : $objType =~/attr|fact/ ? 'desc' : 'def';
+	#if no target tab, use last selected tab, if no such tab in list use def
+}
+
+#use Data::Dumper;
+#print "<pre>1".Dumper(@@hlp)."</pre>";
+
+my $localTab;
+foreach (@@loadTabs) {	#when saving it is neccessary load previous and following package
+	$localTab = $_; #always open description tab for attributes and facts
+	$variables->{icon} = $objType;
+	$objType =~ /(.)(.*)/;
+	$variables->{langSegment} = uc($1).$2;
+
+require 'edit/Rights.pm' if $localTab eq 'rights';
+if ($localTab eq 'desc') {
+	if ($objType =~ /^attr$|^fact$|^urole$/) {
+		require 'edit/Description2.pm'
+	} else {
+		require 'edit/Description.pm' if $objType ne 'report';
+	}
+};
+if ($objType eq 'filter') {						# F I L T E R
+	$variables->{script} = "filter_metric.js";
+	if ($localTab eq 'def') { require 'edit/Filter.pm' }
+} elsif ($objType eq 'param') {							# P A R A M
+	if ($localTab eq 'def') { require 'edit/Param.pm' }
+	elsif ($localTab eq 'q') { require 'edit/Param_q.pm' }
+} elsif ($objType eq 'format') {						# F O R M A T
+	$variables->{hidden}->{form} = $obj->{form};
+	$variables->{hidden}->{type} = "grid";
+	$variables->{hidden}->{header} = "$obj->{header}";
+	if ($localTab eq 'def') { require 'edit/Format.pm' }
+} elsif ($objType eq 'format3d') {						# F O R M A T 3 D
+	$variables->{hidden}->{form} = $obj->{form};
+	$variables->{hidden}->{type} = "graph3d";
+	if ($localTab eq 'def') { require 'edit/Format3d.pm' }
+} elsif ($objType eq 'metric') {						# M E T R I C
+	$variables->{script} = "filter_metric.js";
+	if ($localTab eq 'def') { require 'edit/Metric.pm'; }
+} elsif ($objType eq 'grid' && $localTab eq 'def') {				# G R I D
+	require 'edit/Grid.pm'
+} elsif ($objType eq 'urole') {							# U R O L E
+	$variables->{langSegment} = 'Role'; #override previus setting
+	$variables->{icon} = "role";
+	if ($localTab eq 'def') { require 'edit/Role.pm'; }
+} elsif ($objType eq 'format2d') {						# F O R M A T 2 D
+	if ($objSubType eq 'map') {
+		$variables->{langSegment} = 'Format2d';
+		$variables->{hidden}->{form} = $obj->{form};
+		$variables->{hidden}->{type} = "graph2d";
+		if ($localTab eq 'def') { require 'edit/Format2d_map.pm'; }
+		elsif ($localTab eq 'layout') { require 'edit/Format2d_map_layout.pm'; }
+		elsif ($localTab eq 'legend') { require 'edit/Format2d_map_legend.pm'; }
+		elsif ($localTab eq 'objects') { require 'edit/Format2d_map_objects.pm'; }
+		elsif ($localTab eq 'galery') { require 'edit/Format2d_map_galery.pm'; }
+	}
+	else {
+		$variables->{langSegment} = 'Format2d';
+		$variables->{hidden}->{form} = $obj->{form};
+		$variables->{hidden}->{type} = "graph2d";
+		if ($localTab eq 'def') { require 'edit/Format2d.pm'; }
+		elsif ($localTab eq 'layout') { require 'edit/Format2d_layout.pm'; }
+		elsif ($localTab eq 'ax_X') { require 'edit/Format2d_ax_X.pm'; }
+		elsif ($localTab eq 'ax_Y') { require 'edit/Format2d_ax_Y.pm'; }
+		elsif ($localTab eq 'legend') { require 'edit/Format2d_legend.pm'; }
+		elsif ($localTab eq 'objects') { require 'edit/Format2d_objects.pm'; }
+		elsif ($localTab eq 'galery') { require 'edit/Format2d_galery.pm'; }
+	}
+} elsif ($objType eq 'graph3d') {						# G R A P H 3 D
+	$variables->{script} = "graph3d.js";
+	$variables->{localTab} = $localTab;
+	if ($localTab eq 'def') { require 'edit/Graph3d.pm'; }
+	elsif ($localTab =~ /^diameter$|^transparency$/) { require 'edit/Graph3d_diam.pm'; }
+	elsif ($localTab eq 'shape') { require 'edit/Graph3d_shape.pm'; }
+	elsif ($localTab eq 'color') { require 'edit/Graph3d_color.pm'; }
+	elsif ($localTab =~ /^x$|^y$|^z$/) { require 'edit/Graph3d_axis.pm'; }
+} elsif ($objType eq 'report') {						# R E P O R T
+	$variables->{hidden}->{open_in} = ($q->param('Open')) ? $q->param('Open') : $q->param('open_in');
+	$variables->{contentVars} = $q->param('Copy');
+	$variables->{script} = "report.js";
+	if ($localTab eq 'desc') { require 'edit/Report_main.pm'; } #has its individual description page
+	elsif ($localTab eq 'def') { require 'edit/Report.pm'; }
+	elsif ($localTab eq 'filter') { require 'edit/Report_filter.pm'; }
+	elsif ($localTab eq 'object') { require 'edit/Report_object.pm'; }
+	elsif ($localTab eq 'format') { require 'edit/Report_format.pm'; }
+	elsif ($localTab eq 'sql') { require 'edit/Report_sql.pm'; }
+};
+}
+
+#use Data::Dumper;
+#print "<pre>".Dumper($q)."</pre>";
+#print $q->param('Action');
+&do_work(\$q,\$obj,\$variables,\$fullObj,$objType,$objSubType) if $q->param('Action') || $q->param('Recover');
+
+&Local::createTabs(\$q,$ID,$objType,$objSubType,$localTab,\$obj,\$Const::lang->{ $variables->{useLang} },\$variables,\@@{$objectTabs->{$objType}},\$fullObj) if defined $ID;	# call into edit/*_ed.pl
+
+} else {
+	print $q->start_html(
+		-style=>{ -src=>"$variables->{skinPath}css.css"},
+		-onload=>"hide_load()",
+		-script=>{-language=>'JAVASCRIPT', -src=>'js/attr.js'}
+	);
+	for my $i (0..$#CAR) {
+		my $rght = "Forbidden $CAR[$i]";
+		$CAR[$i] = "$Const::lang->{$variables->{useLang}}{$rght}";
+	}
+	if ($ID && $CA) { #acceess to object forbidden
+		&Local::accessForbidden("$Const::lang->{$variables->{useLang}}{'Forbidden Object'} ".join(",",@@CAR));
+	} elsif ($CA) {	#no access restriction and no object to handle
+	
+	} else {	#access to tab forbidden
+		&Local::accessForbidden("$Const::lang->{$variables->{useLang}}{'Forbidden Tab'} ".join(",",@@CAR));
+	}
+}
+print $q->end_html;
+
+#-----------------------------------------------------
+
+sub do_work {
+my ($q, $obj, $variables, $fullObj, $objType, $objSubType) = (shift,shift,shift,shift,shift,shift);
+
+	my $use_lang = $$variables->{useLang};
+	my $check = $Const::lang->{$use_lang}->{'Save As'};
+	my $action = &Local::param_utf8($q,'Action'); #cgi input is in utf8 without utf8 flag, q = pointer
+	my $type;
+	my $saveLang = $$q->param('langSpec') ? $$q->param('langSpec') : undef;
+	my $lastName = &Local::LocalizedObj($$obj->{name}, "Object ~$$variables->{id}", $saveLang, $Const::defaultLanguage);
+	my $lastDesc = &Local::LocalizedObj($$obj->{description}, "Object ~$$variables->{id}", $saveLang, $Const::defaultLanguage);
+	my $savedAs;
+	
+	if ($action =~ /$Const::lang->{$use_lang}->{'Save'}|$check|$Const::lang->{$use_lang}->{'Save and Run'}|$Const::lang->{$use_lang}->{'Rights'}/ || $$q->param('Recover')) {
+		my $r;
+		if ($action =~ $check) {	# Save As
+			my $newObj;
+			my $subObj;
+			my $desc;
+			$subObj = {};
+			my $local = $$q->param('local_tab');
+			my $linkIt = 1;
+
+			if ($local eq $$q->param('ObjT')) {	#all pages (description)
+				$type = $local;
+				foreach (keys %{$$obj}) {
+					next if $_ =~ /name|description|acl|meta/;
+					$subObj->{$_} = $$obj->{$_};
+				}
+				$desc = 1;
+			} elsif ($local eq 'def') {	#almost all pages
+				$local = $type = $$q->param('ObjT');
+			} elsif ($local =~ /object/) {	#report page
+				$type = $$obj->{report_type};
+				$local = "var";
+			} elsif ($local =~ /format/) {	#report page
+				&link2NextParams(\$subObj,$variables,$objType,$objSubType,$q);
+				$linkIt = 0;
+				$type = ($subObj->{format_def}{type} eq 'grid') ? "format" : ($subObj->{format_def}{type} eq 'graph2d') ? "format2d" : "format3d";
+				$local = "format";
+			} elsif ($local eq 'filter') {
+				$type = $local;
+			} else {			#all other posibilities
+				foreach (keys %{$$obj}) {
+					next if $_ =~ /^name$|^description$|^acl$|^meta$|^$local$/;
+					$subObj->{$_} = $$obj->{$_};
+				}
+				if ($$q->param('ObjT') eq "graph3d") {	#special handling for tabs other then def,graph3d,rights when editing graph3d
+					$subObj->{$local} = $$obj->{$local};
+				};
+				$type = $local = $$q->param('ObjT');
+			}
+			
+			&link2NextParams(\$subObj,$variables,$objType,$objSubType,$q) if $linkIt;
+			
+			my $newId = SOAP->NewID();
+			$newObj->{$type}->{$newId} = ($subObj->{$local."_def"}) ? $subObj->{$local."_def"} : $subObj;
+
+			delete($newObj->{$type}->{$newId}->{orig_id}) if (exists($newObj->{$type}->{$newId}->{orig_id}));
+			$newObj->{$type}{$newId}{name} = &Local::param_utf8($q,'saveAsName');
+			if ($$q->param('desc')) {
+				$newObj->{$type}{$newId}{description} = &Local::setLocalizedObj($$obj->{description},&Local::param_utf8($q,'desc'),$saveLang);
+			} elsif ($desc) {
+				$newObj->{$type}{$newId}{description} = $$obj->{description};
+			}
+			$newObj->{$type}{$newId}{meta}{creator} = $$variables->{user};
+			$newObj->{$type}{$newId}{meta}{created} = &Local::getTime;
+			my $path = SOAP->GetProjectName($$variables->{id}); #project name
+			if ($type eq 'filter') { $path .= "/Filters/"; }
+			elsif ($type eq 'grid') { $path .= "/Grids/"; }
+			elsif ($type eq 'format') { $path .= "/Formats/"; }
+			elsif ($type eq 'metric') { $path .= "/Metrics/"; }
+			elsif ($type eq 'graph3d') { $path .= "/Graphs3d/"; }
+			elsif ($type eq 'format3d') { $path .= "/Formats3d/"; }
+			elsif ($type eq 'format2d') { $path .= "/Formats2d/"; }
+			elsif ($type eq 'param') { $path .= "/Params/"; }
+			elsif ($type eq 'report') {
+				$path .= "/Reports/"; 
+				$subObj->{filter_def} = $$obj->{filter_def} if (ref($$obj->{filter_def}) =~ /HASH/);
+				$subObj->{var_def} = $$obj->{var_def} if (ref($$obj->{var_def}) =~ /HASH/);
+				$subObj->{format_def} = $$obj->{format_def} if (ref($$obj->{format_def}) =~ /HASH/);
+			} else { return }
+			$r=SOAP->SaveMData($newObj,0,$path);	#don't rewrite
+			$savedAs = 1;
+		} else {	# Save
+			
+			$$obj->{name} = &Local::setLocalizedObj($$obj->{name},$$q->param('name'),$saveLang) if defined $$q->param('name');
+			$$obj->{description} = &Local::setLocalizedObj($$obj->{description},&Local::param_utf8($q,'desc'),$saveLang) if defined $$q->param('desc');
+			my $path;
+			if ($objType =~ /^attr$|^fact$/) {
+				$path = SOAP->GetProjectName($$variables->{id});
+				$$fullObj->{$objType}{$$variables->{id}} = {};
+				$$obj = $$fullObj->{$objType}->{$$variables->{id}};
+				$path .= ($objType eq 'attr') ? '/Attributes/' : '/Facts/';
+			}
+			&link2NextParams($obj,$variables,$objType,$objSubType,$q);	# called from edit/*_ed.pl
+			$$obj->{meta}{modifier} = $user;
+			$$obj->{meta}{modified} = &Local::getTime;
+			$r=SOAP->SaveMData($$fullObj,1,$path);
+		}
+
+		if ($r) {
+			&Local::loadMetadata($$variables->{id},$fullObj,$obj);
+			clearCache($$variables->{id},$objType);
+			my $pr=	SOAP->GetProjectName($$variables->{id}); #project name
+			if ($saveLang eq $$variables->{useLang} || $savedAs) {
+				#unlink the treefile to force generating new one when description or name in active language changed
+				unlink(&Local::TreeFileName($Const::myPath,$pr,$user)) if (not($lastDesc eq $$q->param('desc') && $lastName eq $$q->param('name')) || $savedAs);
+			}
+			$$variables->{saved} = "true" if $type;
+			$$variables->{saveRun} = "run_result();" if $action eq $Const::lang->{$use_lang}->{'Save and Run'};
+		} else {
+			my $n=$$q->param('name');
+			print "<span class='error'>ERROR: Saving Object [$n] into metadata failed.</span>";
+		}
+	}
+}
+
+#---------------------------------------------------
+
+sub link2NextParams {
+	my ($obj,$variables,$objType,$objSubType,$q) = (shift,shift,shift,shift,shift);
+	my $localTab = $$q->param('source_tab');
+	return if $localTab eq 'desc';
+if ($localTab eq 'rights') {
+	&Rights::set_next_param($obj,$q,$variables)
+} elsif ($localTab eq 'def') {
+	if ($objType eq 'filter') {
+		&Filter::set_next_param($obj,$q);
+	} elsif ($objType eq 'format') {
+		&Format::set_next_param($obj,$q)
+		&generateCss($$obj->{'cssStyle'},$$variables->{'id'});
+	} elsif ($objType eq 'format3d') {
+		&Format3d::set_next_param($obj,$q,$variables)
+	} elsif ($objType eq 'metric') {
+		&Metric::set_next_param($obj,$q,$variables)
+	} elsif ($objType eq 'grid') {
+		&Grid::set_next_param($obj,$q,$variables)
+	} elsif ($objType eq 'urole') {
+		&Role::set_next_param($obj,$q,$variables)
+	} elsif ($objType eq 'param') {
+		&Param::set_next_param($obj,$q,$variables)
+	} elsif ($objType eq 'format2d') {
+		&Format2d::set_next_param($obj,$q,$variables)
+	} elsif ($objType eq 'graph3d') {
+		&Graph3d::set_next_param($obj,$q,$variables)
+	} elsif ($objType eq 'report') {
+		&Report::set_next_param($obj,$q,$variables)
+	}
+} elsif ($objType eq 'param') {
+	&Param_q::set_next_param($obj,$q,$variables) if $localTab eq 'q';
+} elsif ($objType eq 'format2d') {
+	if ($objSubType eq 'map') {
+		if ($localTab eq 'def') {
+			&Format2d_map::set_next_param($obj,$q,$variables);
+		} elsif ($localTab eq 'layout') {
+			&Format2d_map_layout::set_next_param($obj,$q,$variables)
+		} elsif ($localTab eq 'legend') {
+			&Format2d_map_legend::set_next_param($obj,$q,$variables)
+		} elsif ($localTab eq 'objects') {
+			&Format2d_map_objects::set_next_param($obj,$q,$variables)
+		} elsif ($localTab eq 'galery') {
+			&Format2d_map_galery::set_next_param($obj,$q,$variables)
+		}
+	}
+	else {
+		if ($localTab eq 'def') {
+			&Format2d::set_next_param($obj,$q,$variables)
+		} elsif ($localTab eq 'layout') {
+			&Format2d_layout::set_next_param($obj,$q,$variables)
+		} elsif ($localTab eq 'ax_X') {
+			&Format2d_ax_X::set_next_param($obj,$q,$variables)
+		} elsif ($localTab eq 'ax_Y') {
+			&Format2d_ax_Y::set_next_param($obj,$q,$variables)
+		} elsif ($localTab eq 'legend') {
+			&Format2d_legend::set_next_param($obj,$q,$variables)
+		} elsif ($localTab eq 'objects') {
+			&Format2d_objects::set_next_param($obj,$q,$variables)
+		} elsif ($localTab eq 'galery') {
+			&Format2d_galery::set_next_param($obj,$q,$variables)
+		}
+	}	
+} elsif ($objType eq 'graph3d') {
+	if ($localTab eq 'color') {
+		&Graph3d_color::set_next_param($obj,$q,$localTab)
+	} elsif ($localTab eq 'shape') {
+		&Graph3d_shape::set_next_param($obj,$q,$localTab)
+	} elsif ($localTab =~ /^x$|^y$|^z$/) {
+		&Graph3d_axis::set_next_param($obj,$q,$localTab)
+	} elsif ($localTab =~ /^diameter$|^transparency$/) {
+		&Graph3d_diam::set_next_param($obj,$q,$localTab)
+	}
+} elsif ($objType eq 'report') {							# R E P O R T
+	if ($localTab eq 'filter') {
+		&Report_filter::set_next_param($obj,$q,$variables)
+	} elsif ($localTab eq 'object') {
+		&Report_object::set_next_param($obj,$q,$variables)
+	} elsif ($localTab eq 'format') {
+		&Report_format::set_next_param($obj,$q,$variables)
+		&generateCss($$obj->{'cssStyle'},$$variables->{'id'});
+	} elsif ($localTab eq 'sql') {
+		&Report_sql::set_next_param($obj,$q,$variables)
+	}
+};
+}
+
+
+#---------------------------------------------------
+
+sub clearCache {
+	my ($ID,$objType) = (shift,shift);
+	if ($objType eq 'report') {
+		unlink <${Const::myPath}html/$ID*>	# delete all cache objects depending on this report
+	} else {
+		foreach (SOAP->GetObjSuccessors($ID,0,'report')) {
+			unlink <${Const::myPath}html/$_*>;	# delete all cache objects depending on this object
+		}
+	}
+}
+#----------------------------------------------------
+sub generateCss {
+	my($xml,$idOfFile) = (shift,shift);
+	my $html;
+	
+	my $nameOfFile = ${Const::myPath}.${Const::css_dir}."/".${idOfFile}.".css";
+	#print $nameOfFile; #!!!
+	
+	$html={
+	'table' => 'font-family: '.$xml->{table}{font}{face}.';
+			font-size: '.$xml->{table}{font}{size}.'px;
+			color: rgb('.$xml->{table}{font}{color}.');
+			border: '.$xml->{table}{lines}{width}.'px '.$xml->{table}{lines}{face}.' rgb('.$xml->{table}{lines}{color}.');
+			border-collapse: collapse;
+			padding: '.$xml->{table}{padding}{horizontal}.'1px;
+			margin: '.$xml->{table}{margin}{horizontal}.'5px;
+			white-space: nowrap;
+			empty-cells: show;
+			cursor:default',
+
+	'th' => {
+				#definition for table header
+				'ch' => 'background-color: rgb('.$xml->{ch}{u}{even}{bgcolor}.'); text-align: '.$xml->{ch}{u}{even}{align}{horizontal}.'; font-size: '.$xml->{ch}{u}{even}{font}{size}.'px; font-family: '.$xml->{ch}{u}{even}{font}{face}.'; color: rgb('.$xml->{ch}{u}{even}{font}{color}.'); padding: '.$xml->{ch}{u}{even}{padding}{horizontal}.'px; margin: '.$xml->{ch}{u}{even}{margin}{horizontal}.'px;',
+				'dv' => 'border-right: '.$xml->{th}{lines}{vertical}{width}.'px '.$xml->{th}{lines}{vertical}{face}.' rgb('.$xml->{th}{lines}{vertical}{color}.');',
+				
+				#definition for row header
+				'oe' => 'background-color: rgb('.$xml->{rh}{l}{oddeven}{bgcolor}.');   text-align:'.$xml->{rh}{l}{oddeven}{align}{horizontal}.';  font-size: '.$xml->{rh}{l}{oddeven}{font}{size}.'px;  font-family: '.$xml->{rh}{l}{oddeven}{font}{face}.';  color: rgb('.$xml->{rh}{l}{oddeven}{font}{color}.');  padding: '.$xml->{rh}{l}{oddeven}{padding}{horizontal}.'px;  margin: '.$xml->{rh}{l}{oddeven}{margin}{horizontal}.'px; ',
+				'ee' => 'background-color: rgb('.$xml->{rh}{l}{eveneven}{bgcolor}.');  text-align:'.$xml->{rh}{l}{eveneven}{align}{horizontal}.'; font-size: '.$xml->{rh}{l}{eveneven}{font}{size}.'px; font-family: '.$xml->{rh}{l}{eveneven}{font}{face}.'; color: rgb('.$xml->{rh}{l}{eveneven}{font}{color}.'); padding: '.$xml->{rh}{l}{eveneven}{padding}{horizontal}.'px; margin: '.$xml->{rh}{l}{eveneven}{margin}{horizontal}.'px;',
+				'oo' => 'background-color: rgb('.$xml->{rh}{l}{oddodd}{bgcolor}.');    text-align:'.$xml->{rh}{l}{oddodd}{align}{horizontal}.';   font-size: '.$xml->{rh}{l}{oddodd}{font}{size}.'px;   font-family: '.$xml->{rh}{l}{oddodd}{font}{face}.';   color: rgb('.$xml->{rh}{l}{oddodd}{font}{color}.');   padding: '.$xml->{rh}{l}{oddodd}{padding}{horizontal}.'px;   margin: '.$xml->{rh}{l}{oddodd}{margin}{horizontal}.'px;  ',
+				'eo' => 'background-color: rgb('.$xml->{rh}{l}{evenodd}{bgcolor}.');   text-align:'.$xml->{rh}{l}{evenodd}{align}{horizontal}.';  font-size: '.$xml->{rh}{l}{evenodd}{font}{size}.'px;  font-family: '.$xml->{rh}{l}{evenodd}{font}{face}.';  color: rgb('.$xml->{rh}{l}{evenodd}{font}{color}.');  padding: '.$xml->{rh}{l}{evenodd}{padding}{horizontal}.'px;  margin: '.$xml->{rh}{l}{evenodd}{margin}{horizontal}.'px; ',
+ 
+				'tt'  => 'border-top:'.$xml->{rh}{u}{lines}{horizontal}{width}.'px '.$xml->{rh}{u}{lines}{horizontal}{face}.' rgb('.$xml->{rh}{u}{lines}{horizontal}{color}.'); border-right: '.$xml->{th}{lines}{vertical}{width}.'px '.$xml->{th}{lines}{vertical}{face}.' rgb('.$xml->{th}{lines}{vertical}{color}.');  padding: '.$xml->{rh}{u}{padding}{horizontal}.'px; background-color: rgb('.$xml->{rh}{u}{oddeven}{bgcolor}.'); text-align:'.$xml->{rh}{u}{oddeven}{align}{horizontal}.'; font-size: '.$xml->{rh}{u}{oddeven}{font}{size}.'px; font-family: '.$xml->{rh}{u}{oddeven}{font}{face}.'; color: rgb('.$xml->{rh}{u}{oddeven}{font}{color}.')',
+				't'   => 'border-top:'.$xml->{rh}{u}{lines}{horizontal}{width}.'px '.$xml->{rh}{u}{lines}{horizontal}{face}.' rgb('.$xml->{rh}{u}{lines}{horizontal}{color}.'); border-right: '.$xml->{th}{lines}{vertical}{width}.'px '.$xml->{th}{lines}{vertical}{face}.' rgb('.$xml->{th}{lines}{vertical}{color}.');  padding: '.$xml->{rh}{u}{padding}{horizontal}.'px; background-color: rgb('.$xml->{rh}{u}{oddeven}{bgcolor}.'); text-align:'.$xml->{rh}{u}{oddeven}{align}{horizontal}.'; font-size: '.$xml->{rh}{u}{oddeven}{font}{size}.'px; font-family: '.$xml->{rh}{u}{oddeven}{font}{face}.'; color: rgb('.$xml->{rh}{u}{oddeven}{font}{color}.')', 
+				'ttr' => 'border-top:'.$xml->{rh}{u}{lines}{horizontal}{width}.'px '.$xml->{rh}{u}{lines}{horizontal}{face}.' rgb('.$xml->{rh}{u}{lines}{horizontal}{color}.'); border-right: '.$xml->{ch}{u}{lines}{vertical}{width}.'px '.$xml->{ch}{u}{lines}{vertical}{face}.' rgb('.$xml->{ch}{u}{lines}{vertical}{color}.'); ',#.'; background-color: '.$xml->{rh}{l}{bgcolor}{oddeven},
+				'tr'  => 'border-top:'.$xml->{rh}{l}{lines}{horizontal}{width}.'px '.$xml->{rh}{l}{lines}{horizontal}{face}.' rgb('.$xml->{rh}{l}{lines}{horizontal}{color}.'); border-right: '.$xml->{ch}{u}{lines}{vertical}{width}.'px '.$xml->{ch}{u}{lines}{vertical}{face}.' rgb('.$xml->{ch}{u}{lines}{vertical}{color}.'); ',#.'; background-color: '.$xml->{rh}{l}{bgcolor}{evenodd},
+
+				'r' => 'border-top:'.$xml->{th}{lines}{horizontal}{width}.'px '.$xml->{th}{lines}{horizontal}{face}.' rgb('.$xml->{th}{lines}{horizontal}{color}.'); border-right:'.$xml->{ch}{u}{lines}{vertical}{width}.'px '.$xml->{ch}{u}{lines}{vertical}{face}.' rgb('.$xml->{ch}{u}{lines}{vertical}{color}.'); padding: '.$xml->{ch}{u}{even}{padding}{horizontal}.'px; margin: '.$xml->{ch}{u}{even}{margin}{horizontal}.'px', 
+				'd' => 'border-top:'.$xml->{th}{lines}{horizontal}{width}.'px '.$xml->{th}{lines}{horizontal}{face}.' rgb('.$xml->{th}{lines}{horizontal}{color}.'); border-right:'.$xml->{ch}{l}{lines}{vertical}{width}.'px '.$xml->{ch}{l}{lines}{vertical}{face}.' rgb('.$xml->{ch}{l}{lines}{vertical}{color}.'); padding: '.$xml->{ch}{m}{even}{padding}{horizontal}.'px; margin: '.$xml->{ch}{m}{even}{margin}{horizontal}.'px', 
+
+	},	
+	'cell' => {
+	 			#definition for data cell
+				'ee'  => 'background-color: rgb('.$xml->{dc}{eveneven}{bgcolor}.');   text-align:'.$xml->{dc}{eveneven}{align}{horizontal}.'; font-size: '.$xml->{dc}{eveneven}{font}{size}.'px; font-family: '.$xml->{dc}{eveneven}{font}{face}.'; color: rgb('.$xml->{dc}{eveneven}{font}{color}.');  padding: '.$xml->{dc}{eveneven}{padding}{horizontal}.'px; margin: '.$xml->{dc}{eveneven}{margin}{horizontal}.'px; ',
+				'eo'  => 'background-color: rgb('.$xml->{dc}{evenodd}{bgcolor}.');    text-align:'.$xml->{dc}{evenodd}{align}{horizontal}.';  font-size: '.$xml->{dc}{evenodd}{font}{size}.'px;  font-family: '.$xml->{dc}{evenodd}{font}{face}.';  color: rgb('.$xml->{dc}{evenodd}{font}{color}.');   padding: '.$xml->{dc}{evenodd}{padding}{horizontal}.'px;  margin: '.$xml->{dc}{evenodd}{margin}{horizontal}.'px;',
+				'oe'  => 'background-color: rgb('.$xml->{dc}{oddeven}{bgcolor}.');    text-align:'.$xml->{dc}{oddeven}{align}{horizontal}.';  font-size: '.$xml->{dc}{oddeven}{font}{size}.'px;  font-family: '.$xml->{dc}{oddeven}{font}{face}.';  color: rgb('.$xml->{dc}{oddeven}{font}{color}.');   padding: '.$xml->{dc}{oddeven}{padding}{horizontal}.'px;  margin: '.$xml->{dc}{oddeven}{margin}{horizontal}.'px;  ',
+				'oo'  => 'background-color: rgb('.$xml->{dc}{oddodd}{bgcolor}.');     text-align:'.$xml->{dc}{oddodd}{align}{horizontal}.';   font-size: '.$xml->{dc}{oddodd}{font}{size}.'px;   font-family: '.$xml->{dc}{oddodd}{font}{face}.';   color: rgb('.$xml->{dc}{oddodd}{font}{color}.');    padding: '.$xml->{dc}{oddodd}{padding}{horizontal}.'px;   margin: '.$xml->{dc}{oddodd}{margin}{horizontal}.'px; ',
+				'set' => 'background-color: rgb('.$xml->{set}{bgcolor}.') !important;  color: rgb('.$xml->{set}{font}{color}.');',
+
+				'r' => 'border-right:'.$xml->{ch}{u}{lines}{vertical}{width}.'px '.$xml->{ch}{u}{lines}{vertical}{face}.' '.$xml->{ch}{u}{lines}{vertical}{color}.'; padding: '.$xml->{ch}{u}{even}{padding}{horizontal}.'px; margin: '.$xml->{ch}{u}{even}{margin}{horizontal}.'px', 
+				'd' => 'border-right:'.$xml->{ch}{m}{lines}{vertical}{width}.'px '.$xml->{ch}{m}{lines}{vertical}{face}.' '.$xml->{ch}{m}{lines}{vertical}{color}.'; padding: '.$xml->{ch}{m}{even}{padding}{horizontal}.'px; margin: '.$xml->{ch}{m}{even}{margin}{horizontal}.'px', 
+
+				'ttd' => 'border-top:'.$xml->{rh}{u}{lines}{horizontal}{width}.'px '.$xml->{rh}{u}{lines}{horizontal}{face}.' rgb('.$xml->{rh}{u}{lines}{horizontal}{color}.'); border-right:'.$xml->{ch}{l}{lines}{vertical}{width}.'px '.$xml->{ch}{l}{lines}{vertical}{face}.' rgb('.$xml->{ch}{l}{lines}{vertical}{color}.'); ', 
+				'ttr' => 'border-top:'.$xml->{rh}{u}{lines}{horizontal}{width}.'px '.$xml->{rh}{u}{lines}{horizontal}{face}.' rgb('.$xml->{rh}{u}{lines}{horizontal}{color}.'); border-right:'.$xml->{ch}{u}{lines}{vertical}{width}.'px '.$xml->{ch}{u}{lines}{vertical}{face}.' rgb('.$xml->{ch}{u}{lines}{vertical}{color}.'); ',
+				'tr'  => 'border-top:'.$xml->{dc}{lines}{horizontal}{width}.'px '.$xml->{dc}{lines}{horizontal}{face}.' rgb('.$xml->{dc}{lines}{horizontal}{color}.'); border-right:'.$xml->{ch}{u}{lines}{vertical}{width}.'px '.$xml->{ch}{u}{lines}{vertical}{face}.' rgb('.$xml->{ch}{u}{lines}{vertical}{color}.');', 
+				'td'  => 'border-top:'.$xml->{dc}{lines}{horizontal}{width}.'px '.$xml->{dc}{lines}{horizontal}{face}.' rgb('.$xml->{dc}{lines}{horizontal}{color}.'); border-right:'.$xml->{ch}{l}{lines}{vertical}{width}.'px '.$xml->{ch}{l}{lines}{vertical}{face}.' rgb('.$xml->{ch}{l}{lines}{vertical}{color}.');', 
+
+		}
+	}; 	#end definition of table
+
+	#--------------------print data in html hash-------------------------
+	#use Data::Dumper;
+	#print Dumper($html);
+
+	#--------------------print data in html hash-------------------------
+
+
+	#--------------------merge html id tag from html to css style---------
+open(CSS,">$nameOfFile"); #or print "<span class='error'>ERROR: Saving CSS [$nameOfFile] into.</span>"
+
+print CSS "
+ /* this part does not affect the REPORT, is used to proper view of style in format page on both Mozilla and IE based web browsers*/
+ BODY.graph {background-color:transparent; padding: 0; margin: 0px, 0px, 0px, 5px;}
+ TABLE.graph {border-style: none; empty-cells:show; padding:0; border-spacing:0;}
+ TABLE.graph  TD { color: inherit; background-color: inherit; text-align: left; white-space:normal;}
+ SPAN.cursor {white-space:nowrap; font-weight:normal; cursor:pointer; cursor:hand;}
+ SPAN.preview {white-space:nowrap; margin: 3px;}
+ TABLE.Neutral { color: inherit;
+     background-color: inherit;
+     border: none;
+     text-align:left;
+     margin:0px; }
+ TD.Neutral {text-align:left; font-weight:bold; padding:5px;}
+ TD.bcg { background-color: #eee; }
+
+ THEAD.t{ background-color: #70cc70; border-bottom: 2px solid #555; padding: inherit; margin: inherit;}  /*color even even (first dark) */
+ TBODY.t1 {background-color: #d8d84b; border-bottom: 2px solid #555; padding: inherit; margin: inherit;} /*color odd even (second dark)*/
+ TR.t1 {background-color: #f2f27b;}                  /*color odd odd (second light)*/
+ TBODY.t2 {background-color: #70cc70; border-bottom: 2px solid #555; padding: inherit; margin: inherit;} /*color even even (first dark) */
+ TR.t2 {background-color: #a0e5a0}                 /*color even odd (first light)*/
+
+ TD.None { color: inherit;  background-color: inherit;  border: none;}
+ /* this part defines fonts, colors and borders of the REPORT*/
+ BODY {background-color:#eee}
+ /*T A B L E  L A Y O U T*/
+
+  TABLE {$html->{table}}
+
+ /*TH {padding: 2px; margin: 0; text-align: center; white-space: nowrap;}*/
+ /*TR {padding: 1px; margin: 0; white-space: nowrap;}*/
+ /*TD {padding: 1px; margin: 0; text-align: right; white-space: nowrap;}*/
+
+ /*B O R D E R S*/
+ .ttd{$html->{cell}{ttd}} /*horizontal and vertical border bold-dashed*/
+ .ttr{$html->{cell}{ttr}} /*horizontal and vertical border bold*/
+ .td{$html->{cell}{td}} /*horizontal and vertical border thin-dashed*/
+ .tr{$html->{cell}{tr}} /*horizontal and vertical border thin*/
+
+ .r {$html->{cell}{r}} /*vertical border bold*/
+ .d {$html->{cell}{d}} /*vertical border thin-dashed*/
+
+ /*C O L O R S*/
+ .ee{$html->{cell}{ee}} /*color even even (first dark) */
+ .eo{$html->{cell}{eo}} /*color even odd (first light)*/
+ .oe{$html->{cell}{oe}} /*color odd even (second dark)*/
+ .oo{$html->{cell}{oo}} /*color odd odd (second light)*/
+ .set {$html->{cell}{set}}
+
+ /*color row header */
+ TH.ee{$html->{th}{ee}} /*color even even (first dark) */
+ TH.eo{$html->{th}{eo}} /*color even odd (first light)*/
+ TH.oe{$html->{th}{oe}} /*color odd even (second dark)*/
+ TH.oo{$html->{th}{oo}} /*color odd odd (second light)*/
+	
+ TH.r {$html->{th}{r}} /*vertical border bold*/
+ TH.d {$html->{th}{d}} /*vertical border thin-dashed*/
+
+ TH.ch{$html->{th}{ch}}  /*color row header */ 
+ TH.dv{$html->{th}{dv}}
+ 
+ /*border column header */
+ TH.tt{$html->{th}{tt}} /*color odd column header*/
+ TH.tr{$html->{th}{tr}}  /*color odd row header*/
+ TH.ttr{$html->{th}{ttr}} /*color 1st even row header*/
+ TH.t{$html->{th}{t}}  /*color 1st even row header*/
+";
+close(CSS);
+}
+
+1
+@
+
+
+1.131
+log
+@fixed padding and margin
+@
+text
+@d5 1
+a5 1
+# $Id: edit_obj.cgi,v 1.130 2004/04/26 18:08:40 vasekd Exp $
+d232 1
+a232 1
+
+d388 1
+a388 1
+		&Format::set_next_param($obj,$q,$variables)
+d457 1
+d499 1
+a499 1
+				'ch' => 'background-color: rgb('.$xml->{ch}{u}{bgcolor}{even}.'); text-align: '.$xml->{ch}{u}{align}{horizontal}.'; font-size: '.$xml->{ch}{u}{font}{size}.'px; font-family: '.$xml->{ch}{u}{font}{face}.'; color: rgb('.$xml->{ch}{u}{font}{color}.'); padding: '.$xml->{ch}{u}{padding}{horizontal}.'1px; margin: '.$xml->{ch}{u}{margin}{horizontal}.'0px;',
+d503 9
+a511 9
+				'oe' => 'background-color: rgb('.$xml->{rh}{l}{bgcolor}{oddeven}.');  text-align:'.$xml->{rh}{l}{align}{horizontal}.'; font-size: '.$xml->{rh}{l}{font}{size}.'px; font-family: '.$xml->{rh}{l}{font}{face}.'; color: rgb('.$xml->{rh}{l}{font}{color}.');',
+				'ee' => 'background-color: rgb('.$xml->{rh}{l}{bgcolor}{eveneven}.');  text-align:'.$xml->{rh}{l}{align}{horizontal}.'; font-size: '.$xml->{rh}{l}{font}{size}.'px; font-family: '.$xml->{rh}{l}{font}{face}.'; color: rgb('.$xml->{rh}{l}{font}{color}.');',
+				'oo' => 'background-color: rgb('.$xml->{rh}{l}{bgcolor}{oddodd}.');  text-align:'.$xml->{rh}{l}{align}{horizontal}.'; font-size: '.$xml->{rh}{l}{font}{size}.'px; font-family: '.$xml->{rh}{l}{font}{face}.'; color: rgb('.$xml->{rh}{l}{font}{color}.');',
+				'eo' => 'background-color: rgb('.$xml->{rh}{l}{bgcolor}{evenodd}.');  text-align:'.$xml->{rh}{l}{align}{horizontal}.'; font-size: '.$xml->{rh}{l}{font}{size}.'px; font-family: '.$xml->{rh}{l}{font}{face}.'; color: rgb('.$xml->{rh}{l}{font}{color}.');',
+
+				'tt'  => 'border-top:'.$xml->{rh}{u}{lines}{horizontal}{width}.'px '.$xml->{rh}{u}{lines}{horizontal}{face}.' rgb('.$xml->{rh}{u}{lines}{horizontal}{color}.'); border-right: '.$xml->{th}{lines}{vertical}{width}.'px '.$xml->{th}{lines}{vertical}{face}.' rgb('.$xml->{th}{lines}{vertical}{color}.');  padding: '.$xml->{rh}{m}{padding}{horizontal}.'0px; background-color: rgb('.$xml->{rh}{u}{bgcolor}{oddeven}.'); text-align:'.$xml->{rh}{u}{align}{horizontal}.'; font-size: '.$xml->{rh}{u}{font}{size}.'px; font-family: '.$xml->{rh}{u}{font}{face}.'; color: rgb('.$xml->{rh}{u}{font}{color}.')',
+				't'   => 'border-top:'.$xml->{rh}{m}{lines}{horizontal}{width}.'px '.$xml->{rh}{m}{lines}{horizontal}{face}.' rgb('.$xml->{rh}{m}{lines}{horizontal}{color}.'); border-right: '.$xml->{th}{lines}{vertical}{width}.'px '.$xml->{th}{lines}{vertical}{face}.' rgb('.$xml->{th}{lines}{vertical}{color}.');  padding: '.$xml->{rh}{m}{padding}{horizontal}.'0px; background-color: rgb('.$xml->{rh}{u}{bgcolor}{oddeven}.'); text-align:'.$xml->{rh}{u}{align}{horizontal}.'; font-size: '.$xml->{rh}{u}{font}{size}.'px; font-family: '.$xml->{rh}{u}{font}{face}.'; color: rgb('.$xml->{rh}{u}{font}{color}.')', 
+				'ttr' => 'border-top:'.$xml->{rh}{u}{lines}{horizontal}{width}.'px '.$xml->{rh}{u}{lines}{horizontal}{face}.' rgb('.$xml->{rh}{u}{lines}{horizontal}{color}.'); border-right: '.$xml->{ch}{u}{lines}{vertical}{width}.'px '.$xml->{ch}{u}{lines}{vertical}{face}.' rgb('.$xml->{ch}{u}{lines}{vertical}{color}.');  padding: '.$xml->{rh}{l}{padding}{horizontal}.'0px',#.'; background-color: '.$xml->{rh}{l}{bgcolor}{oddeven},
+				'tr'  => 'border-top:'.$xml->{rh}{l}{lines}{horizontal}{width}.'px '.$xml->{rh}{l}{lines}{horizontal}{face}.' rgb('.$xml->{rh}{l}{lines}{horizontal}{color}.'); border-right: '.$xml->{ch}{u}{lines}{vertical}{width}.'px '.$xml->{ch}{u}{lines}{vertical}{face}.' rgb('.$xml->{ch}{u}{lines}{vertical}{color}.');  padding: '.$xml->{rh}{l}{padding}{horizontal}.'0px',#.'; background-color: '.$xml->{rh}{l}{bgcolor}{evenodd},
+d513 2
+a514 2
+				'r' => 'border-top:'.$xml->{th}{lines}{horizontal}{width}.'px '.$xml->{th}{lines}{horizontal}{face}.' rgb('.$xml->{th}{lines}{horizontal}{color}.'); border-right:'.$xml->{ch}{u}{lines}{vertical}{width}.'px '.$xml->{ch}{u}{lines}{vertical}{face}.' rgb('.$xml->{ch}{u}{lines}{vertical}{color}.'); padding: '.$xml->{ch}{u}{padding}{horizontal}.'1px; margin: '.$xml->{ch}{u}{margin}{horizontal}.'0px', 
+				'd' => 'border-top:'.$xml->{th}{lines}{horizontal}{width}.'px '.$xml->{th}{lines}{horizontal}{face}.' rgb('.$xml->{th}{lines}{horizontal}{color}.'); border-right:'.$xml->{ch}{l}{lines}{vertical}{width}.'px '.$xml->{ch}{l}{lines}{vertical}{face}.' rgb('.$xml->{ch}{l}{lines}{vertical}{color}.'); padding: '.$xml->{ch}{m}{padding}{horizontal}.'1px; margin: '.$xml->{ch}{m}{margin}{horizontal}.'0px', 
+d519 4
+a522 4
+				'ee'  => 'background-color: rgb('.$xml->{dc}{bgcolor}{eveneven}.');  text-align:'.$xml->{dc}{align}{horizontal}.'; font-size: '.$xml->{dc}{font}{size}.'px; font-family: '.$xml->{dc}{font}{face}.'; color: rgb('.$xml->{dc}{font}{color}.'); padding: '.$xml->{dc}{padding}{horizontal}.'1px;',
+				'eo'  => 'background-color: rgb('.$xml->{dc}{bgcolor}{evenodd}.');  text-align:'.$xml->{dc}{align}{horizontal}.'; font-size: '.$xml->{dc}{font}{size}.'px; font-family: '.$xml->{dc}{font}{face}.'; color: rgb('.$xml->{dc}{font}{color}.'); padding: '.$xml->{dc}{padding}{horizontal}.'1px;',
+				'oe'  => 'background-color: rgb('.$xml->{dc}{bgcolor}{oddeven}.');  text-align:'.$xml->{dc}{align}{horizontal}.'; font-size: '.$xml->{dc}{font}{size}.'px; font-family: '.$xml->{dc}{font}{face}.'; color: rgb('.$xml->{dc}{font}{color}.'); padding: '.$xml->{dc}{padding}{horizontal}.'1px;',
+				'oo'  => 'background-color: rgb('.$xml->{dc}{bgcolor}{oddodd}.');  text-align:'.$xml->{dc}{align}{horizontal}.'; font-size: '.$xml->{dc}{font}{size}.'px; font-family: '.$xml->{dc}{font}{face}.'; color: rgb('.$xml->{dc}{font}{color}.'); padding: '.$xml->{dc}{padding}{horizontal}.'1px;',
+d525 2
+a526 2
+				'r' => 'border-right:'.$xml->{ch}{u}{lines}{vertical}{width}.'px '.$xml->{ch}{u}{lines}{vertical}{face}.' '.$xml->{ch}{u}{lines}{vertical}{color}.'; padding: '.$xml->{ch}{u}{padding}{horizontal}.'1px; margin: '.$xml->{ch}{u}{margin}{horizontal}.'0px', 
+				'd' => 'border-right:'.$xml->{ch}{m}{lines}{vertical}{width}.'px '.$xml->{ch}{m}{lines}{vertical}{face}.' '.$xml->{ch}{m}{lines}{vertical}{color}.'; padding: '.$xml->{ch}{m}{padding}{horizontal}.'1px; margin: '.$xml->{ch}{m}{margin}{horizontal}.'0px', 
+d528 4
+a531 4
+				'ttd' => 'border-top:'.$xml->{rh}{u}{lines}{horizontal}{width}.'px '.$xml->{rh}{u}{lines}{horizontal}{face}.' rgb('.$xml->{rh}{u}{lines}{horizontal}{color}.'); border-right:'.$xml->{ch}{l}{lines}{vertical}{width}.'px '.$xml->{ch}{l}{lines}{vertical}{face}.' rgb('.$xml->{ch}{l}{lines}{vertical}{color}.'); padding: '.$xml->{rh}{l}{padding}{horizontal}.'0px; margin: '.$xml->{dc}{margin}{horizontal}.'1px', 
+				'ttr' => 'border-top:'.$xml->{rh}{u}{lines}{horizontal}{width}.'px '.$xml->{rh}{u}{lines}{horizontal}{face}.' rgb('.$xml->{rh}{u}{lines}{horizontal}{color}.'); border-right:'.$xml->{ch}{u}{lines}{vertical}{width}.'px '.$xml->{ch}{u}{lines}{vertical}{face}.' rgb('.$xml->{ch}{u}{lines}{vertical}{color}.'); padding: '.$xml->{ch}{u}{padding}{horizontal}.'0px; margin: '.$xml->{dc}{margin}{horizontal}.'1px', 
+				'tr'  => 'border-top:'.$xml->{dc}{lines}{horizontal}{width}.'px '.$xml->{dc}{lines}{horizontal}{face}.' rgb('.$xml->{dc}{lines}{horizontal}{color}.'); border-right:'.$xml->{ch}{u}{lines}{vertical}{width}.'px '.$xml->{ch}{u}{lines}{vertical}{face}.' rgb('.$xml->{ch}{u}{lines}{vertical}{color}.'); padding: '.$xml->{dc}{padding}{horizontal}.'0px; margin: '.$xml->{dc}{margin}{horizontal}.'1px', 
+				'td'  => 'border-top:'.$xml->{dc}{lines}{horizontal}{width}.'px '.$xml->{dc}{lines}{horizontal}{face}.' rgb('.$xml->{dc}{lines}{horizontal}{color}.'); border-right:'.$xml->{ch}{l}{lines}{vertical}{width}.'px '.$xml->{ch}{l}{lines}{vertical}{face}.' rgb('.$xml->{ch}{l}{lines}{vertical}{color}.'); padding: '.$xml->{dc}{padding}{horizontal}.'0px; margin: '.$xml->{dc}{margin}{horizontal}.'1px', 
+@
+
+
+1.130
+log
+@new format of table
+@
+text
+@d5 1
+a5 1
+# $Id: edit_obj.cgi,v 1.129 2004/04/16 16:10:36 vacula Exp $
+d490 2
+a491 2
+			padding: '.$xml->{table}{padding}{horizontal}.'px;
+			margin: '.$xml->{table}{margin}{horizontal}.'px;
+d498 1
+a498 1
+				'ch' => 'background-color: rgb('.$xml->{ch}{u}{bgcolor}{even}.'); text-align: '.$xml->{ch}{u}{align}{horizontal}.'; font-size: '.$xml->{ch}{u}{font}{size}.'px; font-family: '.$xml->{ch}{u}{font}{face}.'; color: rgb('.$xml->{ch}{u}{font}{color}.'); padding: '.$xml->{ch}{u}{padding}{horizontal}.'px; margin: '.$xml->{ch}{u}{margin}{horizontal}.'px;',
+d507 4
+a510 4
+				'tt'  => 'border-top:'.$xml->{rh}{u}{lines}{horizontal}{width}.'px '.$xml->{rh}{u}{lines}{horizontal}{face}.' rgb('.$xml->{rh}{u}{lines}{horizontal}{color}.'); border-right: '.$xml->{th}{lines}{vertical}{width}.'px '.$xml->{th}{lines}{vertical}{face}.' rgb('.$xml->{th}{lines}{vertical}{color}.');  padding: '.$xml->{rh}{m}{padding}{horizontal}.'px; background-color: rgb('.$xml->{rh}{u}{bgcolor}{oddeven}.'); text-align:'.$xml->{rh}{u}{align}{horizontal}.'; font-size: '.$xml->{rh}{u}{font}{size}.'px; font-family: '.$xml->{rh}{u}{font}{face}.'; color: rgb('.$xml->{rh}{u}{font}{color}.')',
+				't'   => 'border-top:'.$xml->{rh}{m}{lines}{horizontal}{width}.'px '.$xml->{rh}{m}{lines}{horizontal}{face}.' rgb('.$xml->{rh}{m}{lines}{horizontal}{color}.'); border-right: '.$xml->{th}{lines}{vertical}{width}.'px '.$xml->{th}{lines}{vertical}{face}.' rgb('.$xml->{th}{lines}{vertical}{color}.');  padding: '.$xml->{rh}{m}{padding}{horizontal}.'px; background-color: rgb('.$xml->{rh}{u}{bgcolor}{oddeven}.'); text-align:'.$xml->{rh}{u}{align}{horizontal}.'; font-size: '.$xml->{rh}{u}{font}{size}.'px; font-family: '.$xml->{rh}{u}{font}{face}.'; color: rgb('.$xml->{rh}{u}{font}{color}.')', 
+				'ttr' => 'border-top:'.$xml->{rh}{u}{lines}{horizontal}{width}.'px '.$xml->{rh}{u}{lines}{horizontal}{face}.' rgb('.$xml->{rh}{u}{lines}{horizontal}{color}.'); border-right: '.$xml->{ch}{u}{lines}{vertical}{width}.'px '.$xml->{ch}{u}{lines}{vertical}{face}.' rgb('.$xml->{ch}{u}{lines}{vertical}{color}.');  padding: '.$xml->{rh}{l}{padding}{horizontal}.'px',#.'; background-color: '.$xml->{rh}{l}{bgcolor}{oddeven},
+				'tr'  => 'border-top:'.$xml->{rh}{l}{lines}{horizontal}{width}.'px '.$xml->{rh}{l}{lines}{horizontal}{face}.' rgb('.$xml->{rh}{l}{lines}{horizontal}{color}.'); border-right: '.$xml->{ch}{u}{lines}{vertical}{width}.'px '.$xml->{ch}{u}{lines}{vertical}{face}.' rgb('.$xml->{ch}{u}{lines}{vertical}{color}.');  padding: '.$xml->{rh}{l}{padding}{horizontal}.'px',#.'; background-color: '.$xml->{rh}{l}{bgcolor}{evenodd},
+d512 2
+a513 2
+				'r' => 'border-top:'.$xml->{th}{lines}{horizontal}{width}.'px '.$xml->{th}{lines}{horizontal}{face}.' rgb('.$xml->{th}{lines}{horizontal}{color}.'); border-right:'.$xml->{ch}{u}{lines}{vertical}{width}.'px '.$xml->{ch}{u}{lines}{vertical}{face}.' rgb('.$xml->{ch}{u}{lines}{vertical}{color}.'); padding: '.$xml->{ch}{u}{padding}{horizontal}.'px; margin: '.$xml->{ch}{u}{margin}{horizontal}.'px', 
+				'd' => 'border-top:'.$xml->{th}{lines}{horizontal}{width}.'px '.$xml->{th}{lines}{horizontal}{face}.' rgb('.$xml->{th}{lines}{horizontal}{color}.'); border-right:'.$xml->{ch}{l}{lines}{vertical}{width}.'px '.$xml->{ch}{l}{lines}{vertical}{face}.' rgb('.$xml->{ch}{l}{lines}{vertical}{color}.'); padding: '.$xml->{ch}{m}{padding}{horizontal}.'px; margin: '.$xml->{ch}{m}{margin}{horizontal}.'px', 
+d518 4
+a521 4
+				'ee'  => 'background-color: rgb('.$xml->{dc}{bgcolor}{eveneven}.');  text-align:'.$xml->{dc}{align}{horizontal}.'; font-size: '.$xml->{dc}{font}{size}.'px; font-family: '.$xml->{dc}{font}{face}.'; color: rgb('.$xml->{dc}{font}{color}.'); padding: '.$xml->{dc}{padding}{horizontal}.'px;',
+				'eo'  => 'background-color: rgb('.$xml->{dc}{bgcolor}{evenodd}.');  text-align:'.$xml->{dc}{align}{horizontal}.'; font-size: '.$xml->{dc}{font}{size}.'px; font-family: '.$xml->{dc}{font}{face}.'; color: rgb('.$xml->{dc}{font}{color}.'); padding: '.$xml->{dc}{padding}{horizontal}.'px;',
+				'oe'  => 'background-color: rgb('.$xml->{dc}{bgcolor}{oddeven}.');  text-align:'.$xml->{dc}{align}{horizontal}.'; font-size: '.$xml->{dc}{font}{size}.'px; font-family: '.$xml->{dc}{font}{face}.'; color: rgb('.$xml->{dc}{font}{color}.'); padding: '.$xml->{dc}{padding}{horizontal}.'px;',
+				'oo'  => 'background-color: rgb('.$xml->{dc}{bgcolor}{oddodd}.');  text-align:'.$xml->{dc}{align}{horizontal}.'; font-size: '.$xml->{dc}{font}{size}.'px; font-family: '.$xml->{dc}{font}{face}.'; color: rgb('.$xml->{dc}{font}{color}.'); padding: '.$xml->{dc}{padding}{horizontal}.'px;',
+d524 2
+a525 2
+				'r' => 'border-right:'.$xml->{ch}{u}{lines}{vertical}{width}.'px '.$xml->{ch}{u}{lines}{vertical}{face}.' '.$xml->{ch}{u}{lines}{vertical}{color}.'; padding: '.$xml->{ch}{u}{padding}{horizontal}.'px; margin: '.$xml->{ch}{u}{margin}{horizontal}.'px', 
+				'd' => 'border-right:'.$xml->{ch}{m}{lines}{vertical}{width}.'px '.$xml->{ch}{m}{lines}{vertical}{face}.' '.$xml->{ch}{m}{lines}{vertical}{color}.'; padding: '.$xml->{ch}{m}{padding}{horizontal}.'px; margin: '.$xml->{ch}{m}{margin}{horizontal}.'px', 
+d527 4
+a530 4
+				'ttd' => 'border-top:'.$xml->{rh}{u}{lines}{horizontal}{width}.'px '.$xml->{rh}{u}{lines}{horizontal}{face}.' rgb('.$xml->{rh}{u}{lines}{horizontal}{color}.'); border-right:'.$xml->{ch}{l}{lines}{vertical}{width}.'px '.$xml->{ch}{l}{lines}{vertical}{face}.' rgb('.$xml->{ch}{l}{lines}{vertical}{color}.'); padding: '.$xml->{rh}{l}{padding}{horizontal}.'px; margin: '.$xml->{dc}{margin}{horizontal}.'px', 
+				'ttr' => 'border-top:'.$xml->{rh}{u}{lines}{horizontal}{width}.'px '.$xml->{rh}{u}{lines}{horizontal}{face}.' rgb('.$xml->{rh}{u}{lines}{horizontal}{color}.'); border-right:'.$xml->{ch}{u}{lines}{vertical}{width}.'px '.$xml->{ch}{u}{lines}{vertical}{face}.' rgb('.$xml->{ch}{u}{lines}{vertical}{color}.'); padding: '.$xml->{ch}{u}{padding}{horizontal}.'px; margin: '.$xml->{dc}{margin}{horizontal}.'px', 
+				'tr'  => 'border-top:'.$xml->{dc}{lines}{horizontal}{width}.'px '.$xml->{dc}{lines}{horizontal}{face}.' rgb('.$xml->{dc}{lines}{horizontal}{color}.'); border-right:'.$xml->{ch}{u}{lines}{vertical}{width}.'px '.$xml->{ch}{u}{lines}{vertical}{face}.' rgb('.$xml->{ch}{u}{lines}{vertical}{color}.'); padding: '.$xml->{dc}{padding}{horizontal}.'px; margin: '.$xml->{dc}{margin}{horizontal}.'px', 
+				'td'  => 'border-top:'.$xml->{dc}{lines}{horizontal}{width}.'px '.$xml->{dc}{lines}{horizontal}{face}.' rgb('.$xml->{dc}{lines}{horizontal}{color}.'); border-right:'.$xml->{ch}{l}{lines}{vertical}{width}.'px '.$xml->{ch}{l}{lines}{vertical}{face}.' rgb('.$xml->{ch}{l}{lines}{vertical}{color}.'); padding: '.$xml->{dc}{padding}{horizontal}.'px; margin: '.$xml->{dc}{margin}{horizontal}.'px', 
+d549 1
+a549 1
+ TABLE.graph  TD { color: inherit; background-color: inherit; text-align: center;}
+d551 1
+@
+
+
+1.129
+log
+@changes for new interface
+@
+text
+@d5 1
+a5 1
+# $Id: edit_obj.cgi,v 1.128 2004/04/15 13:22:23 jiri_schmid Exp $
+d389 1
+d476 136
+@
+
+
+1.128
+log
+@implemented opening object on last used tab, if possible
+@
+text
+@d5 1
+a5 1
+# $Id: edit_obj.cgi,v 1.127 2004/04/15 08:41:56 jiri_schmid Exp $
+d13 1
+d97 1
+a97 1
+my ($fullObj, $objType, $obj);	#ptr to main part of data structure
+d100 1
+a100 1
+$objType = &Local::loadMetadata($ID,\$fullObj,\$obj);
+d113 7
+d131 2
+a132 1
+	format2d => ['desc','def','layout','colors','logo','map','rights',],
+d187 22
+a208 8
+	$variables->{langSegment} = 'Format2d';
+	$variables->{hidden}->{form} = $obj->{form};
+	$variables->{hidden}->{type} = "graph2d";
+	if ($localTab eq 'def') { require 'edit/Format2d.pm'; }
+	elsif ($localTab eq 'layout') { require 'edit/Format2d_layout.pm'; }
+	elsif ($localTab eq 'colors') { require 'edit/Format2d_color.pm'; }
+	elsif ($localTab eq 'logo') { require 'edit/Format2d_logo.pm'; }
+	elsif ($localTab eq 'map') { require 'edit/Format2d_map.pm'; }
+d233 3
+a235 1
+&do_work(\$q,\$obj,\$variables,\$fullObj,$objType) if $q->param('Action') || $q->param('Recover');
+a236 1
+&Local::createTabs(\$q,$ID,$objType,$localTab,\$obj,\$Const::lang->{ $variables->{useLang} },\$variables,\@@{$objectTabs->{$objType}},\$fullObj) if defined $ID;	# call into edit/*_ed.pl
+d260 1
+a260 1
+my ($q, $obj, $variables, $fullObj, $objType) = (shift,shift,shift,shift,shift);
+d294 1
+a294 1
+				&link2NextParams(\$subObj,$variables,$objType,$q);
+d311 1
+a311 1
+			&link2NextParams(\$subObj,$variables,$objType,$q) if $linkIt;
+a324 1
+
+d353 1
+a353 1
+			&link2NextParams($obj,$variables,$objType,$q);	# called from edit/*_ed.pl
+d379 1
+a379 1
+	my ($obj,$variables,$objType,$q) = (shift,shift,shift,shift);
+d409 12
+a420 8
+	if ($localTab eq 'colors') {
+		&Format2d_color::set_next_param($obj,$q,$variables)
+	} elsif ($localTab eq 'layout') {
+		&Format2d_layout::set_next_param($obj,$q,$variables)
+	} elsif ($localTab eq 'logo') {
+		&Format2d_logo::set_next_param($obj,$q,$variables)
+	} elsif ($localTab eq 'map') {
+		&Format2d_map::set_next_param($obj,$q,$variables)
+d422 17
+@
+
+
+1.127
+log
+@last used tab is active 4 viewing object, when possible
+@
+text
+@d5 1
+a5 1
+# $Id: edit_obj.cgi,v 1.126 2004/02/25 16:05:02 jiri_schmid Exp $
+a110 1
+my $localTab;
+d112 16
+d131 2
+a132 1
+	@@loadTabs = ($q->param('target_tab')) ? $q->param('target_tab')  : 'def';
+d136 1
+a136 1
+#print "<pre>".Dumper($q)."</pre>";
+d138 1
+d140 1
+a140 1
+	$localTab = ($objType =~ /^attr$|^fact$/ && $_ eq 'def') ? $objType : $_; #always open description tab for attributes and facts
+a144 1
+$localTab = 'rights' if $variables->{lastTab} eq 'rights';
+d146 2
+a147 2
+if ($localTab eq $objType) {
+	if ($localTab =~ /^attr$|^fact$|^urole$/) {
+d150 1
+a150 1
+		require 'edit/Description.pm'
+d153 1
+a153 5
+if ($objType eq 'attr') {							# A T T R
+	@@localTabs = ('attr','rights');
+} elsif ($objType eq 'fact') {							# F A C T
+	@@localTabs = ('fact','rights');
+} elsif ($objType eq 'filter') {						# F I L T E R
+a154 1
+	@@localTabs = ('filter','def','rights');
+a156 1
+	@@localTabs = ('param','def','q','rights');
+a159 1
+	@@localTabs = ('format','def','rights');
+a164 1
+	@@localTabs = ('format3d','def','rights');
+a169 1
+	@@localTabs = ('metric','def','rights');
+d171 2
+a172 3
+} elsif ($objType eq 'grid') {							# G R I D
+	@@localTabs = ('grid','def','rights');
+	if ($localTab eq 'def') { require 'edit/Grid.pm'; }
+a174 1
+	@@localTabs = ('urole','def');
+a178 1
+	@@localTabs = ('format2d','def','layout','colors','logo','map','rights',);
+a188 1
+	@@localTabs = ('graph3d','def','x','y','z','diameter','transparency','shape','color','rights');
+a194 1
+	@@localTabs = ('report','def','filter','object','format','sql','rights');
+d198 1
+a198 1
+	if ($localTab eq 'report') { require 'edit/Report_main.pm'; }
+a206 2
+$localTab = $variables->{lastTab} if grep /^$variables->{lastTab}$/,@@localTabs; #activate last active tab if tab type in list
+
+d212 1
+a212 1
+&Local::createTabs(\$q,$ID,$objType,$localTab,\$obj,\$Const::lang->{ $variables->{useLang} },\$variables,\@@localTabs,\$fullObj) if defined $ID;	# call into edit/*_ed.pl
+d358 1
+d361 14
+a374 4
+} elsif ($objType eq 'filter' && $localTab eq 'def') {
+	&Filter::set_next_param($obj,$q);
+} elsif ($objType eq 'param') {
+	if ($localTab eq 'def') {
+d376 6
+a381 2
+	} elsif ($localTab eq 'q') {
+		&Param_q::set_next_param($obj,$q,$variables)
+d383 2
+a384 10
+} elsif ($objType eq 'format' && $localTab eq 'def') {
+	&Format::set_next_param($obj,$q,$variables)
+} elsif ($objType eq 'format3d' && $localTab eq 'def') {
+	&Format3d::set_next_param($obj,$q,$variables)
+} elsif ($objType eq 'metric' && $localTab eq 'def') {
+	&Metric::set_next_param($obj,$q,$variables)
+} elsif ($objType eq 'grid' && $localTab eq 'def') {
+	&Grid::set_next_param($obj,$q,$variables)
+} elsif ($objType eq 'urole' && $localTab eq 'def') {
+	&Role::set_next_param($obj,$q,$variables)
+d386 1
+a386 3
+	if ($localTab eq 'def') {
+		&Format2d::set_next_param($obj,$q,$variables)
+	} elsif ($localTab eq 'colors') {
+d396 1
+a396 3
+	if ($localTab eq 'def') {
+		&Graph3d::set_next_param($obj,$q,$variables)
+	} elsif ($localTab eq 'color') {
+d406 1
+a406 7
+	if ($localTab eq 'report') {
+		return
+	}
+	elsif ($localTab eq 'def') {
+		&Report::set_next_param($obj,$q,$variables)
+	}
+	elsif ($localTab eq 'filter') {
+d408 1
+a408 2
+	}
+	elsif ($localTab eq 'object') {
+d410 1
+a410 2
+	}
+	elsif ($localTab eq 'format') {
+d412 1
+a412 2
+	}
+	elsif ($localTab eq 'sql') {
+@
+
+
+1.126
+log
+@fixed rights logic and folder XML definition files are specific for each project now
+@
+text
+@d5 1
+a5 1
+# $Id: edit_obj.cgi,v 1.125 2004/02/24 10:21:34 jiri_schmid Exp $
+d54 2
+d107 1
+d128 1
+d205 2
+@
+
+
+1.125
+log
+@prefer access and rights logic changed
+@
+text
+@d5 1
+a5 1
+# $Id: edit_obj.cgi,v 1.124 2004/02/20 12:41:02 jiri_schmid Exp $
+d209 4
+a212 5
+			-style=>{ -src=>"$variables->{skinPath}css.css"},
+			-onload=>"hide_load()",
+			-script=>{-language=>'JAVASCRIPT', -src=>'js/attr.js'}
+			);
+	my $msg = ($CA == 1) ? "$Const::lang->{$variables->{useLang}}{'Forbidden Object'} " : "$Const::lang->{$variables->{useLang}}{'Forbidden Tab'}";
+d217 7
+a223 2
+	$msg .= join(",",@@CAR);
+	&Local::accessForbidden($msg);
+@
+
+
+1.124
+log
+@rights for edit page finished
+@
+text
+@d5 1
+a5 1
+# $Id: edit_obj.cgi,v 1.123 2004/02/18 16:19:06 jiri_schmid Exp $
+d47 1
+a47 1
+$variables->{allParams} = ($q->param('all_params')) ? $q->param('all_params') : "Lang=".$q->param('Lang')."&Cook=".$q->param('Cook')."&Open=".$q->param('Open')."&Proj=".$q->param('Proj')."&sqlA=".$q->param('sqlA')."&Skin=$variables->{skin}";
+@
+
+
+1.123
+log
+@rights implemented
+@
+text
+@d5 1
+a5 1
+# $Id: edit_obj.cgi,v 1.121 2004/02/10 14:46:54 jiri_schmid Exp $
+d63 14
+a76 3
+my $CAR = $q->param('Action') ? 'W' : 'R';	#check rights according to operation read / write
+$CAR = 'W' if $q->param('Recover');	#check for write ever
+my $CA = SOAP->CheckAccess('E',$user,$q->param('Proj'),$ID,$CAR);
+d213 6
+a218 2
+	my $rght = "Forbidden $CAR";
+	my $msg = ($CA == 1) ? "$Const::lang->{$variables->{useLang}}{'Forbidden Object'} $Const::lang->{$variables->{useLang}}{$rght}" : "$Const::lang->{$variables->{useLang}}{'Forbidden Tab'}";
+@
+
+
+1.122
+log
+@security improvment for tabs
+@
+text
+@d63 4
+a66 1
+if (SOAP->CheckAccess('E',$user,$q->param('Proj'))) {
+d193 1
+a193 1
+&do_work(\$q,\$obj,\$variables,\$fullObj,$objType) if $q->param('Action');
+d197 8
+a204 2
+	print $q->start_html(-style=>{ -src=>"$variables->{skinPath}css.css"});
+	&Local::accessForbidden('Edit',$user);
+d222 1
+a222 1
+	if ($action =~ /$Const::lang->{$use_lang}->{'Save'}|$check|$Const::lang->{$use_lang}->{'Save and Run'}|$Const::lang->{$use_lang}->{'Rights'}/) {
+@
+
+
+1.121
+log
+@mod perl fixies, functionality improvment
+@
+text
+@d5 1
+a5 1
+# $Id: edit_obj.cgi,v 1.120 2004/01/27 13:35:15 jiri_schmid Exp $
+d52 1
+d63 1
+d193 4
+a196 1
+
+@
+
+
+1.120
+log
+@dynamic param fix, description fix
+@
+text
+@d5 1
+a5 1
+# $Id: edit_obj.cgi,v 1.119 2004/01/23 09:13:12 jiri_schmid Exp $
+d94 1
+a94 1
+if ($q->param('Action')) {
+d99 1
+d101 1
+a101 1
+#print "<pre>".Dumper(@@loadTabs)."</pre>";
+d103 1
+a103 1
+foreach (@@loadTabs) {
+@
+
+
+1.119
+log
+@filter,metric syntax checker fix
+@
+text
+@d5 1
+a5 1
+# $Id: edit_obj.cgi,v 1.118 2003/12/12 12:12:06 jiri_schmid Exp $
+a282 1
+
+@
+
+
+1.118
+log
+@found a fixed bug manipulating dynamic params in grid
+@
+text
+@d5 1
+a5 1
+# $Id: edit_obj.cgi,v 1.117 2003/12/04 12:15:12 jiri_schmid Exp $
+d184 3
+@
+
+
+1.117
+log
+@img type changes tested and fixed
+@
+text
+@d5 1
+a5 1
+# $Id: edit_obj.cgi,v 1.116 2003/12/02 16:22:28 jiri_schmid Exp $
+d86 1
+@
+
+
+1.116
+log
+@fixed some generating bugs when creating HTML output
+@
+text
+@d5 1
+a5 1
+# $Id: edit_obj.cgi,v 1.115 2003/11/27 16:40:57 jiri_schmid Exp $
+d48 1
+a48 1
+$variables->{imgType} = &Local::getImageType("$Const::myPath$variables->{skinPath}img/");
+@
+
+
+1.115
+log
+@something like drill implemeted
+@
+text
+@d5 1
+a5 1
+# $Id: edit_obj.cgi,v 1.114 2003/11/24 10:43:40 vacula Exp $
+a209 1
+			&link2NextParams(\$subObj,$variables,$objType,$q);
+d211 1
+d226 2
+a232 4
+				if ($$q->param('ObjT') eq "graph3d") {	#special handling for tabs other then def,graph3d,rights when editing graph3d
+					$subObj->{$local} = $$obj->{$local};
+					&link2NextParams(\$subObj,$variables,$objType,$q);
+				};
+d237 3
+d242 3
+a244 1
+
+@
+
+
+1.114
+log
+@fix format2d_map
+@
+text
+@d5 1
+a5 1
+# $Id: edit_obj.cgi,v 1.113 2003/11/20 16:34:03 jiri_schmid Exp $
+d252 1
+a252 1
+			$newObj->{$type}{$newId}{meta}{owner} = $$variables->{user};
+d290 1
+a290 4
+		if (!$r) {
+			my $n=$$q->param('name');
+			print "<span class='error'>ERROR: Saving Object [$n] into metadata failed.</span>";
+		} else {
+d300 3
+@
+
+
+1.113
+log
+@fixed naming of unlocalized objects
+@
+text
+@d5 1
+a5 1
+# $Id: edit_obj.cgi,v 1.112 2003/11/19 09:46:40 jiri_schmid Exp $
+d341 2
+@
+
+
+1.112
+log
+@fixed bug with name and description when auto-saving
+@
+text
+@d5 1
+a5 1
+# $Id: edit_obj.cgi,v 1.111 2003/11/19 09:26:14 jiri_schmid Exp $
+d199 2
+a200 2
+	my $lastName = &Local::LocalizedObj($$obj->{name}, "Object #$$variables->{id}", $saveLang, $Const::defaultLanguage);
+	my $lastDesc = &Local::LocalizedObj($$obj->{description}, "Object #$$variables->{id}", $saveLang, $Const::defaultLanguage);
+@
+
+
+1.111
+log
+@micro change
+@
+text
+@d5 1
+a5 1
+# $Id: edit_obj.cgi,v 1.110 2003/11/18 14:38:34 jiri_schmid Exp $
+d273 3
+a275 2
+			$$obj->{name} = &Local::setLocalizedObj($$obj->{name},$$q->param('name'),$saveLang);
+			$$obj->{description} = &Local::setLocalizedObj($$obj->{description},&Local::param_utf8($q,'desc'),$saveLang);
+@
+
+
+1.110
+log
+@auto save when changing tabs implemented
+@
+text
+@d5 1
+a5 1
+# $Id: edit_obj.cgi,v 1.109 2003/11/14 11:45:31 jiri_schmid Exp $
+d92 6
+a97 1
+my @@loadTabs = (defined $q->param('target_tab')) ? ($q->param('source_tab') eq $q->param('target_tab')) ? ($q->param('target_tab')) : ($q->param('source_tab'),$q->param('target_tab')) : 'def';
+d100 1
+@
+
+
+1.109
+log
+@question for dynamic param implemented
+@
+text
+@d5 1
+a5 1
+# $Id: edit_obj.cgi,v 1.108 2003/11/11 14:03:03 jiri_schmid Exp $
+d47 1
+a47 1
+$variables->{allParams} = ($q->param('all_params')) ? $q->param('all_params') :  "Lang=".$q->param('Lang')."&Cook=".$q->param('Cook')."&Open=".$q->param('Open')."&Proj=".$q->param('Proj')."&sqlA=".$q->param('sqlA')."&Skin=$variables->{skin}";
+a81 1
+
+d91 10
+a100 5
+my $localTab = ($q->param('LocalTab')) ? $q->param('LocalTab') : ($q->param('local_tab')) ? $q->param('local_tab') : "def"; # $objType; # (open description tab)
+$localTab = $objType if ($objType =~ /attr|fact/ && $localTab eq "def"); #always open description tab for attributes and facts
+$variables->{icon} = $objType;
+$objType =~ /(.)(.*)/;
+$variables->{langSegment} = uc($1).$2;
+d113 1
+a113 1
+} elsif ($objType eq 'filter') {							# F I L T E R
+d121 1
+a121 1
+} elsif ($objType eq 'format') {							# F O R M A T
+d127 1
+a127 1
+} elsif ($objType eq 'format3d') {							# F O R M A T 3 D
+d132 1
+a132 1
+} elsif ($objType eq 'metric') {							# M E T R I C
+d144 1
+a144 1
+} elsif ($objType eq 'format2d') {							# F O R M A T 2 D
+d146 1
+a146 1
+	@@localTabs = ('format2d','def','layout','color','logo','map','rights',);
+d154 1
+a154 1
+} elsif ($objType eq 'graph3d') {							# G R A P H 3 D
+d163 1
+a163 1
+} elsif ($objType eq 'report') {							# R E P O R T
+d175 1
+d267 3
+a269 4
+			$$obj->{name} = &Local::setLocalizedObj($$obj->{name},$$q->param('name'),$saveLang) if ($$q->param('name'));
+			if ($$q->param('desc')) {
+				$$obj->{description} = &Local::setLocalizedObj($$obj->{description},&Local::param_utf8($q,'desc'),$saveLang);
+			}
+d304 1
+a304 1
+	my $localTab = $$q->param('local_tab');
+d339 1
+a339 1
+		&Graph3d_color::set_next_param($obj,$q,$$variables->{localTab})
+d341 1
+a341 1
+		&Graph3d_shape::set_next_param($obj,$q,$$variables->{localTab})
+d343 1
+a343 1
+		&Graph3d_axis::set_next_param($obj,$q,$$variables->{localTab})
+d345 1
+a345 1
+		&Graph3d_diam::set_next_param($obj,$q,$$variables->{localTab})
+@
+
+
+1.108
+log
+@creating report - minor bugs fixed, seems to be working properly
+@
+text
+@d5 1
+a5 1
+# $Id: edit_obj.cgi,v 1.107 2003/11/09 20:31:45 vacula Exp $
+d114 1
+a114 1
+	@@localTabs = ('param','def','rights');
+d116 1
+d305 6
+a310 2
+} elsif ($objType eq 'param' && $localTab eq 'def') {
+	&Param::set_next_param($obj,$q,$variables)
+@
+
+
+1.107
+log
+@added graph 2d map
+@
+text
+@d5 1
+a5 1
+# $Id: edit_obj.cgi,v 1.106 2003/11/07 13:40:44 jiri_schmid Exp $
+a148 1
+
+@
+
+
+1.106
+log
+@tested a fixed saving of all objects
+@
+text
+@d5 1
+a5 1
+# $Id: edit_obj.cgi,v 1.105 2003/11/07 09:35:05 jiri_schmid Exp $
+d141 1
+a141 1
+	@@localTabs = ('format2d','def','layout','colors','logo','rights');
+d148 2
+@
+
+
+1.105
+log
+@saving rights of attr and fact fixed
+@
+text
+@d5 1
+a5 1
+# $Id: edit_obj.cgi,v 1.104 2003/11/05 10:44:47 jiri_schmid Exp $
+d99 1
+a99 1
+	if ($localTab =~ /^attr$|^fact$/) {
+d137 1
+d141 1
+a141 1
+	@@localTabs = ('format2d','def','layout','color','logo','rights');
+d146 1
+a146 1
+	elsif ($localTab eq 'color') { require 'edit/Format2d_color.pm'; }
+d228 1
+a228 1
+			
+d318 1
+a318 1
+	} elsif ($localTab eq 'color') {
+@
+
+
+1.104
+log
+@pointers everywhere, reapply of removed fix
+@
+text
+@d5 1
+a5 1
+# $Id: edit_obj.cgi,v 1.103 2003/11/04 15:18:54 jiri_schmid Exp $
+d179 1
+d188 1
+d266 2
+a267 2
+				$fullObj->{$objType}{$$variables->{id}} = {};
+				$$obj = $fullObj->{$objType}->{$$variables->{id}};
+@
+
+
+1.103
+log
+@save as - modperl fixies, code improvments
+@
+text
+@d5 1
+a5 1
+# $Id: edit_obj.cgi,v 1.102 2003/10/31 12:47:54 jiri_schmid Exp $
+d171 1
+a171 1
+&Local::createTabs($q,$ID,$objType,$localTab,\$obj,\$Const::lang->{ $variables->{useLang} },\$variables,\@@localTabs,\$fullObj) if defined $ID;	# call into edit/*_ed.pl
+@
+
+
+1.102
+log
+@mod perl rocks!
+@
+text
+@d5 1
+a5 1
+# $Id: edit_obj.cgi,v 1.101 2003/10/17 11:36:08 jiri_schmid Exp $
+d195 1
+a196 2
+			my $local = $$q->param('local_tab');
+			
+d210 1
+a210 1
+				$type = ($subObj->{format_def}{type} eq 'grid') ? "format" : "format3d";
+d212 2
+d299 1
+a299 1
+	&Filter::set_next_param($obj,$q)
+@
+
+
+1.101
+log
+@last changes-fixies coresponding mod-perl stage 1
+@
+text
+@d5 1
+a5 1
+# $Id: edit_obj.cgi,v 1.100 2003/10/16 15:29:08 jiri_schmid Exp $
+d8 3
+a10 1
+binmode STDOUT,':utf8';
+d13 2
+a14 1
+our $q = new CGI;
+d16 13
+a28 2
+require "const.def";
+our($StyleSheet,$bearHost,$bearPort,$compress_threshold,$Languages,$lang,$ObjectAttr,$MetricsIdent,$DefaultLanguage);
+d30 7
+a36 7
+require "local/local_lib.pl";
+
+our $ID = param('item_id');
+our $User=$q->remote_user();
+
+our $variables = {};
+our @@localTabs;
+d38 8
+a45 2
+$variables->{useLang} = (param('Lang')) ? param('Lang') : param('active_lang'); #active lang defined in *_ed.pl
+$variables->{skin} = (param('Skin')) ? param('Skin') : (param('skin')) ? param('skin') : "";
+d47 3
+a49 3
+$variables->{allParams} = (param('all_params')) ? param('all_params') :  "Lang=".param('Lang')."&Cook=".param('Cook')."&Open=".param('Open')."&Proj=".param('Proj')."&sqlA=".param('sqlA')."&Skin=$variables->{skin}";
+$variables->{imgType} = getImageType("$variables->{skinPath}img/");
+$variables->{defaultLang} = $DefaultLanguage;
+d51 2
+d54 1
+a54 1
+require $Languages->{ $variables->{useLang} }->{src};
+d56 3
+a58 1
+my $use_enc = $Languages->{ $variables->{useLang} }->{'enc'};
+d65 1
+a65 1
+	-lang=>$Languages->{ $variables->{useLang} }->{lang},
+a75 15
+# --- make SOAP connection ---
+eval "use SOAP::Lite +autodispatch => 
+	uri => 'Bear', 
+	proxy => ['http://$bearHost:$bearPort/', 
+	options => {compress_threshold => $compress_threshold}],
+	encoding => 'UTF-8';
+	1"
+or ( &ErrorDie("ERROR in eval of \"use SOAP::Lite ...\".") );
+
+my $serverVerbName="SOAP Server http://$bearHost:$bearPort/";
+if (! eval "SOAP::Lite->self->fault") {
+	ErrorDie('ERROR: '.$serverVerbName.' not responding<br><form><input type="submit" name="Refresh" value="Refresh" /></form>');
+}
+#*SOAP::Serializer::as_string = \&SOAP::Serializer::as_base64;	#reducing number of XML::Parser char() callbaks  for every single portion of processed stream (e.g. \n)
+
+d78 4
+a81 6
+my $FullObj;	#full object hash
+our $ObjT;		#object type
+our $Obj;		#ptr to main part of data structure
+
+#my @@x = param();	#show sended parameters
+#print "param:@@x";
+d83 1
+a83 2
+loadMetadata($ID) if ($ID);
+print <<END ;
+d85 2
+a86 2
+	var mg="$MetricsIdent";
+	var mg_type="$ObjectAttr->{$MetricsIdent}->{nick}";
+d88 1
+a88 1
+	var saveEnName = "$lang->{'Save EN Name'}";
+d92 18
+a109 40
+our $localTab = (param('LocalTab')) ? param('LocalTab') : (param('local_tab')) ? param('local_tab') : "def"; # $ObjT; # (open description tab)
+$localTab = $ObjT if ($ObjT =~ /attr|fact/ && $localTab eq "def"); #always open description tab for attributes and facts
+if ($ObjT eq 'report') {							# R E P O R T
+#	require 'edit/report_ed.pl';
+	$variables->{langSegment} = 'Report';
+	$variables->{icon} = 'report';
+	@@localTabs = ('report','def','filter','object','format','sql','rights');
+	$variables->{hidden}->{open_in} = (param('Open')) ? param('Open') : param('open_in');
+	$variables->{contentVars} = param('Copy');
+	$variables->{script} = "report.js";
+	if ($localTab eq 'report') { require 'edit/report_main_ed.pl'; }
+	elsif ($localTab eq 'def') { require 'edit/report_def_ed.pl'; }
+	elsif ($localTab eq 'filter') { require 'edit/report_filter_ed.pl'; }
+	elsif ($localTab eq 'object') { require 'edit/report_object_ed.pl'; }
+	elsif ($localTab eq 'format') { require 'edit/report_format_ed.pl'; }
+	elsif ($localTab eq 'sql') { require 'edit/report_sql_ed.pl'; }
+	elsif ($localTab eq 'rights') { require 'edit/rights2_ed.pl'; }
+} elsif ($ObjT eq 'grid') {							# G R I D
+#	require 'edit/grid_ed.pl';
+	$variables->{langSegment} = 'Grid';
+	$variables->{icon} = 'grid';
+	@@localTabs = ('grid','def','rights');
+	if ($localTab eq 'grid') { require 'edit/description_ed.pl'; }
+	elsif ($localTab eq 'def') { require 'edit/grid_def_ed.pl'; }
+	elsif ($localTab eq 'rights') { require 'edit/rights2_ed.pl'; }
+} elsif ($ObjT eq 'metric') {							# M E T R I C
+#	require 'edit/metric_ed.pl';
+	$variables->{langSegment} = 'Metric';
+	$variables->{icon} = 'metric';
+	$variables->{script} = "filter_metric.js";
+	@@localTabs = ('metric','def','rights');
+	if ($localTab eq 'metric') { require 'edit/description_ed.pl'; }
+	elsif ($localTab eq 'def') { require 'edit/metric_def_ed.pl'; }
+	elsif ($localTab eq 'rights') { require 'edit/rights2_ed.pl'; }
+} elsif ($ObjT eq 'folder') {							# F O L D E R
+	require 'edit/folder_ed.pl' 
+} elsif ($ObjT eq 'filter') {							# F I L T E R
+#	require 'edit/filter_ed.pl';
+	$variables->{langSegment} = 'Filter';
+	$variables->{icon} = 'filter';
+d112 5
+a116 7
+	if ($localTab eq 'filter') { require 'edit/description_ed.pl'; }
+	elsif ($localTab eq 'def') { require 'edit/filter_def_ed.pl'; }
+	elsif ($localTab eq 'rights') { require 'edit/rights2_ed.pl'; }
+} elsif ($ObjT eq 'format') {							# F O R M A T
+#	require 'edit/format_ed.pl';
+	$variables->{langSegment} = 'Format';
+	$variables->{icon} = 'format';
+d118 1
+a118 1
+	$variables->{hidden}->{form} = $Obj->{form};
+d120 3
+a122 23
+	$variables->{hidden}->{header} = "$Obj->{header}";
+	if ($localTab eq 'format') { require 'edit/description_ed.pl'; }
+	elsif ($localTab eq 'def') { require 'edit/format_def_ed.pl'; }
+	elsif ($localTab eq 'rights') { require 'edit/rights2_ed.pl'; }
+} elsif ($ObjT eq 'graph3d') {							# G R A P H 3 D
+#	require 'edit/graph3d_ed.pl';
+	require 'local/graph3d_lib.pl';
+	$variables->{langSegment} = 'Graph3d';
+	$variables->{icon} = 'graph3d';
+	$variables->{script} = "graph3d.js";
+	$variables->{localTab} = $localTab;
+	@@localTabs = ('graph3d','def','x','y','z','diameter','transparency','shape','color','rights');
+	if ($localTab eq 'graph3d') { require 'edit/description_ed.pl'; }
+	elsif ($localTab eq 'def') { require 'edit/graph3d_def_ed.pl'; }
+	elsif ($localTab =~ /^diameter$|^transparency$/) { require 'edit/graph3d_diam_ed.pl'; }
+	elsif ($localTab eq 'shape') { require 'edit/graph3d_shape_ed.pl'; }
+	elsif ($localTab eq 'color') { require 'edit/graph3d_color_ed.pl'; }
+	elsif ($localTab =~ /^x$|^y$|^z$/) { require 'edit/graph3d_axis_ed.pl'; }
+	elsif ($localTab eq 'rights') { require 'edit/rights2_ed.pl'; }
+} elsif ($ObjT eq 'format3d') {							# F O R M A T 3 D
+#	require 'edit/format3d_ed.pl';
+	$variables->{langSegment} = 'Format3d';
+	$variables->{icon} = 'format3d';
+d124 1
+a124 1
+	$variables->{hidden}->{form} = $Obj->{form};
+d126 13
+a138 5
+	if ($localTab eq 'format3d') { require 'edit/description_ed.pl'; }
+	elsif ($localTab eq 'def') { require 'edit/format3d_def_ed.pl'; }
+	elsif ($localTab eq 'rights') { require 'edit/rights2_ed.pl'; }
+} elsif ($ObjT eq 'format2d') {							# F O R M A T 2 D
+#	require 'edit/format2d_ed.pl';
+a139 1
+	$variables->{icon} = 'format2d';
+d141 1
+a141 1
+	$variables->{hidden}->{form} = $Obj->{form};
+d143 24
+a166 35
+	if ($localTab eq 'format2d') { require 'edit/description_ed.pl'; }
+	elsif ($localTab eq 'def') { require 'edit/format2d_def_ed.pl'; }
+	elsif ($localTab eq 'layout') { require 'edit/format2d_layout_ed.pl'; }
+	elsif ($localTab eq 'color') { require 'edit/format2d_color_ed.pl'; }
+	elsif ($localTab eq 'logo') { require 'edit/format2d_logo_ed.pl'; }
+	elsif ($localTab eq 'rights') { require 'edit/rights2_ed.pl'; }
+} elsif ($ObjT eq 'param') {							# P A R A M
+#	require 'edit/param_ed.pl';
+	$variables->{langSegment} = 'Param';
+	$variables->{icon} = 'param';
+	@@localTabs = ('param','def','rights');
+	if ($localTab eq 'param') { require 'edit/description_ed.pl'; }
+	elsif ($localTab eq 'def') { require 'edit/param_def_ed.pl'; }
+	elsif ($localTab eq 'rights') { require 'edit/rights2_ed.pl'; }
+} elsif ($ObjT eq 'urole') {							# U R O L E
+#	require 'edit/role_ed.pl';
+	$variables->{langSegment} = 'Role';
+	$variables->{icon} = 'role';
+	@@localTabs = ('urole','def');
+	if ($localTab eq 'urole') { require 'edit/description2_ed.pl'; }
+	elsif ($localTab eq 'def') { require 'edit/role_def_ed.pl'; }
+} elsif ($ObjT eq 'attr') {							# A T T R
+#	require 'edit/attr_ed.pl';
+	$variables->{langSegment} = 'Attr';
+	$variables->{icon} = 'attr';
+	@@localTabs = ('attr','rights');
+	if ($localTab eq 'attr') { require 'edit/description2_ed.pl'; }
+	elsif ($localTab eq 'rights') { require 'edit/rights2_ed.pl'; }
+} elsif ($ObjT eq 'fact') {							# F A C T
+#	require 'edit/fact_ed.pl';
+	$variables->{langSegment} = 'Fact';
+	$variables->{icon} = 'fact';
+	@@localTabs = ('fact','rights');
+	if ($localTab eq 'fact') { require 'edit/description2_ed.pl'; }
+	elsif ($localTab eq 'rights') { require 'edit/rights2_ed.pl'; }
+d169 1
+a169 1
+&do_work($q) if param('Action');
+d171 1
+a171 2
+#&print_form(\$ID,\$Obj,\$ObjT,\$use_lang,\$lang,\$all_params,\$skin,\$skinPath,\$imgType,\$DefaultLanguage,\$localTab,\@@localTabs,\$openIn);	# call into edit/*_ed.pl
+&createTabs(\$ID,\$Obj,\$ObjT,\$lang,\$variables,\$localTab,\@@localTabs) if defined $ID;	# call into edit/*_ed.pl
+d178 4
+a181 2
+	my $check = $lang->{'Save As'};
+	my $action = param_utf8('Action'); #cgi input is in utf8 without utf8 flag
+d183 3
+a185 3
+	my $saveLang = param('langSpec') ? lc(param('langSpec')) : undef;
+	my $lastName = LocalizedObj($Obj->{name}, "Object #$ID", $saveLang, $DefaultLanguage);
+	my $lastDesc = LocalizedObj($Obj->{description}, "Object #$ID", $saveLang, $DefaultLanguage);
+d187 1
+a187 1
+	if ($action =~ /$lang->{'Save'}|$check|$lang->{'Save and Run'}|$lang->{'Rights'}/) {
+d194 1
+a194 1
+			&set_next_param($subObj,\$variables);	#fill subHash called from edit/*_ed.pl
+d196 1
+a196 1
+			my $local = param('local_tab');
+d198 1
+a198 1
+			if ($local eq param('ObjT')) {	#all pages (description)
+d200 1
+a200 1
+				foreach (keys %{$Obj}) {
+d202 1
+a202 1
+					$subObj->{$_} = $Obj->{$_};
+d206 1
+a206 1
+				$local = $type = param('ObjT');
+d208 1
+a208 1
+				$type = $Obj->{report_type};
+d214 3
+a216 3
+				if (param('ObjT') eq "graph3d") {	#special handling for tabs other then def,graph3d,rights when editing graph3d
+					$subObj->{$local} = $Obj->{$local};
+					&set_next_param($subObj,\$variables);
+d218 1
+a218 1
+				foreach (keys %{$Obj}) {
+d220 1
+a220 1
+					$subObj->{$_} = $Obj->{$_};
+d222 1
+a222 1
+				$type = $local = param('ObjT');
+d229 3
+a231 3
+			$newObj->{$type}{$newId}{name} = param_utf8('saveAsName');
+			if (param('desc')) {
+				$newObj->{$type}{$newId}{description} = setLocalizedObj($Obj->{description},param_utf8('desc'),$saveLang);
+d233 1
+a233 1
+				$newObj->{$type}{$newId}{description} = $Obj->{description};
+d235 2
+a236 2
+			$newObj->{$type}{$newId}{meta}{owner} = $User;
+			$newObj->{$type}{$newId}{meta}{created} = &getTime;
+d238 1
+a238 6
+#use Data::Dumper;
+#print "<pre>Obj".Dumper($Obj)."</pre>";
+#print "<pre>New".Dumper($newObj)."</pre>";
+#print "<pre>sub".Dumper($subObj)."</pre>";			
+			
+			my $path = SOAP->GetProjectName($ID); #project name
+d249 4
+a252 5
+				$subObj->{filter_def} = $Obj->{filter_def} if (ref($Obj->{filter_def}) =~ /HASH/);
+				$subObj->{var_def} = $Obj->{var_def} if (ref($Obj->{var_def}) =~ /HASH/);
+				$subObj->{format_def} = $Obj->{format_def} if (ref($Obj->{format_def}) =~ /HASH/);
+			}
+			else { return }
+d256 3
+a258 3
+			$Obj->{name} = setLocalizedObj($Obj->{name},param('name'),$saveLang) if (param('name'));
+			if (param('desc')) {
+				$Obj->{description} = setLocalizedObj($Obj->{description},param_utf8('desc'),$saveLang);
+d261 5
+a265 5
+			if ($ObjT =~ /^attr$|^fact$/) {
+				$path = SOAP->GetProjectName($ID);
+				$FullObj->{$ObjT}{$ID} = {};
+				$Obj = $FullObj->{$ObjT}->{$ID};
+				$path .= ($ObjT eq 'attr') ? '/Attributes/' : '/Facts/';
+d267 4
+a270 4
+			&set_next_param($Obj,\$variables);	# called from edit/*_ed.pl
+			$Obj->{meta}{modifier} = $User;
+			$Obj->{meta}{modified} = &getTime;
+			$r=SOAP->SaveMData($FullObj,1,$path);
+d274 1
+a274 1
+			my $n=param('name');
+d277 4
+a280 4
+			loadMetadata($ID);
+			clearCache($ID);
+			my $pr=	SOAP->GetProjectName($ID); #project name
+			if ($saveLang eq lc($variables->{useLang}) || $savedAs) {
+d282 1
+a282 1
+				unlink(main::TreeFileName($pr, $User)) if (not($lastDesc eq param('desc') && $lastName eq param('name')) || $savedAs);
+d284 2
+a285 2
+			$variables->{saved} = "true" if $type;
+			$variables->{saveRun} = "run_result();" if $action eq $lang->{'Save and Run'};
+d292 61
+a352 6
+sub loadMetadata {
+	my $ID = shift;
+	$FullObj = SOAP->GetMetadata($ID);
+	$ObjT = (keys %{$FullObj})[0];		#object type
+	$Obj = $FullObj->{$ObjT}->{$ID};	#ptr to main part of data structure
+	$Obj->{description}=~s/\\n/\n/g;	#substitute NL
+d355 1
+d358 4
+a361 4
+sub clearCache() {
+	my $ID = shift;
+	if ($ObjT eq 'report') {
+		unlink <./html/$ID*>	# delete all cache objects depending on this report
+d364 1
+a364 1
+			unlink <./html/$_>;	# delete all cache objects depending on this object
+d368 2
+@
+
+
+1.100
+log
+@some fixies due to mod-perl changes
+@
+text
+@d5 1
+a5 1
+# $Id: edit_obj.cgi,v 1.99 2003/10/16 14:08:51 jiri_schmid Exp $
+d234 1
+a234 1
+			$subObj->{description} = ""; #recreate HASH from Scalar;
+d238 2
+a239 1
+			if ($local eq param('ObjT')) {
+d244 1
+a244 1
+					}
+d246 1
+a246 1
+			} elsif ($local eq 'def') {
+d248 1
+a248 1
+			} elsif ($local =~ /object/) {
+d251 1
+a251 1
+			} elsif ($local =~ /format/) {
+d254 10
+a263 2
+			} else {
+				$type = $local;
+d265 1
+a265 1
+
+a332 3
+			#temporarily for backward compatibilty
+			our $saved = $variables->{saved};
+			our $saveRun = $variables->{saveRun};
+@
+
+
+1.99
+log
+@mod-perl implementation stage 1, rebuilding global vars in .pl to global pointers
+@
+text
+@d5 1
+a5 1
+# $Id: edit_obj.cgi,v 1.98 2003/10/13 14:43:16 jiri_schmid Exp $
+a228 1
+#	if ($action eq $lang->{'Save'} || $action eq $check || $action eq $lang->{'Save and Run'} || $action eq $lang->{'Rights'}) {
+@
+
+
+1.98
+log
+@description tab defined under two files, bug fixies
+@
+text
+@d5 1
+a5 1
+# $Id: edit_obj.cgi,v 1.97 2003/10/07 05:47:57 michald Exp $
+a11 1
+use vars qw($StyleSheet $bearHost $bearPort $compress_threshold $Languages $lang $ObjectAttr $MetricsIdent $DefaultLanguage);
+d14 5
+a18 10
+require "local_lib.pl";
+our $use_lang = (param('Lang')) ? param('Lang') : param('active_lang'); #active lang defined in *_ed.pl
+our $skin = (param('Skin')) ? param('Skin') : (param('skin')) ? param('skin') : "";
+our $skinPath = ($skin) ? "skins/$skin/" : "";
+our $all_params = (param('all_params')) ? param('all_params') :  "Lang=".param('Lang')."&Cook=".param('Cook')."&Open=".param('Open')."&Proj=".param('Proj')."&sqlA=".param('sqlA')."&Skin=$skin";
+my $use_enc = $Languages->{$use_lang}->{'enc'};
+require $Languages->{$use_lang}->{src};
+our $ID;
+$ID = param('item_id');
+our $imgType = getImageType("${skinPath}img/");
+d21 15
+d41 1
+a41 1
+	-lang=>$Languages->{$use_lang}->{lang},
+d44 1
+a44 1
+	-style=>{-src=>"${skinPath}css.css"},
+d86 1
+a86 2
+
+our $localTab = (param('LocalTab')) ? param('LocalTab') : (param('local_tab')) ? param('local_tab') : "def"; # $ObjT; (open description tab)
+a87 1
+
+d89 7
+a95 2
+	our $open = (param('Open')) ? param('Open') : param('open_in');
+	require 'edit/report_ed.pl';
+d104 4
+a107 1
+	require 'edit/grid_ed.pl';
+d112 5
+a116 1
+	require 'edit/metric_ed.pl';
+d123 5
+a127 1
+	require 'edit/filter_ed.pl';
+d132 7
+a138 1
+	require 'edit/format_ed.pl';
+d143 7
+a149 1
+	require 'edit/graph3d_ed.pl';
+d158 6
+a163 1
+	require 'edit/format3d_ed.pl';
+d168 6
+a173 1
+	require 'edit/format2d_ed.pl';
+d181 4
+a184 1
+	require 'edit/param_ed.pl';
+d189 4
+a192 1
+	require 'edit/role_ed.pl';
+d196 4
+a199 1
+	require 'edit/attr_ed.pl';
+d203 4
+a206 1
+	require 'edit/fact_ed.pl';
+d213 2
+a214 1
+&print_form($q);	# call it from edit/*_ed.pl
+d236 1
+a236 1
+			&set_next_param($subObj);	#fill subHash called from edit/*_ed.pl
+d306 1
+a306 1
+			&set_next_param($Obj);	# called from edit/*_ed.pl
+d319 1
+a319 1
+			if ($saveLang eq lc($use_lang) || $savedAs) {
+d323 5
+a327 2
+			our $saved = "true" if $type;
+			our $saveRun = "run_result();" if $action eq $lang->{'Save and Run'};
+@
+
+
+1.97
+log
+@loading RCache from DB
+@
+text
+@d5 1
+a5 1
+# $Id: edit_obj.cgi,v 1.96 2003/10/01 15:29:37 jiri_schmid Exp $
+d77 15
+a91 4
+our $localTab = (param('LocalTab')) ? param('LocalTab') : (param('local_tab')) ? param('local_tab') : "def";
+$localTab = $ObjT if ($ObjT =~ /attr|fact/ && $localTab eq "def");
+if (param('prava') || param('Rights')) { require 'edit/rights_ed.pl' }
+elsif ($ObjT eq 'grid') {
+d93 1
+a93 1
+	if ($localTab eq 'grid') { require 'edit/grid_main_ed.pl'; }
+d96 1
+a96 1
+} elsif ($ObjT eq 'metric') {
+d98 1
+a98 1
+	if ($localTab eq 'metric') { require 'edit/metric_main_ed.pl'; }
+d101 3
+a103 2
+} elsif ($ObjT eq 'folder') { require 'edit/folder_ed.pl' }   
+elsif ($ObjT eq 'filter') {
+d105 1
+a105 1
+	if ($localTab eq 'filter') { require 'edit/filter_main_ed.pl'; }
+d108 1
+a108 1
+} elsif ($ObjT eq 'format') {
+d110 1
+a110 1
+	if ($localTab eq 'format') { require 'edit/format_main_ed.pl'; }
+d113 1
+a113 19
+} elsif ($ObjT eq 'report') {
+	our $open = (param('Open')) ? param('Open') : param('open_in');
+	require 'edit/report_ed.pl';
+	if ($localTab eq 'report') { require 'edit/report_main_ed.pl'; }
+	elsif ($localTab eq 'def') { require 'edit/report_def_ed.pl'; }
+	elsif ($localTab eq 'filter') { require 'edit/report_filter_ed.pl'; }
+	elsif ($localTab eq 'object') { require 'edit/report_object_ed.pl'; }
+	elsif ($localTab eq 'format') { require 'edit/report_format_ed.pl'; }
+	elsif ($localTab eq 'sql') { require 'edit/report_sql_ed.pl'; }
+	elsif ($localTab eq 'rights') { require 'edit/rights2_ed.pl'; }
+} elsif ($ObjT eq 'attr') {
+	require 'edit/attr_ed.pl';
+	if ($localTab eq 'attr') { require 'edit/attr_main_ed.pl'; }
+	elsif ($localTab eq 'rights') { require 'edit/rights2_ed.pl'; }
+} elsif ($ObjT eq 'fact') {
+	require 'edit/fact_ed.pl';
+	if ($localTab eq 'fact') { require 'edit/fact_main_ed.pl'; }
+	elsif ($localTab eq 'rights') { require 'edit/rights2_ed.pl'; }
+} elsif ($ObjT eq 'graph3d') { 
+d115 1
+a115 1
+	if ($localTab eq 'graph3d') { require 'edit/graph3d_main_ed.pl'; }
+d117 1
+a117 1
+	elsif ($localTab =~ /diameter|transparency/) { require 'edit/graph3d_diam_ed.pl'; }
+d120 1
+a120 1
+	elsif ($localTab =~ /x|y|z/) { require 'edit/graph3d_axis_ed.pl'; }
+d122 1
+a122 1
+} elsif ($ObjT eq 'format3d') {
+d124 1
+a124 1
+	if ($localTab eq 'format3d') { require 'edit/format3d_main_ed.pl'; }
+d127 1
+a127 1
+} elsif ($ObjT eq 'format2d') {
+d129 1
+a129 1
+	if ($localTab eq 'format2d') { require 'edit/format2d_main_ed.pl'; }
+d135 6
+a140 1
+} elsif ($ObjT eq 'urole') {
+d142 1
+a142 1
+	if ($localTab eq 'urole') { require 'edit/role_main_ed.pl'; }
+d144 7
+a150 4
+} elsif ($ObjT eq 'param') {
+	require 'edit/param_ed.pl';
+	if ($localTab eq 'param') { require 'edit/param_main_ed.pl'; }
+	elsif ($localTab eq 'def') { require 'edit/param_def_ed.pl'; }
+d155 1
+a155 4
+#my $x;
+#use Data::Dumper;
+#$x = $q->Vars;
+#print "<pre>".Dumper($x)."</var>";
+d157 1
+@
+
+
+1.96
+log
+@prompt implemented
+@
+text
+@d5 1
+a5 1
+# $Id: edit_obj.cgi,v 1.95 2003/09/29 15:37:41 jiri_schmid Exp $
+d286 1
+a286 1
+		unlink <./html/$ID*.html>
+d289 1
+a289 1
+			unlink <./html/$_*.html>;
+@
+
+
+1.95
+log
+@report result parameters handling changed, minor code improvments
+@
+text
+@d5 1
+a5 1
+# $Id: edit_obj.cgi,v 1.94 2003/09/26 12:21:29 jiri_schmid Exp $
+d78 1
+a78 1
+$localTab = $ObjT if $ObjT =~ /attr|fact/;
+d145 5
+d226 1
+@
+
+
+1.94
+log
+@format2d added logo page, minor visual improvments on layout, color page
+@
+text
+@d5 1
+a5 1
+# $Id: edit_obj.cgi,v 1.93 2003/09/25 15:03:59 jiri_schmid Exp $
+d77 2
+a78 1
+our $localTab = (param('LocalTab')) ? param('LocalTab') : (param('local_tab')) ? param('local_tab') : $ObjT;
+@
+
+
+1.93
+log
+@operational commit for martin
+@
+text
+@d5 1
+a5 1
+# $Id: edit_obj.cgi,v 1.92 2003/09/22 11:52:27 jiri_schmid Exp $
+d138 1
+@
+
+
+1.92
+log
+@format page - visual improvment
+@
+text
+@d5 1
+a5 1
+# $Id: edit_obj.cgi,v 1.91 2003/09/19 10:24:58 jiri_schmid Exp $
+d136 2
+@
+
+
+1.91
+log
+@tabs implemented everywhere
+@
+text
+@d5 1
+a5 1
+# $Id: edit_obj.cgi,v 1.90 2003/09/18 14:10:45 jiri_schmid Exp $
+d31 1
+d144 4
+a147 1
+
+@
+
+
+1.90
+log
+@tabs imlemented almost everywhere
+@
+text
+@d5 1
+a5 1
+# $Id: edit_obj.cgi,v 1.89 2003/09/17 15:40:51 jiri_schmid Exp $
+d109 9
+a117 3
+} elsif ($ObjT eq 'attr') { require 'edit/attr_ed.pl' }   
+elsif ($ObjT eq 'fact') { require 'edit/fact_ed.pl' }
+elsif ($ObjT eq 'graph3d') { 
+d136 5
+a140 1
+} elsif ($ObjT eq 'urole') { require 'edit/role_ed.pl' };
+@
+
+
+1.89
+log
+@report tab changes
+@
+text
+@d5 1
+a5 1
+# $Id: edit_obj.cgi,v 1.88 2003/09/17 14:51:09 jiri_schmid Exp $
+d76 1
+d78 32
+a109 7
+elsif ($ObjT eq 'grid') { require 'edit/grid_ed.pl' }
+elsif ($ObjT eq 'metric') { require 'edit/metric_ed.pl' }
+elsif ($ObjT eq 'folder') { require 'edit/folder_ed.pl' }   
+elsif ($ObjT eq 'filter') { require 'edit/filter_ed.pl' }   
+elsif ($ObjT eq 'format') { require 'edit/format_ed.pl' }   
+elsif ($ObjT eq 'report') { &generateLocalTabs($ObjT) }   
+elsif ($ObjT eq 'attr') { require 'edit/attr_ed.pl' }   
+d111 20
+a130 4
+elsif ($ObjT eq 'graph3d') { &generateLocalTabs($ObjT) }
+elsif ($ObjT eq 'format3d') { require 'edit/format3d_ed.pl' }
+elsif ($ObjT eq 'format2d') { require 'edit/format2d_ed.pl' }
+elsif ($ObjT eq 'urole') { require 'edit/role_ed.pl' };
+d150 1
+a150 1
+		if ($action eq $check) {	# Save As
+d153 1
+a153 1
+			
+a156 2
+use Data::Dumper;
+#print "<pre>".Dumper($subObj)."</pre>";
+d158 15
+a172 3
+			if ($local) {
+				if ($local =~ /object/) { $type = $Obj->{report_type}; $local = "var" }
+				elsif ($local =~ /format/) { $type = ($subObj->{format_def}{type} eq 'grid') ? "format" : "format3d"; $local = "format"}
+d174 1
+a174 1
+				$type = $local = param('ObjT');
+d176 1
+a176 1
+	
+a178 1
+			
+d181 6
+a186 2
+			$newObj->{$type}{$newId}{name} = setLocalizedObj($Obj->{name},param('saveAsName'),$saveLang);
+			$newObj->{$type}{$newId}{description} = setLocalizedObj($Obj->{description},param('desc'),$saveLang);
+d189 5
+a202 1
+			#elsif ($type eq 'urole') { $path .= "/Roles/"; }
+a254 26
+}
+
+#---------------------------------------------------
+sub generateLocalTabs {
+my $editItem = shift;	
+our $localTab = (param('LocalTab')) ? param('LocalTab') : (param('local_tab')) ? param('local_tab') : $editItem;
+if ($editItem =~ 'report') {
+	our $open = (param('Open')) ? param('Open') : param('open_in');
+	require 'edit/report_ed.pl';
+	if ($localTab eq 'report') { require 'edit/report_main_ed.pl'; }
+	if ($localTab eq 'def') { require 'edit/report_def_ed.pl'; }
+	elsif ($localTab eq 'filter') { require 'edit/report_filter_ed.pl'; }
+	elsif ($localTab eq 'object') { require 'edit/report_object_ed.pl'; }
+	elsif ($localTab eq 'format') { require 'edit/report_format_ed.pl'; }
+	elsif ($localTab eq 'sql') { require 'edit/report_sql_ed.pl'; }
+	elsif ($localTab eq 'rights') { require 'edit/rights2_ed.pl'; }
+} elsif ($editItem =~ 'graph3d') {
+	require 'edit/graph3d_ed.pl';
+	if ($localTab eq 'graph3d') { require 'edit/graph3d_main_ed.pl'; }
+	elsif ($localTab eq 'def') { require 'edit/graph3d_def_ed.pl'; }
+	elsif ($localTab =~ /diameter|transparency/) { require 'edit/graph3d_diam_ed.pl'; }
+	elsif ($localTab eq 'shape') { require 'edit/graph3d_shape_ed.pl'; }
+	elsif ($localTab eq 'color') { require 'edit/graph3d_color_ed.pl'; }
+	elsif ($localTab =~ /x|y|z/) { require 'edit/graph3d_axis_ed.pl'; }
+	elsif ($localTab eq 'rights') { require 'edit/rights2_ed.pl'; }
+}
+@
+
+
+1.88
+log
+@tabed rights on graph3d and report
+@
+text
+@d5 1
+a5 1
+# $Id: edit_obj.cgi,v 1.87 2003/09/16 14:37:43 jiri_schmid Exp $
+d206 1
+@
+
+
+1.87
+log
+@rights page user improvments, unbelieveble IE bug fixed
+@
+text
+@d5 1
+a5 1
+# $Id: edit_obj.cgi,v 1.86 2003/09/09 09:41:30 jiri_schmid Exp $
+d210 1
+d219 1
+@
+
+
+1.86
+log
+@ACL for facts and attrs implemented
+@
+text
+@d5 1
+a5 1
+# $Id: edit_obj.cgi,v 1.85 2003/09/01 12:40:05 jiri_schmid Exp $
+d76 1
+a76 1
+if (param('Rights')) { require 'edit/rights_ed.pl' }
+@
+
+
+1.85
+log
+@skins implemented. mozilla skin - temporarily copy msie content
+@
+text
+@d5 1
+a5 1
+# $Id: edit_obj.cgi,v 1.84 2003/08/28 09:26:11 jiri_schmid Exp $
+d115 1
+a115 1
+#use Data::Dumper;
+d158 7
+d168 1
+a168 1
+			$r=SOAP->SaveMData($FullObj,1);
+@
+
+
+1.84
+log
+@tabs.cgi speed improvmnet, visual improvment on trees, rights and some other minor improvments
+@
+text
+@d5 1
+a5 1
+# $Id: edit_obj.cgi,v 1.83 2003/08/26 15:35:41 jiri_schmid Exp $
+d17 4
+a20 1
+our $all_params = (param('all_params')) ? param('all_params') :  "Lang=".param('Lang')."&Cook=".param('Cook')."&Open=".param('Open')."&Proj=".param('Proj')."&sqlA=".param('sqlA');
+a21 1
+my $use_enc = $Languages->{$use_lang}->{'enc'};
+d24 1
+a24 1
+
+d34 1
+a34 1
+	-style=>{-src=>'css.css'},
+@
+
+
+1.83
+log
+@rights improvment, create delete duplicate rule implemented
+@
+text
+@d5 1
+a5 1
+# $Id: edit_obj.cgi,v 1.82 2003/08/25 15:09:09 jiri_schmid Exp $
+d103 2
+a104 1
+	if ($action eq $lang->{'Save'} || $action eq $check || $action eq $lang->{'Save and Run'} || $action eq $lang->{'Rights'}) {
+@
+
+
+1.82
+log
+@object acl, owner, modifier, datetime creation and modification implemented
+@
+text
+@d5 1
+a5 1
+# $Id: edit_obj.cgi,v 1.81 2003/08/22 16:00:53 jiri_schmid Exp $
+d129 2
+a130 2
+			$newObj->{$type}{$newId}{owner} = $User;
+			$newObj->{$type}{$newId}{created} = &getTime;
+d156 2
+a157 2
+			$Obj->{modifier} = $User;
+			$Obj->{modified} = &getTime;
+@
+
+
+1.81
+log
+@access - rules changing implemented
+@
+text
+@d5 1
+a5 1
+# $Id: edit_obj.cgi,v 1.80 2003/08/21 14:23:28 jiri_schmid Exp $
+a72 1
+
+d103 1
+a103 1
+	if ($action eq $lang->{'Save'} || $action eq $check || $action eq $lang->{'Save and Run'}) {
+d127 4
+a130 2
+			$newObj->{$type}->{$newId}->{name} = setLocalizedObj($Obj->{name},param('saveAsName'),$saveLang);
+			$newObj->{$type}->{$newId}->{description} = setLocalizedObj($Obj->{description},param('desc'),$saveLang);
+d156 2
+@
+
+
+1.80
+log
+@role implementation next step
+@
+text
+@d5 1
+a5 1
+# $Id: edit_obj.cgi,v 1.79 2003/08/20 14:23:41 jiri_schmid Exp $
+d139 1
+a139 1
+			elsif ($type eq 'urole') { $path .= "/Roles/"; }
+@
+
+
+1.79
+log
+@access object implemented
+@
+text
+@d5 1
+a5 1
+# $Id: edit_obj.cgi,v 1.78 2003/08/19 13:05:55 jiri_schmid Exp $
+d139 1
+a139 1
+			elsif ($type eq 'role') { $path .= "/Roles/"; }
+@
+
+
+1.78
+log
+@formats2d implemented
+@
+text
+@d5 1
+a5 1
+# $Id: edit_obj.cgi,v 1.77 2003/08/13 14:22:00 jiri_schmid Exp $
+d86 2
+a87 1
+elsif ($ObjT eq 'format2d') { require 'edit/format2d_ed.pl' };
+d139 1
+d142 3
+a144 3
+				if (ref($Obj->{filter_def}) =~ /HASH/) { $subObj->{filter_def} = $Obj->{filter_def}; };
+				if (ref($Obj->{var_def}) =~ /HASH/) { $subObj->{var_def} = $Obj->{var_def}; };
+				if (ref($Obj->{format_def}) =~ /HASH/) { $subObj->{format_def} = $Obj->{format_def}; };
+@
+
+
+1.77
+log
+@code clearing and improvment
+@
+text
+@d5 1
+a5 1
+# $Id: edit_obj.cgi,v 1.76 2003/08/13 13:16:25 jiri_schmid Exp $
+d85 2
+a86 1
+elsif ($ObjT eq 'format3d') { require 'edit/format3d_ed.pl' };
+d137 1
+@
+
+
+1.76
+log
+@setting up rights inetrface for each object implemnted
+@
+text
+@d5 1
+a5 1
+# $Id: edit_obj.cgi,v 1.75 2003/08/06 15:22:29 jiri_schmid Exp $
+a94 1
+	my($cgi) = @@_;
+d109 1
+a109 1
+			&set_next_param($cgi,$subObj);	#fill subHash called from edit/*_ed.pl
+d150 1
+a150 1
+			&set_next_param($cgi,$Obj);	# called from edit/*_ed.pl
+@
+
+
+1.75
+log
+@user ACL implementation started
+@
+text
+@d5 1
+a5 1
+# $Id: edit_obj.cgi,v 1.74 2003/08/01 13:07:11 jiri_schmid Exp $
+d75 2
+a76 1
+if ($ObjT eq 'grid') { require 'edit/grid_ed.pl' }
+@
+
+
+1.74
+log
+@graph3d relevant changes made to cooperate with right pane, multiple metric not alowed yet
+@
+text
+@d5 1
+a5 1
+# $Id: edit_obj.cgi,v 1.73 2003/07/29 12:28:26 jiri_schmid Exp $
+a28 1
+	-id=>'body',
+@
+
+
+1.73
+log
+@right frame implemented
+@
+text
+@d5 1
+a5 1
+# $Id: edit_obj.cgi,v 1.72 2003/07/24 12:14:56 jiri_schmid Exp $
+d198 1
+a198 2
+	elsif ($localTab eq 'diameter') { require 'edit/graph3d_diam_ed.pl'; }
+	elsif ($localTab eq 'transparency') { require 'edit/graph3d_diam_ed.pl'; }
+@
+
+
+1.72
+log
+@code change/improvment, bug fixies
+@
+text
+@d5 1
+a5 1
+# $Id: edit_obj.cgi,v 1.71 2003/07/23 11:44:52 jiri_schmid Exp $
+d36 1
+a36 1
+	-onload=>"init_var('drop_iframe'); hide_load(); return true;",
+@
+
+
+1.71
+log
+@next tab implemented on graph3d page
+@
+text
+@d5 1
+a5 1
+# $Id: edit_obj.cgi,v 1.70 2003/07/22 15:13:03 jiri_schmid Exp $
+d29 1
+@
+
+
+1.70
+log
+@new tabs on graph3d page implemented
+@
+text
+@d5 1
+a5 1
+# $Id: edit_obj.cgi,v 1.69 2003/07/22 08:47:56 jiri_schmid Exp $
+d198 1
+a198 1
+	elsif ($localTab eq 'transparency') { require 'edit/graph3d_trans_ed.pl'; }
+@
+
+
+1.69
+log
+@axis tabs on 3dgraph page implented
+@
+text
+@d5 1
+a5 1
+# $Id: edit_obj.cgi,v 1.68 2003/07/21 10:51:39 jiri_schmid Exp $
+d197 4
+@
+
+
+1.68
+log
+@report and format scripts fixies, GUI improvment
+@
+text
+@d5 1
+a5 1
+# $Id: edit_obj.cgi,v 1.67 2003/07/18 10:50:59 jiri_schmid Exp $
+d197 1
+@
+
+
+1.67
+log
+@format3d implemented, format changed all dependencies fixed
+@
+text
+@d5 1
+a5 1
+# $Id: edit_obj.cgi,v 1.66 2003/07/14 11:52:23 jiri_schmid Exp $
+d111 2
+a112 2
+use Data::Dumper;
+print "<pre>".Dumper($subObj)."</pre>";
+d120 1
+a120 3
+
+print "typeeeeeeeeeeeeeeeeeee$type";
+			
+@
+
+
+1.66
+log
+@3dgraph webpage-rules implantation, minor code changes
+@
+text
+@d5 1
+a5 1
+# $Id: edit_obj.cgi,v 1.65 2003/07/10 12:59:59 jiri_schmid Exp $
+d79 1
+a79 1
+elsif ($ObjT eq 'format') { &generateLocalTabs($ObjT) }   
+d83 2
+a84 1
+elsif ($ObjT eq 'graph3d') { &generateLocalTabs($ObjT) };
+a93 1
+use Encode;
+d95 1
+a95 2
+	my $check1 = $lang->{'Save'};
+	my $check2 = $lang->{'Save As'};
+d102 1
+a102 1
+	if ($action eq $check1 || $action eq $check2) {
+d104 1
+a104 2
+		if ($action eq $check2) {	# Save As
+			$type = (param('report_tab')) ? param('report_tab') : param('ObjT');
+d111 12
+d124 1
+a124 1
+			$newObj->{$type}->{$newId} = ($subObj->{$type."_def"}) ? $subObj->{$type."_def"} : $subObj;
+d137 1
+d141 1
+a141 1
+				if (ref($Obj->{grid_def}) =~ /HASH/) { $subObj->{grid_def} = $Obj->{grid_def}; };
+d167 2
+a168 1
+			our $saved = "true" if ($type);
+d192 1
+a192 1
+	elsif ($localTab eq 'grid') { require 'edit/report_grid_ed.pl'; }
+a194 4
+} elsif ($editItem =~ 'format') {
+	require 'edit/format_ed.pl';
+	if ($localTab eq 'format') { require 'edit/format_main_ed.pl'; }
+	elsif ($localTab eq 'def') { require 'edit/format_def_ed.pl'; }
+@
+
+
+1.65
+log
+@tabed graph3d implemnted, code improvment
+@
+text
+@d5 1
+a5 1
+# $Id: edit_obj.cgi,v 1.64 2003/07/09 15:30:14 jiri_schmid Exp $
+a8 1
+
+d84 1
+a158 2
+	#print "charset:".$CGI::QUERY_CHARSET;
+	#print "<br>charset:".&charset;
+@
+
+
+1.64
+log
+@minor bug fixies, 3dgraph interface changes
+@
+text
+@d5 1
+a5 1
+# $Id: edit_obj.cgi,v 1.63 2003/07/08 08:24:43 jiri_schmid Exp $
+a23 1
+
+d80 2
+a81 2
+elsif ($ObjT eq 'format') { &generateFormat }   
+elsif ($ObjT eq 'report') { &generateReport }   
+d84 1
+a84 1
+elsif ($ObjT eq 'graph3d') { require 'edit/graph3d_ed.pl' };
+d97 1
+a97 1
+	my $action = decode_utf8(param('Action')); #cgi input is in utf8 without utf8 flag
+d139 1
+a139 2
+				$Obj->{description} = setLocalizedObj($Obj->{description},param('desc'),$saveLang) ;
+				#$Obj->{description}->{$saveLang}=~s/\r//g;
+a140 1
+
+d159 2
+d174 4
+a177 2
+
+sub generateReport() {
+d180 13
+a192 6
+	our $reportTab = (param('ReportTab')) ? param('ReportTab') : (param('report_tab')) ? param('report_tab') : 'report';
+	if ($reportTab eq 'report') { require 'edit/report_main_ed.pl'; }
+	elsif ($reportTab eq 'filter') { require 'edit/report_filter_ed.pl'; }
+	elsif ($reportTab eq 'grid') { require 'edit/report_grid_ed.pl'; }
+	elsif ($reportTab eq 'format') { require 'edit/report_format_ed.pl'; }
+	elsif ($reportTab eq 'sql') { require 'edit/report_sql_ed.pl'; }
+a193 8
+
+#---------------------------------------------------
+
+sub generateFormat() {
+	require 'edit/format_ed.pl';
+	our $formatTab = (param('FormatTab')) ? param('FormatTab') : (param('format_tab')) ? param('format_tab') : 'format';
+	if ($formatTab eq 'format') { require 'edit/format_main_ed.pl'; }
+	elsif ($formatTab eq 'def') { require 'edit/format_def_ed.pl'; }
+@
+
+
+1.63
+log
+@binmode for STDIN changes
+@
+text
+@d5 1
+a5 1
+# $Id: edit_obj.cgi,v 1.62 2003/07/08 07:12:02 jiri_schmid Exp $
+d86 1
+a86 2
+
+&do_work($q) if $q->param('Action');
+d94 1
+d98 1
+a98 1
+	my $action = param('Action');
+d104 1
+a104 1
+	if ($action =~ /[$check1|$check2]/ ) {
+d106 1
+a106 1
+		if ($action =~ /$check2/ ) {	# Save As
+d111 1
+a111 1
+			$subObj->{description} = ""; #create HASH from Scalar;
+d127 1
+a134 1
+
+d141 1
+a141 1
+				$Obj->{description}->{$saveLang}=~s/\r//g;
+@
+
+
+1.62
+log
+@utf8 implementation in last stage
+@
+text
+@d5 1
+a5 1
+# $Id: edit_obj.cgi,v 1.61 2003/07/07 14:17:10 jiri_schmid Exp $
+d8 1
+a8 1
+binmode(STDOUT, ':utf8');
+@
+
+
+1.61
+log
+@utf8 may work properly
+@
+text
+@d5 1
+a5 1
+# $Id: edit_obj.cgi,v 1.60 2003/07/04 14:29:27 jiri_schmid Exp $
+d8 2
+@
+
+
+1.60
+log
+@utf8 handling fixed
+@
+text
+@d5 1
+a5 1
+# $Id: edit_obj.cgi,v 1.59 2003/06/30 09:14:30 jiri_schmid Exp $
+a142 1
+
+@
+
+
+1.59
+log
+@mcache inherited into report
+@
+text
+@d5 1
+a5 1
+# $Id: edit_obj.cgi,v 1.58 2003/06/26 09:31:40 jiri_schmid Exp $
+d76 8
+a83 7
+if ($ObjT eq 'metric') { require 'edit/metric_ed.pl' }
+if ($ObjT eq 'folder') { require 'edit/folder_ed.pl' }   
+if ($ObjT eq 'filter') { require 'edit/filter_ed.pl' }   
+if ($ObjT eq 'format') { generateFormat(); }   
+if ($ObjT eq 'report') { generateReport(); }   
+if ($ObjT eq 'attr') { require 'edit/attr_ed.pl' }   
+if ($ObjT eq 'fact') { require 'edit/fact_ed.pl' }   
+@
+
+
+1.58
+log
+@css report visual changes, code improvment
+@
+text
+@d5 1
+a5 1
+# $Id: edit_obj.cgi,v 1.57 2003/06/23 08:31:12 jiri_schmid Exp $
+d198 6
+a203 2
+	foreach (SOAP->GetObjSuccessors($ID,0,'report')) {
+		unlink <./html/$_*.html>;
+@
+
+
+1.57
+log
+@clearCache rebuild
+@
+text
+@d5 1
+a5 1
+# $Id: edit_obj.cgi,v 1.56 2003/06/21 16:13:05 michald Exp $
+d19 3
+a22 1
+our $ID;
+d36 1
+a36 1
+	-onclick=>'hide_me();return true;',
+a63 1
+$ID = $q->param('item_id');
+@
+
+
+1.56
+log
+@improvement of object dependency directed graph
+@
+text
+@d5 1
+a5 1
+# $Id: edit_obj.cgi,v 1.55 2003/06/20 16:21:19 jiri_schmid Exp $
+d197 1
+a197 2
+
+	foreach (SOAP->IsUsedInReport($ID)) {
+@
+
+
+1.55
+log
+@result of clearing HTML cache depends on HasPath() now
+@
+text
+@d5 1
+a5 1
+# $Id: edit_obj.cgi,v 1.54 2003/06/19 14:59:41 jiri_schmid Exp $
+d102 1
+a102 1
+		if ($action =~ /$check2/ ) {
+d133 1
+a133 1
+		} else {
+d137 2
+a138 2
+				$Obj->{description}->{$saveLang}=~s/\r//g; }
+
+a140 2
+#use Data::Dumper;
+#print "<pre>".Dumper($Obj)."</pre>";			
+d144 1
+d174 8
+a181 8
+our $open = (param('Open')) ? param('Open') : param('open_in');
+require 'edit/report_ed.pl';
+our $reportTab = (param('ReportTab')) ? param('ReportTab') : (param('report_tab')) ? param('report_tab') : 'report';
+if ($reportTab eq 'report') { require 'edit/report_main_ed.pl'; }
+elsif ($reportTab eq 'filter') { require 'edit/report_filter_ed.pl'; }
+elsif ($reportTab eq 'grid') { require 'edit/report_grid_ed.pl'; }
+elsif ($reportTab eq 'format') { require 'edit/report_format_ed.pl'; }
+elsif ($reportTab eq 'sql') { require 'edit/report_sql_ed.pl'; }
+d187 4
+a190 4
+require 'edit/format_ed.pl';
+our $formatTab = (param('FormatTab')) ? param('FormatTab') : (param('format_tab')) ? param('format_tab') : 'format';
+if ($formatTab eq 'format') { require 'edit/format_main_ed.pl'; }
+elsif ($formatTab eq 'def') { require 'edit/format_def_ed.pl'; }
+d196 1
+a196 3
+my $ID = shift;
+my @@usedIn;
+@@usedIn = SOAP->IsUsedInReport($ID);
+d198 2
+a199 2
+foreach (@@usedIn) {
+	unlink <./html/$_*.html>;
+@
+
+
+1.54
+log
+@huge improvment on format page
+@
+text
+@d5 1
+a5 1
+# $Id: edit_obj.cgi,v 1.53 2003/06/16 08:33:02 jiri_schmid Exp $
+d199 1
+a199 10
+if ($ObjT eq 'metric') {
+	@@usedIn = SOAP->IsMetricUsedInReport($ID);	
+} elsif ($ObjT eq 'report') {
+	push(@@usedIn,$ID);
+} elsif ($ObjT eq 'format' || $ObjT eq 'grid') {
+	@@usedIn = SOAP->IsUsedInReport($ID);
+} elsif ($ObjT eq 'filter') {
+	@@usedIn = SOAP->IsUsedInReport($ID);
+	push(@@usedIn,SOAP->IsUsedInMetricInReport($ID));
+}
+@
+
+
+1.53
+log
+@styles in report implemented
+@
+text
+@d5 1
+a5 1
+# $Id: edit_obj.cgi,v 1.52 2003/06/13 15:35:07 jiri_schmid Exp $
+d78 1
+a78 1
+if ($ObjT eq 'format') { require 'edit/format_ed.pl' }   
+d99 1
+d132 1
+d153 1
+a153 1
+			if ($saveLang eq lc($use_lang)) {
+d155 1
+a155 1
+				unlink(main::TreeFileName($pr, $User)) if (not($lastDesc eq param('desc') && $lastName eq param('name')));
+d175 2
+a176 1
+our $open = (param('Open')) ? param('Open') : param('open_in'); require 'edit/report_ed.pl';
+d186 10
+@
+
+
+1.52
+log
+@code improvmnent
+@
+text
+@d5 1
+a5 1
+# $Id: edit_obj.cgi,v 1.51 2003/06/13 13:08:10 jiri_schmid Exp $
+d153 1
+a153 1
+				unlink(main::TreeFileName($pr, $User)) if ($lastDesc !~ param('desc') || $lastName !~ param('name'));
+@
+
+
+1.51
+log
+@clearing html cache improved
+@
+text
+@d5 1
+a5 1
+# $Id: edit_obj.cgi,v 1.50 2003/06/13 11:32:49 jiri_schmid Exp $
+a150 1
+			#print "<pre>$saveLang:$use_lang</pre>";
+d152 2
+a153 1
+				unlink(main::TreeFileName($pr, $User)) if ($lastName !~ param('name') || $lastDesc !~ param('desc'));
+@
+
+
+1.50
+log
+@metric in report implemented, clearcache implemented, when part of report changed
+@
+text
+@d5 1
+a5 1
+# $Id: edit_obj.cgi,v 1.49 2003/06/12 08:44:21 jiri_schmid Exp $
+d11 1
+a11 1
+use vars qw($StyleSheet $bearHost $bearPort $compress_threshold $Languages $lang $ObjectAttr $MetricsIdent);
+d97 2
+d151 4
+a154 1
+			unlink(main::TreeFileName($pr, $User));
+d190 3
+a192 1
+} elsif ($ObjT eq 'format' || $ObjT eq 'filter') {
+d194 1
+@
+
+
+1.49
+log
+@create HTML report on artificial datas implemented
+@
+text
+@d5 1
+a5 1
+# $Id: edit_obj.cgi,v 1.48 2003/06/04 11:22:27 jiri_schmid Exp $
+d147 1
+a147 2
+			our $use_lang, $ObjT;
+			unlink("./html/$ID-$use_lang.html") if ($ObjT eq 'report');
+d175 1
+d177 15
+@
+
+
+1.48
+log
+@bug fixies
+@
+text
+@d5 1
+a5 1
+# $Id: edit_obj.cgi,v 1.47 2003/06/04 07:50:41 jiri_schmid Exp $
+a111 4
+
+#			delete($subObj->{description}) if (ref($subObj->{description})!~/HASH/);
+#			$newObj->{$type}->{$newId}->{name}->{$saveLang} = param('saveAsName') ? param('saveAsName') : "duplicated";
+#			$newObj->{$type}->{$newId}->{description}->{$saveLang} = $Obj->{description};
+a129 5
+#			delete ($Obj->{name}) if (ref($Obj->{name}) !~ /HASH/);
+#			delete ($Obj->{description}) if (ref($Obj->{description}) !~ /HASH/);
+#			if (param('name')) {($Obj->{name}->{$saveLang} = param('name'))=~s/\n/\\n/g;}	#object name
+#			if (param('desc')) {($Obj->{description}->{$saveLang} = param('desc'))=~s/\n/\\n/g;}	#object description
+			
+d147 2
+a159 1
+
+a160 4
+#use Data::Dumper;
+#print "<pre>".Dumper($FullObj)."</pre>";
+	
+	#$FullObj = SOAP->GetMetadataSubstPtr2Name($ID);
+a168 1
+
+a177 11
+
+
+
+
+
+
+
+
+
+
+
+@
+
+
+1.47
+log
+@report save as bug when locals defined fixed
+@
+text
+@d5 1
+a5 1
+# $Id: edit_obj.cgi,v 1.46 2003/06/03 15:26:37 jiri_schmid Exp $
+d16 1
+a16 1
+our $all_params = (param('all_params')) ? param('all_params') :  "Lang=".param('Lang')."&Cook=".param('Cook')."&Open=".param('Open')."&Proj=".param('Proj')."&sqlA=".param('sqlA');;
+@
+
+
+1.46
+log
+@found a fixed bug saving main report when locals defined
+@
+text
+@d5 1
+a5 1
+# $Id: edit_obj.cgi,v 1.45 2003/05/28 15:44:12 jiri_schmid Exp $
+d109 1
+d124 6
+a129 1
+			elsif ($type eq 'report') { $path .= "/Reports/"; }
+@
+
+
+1.45
+log
+@control dialog when changing tabs implemnted
+@
+text
+@d5 1
+a5 1
+# $Id: edit_obj.cgi,v 1.44 2003/05/28 07:34:14 jiri_schmid Exp $
+d134 6
+a139 1
+			$Obj->{description} = setLocalizedObj($Obj->{description},param('desc'),$saveLang) if (param('desc'));
+a142 3
+			$Obj->{description}->{$saveLang}=~s/\r//g;
+
+			&set_next_param($cgi,$Obj);	# called from edit/*_ed.pl
+@
+
+
+1.44
+log
+@cvs add/remove changes
+@
+text
+@d5 1
+a5 1
+# $Id: edit_obj.cgi,v 1.43 2003/05/27 14:12:05 jiri_schmid Exp $
+a63 1
+print "<input type=\"hidden\" value=\"0\" id=\"changed\">\n";
+@
+
+
+1.43
+log
+@implemented setLocalizedObj & LocalizedObj on client side
+@
+text
+@d5 1
+a5 1
+# $Id: edit_obj.cgi,v 1.42 2003/05/26 15:30:27 jiri_schmid Exp $
+d97 1
+a97 1
+	my $saveLang = param('langSpec') ? lc(param('langSpec')) : "en";
+@
+
+
+1.42
+log
+@saving under EN name, when undefined implemented
+@
+text
+@d5 1
+a5 1
+# $Id: edit_obj.cgi,v 1.41 2003/05/26 15:01:23 jiri_schmid Exp $
+d35 1
+a35 2
+	-onresize=>'initOffset();',
+	-onunload=>'checkEnglishName()'
+d105 1
+a105 1
+			$subObj->{description}->{$saveLang} = ""; #create HASH from Scalar;
+d111 1
+a111 1
+			$newObj->{$type}{$newId}{name}{$saveLang} = param('saveAsName') ? param('saveAsName') : "duplicated";
+d113 6
+a118 9
+			if (exists($newObj->{$type}->{$newId}->{orig_id})) {
+				delete($newObj->{$type}->{$newId}->{orig_id});
+			} else { 
+				delete ($subObj->{description}) if (ref($subObj->{description})!~/HAS/);#should be removed, after data cleaned from unlocalized name and desc content
+				$subObj->{description}->{$saveLang} = $Obj->{description};
+			}
+
+#use Data::Dumper;
+#print "<pre>".Dumper($newObj)."</pre>";			
+d129 7
+a135 5
+			delete ($Obj->{name}) if (ref($Obj->{name}) !~ /HASH/); #should be removed, after data cleaned from unlocalized name and desc content
+			delete ($Obj->{description}) if (ref($Obj->{description}) !~ /HASH/);
+
+			if (param('name')) {($Obj->{name}{$saveLang} = param('name'))=~s/\n/\\n/g;}	#object name
+			if (param('desc')) {($Obj->{description}{$saveLang} = param('desc'))=~s/\n/\\n/g;}	#object description
+d139 1
+a139 1
+			$Obj->{description}{$saveLang}=~s/\r//g;
+@
+
+
+1.41
+log
+@saving under non-selected language implemented
+@
+text
+@d5 1
+a5 1
+# $Id: edit_obj.cgi,v 1.40 2003/05/21 11:39:42 jiri_schmid Exp $
+d35 2
+a36 1
+	-onresize=>'initOffset();'
+d70 2
+@
+
+
+1.40
+log
+@visual and code improvment
+@
+text
+@d5 1
+a5 1
+# $Id: edit_obj.cgi,v 1.39 2003/05/16 12:57:57 jiri_schmid Exp $
+d95 1
+d103 1
+a103 1
+			$subObj->{description} = ""; #create subHash;
+d109 2
+a110 2
+			$newObj->{$type}->{$newId}->{name} = param('saveAsName') ? param('saveAsName') : "duplicated";
+			$newObj->{$type}->{$newId}->{description} = "";
+d114 2
+a115 1
+				$subObj->{description} = $Obj->{description};
+d117 3
+a119 1
+	
+d128 7
+d136 3
+a138 1
+#print "<pre>".Dumper($newObj)."</pre>";			
+a139 5
+			$r=SOAP->SaveMData($newObj,0,$path);	#don't rewrite
+		} else {
+			if (param('name')) {($Obj->{name} = param('name'))=~s/\n/\\n/g;}	#object name
+			if (param('desc')) {($Obj->{description} = param('desc'))=~s/\n/\\n/g;}	#object description
+			$Obj->{description}=~s/\r//g;
+@
+
+
+1.39
+log
+@save as implemented everywhere
+@
+text
+@d5 1
+a5 1
+# $Id: edit_obj.cgi,v 1.38 2003/05/16 11:28:22 jiri_schmid Exp $
+d34 2
+a35 1
+	-onclick=>'hide_me();return true;'
+@
+
+
+1.38
+log
+@report page - save as functionality implemented
+@
+text
+@d5 1
+a5 1
+# $Id: edit_obj.cgi,v 1.37 2003/05/15 12:01:28 jiri_schmid Exp $
+d93 1
+d97 1
+a97 1
+			my $type = param('report_tab');
+d101 1
+a101 1
+			$subObj->{$type."_def"} = "delete"; #create subHash;
+d105 2
+a106 1
+			$newObj->{$type}->{$newId} = $subObj->{$type."_def"};
+d109 5
+a113 1
+			delete($newObj->{$type}->{$newId}->{orig_id}) if ($newObj->{$type}->{$newId}->{orig_id});
+d119 6
+d141 1
+a141 1
+			our $saved = "true";
+d166 2
+a167 2
+our $reportTab = (param('ReportTab')) ? param('ReportTab') : (param('report_tab')) ? param('report_tab') : 'main';
+if ($reportTab eq 'main') { require 'edit/report_main_ed.pl'; }
+@
+
+
+1.37
+log
+@code improvment
+@
+text
+@d5 1
+a5 1
+# $Id: edit_obj.cgi,v 1.36 2003/05/14 14:28:18 jiri_schmid Exp $
+d90 23
+d114 8
+a121 6
+	if ($cgi->param('Action') eq $lang->{'Save'}) {
+		if (param('name')) {($Obj->{name} = $cgi->param('name'))=~s/\n/\\n/g;}	#object name
+		if (param('desc')) {($Obj->{description} = $cgi->param('desc'))=~s/\n/\\n/g;}	#object description
+		$Obj->{description}=~s/\r//g;
+		&set_next_param($cgi,$Obj);	# called from edit/*_ed.pl
+		my $r=SOAP->SaveMData($FullObj,1);
+d123 2
+a124 4
+			my $n=$cgi->param('name');
+			print <<END ;
+<span class="error">ERROR: Saving Object [$n] into metadata failed.</span>
+END
+d129 1
+a129 1
+			#&DefHiearchy($ProjectName, $User, 0, ".*");
+d140 3
+a161 1
+
+@
+
+
+1.36
+log
+@next report improvment
+@
+text
+@d5 1
+a5 1
+# $Id: edit_obj.cgi,v 1.35 2003/05/13 15:18:56 jiri_schmid Exp $
+d16 1
+a16 1
+our $all_params = (param('all_params')) ? param('all_params') :  "Lang=".param('Lang')."&Cook=".param('Cook')."&Open=".param('Open')."&Proj=".param('Proj');
+@
+
+
+1.35
+log
+@new report page seems to be fullfunctional, javascript code huge improvment
+@
+text
+@d5 1
+a5 1
+# $Id: edit_obj.cgi,v 1.34 2003/05/08 15:35:44 jiri_schmid Exp $
+d126 1
+a128 1
+
+@
+
+
+1.34
+log
+@report huge improvment
+@
+text
+@d5 1
+a5 1
+# $Id: edit_obj.cgi,v 1.33 2003/05/08 07:42:43 michald Exp $
+d77 1
+a77 1
+if ($ObjT eq 'report') {our $open = (param('Open')) ? param('Open') : param('open_in'); require 'edit/report_ed.pl' }   
+d92 2
+a93 2
+		($Obj->{name} = $cgi->param('name'))=~s/\n/\\n/g;	#object name
+		($Obj->{description} = $cgi->param('desc'))=~s/\n/\\n/g;	#object description
+d125 9
+d135 1
+@
+
+
+1.33
+log
+@customization of report SQL
+@
+text
+@d5 1
+a5 1
+# $Id: edit_obj.cgi,v 1.32 2003/05/07 13:11:47 jiri_schmid Exp $
+d16 1
+d77 1
+a77 1
+if ($ObjT eq 'report') {our $open = (param('Open')) ? param('Open') : param('open_in'); require 'edit/report_ed.pl'; }   
+a80 2
+our $ObjPref = SOAP->LoadUserPref($User);
+
+d122 16
+@
+
+
+1.32
+log
+@bug fixies, code improvment
+@
+text
+@d5 1
+a5 1
+# $Id: edit_obj.cgi,v 1.31 2003/05/05 06:41:42 michald Exp $
+d80 2
+d84 1
+a84 1
+&print_form($q);	# called from edit/*_ed.pl
+@
+
+
+1.31
+log
+@implementation of full localized metadata
+@
+text
+@d5 1
+a5 1
+# $Id: edit_obj.cgi,v 1.30 2003/05/01 12:17:12 michald Exp $
+d11 1
+a11 1
+use vars qw($StyleSheet $bearHost $bearPort $compress_threshold $Languages $lang $ObjectAttr $MetricsIdent $ProjectName);
+a16 1
+
+d103 2
+a104 1
+			unlink("./html/$User-$ProjectName.html");
+@
+
+
+1.30
+log
+@some minor fixes
+@
+text
+@d5 1
+a5 1
+# $Id: edit_obj.cgi,v 1.29 2003/05/01 09:31:44 jiri_schmid Exp $
+d105 1
+a105 1
+			#&DefHiearchy($ProjectName,0,".*");
+@
+
+
+1.29
+log
+@saving bug removed
+@
+text
+@d5 1
+a5 1
+# $Id: edit_obj.cgi,v 1.28 2003/04/30 09:53:35 jiri_schmid Exp $
+d29 1
+a29 2
+	-head=>meta({	-http_equiv => 'Content-Type', 
+			-content => "text/html; charset=$use_enc" }),
+@
+
+
+1.28
+log
+@tabs for results implemented
+@
+text
+@d5 1
+a5 1
+# $Id: edit_obj.cgi,v 1.27 2003/04/23 14:38:57 jiri_schmid Exp $
+d105 2
+a106 1
+			&DefHiearchy($ProjectName,0,".*");
+@
+
+
+1.27
+log
+@the tree is generated now on server side in html directory as tree.html
+@
+text
+@d5 1
+a5 1
+# $Id: edit_obj.cgi,v 1.26 2003/04/18 14:52:55 jiri_schmid Exp $
+a80 12
+
+#print <<END ;
+#<script type="text/javascript">
+#function get_tree_data(){ //report_ed.pl - input element - oncontextmenu
+#document.getElementById('DESC').value=parent.frames['tree_iframe'].document.lastChild.innerHTML;
+#return false;
+#}
+#</script>	
+#	<textarea cols="50" rows="5" name="desc" id="DESC"></textarea>
+#	<br />
+#	<input type="button" name="reset" value="get data" onclick="return get_tree_data();"/>
+#END
+@
+
+
+1.26
+log
+@fixed bug in dad.js
+@
+text
+@d5 1
+a5 1
+# $Id: edit_obj.cgi,v 1.25 2003/04/18 13:22:10 jiri_schmid Exp $
+d11 1
+a11 1
+use vars qw($StyleSheet $bearHost $bearPort $compress_threshold $Languages $lang $ObjectAttr $MetricsIdent);
+d117 1
+@
+
+
+1.25
+log
+@added disk-cache html/ for generated tree/tree.html and loading alert
+@
+text
+@d5 1
+a5 1
+# $Id: edit_obj.cgi,v 1.24 2003/04/16 11:18:06 jiri_schmid Exp $
+d11 1
+a11 1
+use vars qw($StyleSheet $bearHost $bearPort $compress_threshold $Languages $lang);
+d65 7
+@
+
+
+1.24
+log
+@id substitution implemented in all of *_ed.pl
+@
+text
+@d5 1
+a5 1
+# $Id: edit_obj.cgi,v 1.23 2003/04/11 15:25:10 jiri_schmid Exp $
+d34 1
+a34 1
+	-onload=>"init_var('drop_iframe'); return true;",
+d74 13
+@
+
+
+1.23
+log
+@substitution of id on grid when loading fixed for Mozilla and IE
+@
+text
+@d5 1
+a5 1
+# $Id: edit_obj.cgi,v 1.22 2003/04/10 14:19:09 jiri_schmid Exp $
+d106 2
+a107 2
+	#my $FullObj = SOAP->GetMetadata($ID);
+	$FullObj = SOAP->GetMetadataSubstPtr2Name($ID);
+@
+
+
+1.22
+log
+@metric, filter, report substitutes IDs by javascript, metric & filter resets the original expresion
+@
+text
+@d5 1
+a5 1
+# $Id: edit_obj.cgi,v 1.21 2003/03/14 09:23:43 jiri_schmid Exp $
+d32 2
+a33 2
+	-script=>[{-language=>'JAVASCRIPT', -src=>'js/attr.js'},
+		{-language=>'JAVASCRIPT', -src=>'js/dad.js'}],
+@
+
+
+1.21
+log
+@solved problem with CZ chars, by forced 8bit operating XML-UTF8 files, removed unused images
+@
+text
+@d5 1
+a5 1
+# $Id: edit_obj.cgi,v 1.20 2003/03/12 16:32:43 jiri_schmid Exp $
+d34 1
+a34 1
+	-onload=>"init_var('drop_iframe');return true;",
+@
+
+
+1.20
+log
+@user prefernce - open result in: implemented
+@
+text
+@d5 1
+a5 1
+# $Id: edit_obj.cgi,v 1.19 2003/03/11 10:01:29 jiri_schmid Exp $
+a12 1
+
+d42 2
+a43 1
+	options => {compress_threshold => $compress_threshold}]; 
+@
+
+
+1.19
+log
+@unused directories mye be removed, minor language changes for more compatibility
+@
+text
+@d5 1
+a5 1
+# $Id: edit_obj.cgi,v 1.18 2003/03/10 16:13:55 jiri_schmid Exp $
+d16 1
+a16 2
+our $use_lang = $q->param('Lang');
+if (!$use_lang) {$use_lang = param('active_lang')};
+a63 1
+ 
+d71 1
+a71 1
+if ($ObjT eq 'report') { require 'edit/report_ed.pl' }   
+@
+
+
+1.18
+log
+@charset fixed
+@
+text
+@d5 1
+a5 1
+# $Id: edit_obj.cgi,v 1.17 2003/03/10 10:28:36 jiri_schmid Exp $
+d32 1
+a32 1
+			-content => "text/html charset=$use_enc" }),
+@
+
+
+1.17
+log
+@charset test commit
+@
+text
+@d5 1
+a5 1
+# $Id: edit_obj.cgi,v 1.16 2003/03/07 16:18:35 jiri_schmid Exp $
+d16 2
+a17 1
+my $use_lang = $q->param('Lang');
+d20 2
+a21 1
+#our $ID=&SetParam('ID','id');
+d26 1
+a26 1
+print $q->header;
+d30 1
+a30 1
+	-encoding=>$Languages->{$use_lang}->{enc},
+d32 1
+a32 1
+			-content => "text/html charset=$Languages->{$use_lang}->{'enc'}" }),
+a39 2
+#print $q->Dump;
+
+d59 3
+@
+
+
+1.16
+log
+@weekend commit, language not fixed :(
+@
+text
+@d5 1
+a5 1
+# $Id: edit_obj.cgi,v 1.15 2003/03/06 14:48:56 jiri_schmid Exp $
+d29 2
+@
+
+
+1.15
+log
+@loading and saving user preferneces under its name functional, preferences affects edit.cgi, tabs.cgi and prefer.cgi for now
+@
+text
+@d5 1
+a5 1
+# $Id: edit_obj.cgi,v 1.14 2003/03/04 10:19:13 spanhel Exp $
+d16 3
+a18 1
+require $Languages->{param('Lang')}->{src};
+d27 2
+@
+
+
+1.14
+log
+@added cz localization
+@
+text
+@d5 1
+a5 1
+# $Id: edit_obj.cgi,v 1.12 2003/03/03 13:23:26 spanhel Exp $
+d11 1
+a11 1
+use vars qw($StyleSheet $bearHost $bearPort $compress_threshold $al $lang);
+d16 1
+a16 4
+if ($al eq 'us') {require 'lang/us.def'}
+if ($al eq 'cz') {require 'lang/cz.def'}
+# require "lang/lang.def";
+
+d55 1
+a55 1
+loadMetadata($ID);
+@
+
+
+1.13
+log
+@cookie managing improvment for better cooperation with user preferences
+@
+text
+@d57 2
+a58 3
+#$ID = $q->param('item_id');
+#loadMetadata($ID);
+if ($q->param('item_id')) {$ID=$q->param('item_id'); loadMetadata($ID)}
+d71 1
+a72 1
+
+@
+
+
+1.12
+log
+@lang version
+@
+text
+@d5 1
+a5 1
+# $Id: edit_obj.cgi,v 1.11 2003/02/26 13:21:32 jiri_schmid Exp $
+d57 3
+a59 2
+$ID = $q->param('item_id');
+loadMetadata($ID);
+@
+
+
+1.11
+log
+@huge javascript optimalization, also files moved to directory js
+@
+text
+@d5 1
+a5 1
+# $Id: edit_obj.cgi,v 1.10 2003/02/25 09:18:01 jiri_schmid Exp $
+d11 2
+a12 1
+use vars qw($StyleSheet $bearHost $bearPort $compress_threshold $al);
+a13 1
+require "lang/lang.def";
+d16 3
+d80 1
+a80 1
+	if ($cgi->param('Action') eq $al->{'Save'}) {
+@
+
+
+1.10
+log
+@added checking of unsaved-changed item, when traying to start editing another one
+@
+text
+@d5 1
+a5 1
+# $Id: edit_obj.cgi,v 1.9 2003/02/24 15:31:09 jiri_schmid Exp $
+d26 2
+a27 4
+	-script=>[{-language=>'JAVASCRIPT', -src=>'tree2.js'},
+		{-language=>'JAVASCRIPT', -src=>'attr.js'},
+		{-language=>'JAVASCRIPT', -src=>'DynFunct.js'},
+		{-language=>'JAVASCRIPT', -src=>'dad.js'}],
+@
+
+
+1.9
+log
+@new bugs just found fixed, some visual changes
+@
+text
+@d5 1
+a5 1
+# $Id: edit_obj.cgi,v 1.8 2003/02/21 09:28:57 jiri_schmid Exp $
+d59 1
+@
+
+
+1.8
+log
+@IE save bug fixed / grid - new uknown bug when saving found, not fixed yet
+@
+text
+@d5 1
+a5 1
+# $Id: edit_obj.cgi,v 1.7 2003/02/20 14:44:49 jiri_schmid Exp $
+d11 1
+a11 1
+use vars qw($StyleSheet $bearHost $bearPort $compress_threshold);
+d78 1
+a78 1
+	if ($cgi->param('Action') =~ /Save/) {
+@
+
+
+1.7
+log
+@save item bug and delete item bug fixed
+@
+text
+@d5 1
+a5 1
+# $Id: edit_obj.cgi,v 1.6 2003/02/19 16:06:47 jiri_schmid Exp $
+d56 1
+a56 2
+if ($q->param('Action') =~ /Save/) { $ID = $q->param('Action'); $ID =~ s/^.*\|//;}
+else {$ID = $q->param('item_id')}
+d58 1
+a58 1
+
+d78 1
+a78 1
+	if ($cgi->param('Action') =~ 'Save') {
+@
+
+
+1.6
+log
+@activating of new items fullfunctional, deleting also
+@
+text
+@d5 1
+a5 1
+# $Id: edit_obj.cgi,v 1.5 2003/02/14 09:56:47 michald Exp $
+d31 1
+a31 2
+	-onclick=>'hide_me();return true;',
+	-onunload=>'set_fid();return true;'
+d55 4
+a58 2
+my $hlp = $q->param('item_id');
+loadMetadata($hlp);
+a68 1
+
+d79 1
+a79 1
+	if ($cgi->param('Action') eq 'Save') {
+@
+
+
+1.5
+log
+@fix saving of metadata after Grid edit
+@
+text
+@d5 1
+a5 1
+# $Id: edit_obj.cgi,v 1.4 2003/01/30 06:36:20 michald Exp $
+d17 2
+a18 1
+our $ID=&SetParam('ID','id');
+d56 2
+a57 1
+loadMetadata($ID);
+@
+
+
+1.4
+log
+@functionality for saving and retrieving attribute displays and metric groups in grid editor
+@
+text
+@d5 1
+a5 1
+# $Id: edit_obj.cgi,v 1.3 2003/01/23 16:43:01 spanhel Exp $
+d50 1
+a50 3
+# --- load Metadata ---
+#my $FullObj = SOAP->GetMetadata($ID);
+my $FullObj = SOAP->GetMetadataSubstPtr2Name($ID);
+d52 4
+a55 4
+
+our $ObjT = (keys %{$FullObj})[0];		#object type
+our $Obj = $FullObj->{$ObjT}->{$ID};	#ptr to main part of data structure
+$Obj->{description}=~s/\\n/\n/g;	#substitute NL
+d88 2
+d96 9
+@
+
+
+1.3
+log
+@added object metric in grid_ed.pl
+@
+text
+@d5 1
+a5 1
+# $Id: edit_obj.cgi,v 1.2 2003/01/21 11:02:56 spanhel Exp $
+d11 1
+a11 1
+use vars qw($StyleSheet $bearHost $bearPort);
+d34 2
+d40 1
+a40 1
+	options => {compress_threshold => 10000}]; 
+@
+
+
+1.2
+log
+@drag and drop + lang version - /lang/lang.def
+@
+text
+@d3 1
+a3 1
+#  Edit Object Form
+d5 1
+a5 1
+# $Id: edit_obj.cgi,v 1.1 2003/01/18 12:23:06 michald Exp $
+d30 1
+a81 2
+		use Data::Dumper;
+		print "<PRE>Obj".Dumper($Obj)."</PRE>";
+a82 3
+
+		print "<PRE>FullObj".Dumper($FullObj)."</PRE>";
+
+d86 1
+a86 1
+<span class="error">aaaERROR: Saving Object [$n] into metadata failed.</span>
+@
+
+
+1.1
+log
+@edit_obj with drag/drop functionality
+@
+text
+@d5 1
+a5 1
+# $Id: edit.cgi,v 1.15 2002/11/26 12:44:36 spanhel Exp $
+d13 1
+a51 6
+
+# data dump for debuging
+#print $q->Dump;
+#use Data::Dumper;
+#print "<PRE>A".Dumper($FullObj)."</PRE>";
+
+d81 2
+d84 2
+a85 2
+		use Data::Dumper;
+		print "<PRE>A".Dumper($FullObj)."</PRE>";
+@
+

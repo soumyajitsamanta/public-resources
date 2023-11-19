@@ -1,0 +1,665 @@
+head	1.21;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.21
+date	2004.05.06.03.22.02;	author vasekd;	state Exp;
+branches;
+next	1.20;
+
+1.20
+date	2004.04.26.18.08.53;	author vasekd;	state Exp;
+branches;
+next	1.19;
+
+1.19
+date	2004.02.11.16.06.05;	author jiri_schmid;	state Exp;
+branches;
+next	1.18;
+
+1.18
+date	2003.11.18.14.38.40;	author jiri_schmid;	state Exp;
+branches;
+next	1.17;
+
+1.17
+date	2003.10.31.12.47.57;	author jiri_schmid;	state Exp;
+branches;
+next	1.16;
+
+1.16
+date	2003.10.13.14.43.23;	author jiri_schmid;	state Exp;
+branches;
+next	1.15;
+
+1.15
+date	2003.08.19.13.05.58;	author jiri_schmid;	state Exp;
+branches;
+next	1.14;
+
+1.14
+date	2003.07.24.12.14.58;	author jiri_schmid;	state Exp;
+branches;
+next	1.13;
+
+1.13
+date	2003.07.18.10.51.02;	author jiri_schmid;	state Exp;
+branches;
+next	1.12;
+
+1.12
+date	2003.07.10.13.00.04;	author jiri_schmid;	state Exp;
+branches;
+next	1.11;
+
+1.11
+date	2003.07.04.14.29.33;	author jiri_schmid;	state Exp;
+branches;
+next	1.10;
+
+1.10
+date	2003.07.02.13.44.34;	author jiri_schmid;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	2003.06.24.15.17.43;	author jiri_schmid;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	2003.06.20.12.19.24;	author jiri_schmid;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	2003.06.19.15.28.44;	author jiri_schmid;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	2003.06.19.14.59.45;	author jiri_schmid;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	2003.06.17.08.45.50;	author jiri_schmid;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2003.06.02.12.09.11;	author jiri_schmid;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2003.04.10.14.21.36;	author jiri_schmid;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2003.03.26.16.15.24;	author jiri_schmid;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2003.03.26.14.46.29;	author jiri_schmid;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.21
+log
+@fixed many bugs in difinition of new format
+@
+text
+@// $Id: format.js,v 1.20 2004/04/26 18:08:53 vasekd Exp $
+
+function reloadPage (imgType,Lang,skinPath,EID,type,Name,NameCell) {
+			
+			var color,align,size,face,ClassId;
+						
+			if(parent.ImageSelected){ //change active image
+				ImgPath=String(parent.ImageSelected.style.backgroundImage).replace(/Active/,"");
+				parent.ImageSelected.style.backgroundImage = ImgPath;
+			}
+			//alert(skinPath);
+			EID.style.backgroundImage = 'url('+skinPath+'img/'+Name+'Active\.'+imgType+')';
+			
+			setSelfF(EID); //set cell as a active
+			parent.NameCell = NameCell; //set name of change element	
+						
+			if (type == "lines"){ //set parametr of a format
+				
+				classId=String(EID.id).replace(/_color(.*)/,"");
+				
+				type = 'lines';
+				align = '';
+				size = parent.document.getElementById(''+classId+'_width').value;
+				face = parent.document.getElementById(''+classId+'_face').value;
+				
+			}else if(type == "fonts"){ 
+				classId=String(EID.id).replace(/_bgcolor(.*)/,"");				
+				//color = parent.document.getElementById(''+classId+'_font_color').value;
+				
+				align = parent.document.getElementById(''+classId+'_align_horizontal').value;
+				
+				size = parent.document.getElementById(''+classId+'_font_size').value;
+				face = parent.document.getElementById(''+classId+'_font_face').value;
+			}
+			parent.document.getElementById('formatIframe').src='format.cgi\?Lang='+Lang+'&Type=grid_'+type+'&Form=default&ImgType='+imgType+'&SkinPath='+skinPath+'&TagId='+classId+'&Size='+size+'&Face='+face+'&Align='+align+'';
+			
+		}
+		
+function objectChanged() {
+if (top.frames["body"].document.getElementById("changed")) {
+	top.frames["body"].document.getElementById("changed").value = 1;
+	return true
+}
+return false
+}
+
+function next(EID){
+EID = EID.firstChild;
+EID.click();
+object_changed();
+}
+
+function loadFormat(format,id,head) {
+switch (format) {
+	case "graph3d":	set(id,"checked",true);
+			setParent("form","value",id);
+			break;
+	case "grid":	set(id,"selected",true);
+			setParent("form","value",id);
+			set(head,"checked",true);
+			setParent("header","checked",head)
+			break;
+	case "graph2d":	set(id,"checked",true);
+			setParent("form","value",id);
+			break;
+}
+}
+
+function set(elementId,property,value,laud){
+var EID = document.getElementById(elementId);
+if (EID) {	//the HTMLelement exists
+	var ready = false;
+	if (EID[property]) {	//the property exists
+		ready = true
+	} else {	 	//the property doesn't exists or it has value recognized by javascript as false
+		for (var item in EID) {	if (item == property) ready = true }; //try to find the property checking all properties defined in element
+	}
+	if (ready) {		//the property is ready to be set
+		EID[property] = value;
+		return (laud) ? objectChanged() : true
+	}
+}
+return false
+}
+
+function setParent(elementId,property,value,laud){
+var EID = parent.document.getElementById(elementId);
+if (EID) {	//the HTMLelement exists
+	var ready = false;
+	if (EID[property]) {	//the property exists
+		ready = true
+	} else {	 	//the property doesn't exists or it has value recognized by javascript as false
+		for (var item in EID) {	if (item == property) ready = true }; //try to find the property checking all properties defined in element
+	}
+	if (ready) {		//the property is ready to be set
+		EID[property] = value;
+		return (laud) ? objectChanged() : true
+	}
+}
+return false
+}
+
+function setVrml(EID) {
+var Input = EID.firstChild;
+Input.checked = true;
+parent.document.getElementById('form').value = Input.id;
+objectChanged();
+}
+
+function setHeader(EID) {
+var Input = EID.firstChild;
+Input.checked = true;
+document.getElementById('header').value = Input.id;
+objectChanged();
+}
+@
+
+
+1.20
+log
+@new format of table
+@
+text
+@d1 1
+a1 1
+// $Id: format.js,v 1.19 2004/02/11 16:06:05 jiri_schmid Exp $
+d3 36
+a66 1
+changeCss(true);
+a102 17
+function changeCss(silent) {
+var SID = document.getElementById('CSS');
+var LID = document.getElementById('CSSList');
+if (SID && LID && LID.selectedIndex > -1) {
+	var id = LID.options[LID.selectedIndex].value;
+	set("form","value",id);
+	SID.disabled = true;
+	SID.href = "CSS/"+id+".css";
+	SID.disabled = false;
+}
+if (silent) {
+	return true
+} else {
+	objectChanged();
+}
+}
+
+@
+
+
+1.19
+log
+@local format improvment and started implementation of tabs selection
+@
+text
+@d1 1
+a1 1
+// $Id: format.js,v 1.18 2003/11/18 14:38:40 jiri_schmid Exp $
+d73 1
+a73 1
+	setParent("form","value",id);
+d95 1
+a95 1
+parent.document.getElementById('header').value = Input.id;
+@
+
+
+1.18
+log
+@auto save when changing tabs implemented
+@
+text
+@d1 1
+a1 1
+// $Id: format.js,v 1.17 2003/10/31 12:47:57 jiri_schmid Exp $
+d71 1
+a71 1
+if (SID && LID) {
+@
+
+
+1.17
+log
+@mod perl rocks!
+@
+text
+@d1 1
+a1 1
+// $Id: format.js,v 1.16 2003/10/13 14:43:23 jiri_schmid Exp $
+d31 1
+a31 1
+changeCss();
+d68 1
+a68 1
+function changeCss() {
+d77 5
+@
+
+
+1.16
+log
+@description tab defined under two files, bug fixies
+@
+text
+@d1 1
+a1 1
+// $Id: format.js,v 1.86 2003/10/09 13:53:24 jiri_schmid Exp $
+d31 1
+@
+
+
+1.15
+log
+@formats2d implemented
+@
+text
+@d1 2
+@
+
+
+1.14
+log
+@code change/improvment, bug fixies
+@
+text
+@d25 3
+@
+
+
+1.13
+log
+@format3d implemented, format changed all dependencies fixed
+@
+text
+@d17 2
+a18 2
+	case "graph3d":	set(id,"checked",true,1);
+			setParent("form","value",id,1);
+d20 4
+a23 4
+	case "grid":	set(id,"selected",true,1);
+			setParent("form","value",id,1);
+			set(head,"checked",true,1);
+			setParent("header","checked",head,1)
+d28 13
+a40 5
+function set(elementId,property,value,silent){
+if (document.getElementById(elementId)) {
+	var EID = document.getElementById(elementId);
+	EID[property] = value;
+	return (silent) ? true : objectChanged()
+d45 13
+a57 5
+function setParent(elementId,property,value,silent){
+if (parent.document.getElementById(elementId)) {
+	var EID = parent.document.getElementById(elementId);
+	EID[property] = value;
+	return (silent) ? true : objectChanged()
+@
+
+
+1.12
+log
+@tabed graph3d implemnted, code improvment
+@
+text
+@d1 6
+a6 32
+var styleID;
+var listID;
+
+function load_format(Typ){
+var Forma = parent.document.getElementById("originalForm").value;
+parent.document.getElementById("form").value = Forma;
+switch (Typ) {
+	case "grid": {	styleID = document.getElementById("style_css");
+			listID = document.getElementById("list_css");
+			for (i = 0; i<listID.length; i++)
+				if (listID.options[i].text == Forma) { listID.selectedIndex = i; change_style();}
+			Forma = parent.document.getElementById('header').value;
+			if (document.list[Forma]) {
+				document.list[Forma].checked=true;
+			}
+			break }
+	case "graph":{	if (document.list[Forma]) {
+				document.list[Forma].checked=true;
+			}
+			break }
+	case "vrml":{	if (document.list[Forma]) {
+				document.list[Forma].checked=true;
+			}
+			break }
+}}
+
+function reload_format(){
+var Typ = document.getElementById("originalType").value;
+document.getElementById("typ").value = Typ;
+document.getElementById("form").value = document.getElementById("originalForm").value;
+document.getElementById("header").value = document.getElementById("originalHeader").value;
+changeStyle(Typ);
+d9 3
+a11 15
+
+function change_style()
+{
+styleID.disabled = true;
+styleID.href = "CSS/" + listID.options[listID.selectedIndex].value;
+parent.document.getElementById("typ").value = 'grid';
+parent.document.getElementById("form").value = listID.options[listID.selectedIndex].text;
+styleID.disabled = false;
+}
+
+function setHeader(header) {
+var Forma = parent.document.getElementById('header');
+if (document.list[Forma.value]) { document.list[Forma.value].checked=false; }
+document.list[header].checked=true;
+Forma.value=header;
+d15 11
+a25 3
+function changeStyle(Typ) {
+document.getElementById("css_graph").src="format.cgi?Lang="+document.getElementById('activeLang').value+"&Type="+Typ;
+return true;
+d28 7
+a34 8
+function set_graph(EID) {
+var Forma = parent.document.getElementById('form');
+if (document.list[Forma.value]) { document.list[Forma.value].checked=false; }
+var hlp = (EID.alt) ? EID.alt : EID.value;
+document.list[hlp].checked=true;
+Forma.value=document.list[hlp].value;
+parent.document.forms[0].typ.value= "graph";
+object_changed();
+d37 7
+a43 6
+function setGraph(EID) {
+var Forma = parent.document.getElementById('form');
+var hlp = (EID.alt) ? EID.alt : EID.value;
+Forma.value=document.list[hlp].value;
+parent.document.forms[0].typ.value= "graph";
+object_changed();
+d46 11
+d58 5
+a62 8
+function set_vrml(EID) {
+var Forma = parent.document.getElementById('form');
+if (document.list[Forma.value]) { document.list[Forma.value].checked=false; }
+var hlp = (EID.alt) ? EID.alt : EID.value;
+document.list[hlp].checked=true;
+Forma.value=document.list[hlp].value;
+parent.document.forms[0].typ.value= "vrml";
+object_changed();
+d65 5
+a69 6
+function object_changed(){top.frames["body"].document.getElementById("changed").value = 1;}
+
+function next(EID){
+EID = EID.firstChild;
+EID.click();
+object_changed();
+@
+
+
+1.11
+log
+@utf8 handling fixed
+@
+text
+@a88 21
+function viewLocalFormat(tab){
+if (deniedQuit('treeInfQ')){
+switch (tab) {
+ case "format":	{self.location.href="edit_obj.cgi?"+params+"&item_id="+document.getElementById('ITEM_ID').value+"&FormatTab=format"; break;}
+ case "def":	{self.location.href="edit_obj.cgi?"+params+"&item_id="+document.getElementById('ITEM_ID').value+"&FormatTab=def"; break;}
+ break;
+ }
+};
+}
+
+function deniedQuit(msg){
+var EID = top.frames["body"].document.getElementById("changed");
+if (EID)
+	if (EID.value == 1) {
+		if (confirm(msg_text(msg))) {EID.value = 0; return true}
+		else {	return false; }
+};
+EID.value = 0;
+return true
+}
+
+@
+
+
+1.10
+log
+@header descriptions finally implemented
+@
+text
+@d89 1
+a89 1
+function viewLocal(tab){
+@
+
+
+1.9
+log
+@metric mData change, minor code improvment
+@
+text
+@d11 5
+a15 1
+				if (listID.options[i].text == Forma) { listID.selectedIndex = i; change_style(); return }
+d31 1
+d43 8
+@
+
+
+1.8
+log
+@visual format-page changes
+@
+text
+@d42 1
+a42 5
+switch (Typ) {
+	case "grid" : document.getElementById("in_css").checked="true"; break;
+	case "graph": document.getElementById("in_graph").checked="true"; break;
+	case "vrml" : document.getElementById("in_vrml").checked="true"; break;
+}
+d55 9
+d95 6
+@
+
+
+1.7
+log
+@reload button on format page fullfunctional
+@
+text
+@d6 1
+d56 10
+@
+
+
+1.6
+log
+@huge improvment on format page
+@
+text
+@d6 14
+a19 7
+if (Typ == 'grid') {
+	styleID = document.getElementById("style_css");
+	listID = document.getElementById("list_css");
+	for (i = 0; i<listID.length; i++)
+		if (listID.options[i].text == Forma) { listID.selectedIndex = i; change_style(); return }
+} else	{
+	if (document.list[Forma]) { document.list[Forma].checked=true; }
+d21 8
+@
+
+
+1.5
+log
+@changed structure of format object
+@
+text
+@d4 2
+a5 1
+function load_format(Typ,Forma){
+d24 9
+d44 21
+@
+
+
+1.4
+log
+@code improvment, bug fixies
+@
+text
+@d4 9
+a12 17
+function load_format(Forma){
+if (Forma == "css")
+	{styleID = document.getElementById("style_css");
+	 listID = document.getElementById("list_css");
+	 var what = parent.document.getElementById("typ_css").value
+	 parent.document.getElementById("forma").value = "css";
+	 for (i = 0; i<listID.length; i++)
+	 	if (listID.options[i].text == what) {listID.selectedIndex = i; change_style(); return;}
+	 }
+else
+	{parent.document.forms[0].form.value= "graph";
+	 var hlp = parent.document.forms[0].type_graph.value;
+	 if (hlp=="")
+ 		{parent.document.forms[0].type_graph.value="area";} //nesesery for set_graph(), when called for the very first time, input element named area have to exist
+	 else document.list[hlp].checked=true;
+	}
+}
+d18 2
+a19 2
+parent.document.getElementById("forma").value = "css";
+parent.document.getElementById("typ_css").value = listID.options[listID.selectedIndex].text;
+d24 2
+a25 1
+document.list[(parent.document.forms[0].type_graph.value)].checked=false;
+d28 2
+a29 2
+parent.document.forms[0].form.value= "graph";
+parent.document.forms[0].type_graph.value=document.list[hlp].value;
+@
+
+
+1.3
+log
+@metric, filter, report substitutes IDs by javascript, metric & filter resets the original expresion
+@
+text
+@d40 1
+a40 1
+function object_changed(){parent.document.getElementById("changed").value = 1;}
+@
+
+
+1.2
+log
+@css options in format page depend on file-tree structure
+@
+text
+@a28 1
+object_changed();
+@
+
+
+1.1
+log
+@added format.js - client-side script for format
+@
+text
+@d29 1
+d38 1
+d40 2
+@
+

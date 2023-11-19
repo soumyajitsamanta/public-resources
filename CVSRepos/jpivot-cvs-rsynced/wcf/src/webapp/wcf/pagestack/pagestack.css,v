@@ -1,0 +1,53 @@
+head	1.2;
+access;
+symbols
+	jpivot_1_8_0:1.2
+	focus_1_6_0:1.2.0.2
+	wcf_1_7_0:1.2
+	wcf_1_6_0:1.2
+	jpivot_1_5_0:1.1.0.4
+	Root_jpivot_1_5_0:1.1
+	mondrian_xmla_2005_08_25:1.1.0.2
+	sourceforge_sync:1.2;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2006.11.09.13.24.07;	author avix;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2005.07.05.14.04.59;	author avix;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@synchronized with tonbeller cvs
+@
+text
+@.pagestack {
+  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+  font-size: 0.8em;;
+}
+
+@
+
+
+1.1
+log
+@initial version
+@
+text
+@d3 1
+a3 1
+  font-size: 0.9em;;
+@
+

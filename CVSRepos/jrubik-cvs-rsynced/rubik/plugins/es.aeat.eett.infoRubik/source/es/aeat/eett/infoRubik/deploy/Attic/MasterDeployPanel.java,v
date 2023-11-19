@@ -1,0 +1,501 @@
+head	1.2;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2008.05.17.15.37.41;	author fsaz;	state dead;
+branches;
+next	1.1;
+
+1.1
+date	2005.11.28.14.44.05;	author fsaz;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@Borrando
+@
+text
+@/*
+ * Created on 28-ene-2005
+ *
+ * MasterDeployPanel.java
+ *
+ */
+package es.aeat.eett.infoRubik.deploy;
+
+
+import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.io.File;
+import java.util.Enumeration;
+import java.util.List;
+import java.util.ResourceBundle;
+
+import javax.swing.AbstractAction;
+import javax.swing.Action;
+import javax.swing.JTree;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.TreeModel;
+import javax.swing.tree.TreeNode;
+import javax.swing.tree.TreePath;
+import javax.swing.tree.TreeSelectionModel;
+
+import org.java.plugin.PluginManager;
+
+import swingUtil.Tamemasa.tree.CheckNode;
+
+import com.tonbeller.jpivot.olap.model.OlapModel;
+
+import es.aeat.eett.rubik.core.RubikPlugin;
+
+
+/**
+ * @@author f00992
+ */
+public class MasterDeployPanel  extends javax.swing.JPanel{
+    private static final ResourceBundle localizationResources =
+        ResourceBundle.getBundle("es.aeat.eett.infoRubik.deploy.locale.LocalizationBundle");
+    private static final String DESPLIEGUE=localizationResources.getString("PluginCaption");
+    private static final String LIMPIAR_TDODO=localizationResources.getString("LimpiarTodo");
+    private static final String ANIADIR=localizationResources.getString("Aniadir");
+
+    private javax.swing.JMenuItem jMenuItemAniadir;
+    private javax.swing.JTree jTreeElegidas;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JMenuItem jMenuItemLimpiar;
+    private javax.swing.JSplitPane jSplitPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JToolBar jToolBar1;
+    private javax.swing.JMenu jMenuDespliege;
+    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JTree jTreeDisponibles;
+    private javax.swing.JMenuBar jMenuBar1;
+
+    private CheckNode rootDisponibles=null;
+    private DefaultMutableTreeNode rootElegidas=null;
+    private AvailableHierarchies disponibles=null;
+    private MasterDeploy despliegue=null;
+    private boolean dirty=false;
+	private static OlapModel olapModel=null;
+
+    /** Creates new JScroll Despliege 
+     * @@throws Exception*/
+    /*
+    public MasterDeployPanel( AvailableHierarchies disponibles) {
+    	this.disponibles=disponibles;
+    	Rubik.getInstance().getOlapModel().addModelChangeListener(this);
+    	despliegue=new MasterDeploy();
+    	initNodes();
+        initComponents();
+        cfg();
+    }
+    */
+    public MasterDeployPanel( ) throws Exception {
+    	disponibles=new AvailableHierarchies();
+        if(olapModel==null){
+	        PluginManager pm = PluginManager.lookup(MasterDeployPanel.class);
+	    	RubikPlugin rubikPlugin = ((RubikPlugin) pm
+	    			.getPlugin(RubikPlugin.PLUGIN_ID));
+	        olapModel=rubikPlugin.getOlapModel();
+	        olapModel=rubikPlugin.getOlapModel();
+//	        InfoRugikPlugin infoRugikPlugin = (InfoRugikPlugin) pm
+//	    			.getPlugin(InfoRugikPlugin.PLUGIN_ID);
+        }
+    	
+    	despliegue=new MasterDeploy();
+    	initNodes(null, null);
+        initComponents();
+        cfg();
+    }
+    /**/
+	public void setDisponibles(AvailableHierarchies disponibles) {
+		this.disponibles = disponibles;
+	}
+    private void clearTrees(){
+		if(jTreeDisponibles!=null){
+			TreeModel treeModel= new DefaultTreeModel(rootDisponibles);
+			jTreeDisponibles.setModel(treeModel);
+		}
+		if(jTreeElegidas!=null){
+			TreeModel treeModel= new DefaultTreeModel(rootElegidas);
+			jTreeElegidas.setModel(treeModel );
+		}
+    }
+    public void updateTrees(){
+        DefaultTreeModel dtmd=(DefaultTreeModel) jTreeDisponibles.getModel();
+        dtmd.nodeStructureChanged((TreeNode) dtmd.getRoot());
+        expandHijosNodo(jTreeDisponibles,  (DefaultMutableTreeNode) dtmd.getRoot());
+    	DefaultTreeModel dtme=(DefaultTreeModel) jTreeElegidas.getModel();
+        dtme.nodeStructureChanged((TreeNode) dtme.getRoot());
+    	expandAll(jTreeElegidas, rootElegidas);
+    }
+    private void expandAll(JTree tree, DefaultMutableTreeNode n){
+        if(tree!=null && tree.isVisible() && !n.isLeaf()){
+            tree.expandPath(new TreePath(n.getPath()));
+            for (int i=0; i<n.getChildCount(); i++){
+                tree.expandPath( new TreePath( ( (DefaultMutableTreeNode) n.getChildAt(i) ).getPath() ) ) ;
+                expandAll(tree,(DefaultMutableTreeNode) n.getChildAt(i));
+            }
+        }
+    }
+
+    public void  initNodes(List listNamesJobs, File folderJobs){
+        despliegue.clearNodes();
+    	clearTrees();
+		try {
+			
+			rootDisponibles = copiaNodo (disponibles.getTreeDisponibles(listNamesJobs, folderJobs));
+			despliegue.setRootDisponibles(rootDisponibles);
+			if(jTreeDisponibles!=null){
+			    TreeModel treeModel= new DefaultTreeModel(rootDisponibles);
+				jTreeDisponibles.setModel(treeModel);
+				jTreeDisponibles.revalidate();
+				jTreeDisponibles.repaint();
+				expandHijosNodo(jTreeDisponibles, rootDisponibles);
+			}
+			rootElegidas =  new DefaultMutableTreeNode (DESPLIEGUE);
+			despliegue.setRootElegidas(rootElegidas);
+			if(jTreeElegidas!=null){
+				TreeModel treeModel= new DefaultTreeModel(rootElegidas);
+				jTreeElegidas.setModel(treeModel );
+			}
+			dirty=false;
+		} catch (Exception e) {
+			//TODO
+			e.printStackTrace();
+		}
+    }
+    private void expandHijosNodo(JTree tree, DefaultMutableTreeNode n){
+        if(tree!=null && tree.isVisible() && !n.isLeaf()){
+            tree.expandPath(new TreePath(n.getPath()));
+            for (int i=0; i<n.getChildCount(); i++){
+                tree.expandPath( new TreePath( ( (DefaultMutableTreeNode) n.getChildAt(i) ).getPath() ) ) ;
+            }
+        }
+    }
+    private void cfg(){
+    	///////////////////// jTreeElegidas
+    	jTreeElegidas.getSelectionModel().setSelectionMode(
+    			TreeSelectionModel.DISCONTIGUOUS_TREE_SELECTION);
+    	jTreeElegidas.putClientProperty("JTree.lineStyle", "Angled");
+    	jTreeElegidas.addMouseListener(new MouseTrigger());
+    	jTreeElegidas.setCellRenderer(new DeployTreeCellRender());
+    	///////////////////// jTreeDisponibles
+    	jTreeDisponibles.setCellRenderer(new AvailableTreeCellRender());
+    	jTreeDisponibles.getSelectionModel().setSelectionMode(
+    			TreeSelectionModel.SINGLE_TREE_SELECTION);
+    	jTreeDisponibles.putClientProperty("JTree.lineStyle", "Angled");
+    	jTreeDisponibles.addMouseListener(new CheckNodeMouseTrigger(this));
+    	expandHijosNodo(jTreeDisponibles, rootDisponibles);
+    	actionAniadir.setEnabled(false);
+    	//actionLimpiar.setEnabled(false);
+
+    }
+	/**
+	 * @@return Returns the disponibles.
+	 */
+	AvailableHierarchies getDisponibles() {
+		return disponibles;
+	}
+	/**
+	 * @@param disponibles The disponibles to set.
+	 */
+
+	/**
+	 * @@return Returns the actionAniadir.
+	 */
+	public Action getActionAniadir() {
+		return actionAniadir;
+	}
+	/**
+	 * @@return Returns the jTreeDisponibles.
+	 */
+	public javax.swing.JTree getJTreeDisponibles() {
+		return jTreeDisponibles;
+	}
+	/**
+	 * @@return Returns the jTreeElegidas.
+	 */
+	public javax.swing.JTree getJTreeElegidas() {
+		return jTreeElegidas;
+	}
+	public MasterDeploy getDespliegue(){
+	    return despliegue;
+	}
+    /////////////////// Actions (menus y toolbar)////////////////////////
+    private Action actionAniadir = new AbstractAction(ANIADIR){
+        public void actionPerformed (ActionEvent e){
+            TreePath   selPath = jTreeDisponibles.getSelectionPath();
+            if(selPath != null){
+            	CheckNode lastItem=(CheckNode)selPath.getLastPathComponent();
+            	despliegue.addLevelToDespliegue(lastItem);
+            	//((DefaultTreeModel)jTreeDisponibles.getModel()).nodeStructureChanged(lastItem.getParent());
+                //jTreeDisponibles.updateUI();
+                DefaultTreeModel dtmd=(DefaultTreeModel) jTreeDisponibles.getModel();
+                dtmd.nodeStructureChanged((TreeNode) dtmd.getRoot());
+
+                System.out.println("El despliegue contiene: "+rootElegidas.getLeafCount()+" hojas.");
+                ////////     Borrar         ///////////////
+                DefaultMutableTreeNode nTest=rootElegidas.getFirstLeaf();
+                TreeNode[] nodes = nTest.getPath();
+                //System.out.println("nodes[0].toString()\t"+ nodes[0].toString()+"\t Ini for");
+                for (int i=1;i<nodes.length;i++) {
+                  System.out.print("/" + nodes[i].toString());
+                }
+                System.out.println();
+                //////// Fin    Borrar           ///////////////
+                updateTrees();
+            	//////////          Expandiendo  jTreeElegidas             ///////////////
+                Enumeration enu = rootElegidas.breadthFirstEnumeration();
+                while (enu.hasMoreElements()) {
+                    DefaultMutableTreeNode node = (DefaultMutableTreeNode)enu.nextElement();
+                    if(node.getDepth()==1)
+                        expandHijosNodo(jTreeElegidas, node);
+                }
+
+            }
+            actionAniadir.setEnabled(false);
+        }
+    };
+
+    private CheckNode copiaNodo(CheckNode nodo){
+    	CheckNode chkNodo=null;
+    	if (nodo!=null && nodo.isSelected()){
+        	int n_hijos=nodo.getChildCount();
+    	    chkNodo= new CheckNode(nodo.getUserObject());
+    	    chkNodo.setSelectionMode(nodo.getSelectionMode());
+    	    chkNodo.setSelected(nodo.isSelected());
+			for (int i=0; i<n_hijos; i++){
+			    CheckNode chkHijo=copiaNodo((CheckNode) nodo.getChildAt(i));
+			    if(chkHijo!=null)    chkNodo.add(chkHijo);
+			}
+    	}
+    	return chkNodo;
+    }
+
+
+    private Action actionLimpiar = new AbstractAction(LIMPIAR_TDODO){
+        public void actionPerformed (ActionEvent e){
+        	initNodes(null, null);
+        }
+    };
+    /////////////////// Fin Actions (menus y toolbar)////////////////////////
+
+
+    private void initComponents() {
+        jSplitPane1 = new javax.swing.JSplitPane();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTreeDisponibles = new javax.swing.JTree(rootDisponibles);
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTreeElegidas = new javax.swing.JTree(rootElegidas);
+        jToolBar1 = new javax.swing.JToolBar();
+        jToolBar1.add(actionAniadir);
+        jToolBar1.add(actionLimpiar);
+        /*
+        jToolBar1.add(new ActionSaveUserActions("Save MasterDeploy", this));
+        jToolBar1.add(new  ActionRestoreUserActions("Restore MasterDeploy", this));
+        */
+
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenuDespliege = new javax.swing.JMenu();
+        jMenuItemAniadir = new javax.swing.JMenuItem();
+        jMenuItemLimpiar = new javax.swing.JMenuItem();
+        jSeparator1 = new javax.swing.JSeparator();
+
+        jSplitPane1.setDividerSize(5);
+        setLayout(new  BorderLayout());
+        jTreeDisponibles.addTreeSelectionListener(new javax.swing.event.TreeSelectionListener() {
+            public void valueChanged(javax.swing.event.TreeSelectionEvent evt) {
+                jTreeDisponiblesValueChanged(evt);
+            }
+        });
+
+        jScrollPane1.setViewportView(jTreeDisponibles);
+
+        jSplitPane1.setLeftComponent(jScrollPane1);
+
+        jScrollPane2.setViewportView(jTreeElegidas);
+
+        jSplitPane1.setRightComponent(jScrollPane2);
+
+        add(jSplitPane1, BorderLayout.CENTER);
+
+        jMenuDespliege.setText(DESPLIEGUE);
+        jMenuItemAniadir.setAction(actionAniadir);
+        jMenuDespliege.add(jMenuItemAniadir);
+        jMenuItemLimpiar.setAction(actionLimpiar);
+        jMenuDespliege.add(jMenuItemLimpiar);
+        jMenuDespliege.add(jSeparator1);
+        jMenuBar1.add(jMenuDespliege);
+
+        add(jToolBar1, BorderLayout.NORTH);
+        setSizePane();
+    }
+    /**
+     * Fija tamanio y posicion inicial  de la ventana
+     */
+    private void setSizePane() {
+        java.awt.Dimension screenSize = getToolkit().getScreenSize();
+        java.awt.Dimension paneSize = screenSize;
+        paneSize.setSize(screenSize.getWidth()*3/4, screenSize.getHeight()*3/4);
+        setPreferredSize(paneSize);
+    }
+
+    private void jTreeDisponiblesValueChanged(javax.swing.event.TreeSelectionEvent evt) {//GEN-FIRST:event_jTreeDisponiblesValueChanged
+	TreePath   selPath = jTreeDisponibles.getSelectionPath();
+	if(selPath != null){
+            CheckNode lastItem=(CheckNode)selPath.getLastPathComponent();
+            actionAniadir.setEnabled((lastItem.isLeaf() || lastItem.getLevel()!=2)? false:true);
+        }else{
+            actionAniadir.setEnabled(false);
+        }
+
+    }//GEN-LAST:event_jTreeDisponiblesValueChanged
+
+}// Fin class MasterDeployPanel
+
+
+//TODO  Borrar las clases Basura
+///////////////////////////////// Clases Basurra pa niapear una miaja /////////////////////////////////////7
+//class ActionSaveUserActions extends AbstractAction{
+//	private MasterDeployPanel desplieguePanel;
+//
+//	/**
+//	 *
+//	 * @@param name
+//	 * @@param desplieguePanel
+//	 */
+//	public ActionSaveUserActions(String name,  MasterDeployPanel desplieguePanel) {
+//		super(name);
+//		this.desplieguePanel= desplieguePanel;
+//	}
+//	/* (non-Javadoc)
+//	 * @@see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+//	 */
+//	public void actionPerformed(ActionEvent e) {
+//		System.out.println("Sin Implementar");
+//	    File file=getFile(null);
+//	    if(file!=null){
+//	    	Element eRoot=desplieguePanel.getDespliegue().getRootElement();
+//	    	try {
+//				new JDomUtil().saveDocument(new Document(eRoot), file);
+//			} catch (IOException e1) {
+//				// TODO Auto-generated catch block
+//				e1.printStackTrace();
+//			}
+//	    }
+//		/*
+//	    File file=getFile(null);
+//	    if(file!=null){
+//			org.jdom.Document document=desplieguePanel.getDespliegue()
+//					.getUserActions().getDocument();
+//			Format format=Format.getPrettyFormat();
+//			format.setEncoding(Misc.ISO_8859_1);
+//		    XMLOutputter outp = new XMLOutputter(format);
+//		    PrintWriter writer=null;
+//            try {
+//                writer = new PrintWriter(new FileWriter(file));
+//                outp.output(document, writer);
+//            } catch (IOException e1) {
+//                // TODO Auto-generated catch block
+//                e1.printStackTrace();
+//            }
+//            if(writer!=null)	writer.close();
+//
+//	    }
+//	    */
+//	}
+//	File getFile(String rutaDir){
+//	    File fileOut=null;
+//		JFileChooser fileChooser = new JFileChooser();
+//		try{
+//			if (rutaDir!=null){
+//				File dir= new  File(rutaDir);
+//				fileChooser.setCurrentDirectory(dir);
+//			}
+//		}catch(Exception ex){;}
+//		if(JFileChooser.APPROVE_OPTION ==fileChooser.showSaveDialog(desplieguePanel)){
+//		    fileOut=fileChooser.getSelectedFile();
+//		}
+//		return fileOut;
+//	}
+//
+//}//Fin class ActionSaveUserActions
+//class ActionRestoreUserActions extends AbstractAction{
+//	private MasterDeployPanel desplieguePanel;
+//
+//	/**
+//	 *
+//	 * @@param name
+//	 * @@param desplieguePanel
+//	 */
+//	public ActionRestoreUserActions(String name,  MasterDeployPanel desplieguePanel) {
+//		super(name);
+//		this.desplieguePanel= desplieguePanel;
+//	}
+//	/* (non-Javadoc)
+//	 * @@see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+//	 */
+//	public void actionPerformed(ActionEvent e) {
+//		System.out.println("Sin Implementar");
+//	    File file=getFile(null);
+//	    if(file!=null){
+//	        desplieguePanel.initNodes();
+//	        Document document;
+//			try {
+//				document = new JDomUtil().JDomChk(file, Job.KEY_DEPLOY);
+//				desplieguePanel.getDespliegue().loadRootElement(document.getRootElement());
+//			} catch (Exception e1) {
+//				// TODO Auto-generated catch block
+//				e1.printStackTrace();
+//			}
+//	        desplieguePanel.updateTrees();
+//	        /*
+//	        try {
+//                desplieguePanel.getDespliegue().putUserActions( file);
+//            } catch (Exception e1) {
+//                //e1.printStackTrace();
+//                JOptionPane.showMessageDialog(desplieguePanel, e1.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+//            }
+//	        desplieguePanel.updateTrees();
+//	        //desplieguePanel.updateUI();
+//	         */
+//	    }
+//	}
+//	File getFile(String rutaDir){
+//	    File fileOut=null;
+//		JFileChooser fileChooser = new JFileChooser();
+//		try{
+//			if (rutaDir!=null){
+//				File dir= new  File(rutaDir);
+//				fileChooser.setCurrentDirectory(dir);
+//			}
+//		}catch(Exception ex){;}
+//		if(JFileChooser.APPROVE_OPTION ==fileChooser.showOpenDialog(desplieguePanel)){
+//		    fileOut=fileChooser.getSelectedFile();
+//		}
+//		return fileOut;
+//	}
+//
+//}//Fin class ActionRestoreUserActions
+@
+
+
+1.1
+log
+@*** empty log message ***
+@
+text
+@@
+

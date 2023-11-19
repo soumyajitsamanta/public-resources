@@ -1,0 +1,253 @@
+head	1.2;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2008.05.17.15.43.54;	author fsaz;	state dead;
+branches;
+next	1.1;
+
+1.1
+date	2005.11.28.15.28.59;	author fsaz;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@borrando viejos
+@
+text
+@/*
+ * Created on 17-ago-2005
+ *
+ * BasicStatPlugin.java
+ * 
+ */
+package es.aeat.eett.rubik.basicStat;
+
+import java.awt.BorderLayout;
+import java.awt.event.HierarchyEvent;
+import java.awt.event.HierarchyListener;
+import java.util.Locale;
+
+import javax.swing.JComponent;
+import javax.swing.JTable;
+import javax.swing.event.ListSelectionListener;
+
+import org.java.plugin.Plugin;
+
+import com.tonbeller.jpivot.core.ModelChangeEvent;
+import com.tonbeller.jpivot.core.ModelChangeListener;
+import com.tonbeller.jpivot.olap.model.OlapException;
+import com.tonbeller.jpivot.olap.model.OlapModel;
+import com.tonbeller.jpivot.olap.model.Result;
+
+import es.aeat.eett.rubik.core.RubikPlugin;
+import es.aeat.eett.rubik.core.util.JTableSimplePrint;
+import es.aeat.eett.rubik.core.util.JTableUtil;
+import es.aeat.eett.rubik.tableRubik.RegisterSelectionListener;
+import es.aeat.eett.workbench.core.PluginException;
+import es.aeat.eett.workbench.core.ViewMain;
+
+/**
+ * <p>
+ * en: Encapsulates a Scroll panel that show the statistical table.
+ * </p>
+ * <p>
+ * es: Este plugin encapsula el panel scroll que
+ * muestra la tabla de datos estadisticos.
+ * </p>
+ * @@author f00992x
+ *
+ */
+public class BasicStatPlugin extends Plugin implements ViewMain
+, ModelChangeListener, RegisterSelectionListener {
+	private ScrollTablePrint scroll=null;
+	private JTableSimplePrint table=null;
+	private JTableUtil jTableUtil;
+	private Locale locale;
+	private boolean autoUpdate=true;
+	private OlapModel olapModel;
+
+    /**
+     * This plug-in ID.
+     */
+    public static final String PLUGIN_ID = "es.aeat.eett.rubik.basicStat";
+
+	/**
+	 *  The uniqueId of the extension ViewMain
+	 */
+	public static final String EXT_UNIQUE_ID=PLUGIN_ID+"@@basicStat";
+
+	/**
+	 * @@see org.java.plugin.Plugin#doStart()
+	 */
+	protected void doStart() throws Exception {
+	}
+
+	/**
+	 * @@see org.java.plugin.Plugin#doStop()
+	 */
+	protected void doStop() throws Exception {
+		if(olapModel!=null){
+			olapModel.removeModelChangeListener(this);
+			olapModel=null;		
+		}
+	}
+
+	/**
+	 * @@see es.aeat.eett.workbench.core.ViewMain#initViewMain(javax.swing.JComponent)
+	 */
+	public void initViewMain(JComponent rootContainer) throws PluginException {
+		RubikPlugin rubikPlugin;
+		try {
+			rubikPlugin = ((RubikPlugin) getManager().getPlugin(RubikPlugin.PLUGIN_ID));
+		} catch (Exception e1) {
+			throw new PluginException(e1, "initViewMain Failed");
+		}
+		olapModel=rubikPlugin.getOlapModel();
+		olapModel.addModelChangeListener(this);
+		locale=Locale.getDefault();
+		Result result=null;
+		try {
+			result=olapModel.getResult();
+		} catch (OlapException e) {
+		}
+		TableModelStat tm = new  TableModelStat(result, locale );
+		table=new JTableSimplePrint(tm);
+		table.setAutoResizeMode(JTableSimplePrint.AUTO_RESIZE_OFF);
+		jTableUtil=new JTableUtil();
+		    jTableUtil.setWidthCol(table);
+		scroll = new ScrollTablePrint(table);
+		rootContainer.setLayout(new BorderLayout());
+		rootContainer.add(scroll, BorderLayout.CENTER);
+		scroll.addHierarchyListener(new HierarchyAdapter(scroll));
+//		rootContainer.addComponentListener(new ComponentAdapter(){
+//			/**
+//			 * Invoked when the component has been made visible.
+//			 */
+//			public void componentShown(ComponentEvent e) {
+//				Container c=e.getComponent().getParent();				
+//				if(c !=null){
+//					BasicStatPlugin.this.setAutoUpdate(true);
+//				}else{ // rootContainer no visible
+//					BasicStatPlugin.this.setAutoUpdate(false);
+//				}
+//			}				
+//			/**
+//			 * Invoked when the component has been made invisible.
+//			 */
+//			public void componentHidden(ComponentEvent e) {
+//				BasicStatPlugin.this.setAutoUpdate(false);
+//			}
+//		});			
+		
+	}
+	/* (non-Javadoc)
+	 * @@see es.aeat.eett.rubik.tableRubik.RegisterSelectionListener#initTableDataSelectionListener()
+	 */
+	public ListSelectionListener initTableDataSelectionListener() throws PluginException {
+		try {
+			return new TableSelectionListener();
+		} catch (Exception e) {
+			throw new PluginException(e, "Failed new TableSelectionListener");
+		}
+	}
+	
+	/**
+	 * Cuando cambia OlapModel se limplia la table de Estadisticas basicas
+	 * (Si no estaba ya limpia)
+	 */
+	private void updateTable(){
+		if(autoUpdate){
+			updateScroll();
+		}else{
+			if(table.getModel().getColumnCount()>1){
+				((TableModelStat)table.getModel()).clear();
+				jTableUtil.setWidthCol(table);
+			}
+		}
+	}
+	public void updateScroll(){
+		Result result=null;
+		try {
+			result=olapModel.getResult();
+		} catch (RuntimeException e1) {
+			log.warn("model no initialize.");
+		} catch (OlapException e) {
+			log.warn("Update basic stat."+e);
+		}
+		((TableModelStat)table.getModel()).setResult(result);
+		jTableUtil.setWidthCol(table);
+		log.info("");
+	}
+
+	public void setAutoUpdate(boolean autoUpdate) {
+		if(this.autoUpdate != autoUpdate){
+			this.autoUpdate = autoUpdate;
+			if(log.isDebugEnabled()){
+				log.debug("setAutoUpdate: "+autoUpdate);
+			}
+			updateScroll();
+		}
+	}
+
+	/**
+	 * @@return Returns the table.
+	 */
+	public JTable getTable() {
+		return table;
+	}
+	/////////////// Implementacion de ModelChangeListener
+	/**
+	 * @@see com.tonbeller.jpivot.core.ModelChangeListener#modelChanged(com.tonbeller.jpivot.core.ModelChangeEvent)
+	 */
+	public void modelChanged(ModelChangeEvent arg0) {
+		updateTable();
+	}
+	/**
+	 * @@see com.tonbeller.jpivot.core.ModelChangeListener#structureChanged(com.tonbeller.jpivot.core.ModelChangeEvent)
+	 */
+	public void structureChanged(ModelChangeEvent arg0) {
+		updateTable();
+	}
+	/////////////// Fin Implementacion de ModelChangeListener
+	class HierarchyAdapter implements HierarchyListener{
+		ScrollTablePrint scroll;
+		
+		/**
+		 * @@param scroll
+		 */
+		private HierarchyAdapter(ScrollTablePrint scroll) {
+			super();
+			this.scroll = scroll;
+		}
+		public void hierarchyChanged(HierarchyEvent e){
+			if(BasicStatPlugin.this.autoUpdate != scroll.isShowing()){
+				if(log.isDebugEnabled()){
+					log.debug(PLUGIN_ID +" AutoUpdate="+scroll.isShowing());
+				}
+				BasicStatPlugin.this.setAutoUpdate(scroll.isShowing());
+			}
+		}
+	}// End class HierarchyAdapter
+
+}
+@
+
+
+1.1
+log
+@*** empty log message ***
+@
+text
+@@
+

@@ -1,0 +1,535 @@
+head	1.17;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.17
+date	2003.10.16.14.08.53;	author jiri_schmid;	state dead;
+branches;
+next	1.16;
+
+1.16
+date	2003.10.13.14.43.23;	author jiri_schmid;	state Exp;
+branches;
+next	1.15;
+
+1.15
+date	2003.09.19.10.23.50;	author jiri_schmid;	state Exp;
+branches;
+next	1.14;
+
+1.14
+date	2003.09.01.12.40.08;	author jiri_schmid;	state Exp;
+branches;
+next	1.13;
+
+1.13
+date	2003.08.13.14.22.03;	author jiri_schmid;	state Exp;
+branches;
+next	1.12;
+
+1.12
+date	2003.08.13.13.16.28;	author jiri_schmid;	state Exp;
+branches;
+next	1.11;
+
+1.11
+date	2003.05.26.15.01.40;	author jiri_schmid;	state Exp;
+branches;
+next	1.10;
+
+1.10
+date	2003.03.03.13.30.26;	author spanhel;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	2003.02.28.13.43.18;	author jiri_schmid;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	2003.02.26.13.21.49;	author jiri_schmid;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	2003.02.17.09.58.23;	author jiri_schmid;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	2003.01.21.14.18.03;	author spanhel;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	2003.01.20.18.23.50;	author spanhel;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2003.01.16.17.20.20;	author spanhel;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2002.11.26.16.29.03;	author spanhel;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2002.11.01.11.49.40;	author spanhel;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2002.10.25.14.03.24;	author spanhel;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.17
+log
+@mod-perl implementation stage 1, rebuilding global vars in .pl to global pointers
+@
+text
+@#-----------------------------------------------------
+#  Attr Editation
+#-----------------------------------------------------
+# $Id: attr_ed.pl,v 1.16 2003/10/13 14:43:23 jiri_schmid Exp $
+
+use strict;
+use CGI qw( :standard );
+use CGI::Pretty;
+
+require "const.def";
+use vars qw($ID $Obj $ObjT $descr_w $descr_r $itemWidth $use_lang $lang $all_params $skin $skinPath $imgType $DefaultLanguage $localTab);
+
+#-----------------------------------------------------
+
+sub print_form {
+	print startform(-action=>'', -name=>'attr');
+	print hidden('ObjT',$ObjT);
+	print hidden('skin',$skin);
+	print hidden('all_params',$all_params);
+	print hidden('local_tab',$localTab);
+	my $name = LocalizedObj($Obj->{name}, "Object #$ID", lc($use_lang), $DefaultLanguage);
+print <<END;
+<input type="hidden" value="$use_lang" id="activeLang" name="active_lang" />
+<input type="hidden" value="$skin" id="skin" name="skin" />
+<input type="hidden" value="$imgType" id="imgType" />
+<input type='hidden' name='item_id' id='ITEM_ID' value='$ID'/>
+<table><tr>
+	<td style='width:20px'><img src="${skinPath}img/attr.$imgType"></td>
+	<td class="neutral_title">$lang->{'Attr'}</td>
+	<td style='font-size:80%; font-weight:bold; vertical-align:bottom'>$lang->{'Read Only'}</td>
+	<td >- $name</td>
+</tr></table>
+END
+&generateTabs($localTab,'Attr','attr','rights');
+print "<table class='local_tabline' cellspacing='0'><tr><td>\n";
+&generateContent();
+print "</td></tr><tr><td>&nbsp;</td></tr></table>";
+print "<script type='text/javascript'>var params = '$all_params';</script>";
+print &endform;
+END
+}
+
+#---------------------------------------------------
+@
+
+
+1.16
+log
+@description tab defined under two files, bug fixies
+@
+text
+@d4 1
+a4 1
+# $Id: attr_ed.pl,v 1.15 2003/09/19 10:23:50 jiri_schmid Exp $
+@
+
+
+1.15
+log
+@fixies
+@
+text
+@d4 1
+a4 1
+# $Id: attr_ed.pl,v 1.14 2003/09/01 12:40:08 jiri_schmid Exp $
+d30 1
+@
+
+
+1.14
+log
+@skins implemented. mozilla skin - temporarily copy msie content
+@
+text
+@d4 1
+a4 1
+# $Id: attr_ed.pl,v 1.13 2003/08/13 14:22:03 jiri_schmid Exp $
+d11 1
+a11 1
+use vars qw($ID $Obj $lang $descr_w $descr_r $itemWidth $use_lang $all_params $skin $skinPath $imgType);
+d17 1
+d20 19
+a38 33
+	print hidden('ID',$ID);
+	print <<END ;
+<input type='hidden' value='$use_lang' id='activeLang' name='active_lang'/>
+<table><tr><td width="20"><img src="${skinPath}img/attr.$imgType"></td><td class='neutral_bold'>$lang->{'Attribut (read only)'}</td></tr></table>	
+<br/>
+<table class="neutral">
+  <tr><td class="neutral_bold">&nbsp;$lang->{'Name'}</td></tr>
+  <tr><td class="neutral_center">
+  	<input value="$Obj->{name}" type="text" name="fact_name" id="NAME" size="$itemWidth" maxlength="100" readonly>
+	<input type="hidden" name="item_id" id="ITEM_ID" value="$ID"/>
+  </td></tr>
+  <tr><td><hr></td></tr>
+  <tr><td class="neutral_bold">&nbsp;$lang->{'Description'}</td></tr>
+  <tr><td><textarea cols="$descr_w" rows="$descr_r" name="attr_des" id="DESC" readonly></textarea></td></tr>
+  <tr><td><hr></td></tr>
+        <!--
+	  <tr><td>
+          <input type="submit" name="save" value="Save" width="15" height="210"> 
+          <input type="reset" name="reset" value="Reset" width="15" height="10">
+	  </td></tr>
+  	-->
+  <tr><td align="center">
+  <table class="buttons">
+  <tr>
+  	<td class="buttons"><input type="button" name="reload" value="$lang->{'Reload'}"/></td>
+	<td class="buttons"><input type="submit" name="Rights" value="$lang->{'Rights'}"/></td>
+  </tr>
+  </table>
+  </td></tr>
+</table>
+<script type="text/javascript">
+	subst_item_id();
+</script>
+a39 1
+	print &endform;
+@
+
+
+1.13
+log
+@code clearing and improvment
+@
+text
+@d4 1
+a4 1
+# $Id: attr_ed.pl,v 1.12 2003/08/13 13:16:28 jiri_schmid Exp $
+d11 1
+a11 1
+use vars qw($ID $Obj $lang $descr_w $descr_r $itemWidth $use_lang);
+d17 2
+d22 1
+a22 1
+<table><tr><td width="20"><img src="img/attr.gif"></td><td class='neutral_bold'>$lang->{'Attribut (read only)'}</td></tr></table>	
+@
+
+
+1.12
+log
+@setting up rights inetrface for each object implemnted
+@
+text
+@d4 1
+a4 1
+# $Id: attr_ed.pl,v 1.11 2003/05/26 15:01:40 jiri_schmid Exp $
+d16 2
+a17 3
+	my $cgi = shift;	
+	print $cgi->startform(-name=>'attr');
+	print $cgi->hidden('ID',$ID);
+d51 1
+a51 1
+	print $cgi->endform;
+@
+
+
+1.11
+log
+@saving under non-selected language implemented
+@
+text
+@d4 1
+a4 1
+# $Id: attr_ed.pl,v 1.10 2003/03/03 13:30:26 spanhel Exp $
+d11 1
+a11 1
+use vars qw($ID $Obj $lang $descr_w $descr_r $itemWidth);
+a15 21
+	my $cgi = shift;
+#	print_decl($cgi);
+	print_form_cont($cgi);
+}
+
+#-----------------------------------------------------
+
+sub print_decl {
+	my $cgi = shift;
+
+	print <<END ;   # openNodes ... list of nodes which are currently open
+
+# tree definition 
+
+END
+
+}
+
+#-----------------------------------------------------
+
+sub print_form_cont {
+d17 1
+a17 1
+	print $cgi->startform(-action=>'', -name=>'attr');
+d20 3
+a22 1
+<h3><img src="img/attr.gif"> $lang->{'Attribut (read only)'}</h3>
+d41 4
+a44 1
+  <tr><td class="buttons"><input type="button" name="reload" value="$lang->{'Reload'}" width="15" height="10"></td></tr>
+@
+
+
+1.10
+log
+@lang version
+@
+text
+@d4 1
+a4 1
+# $Id: attr_ed.pl,v 1.9 2003/02/28 13:43:18 jiri_schmid Exp $
+d11 1
+a11 1
+use vars qw($ID $Obj $lang $descr_w $descr_r $name_w);
+d44 4
+a47 1
+  <tr><td class="neutral_center"><input value="$Obj->{name}" type="text" name="attr_name" size="$name_w" maxlength="100" readonly></td></tr>
+d50 1
+a50 1
+  <tr><td><textarea cols="$descr_w" rows="$descr_r" name="attr_des" readonly>$Obj->{description}</textarea></td></tr>
+d64 3
+a66 1
+
+@
+
+
+1.9
+log
+@weekend-leaving commit, (last?) code cleaning
+@
+text
+@d4 1
+a4 1
+# $Id: attr_ed.pl,v 1.8 2003/02/26 13:21:49 jiri_schmid Exp $
+d11 1
+a11 1
+use vars qw($ID $Obj $al $descr_w $descr_r $name_w);
+d41 1
+a41 1
+<h3><img src="img/attr.gif"> $al->{'Attribut (read only)'}</h3>
+d43 1
+a43 1
+  <tr><td class="neutral_bold">&nbsp;$al->{'Name'}</td></tr>
+d46 1
+a46 1
+  <tr><td class="neutral_bold">&nbsp;$al->{'Description'}</td></tr>
+d57 1
+a57 1
+  <tr><td class="buttons"><input type="button" name="reload" value="$al->{'Reload'}" width="15" height="10"></td></tr>
+@
+
+
+1.8
+log
+@huge javascript optimalization, also files moved to directory js
+@
+text
+@d4 1
+a4 1
+# $Id: attr_ed.pl,v 1.7 2003/02/17 09:58:23 jiri_schmid Exp $
+d42 3
+a44 3
+<table class = "neutral" cellpading="0" cellspacing="0">
+  <tr><td class = "neutral_bold">&nbsp;$al->{'Attribut Name'}</td></tr>
+  <tr><td class = "neutral_center"><input value="$Obj->{name}" type="text" name="attr_name" size="$name_w" maxlength="100" readonly></td></tr>
+d46 1
+a46 1
+  <tr><td class = "neutral_bold">&nbsp;$al->{'Attribut Description'}</td></tr>
+@
+
+
+1.7
+log
+@added directory for javascript files, deleting items from tree controled by javascipt - tabs.js/check_drop()
+@
+text
+@d4 1
+a4 1
+# $Id: attr_ed.pl,v 1.6 2003/01/21 14:18:03 spanhel Exp $
+a37 1
+#	print $cgi->startform(-action=>'', -name=>'grid', -onSubmit=>'setAll(setAll(document.PromptForm.MetricsUse); resetAll(document.PromptForm.Metrics; document.PromptForm.RowObj); setAll(document.PromptForm.ColObj); setAll(document.PromptForm.PageObj); resetAll(document.PromptForm.AvailObj)');
+@
+
+
+1.6
+log
+@load metadata to grid_ed.pl
+@
+text
+@d4 1
+a4 1
+# $Id: attr_ed.pl,v 1.5 2003/01/20 18:23:50 spanhel Exp $
+d10 2
+a11 5
+use vars qw($ID $Obj $al);
+
+my $descr_w=40;	# width of descriprion window
+my $descr_r=8;	# rows of descriprion window
+my $name_w=48;	# width of name input area
+d45 1
+a45 1
+  <tr><td class = "neutral_center"><input value="$Obj->{name}" type="text" name="attr_name" size="42" maxlength="100" readonly></td></tr>
+@
+
+
+1.5
+log
+@reduce number of tabs
+@
+text
+@d4 1
+a4 1
+# $Id: attr_ed.pl,v 1.4 2003/01/16 17:20:20 spanhel Exp $
+d10 1
+a10 1
+use vars qw($ID $Obj);
+d40 1
+a40 2
+	my $cgi = shift;
+	
+d45 1
+a45 1
+<h3><img src="img/attr.gif"> Attribut (read only)</h3>
+d47 2
+a48 2
+  <tr><td class = "neutral_bold">Atribut name:</td></tr>
+  <tr><td class = "neutral_center"><input value="$Obj->{name}" type="text" name="attr_name" size="29" maxlength="100" readonly></td></tr>
+d50 1
+a50 1
+  <tr><td class = "neutral_bold">Atribut description:</td></tr>
+d61 1
+a61 1
+  <tr><td class="buttons"><input type="button" name="reload" value="Reload" width="15" height="10"></td></tr>
+@
+
+
+1.4
+log
+@change edit.cgi - tree and object edit desided into two iframes
+@
+text
+@d4 1
+a4 1
+# $Id: attr_ed.pl,v 1.3 2002/11/26 16:29:03 spanhel Exp $
+d46 8
+a53 16
+<h3><img class = "rubbish" src="img/attr.gif"> Attribut (read only)</h3>
+<table class = "main" cellpading="0" cellspacing="0">
+  <tr class = "f_main">
+      <td>
+	  <div class = "text">Atribut name:<br></div>
+	  <input value="$Obj->{name}" class = "ro" type="text" name="folder_name" size="29" maxlength="100" readonly>
+	  </td>
+  </tr>
+  <tr class = "f_main">
+      <td>
+	  <div class = "text">Atribut description:<br></div>
+	  <textarea class ="ro" cols="27" rows="5" name="folder_des" readonly>$Obj->{description}</textarea>
+	  </td>
+  </tr>
+  <tr class = "f_main">
+      <td>
+d55 10
+a64 7
+          <input class = "text" type="submit" name="save" value="Save" width="15" height="210"> 
+          <input class = "text" type="reset" name="reset" value="Reset" width="15" height="10">
+	-->    
+        <input class = "text" type="button" name="reload" value="Reload" width="15" height="10">
+      </td>
+
+  </tr>
+@
+
+
+1.3
+log
+@format_ed.pl - grid & graph
+@
+text
+@d4 1
+a4 1
+# $Id: attr_ed.pl,v 1.2 2002/11/01 11:49:40 spanhel Exp $
+d47 1
+a47 1
+<table class = "main">
+@
+
+
+1.2
+log
+@added dynamic tree for edit html pages, created format_ed.pl (CSS), changed cookie ID (edit.cgi)
+@
+text
+@d4 1
+a4 1
+# $Id: attr_ed.pl,v 1.1 2002/10/25 14:03:24 spanhel Exp $
+d51 1
+a51 1
+	  <input value="$Obj->{name}" class = "text" type="text" name="folder_name" size="29" maxlength="100" readonly>
+d57 1
+a57 1
+	  <textarea class =" text " cols="23" rows="5" name="folder_des" readonly>$Obj->{description}</textarea>
+@
+
+
+1.1
+log
+@edit pages created
+@
+text
+@d4 1
+a4 1
+# $Id: grid_ed.pl,v 1.1 2002/10/05 17:35:13 michald Exp $
+a9 3
+require "const.def";
+require "local_lib.pl";
+
+d46 1
+a46 1
+
+d51 1
+a51 1
+	  <input class = "text" type="text" name="folder_name" size="29" maxlength="100" readonly>
+d57 1
+a57 1
+	  <textarea class =" text " cols="23" rows="5" name="folder_des" readonly></textarea>
+d61 6
+a66 3
+      <td><input class = "text" type="submit" name="save" value="Save" width="15" height="210"> 
+      <input class = "text" type="reset" name="reset" value="Reset" width="15" height="10" onclick='reset_all_folder(); return true;'>
+      <input class = "text" type="button" name="reload" value="Reload" width="15" height="10">
+@
+

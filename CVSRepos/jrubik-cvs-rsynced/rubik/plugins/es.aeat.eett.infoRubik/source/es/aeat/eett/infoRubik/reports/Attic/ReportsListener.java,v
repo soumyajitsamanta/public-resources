@@ -1,0 +1,55 @@
+head	1.2;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2008.05.17.15.40.41;	author fsaz;	state dead;
+branches;
+next	1.1;
+
+1.1
+date	2005.11.28.15.39.46;	author fsaz;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@borrando viejos
+@
+text
+@/*
+ * Created on 10-nov-2005
+ *
+ * ReportsListener.java
+ */
+package es.aeat.eett.infoRubik.reports;
+
+/**
+ * @@author f00992
+ * 
+ */
+public interface ReportsListener {
+	public static final int RIGHTPANEL=0;
+	public static final int LOGPANE=1;
+	
+	public void showRight(int id );
+	public void hideRight();
+}
+@
+
+
+1.1
+log
+@*** empty log message ***
+@
+text
+@@
+

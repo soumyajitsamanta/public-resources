@@ -1,0 +1,174 @@
+head	1.2;
+access;
+symbols
+	jpivot_1_8_0:1.2
+	focus_1_6_0:1.2.0.2
+	wcf_1_7_0:1.2
+	wcf_1_6_0:1.2
+	jpivot_1_5_0:1.1.0.4
+	Root_jpivot_1_5_0:1.1
+	mondrian_xmla_2005_08_25:1.1.0.2
+	sourceforge_sync:1.2;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2006.11.09.13.24.06;	author avix;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2005.07.05.14.05.01;	author avix;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@synchronized with tonbeller cvs
+@
+text
+@package com.tonbeller.wcf.expr;
+
+import java.beans.PropertyDescriptor;
+import java.util.HashMap;
+import java.util.Map;
+
+import junit.framework.TestCase;
+
+/**
+ * @@author av
+ */
+public class ExprUtilsTest extends TestCase {
+  public class MyBean {
+    Object object = null;
+    int value = 4;
+    public int getValue() {
+      return value;
+    }
+    public void setValue(int newValue) {
+      this.value = newValue;
+    }
+    public Object getObject() {
+      return object;
+    }
+    public void setObject(Object object) {
+      this.object = object;
+    }
+  }
+  
+  MyBean bean;
+  ExprContext ctx;
+  
+  /**
+   * Constructor for ExprUtilsTest.
+   * @@param arg0
+   */
+  public ExprUtilsTest(String arg0) {
+    super(arg0);
+  }
+
+  /**
+   * @@see TestCase#setUp()
+   */
+  protected void setUp() throws Exception {
+    bean = new MyBean();
+    final Map map = new HashMap();
+    map.put("bean", bean);
+    
+    ctx = new ExprContext() {
+      public Object findBean(String name) {
+        return map.get(name);
+      }
+      public void setBean(String name, Object value) {
+        map.put(name, value);
+      }
+    };
+  }
+
+  public void testCheckExpr() {
+    try {
+      ExprUtils.checkExpr("${abc.def");
+      assertTrue("Exception expected", false);
+    }
+    catch (IllegalArgumentException e) {
+    }
+
+    try {
+      ExprUtils.checkExpr("${abc.def}");
+    }
+    catch (IllegalArgumentException e) {
+      assertTrue("unexpected exception", false);
+    }
+  }
+
+  public void testGetModelReference() {
+    Object obj = ExprUtils.getModelReference(ctx, "${bean.value}");
+    assertEquals(new Integer(bean.getValue()), obj);
+    obj = ExprUtils.getModelReference(ctx, "bean");
+    assertEquals(bean, obj);
+  }
+  
+  public void testBeanName() {
+    assertEquals("bean", ExprUtils.getBeanName("${bean.property}"));
+  }
+
+  public void testSetModelReference() {
+    ExprUtils.setModelReference(ctx, "${bean.value}", new Integer(27));
+    assertEquals(27, bean.getValue());
+  }
+
+  public void testSetBean1() {
+    MyBean b = new MyBean();
+    ExprUtils.setModelReference(ctx, "bean", b);
+    Object o = ExprUtils.getModelReference(ctx, "bean");
+    assertEquals(b, o);
+    o = ExprUtils.getModelReference(ctx, "#{bean}");
+    assertEquals(b, o);
+    o = ExprUtils.getModelReference(ctx, "${bean}");
+    assertEquals(b, o);
+  }
+
+  public void testSetBean2() {
+    MyBean b = new MyBean();
+    ExprUtils.setModelReference(ctx, "${bean}", b);
+    Object o = ExprUtils.getModelReference(ctx, "${bean}");
+    assertEquals(b, o);
+  }
+  
+  public void testSetBean3() {
+    Object obj1 = new Object();
+    ExprUtils.setModelReference(ctx, "${bean.object}", obj1);
+    assertEquals(obj1, bean.getObject());
+    Object obj2 = ExprUtils.getModelReference(ctx, "${bean.object}");
+    assertEquals(obj1, obj2);
+  }
+  
+  public void testPropertyDescriptor() {
+    PropertyDescriptor pd = ExprUtils.getPropertyDescriptor(ctx, "#{bean.value}");
+    assertEquals(Integer.TYPE, pd.getPropertyType());
+  }
+}
+@
+
+
+1.1
+log
+@initial version
+@
+text
+@d3 4
+d14 1
+d22 6
+d46 3
+d51 4
+a54 1
+        return bean;
+d91 30
+@
+

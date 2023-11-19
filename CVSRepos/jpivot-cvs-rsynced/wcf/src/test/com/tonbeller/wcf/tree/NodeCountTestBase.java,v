@@ -1,0 +1,89 @@
+head	1.1;
+access;
+symbols
+	jpivot_1_8_0:1.1
+	focus_1_6_0:1.1.0.6
+	wcf_1_7_0:1.1
+	wcf_1_6_0:1.1
+	jpivot_1_5_0:1.1.0.4
+	Root_jpivot_1_5_0:1.1
+	mondrian_xmla_2005_08_25:1.1.0.2
+	sourceforge_sync:1.1;
+locks; strict;
+comment	@# @;
+
+
+1.1
+date	2005.07.05.14.05.00;	author avix;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@initial version
+@
+text
+@package com.tonbeller.wcf.tree;
+
+import junit.framework.TestCase;
+
+
+/**
+ * @@author av
+ */
+public class NodeCountTestBase extends TestCase {
+  protected void assertChildCount(TreeModel tm, int level, int count) {
+    Object[] o = getChildren(tm, level);
+    assertEquals("child count ", count, o.length);
+  }
+
+  protected Object [] getChildren(TreeModel tm, int level) {
+    Object[] o = tm.getRoots();
+    for (int i = 0; i < level; i++) {
+      Object parent = o[0];
+      assertTrue("has children ", tm.hasChildren(parent));
+      o = tm.getChildren(parent);
+    }
+    return o;
+  }
+
+  protected void assertChildCount(TreeModel tm, int[] path, int count) {
+    Object[] o = getChildren(tm, path);
+    assertEquals("child count ", count, o.length);
+  }
+
+  protected Object [] getChildren(TreeModel tm, int[] path) {
+    Object[] o = tm.getRoots();
+    for (int i = 0; i < path.length; i++) {
+      Object parent = o[path[i]];
+      assertTrue("has children ", tm.hasChildren(parent));
+      o = tm.getChildren(parent);
+    }
+    return o;
+  }
+  
+  protected void assertLevelCount(TreeModel tm, int level) {
+    Object[] o = getChildren(tm, level-1);
+    assertFalse("leaf expected ", tm.hasChildren(o[0]));
+  }
+
+  protected void testParentChildConsistence(TreeModel ttm) {
+    Object[] roots = ttm.getRoots();
+    testParentChildConsistence(ttm, null, roots);
+  }
+  
+  protected void testParentChildConsistence(TreeModel ttm, Object parent, Object[] children) {
+    for (int i = 0; i  < children.length; i++) {
+      Object child = children[i];
+      assertEquals(parent, ttm.getParent(child));
+      if (ttm.hasChildren(child))
+        testParentChildConsistence(ttm, child, ttm.getChildren(child));
+    }
+  }
+}
+@

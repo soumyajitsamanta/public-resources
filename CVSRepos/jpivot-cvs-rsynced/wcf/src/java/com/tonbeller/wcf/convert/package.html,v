@@ -1,0 +1,61 @@
+head	1.1;
+access;
+symbols
+	jpivot_1_8_0:1.1
+	focus_1_6_0:1.1.0.6
+	wcf_1_7_0:1.1
+	wcf_1_6_0:1.1
+	jpivot_1_5_0:1.1.0.4
+	Root_jpivot_1_5_0:1.1
+	mondrian_xmla_2005_08_25:1.1.0.2
+	sourceforge_sync:1.1;
+locks; strict;
+comment	@# @;
+
+
+1.1
+date	2005.07.05.14.04.32;	author avix;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@initial version
+@
+text
+@<html>
+<body>
+
+Present and update values of java bean properties.
+
+A Converter supports two different <code>convert()</code> methods:
+<ul>
+<li>fill the values of html form elements from bean properties for presentation</li>
+<li>update the bean properties from user input, i.e. http request parameters </li>
+</ul>
+
+
+<h4>Formatting values for display</h4>
+
+Values from bean properties are formatted, using the
+users preferred locale. The formatted values are stored
+in a DOM tree for display to the user.
+
+<p>
+The DOM tree must conform to the xoplon DTD.
+
+
+
+<h4>Parsing user input</h4>
+
+HTTP paramters (i.e. user input) is parsed and the values are
+stored into bean properties.
+
+</body>
+</html>
+@

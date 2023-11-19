@@ -1,0 +1,89 @@
+head	1.3;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.3
+date	2003.11.10.14.38.27;	author numberone;	state dead;
+branches;
+next	1.2;
+
+1.2
+date	2003.10.29.06.59.06;	author numberone;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2003.10.27.15.15.18;	author numberone;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.3
+log
+@final (expect docs) 1.0 release
+@
+text
+@
+ o perl
+
+   Starting from Perl 5.005 the Win32 support has been integrated to the 
+   Perl standard source code distribution. If you want precompiled binaries,
+   you can download for example ActiveState Perl distribution from:
+
+   http://www.activestate.com/Products/Download/Download.plex?id=ActivePerl
+
+   In next we will assume, that you have Perl installed in c:\perl,
+   you have perl.exe in your PATH enviromnent variable, *.pl extension
+   is registered to perl correctly.
+
+ o additional perl's modules.
+
+   c:\ ppm
+   ppm> install DBI
+   ppm> install DBD-mysql    # or DBD::mysql
+   ppm> install Tk::FileDialog
+   ppm> install Tk::Splash   # or Tk-Splash
+
+
+installing binary version
+
+
+recompiling
+-----------
+
+ o  OpenSSL
+
+    Downloadable from http://www.openssl.org
+
+ 
+ ------
+
+nmake
+cp c:\openssl\lib\* bee/dad..
+
+@
+
+
+1.2
+log
+@libNet -- no warnings..
+@
+text
+@@
+
+
+1.1
+log
+@install file from windoze -- start
+@
+text
+@d34 5
+@
+

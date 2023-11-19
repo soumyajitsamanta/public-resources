@@ -1,0 +1,248 @@
+head	1.3;
+access;
+symbols
+	jpivot_1_8_0:1.3
+	focus_1_6_0:1.3.0.2
+	wcf_1_7_0:1.3
+	wcf_1_6_0:1.3
+	jpivot_1_5_0:1.2.0.2
+	Root_jpivot_1_5_0:1.2
+	mondrian_xmla_2005_08_25:1.1.0.2
+	sourceforge_sync:1.3;
+locks; strict;
+comment	@# @;
+
+
+1.3
+date	2006.11.09.13.24.02;	author avix;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2005.09.14.08.22.46;	author avix;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2005.07.05.14.04.29;	author avix;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.3
+log
+@synchronized with tonbeller cvs
+@
+text
+@<?xml version="1.0" encoding="UTF-8"?>
+<form method="post" action="tabledemo.jsp"> <table border="1" cellspacing="0" cellpadding="2">
+<tr>
+<th colspan="8" class="xtable-title">
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<th align="left" class="xtable-title">
+<input type="image" src="/wcf/wcf/table/edit.png"/>
+</th>
+<th align="left" class="xtable-title"> Test Table model</th>
+<td align="right" class="xtable-title">
+<input type="image" src="/wcf/wcf/form/cancel.png"/>
+</td>
+</tr>
+</table>
+</th>
+</tr>
+<tr>
+<th class="xtable-heading">
+<input type="image" border="0" src="/wcf/wcf/table/select.png"/>
+</th>
+<th class="xtable-heading">
+<input type="image" border="0" src="/wcf/wcf/table/sort-dc.png"/> String</th>
+<th class="xtable-heading">
+<input type="image" border="0" src="/wcf/wcf/table/sort-dn.png"/> Date</th>
+<th class="xtable-heading">
+<input type="image" border="0" src="/wcf/wcf/table/sort-dn.png"/> Double</th>
+<th class="xtable-heading">
+<input type="image" border="0" src="/wcf/wcf/table/sort-dn.png"/> Integer</th>
+<th class="xtable-heading">
+<input type="image" border="0" src="/wcf/wcf/table/sort-dn.png"/> Click Me</th>
+<th class="xtable-heading">
+<input type="image" border="0" src="/wcf/wcf/table/sort-dn.png"/> Image 1</th>
+<th class="xtable-heading">
+<input type="image" border="0" src="/wcf/wcf/table/sort-dn.png"/> Image 2</th>
+</tr>
+<tr>
+<td class="xtable-data">
+<input type="checkbox"/>
+<input type="hidden"/>
+</td>
+<td align="left" class="xtable-data">Hello World: 2</td>
+<td align="left" class="xtable-data">02/03/2002</td>
+<td align="right" class="xtable-data">181.51</td>
+<td align="right" class="xtable-data">912</td>
+<td align="right" class="xtable-data">
+<a>884</a>
+</td>
+<td class="xtable-data">
+<a>
+<img src="wcf/table/sort-dn.png" border="0"/>
+</a> </td>
+<td align="left" class="xtable-data">
+<a>
+<img src="wcf/table/sort-ac.png" border="0"/> Text 13</a>
+</td>
+</tr>
+<tr>
+<td class="xtable-data">
+<input type="checkbox"/>
+<input type="hidden"/>
+</td>
+<td align="left" class="xtable-data">Hello World: 3</td>
+<td align="left" class="xtable-data">02/04/2002</td>
+<td align="right" class="xtable-data">229.86</td>
+<td align="right" class="xtable-data">596</td>
+<td align="right" class="xtable-data">
+<a>948</a>
+</td>
+<td class="xtable-data">
+<a>
+<img src="wcf/table/sort-dn.png" border="0"/>
+</a> </td>
+<td align="left" class="xtable-data">
+<a>
+<img src="wcf/table/sort-ac.png" border="0"/> Text 88</a>
+</td>
+</tr>
+<tr>
+<td class="xtable-data">
+<input type="checkbox"/>
+<input type="hidden"/>
+</td>
+<td align="left" class="xtable-data">Hello World: 4</td>
+<td align="left" class="xtable-data">02/05/2002</td>
+<td align="right" class="xtable-data">568.18</td>
+<td align="right" class="xtable-data">249</td>
+<td align="right" class="xtable-data">
+<a>168</a>
+</td>
+<td class="xtable-data">
+<a>
+<img src="wcf/table/sort-dn.png" border="0"/>
+</a> </td>
+<td align="left" class="xtable-data">
+<a>
+<img src="wcf/table/sort-ac.png" border="0"/> Text 73</a>
+</td>
+</tr>
+<tr>
+<td class="xtable-data">
+<input type="checkbox"/>
+<input type="hidden"/>
+</td>
+<td align="left" class="xtable-data">Hello World: 5</td>
+<td align="left" class="xtable-data">02/06/2002</td>
+<td align="right" class="xtable-data">117.69</td>
+<td align="right" class="xtable-data">594</td>
+<td align="right" class="xtable-data">
+<a>762</a>
+</td>
+<td class="xtable-data">
+<a>
+<img src="wcf/table/sort-ac.png" border="0"/>
+</a> </td>
+<td align="left" class="xtable-data">
+<a>
+<img src="wcf/table/sort-ac.png" border="0"/> Text 65</a>
+</td>
+</tr>
+<tr>
+<td colspan="8" class="xtable-data"> <input type="image" border="0" src="/wcf/wcf/table/page-first.png"/>
+<input type="image" border="0" src="/wcf/wcf/table/page-prev.png"/> Page 4/5 <input type="image" border="0" src="/wcf/wcf/table/page-next.png"/>
+<input type="image" border="0" src="/wcf/wcf/table/page-last.png"/>  Goto Page <input type="text" maxlength="3" size="3"/> <input type="image" border="0" src="/wcf/wcf/table/gotopage.png"/>  Rows/page <input type="text" maxlength="3" size="3"/> <input type="image" border="0" src="/wcf/wcf/table/gotopage.png"/>
+</td>
+</tr>
+</table>
+<p/>
+</form>
+@
+
+
+1.2
+log
+@Fixed Test for JDK 1.5
+Made Table Test Data time zone independent
+@
+text
+@d124 1
+a124 1
+<input type="image" border="0" src="/wcf/wcf/table/page-last.png"/>  Goto Page <input type="text" maxlength="3" size="3"/> <input type="image" border="0" src="/wcf/wcf/table/gotopage.png"/>
+@
+
+
+1.1
+log
+@initial version
+@
+text
+@d2 1
+a2 2
+<form method="post" action="tabledemo.jsp">
+<table border="1" cellspacing="0" cellpadding="2">
+d43 3
+a45 3
+<td align="left" class="xtable-data">04/16/2003</td>
+<td align="right" class="xtable-data">688.31</td>
+<td align="right" class="xtable-data">888</td>
+d47 1
+a47 1
+<a>913</a>
+d51 1
+a51 1
+<img src="wcf/table/sort-ac.png" border="0"/>
+d55 1
+a55 1
+<img src="wcf/table/sort-ac.png" border="0"/> Text 42</a>
+d64 3
+a66 3
+<td align="left" class="xtable-data">04/02/2003</td>
+<td align="right" class="xtable-data">43.14</td>
+<td align="right" class="xtable-data">410</td>
+d68 1
+a68 1
+<a>276</a>
+d72 1
+a72 1
+<img src="wcf/table/sort-ac.png" border="0"/>
+d76 1
+a76 1
+<img src="wcf/table/sort-dn.png" border="0"/> Text 7</a>
+d85 3
+a87 3
+<td align="left" class="xtable-data">03/23/2003</td>
+<td align="right" class="xtable-data">61.99</td>
+<td align="right" class="xtable-data">827</td>
+d89 1
+a89 1
+<a>250</a>
+d97 1
+a97 1
+<img src="wcf/table/sort-dn.png" border="0"/> Text 49</a>
+d106 3
+a108 3
+<td align="left" class="xtable-data">03/24/2003</td>
+<td align="right" class="xtable-data">35.40</td>
+<td align="right" class="xtable-data">537</td>
+d110 1
+a110 1
+<a>775</a>
+d114 1
+a114 1
+<img src="wcf/table/sort-dn.png" border="0"/>
+d118 1
+a118 1
+<img src="wcf/table/sort-dn.png" border="0"/> Text 46</a>
+@
+

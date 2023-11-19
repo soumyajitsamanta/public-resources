@@ -1,0 +1,744 @@
+head	1.18;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.18
+date	2003.10.16.14.08.51;	author jiri_schmid;	state dead;
+branches;
+next	1.17;
+
+1.17
+date	2003.09.15.13.04.03;	author jiri_schmid;	state Exp;
+branches;
+next	1.16;
+
+1.16
+date	2003.09.03.15.10.42;	author jiri_schmid;	state Exp;
+branches;
+next	1.15;
+
+1.15
+date	2003.09.01.12.40.05;	author jiri_schmid;	state Exp;
+branches;
+next	1.14;
+
+1.14
+date	2003.08.28.09.26.11;	author jiri_schmid;	state Exp;
+branches;
+next	1.13;
+
+1.13
+date	2003.08.21.12.02.01;	author jiri_schmid;	state Exp;
+branches;
+next	1.12;
+
+1.12
+date	2003.08.20.14.23.41;	author jiri_schmid;	state Exp;
+branches;
+next	1.11;
+
+1.11
+date	2003.08.19.15.09.02;	author jiri_schmid;	state Exp;
+branches;
+next	1.10;
+
+1.10
+date	2003.08.19.13.05.55;	author jiri_schmid;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	2003.08.18.13.17.09;	author jiri_schmid;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	2003.08.14.12.43.47;	author jiri_schmid;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	2003.08.13.14.22.00;	author jiri_schmid;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	2003.08.13.13.16.25;	author jiri_schmid;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	2003.08.13.08.48.59;	author jiri_schmid;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2003.08.13.08.22.23;	author jiri_schmid;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2003.08.12.15.05.58;	author jiri_schmid;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2003.08.12.09.19.16;	author jiri_schmid;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2003.08.11.13.51.26;	author jiri_schmid;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.18
+log
+@mod-perl implementation stage 1, rebuilding global vars in .pl to global pointers
+@
+text
+@#!/usr/bin/perl
+#-----------------------------------------------------
+# generate tree
+#-----------------------------------------------------
+# $Id: tree.pl,v 1.17 2003/09/15 13:04:03 jiri_schmid Exp $
+
+use strict;
+use vars qw($use_lang $tree $skinPath $imgType);
+
+our @@icons;
+our @@folderIcons;
+our $iconSrc;
+our $itemType;
+our @@structure;
+our $AAB = ' align="absbottom"'; #fixing of MSIE bug
+
+#expected structure of HASH for proper generating tree:
+#	$VAR -> {FOLDER_ID1} -> {'~name'} = 'Folder 1';
+#	$VAR -> {FOLDER_ID1} -> {'~content'} = 'CONTENT_TYPE_1';
+#	$VAR -> {FOLDER_ID1} -> {ITEM_ID1} -> {'name'} = 'Item 1';
+#	$VAR -> {FOLDER_ID1} -> {ITEM_ID2} -> {'name'} = 'Item 2';
+#	..................
+#	$VAR -> {FOLDER_ID1} -> {FOLDER_ID10} -> {'~name'} = 'Folder 10';
+#	$VAR -> {FOLDER_ID1} -> {FOLDER_ID10} -> {'~content'} = 'CONTENT_TYPE_10';
+#	$VAR -> {FOLDER_ID1} -> {FOLDER_ID10} -> {ITEM_ID100} -> {'name'} = 'Item 100';
+#	$VAR -> {FOLDER_ID1} -> {FOLDER_ID10} -> {ITEM_ID101} -> {'name'} = 'Item 101';
+#	..................
+#	$VAR -> {FOLDER_ID2} -> {'~name'} = 'Folder 2';
+#	$VAR -> {FOLDER_ID1} -> {'~content'} = 'CONTENT_TYPE_2';
+#	..................
+# {HASH_NAME}->{~content} defines type of folder's content 
+#	exactly: should match with icon of same name and eventualy of name "~contentFolder" spcified in hash iconSrc
+#	eg: {HASH_NAME}->{~content} = 'TYPE'
+#	relevant icon's hashes:
+#	$iconSrc->{'TYPE'} = 'image0.(gif,png...)';	-- custom item icon
+#	$iconSrc->{'TYPEClose'} = 'image1.(gif,png...)' -- custom folder icon
+#	$iconSrc->{'TYPEOpen'} = 'image2.(gif,png...)'	-- custom folder icon
+# {HASH_NAME}->{~name} defines Folder
+# {HASH_NAME}->{name} defines folder's Item
+# {name} or {~name} may content language 
+# hashnames MUST BE UNIQUE !!! for proper work of javascript on client side
+sub createTree {
+my $title=shift;
+$iconSrc={
+#tree icons - neccessary
+	plus=>"${skinPath}img/tree/plus.$imgType",
+	plusBottom=>"${skinPath}img/tree/plusbottom.$imgType",
+	minus=>"${skinPath}img/tree/minus.$imgType",
+	minusBottom=>"${skinPath}img/tree/minusbottom.$imgType",
+	line=>"${skinPath}img/tree/line.$imgType",
+	base=>"${skinPath}img/tree/base.$imgType",
+	join=>"${skinPath}img/tree/join.$imgType",
+	joinBottom=>"${skinPath}img/tree/joinbottom.$imgType",
+	empty=>"${skinPath}img/tree/empty.$imgType",
+#folder icons
+	folderClose=>"${skinPath}img/tree/folder.$imgType",	#default close folder icon
+	folderOpen=>"${skinPath}img/tree/folderopen.$imgType",	#default open folder icon
+	groupClose=>"${skinPath}img/tree/folder.$imgType",	#custom folder icon
+	userClose=>"${skinPath}img/tree/folder.$imgType",	# -//- 
+	roleClose=>"${skinPath}img/tree/folder.$imgType",	# -//-
+#item icons
+	item=>"",		#default item icon
+	group=>"${skinPath}img/group.$imgType",	#custom item icon
+	user=>"${skinPath}img/single.$imgType",	# -//- 
+	role=>"${skinPath}img/role.$imgType",	# -//- 
+};
+
+$itemType={
+	user=>'U',
+	group=>'G',
+	role=>'R',
+};
+
+foreach (SOAP->GetProjects) {
+	$itemType->{$_} = $itemType->{role};
+}
+
+print "<div id='content' class='folder'><table><tr><td><span class='tree'><img src='${skinPath}img/tree/base.$imgType' style='vertical-align:bottom' alt='base'/>&nbsp;$title</span></td></tr></table>";
+&processTree($tree);
+print "</div>";
+
+my @@object;
+my ($type, $src);
+foreach (keys %{$iconSrc}) { push(@@object,"\n$_:'$iconSrc->{$_}'") }
+my $objectIcons = join(",",@@object);
+my $structure = join(",",@@structure);
+
+print "\n<script type='text/javascript'>var icons={$objectIcons};\nvar structure = new Array($structure);</script>";
+
+}
+
+#------------------------------------------
+sub processTree {
+my $tree = shift;
+my @@root = sort(keys(%{$tree}));
+my $lastItem = $root[$#root];
+foreach my $rootItem (@@root) {
+	my $depth = 0;
+	if (exists($tree->{$rootItem}{'~name'})) {
+		if ($lastItem eq $rootItem) {
+			$icons[$depth] = $iconSrc->{empty};
+			$folderIcons[$depth] = ($tree->{$rootItem}{'~content'}) ? $iconSrc->{plusBottom} : $iconSrc->{join};
+		} else {
+			$icons[$depth] = $iconSrc->{line};
+			$folderIcons[$depth] = ($tree->{$rootItem}{'~content'}) ?  $iconSrc->{plus} : $iconSrc->{joinBottom};
+		}
+		&printFolder($tree->{$rootItem},$rootItem,$depth,$tree->{$rootItem}{'~content'},0);
+		if ($tree->{$rootItem}{'~content'}) {
+			my $reType = delete $tree->{$rootItem}{'~content'};
+			print "<div id='segment$rootItem' style='display:none'>";
+			$depth++;
+			&createTreeSegment($tree->{$rootItem},$depth,$reType,$rootItem) ;
+			print "</div>";
+		}
+	}
+}
+}
+
+#------------------------------------------
+sub createTreeSegment {
+my ($tree, $inDepth, $type, $parent) = @@_;		
+my @@items = sort(keys(%{$tree}));
+my $lastItem = $items[$#items];
+my @@fixFolderIcons = @@folderIcons;
+my @@fixIcons = @@icons;
+foreach (@@items) {
+	my $outDepth = $inDepth;
+	if (exists $tree->{$_}{name}) {
+		$icons[$inDepth] = ($lastItem eq $_) ? $iconSrc->{join} : $iconSrc->{joinBottom};
+		&printItem($tree->{$_},$_,$type,$parent);
+	} elsif (exists $tree->{$_}{'~name'}) {
+		if ($lastItem eq $_) {
+			$icons[$outDepth] = $iconSrc->{empty};
+			$folderIcons[$outDepth] = ($tree->{$_}{'~content'}) ? $iconSrc->{plusBottom} : $iconSrc->{join};
+		} else {
+			$icons[$outDepth] = $iconSrc->{line};
+			$folderIcons[$outDepth] = ($tree->{$_}{'~content'}) ?  $iconSrc->{plus} : $iconSrc->{joinBottom};
+		}
+		$folderIcons[$inDepth-1] = $icons[$inDepth-1];
+		&printFolder($tree->{$_},$_,$inDepth,$tree->{$_}{'~content'},$parent);
+		if ($tree->{$_}{'~content'}) {
+			my $reType = delete $tree->{$_}{'~content'};
+			print "<div id='segment$_' style='display:none'>";
+			$outDepth++;
+			&createTreeSegment($tree->{$_},$outDepth,$reType,$_);
+			print "</div>";
+		}
+		@@folderIcons = @@fixFolderIcons;
+		@@icons = @@fixIcons;
+	}
+}
+return 
+}
+
+#------------------------------------------
+sub printFolder {
+my ($item, $id, $depth, $content, $parent) = @@_;
+	print "<span>";	#keeps the row unbreakable
+	my ($class, $onclick, $folderIcon);
+	if ($content) {
+		$onclick = "onclick='ocFolder(this)'";
+		$folderIcon = $content."Close";
+	} else {
+		$class = "class='inactive'";
+	}
+	$folderIcon = (exists $iconSrc->{$folderIcon}) ? $iconSrc->{$folderIcon} : $iconSrc->{folderClose};
+	for (0..($#folderIcons-1)) { print "<img$AAB src='$folderIcons[$_]' />" }
+	print "<a href='javascript:{}'><span id='$id' $onclick><img$AAB id='icon$id' src='$folderIcons[$#folderIcons]'><img$AAB id='folderIcon$id' name='$content|$id' src='$folderIcon'/><span id='view$id' $class title=\"$item->{'~desc'}\">&nbsp;$item->{'~name'}&nbsp;</span></span></a>";
+	delete $item->{'~name'};
+	delete $item->{'~desc'} if exists $item->{'~desc'};
+	print "</span><br />";	#break for new row
+	push (@@structure,"\n'$parent|$id'");
+}
+
+#------------------------------------------
+sub printItem {
+my ($item, $id, $type, $parent) = @@_;
+	print "<span>";	#keeps the row unbreakable
+	my $itemIcon = (exists $iconSrc->{$type}) ? $iconSrc->{$type} : $iconSrc->{item};
+	for (0..$#icons) { print "<img$AAB src='$icons[$_]' />" }
+	print "<a href='javascript:{}'><span id='$id' onclick='showMe(this)' ondblclick='jump(this)'><img$AAB name='$item->{name}|$itemType->{$type}' id='icon$id' src='$itemIcon'/><span id='view$id' title='$item->{desc}'>&nbsp;$item->{name}&nbsp;</span></span></a>";
+	print "</span><br />";	#break for new row
+	push (@@structure,"'$parent|$id'");
+	# emtpy anchor <a href='javascript:{}'> inhibits auto-selecting text on doubleclick on both Mozilla and IE browsers
+}
+
+1
+
+__END__
+@
+
+
+1.17
+log
+@code changes and improvments
+@
+text
+@d5 1
+a5 1
+# $Id: tree.pl,v 1.16 2003/09/03 15:10:42 jiri_schmid Exp $
+@
+
+
+1.16
+log
+@implementation of right clik menu
+@
+text
+@d5 1
+a5 1
+# $Id: tree.pl,v 1.15 2003/09/01 12:40:05 jiri_schmid Exp $
+d14 1
+d84 1
+a84 1
+foreach (keys %{$iconSrc}) { push(@@object,"$_:'$iconSrc->{$_}'") }
+d86 1
+d88 1
+a88 2
+
+print "\n<script type='text/javascript'>var icons={$objectIcons};</script>";
+d107 1
+a107 1
+		&printFolder($tree->{$rootItem},$rootItem,$depth,$tree->{$rootItem}{'~content'});
+d112 1
+a112 1
+			&createTreeSegment($tree->{$rootItem},$depth,$reType) ;
+d121 1
+a121 1
+my ($tree, $inDepth, $type) = @@_;		
+d130 1
+a130 1
+		&printItem($tree->{$_},$_,$type);
+d140 1
+a140 1
+		&printFolder($tree->{$_},$_,$inDepth,$tree->{$_}{'~content'});
+d145 1
+a145 1
+			&createTreeSegment($tree->{$_},$outDepth,$reType);
+d157 1
+a157 1
+my ($item, $id, $depth, $content) = @@_;
+d172 1
+d177 1
+a177 1
+my ($item, $id, $type) = @@_;
+d183 1
+a183 1
+
+@
+
+
+1.15
+log
+@skins implemented. mozilla skin - temporarily copy msie content
+@
+text
+@d5 1
+a5 1
+# $Id: tree.pl,v 1.14 2003/08/28 09:26:11 jiri_schmid Exp $
+d77 1
+a77 1
+print "<div id='content' class='folder'><table><tr><td><span class='tree'><img src='${skinPath}img/tree/base.gif' style='vertical-align:bottom' alt='base'/>&nbsp;$title</span></td></tr></table>";
+@
+
+
+1.14
+log
+@tabs.cgi speed improvmnet, visual improvment on trees, rights and some other minor improvments
+@
+text
+@d5 1
+a5 1
+# $Id: tree.pl,v 1.13 2003/08/21 12:02:01 jiri_schmid Exp $
+d8 1
+a8 1
+use vars qw($use_lang $tree );
+d43 1
+a43 1
+$iconSrc={ 
+d45 9
+a53 9
+	plus=>'img/tree/plus.gif',
+	plusBottom=>'img/tree/plusbottom.gif',
+	minus=>'img/tree/minus.gif',
+	minusBottom=>'img/tree/minusbottom.gif',
+	line=>'img/tree/line.gif',
+	base=>'img/tree/base.gif',
+	join=>'img/tree/join.gif',
+	joinBottom=>'img/tree/joinbottom.gif',
+	empty=>'img/tree/empty.gif',
+d55 5
+a59 5
+	folderClose=>'img/tree/folder.gif',	#default close folder icon
+	folderOpen=>'img/tree/folderopen.gif',	#default open folder icon
+	groupClose=>'img/tree/folder.gif',	#custom folder icon
+	userClose=>'img/tree/folder.gif',	# -//- 
+	roleClose=>'img/tree/folder.gif',	# -//-
+d61 4
+a64 5
+	item=>'',		#default item icon
+	group=>'img/group.gif',	#custom item icon
+	user=>'img/single.gif',	# -//- 
+	role=>'img/role.gif',	# -//- 
+
+a70 2
+	test=>'R',
+	demo=>'R'
+d72 6
+a77 1
+print "<div id='content' class='folder'><table><tr><td><span class='tree'><img src='img/tree/base.gif' style='vertical-align:bottom' alt='base'/>&nbsp;$title</span></td></tr></table>";
+d83 1
+a83 1
+foreach ('plus','plusBottom','minus','minusBottom','folderClose','folderOpen') { push(@@object,"$_:'$iconSrc->{$_}'") }
+@
+
+
+1.13
+log
+@description for access tree changes
+@
+text
+@d5 1
+a5 1
+# $Id: tree.pl,v 1.12 2003/08/20 14:23:41 jiri_schmid Exp $
+d8 1
+a8 1
+use vars qw($use_lang $tree);
+d42 1
+d75 1
+a75 1
+print "<div class='folder'>";
+a157 1
+		$class = "class='view'";
+d160 2
+d165 1
+a165 1
+	print "<span id='$id' $onclick><img$AAB id='icon$id' src='$folderIcons[$#folderIcons]'><img$AAB id='folderIcon$id' name='$content|$id' src='$folderIcon'/><span id='view$id' $class title=\"$item->{'~desc'}\">$item->{'~name'}</span></span>";
+d168 1
+a168 1
+	print "</span><br/>";	#break for new row
+d177 4
+a180 2
+	print "<span id='$id' onclick='showMe(this)' ondblclick='jump(this)'><img$AAB name='$item->{name}|$itemType->{$type}' id='icon$id' src='$itemIcon'/>&nbsp;<span id='view$id' class='view' title='$item->{desc}'>$item->{name}</span></span>";
+	print "</span><br/>";	#break for new row
+@
+
+
+1.12
+log
+@access object implemented
+@
+text
+@d5 1
+a5 1
+# $Id: tree.pl,v 1.11 2003/08/19 15:09:02 jiri_schmid Exp $
+d105 2
+a106 2
+			my $reType = $tree->{$rootItem}{'~content'};
+			delete $tree->{$rootItem}{'~content'};
+a107 1
+			print "<div id='segment$rootItem' style='display:none'>";
+d138 2
+a139 2
+			my $reType = $tree->{$_}{'~content'};
+			delete $tree->{$_}{'~content'};
+a140 1
+			print "<div id='segment$_' style='display:none'>";
+@
+
+
+1.11
+log
+@ACL changes
+@
+text
+@d5 1
+a5 1
+# $Id: tree.pl,v 1.10 2003/08/19 13:05:55 jiri_schmid Exp $
+d30 7
+a36 1
+# {HASH_NAME}->{~content} defines type of folder's content (exactly: have to match with icon spcified in hash iconSrc)
+d40 1
+a40 1
+
+d43 1
+a47 2
+	folderClose=>'img/tree/folder.gif',
+	folderOpen=>'img/tree/folderopen.gif',
+d53 12
+a64 3
+	group=>'img/group.gif',
+	user=>'img/single.gif',
+	role=>'img/role.gif',
+d157 7
+a163 2
+	my $class = ($content) ? "class='view'" : "";
+	$content = ($content) ? "onclick='ocFolder(this)'" : "";
+d165 1
+a165 1
+	print "<span id='$id' $content><img$AAB id='icon$id' src='$folderIcons[$#folderIcons]'><img$AAB id='folderIcon$id' src='$iconSrc->{folderClose}'/><span id='view$id' $class title=\"$item->{'~desc'}\">$item->{'~name'}</span></span>";
+d175 1
+d177 1
+a177 1
+	print "<span id='$id' onclick='showMe(this)' ondblclick='jump(this)'><img$AAB name='$item->{name}|$itemType->{$type}' id='icon$id' src='$iconSrc->{$type}'/>&nbsp;<span id='view$id' class='view' title='$item->{desc}'>$item->{name}</span></span>";
+@
+
+
+1.10
+log
+@formats2d implemented
+@
+text
+@d5 1
+a5 1
+# $Id: tree.pl,v 1.8 2003/08/14 12:43:47 jiri_schmid Exp $
+d91 1
+a91 1
+			$rootItem = $tree->{$rootItem}{'~content'};
+d95 1
+a95 1
+			&createTreeSegment($tree->{$rootItem},$depth,$rootItem) ;
+d125 1
+a125 1
+			my $subtype = $tree->{$_}{'~content'};
+d129 1
+a129 1
+			&createTreeSegment($tree->{$_},$outDepth,$subtype);
+@
+
+
+1.9
+log
+@admin page reading rutines implemented
+@
+text
+@d16 19
+d157 1
+a157 1
+	print "<span id='$id' onclick='showMe(this)' ondblclick='jump(this,event)'><img$AAB name='$item->{name}|$itemType->{$type}' id='icon$id' src='$iconSrc->{$type}'/>&nbsp;<span id='view$id' class='view' title='$item->{desc}'>$item->{name}</span></span>";
+@
+
+
+1.8
+log
+@huge code, minor functionality and design improvment on main tree
+@
+text
+@d5 1
+a5 1
+# $Id: tree.pl,v 1.7 2003/08/13 14:22:00 jiri_schmid Exp $
+a6 2
+
+use Data::Dumper;
+d8 1
+a8 1
+use vars qw($use_lang);
+a16 4
+
+my $tree;
+$tree = SOAP->GetAccessObjects($use_lang);
+
+d138 1
+a138 1
+	print "<span id='$id' onclick='showMe(this)' ondblclick='jump(this)'><img$AAB name='$item->{name}|$itemType->{$type}' id='icon$id' src='$iconSrc->{$type}'/>&nbsp;<span id='view$id' class='view' title='$item->{desc}'>$item->{name}</span></span>";
+@
+
+
+1.7
+log
+@code clearing and improvment
+@
+text
+@d5 1
+a5 1
+# $Id: tree.pl,v 1.6 2003/08/13 13:16:25 jiri_schmid Exp $
+d129 1
+a131 1
+	print "<span id='folder$id'>";
+d133 1
+a133 1
+	print "<span id='$id' $content><img$AAB id='icon$id' src='$folderIcons[$#folderIcons]'><img$AAB id='folderIcon$id' src='$iconSrc->{folderClose}'/><span id='view$id' $class title=\"$item->{'~desc'}\">$item->{'~name'}</span></span></span><br/>";
+d136 1
+d142 1
+d144 2
+a145 1
+	print "<span id='$id' onclick='showMe(this)' ondblclick='jump(this)'><img$AAB name='$item->{name}|$itemType->{$type}' id='icon$id' src='$iconSrc->{$type}'/>&nbsp;<span id='view$id' class='view' title='$item->{desc}'>$item->{name}</span></span><br/>";
+@
+
+
+1.6
+log
+@setting up rights inetrface for each object implemnted
+@
+text
+@d5 1
+a5 1
+# $Id: tree.pl,v 1.5 2003/08/13 08:48:59 jiri_schmid Exp $
+d142 1
+a142 1
+	print "<span id='$id' onclick='showMe(this)' ondblclick='jump(this)'><img$AAB name='$item->{name}|$itemType->{$type}' id='icon$id' src='$iconSrc->{$type}'/><span id='view$id' class='view' title='$item->{desc}'> $item->{name}</span></span><br/>";
+@
+
+
+1.5
+log
+@accessTree visual improvment
+@
+text
+@d5 1
+a5 1
+# $Id: tree.pl,v 1.4 2003/08/13 08:22:23 jiri_schmid Exp $
+d112 1
+a112 2
+			local *type;
+			$type = $tree->{$_}{'~content'};
+d116 1
+a116 1
+			&createTreeSegment($tree->{$_},$outDepth,$type);
+@
+
+
+1.4
+log
+@tree generating improvment
+@
+text
+@d5 1
+a5 1
+# $Id: tree.pl,v 1.3 2003/08/12 15:05:58 jiri_schmid Exp $
+d37 1
+a37 2
+	test=>'img/tree/metric.gif',
+	demo=>'img/tree/grid.gif',
+d43 3
+a45 1
+	role=>'R'
+d78 1
+@
+
+
+1.3
+log
+@MSIE viewtree bug found and fixed
+@
+text
+@d5 1
+a5 1
+# $Id: tree.pl,v 1.2 2003/08/12 09:19:16 jiri_schmid Exp $
+d35 4
+a38 3
+	group=>'img/tree/metric.gif',
+	user=>'img/tree/grid.gif',
+	role=>'img/tree/format.gif',
+d110 2
+@
+
+
+1.2
+log
+@ACL implementation, datas moved into beard"s caches
+@
+text
+@d5 1
+a5 1
+# $Id: tree.pl,v 1.1 2003/08/11 13:51:26 jiri_schmid Exp $
+d16 1
+a16 1
+
+d128 2
+a129 2
+	for (0..($#folderIcons-1)) { print "<img src='$folderIcons[$_]' />" }
+	print "<span class='default' id='$id' $content><img id='icon$id' src='$folderIcons[$#folderIcons]'><img id='folderIcon$id' src='$iconSrc->{folderClose}'/><span id='view$id' $class title=\"$item->{'~desc'}\">$item->{'~name'}</span></span></span><br/>";
+d137 2
+a138 2
+	for (0..$#icons) { print "<img src='$icons[$_]' />" }
+	print "<span class='default' id='$id' onclick='showMe(this)' ondblclick='jump(this)'><img name='$item->{name}|$itemType->{$type}' id='icon$id' src='$iconSrc->{$type}'/><span id='view$id' class='view' title='$item->{desc}'> $item->{name}</span></span><br/>";
+@
+
+
+1.1
+log
+@necessary files for admin page added
+@
+text
+@d5 1
+a5 1
+# $Id:  $
+d10 1
+d21 1
+a21 42
+$tree->{user}{'~name'} = 'Uzivatele';			# necessary! for proper tree structure, needed in each 'container'
+$tree->{user}{'~desc'} = 'Slozka s uzivatelama';	#description of folder
+$tree->{user}{'~content'} = 1;				# necessary! defines that folder has content and it should be viewed
+$tree->{user}{1}{name} = "Karel";
+$tree->{user}{1}{login} = "carl";
+$tree->{user}{1}{passwd} = "ttttt";
+$tree->{user}{2}{name} = "Pert";
+$tree->{user}{2}{login} = "Pert";
+$tree->{user}{2}{passwd} = "Pert";
+$tree->{user}{3}{name} = "Pavel";
+$tree->{user}{3}{login} = "Pavel";
+$tree->{user}{3}{passwd} = "Pavel";
+$tree->{user}{4}{name} = "Ivan";
+$tree->{user}{4}{login} = "Ivan";
+$tree->{user}{4}{passwd} = "Ivan";
+$tree->{user}{5}{name} = "Katka";
+$tree->{user}{5}{login} = "Katka";
+$tree->{user}{5}{passwd} = "Katka";
+$tree->{group}{'~name'} = 'Skupiny';
+$tree->{group}{'~desc'} = 'GruppenSlozka';
+$tree->{group}{'~content'} = 1;
+$tree->{group}{g1}{name} = 'Admin';
+$tree->{group}{g2}{name} = 'Root';
+$tree->{group}{g3}{name} = 'User';
+$tree->{group}{g4}{name} = 'Superman';
+$tree->{role}{'~name'} = 'Role';
+$tree->{role}{'~desc'} = 'a rolicky';
+$tree->{role}{'~content'} = 1;
+$tree->{role}{test}{'~name'} = "Test";
+$tree->{role}{test}{'~desc'} = "projectos testos";
+$tree->{role}{test}{'~content'} = 1;
+$tree->{role}{test}{t1}{name} = "Rootrs";
+$tree->{role}{test}{t1}{desc} = "Rooteros";
+$tree->{role}{test}{t2}{name} = "Userrr";
+$tree->{role}{test}{t2}{desc} = "Usrros";
+$tree->{role}{demo}{'~name'} = "demo";
+$tree->{role}{demo}{'~desc'} = "projectos demos";
+$tree->{role}{demo}{'~content'} = 1;
+$tree->{role}{demo}{d1}{name} = "DemoR";
+$tree->{role}{demo}{d1}{desc} = "demoRooteros";
+$tree->{role}{demo}{d2}{name} = "demoserrr";
+$tree->{role}{demo}{d2}{desc} = "demoUsrros";
+d138 1
+a138 1
+	print "<span class='default' id='$id' onclick='showMe(this)'><img name='$item->{name}|$itemType->{$type}' id='icon$id' src='$iconSrc->{$type}'/><span id='view$id' class='view' title='$item->{desc}'> $item->{name}</span></span><br/>";
+@
+

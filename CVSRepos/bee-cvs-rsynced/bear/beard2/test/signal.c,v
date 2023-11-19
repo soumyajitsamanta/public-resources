@@ -1,0 +1,42 @@
+head	1.1;
+access;
+symbols;
+locks; strict;
+comment	@ * @;
+
+
+1.1
+date	2004.03.01.16.16.49;	author numberone;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@
+Added beard2 -- new bear daemon source tree.
+
+mdata subsystem works, some docs, some tests, etc.
+
+cached in progress
+@
+text
+@#include<stdio.h>
+#include<signal.h>
+
+void handler(int s) {
+	printf("signal %d received\n",s);
+}
+
+int main() {
+	int value;
+	signal(SIGALRM,handler);
+	printf("number: ");
+	scanf("%d",&value);
+	return 0;
+}
+@

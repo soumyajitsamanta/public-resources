@@ -1,0 +1,110 @@
+head	1.1;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.1
+date	2003.11.06.12.08.47;	author numberone;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@renaming .xml to .scheme and .bee
+@
+text
+@<?xml version="1.0" encoding="ISO-8859-2"?>
+<script lang="perl" name='url'>
+<description>
+---
+</description>
+
+<input name="check" type='stream' />
+
+<output name="clf" type='stream'/>
+
+<code>
+<![CDATA[
+#	Module for URL parsing
+#	-	reads the stream of all web log values,
+#		parses the URL and returns only the CLF values
+#	Input: all web log values stream
+#	Output: CLF parsed stream with parsed URL, without user and ident
+#	
+# Last revision:
+#		2003-05-08	xpav	new
+#		2003-05-19	xpav	large input stream
+
+use strict;
+
+#	input stream
+my ($hostname,$url,$status,$date,$time,$authuser,$servername,$useragent,$referer,$size,$duration,$in,$out);
+
+# split url
+my ($path,$file);
+
+# getting known languages
+#	for deleting the suffixes from coding
+chdir('../client/log');
+open (LNGFILE,  "regexpCODING.txt") ||  die "Can not open coding extension file!\n";
+	my $coding = <LNGFILE>;
+ 	chomp($coding);
+	$coding = "\\.($coding)";
+close(LNGFILE);
+		
+
+while (my @@row = $check->fetch)
+{
+	($hostname,$url,$status,$date,$time,$authuser,$servername,$useragent,$referer,$size,$duration,$in,$out) = @@row;
+	
+	# URL can not contain white space by def, so ignoring such entries
+	next if ($url =~ /\s/);
+	
+	#	if status or bytes equals non value
+	$status = 999 if ($status eq "-");
+	$size = 0 if ($size eq "-");
+
+	#	parsing url to its components following RFC 2396 syntax
+	next if (!($url =~ m{^(([^:/?#]+):)?(//([^/?#]*))?([^?#]*)(\?([^#]*))?(#(.*))?}));
+
+	#	we are interested only in path
+	$url = $5;
+	#	splitting URL
+	($path,$file) = $url =~ /^(.*)\/(.*)$/;
+	
+	#	simple heuristic for dirs accessing
+	#	if the status is 301 and file is without any fullstop, programs assumes its a directory
+	#
+	if (!($file =~ /\./) && ($status eq "301"))
+	{
+		$path = "$path/$file";
+		$file = "";
+	}
+	
+	#	path must be at least root
+	#	this "/" can be taken out from spliting URL to file and dir,
+	#	so it must be checked if its empty
+	$path = "/" if (!$path);
+	
+	#	optimizing for .lang-ext handling
+	while ($file =~ /^(.*)$coding/)
+	{
+		$file = $1;
+	}
+
+	#	sending out the parsed result
+	$clf->put($hostname,$date,$time,$path,$file,$status,$size);
+}
+]]>
+</code>
+
+</script>
+
+@

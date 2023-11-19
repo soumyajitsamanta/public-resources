@@ -1,0 +1,341 @@
+head	1.2;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2006.01.13.12.21.15;	author igorludi;	state dead;
+branches;
+next	1.1;
+
+1.1
+date	2005.10.18.14.04.41;	author igorludi;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@*** empty log message ***
+@
+text
+@package rex.graphics.mdxeditor.mdxbuilder;
+
+
+import java.util.*;
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+import rex.utils.*;
+import java.util.Stack;
+import rex.utils.S;
+import java.io.ByteArrayOutputStream;
+import java.io.ByteArrayInputStream;
+import java.io.FileInputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileNotFoundException;
+
+/**
+ * MdxEditor's toolbar component.
+ * @@author Igor Mekterovic
+ * @@version 0.3
+ */
+public class MdxBuilderToolbar extends JPanel{
+   private CanSaveAndResumeState parent;
+   private HandlesMdxEditorSettings settingsHandler;
+   private JLabel   saveQuery
+          , loadQuery
+          , undoAction
+          , redoAction
+          , newQuery;
+   private static int MAX_UNDO_OPERATIONS = 20;
+   private Stack undoStack
+               , redoStack;
+
+//   private UndoableRedoable parent;
+
+
+   private static ImageIcon undoEnabledIcon;
+   private static ImageIcon undoDisabledIcon;
+   private static ImageIcon redoEnabledIcon;
+   private static ImageIcon redoDisabledIcon;
+   static {
+      undoEnabledIcon = S.getAppIcon("undo.gif");
+      undoDisabledIcon = S.getAppIcon("undo_disabled.gif");
+      redoEnabledIcon = S.getAppIcon("redo.gif");
+      redoDisabledIcon = S.getAppIcon("redo_disabled.gif");
+   }
+
+   /**
+    * Creates all the buttons
+    * @@param _parent MdxEditor
+    */
+   public MdxBuilderToolbar(CanSaveAndResumeState _parent, HandlesMdxEditorSettings _settingsHandler) {
+
+
+      parent = _parent;
+      settingsHandler = _settingsHandler;
+
+      newQuery = new JLabel(S.getAppIcon("new_query.gif"));
+      newQuery.addMouseListener(new MouseAdapter() {
+         public void mouseClicked(MouseEvent e) {
+            MdxBuilderToolbar.this.newQuery();
+         }
+      });
+      newQuery.setToolTipText("New Query");
+
+
+      saveQuery = new JLabel(S.getAppIcon("save_query.gif"));
+      saveQuery.addMouseListener(new MouseAdapter() {
+         public void mouseClicked(MouseEvent e) {
+            MdxBuilderToolbar.this.saveQuery();
+         }
+      });
+      saveQuery.setToolTipText("Save Query");
+
+      loadQuery = new JLabel(S.getAppIcon("open_query.gif"));
+      loadQuery.addMouseListener(new MouseAdapter() {
+         public void mouseClicked(MouseEvent e) {
+            MdxBuilderToolbar.this.loadQuery();
+         }
+      });
+      loadQuery.setToolTipText("Load saved query");
+      loadQuery.setOpaque(false);
+
+
+      undoAction = new JLabel(undoDisabledIcon);
+      undoAction.addMouseListener(new MouseAdapter() {
+         public void mouseClicked(MouseEvent e) {
+            MdxBuilderToolbar.this.undo();
+         }
+      });
+      undoAction.setToolTipText("Undo action");
+      undoAction.setOpaque(false);
+//      undoAction.setEnabled(false);
+
+      redoAction = new JLabel(redoDisabledIcon);
+      redoAction.addMouseListener(new MouseAdapter() {
+         public void mouseClicked(MouseEvent e) {
+            MdxBuilderToolbar.this.redo();
+         }
+      });
+      redoAction.setToolTipText("Redo action");
+      redoAction.setOpaque(false);
+//      redoAction.setEnabled(false);
+
+
+//      Line 'em up boys...
+      this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
+      this.add(Box.createRigidArea(new Dimension(4, 0)));
+      this.add(newQuery);
+      this.add(Box.createRigidArea(new Dimension(4, 0)));
+      this.add(saveQuery);
+      this.add(Box.createRigidArea(new Dimension(4, 0)));
+      this.add(loadQuery);
+      this.add(Box.createRigidArea(new Dimension(4, 0)));
+      this.add(undoAction);
+      this.add(Box.createRigidArea(new Dimension(4, 0)));
+      this.add(redoAction);
+      this.setBorder(AppColors.TOOLBAR_BORDER);
+      this.setOpaque(false);
+
+
+      undoStack = new Stack();
+      redoStack = new Stack();
+
+   }
+   /**
+    * Sets the undo button to specified state
+    * @@param enabled boolean
+    */
+   public void setUndoEnabled(boolean enabled){
+      undoAction.setEnabled(enabled);
+//      S.out("setting undo = " + enabled);
+      if (enabled){
+         undoAction.setIcon(undoEnabledIcon);
+      }else{
+         undoAction.setIcon(undoDisabledIcon);
+      }
+   }
+
+   /**
+    * Sets the redo button to specified state
+    * @@param enabled boolean
+    */
+   public void setRedoEnabled(boolean enabled){
+      redoAction.setEnabled(enabled);
+      if (enabled){
+         redoAction.setIcon(redoEnabledIcon);
+      }else{
+         redoAction.setIcon(redoDisabledIcon);
+      }
+   }
+
+   /**
+    * Refreshes the display(state) of undo and redo buttons.
+    */
+   public void refreshUndoRedoState(){
+      setUndoEnabled(canUndo());
+      setRedoEnabled(canRedo());
+   }
+
+   /**
+    * This method is called by the object that uses this toolbar before it performs any operation.
+    * <br>This method then saves the state of that object and pushes it onto the stack.
+    */
+   public void actionToBePerformed(){
+      if (undoStack.size() == MAX_UNDO_OPERATIONS)
+         undoStack.removeElementAt(0);
+      ByteArrayOutputStream memStream = new ByteArrayOutputStream();
+      redoStack.removeAllElements();
+      parent.saveState(memStream);
+      undoStack.push(memStream);
+      refreshUndoRedoState();
+   }
+
+   /**
+    * Performs undo operation.
+    */
+   public void undo(){
+      if (canUndo()){
+//       First, save current state (in case of redo) and push it on the redo stack
+         ByteArrayOutputStream currMemStream = new ByteArrayOutputStream();
+         parent.saveState(currMemStream);
+         redoStack.push(currMemStream);
+//       Then, retrieve previous state from the undo stack and resume it
+         ByteArrayOutputStream memStream = (ByteArrayOutputStream)undoStack.pop();
+         parent.resumeState(new ByteArrayInputStream(memStream.toByteArray()));
+         refreshUndoRedoState();
+      }else{
+//         S.out("alert: undo called when there is nothing to undo!");
+      }
+   }
+
+   /**
+    * Performs redo operation.
+    */
+   public void redo(){
+      if (canRedo()){
+//       First, save current state (in case of undo) and push it on the UNDO stack
+         ByteArrayOutputStream currMemStream = new ByteArrayOutputStream();
+         parent.saveState(currMemStream);
+         undoStack.push(currMemStream);
+//       Then, retrieve previous state from the REDO stack and resume it
+         ByteArrayOutputStream memStream = (ByteArrayOutputStream)redoStack.pop();
+//         undoStack.push(memStream);
+         parent.resumeState(new ByteArrayInputStream(memStream.toByteArray()));
+         refreshUndoRedoState();
+      }else{
+//         S.out("alert: redo called when there is nothing to redo!");
+      }
+   }
+
+   /**
+    * Returns true if undo operation can be performed, false otherwise.
+    * @@return boolean
+    */
+   public boolean canUndo(){
+      return !undoStack.empty();
+   }
+
+   /**
+    * Returns true if redo operation can be performed, false otherwise.
+    * @@return boolean
+    */
+   public boolean canRedo(){
+      return !redoStack.empty();
+   }
+
+   /**
+    * Clears a state of the parent object - for a new query to be created.
+    */
+   protected void newQuery(){
+      parent.clearState();
+   }
+
+   /**
+    * Loads a query from the file. (dialog box for choosing a file is presented to user)
+    */
+   protected void loadQuery(){
+      JFileChooser chooser = new JFileChooser();
+      chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+      if (settingsHandler.getDefaultSaveDirectory() != null)
+         chooser.setCurrentDirectory(new File(settingsHandler.getDefaultSaveDirectory()));
+      int returnVal = chooser.showOpenDialog(null);
+      if (returnVal != JFileChooser.APPROVE_OPTION) {
+         return;
+      }
+      FileInputStream in;
+      try{
+         in = new FileInputStream(chooser.getSelectedFile().getAbsolutePath());
+      }catch(Exception e){
+         e.printStackTrace();
+         JOptionPane.showMessageDialog(null
+                                        , "Sorry, error while loading a query:" + chooser.getSelectedFile().getAbsolutePath()
+                                        , "Loading query"
+                                        , JOptionPane.ERROR_MESSAGE);
+         return;
+      }
+
+      parent.resumeState(in);
+   }
+
+   /**
+    * Saves a query to the file.  (dialog box for choosing a file is presented to user)
+    */
+   protected void saveQuery(){
+      JFileChooser chooser = new JFileChooser();
+      chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+      if (settingsHandler.getDefaultSaveDirectory() != null)
+         chooser.setCurrentDirectory(new File(settingsHandler.getDefaultSaveDirectory()));
+      int returnVal = chooser.showSaveDialog(null);
+      if (returnVal != JFileChooser.APPROVE_OPTION) {
+         return;
+      }
+      FileOutputStream out = null;
+      try {
+         out = new FileOutputStream(chooser.getSelectedFile().getAbsolutePath());
+      } catch (FileNotFoundException e){
+         JOptionPane.showMessageDialog(null
+                                        , "Query is not saved!\nFile not found:" + chooser.getSelectedFile().getAbsolutePath()
+                                        , "Saving query."
+                                        , JOptionPane.ERROR_MESSAGE);
+         return;
+
+      }
+      parent.saveState(out);
+      JOptionPane.showMessageDialog(null
+                                        , "Query saved!"
+                                        , "Saving query"
+                                        , JOptionPane.INFORMATION_MESSAGE);
+      settingsHandler.setDefaultSaveDirectory(chooser.getSelectedFile().getParentFile().getAbsolutePath());
+
+   }
+
+   /**
+    * Overrides the <code>paintComponent(Graphics g)<code> to paint gradient blue background.
+    * @@param g Graphics
+    */
+   public void paintComponent(Graphics g) {
+      S.paintBackground(g, this);
+      super.paintComponent(g);
+   }
+
+}
+@
+
+
+1.1
+log
+@*** empty log message ***
+@
+text
+@@
+

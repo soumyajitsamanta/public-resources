@@ -1,0 +1,31 @@
+head	1.1;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.1
+date	2003.09.09.09.41.30;	author jiri_schmid;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@ACL for facts and attrs implemented
+@
+text
+@<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<project>
+   <folder id="_ATTRIBUTES_">
+    <name><cz>Atributy</cz><en>Attributes</en></name>
+    <description><cz>Slozka Atributu</cz><en>Attributes Folder</en></description>
+    <gui-presentation line="12"/>
+  </folder>
+</project>
+@

@@ -1,0 +1,90 @@
+head     1.1;
+branch   1.1.1;
+access   ;
+symbols  start:1.1.1.1 vendor:1.1.1;
+locks    ; strict;
+comment  @# @;
+
+
+1.1
+date     2002.09.24.01.34.18;  author michald;  state Exp;
+branches 1.1.1.1;
+next     ;
+
+1.1.1.1
+date     2002.09.24.01.34.18;  author michald;  state Exp;
+branches ;
+next     ;
+
+
+desc
+@@
+
+
+
+1.1
+log
+@Initial revision
+@
+text
+@<!--BEETL Transformation Library-->
+
+<!--General definitions-->
+
+<!ENTITY % namedesc "name,description?">
+<!ENTITY % lnamedesc "name,lname?,description?">
+<!ENTITY % datacon "
+	type (boolean|integer|float|numeric|char|varchar|date|time|datetime) #REQUIRED
+	lenght CDATA #IMPLIED"
+>	<!--length is required for char|varchar|integer|float and repreents byte length-->
+	<!--numeric type requires length in form preciion.scale-->
+
+<!ELEMENT name (#PCDATA)>	<!--unique physical name-->
+<!ELEMENT lname (#PCDATA)>	<!--long logical name-->
+<!ELEMENT description (#PCDATA)>
+
+<!--TRANSFORMATIONS-->
+
+<!ELEMENT library (dir*|proc*)>
+<!ATTLIST library 
+	name CDATA #IMPLIED
+	description CDATA #IMPLIED
+	author CDATA #IMPLIED
+	create-date CDATA #REQUIRED
+	update-date CDATA #IMPLIED
+>
+
+<!ELEMENT dir (%namedesc;,dir*|proc*)>
+<!ATTLIST dir
+	gui-status (close|open) "close"
+>
+<!ELEMENT proc (%lnamedesc;,input*,output*,def)>
+
+<!ELEMENT input (%lnamedesc;,datatype*)>
+<!ATTLIST input
+	gui-line CDATA #IMPLIED
+>	<!--gui-line repreents order of GUI presentation order of field-->
+
+<!ELEMENT output (%lnamedesc;,datatype*)>
+<!ATTLIST output
+	gui-line CDATA #IMPLIED
+>	<!--gui-line repreents order of GUI presentation order of field-->
+
+<!ELEMENT datatype EMPTY>
+<!ATTLIST datatype
+	%datacon;
+>	
+<!ELEMENT def (#PCDATA)>	<!--Transformation definition in specific language-->
+<!ATTLIST def
+	language (perl) "perl"
+>
+
+@
+
+
+1.1.1.1
+log
+@Initial public release of BEE Project.
+@
+text
+@@

@@ -1,0 +1,35 @@
+head	1.1;
+access;
+symbols
+	jpivot_1_8_0:1.1
+	focus_1_6_0:1.1.0.2
+	wcf_1_7_0:1.1
+	wcf_1_6_0:1.1
+	sourceforge_sync:1.1;
+locks; strict;
+comment	@# @;
+
+
+1.1
+date	2006.07.02.06.05.50;	author qinhui99;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@Simplified Chinese Translation
+@
+text
+@#tableproperties.xml
+tableproperties.cancel=\u53d6\u6d88
+tableproperties.columns=\u5217
+tableproperties.paging=\u5141\u8bb8\u5206\u9875
+tableproperties.ok=\u786e\u5b9a
+tableproperties.pagesize=\u5206\u9875\u5927\u5c0f
+tableproperties.rowperpage=\u8bb0\u5f55/\u9875
+@

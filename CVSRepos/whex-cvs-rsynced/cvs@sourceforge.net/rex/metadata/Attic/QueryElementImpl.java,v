@@ -1,0 +1,54 @@
+head	1.2;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2005.06.28.13.38.29;	author igorludi;	state dead;
+branches;
+next	1.1;
+
+1.1
+date	2005.06.28.11.35.04;	author igorludi;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@*** empty log message ***
+@
+text
+@package rex.metadata;
+
+public class QueryElementImpl implements QueryElement{
+   private String queryMembersExpression
+                , hierarchyUniqueName;
+   public QueryElementImpl(String _queryMembersExpression
+                         , String _hierarchyUniqueName) {
+      queryMembersExpression = _queryMembersExpression;
+      hierarchyUniqueName   = _hierarchyUniqueName;
+   }
+   public String getQueryMembersExpression(){
+      return queryMembersExpression;
+   }
+   public String getHierarchyUniqueName(){
+      return hierarchyUniqueName;
+   }
+}
+@
+
+
+1.1
+log
+@first time commit
+@
+text
+@@
+

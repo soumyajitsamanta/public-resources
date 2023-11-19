@@ -1,0 +1,47 @@
+head	1.1;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.1
+date	2004.03.01.16.16.48;	author numberone;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@
+Added beard2 -- new bear daemon source tree.
+
+mdata subsystem works, some docs, some tests, etc.
+
+cached in progress
+@
+text
+@
+cached uses pre-created table pool. 
+
+set of tables is created for particular number of rows.
+by default, 10.000 tables with 10 columns, 10.000 tables with 30 columns
+and 1.000 tables with 100 columns is created.
+
+tables	columns	.db size
+10.000	1		11MB
+10.000	10		11MB
+10.000	30		12MB
+10.000	31		12MB
+10.000	32		23MB
+10.000	100		23MB
+
+sqlite_open() delays 1.27s opening .db with 21.000 tables, 
+0.13s opening 2.100 tables
+
+
+@

@@ -1,0 +1,472 @@
+head	1.8;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.8
+date	2004.05.10.15.19.09;	author tuco80;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	2004.04.21.08.15.48;	author numberone;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	2003.09.05.11.29.34;	author numberone;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	2003.08.22.12.54.25;	author numberone;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2003.08.11.06.53.58;	author numberone;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2003.06.03.13.16.14;	author numberone;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2003.03.12.23.35.13;	author numberone;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2003.02.05.17.20.22;	author numberone;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.8
+log
+@
+return exit-status code correctly
+@
+text
+@# $Id: client.pm,v 1.7 2004/04/21 08:15:48 numberone Exp $
+
+package client;
+
+
+use Data::Dumper;
+use strict;
+
+use lib '../lib';
+use url;
+use Msg;
+
+use lib '.';
+use common;
+use bee;
+
+our $client; # global, for xmlrpc
+
+my $bee_id = 0; # unique bee id counter
+
+sub new {
+	my($pkg,$msg) = @@_;
+
+#	my $auth = &::auth();
+#	return undef if($auth->query('key',$msg->auth));# or return undef;
+
+	print "client \`".$msg->auth."\' from ".$msg->peer."\n";
+	my $client = bless {
+		msg   => $msg,
+		bee   => [],   # bee-list
+		queue => [],   # pending messages to client
+	}, $pkg;
+
+	return $client;
+};
+
+sub peek { shift->{msg}->peek }
+sub auth { shift->{msg}->auth }
+sub peer { shift->{msg}->peer }
+
+sub close {
+	my($client) = @@_;
+	$client->{closed} = 1;
+
+	foreach(@@{$client->{bee}}) {
+		# FIX: shouldn't bee 2? or some xml-rpc based end?
+		if(kill 9,$_->{id}) { wait() }
+	}
+
+	print "client \'".$client->auth.
+			"\' from ".$client->peer." closed\n\n";
+}
+
+sub find {
+	my($client,$id) = @@_;
+	foreach my $bee (@@{$client->{bee}}) {
+		return $bee if($bee->{id} eq $id);
+	}
+	return undef;
+}
+
+sub watch {
+	my($client,$bee) = @@_;
+
+	return unless($bee->{state} eq 'letfly');
+
+	# FIX: handle if bee died, 
+	my $pid = $bee->{id};
+	if(exists $::death{$pid}) {
+		$bee->{state} = 'landed';
+		$client->message($bee,'landed',status => $::death{$pid});
+		delete $::death{$pid};
+	}
+	# now it's zombie until client closes connection
+	return unless($bee->{server}->peek > 0);
+
+	my $msg = $bee->{server}->recv();
+
+	if($msg =~ /^landed\s/) {
+		print "bee `".$bee->{name}."' landed, status $'\n";
+		$bee->{state} = 'landed';
+		$client->message($bee,'landed',status => $');
+
+	} elsif($msg =~ /^display\s/) {
+		# FIX: split $line and send as separate values
+		$client->message($bee,'display',line => $');
+
+	} else {
+		print "warning: bee ".$bee->{name}.": unknown message: \'$msg\'\n";
+	}
+}
+
+sub message {
+	my $client  = shift;
+	my $bee     = shift;
+	my $message = shift;
+
+	push @@{$client->{queue}}, {
+		bee     => $bee ? $bee->{id} : undef,
+		message => $message,
+		@@_
+	};
+}
+
+
+# ------------------- client requests ----------------------
+
+# dad methods offered to client
+#  bee		- create new bee
+#  queue	- read message queue
+#  input	- attach bee's input
+#  output	- attach bee's output
+#  letfly	- execute bee (not exec(), just send signal to running bee)
+#
+#  tables	- ee, i don't know yet :-)
+#
+#  todo:
+#  install	- install library ('install','path/name.pl',\code)
+#  			  [no code == remove ??, or ls/cd mechanism?]
+
+my $methods = {
+	version => sub { 'v1' }, 
+	bee    => \&rpc_bee,
+	queue  => \&rpc_queue,
+
+#	status => \&rpc_status;
+	input  => \&rpc_input,
+	output => \&rpc_output,
+	letfly => sub { print "> letfly ",$_[0],"\n"; bee_call('letfly',@@_) },
+
+	tables		=> \&rpc_tables,
+};
+
+# serve client request
+sub serve { 
+	$client = shift; # set global
+	$client->{msg}->serve($methods);
+	$client = undef;
+}
+
+
+sub rpc_bee {
+	my($name,$script) = @@_;
+
+	my $bee = new bee($name,$script);
+	return undef unless defined $bee;
+
+	push @@{$client->{bee}}, $bee;
+	return $bee->{id};
+}
+
+# return pending messages to client
+sub rpc_queue {
+	my $copy = $client->{queue};
+	$client->{queue} = []; # empty queue
+	return $copy;
+}
+
+
+# send command to bee, save 'status' (!)
+sub bee_call {
+	my $method = shift;
+	my $bee = $client->find(shift);
+	return undef unless $bee;
+	# what if bee flies?
+	$bee->{state} = $method;
+	return $bee->{client}->call($method,@@_);
+}
+
+
+#sub rpc_status {
+#	my $bee = $client->find(shift);
+#	return $bee ? $bee->{status} : undef;
+#}
+
+
+sub rpc_tables {
+	my($full,$select) = @@_;
+	my $url = url::split($full);
+	my @@tables = ();
+
+	# todo: auth: check permissions.. !!!!!!!
+#	$auth->query();
+
+	return "error: table specified in url ?!?" if($url->{table});
+
+	if($url->{proto} eq 'dbi') {
+		eval {
+			# fix: todo..
+			unless($select) {
+				die unless $::auth;
+				$select = $::auth->query('tablequery',$full);
+			}
+			print "client: ".$client->auth."\n";
+
+			die unless $::auth;
+			my $credit = $::auth->query('read',$client->auth,$full);
+			if($credit) {
+				my $db = common::database($url,$credit);
+				my $ary = $db->selectall_arrayref($select);
+				foreach(@@$ary) {
+					push @@tables,join(" ",@@$_);
+				}
+			}
+		}
+
+	} elsif($url->{proto} eq 'dir') {
+		# check url->host!
+		my $db = $url->{db};
+		return "error: directory not specified in $full" unless($db);
+		opendir(DIR,$db) || return "error: $db\: $!";
+		foreach(readdir(DIR)) {
+			next if(/^\./);
+			push @@tables,$_    if(-f "$db$_");
+			push @@tables,"$_/" if(-d "$db$_");
+		}
+		closedir(DIR);
+
+	} else {
+		return "error: unknown proto $full";
+	}
+
+	return \@@tables;
+}
+
+
+
+
+
+# check whether $client has permission $mode (r/w) to $fullurl
+# undef == deny
+sub auth_inout {
+	my($mode,$fullurl) = @@_;
+	return undef unless defined $fullurl;
+	my $url = url::split($fullurl);
+	my $p = $url->{proto};
+	return 1 unless(($p eq 'dir') or ($p eq 'dbi'));
+
+	return 1 unless $::auth; # FIX
+	my $credit = $::auth->query($mode,$client->auth,$fullurl);
+
+	# FIX: die??? WTF is this??
+	die "`".$client->auth." not authorized to $mode `$fullurl' source\n" 
+			unless($credit);
+
+#	if($p eq 'dbi') {
+#		return 
+#	}
+
+	return $credit;
+}
+
+
+sub rpc_input {
+	my $bee = shift;
+	my $num = shift() - 1;
+	my $arg = { @@_ };
+	$arg->{auth} = auth_inout('read',$arg->{url});
+	bee_call('input',$bee,$num,$arg);
+}
+
+
+sub rpc_output {
+	my $bee = shift;
+	my $num = shift() - 1;
+	my $arg = { @@_ };
+	$arg->{auth} = auth_inout('write',$arg->{url});
+	bee_call('output',$bee,$num,$arg);
+}
+
+
+@
+
+
+1.7
+log
+@
+bee exit status code propagation
+
+task.pl returns 0 on success, or error code of first died bee
+@
+text
+@d1 1
+a1 1
+# $Id: client.pm,v 1.6 2003/09/05 11:29:34 numberone Exp $
+d68 2
+a69 1
+	if(exists $::death{$bee->{id}}) {
+d71 2
+a72 1
+		$client->message($bee,'landed',status => $::death{$bee->{id}});
+@
+
+
+1.6
+log
+@new dad code emerges in separate private location
+@
+text
+@d1 1
+a1 1
+# $Id: client.pm,v 1.5 2003/08/22 12:54:25 numberone Exp $
+d68 4
+@
+
+
+1.5
+log
+@net - select
+@
+text
+@d1 1
+a1 1
+# $Id: client.pm,v 1.4 2003/08/11 06:53:58 numberone Exp $
+d123 1
+a123 1
+	letfly => sub { bee_call('letfly',@@_) },
+d185 2
+a186 1
+				$select = $::auth-query('tablequery',$full);
+d190 1
+d233 1
+@
+
+
+1.4
+log
+@merging old version to cvs
+@
+text
+@d1 1
+a1 1
+# $Id: client.pm,v 1.3 2003/06/03 13:16:14 numberone Exp $
+d116 1
+@
+
+
+1.3
+log
+@0.9.1 -- version merge
+@
+text
+@d1 1
+a1 1
+# $Id: client.pm,v 1.2 2003/03/12 23:35:13 numberone Exp $
+a71 1
+	print "message: $msg\n";
+d74 1
+a74 1
+		print "bee landed, status $'\n";
+@
+
+
+1.2
+log
+@bee/ directory - where to store temporary script files
+dad now use processes (fork and exec) to run bee instead
+of forking and `eval`-uating.
+perl -e "use DBI; fork;" sigfaults on Microsoft Windows
+so this fixes this problem
+@
+text
+@d1 1
+a1 1
+# $Id: client.pm,v 1.1 2003/02/05 17:20:22 numberone Exp $
+d24 2
+a25 1
+#	fix: $auth->query('user'|'client',$msg->auth,$msg->peer) or return undef;
+@
+
+
+1.1
+log
+@otec deleted
+@
+text
+@d1 1
+a1 1
+# $Id: client.pm,v 1.7 2003/02/05 15:39:46 numberone Exp $
+a28 2
+		peer  => $msg->peer,
+		auth  => $msg->auth,
+d37 2
+d49 2
+a50 2
+	print "client \'".$client->{auth}.
+			"\' from ".$client->{peer}." closed\n\n";
+d68 1
+a68 1
+	return unless($bee->{client}->peek > 0);
+d70 2
+a71 1
+	my $msg = $bee->{client}->recv();
+d136 1
+a136 1
+	my($name,$input,$output,$script) = @@_;
+d138 1
+a138 1
+	my $bee = new bee($name,$input,$output,\$script);
+a156 1
+	die unless $bee;
+d186 3
+a188 2
+			my $credit = $::auth->query('read',
+						 $client->{key},$::selfkey,$full);
+d230 1
+a230 2
+	# selfkey??
+	my $credit = $::auth->query($mode,$client->{key},'localhost:2333',$fullurl);
+d233 1
+a233 1
+	die "`".$client->{key}." not authorized to $mode `$fullurl' source\n" 
+@
+

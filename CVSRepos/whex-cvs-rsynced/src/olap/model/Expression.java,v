@@ -1,0 +1,49 @@
+head	1.1;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.1
+date	2007.07.11.09.22.48;	author pyadav;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@Additional files for version 0.7.
+@
+text
+@/*
+ * ====================================================================
+ * This software is subject to the terms of the Common Public License
+ * Agreement, available at the following URL:
+ *   http://www.opensource.org/licenses/cpl.html .
+ * Copyright (C) 2003-2004 TONBELLER AG.
+ * All Rights Reserved.
+ * You must accept the terms of that agreement to use this software.
+ * ====================================================================
+ *
+ * 
+ */
+/*
+ * Created on 05.11.2003
+ *
+ * To change the template for this generated file go to
+ * Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
+ */
+package rex.olap.model;
+
+/**
+ * @@author av
+ */
+public interface Expression extends Visitable {
+
+}
+@

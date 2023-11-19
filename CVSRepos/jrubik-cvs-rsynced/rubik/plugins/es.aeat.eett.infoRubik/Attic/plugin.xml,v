@@ -1,0 +1,100 @@
+head	1.2;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2008.05.17.15.40.42;	author fsaz;	state dead;
+branches;
+next	1.1;
+
+1.1
+date	2005.11.28.14.02.37;	author fsaz;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@borrando viejos
+@
+text
+@<?xml version="1.0" ?>
+<!DOCTYPE plugin PUBLIC "-//JPF//Java Plug-in Manifest 0.4" "http://jpf.sourceforge.net/plugin_0_4.dtd">
+<plugin id="es.aeat.eett.infoRubik" version="0.0.1" class="es.aeat.eett.infoRubik.InfoRugikPlugin">
+	<requires>
+		<import plugin-id="es.aeat.eett.workbench.core"/>
+		<import plugin-id="es.aeat.eett.rubik.core"/>
+		<import plugin-id="es.aeat.eett.rubik.menu"/>
+		<import plugin-id="es.aeat.eett.rubik.export"/>
+		<import plugin-id="es.aeat.eett.rubik.tableRubik"/>
+		<import plugin-id="es.aeat.eett.rubik.chart"/>
+		<import plugin-id="es.aeat.eett.rubik.map"/>
+	</requires>
+	<runtime>
+		<library id="infoRubik" path="classes/" type="code">
+			<doc caption="API documentation">
+				<doc-ref path="api/index.html" caption="javadoc"/>
+			</doc>
+		</library>
+		<library type="resources" path="icons/" id="icons"/>	
+	</runtime>
+	<extension-point id="JobFactory">
+		<parameter-def id="class"/>
+		<parameter-def id="nameJob"/>
+	</extension-point>		
+	<extension-point id="IndexFactory">
+		<parameter-def id="class"/>
+		<parameter-def id="name"/>
+	</extension-point>		
+	
+	<extension plugin-id="es.aeat.eett.infoRubik" point-id="JobFactory" id="TableJobFactory">
+		<parameter id="class" value="es.aeat.eett.infoRubik.jobs.olap_jobs.table_job.TableJobFactory"/>
+		<parameter id="nameJob" value="Table" />
+	</extension>	
+
+	<extension plugin-id="es.aeat.eett.infoRubik" point-id="JobFactory" id="ChartJobFactory">
+		<parameter id="class" value="es.aeat.eett.infoRubik.jobs.olap_jobs.chart_job.ChartJobFactory"/>
+		<parameter id="nameJob" value="Chart" />
+	</extension>			
+	<extension plugin-id="es.aeat.eett.infoRubik" point-id="JobFactory" id="MapJobFactory">
+		<parameter id="class" value="es.aeat.eett.infoRubik.jobs.olap_jobs.map_job.MapJobFactory"/>
+		<parameter id="nameJob" value="Map" />
+	</extension>
+	
+	<extension plugin-id="es.aeat.eett.infoRubik" point-id="IndexFactory" id="indexGeneral">
+		<parameter id="class" value="es.aeat.eett.infoRubik.index.general_index.GeneralFactory"/>
+		<parameter id="name" value="General Index" />
+	</extension>	
+				
+	<extension plugin-id="es.aeat.eett.workbench.core" point-id="ViewMain" id="infoRubik">
+		<doc caption="InfoRugikPlugin">
+			<doc-text><![CDATA[
+<P></P>
+<P></P>]]></doc-text>
+		</doc>
+		<parameter id="class" value="es.aeat.eett.infoRubik.InfoRugikPlugin"/>
+		<parameter id="name" value="InfoRubik"/>		
+		<parameter id="icon" value="reports.gif"/>		
+		<parameter id="top" value="true"/>
+		<parameter id="description" value="Show the reports plugin."/>
+		<parameter id="autoShow" value="false"/>
+	</extension>
+	
+	
+</plugin>@
+
+
+1.1
+log
+@*** empty log message ***
+@
+text
+@@
+

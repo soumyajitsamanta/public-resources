@@ -1,0 +1,168 @@
+head	1.3;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.3
+date	2003.10.31.12.47.57;	author jiri_schmid;	state dead;
+branches;
+next	1.2;
+
+1.2
+date	2003.10.16.14.08.53;	author jiri_schmid;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2003.09.18.14.10.50;	author jiri_schmid;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.3
+log
+@mod perl rocks!
+@
+text
+@#-----------------------------------------------------
+#  Grid Editation
+#-----------------------------------------------------
+# $Id: grid_def_ed.pl,v 1.2 2003/10/16 14:08:53 jiri_schmid Exp $
+
+use strict;
+require "local/generate.pl";
+
+our($ObjectAttr,$MetricsIdent);
+
+#-----------------------------------------------------
+# print_form is called from edit.cgi
+
+sub generateContent {
+my($variables, $lang, $obj) = (shift, shift, shift);
+my $saved = $$variables->{saved} if exists $$variables->{saved};
+print <<END;
+<br />	
+<table class="page_skeleton">
+<tr class="page_skeleton"><td class="page_skeleton_ex" align="center">
+END
+&generateGridEdit($lang,$$variables->{skinPath},$$variables->{imgType});
+print <<END;
+</td>
+</tr>
+<tr class="page_skeleton">
+<td class="page_skeleton">
+	<table class="neutral_100">
+	<tr><td align="center">
+	<table class="buttons" cellpading="0" cellspacing="0">
+	<tr>	<td class="buttons"><input type="submit" name="Action" value="$$lang->{'Save'}" onclick="fill_selects();"/></td>
+		<td class="buttons">	<input type="submit" name="Action" value="$$lang->{'Save As'}" onclick="fill_selects(); return readName();"/>
+					<input type="hidden" name="saveAsName" id="saveAsName" value="" /></td>
+		<td class="buttons"><input type="button" name="reset" value="$$lang->{'Reset'}" onclick="fill_tables();"/></td>
+	</tr>
+	</table>
+	</td></tr>
+	</table>
+</td></tr></table>
+END
+&generateGridEditFields($obj);
+print <<END ;
+<script type="text/javascript" src="js/grid.js"></script>
+<script type="text/javascript">
+	var mg_img="$ObjectAttr->{$MetricsIdent}->{img}";
+	var mg_remove="$$lang->{'Grid Remove MG'}";
+	var msg="$$lang->{'New Save Part1'}$$lang->{'New Grid Save'}$$lang->{'New Save Part2'}";
+	fill_tables();
+	var saveAsMsg = "$$lang->{SaveAsMsg}$$lang->{'New Grid'}";
+	reloadTree($saved);
+</script>
+END
+}
+
+
+#---------------------------------------------------
+
+sub set_next_param {
+	my $o=shift;
+	$o->{row} = [param('RowObj')];
+	$o->{col} = [param('ColObj')];
+	$o->{page} = [param('PageObj')];
+	$o->{metric} = [param('Metrics')];	# nemely by metriky byt vnoreny do row|col|page ?
+}
+
+1
+@
+
+
+1.2
+log
+@mod-perl implementation stage 1, rebuilding global vars in .pl to global pointers
+@
+text
+@d4 1
+a4 1
+# $Id: grid_def_ed.pl,v 1.1 2003/09/18 14:10:50 jiri_schmid Exp $
+@
+
+
+1.1
+log
+@tabs imlemented almost everywhere
+@
+text
+@d4 1
+a4 1
+# $Id: grid_ed.pl,v 1.65 2003/09/01 13:35:23 jiri_schmid Exp $
+d7 1
+a7 2
+use CGI qw( :standard );
+use CGI::Pretty;
+d9 1
+a9 13
+require "const.def";
+require "local_lib.pl";
+
+
+use vars qw($ID $Obj $ObjT $ObjectAttr $MetricsIdent $descr_w $descr_r $name_w $use_lang $saved @@Languages $DefaultLanguage $all_params $skin $skinPath $imgType);
+
+my $none='-none-';
+my @@RowObj = [$none];
+my @@ColObj = [$none];
+my @@PageObj = [$none];
+
+my @@Metrics = ['A','B','C','D','E'];
+my @@MetricsUse = [$none];
+d15 3
+a17 4
+	my $item;
+	my $empty=0; # empty array; will write "-none-"
+	my $name = LocalizedObj($Obj->{name}, "Object #$ID", lc($use_lang), $DefaultLanguage);
+print <<END ;   # openNodes ... list of nodes which are currently open
+d22 2
+a23 2
+&generateGridEdit();
+print <<END ;
+d31 2
+a32 2
+	<tr>	<td class="buttons"><input type="submit" name="Action" value="$lang->{'Save'}" onclick="fill_selects();"/></td>
+		<td class="buttons">	<input type="submit" name="Action" value="$lang->{'Save As'}" onclick="fill_selects(); return readName();"/>
+d34 1
+a34 1
+		<td class="buttons"><input type="button" name="reset" value="$lang->{'Reset'}" onclick="fill_tables();"/></td>
+d41 1
+a41 1
+&generateGridEditFields();
+d46 2
+a47 2
+	var mg_remove="$lang->{'Grid Remove MG'}";
+	var msg="$lang->{'New Save Part1'}$lang->{'New Grid Save'}$lang->{'New Save Part2'}";
+d49 1
+a49 1
+	var saveAsMsg = "$lang->{SaveAsMsg}$lang->{'New Grid'}";
+@
+

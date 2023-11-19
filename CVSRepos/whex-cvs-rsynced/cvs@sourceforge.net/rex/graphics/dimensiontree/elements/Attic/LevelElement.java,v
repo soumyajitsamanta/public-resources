@@ -1,0 +1,246 @@
+head	1.2;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2005.06.28.13.38.27;	author igorludi;	state dead;
+branches;
+next	1.1;
+
+1.1
+date	2005.06.28.11.35.03;	author igorludi;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@*** empty log message ***
+@
+text
+@package rex.graphics.dimensiontree.elements;
+
+import javax.swing.ImageIcon;
+import rex.metadata.ServerMetadata;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+
+import rex.utils.*;
+import org.tempuri.type.ClsXMLAProxDiscoverPropertyList;
+
+import org.tempuri.type.ClsXMLAProxDiscoverRestrictions;
+import org.tempuri.type.ClsXMLAProxDiscoverProperties;
+import org.tempuri.type.ClsXMLAProxDiscoverRestrictionList;
+import rex.metadata.QueryElement;
+
+
+/**
+ * <p>Title: WHEX</p>
+ * <p>Description: </p>
+ * <p>Copyright: Copyright (c) 2003</p>
+ * <p>Company: </p>
+ * @@author igor
+ * @@version 1.0
+ */
+
+public class LevelElement implements DimensionTreeElement, QueryElement{
+
+   private String catalogName;
+   private String schemaName;
+   private String cubeName;
+   private String dimensionUniqueName;
+   private String hierarchyUniqueName;
+   private String levelName;
+   private String levelUniqueName;
+   private String levelGuid;
+   private String levelCaption;
+   private int levelNumber;
+   private int levelCardinality;
+   private int levelType;
+   private String description;
+   private int customRollupSettings;
+   private int levelUniqueSettings;
+   private boolean levelIsVisible;
+   private String levelOrderingProperty;
+   private int levelDbtype;
+   private String levelMasterUniqueName;
+   private String levelNameSqlColumnName;
+   private String levelKeySqlColumnName;
+   private String levelUniqueNameSqlColumnName;
+   private boolean nodeEnabled;
+
+
+   private ClsXMLAProxDiscoverRestrictions restrictions;
+   private ClsXMLAProxDiscoverProperties   properties;
+
+   private ServerMetadata parent;
+
+   static ImageIcon[] icon;
+
+   static {
+       icon = new ImageIcon[]{
+            S.getAppIcon("level_1.gif")
+          , S.getAppIcon("level_2.gif")
+          , S.getAppIcon("level_3.gif")
+          , S.getAppIcon("level_4.gif")
+          , S.getAppIcon("level_5.gif")
+          , S.getAppIcon("level_6.gif")
+          , S.getAppIcon("level_7.gif")
+          , S.getAppIcon("level_8.gif")
+          , S.getAppIcon("level_9.gif")
+          , S.getAppIcon("level_10.gif")
+       };
+   }
+   public LevelElement(  ServerMetadata svm
+                           , Node rowNode
+                           , ClsXMLAProxDiscoverRestrictions _restrictions
+                           , ClsXMLAProxDiscoverProperties   _properties) {
+
+      ClsXMLAProxDiscoverRestrictionList rl = new ClsXMLAProxDiscoverRestrictionList();
+      rl.setCatalog(_restrictions.getRestrictionList().getCatalog());
+      rl.setCubeName(_restrictions.getRestrictionList().getCubeName());
+      restrictions = new ClsXMLAProxDiscoverRestrictions();
+      restrictions.setRestrictionList(rl);
+      properties = _properties;
+
+      parent = svm;
+      nodeEnabled = true;
+      NodeList nl = rowNode.getChildNodes();
+
+      for(int i=0; i < nl.getLength(); i++){
+         // TO BE DONE: OTHER VARS...
+         if (nl.item(i).getNodeType() == 1){
+            if (nl.item(i).getNodeName().equals("CATALOG_NAME")) {
+               catalogName = DOM.getTextFromDOMElement(nl.item(i));
+            }else if (nl.item(i).getNodeName().equals("CUBE_NAME")) {
+               cubeName = DOM.getTextFromDOMElement(nl.item(i));
+            }else if (nl.item(i).getNodeName().equals("DIMENSION_UNIQUE_NAME")) {
+               dimensionUniqueName = DOM.getTextFromDOMElement(nl.item(i));
+            }else if (nl.item(i).getNodeName().equals("HIERARCHY_UNIQUE_NAME")) {
+               hierarchyUniqueName = DOM.getTextFromDOMElement(nl.item(i));
+            }else if (nl.item(i).getNodeName().equals("LEVEL_NAME")) {
+               levelName = DOM.getTextFromDOMElement(nl.item(i));
+            }else if (nl.item(i).getNodeName().equals("LEVEL_UNIQUE_NAME")) {
+               levelUniqueName = DOM.getTextFromDOMElement(nl.item(i));
+            }else if (nl.item(i).getNodeName().equals("LEVEL_NUMBER")) {
+               levelNumber = Integer.parseInt(DOM.getTextFromDOMElement(nl.item(i)));
+            }else if (nl.item(i).getNodeName().equals("LEVEL_CAPTION")) {
+               levelCaption = DOM.getTextFromDOMElement(nl.item(i));
+            }else if (nl.item(i).getNodeName().equals("LEVEL_CARDINALITY")) {
+               levelCardinality = Integer.parseInt(DOM.getTextFromDOMElement(nl.item(i)));
+            }
+
+         }
+      }
+//      S.out("levelUniqueName:" + levelUniqueName
+//            + " dimensionUniqueName:"+ dimensionUniqueName
+//            + " hierarchyUniqueName:" + hierarchyUniqueName);
+
+   }
+
+   public DimensionTreeElement[] getChildren(){
+      if (levelUniqueName.startsWith("[Measures]")){
+         return parent.getMeasuresList(restrictions, properties);
+      }else{
+         return null;
+      }
+   }
+
+
+   public String toString(){
+      if (levelName == null)
+         return "not initialized";
+      else
+         return levelName;
+
+   }
+
+   public ImageIcon getIcon(){
+      return icon[levelNumber];
+   }
+
+   public String getToolTip(){
+      if (levelName == null)
+         return "not initialized";
+      else
+         return "<html>Level unique name:"           + levelUniqueName
+                   +  "<br>Dimension unique name:"   + dimensionUniqueName
+                   + "<br>Hierarchy unique name:"    + hierarchyUniqueName
+                   + "<br>Children count(estimate):" + getChildrenCount()
+                   + "</html>";
+
+   }
+
+
+
+
+   public String[] getPopUpActionList(){
+      if (isEnabled()){
+         return new String[] {
+              PopUpActions.SEND_TO_COLUMNS
+            , PopUpActions.SEND_TO_ROWS
+            , PopUpActions.SEND_TO_PAGES
+         };
+      }else{
+         return null;
+      }
+   }
+   public String getUniqueName(){
+      return levelUniqueName;
+   }
+   public String getCaption(){
+      return levelCaption;
+   }
+   public String getQueryMembersExpression(){
+      return levelUniqueName + ".Members";
+   }
+
+   public boolean isEnabled(){
+      return nodeEnabled;
+   }
+   public void setEnabled(boolean newValue){
+      nodeEnabled = newValue;
+   }
+   public String getHierarchyUniqueName(){
+      return hierarchyUniqueName;
+   }
+   public String getDimensionUniqueName(){
+      return dimensionUniqueName;
+   }
+   public boolean isMeasure(){
+      return false;
+   }
+   public int getChildrenCount(){
+      return levelCardinality;
+   }
+
+// these methods are needed when FilterTreeLevelElement extends
+// this and then sets it's own limitations
+   public ServerMetadata getServerMetadata(){
+      return parent;
+   }
+   public ClsXMLAProxDiscoverRestrictions getRestrictions(){
+      return restrictions;
+   }
+   public ClsXMLAProxDiscoverProperties   getProperties(){
+      return properties;
+   }
+/////////////////////////////////////////////////
+
+}@
+
+
+1.1
+log
+@first time commit
+@
+text
+@@
+

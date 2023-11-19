@@ -1,0 +1,142 @@
+head	1.3;
+access;
+symbols
+	test_tag:1.1
+	sfsync:1.3;
+locks; strict;
+comment	@# @;
+
+
+1.3
+date	2004.06.30.18.27.28;	author avix;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2004.06.30.13.45.54;	author avix;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2004.06.09.20.29.37;	author avix;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.3
+log
+@dont write empty topLevel/bottomLevel attributes into HierarchyGrant elements
+@
+text
+@<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<!--
+/**
+ * <copyright>
+ * </copyright>
+ *
+ * $Id: plugin.xml,v 1.2 2004/06/30 13:45:54 avix Exp $
+ */
+-->
+
+<plugin
+    name = "Mondrian Schema Editor"
+    id = "net.sourceforge.mondrian.schema"
+    version = "1.0.3"
+    provider-name = "Andreas Voss"
+    class = "net.sourceforge.mondrian.schema.provider.MondrianEditPlugin$Implementation">
+
+  <requires>
+    <import plugin="org.eclipse.core.runtime" />
+    <import plugin="org.eclipse.core.resources" export="true"/>
+    <import plugin="org.eclipse.emf.ecore" export="true"/>
+    <import plugin="org.eclipse.emf.ecore.xmi" export="true"/>
+    <import plugin="org.eclipse.emf.edit" export="true"/>
+    <import plugin="org.eclipse.emf.edit.ui" export="true"/>
+    <import plugin="org.eclipse.ui.ide" export="true"/>
+  </requires>
+
+  <runtime>
+    <library name="runtime/net.sourceforge.mondrian.schema.jar">
+      <export name="*"/>
+    </library>
+  </runtime>
+
+  <extension point="org.eclipse.emf.ecore.generated_package">
+    <package
+       uri = "file:/C:/Java/trang-20030619/mondrian.xsd"
+       class = "net.sourceforge.mondrian.schema.Mondrian.MondrianPackage" />
+  </extension>
+
+  <extension point="org.eclipse.emf.ecore.extension_parser">
+    <parser
+       type="mondrian"
+       class="net.sourceforge.mondrian.schema.Mondrian.util.MondrianResourceFactoryImpl" />
+  </extension>
+
+  <extension
+    point = "org.eclipse.ui.newWizards">
+    <category
+       id = "org.eclipse.emf.ecore.Wizard.category.ID"
+       name="%_UI_Wizard_category">
+    </category>
+    <wizard
+        id = "net.sourceforge.mondrian.schema.Mondrian.presentation.MondrianModelWizardID"
+        name = "%_UI_MondrianModelWizard_label"
+        class = "net.sourceforge.mondrian.schema.Mondrian.presentation.MondrianModelWizard"
+        category = "org.eclipse.emf.ecore.Wizard.category.ID"
+        icon = "icons/full/obj16/MondrianModelFile.gif">
+      <description>%_UI_MondrianModelWizard_description</description>
+      <selection class = "org.eclipse.core.resources.IResource" />
+    </wizard>
+  </extension>
+
+  <extension point = "org.eclipse.ui.editors">
+    <editor
+        id = "net.sourceforge.mondrian.schema.Mondrian.presentation.MondrianEditorID"
+        name = "%_UI_MondrianEditor_label"
+        icon = "icons/full/obj16/MondrianModelFile.gif"
+        extensions = "mondrian"
+        class = "net.sourceforge.mondrian.schema.Mondrian.presentation.MondrianEditor" 
+        contributorClass="net.sourceforge.mondrian.schema.Mondrian.presentation.MondrianActionBarContributor" >
+    </editor>
+  </extension>
+  <extension point="org.eclipse.help.toc">
+    <toc file="toc.xml" primary="true"/>
+  </extension>  
+</plugin>
+@
+
+
+1.2
+log
+@Fixed bug with Join Element
+@
+text
+@d9 1
+a9 1
+ * $Id: plugin.xml,v 1.1 2004/06/09 20:29:37 avix Exp $
+d16 1
+a16 1
+    version = "1.0.2"
+@
+
+
+1.1
+log
+@initial checkin
+@
+text
+@d9 1
+a9 1
+ * $Id$
+d16 1
+a16 1
+    version = "1.0.1"
+@
+

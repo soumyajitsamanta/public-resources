@@ -1,0 +1,61 @@
+head	1.2;
+access;
+symbols
+	start:1.1.1.1 vendor:1.1.1;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2003.10.27.13.07.38;	author tuco80;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2002.09.24.01.34.16;	author michald;	state Exp;
+branches
+	1.1.1.1;
+next	;
+
+1.1.1.1
+date	2002.09.24.01.34.16;	author michald;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@Corrected naming for Layer1
+@
+text
+@<defaults>
+  <auth>localhost</auth>
+  <gui-layer height="280" width="210" id="1" visible="YES">
+  	<name en="Layer 1" cz="Layer 1" />
+  </gui-layer>
+  <db-def>db.conf</db-def>
+</defaults>
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d3 3
+a5 1
+  <gui-layer height="280" width="210" id="1" visible="YES" name="Layer 1" />
+@
+
+
+1.1.1.1
+log
+@Initial public release of BEE Project.
+@
+text
+@@

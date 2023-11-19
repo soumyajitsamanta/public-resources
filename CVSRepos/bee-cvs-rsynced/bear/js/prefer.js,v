@@ -1,0 +1,293 @@
+head	1.15;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.15
+date	2004.02.18.16.19.17;	author jiri_schmid;	state Exp;
+branches;
+next	1.14;
+
+1.14
+date	2004.02.12.16.24.27;	author jiri_schmid;	state Exp;
+branches;
+next	1.13;
+
+1.13
+date	2003.10.13.14.43.23;	author jiri_schmid;	state Exp;
+branches;
+next	1.12;
+
+1.12
+date	2003.09.24.09.43.24;	author jiri_schmid;	state Exp;
+branches;
+next	1.11;
+
+1.11
+date	2003.09.23.15.42.57;	author jiri_schmid;	state Exp;
+branches;
+next	1.10;
+
+1.10
+date	2003.09.17.14.51.14;	author jiri_schmid;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	2003.05.28.15.44.21;	author jiri_schmid;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	2003.05.28.12.56.24;	author jiri_schmid;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	2003.05.28.10.40.23;	author jiri_schmid;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	2003.05.08.15.35.52;	author jiri_schmid;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	2003.05.06.09.21.01;	author jiri_schmid;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2003.05.05.15.27.01;	author jiri_schmid;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2003.05.05.15.16.34;	author jiri_schmid;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2003.04.30.09.53.40;	author jiri_schmid;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2003.03.18.08.58.20;	author jiri_schmid;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.15
+log
+@rights implemented
+@
+text
+@// $Id: prefer.js,v 1.14 2004/02/12 16:24:27 jiri_schmid Exp $
+
+function hideLoad() {
+	document.getElementById("loading").style.display = "none";
+	if (saved){
+browsertype = (String(navigator.userAgent.toLowerCase()).indexOf('msie') < 0) ? "mozilla" : "msie";
+var str = '';
+str += '&Lang='+document.preferences.language.value;
+str += '&Open='+document.preferences.open_in.value;
+str += '&Length='+document.preferences.tablength.value;
+str += '&Proj='+document.preferences.project.value;
+str += '&Skin='+browsertype+'/'+document.preferences.skin.value;
+str += tabs;
+top.frames["tabs"].location.href='tabs.cgi?TabAct=P'+str;
+	};
+}
+
+function showLoad() {document.getElementById("loading").style.display = "block";}
+
+function objectChanged() {document.getElementById("changed").value = 1;}
+@
+
+
+1.14
+log
+@prototype of tabs hidding implemented
+@
+text
+@d1 1
+a1 1
+// $Id: prefer.js,v 1.13 2003/10/13 14:43:23 jiri_schmid Exp $
+d7 8
+a14 1
+top.frames["tabs"].location.href="tabs.cgi?TabAct=P&Lang="+document.preferences.language.value+"&Open="+document.preferences.open_in.value+"&Length="+document.preferences.tablength.value+"&Skin="+browsertype+"/"+document.preferences.skin.value+tabs;
+@
+
+
+1.13
+log
+@description tab defined under two files, bug fixies
+@
+text
+@d1 1
+a1 1
+// $Id: prefer.js,v 1.86 2003/10/09 13:53:24 jiri_schmid Exp $
+d7 1
+a7 1
+top.frames["tabs"].location.href="tabs.cgi?TabAct=P&Lang="+document.preferences.language.value+"&Open="+document.preferences.open_in.value+"&Tabs="+tabs+"&Length="+document.preferences.tablength.value+"&Skin="+browsertype+"/"+document.preferences.skin.value;
+@
+
+
+1.12
+log
+@fixies
+@
+text
+@d1 2
+@
+
+
+1.11
+log
+@bug fixies, web browser oriented skins implemented
+@
+text
+@d4 1
+a4 1
+browsertype = (String(navigator.userAgent.toLowerCase()).indexOf('msie') < 0) ? "msie" : "mozilla";
+@
+
+
+1.10
+log
+@tabed rights on graph3d and report
+@
+text
+@d4 2
+a5 2
+	
+top.frames["tabs"].location.href="tabs.cgi?TabAct=P&Lang="+document.preferences.language.value+"&Open="+document.preferences.open_in.value+"&Tabs="+tabs+"&Length="+document.preferences.tablength.value+"&Skin="+document.preferences.skin.value;
+@
+
+
+1.9
+log
+@control dialog when changing tabs implemnted
+@
+text
+@d4 2
+a5 1
+		top.frames["tabs"].location.href="tabs.cgi?TabAct=P&Lang="+document.preferences.language.value+"&Open="+document.preferences.open_in.value+"&Tabs="+tabs+"&Length="+document.preferences.tablength.value;
+@
+
+
+1.8
+log
+@forcearray fixies
+@
+text
+@a10 6
+
+function checkObjectChange() {
+if (document.getElementById("changed").value == 1) {
+	if (confirm(msg)) {document.getElementsByName("Action")[0].click();}
+}
+}
+@
+
+
+1.7
+log
+@code-improvment bug removed
+@
+text
+@d4 2
+a5 1
+		top.frames["tabs"].location.href="tabs.cgi?TabAct=P&Lang="+document.preferences.language.value+"&Open="+document.preferences.open_in.value+"&Tabs="+tabs+"&Length="+document.preferences.tablength.value;}
+d7 1
+d9 8
+@
+
+
+1.6
+log
+@report huge improvment
+@
+text
+@d1 4
+a4 4
+function dataSaved(){ 
+if (saved){
+top.frames["tabs"].location.href="tabs.cgi?TabAct=P&Lang="+document.preferences.language.value+"&Open="+document.preferences.open_in.value+"&Tabs="+tabs+"&Length="+document.preferences.tablength.value;
+alert(saved);}
+d6 1
+@
+
+
+1.5
+log
+@loading user pref from cache, tabs length implemented
+@
+text
+@d3 1
+a3 1
+top.frames["tabs"].location.href="tabs.cgi?TabAct=P&Lang="+document.preferences.language.value+"&Open="+document.preferences.open_in.value+"&Tabs="+tabs+"&Length="+document.preferences.Length.value;
+a5 1
+
+@
+
+
+1.4
+log
+@opening result bug after saving preferences finally find and fixed
+@
+text
+@d3 2
+a4 3
+	top.frames["tabs"].location.href="tabs.cgi?TabAct=P&Lang="+document.preferences.language.value+"&Open="+document.preferences.open_in.value+"&Tabs="+tabs;
+	alert(saved);
+}
+@
+
+
+1.3
+log
+@huge code improvment on client side when substituting from/to ID, minor language dependeces fixies
+@
+text
+@d3 1
+a3 1
+	top.frames["tabs"].location.href="tabs.cgi?TabAct=P&Lang="+document.preferences.language.value+"&Tabs="+tabs;
+@
+
+
+1.2
+log
+@tabs for results implemented
+@
+text
+@d3 1
+a3 1
+	top.frames["tabs"].location.href="tabs.cgi?TabAct=P&Lang="+document.preferences.language.value;
+@
+
+
+1.1
+log
+@language change affects TABS immediatly
+@
+text
+@d1 4
+a4 6
+function re_init_lang(){
+var hlp = "tabs.cgi?Lang="+document.preferences.language.value+"&Cook=";
+hlp += (document.preferences.cookie.checked) ? "on" : "off";
+hlp += "&Open="+document.preferences.open_in.value+"&TabAct=P";
+top.frames["tabs"].location.href=hlp;
+//top.location.href="index.cgi?TabAct=R
+d6 2
+@
+

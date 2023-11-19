@@ -1,0 +1,663 @@
+head	1.13;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.13
+date	2004.06.08.15.12.37;	author numberone;	state Exp;
+branches;
+next	1.12;
+
+1.12
+date	2004.05.11.18.08.47;	author numberone;	state Exp;
+branches;
+next	1.11;
+
+1.11
+date	2004.05.10.13.15.45;	author numberone;	state Exp;
+branches;
+next	1.10;
+
+1.10
+date	2003.10.29.12.25.27;	author numberone;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	2003.09.15.08.08.08;	author numberone;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	2003.09.12.09.12.42;	author numberone;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	2003.07.10.07.45.13;	author numberone;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	2003.07.08.17.55.33;	author numberone;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	2003.07.07.11.06.25;	author numberone;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2003.06.03.13.16.14;	author numberone;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2003.03.12.23.35.13;	author numberone;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2003.02.17.23.38.14;	author numberone;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2003.02.05.17.20.27;	author numberone;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.13
+log
+@
+Prepare API
+
+every bee must call ->prepare() before ->put()/->fetch()
+
+or they can call ->prepare_sql("SELECT/INSERT ...")
+
+->put() is identical to new ->execute()
+@
+text
+@# $Id: input.pm,v 1.12 2004/05/11 18:08:47 numberone Exp $
+
+package input;
+
+use inout;
+
+use lib '.';
+use common;
+
+use lib '../lib';
+use Net;
+
+use Data::Dumper;
+use strict;
+
+
+sub new {
+	my $pkg    = shift;
+	die "$pkg unsupported now\n";
+}
+
+sub listen {
+	input::stream::bee::listen();
+}
+
+sub init {
+	my ($type,$input) = @@_;
+
+#	foreach(@@$input) {
+#		if(ref eq 'input::stream::select') { $_->init() }
+#	}
+}
+
+sub close {
+	my ($type,$input) = @@_;
+	for(my $i=0;$i<@@$type;$i++) {
+		undef $input->[$i]; # close handle, disconnect dbi, ..
+	}
+}
+
+
+# ==============================================================
+
+# type input::script::source
+# (script - what script assumes vs. script::source - what is connected)
+
+# package input::signal;
+# package input::scalar;
+# package input::array;
+# package input::stream::file;
+# package input::stream::select;
+# package input::stream::bee;
+# package input::table::file;     # same as output::table::file
+# package input::table::dbi;      # same as output::table::dbi
+# package input::dbi;             # same as output::dbi
+
+
+# ==============================================================
+
+package input::scalar;
+
+use inout;
+our @@ISA = qw(inout);
+
+sub new {
+	my($pkg,$url,$arg) = @@_;
+	return $arg->{content};
+}
+
+
+# ==============================================================
+
+package input::array;
+
+use inout;
+our @@ISA = qw(inout);
+
+sub new {
+	my($pkg,$url,$arg) = @@_;
+	die unless ref $arg->{element} ne 'ARRAY';
+	return [$arg->{element},''];
+}
+
+
+# ==============================================================
+
+# fix: merge common input/output classes to inout:: using url2 mapping
+
+package input::dbi;
+
+use inout;
+our @@ISA = qw(inout);
+
+use Data::Dumper;
+use inout;
+
+sub new { 
+	my($pkg,$url,$arg) = @@_;
+	my $db = common::database($url,$arg->{auth});
+	return [[$db,@@{$arg->{arg}}],''];
+}
+
+    
+# ==============================================================
+
+package input::stream::bee;
+
+use inout;
+our @@ISA = qw(inout);
+
+use Data::Dumper;
+use Data;
+
+my @@listen = (); # to what listen
+my @@data_p = (); # where to store 
+
+sub new {
+	my($pkg,$url,$arg,$data_p) = @@_;
+
+	my $server; 
+	my $return = {};
+
+	# find available port/socket-file to listen
+	# fix: carefuly: we can have multiple ip's, be after masquarade..
+
+	# todo: bf, zip
+	$return->{zip}  = $arg->{zip};
+	$return->{bf}   = $arg->{bf};
+
+	if($arg->{unix}) {
+
+		# path should be unique for every running dad in system!
+		$server = Data->listen("/tmp/.bee-$$",0);
+		print "listen on port ",$server->port,"\n";
+
+		$return->{host} = $server->unix;
+		$return->{port} = 0;
+
+	} else {
+
+		$server = Data->listen(undef,0);
+		print "listen on port ",$server->port,"\n";
+
+		$return->{host} = $arg->{host};
+		$return->{port} = $server->port;
+	}
+
+	push @@listen,$server; # add to listen objects
+	push @@data_p,$data_p; # save pointer to input[num]
+
+#	print Dumper($return);
+	return [undef,$return];
+}
+
+
+sub listen {
+	for(my $i=0;$i<=@@listen;$i++) {
+		next unless($listen[$i]);
+
+		next unless $listen[$i]->accept();
+
+		my $input = bless { 
+				data  => $listen[$i],
+				stats => 0,
+			}, __PACKAGE__;
+
+		${$data_p[$i]} = $input;
+
+		$listen[$i] = undef;
+		$data_p[$i] = undef;
+	}
+
+	@@listen = grep defined $_, @@listen;
+	@@data_p = grep defined $_, @@data_p;
+}
+
+sub fetch { shift->{data}->recv(@@_); }
+
+# ==============================================================
+
+package input::stream::file;
+
+#use inout::file;
+our @@ISA = qw(inout::file);
+
+sub prepare { shift->open(0) }
+
+# ==============================================================
+
+package input::stream::select;
+
+#use inout::table;
+our @@ISA = qw(inout::table);
+
+sub prepare { shift->open(0) }
+
+1;
+
+@
+
+
+1.12
+log
+@
+Support for UNIX sockets in Data library. Runs 2 times faster now :-)
+
+inet: 1M @@ 95s
+
+unix: 1M @@ 47s
+
+Creates pipe in "/tmp/.bee-$$-".(i++), removes them after connection
+success (pipe still work)
+@
+text
+@d1 1
+a1 1
+# $Id: input.pm,v 1.11 2004/05/10 13:15:45 numberone Exp $
+a57 1
+
+d62 3
+d75 3
+d87 1
+a87 1
+# fix: merge common input/output classes to inout:: usign url2 mapping
+d91 3
+d108 3
+d133 1
+a133 1
+		$server = Data->listen("/tmp/bee",0);
+a178 1
+
+d183 2
+a184 15
+use Data::Dumper;
+use inout;
+
+sub new {
+	my($pkg,$url,$arg) = @@_;
+
+	my $table = new inout::file($url,$arg);
+	$table->open(0);
+
+	# rebless: allow only fetch
+	return bless $table,$pkg;
+}
+
+sub fetch { inout::file::fetch(@@_); }
+
+d186 1
+d192 2
+a193 12
+use DBI;
+use Data::Dumper;
+
+sub new {
+	my($pkg,$url,$arg) = @@_;
+
+	my $dbi = new inout::table($url,$arg);
+	$dbi->open(0);
+	return bless $dbi,$pkg;
+}
+
+#sub fetch { shift->{sth}->fetchrow_array }
+d195 1
+a195 1
+sub fetch { inout::table::fetch(@@_) }
+@
+
+
+1.11
+log
+@
+path-17x100k benchmark
+
+some dad cleanups
+@
+text
+@d1 1
+a1 1
+# $Id: input.pm,v 1.10 2003/10/29 12:25:27 numberone Exp $
+d109 2
+a110 2
+	my $server = undef; # find available port/socket-file to listen
+	my $return = undef;
+d112 1
+d115 3
+a117 2
+	if(($arg->{ihost} eq $arg->{ohost}) and 
+	   ($arg->{iport} == $arg->{oport})) {
+d119 1
+a119 1
+		# fix: use UNIX sockets!
+d121 2
+a122 1
+		$server = Data->listen(0);
+d124 3
+a126 1
+		$return = { host=>$arg->{ihost}, port=>$server->port }; # fix: 'host:port' ?
+d129 2
+a130 1
+		$server = Data->listen(0);
+d133 1
+a133 1
+		$return->{host} = $arg->{ihost};
+a134 4
+
+		# todo: bf, zip
+		$return->{zip}  = $arg->{zip};
+		$return->{bf}   = $arg->{bf};
+@
+
+
+1.10
+log
+@instead of creating pipes between dad and bee, we now
+use tcp/ip connection.
+
+it's because of windows, where it didn't work (maybe perl fault, i dunno)
+@
+text
+@d1 1
+a1 1
+# $Id: input.pm,v 1.9 2003/09/15 08:08:08 numberone Exp $
+a105 2
+use Data::Dumper;
+
+@
+
+
+1.9
+log
+@t:a::c -- select a,NULL,c from t;
+bench -- mysql,
+@
+text
+@d1 1
+a1 1
+# $Id: input.pm,v 1.8 2003/09/12 09:12:42 numberone Exp $
+a102 2
+my $otec_port = 2335; # fix: from config or so
+
+a113 5
+	# TODO: correct libNet for returning error instead of exit()
+	# TODO: read port ranges from config
+#	my $port = $otec_port;
+#	$port += $1 if($0 =~ /(\d+)\.pl$/);
+
+d121 3
+a123 7
+#		my $tmp = `mktemp -u`; chomp($tmp); # FIX: move to lib!!!!
+#		$server = Net->server('UNIX','/tmp/pokus') or die;
+#		$return = { unix=>$tmp };
+
+		my $port = $otec_port; # todo: from config range
+        until($server = Data->listen(++$port)) { }
+		$return = { host=>$arg->{ihost}, port=>$port }; # fix: 'host:port' ?
+d126 3
+a128 2
+		my $port = $otec_port; # todo: from config range
+        until($server = Data->listen(++$port)) { }
+d130 1
+a130 1
+		$return->{port} = $port;
+@
+
+
+1.8
+log
+@user@@pass url
+@
+text
+@d1 1
+a1 1
+# $Id: input.pm,v 1.7 2003/07/10 07:45:13 numberone Exp $
+d133 1
+a133 2
+#        until($server = Data->listen(++$port)) { }
+        Data->listen(++$port);
+@
+
+
+1.7
+log
+@demo example -- apache
+@
+text
+@d1 1
+a1 1
+# $Id: input.pm,v 1.6 2003/07/08 17:55:33 numberone Exp $
+d133 2
+a134 1
+        until($server = Data->listen(++$port)) { }
+@
+
+
+1.6
+log
+@send/recv, in C, optimized, LEN_ code, small integers
+@
+text
+@d1 1
+a1 1
+# $Id: input.pm,v 1.5 2003/07/07 11:06:25 numberone Exp $
+d118 2
+a119 2
+	my $port = $otec_port;
+	$port += $1 if($0 =~ /(\d+)\.pl$/);
+d150 1
+a150 1
+	print Dumper($return);
+d159 1
+a159 2
+		my $data = $listen[$i]->accept();
+		next unless $data;
+d162 1
+a162 1
+				data  => $data, 
+@
+
+
+1.5
+log
+@Data module added (empty)
+@
+text
+@d1 1
+a1 1
+# $Id: input.pm,v 1.4 2003/06/03 13:16:14 numberone Exp $
+d101 1
+a101 1
+use perlData;
+d133 1
+a133 1
+        until($server = Net->server("INET",++$port)) { }
+d138 1
+a138 1
+        until($server = Net->server("INET",++$port)) { }
+d159 2
+a160 2
+		my $net = $listen[$i]->accept(0);
+		next unless($net);
+d163 1
+a163 1
+				net   => $net, 
+d177 1
+a177 32
+# should be rewritten to optimized C
+sub fetch {
+	my $input = shift;
+
+	my $peek;
+	until(($peek = $input->{net}->peek())) { }
+	return () if($peek < 0);
+
+	my $line = $input->{net}->read();
+
+	my @@array = ();
+	my $offset = 0;
+	while($offset < length($line)) {
+		my $length = unpack("C",substr($line,$offset++,1));
+		if($length < 192) {
+			# ok
+		} elsif($length == 192) {
+			push @@array,0;
+			next;
+		} elsif($length == 254) {
+			push @@array,undef;
+			next;
+		} elsif($length == 255) {
+			$length = unpack("N",substr($line,$offset,4));
+			$offset += 4;
+		}
+		push @@array, substr($line,$offset,$length);
+		$offset += $length;
+	}
+
+	return @@array;
+}
+@
+
+
+1.4
+log
+@0.9.1 -- version merge
+@
+text
+@d1 1
+a1 1
+# $Id: input.pm,v 1.3 2003/03/12 23:35:13 numberone Exp $
+d101 1
+d133 1
+a133 1
+		until($server = Net->server("INET",++$port)) { }
+d138 1
+a138 1
+		until($server = Net->server("INET",++$port)) { }
+@
+
+
+1.3
+log
+@bee/ directory - where to store temporary script files
+dad now use processes (fork and exec) to run bee instead
+of forking and `eval`-uating.
+perl -e "use DBI; fork;" sigfaults on Microsoft Windows
+so this fixes this problem
+@
+text
+@d1 1
+a1 1
+# $Id: input.pm,v 1.2 2003/02/17 23:38:14 numberone Exp $
+d115 5
+d192 4
+a195 1
+		} elsif($length == 255) {
+d198 1
+a198 1
+		} elsif($length == 254) {
+@
+
+
+1.2
+log
+@demo certificate + some keys
+certs/newkey.sh - script for automated key generation
+@
+text
+@d1 1
+a1 1
+# $Id: input.pm,v 1.1 2003/02/05 17:20:27 numberone Exp $
+d107 2
+d144 1
+d228 1
+a235 21
+
+#	my $db = common::database($url,$arg->{auth});
+
+#	my $cmd;
+#	if($arg->{view} and not $url->{table}) {
+#		$cmd = $arg->{view};
+#	} elsif($url->{table} and not $arg->{view}) {
+#		die unless @@{$url->{fields}};
+#		$cmd = "SELECT ".(join(",",@@{$url->{fields}})).
+#				" FROM ".$url->{table};
+#	} else {
+#		die "view xor table must be specified in ".__PACKAGE__;
+#	}
+
+#	my $sth = $db->prepare($cmd);
+#	$sth->execute();
+
+#	return bless {
+#			dbi => $db,
+#			sth => $sth,
+#	}, __PACKAGE__;
+@
+
+
+1.1
+log
+@otec deleted
+@
+text
+@d1 1
+a1 1
+# $Id: input.pm,v 1.5 2003/02/05 15:39:46 numberone Exp $
+d102 1
+a102 1
+my $otec_port = 2330; # fix: $main::port
+d115 2
+a116 1
+	if($arg->{ihost} eq $arg->{ohost} and $arg->{iport} == $arg->{oport}) {
+@
+

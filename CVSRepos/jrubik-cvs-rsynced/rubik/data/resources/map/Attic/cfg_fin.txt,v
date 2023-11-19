@@ -1,0 +1,51 @@
+head	1.2;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2008.05.17.15.43.54;	author fsaz;	state dead;
+branches;
+next	1.1;
+
+1.1
+date	2005.11.28.14.02.37;	author fsaz;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@borrando viejos
+@
+text
+@		<!-- Ultima fase de configuracion -->
+		</NamedLayer>
+	</ExtendedLayerDescriptor>
+	<featureCollection>
+		<boundedBy>
+			<Box>0,0 1515100,1032650</Box>
+			<!--Box>-389564,3826792 1127056,4859444</Box-->		
+			<!-- Box>-118.642,43.839 -85.2156,3.43236</Box -->
+		</boundedBy>
+		<featureMember>
+		
+		<!-- Fin Ultima fase de configuracion -->	
+		<!--  Se inicia la carga de datos -->	
+
+@
+
+
+1.1
+log
+@*** empty log message ***
+@
+text
+@@
+

@@ -1,0 +1,224 @@
+head	1.3;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.3
+date	2007.07.12.10.35.23;	author pyadav;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2007.07.11.09.09.50;	author pyadav;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2006.01.13.12.27.35;	author igorludi;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.3
+log
+@Modified AuthenticationDialog to remove exception
+@
+text
+@package rex.graphics;
+
+import javax.swing.JDialog;
+import java.awt.GridLayout;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+import java.awt.Color;
+import javax.swing.JButton;
+import javax.swing.JPasswordField;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import rex.utils.LanguageChangedListener;
+import rex.utils.S;
+import javax.swing.JFrame;
+import java.awt.Dimension;
+import java.awt.Toolkit;
+import javax.swing.JPanel;
+import java.awt.BorderLayout;
+import java.awt.Font;
+import rex.utils.*;
+
+/**
+ * Copyright (C) 2006 CINCOM SYSTEMS, INC.
+ * All Rights Reserved
+ * Copyright (C) 2006 Igor Mekterovic
+ * All Rights Reserved
+ */ 
+ /*  Added LanguageChangedListener to implement I18n  */
+ 
+public class AuthenticationDialog 
+        extends JDialog 
+        implements LanguageChangedListener{
+    
+   JTextField username;
+   JPasswordField password;
+   /* declared variabled to implement I18n */
+   JLabel lblUserName;
+   JLabel lblPassword;
+   JButton jb;
+   /* end of modification for I18n */
+   
+   public AuthenticationDialog(JDialog owner) {
+       super((JFrame)null, I18n.getString("frame.authentication"), true);
+
+//      S.out("starting dialog...");
+      JPanel jp = new JPanel(new GridLayout (2, 2));
+    /**
+     * Copyright (C) 2006 CINCOM SYSTEMS, INC.
+     * All Rights Reserved
+     * Copyright (C) 2006 Igor Mekterovic
+     * All Rights Reserved
+     */
+      lblUserName=new JLabel(I18n.getString("label.userName"));
+      lblPassword=new JLabel(I18n.getString("label.password"));
+      jb= new JButton(I18n.getString("btn.ok"));
+      jp.add (lblUserName);
+       /* end of modification for I18n */
+      username = new JTextField();
+      username.setFont(new Font("Monospaced", Font.BOLD, 16)); // username.getFont().deriveFont(16.f)
+      //username.setBackground (Color.lightGray);
+      jp.add (username);
+   
+      jp.add (lblPassword);
+      password = new JPasswordField();
+      //password.setBackground (Color.lightGray);
+      password.setFont(new Font("Monospaced", Font.BOLD, 16));
+      jp.add (password);
+      getContentPane().setLayout (new BorderLayout());
+      getContentPane().add (jp, BorderLayout.CENTER);
+
+      
+      jb.addActionListener (new ActionListener() {
+         public void actionPerformed (ActionEvent e) {
+            S.out("disposing...");
+            dispose();
+         }
+      });
+      getContentPane().add (jb, BorderLayout.SOUTH);
+      Dimension sd = Toolkit.getDefaultToolkit().getScreenSize();
+      setLocation(sd.width / 2 - 250 / 2, sd.height / 2 - 120 / 2);
+      setResizable(false);
+    /**
+     * Copyright (C) 2006 CINCOM SYSTEMS, INC.
+     * All Rights Reserved
+     * Copyright (C) 2006 Igor Mekterovic
+     * All Rights Reserved
+     */
+      /*adding this class to the list of classes to implement I18n */
+      I18n.addOnLanguageChangedListener(this);
+      applyI18n();
+     /* end of modification for I18n */
+      setSize(250, 120);
+//      pack();
+      setVisible(true);
+   }
+
+   public String getPassword(){
+      return new String(password.getPassword());
+   }
+   public char[] getPasswordCA(){
+      return password.getPassword();
+   }
+
+   public String getUsername(){
+      return username.getText();
+   }
+
+   public static void main(String[] args){
+     new AuthenticationDialog(null);
+   }
+   
+/**
+ * Copyright (C) 2006 CINCOM SYSTEMS, INC.
+ * All Rights Reserved
+ * Copyright (C) 2006 Igor Mekterovic
+ * All Rights Reserved
+ */
+ /**
+  * Helper method that is executed when the language is changed
+  */
+
+    public void languageChanged(LanguageChangedEvent evt) {
+
+        this.applyI18n();
+    }
+ /**
+  *  Helper method to implement locatization when language is changed
+  */
+    public void applyI18n(){
+      lblUserName.setText(I18n.getString("label.userName"));
+      lblPassword.setText(I18n.getString("label.password"));
+      jb.setText(I18n.getString("btn.ok"));
+    }
+   /* end of modification for I18n */
+}
+@
+
+
+1.2
+log
+@Modified file's for Rex 0.7.
+@
+text
+@d54 1
+a54 1
+      lblUserName=new JLabel(I18n.getString("label.password"));
+d131 1
+a131 1
+      lblUserName.setText(I18n.getString("label.password"));
+@
+
+
+1.1
+log
+@*** empty log message ***
+@
+text
+@d12 1
+d19 2
+d22 12
+a33 1
+public class AuthenticationDialog extends JDialog {
+d36 6
+d43 2
+a44 1
+      super((JFrame)null, "Enter username and password", true);
+d47 11
+a57 1
+      jp.add (new JLabel ("Username:"));
+d59 2
+a60 1
+      username.setBackground (Color.lightGray);
+d62 2
+a63 1
+      jp.add (new JLabel("Password:"));
+d65 2
+a66 1
+      password.setBackground (Color.lightGray);
+d70 2
+a71 1
+      JButton jb = new JButton ("OK");
+d82 10
+a97 1
+//      S.out("returning password = " + new String(password.getPassword()));
+a100 1
+//      S.out("returning password = " + new String(password.getPassword()));
+a104 1
+//      S.out("returning username =" + username.getText() );
+d108 15
+d124 11
+@
+

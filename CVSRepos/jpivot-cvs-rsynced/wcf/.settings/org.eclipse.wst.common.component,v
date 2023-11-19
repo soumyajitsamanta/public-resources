@@ -1,0 +1,65 @@
+head	1.2;
+access;
+symbols
+	jpivot_1_8_0:1.2
+	focus_1_6_0:1.2.0.2
+	wcf_1_7_0:1.2
+	wcf_1_6_0:1.2
+	sourceforge_sync:1.2;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2006.11.09.13.24.21;	author avix;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2006.09.29.14.12.06;	author avix;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@synchronized with tonbeller cvs
+@
+text
+@<?xml version="1.0" encoding="UTF-8"?>
+<project-modules id="moduleCoreId">
+    <wb-module deploy-name="wcf">
+        <module-type module-type-id="jst.web">
+            <version>2.3</version>
+            <property name="context-root" value="wcf"/>
+            <property name="java-output-path" value="/build/classes/"/>
+        </module-type>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/java"/>
+        <wb-resource deploy-path="/" source-path="/src/webapp"/>
+        <wb-resource deploy-path="/" source-path="/build/web"/>
+    </wb-module>
+</project-modules>
+
+@
+
+
+1.1
+log
+@Update Eclipse settings
+@
+text
+@d2 1
+a2 1
+<project-modules id="moduleCoreId" project-version="1.5.0">
+d6 2
+a11 3
+<wb-resource deploy-path="/WEB-INF/classes" source-path="/src/test"/>
+<property name="context-root" value="wcf"/>
+<property name="java-output-path" value="/build/classes/"/>
+d14 1
+@
+

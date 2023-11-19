@@ -1,0 +1,73 @@
+head	1.1;
+access;
+symbols
+	jpivot_1_8_0:1.1
+	focus_1_6_0:1.1.0.6
+	jpivot_1_7_0:1.1
+	jpivot_1_6_0:1.1
+	jpivot_1_5_0:1.1.0.4
+	Root_jpivot_1_5_0:1.1
+	mondrian_xmla_2005_08_25:1.1.0.2
+	sourceforge_sync:1.1;
+locks; strict;
+comment	@# @;
+expand	@k@;
+
+
+1.1
+date	2005.07.05.14.19.47;	author avix;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@initial version
+@
+text
+@<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!--
+Copyright goes here
+-->
+</head>
+<body bgcolor="white">
+
+Defines a simple OLAP Result and Metadata.
+
+<h2>Overview</h2>
+
+The OlapModel provides access to the {@@link com.tonbeller.jpivot.olap.model.Result}
+of a query. It does not specify the query itself (e.g. what data will be displayed).
+<p>
+
+The interfaces in this package define a minimal OLAP result. The
+definitions are independent of an implementation like
+<a href="http://mondrian.sourceforge.net">Mondrian</a> or
+JOLAP. It only defines what is necessary to display the result to the user.
+
+<h2>OLAP Result</h2>
+
+<img src="doc-files/result.gif">
+
+<p>
+
+To support "ragged hierarchies" or "parent-child hierarchies" no 
+assuptions are made regarding the number, ordering or hierarchy of Levels 
+instances.
+
+See 
+Microsofts definition of <a href="http://www.ddart.net/mssql/sql2000/html/olapdmad/agdimensions_5ab7.htm">Parent-Child Hierarchy</a>
+
+<h2>Expressions</h2>
+
+<img src="doc-files/expressions.gif">
+
+</body>
+</html>
+@

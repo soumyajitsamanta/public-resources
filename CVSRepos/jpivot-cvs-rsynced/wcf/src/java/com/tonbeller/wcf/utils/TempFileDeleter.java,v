@@ -1,0 +1,44 @@
+head	1.1;
+access;
+symbols
+	jpivot_1_8_0:1.1
+	focus_1_6_0:1.1.0.2
+	wcf_1_7_0:1.1
+	wcf_1_6_0:1.1
+	sourceforge_sync:1.1;
+locks; strict;
+comment	@# @;
+
+
+1.1
+date	2006.11.09.13.24.05;	author avix;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@synchronized with tonbeller cvs
+@
+text
+@/*
+ * Copyright (c) 1971-2003 TONBELLER AG, Bensheim.
+ * All rights reserved.
+ */
+package com.tonbeller.wcf.utils;
+
+import java.io.File;
+
+/**
+ * deletes fiels on system exit, session timeout etc.
+ * @@author av
+ * @@since Jan 4, 2006
+ */
+public interface TempFileDeleter {
+  void register(File f);
+}
+@

@@ -1,0 +1,66 @@
+head	1.2;
+access;
+symbols;
+locks; strict;
+comment	@ * @;
+
+
+1.2
+date	2003.08.11.06.34.19;	author numberone;	state dead;
+branches;
+next	1.1;
+
+1.1
+date	2003.02.05.15.46.36;	author numberone;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@removing old dir Net-1.0
+@
+text
+@/* sys.h - libnet's private header file
+ * Copyright (c) 2003 Martin Sarfy <xsarfy@@fi.muni.cz> */
+
+#ifndef HEADER_SYS_H_INCLUDED
+#define HEADER_SYS_H_INCLUDED
+
+/* create_net - defined in net.c */
+Net create_net(int sys_type,int sock,char* peek,char* auth);
+/* net_block - maybe we could move it to net.h */
+Bool net_block(Net net,Bool block);
+
+
+/*  Net::INET - bsd socket */
+Bool inet_init();
+Net  inet_accept(Net net);
+int  inet_write(Net net,void *buffer,int len);
+int  inet_read(Net net,void *buffer,int len);
+void inet_block(Net net,Bool block);
+void inet_close(Net net);
+
+/*  Net::UNIX - local communication */
+#define unix_read  inet_read
+#define unix_write inet_write
+#define unix_block inet_block
+#define unix_close inet_close
+
+
+#endif
+
+@
+
+
+1.1
+log
+@libnet-1.0, README
+@
+text
+@@
+

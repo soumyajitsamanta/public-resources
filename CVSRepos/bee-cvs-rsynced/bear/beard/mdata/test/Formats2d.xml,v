@@ -1,0 +1,48 @@
+head	1.2;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2003.09.29.05.43.19;	author michald;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2003.08.19.13.13.39;	author jiri_schmid;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@new version of the metadata - multiple attribute PK implementation; improvement of the PrepareSQL
+@
+text
+@<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<project>
+  <folder id="_FORMAT2D_">
+    <name><cz>Formáty 2D grafu</cz><en>Formats of 2D graphs</en></name>
+    <description><cz>Formáty mřížky zobrazené jako graf</cz><en>Formats of grid viewed as graph</en></description>
+    <gui-presentation line="10" />
+  </folder>
+</project>
+@
+
+
+1.1
+log
+@added format2d
+@
+text
+@d4 1
+a4 1
+    <name><cz>Formáty mřížky - grafy</cz><en>Formats of grid - graphs</en></name>
+@
+

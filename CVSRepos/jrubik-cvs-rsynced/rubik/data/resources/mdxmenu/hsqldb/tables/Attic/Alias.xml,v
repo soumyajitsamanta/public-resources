@@ -1,0 +1,51 @@
+head	1.2;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2008.05.17.15.43.54;	author fsaz;	state dead;
+branches;
+next	1.1;
+
+1.1
+date	2005.11.28.14.02.37;	author fsaz;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@borrando viejos
+@
+text
+@<?xml version="1.0" encoding="ISO-8859-1"?>
+<Alias>
+  Table
+  <Name>mnu5281.xml</Name>
+  <Name>mnu56978.xml</Name>
+  <Name>mnu61558.xml</Name>
+  <Name>mnu30180.xml</Name>
+  <Name>mnu64235.xml</Name>
+  <Name>mnu8891.xml</Name>
+  <Name>mnu52634.xml</Name>
+  <Name>Arrows.xml</Name>
+  <Name>Colors.xml</Name>
+</Alias>
+
+@
+
+
+1.1
+log
+@*** empty log message ***
+@
+text
+@@
+

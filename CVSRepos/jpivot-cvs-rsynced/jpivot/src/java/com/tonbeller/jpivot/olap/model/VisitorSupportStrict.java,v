@@ -1,0 +1,151 @@
+head	1.2;
+access;
+symbols
+	jpivot_1_8_0:1.2
+	focus_1_6_0:1.2.0.4
+	jpivot_1_7_0:1.2
+	jpivot_1_6_0:1.2
+	jpivot_1_5_0:1.2.0.2
+	Root_jpivot_1_5_0:1.2
+	mondrian_xmla_2005_08_25:1.1.0.2
+	sourceforge_sync:1.2;
+locks; strict;
+comment	@# @;
+expand	@k@;
+
+
+1.2
+date	2005.12.13.11.56.41;	author avix;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2005.07.05.14.19.47;	author avix;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@Synchronized with Tonbeller CVS:
+  * Supports Mondrian 2.x API
+  * Added BEA / Websphere Support
+  * More tags in wcf tag library
+  * Bugfixes
+@
+text
+@/*
+ * ====================================================================
+ * This software is subject to the terms of the Common Public License
+ * Agreement, available at the following URL:
+ *   http://www.opensource.org/licenses/cpl.html .
+ * Copyright (C) 2003-2004 TONBELLER AG.
+ * All Rights Reserved.
+ * You must accept the terms of that agreement to use this software.
+ * ====================================================================
+ *
+ *
+ */
+package com.tonbeller.jpivot.olap.model;
+
+/**
+ * default implementation of Visitor. Throws an UnsupportedOperationException
+ * for each method.
+ *
+ * @@author av
+ */
+public abstract class VisitorSupportStrict implements Visitor {
+
+  public void visitAxis(Axis v) {
+    throw new UnsupportedOperationException();
+  }
+
+  public void visitCell(Cell v) {
+    throw new UnsupportedOperationException();
+  }
+
+  public void visitDimension(Dimension v) {
+    throw new UnsupportedOperationException();
+  }
+
+  public void visitHierarchy(Hierarchy v) {
+    throw new UnsupportedOperationException();
+  }
+
+  public void visitLevel(Level v) {
+    throw new UnsupportedOperationException();
+  }
+
+  public void visitMember(Member v) {
+    throw new UnsupportedOperationException();
+  }
+
+  public void visitPosition(Position v) {
+    throw new UnsupportedOperationException();
+  }
+
+  public void visitProperty(Property v) {
+    throw new UnsupportedOperationException();
+  }
+
+  public void visitResult(Result v) {
+    throw new UnsupportedOperationException();
+  }
+
+  public void visitMemberPropertyMeta(MemberPropertyMeta v) {
+    throw new UnsupportedOperationException();
+  }
+
+  public void visitBooleanExpr(BooleanExpr v) {
+    throw new UnsupportedOperationException();
+  }
+
+  public void visitIntegerExpr(IntegerExpr v) {
+    throw new UnsupportedOperationException();
+  }
+
+  public void visitDoubleExpr(DoubleExpr v) {
+    throw new UnsupportedOperationException();
+  }
+
+  public void visitStringExpr(StringExpr v) {
+    throw new UnsupportedOperationException();
+  }
+
+  public void visitFunCallExpr(FunCallExpr v) {
+    throw new UnsupportedOperationException();
+  }
+
+  public void visitParameterExpr(ParameterExpr v) {
+    throw new UnsupportedOperationException();
+  }
+
+  public void visitPropertyExpr(PropertyExpr v) {
+    throw new UnsupportedOperationException();
+  }
+
+  public void visitEmptyMember(EmptyMember v) {
+    throw new UnsupportedOperationException();
+  }
+}
+@
+
+
+1.1
+log
+@initial version
+@
+text
+@d11 1
+a11 1
+ * 
+d18 1
+a18 1
+ * 
+d90 4
+@
+

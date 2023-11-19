@@ -1,0 +1,89 @@
+head	1.5;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.5
+date	2003.05.28.08.55.29;	author jiri_schmid;	state dead;
+branches;
+next	1.4;
+
+1.4
+date	2003.05.08.15.35.51;	author jiri_schmid;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2003.05.06.09.21.01;	author jiri_schmid;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2003.03.25.15.37.51;	author jiri_schmid;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2003.03.06.14.43.44;	author jiri_schmid;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.5
+log
+@user pref handling changed, implicit.xml file removed
+@
+text
+@<?xml version='1.0' standalone='yes'?>
+<prefernces>
+  <Beard tablength="10" language="EN" open_in="_one" cookie="off" />
+</prefernces>
+@
+
+
+1.4
+log
+@report huge improvment
+@
+text
+@@
+
+
+1.3
+log
+@loading user pref from cache, tabs length implemented
+@
+text
+@d3 1
+a3 1
+  <Beard length="10" language="EN" open_in="_one" cookie="off" />
+@
+
+
+1.2
+log
+@syntax checker for metrics imrpoved, loading user pref file when file missing fixed/imrpoved
+@
+text
+@d3 1
+a3 1
+  <Beard language="EN" open_in="_one" cookie="off" />
+@
+
+
+1.1
+log
+@implicit.xml the very important file for user who runs the beard for the very first time
+@
+text
+@d3 1
+a3 1
+  <Beard language="EN" open_in="_self" cookie="off" />
+@
+

@@ -1,0 +1,178 @@
+head	1.2;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2006.01.13.12.21.31;	author igorludi;	state dead;
+branches;
+next	1.1;
+
+1.1
+date	2005.10.18.14.04.41;	author igorludi;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@*** empty log message ***
+@
+text
+@package rex.graphics.mdxeditor.mdxbuilder.nodes;
+
+
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
+
+
+/**
+ * Node representing MdxFunction's enum argument (one that can take on only one value from the finite set).
+ * @@author Igor Mekterovic
+ * @@version 0.3
+ */
+public class MBTArgEnumNode extends DefaultMBTArgNode{
+
+   private String value;
+   private String[] enums;
+
+   public MBTArgEnumNode(){
+      super();
+   }
+
+   public MBTArgEnumNode(    String _argName
+                           , String[] _enums
+                            ) {
+      super(false, _argName, false);
+      enums = _enums;
+   }
+   public MBTArgEnumNode(    String _argName
+                           , String[] _enums
+                           , boolean _respawnArg
+                            ) {
+      super(false, _argName,  _respawnArg);
+      enums = _enums;
+   }
+   public MBTArgEnumNode(    boolean _isHeadArg
+                           , String[] _enums
+                           , String _argName
+                            ) {
+      super(_isHeadArg, _argName,  false);
+      enums = _enums;
+   }
+   public MBTArgEnumNode(    boolean _isHeadArg
+                          , String _argName
+                          , String[] _enums
+                          , boolean _respawnArg
+                            ) {
+      super(_isHeadArg, _argName, _respawnArg);
+      enums = _enums;
+   }
+
+   public MBTArgEnumNode(    boolean _isHeadArg
+                          , String _argName
+                          , String[] _enums
+                          , boolean _respawnArg
+                          , boolean _optionalArg
+                            ) {
+      super(_isHeadArg, _argName, _respawnArg, _optionalArg);
+      enums = _enums;
+   }
+
+   /**
+    * Returns a corresponding MDX statement with specified indent.
+    * @@param indent String
+    * @@return String
+    */
+   public  String getMdx(String indent){
+      return (value == null) ? "": indent + value;
+
+   }
+
+
+   public String toString(){
+      if(value == null)
+         return super.toString();
+      if (isOptionalArg()){
+         return "<html><i>" + value + "</i></html>";
+      }
+      return value;
+   }
+
+   /**
+    * Sets accpetable mime types. This node accepts no-one.
+    */
+   void setAcceptableFlavorsArray(){
+   }
+
+
+   /**
+    * Handles drop.
+    * @@param droppedData Object
+    * @@param containerNode DefaultMutableTreeNode
+    * @@param treeModel DefaultTreeModel
+    */
+   public  void handleDrop(  Object droppedData
+                           , DefaultMutableTreeNode containerNode
+                           , DefaultTreeModel treeModel){
+
+   }
+
+
+   /**
+    * Returns pop-up actions available for this node.
+    * @@return String[]
+    */
+   public String[] getPopUpActionList(){
+//      S.out("enums.length = " + enums.length);
+
+      String[] al = new String[1 + enums.length];
+//      S.out("al.length = " + al.length);
+      al[0] = MBTPopUpActions.CLEAR_VALUE;
+      for (int i=1; i< al.length; i++){
+         al[i] = new String(enums[i - 1]);
+      }
+      return al;
+   }
+
+   /**
+    * Handles selected pop-up action.
+    * @@param action String
+    * @@param actionNode DefaultMutableTreeNode
+    * @@param treeModel DefaultTreeModel
+    */
+   public void handlePopUpAction(  String action
+                                 , DefaultMutableTreeNode actionNode
+                                 , DefaultTreeModel treeModel){
+
+      if (action.equals(MBTPopUpActions.CLEAR_VALUE)){
+         value = null;
+      }else{
+         for (int i=0; i< enums.length; i++){
+            if (action.equals(enums[i])){
+               value = enums[i];
+//               uncomment this if there ever appears a respawning enum node?
+//               maybeRespawnOnDrop(actionNode, treeModel);
+               return;
+            }
+         }
+      }
+   }
+
+}
+@
+
+
+1.1
+log
+@*** empty log message ***
+@
+text
+@@
+

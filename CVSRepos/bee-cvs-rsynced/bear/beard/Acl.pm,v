@@ -1,0 +1,663 @@
+head	1.11;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.11
+date	2004.03.02.13.00.58;	author jiri_schmid;	state Exp;
+branches;
+next	1.10;
+
+1.10
+date	2004.02.19.13.26.06;	author jiri_schmid;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	2004.02.16.14.55.22;	author jiri_schmid;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	2004.02.13.17.09.40;	author jiri_schmid;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	2003.08.22.16.01.03;	author jiri_schmid;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	2003.08.21.12.02.13;	author jiri_schmid;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	2003.08.20.14.23.45;	author jiri_schmid;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2003.08.19.15.09.07;	author jiri_schmid;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2003.08.18.13.17.13;	author jiri_schmid;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2003.08.18.05.50.55;	author michald;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2003.08.15.10.59.39;	author michald;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.11
+log
+@changed id handling 4 access tree
+@
+text
+@#-----------------------------------------------------
+#  Beard Urers and ACL package
+#-----------------------------------------------------
+# $Id: Acl.pm,v 1.10 2004/02/19 13:26:06 jiri_schmid Exp $
+
+package Acl;
+
+use strict;
+
+use utf8;
+use XML::Simple;
+binmode(STDOUT, ':utf8');
+binmode(STDIN, ':utf8');
+#----------------------------------------------------------
+# Data structures:
+
+our $UsRL = {};
+our $ACL = {};
+
+#-----------------------------------------------------
+sub GetLocalizedGroupsList {	#returns keys and values of groups as id : name
+my $lang = lc (shift);
+my $rtrn;
+foreach (@@_) {
+	$rtrn->{$_} = exists $ACL->{groups}{$_} ? LocalizedACLObject($ACL->{groups}{$_}{name},"> id > $_?",$lang,'en') : "> id > $_";
+}
+return $rtrn
+}
+
+#-----------------------------------------------------
+sub GetLocalizedUsersList {	#returns keys and values of user as id : name
+my $rtrn;
+foreach (@@_) {
+	$rtrn->{$_} = exists $ACL->{users}{$_} ? $ACL->{users}{$_}{name} : "> id > $_";
+}
+return $rtrn
+}
+
+#-----------------------------------------------------
+sub GetGroupDetail { return $ACL->{groups}{$_[0]} }
+
+#-----------------------------------------------------
+sub GetUserDetail { return $ACL->{users}{$_[0]} }
+
+#-----------------------------------------------------
+sub LoadUserGroups {
+my $MDD = shift; #metadatadir
+foreach (&Bearlib::GetFiles($MDD."Access/",$Const::MDataExt)) {
+	my $md = LoadDescription($MDD,$_,$Const::MDataExt);
+	my $ID = delete $md->{folder}{id};
+	$ACL->{folder}{$ID} = $md->{folder} if $ID && $md->{folder}{type} =~ /role|user|group/; #add objects defining role, user ...
+}
+foreach (USR::getUserList()) {
+	$ACL->{users}{$_} = USR::getUserDetail($_);
+	}
+foreach (USR::getGroupList()) {
+	$ACL->{groups}{$_} = USR::getGroupDetail($_);
+	}
+}
+
+#-----------------------------------------------------
+sub LoadDescription {
+my ($path,$fileName,$ext) = @@_;
+my $file = $path."Access/$fileName$ext";
+my $md;
+	if (-e $file) {
+		my $PData = new XML::Simple(keyattr=>'id', rootname=>'project');
+		$md = $PData->XMLin($file);
+	}
+	return ($md) ? $md : undef
+}
+
+#-----------------------------------------------------
+sub AddUserRoleToUsRL {
+	my $pName=shift;	# project name
+	my $role=shift;	# role ID
+	my $user=shift;	# user
+
+	push @@{$UsRL->{$pName}->{$user}}, $role;
+}
+
+#-----------------------------------------------------
+sub GetUserRolesFromUsRL {
+	my $pName=shift;# project name
+	my $userID=shift;	# user
+	return ($pName && $userID) ? @@{$UsRL->{$pName}->{$userID}} : ();
+}
+
+#-----------------------------------------------------
+sub AddToRole {
+	my $pName=shift;	# project name
+	my $role=shift;	# role ID
+	my $member=shift;	# user or group
+	my $isGroup=shift;	# 0=user; 1=group
+
+}
+
+#-----------------------------------------------------
+sub RemoveFromRole {
+	my $pName=shift;	# project name
+	my $role=shift;	# role ID
+	my $member=shift;	# user
+	my $isGroup=shift;	# 0=user; 1=group
+
+}
+
+#-----------------------------------------------------
+sub GrantObjPermition {
+	my $MDO=shift;	# metadata object
+	my $role=shift;	# role ID
+	my $perm=shift;	# permitions in form of string, e.g. 'rwx', 'xr', ...
+
+}
+
+#-----------------------------------------------------
+sub RevokeObjPermition {
+	my $MDO=shift;	# metadata object
+	my $role=shift;	# role ID
+	my $perm=shift;	# permitions in form of string, e.g. 'rwx', 'xr', ...
+
+}
+
+#-----------------------------------------------------
+sub CheckObjPermition {
+	my $MDO=shift;	# metadata object
+	my $user=shift;	# user name
+	my $perm=shift;	# permitions in form of string, e.g. 'rwx', 'xr', ...
+	
+	return 1;
+
+}
+
+#-----------------------------------------------------
+sub GetTreeDefinition {
+my $lang = shift;
+my $rtrn;
+
+#localize names of strings
+foreach my $folderID (keys %{$ACL->{folder}}) {
+	my $type = $ACL->{folder}{$folderID}{type};
+	$rtrn->{$folderID}{'~name'} = LocalizedACLObject($ACL->{folder}{$folderID}{name},"?$folderID",$lang,'en');
+	$rtrn->{$folderID}{'~desc'} = LocalizedACLObject($ACL->{folder}{$folderID}{description},"?$folderID",$lang,'en') if $ACL->{folder}{$folderID}{description};
+	$rtrn->{$folderID}{'~content'} = $type;
+	if (exists $ACL->{$type}) {
+		foreach (keys %{$ACL->{$type}}) {
+		$rtrn->{$folderID}{$_}{name} = LocalizedACLObject($ACL->{$type}{$_}{name},"?$_",$lang,'en');
+		$rtrn->{$folderID}{$_}{desc} = LocalizedACLObject($ACL->{$type}{$_}{description},"?$_",$lang,'en') if $ACL->{$type}{$_}{description};
+		}
+	}
+}
+	return $rtrn
+}
+
+#-----------------------------------------------------
+sub LocalizedACLObject {		# returns localized description
+					# $descr = LocalizedObj($descrObj, "NA", 'cz', 'en', ...);
+
+	my $descr=shift;	# description with possible locale
+	my $alter=shift;	# alternate description for case specific locale is not defined
+	my @@lang=@@_;		# locale(s)
+	
+	if ($descr) {
+		if (ref($descr)=~/HASH/) {
+			foreach (@@lang) {
+				if (exists ($descr->{$_})) {
+					if (ref($descr->{$_})=~/HASH/) {	# empty string is presented as empty hash
+						return ''
+					} else {
+						return $descr->{$_}
+					}
+				}
+			}
+		} else {
+			return $descr
+		}
+	}
+	return $alter
+
+}
+
+#-----------------------------------------------------
+
+1
+
+__END__
+@
+
+
+1.10
+log
+@edit page rights fixies and improvments
+@
+text
+@d4 1
+a4 1
+# $Id: Acl.pm,v 1.9 2004/02/16 14:55:22 jiri_schmid Exp $
+d48 2
+a49 2
+foreach ('Users','Groups','Roles') {
+	my $md = LoadDescription($MDD,$_);
+d51 1
+a51 1
+	$ACL->{folder}{$ID} = $md->{folder} if $ID;
+d63 2
+a64 1
+my $file = "$_[0]Access/$_[1].xml";
+d138 10
+a147 4
+#get all groups
+	foreach	(keys %{$ACL->{groups}}) {
+		$rtrn->{groups}{$_}{name} = LocalizedACLObject($ACL->{groups}{$_}{name},"?$_",$lang,'en');
+		$rtrn->{groups}{$_}{desc} = LocalizedACLObject($ACL->{groups}{$_}{description},"?$_",$lang,'en') if $ACL->{groups}{$_}{description};
+d149 3
+a151 18
+	$rtrn->{groups}{'~name'} = LocalizedACLObject($ACL->{folder}{_GROUPS_}{name},"?$_",$lang,'en');
+	$rtrn->{groups}{'~desc'} = LocalizedACLObject($ACL->{folder}{_GROUPS_}{description},"?$_",$lang,'en') if $ACL->{folder}{_GROUPS_}{description};
+	$rtrn->{groups}{'~content'} = "group";
+#get all users
+	foreach (keys %{$ACL->{users}}) {
+		$rtrn->{users}{$_}{name} = LocalizedACLObject($ACL->{users}{$_}{name},"?$_",$lang,'en');
+		$rtrn->{users}{$_}{desc} = LocalizedACLObject($ACL->{users}{$_}{description},"?$_",$lang,'en') if $ACL->{users}{$_}{description};
+		}
+	$rtrn->{users}{'~name'} = LocalizedACLObject($ACL->{folder}{_USERS_}{name},"?$_",$lang,'en');
+	$rtrn->{users}{'~desc'} = LocalizedACLObject($ACL->{folder}{_USERS_}{description},"?$_",$lang,'en') if $ACL->{folder}{_USERS_}{description};
+	$rtrn->{users}{'~content'} = "user";
+
+
+	$rtrn->{roles}{'~name'} = LocalizedACLObject($ACL->{folder}{_ROLES_}{name},"?$_",$lang,'en');
+	$rtrn->{roles}{'~desc'} = LocalizedACLObject($ACL->{folder}{_ROLES_}{description},"?$_",$lang,'en') if $ACL->{folder}{_ROLES_}{description};
+	$rtrn->{roles}{'~content'} = "role";
+
+	return $rtrn;
+@
+
+
+1.9
+log
+@security improvment for tabs
+@
+text
+@d4 1
+a4 1
+# $Id: Acl.pm,v 1.8 2004/02/13 17:09:40 jiri_schmid Exp $
+d25 1
+a25 1
+	$rtrn->{$_} = exists $ACL->{groups}{$_} ? LocalizedACLObject($ACL->{groups}{$_}{name},"> id > $_?,$lang,'en'") : "> id > $_";
+@
+
+
+1.8
+log
+@major tabs control implemented
+@
+text
+@d4 1
+a4 1
+# $Id: Acl.pm,v 1.7 2003/08/22 16:01:03 jiri_schmid Exp $
+d21 1
+a21 1
+sub GetLocalizedGroupsList {
+d23 1
+a23 1
+my @@rtrn;
+d25 1
+a25 1
+	push(@@rtrn,LocalizedACLObject($ACL->{groups}{$_}{name},"?$_",$lang,'en'));
+d27 1
+a27 1
+return @@rtrn
+d31 2
+a32 2
+sub GetLocalizedUsersList {
+my @@rtrn;
+d34 1
+a34 1
+	push(@@rtrn,$ACL->{users}{$_}{name});
+d36 1
+a36 1
+return @@rtrn
+a41 1
+
+a45 1
+
+a52 1
+
+a55 1
+
+a61 1
+
+a72 1
+
+a81 1
+
+a88 1
+
+a97 1
+
+a106 1
+
+a114 1
+
+a122 1
+
+a132 1
+
+a162 1
+
+a193 26
+
+=head1 NAME
+
+Bear - Package to implement Users, Groups and ACL
+
+=head1 DESCRIPTION
+
+=head2 Object level Implementation
+
+XML Metadata Example:
+
+	<project>
+	  <metric ........
+	    <acl>
+	      <r0>rwx</r0>
+	      <r1>rx</r1>
+	    </acl>
+	    <name ..........
+	    <description ..........
+	  </metric>
+	</project>
+	
+where B<r0>, B<r1> represents RoleID and B<rwx> represents permitions for read, write and search/execute
+
+=cut
+
+@
+
+
+1.7
+log
+@access - rules changing implemented
+@
+text
+@d4 1
+a4 1
+# $Id: Acl.pm,v 1.6 2003/08/21 12:02:13 jiri_schmid Exp $
+d89 8
+@
+
+
+1.6
+log
+@description for access tree changes
+@
+text
+@d4 1
+a4 1
+# $Id: Acl.pm,v 1.5 2003/08/20 14:23:45 jiri_schmid Exp $
+d19 19
+@
+
+
+1.5
+log
+@access object implemented
+@
+text
+@d4 1
+a4 1
+# $Id: Acl.pm,v 1.4 2003/08/19 15:09:07 jiri_schmid Exp $
+d11 1
+a13 1
+
+d30 9
+a38 2
+	foreach (USR::getUserList()) {
+		$ACL->{users}{$_} = USR::getUserDetail($_);
+d40 14
+a53 2
+	foreach (USR::getGroupList()) {
+		$ACL->{groups}{$_} = USR::getGroupDetail($_);
+d55 1
+d119 1
+a119 1
+sub GetAccessTreeDefinition {
+d126 1
+a126 1
+		$rtrn->{groups}{$_}{desc} = LocalizedACLObject($ACL->{groups}{$_}{description},"?$_",$lang,'en') if $ACL->{$_}{description};
+d128 3
+d132 1
+a132 1
+	foreach (keys%{$ACL->{users}}) {
+d134 1
+a134 1
+		$rtrn->{users}{$_}{desc} = LocalizedACLObject($ACL->{users}{$_}{description},"?$_",$lang,'en') if $ACL->{$_}{description};
+d136 9
+@
+
+
+1.4
+log
+@ACL changes
+@
+text
+@d4 1
+a4 1
+# $Id: Acl.pm,v 1.3 2003/08/18 13:17:13 jiri_schmid Exp $
+a112 45
+
+#get all roles
+$rtrn->{roles}{test}{'~name'} = "Test";
+$rtrn->{roles}{test}{'~desc'} = "projectos testos";
+$rtrn->{roles}{test}{'~content'} = 'role';
+$rtrn->{roles}{test}{t1}{name} = "Rootrs";
+$rtrn->{roles}{test}{t1}{desc} = "Rooteros";
+$rtrn->{roles}{test}{t2}{name} = "Userrr";
+$rtrn->{roles}{test}{t2}{desc} = "ACLros";
+$rtrn->{roles}{demo}{'~name'} = "demo";
+$rtrn->{roles}{demo}{'~desc'} = "projectos demos";
+$rtrn->{roles}{demo}{'~content'} = 'role';
+$rtrn->{roles}{demo}{d1}{name} = "DemoR";
+$rtrn->{roles}{demo}{d1}{desc} = "demoRooteros";
+$rtrn->{roles}{demo}{d2}{name} = "demoserrr";
+$rtrn->{roles}{demo}{d2}{desc} = "demoUsrros";
+
+# structure conflitcs !!!
+# no descriptions a names defined anywhere for 'folder' groups, users, roles-project !!!
+my $HLP = {};
+$HLP->{groups}{'~name'}{cz} = 'Groupa';
+$HLP->{groups}{'~name'}{en} = 'grups';
+$HLP->{groups}{'~content'} = 'group';
+$HLP->{users}{'~name'}{cz} = 'Uzivaci';
+$HLP->{users}{'~name'}{en} = 'Userrors';
+$HLP->{users}{'~content'} = 'user';
+$HLP->{roles}{'~name'} = 'Role';
+$HLP->{roles}{'~desc'} = 'a rolicky';
+$HLP->{roles}{'~content'} = 'role';
+
+	$rtrn->{groups}{'~name'} = LocalizedACLObject($HLP->{groups}{'~name'},'group',$lang,'en');
+	$rtrn->{groups}{'~content'} = LocalizedACLObject($HLP->{groups}{'~content'},'group',$lang,'en');
+	$rtrn->{groups}{'~desc'} = LocalizedACLObject($HLP->{groups}{'~description'},'?$group',$lang,'en') if $HLP->{'~description'};
+
+	$rtrn->{users}{'~name'} = LocalizedACLObject($HLP->{users}{'~name'},'user',$lang,'en');
+	$rtrn->{users}{'~content'} = LocalizedACLObject($HLP->{users}{'~content'},'user',$lang,'en');
+	$rtrn->{users}{'~desc'} = LocalizedACLObject($HLP->{users}{'~description'},'?user',$lang,'en') if $HLP->{'~description'};
+
+	$rtrn->{roles}{'~name'} = LocalizedACLObject($HLP->{roles}{'~name'},'role',$lang,'en');
+	$rtrn->{roles}{'~content'} = LocalizedACLObject($HLP->{roles}{'~content'},'role',$lang,'en');
+	$rtrn->{roles}{'~desc'} = LocalizedACLObject($HLP->{roles}{'~description'},'?role',$lang,'en') if $HLP->{'~description'};
+
+# structure conflitcs !!!
+# no descriptions and names definition anywhere for 'folder' groups, users, roles-project !!!
+
+@
+
+
+1.3
+log
+@admin page reading rutines implemented
+@
+text
+@d4 1
+a4 1
+# $Id: Acl.pm,v 1.2 2003/08/18 05:50:55 michald Exp $
+d18 1
+a18 15
+our $Usr = {};
+our $Grp = {};
+our $Acache = {};
+
+# structure conflitcs !!!
+# no descriptions and names definition anywhere for 'folder' groups, users, roles-project !!!
+$Acache->{group}{'~name'}->{cz} = 'Groupa';
+$Acache->{group}{'~name'}->{en} = 'grups';
+$Acache->{group}{'~content'} = 'group';
+$Acache->{user}{'~name'}->{cz} = 'Uzivaci';
+$Acache->{user}{'~name'}->{en} = 'Userrors';
+$Acache->{user}{'~content'} = 'user';
+$Acache->{role}{'~name'} = 'Role';
+$Acache->{role}{'~desc'} = 'a rolicky';
+$Acache->{role}{'~content'} = 'role';
+d21 1
+a21 1
+sub GetGroupDetail { return $Grp->{$_[0]} }
+d25 1
+a25 1
+sub GetUserDetail { return $Usr->{$_[0]} }
+d31 1
+a31 1
+		$Usr->{$_} = USR::getUserDetail($_);
+d34 1
+a34 1
+		$Grp->{$_}{members} = USR::getGroupMembers($_);
+a35 15
+	
+$Grp->{clerks}{name}{cz}='urednici';
+$Grp->{clerks}{name}{en}='clerks';
+#members => ['admin','sara','peggy','bert'],
+$Grp->{clerks}{description}{cz}='makac';
+$Grp->{clerks}{description}{en}='worker';
+$Grp->{managers}{name}{cz} = 'manazeri';
+$Grp->{managers}{name}{en} = 'managers';
+#members => ['admin','joe','laura'],
+$Grp->{managers}{description}{cz}='malo makaci';
+$Grp->{managers}{description}{en}='low-workers';
+$Grp->{Gadmin}{name}{cz}='admini';
+$Grp->{Gadmin}{name}{en}='admins';
+#members => ['admin'],
+
+d104 3
+a106 3
+	foreach	(keys %{$Grp}) {
+		$rtrn->{group}{$_}{name} = LocalizedACLObject($Grp->{$_}{name},"?$_",$lang,'en');
+		$rtrn->{group}{$_}{desc} = LocalizedACLObject($Grp->{$_}{description},"?$_",$lang,'en') if $Grp->{$_}{description};
+d109 3
+a111 3
+	foreach (keys%{$Usr}) {
+		$rtrn->{user}{$_}{name} = LocalizedACLObject($Usr->{$_}{name},"?$_",$lang,'en');
+		$rtrn->{user}{$_}{desc} = LocalizedACLObject($Usr->{$_}{description},"?$_",$lang,'en') if $Usr->{$_}{description};
+d115 14
+a128 14
+$rtrn->{role}{test}{'~name'} = "Test";
+$rtrn->{role}{test}{'~desc'} = "projectos testos";
+$rtrn->{role}{test}{'~content'} = 'role';
+$rtrn->{role}{test}{t1}{name} = "Rootrs";
+$rtrn->{role}{test}{t1}{desc} = "Rooteros";
+$rtrn->{role}{test}{t2}{name} = "Userrr";
+$rtrn->{role}{test}{t2}{desc} = "Usrros";
+$rtrn->{role}{demo}{'~name'} = "demo";
+$rtrn->{role}{demo}{'~desc'} = "projectos demos";
+$rtrn->{role}{demo}{'~content'} = 'role';
+$rtrn->{role}{demo}{d1}{name} = "DemoR";
+$rtrn->{role}{demo}{d1}{desc} = "demoRooteros";
+$rtrn->{role}{demo}{d2}{name} = "demoserrr";
+$rtrn->{role}{demo}{d2}{desc} = "demoUsrros";
+d132 25
+a156 11
+	$rtrn->{group}{'~name'} = LocalizedACLObject($Acache->{group}{'~name'},'group',$lang,'en');
+	$rtrn->{group}{'~content'} = LocalizedACLObject($Acache->{group}{'~content'},'group',$lang,'en');
+	$rtrn->{group}{'~desc'} = LocalizedACLObject($Acache->{group}{'~description'},'?$group',$lang,'en') if $Grp->{'~description'};
+
+	$rtrn->{user}{'~name'} = LocalizedACLObject($Acache->{user}{'~name'},'user',$lang,'en');
+	$rtrn->{user}{'~content'} = LocalizedACLObject($Acache->{user}{'~content'},'user',$lang,'en');
+	$rtrn->{user}{'~desc'} = LocalizedACLObject($Acache->{user}{'~description'},'?user',$lang,'en') if $Usr->{'~description'};
+
+	$rtrn->{role}{'~name'} = LocalizedACLObject($Acache->{role}{'~name'},'role',$lang,'en');
+	$rtrn->{role}{'~content'} = LocalizedACLObject($Acache->{role}{'~content'},'role',$lang,'en');
+	$rtrn->{role}{'~desc'} = LocalizedACLObject($Acache->{role}{'~description'},'?role',$lang,'en') if $Usr->{'~description'};
+@
+
+
+1.2
+log
+@some ACL improvement
+@
+text
+@d4 1
+a4 1
+# $Id: Acl.pm,v 1.1 2003/08/15 10:59:39 michald Exp $
+d20 20
+d48 1
+a48 1
+		$Grp->{$_} = USR::getGroupMembers($_);
+d50 15
+d89 1
+a89 1
+sub DropFromRole {
+d123 78
+@
+
+
+1.1
+log
+@initial ACL implementation
+@
+text
+@d4 1
+a4 1
+# $Id$
+d34 1
+a34 1
+sub AddRoleToUser {
+d44 49
+d109 4
+a112 2
+	    <acl id="0" r="1" w="1" x="1"/>
+	    <acl id="1" r="1" w="1"/>
+d118 1
+a118 1
+where B<id> represents RoleID and B<r>, B<w>, B<x> represents permitions for read, write and search/execute
+@
+

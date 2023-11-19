@@ -1,0 +1,454 @@
+head	1.10;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.10
+date	2004.04.14.12.21.33;	author jiri_schmid;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	2004.03.21.07.01.21;	author michald;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	2004.03.18.15.34.43;	author jiri_schmid;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	2004.03.17.15.20.06;	author jiri_schmid;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	2004.03.16.15.48.52;	author jiri_schmid;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	2004.03.16.15.29.11;	author jiri_schmid;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2003.12.04.10.44.36;	author jiri_schmid;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2003.11.18.14.38.40;	author jiri_schmid;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2003.11.04.15.19.00;	author jiri_schmid;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2003.10.31.12.47.57;	author jiri_schmid;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.10
+log
+@added help tab
+@
+text
+@#-----------------------------------------------------
+#  Metric Editation
+#-----------------------------------------------------
+# $Id: Metric.pm,v 1.9 2004/03/21 07:01:21 michald Exp $
+
+package Metric;
+
+use strict;
+# require "const/Const.pm"; #allready pluged-in by edit_obj.cgi
+
+#-----------------------------------------------------
+# print_form is called from edit.cgi
+
+sub generateContent {
+my($variables, $lang, $obj) = (shift, shift, shift);
+
+my $saved = $$variables->{saved} if exists $$variables->{saved};
+my $imgType = \$$variables->{imgType};
+my $skinPath = \$$variables->{skinPath};
+
+print <<END;
+<input type="hidden" value="$$obj->{filter_def}" id="ITEMS"/><br />
+<table class="page_skeleton_ex">
+<tr class="page_skeleton">
+<td class="page_skeleton" rowspan='2'>
+	<table class="neutral">
+	<tr>	<td class="neutral_bold" colspan="3">$$lang->{'Metric expresion'}</td></tr>
+	<tr>	<td valign="top"><img src="$${skinPath}img/metric.$$imgType" vspace="5"><br><img src="$${skinPath}img/attr.$$imgType"><br><img src="$${skinPath}img/fact.$$imgType" vspace="5"><br><img src="$${skinPath}img/attr_form.$$imgType"></td>
+		<td align="center">
+			<textarea id="object_metric" onclick="drop_textarea(this)" onchange="object_changed()" name="expr" cols="$Const::wb_const->{ $$variables->{wb} }{descriptionWidth}" rows="$Const::descriptionRows"></textarea>
+			<input type="hidden" name="expr_id" id="object_metric_id" value="$$obj->{expr}"/>
+		</td>
+		<td valign="bottom" align="center"><img class="cursor" src="$${skinPath}img/delete.$$imgType" title="$$lang->{Delete}" onclick='clearById("object_metric");return true;'></td></tr>
+	<tr>	<td align="center" colspan="3">
+		<table>
+		<tr>	<td class="visual_down">
+			<table class="visual_up" cellpading="0" cellspacing="0">
+			<tr>	<td class="visual_up_button" onmouseover='active(this)' onmouseout='passive(this)' onclick='exprr("object_metric","(");'><a name="lb" class="cursor">(</a></td>
+				<td class="visual_up_button" onmouseover='active(this)' onmouseout='passive(this)' onclick='exprr("object_metric",")");'><a name="rb" class="cursor">)</a></td>
+				<td class="visual_up_button" onmouseover='active(this)' onmouseout='passive(this)' onclick='exprr("object_metric","+");'><a name="pl" class="cursor">+</a></td>
+				<td class="visual_up_button" onmouseover='active(this)' onmouseout='passive(this)' onclick='exprr("object_metric","-");'><a name="mi" class="cursor">-</a></td>
+				<td class="visual_up_button" onmouseover='active(this)' onmouseout='passive(this)' onclick='exprr("object_metric","*");'><a name="ti" class="cursor">*</a></td>
+				<td class="visual_up_button" onmouseover='active(this)' onmouseout='passive(this)' onclick='exprr("object_metric","/");'><a name="di" class="cursor">/</a></td></tr>
+			</table>
+		</tr>
+		<tr>	<td class="visual_down">
+			<table class="visual_up" cellpading="0" cellspacing="0">
+			<tr>	<td class="visual_up_button" onmouseover='active(this)' onmouseout='passive(this)' onclick='exprr("object_metric","SUM()");'><a name="sum" class="cursor">SUM</a></td>
+				<td class="visual_up_button" onmouseover='active(this)' onmouseout='passive(this)' onclick='exprr("object_metric","AVG()");'><a name="avg" class="cursor">AVG</a></td>
+				<td class="visual_up_button" onmouseover='active(this)' onmouseout='passive(this)' onclick='exprr("object_metric","COUNT()");'><a name="count" class="cursor">COUNT</a></td>
+				<td class="visual_up_button" onmouseover='active(this)' onmouseout='passive(this)' onclick='exprr("object_metric","MAX()");'><a name="max" class="cursorr">MAX</a></td>
+				<td class="visual_up_button" onmouseover='active(this)' onmouseout='passive(this)' onclick='exprr("object_metric","MIN()");'><a name="min" class="cursor">MIN</a></td></tr>
+			</table>
+		</tr>
+		</table>
+	</td></tr>
+	<tr><td></td><td style="text-align:right">$$lang->{'Metric Output'}: <input onclick="drop_input(this)" value="$$obj->{output}" name="output" type="text" size="20"/></td><td></td></tr>
+	</table>
+</td>
+<td class='page_skeleton' style='height:100%'>
+	<table class="neutral_100" style='height:100%'>
+	<tr>	<td colspan="3" class="neutral_bold">
+		$$lang->{'Metric Filter'}
+	</td></tr>
+	<tr><td colspan="3">
+		<span class="rule">$$lang->{'Metric Intersect'}</span>
+END
+my $checked;
+my $viewName;
+my $viewTitle;
+delete $$obj->{filter_intersect} if ref $$obj->{filter_intersect} ne "HASH"; # !!! should be removed ASAP (it removes old definition of filter_intersect)
+#$$obj->{filter_intersect}{na} = 1 if !$$obj->{filter_intersect}{na};
+my %ch;
+foreach (@@{$$obj->{filter_intersect}{contents}}) {
+	$ch{$_} = "checked='checked'";
+}
+foreach ('metric','report') {
+	$viewName = "Metric Intersect $_";
+	$viewTitle = "Metric Intersect $_ Title";
+	print "<input type='checkbox' onclick='doSwitch(this,\"$_\",\"metric_filter\")' value='1' id='intersect$_' name='intersect$_' $ch{$_}><span class='rule' title='$$lang->{$viewTitle}' onclick='nexts(\"intersect$_\",\"metric_filter\")'>$$lang->{$viewName}</span>";
+}
+my $disabled = ($ch{metric} && $ch{report})? "" : "disabled='disabled'";
+print "<select $disabled name='intersecttype' id='intersecttype' size='1' title='$$lang->{'Metric Intersect type Title'}'>";
+foreach ('non-rel','all') {
+	$checked = ($$obj->{filter_intersect}{type} eq $_) ? " selected='selected'" : '';
+	$viewName = $$lang->{"Metric Intersect $_"};
+	print "<option $checked value='$_'>$viewName</option>";
+}
+print "</select>";
+my $disabled = (((ref $$obj->{filter_intersect}{contents} eq 'ARRAY')) && (grep /metric/, @@{$$obj->{filter_intersect}{contents}})) ? "" : "disabled='disabled'";
+#my $disabled = $$obj->{filter_intersect}{metrics} ? "" : "disabled='disabled'";
+print <<END;
+	</td></tr>
+	<tr><td><img src="$${skinPath}img/filter.$$imgType"</td>
+		<td align="center">
+			<input $disabled onclick="drop_input(this)" id="metric_filter" value="" name="filter" type="text" size="$Const::wb_const->{ $$variables->{wb} }{itemWidth}" maxlength="100" readonly/>
+			<input type="hidden" id="metric_filter_id" name="filter_id" value="$$obj->{filter_def}"/>
+		</td>
+		<td><img class="cursor" src="$${skinPath}img/delete.$$imgType" title="$$lang->{Delete}" onclick="clearItem('metric_filter')"></td></tr>
+	</table>
+</td>
+</tr>
+<tr class='page_skeleton'>
+<td class='page_skeleton' style='height:100%'>
+	<table class="neutral_100" style='height:100%'>
+	<tr>	<td colspan="3" class="neutral_bold">
+		$$lang->{'Agregation level'}
+	</td></tr>
+	<tr><td colspan="3">
+		<span class="rule">$$lang->{'Metric Rule'}</span>
+END
+$$obj->{aggr_type} = 'report' if !$$obj->{aggr_type};
+$disabled = $$obj->{aggr_type} eq 'specific' ? "" : "disabled='disabled'";
+foreach ('specific','report','none') {
+	$checked = ($$obj->{aggr_type} eq $_) ? " checked='checked'" : '';
+	$viewName = "Metric $_";
+	$viewTitle = "Metric $_ Title";
+	print "<span class='rule' onclick='NEXT(this,\"metric_attributes\")' title='$$lang->{$viewTitle}'><input type='radio' value='$_' name='aggr_rule'$checked>$$lang->{$viewName}</span>";
+}
+print <<END;
+	</td></tr>
+	<tr>	<td><img src="$${skinPath}img/attr.$$imgType"></td>
+		<td align="center" style="width:100%">
+			<select $disabled onclick="drop_select(this)" id="metric_attributes" name="agreg" maxlength="100" readonly size="4" style="width:100%" multiple>
+				<option value=""></option>
+			</select>
+END
+my $hlp;
+foreach (@@{$$obj->{aggr_def}}) {
+		$hlp .= "$_|";
+	}
+print <<END;
+			<input type="hidden" id="metric_attributes_id" value="$hlp" />
+		</td>
+		<td><img class="cursor" src="$${skinPath}img/delete.$$imgType" title="$$lang->{Delete}" onclick="emptySelect('metric_attributes')"></td></tr>
+	</table>
+</td></tr>
+<tr class='page_skeleton'>
+<td class='page_skeleton' colspan='2'>
+	<table class='neutral_100'>
+	<tr><td align='center'>
+		<table class="buttons" cellpading="0" cellspacing="0">
+		<tr>	<td class="buttons"><input id='SAVE' type="submit" name="Action" value="$$lang->{'Save'}" onclick="multiple(); return metric_checker()"/></td>
+			<td class="buttons">	<input type="submit" name="Action" value="$$lang->{'Save As'}" onclick="multiple(); return readName('metric');"/>
+						<input type="hidden" name="saveAsName" id="saveAsName" value="" /></td>
+			<td class="buttons"><input type="button" name="reset" value="$$lang->{'Reset'}" onclick="subst_ID_expr('object_metric');subst_ID('metric_filter');fillSelect('metric_attributes');"/></td>
+		</tr>
+		</table>
+	</td></tr>
+	</table>
+</td></tr></table>
+<script type="text/javascript">
+	var msg="$$lang->{'New Save Part1'}$$lang->{'New Metric Save'}$$lang->{'New Save Part2'}";
+	subst_ID('metric_filter');
+	subst_ID_expr('object_metric');
+	fillSelect('metric_attributes');
+	var saveAsMsg = "$$lang->{SaveAsMsg}$$lang->{'New Metric'}";
+	reloadTree($saved);
+</script>
+END
+}
+
+#---------------------------------------------------
+
+sub set_next_param {
+	my ($o,$q) = (shift,shift);
+	$$o->{expr} = $$q->param('expr_id');
+	$$o->{filter_def} = $$q->param('filter_id');	# filter_name should be replaced to filter in form as well
+	delete $$o->{filter_intersect};
+	$$o->{filter_intersect}{type} = $$q->param("intersecttype") if $$q->param("intersecttype");		
+	foreach ('metric','report') {
+		push @@{$$o->{filter_intersect}{contents}}, $_ if $$q->param("intersect$_");		
+	}
+		# format_name should be replaced to format in form as well
+	$$o->{aggr_def} = [$$q->param("aggr_type")];
+	$$o->{aggr_type} = $$q->param('aggr_rule');
+	$$o->{output} = ($$q->param('output')) ? $$q->param('output') : "%.2f";
+}
+
+1
+@
+
+
+1.9
+log
+@slight modification of the Metric Filter Intersection MD presentation
+@
+text
+@d4 1
+a4 1
+# $Id: Metric.pm,v 1.8 2004/03/18 15:34:43 jiri_schmid Exp $
+d30 1
+a30 1
+			<textarea id="object_metric" onclick="drop_textarea(this)" onchange="object_changed()" name="expr" cols="$Const::wb_const->{ $$variables->{wb} }{descriptionWidth}" rows="$Const::descriptionRows" maxlength="100"></textarea>
+@
+
+
+1.8
+log
+@hash name change
+@
+text
+@d4 1
+a4 1
+# $Id: Metric.pm,v 1.7 2004/03/17 15:20:06 jiri_schmid Exp $
+d73 8
+a80 7
+my @@dsbl = ();
+foreach ('metrics','reports') {
+	$checked = ($$obj->{filter_intersect}{$_}) ? " checked='checked'" : '';
+	$viewName = "Metric $_";
+	$viewTitle = "Metric $_ Title";
+	push @@dsbl, $_ if $$obj->{filter_intersect}{$_};
+	print "<input type='checkbox' onclick='doSwitch(this,\"$_\",\"metric_filter\")' value='1' id='intersect$_' name='intersect$_'$checked><span class='rule' title='$$lang->{$viewTitle}' onclick='nexts(\"intersect$_\",\"metric_filter\")'>$$lang->{$viewName}</span>";
+d82 3
+a84 3
+my $disabled = @@dsbl == 2 ? "" : "disabled='disabled'";
+print "<select $disabled name='intersecttype' id='intersecttype' size='1'>";
+foreach ('type','all') {
+d86 2
+a87 3
+	$viewName = $$lang->{"Metric $_"};
+	$viewTitle = $$lang->{"Metric $_ Title"};
+	print "<option $checked value='$_' title='$viewTitle'>$viewName</option>";
+d90 2
+a91 1
+my $disabled = $$obj->{filter_intersect}{metrics} ? "" : "disabled='disabled'";
+d170 3
+a172 2
+	foreach ('metrics','reports','type') {
+		$$o->{filter_intersect}{$_} = $$q->param("intersect$_");		
+@
+
+
+1.7
+log
+@metric view fix
+@
+text
+@d4 1
+a4 1
+# $Id: Metric.pm,v 1.6 2004/03/16 15:48:52 jiri_schmid Exp $
+d82 3
+a84 3
+print "<select $disabled name='intersectnon_rel' id='intersectnon_rel' size='1'>";
+foreach ('non_rel','all') {
+	$checked = ($$obj->{filter_intersect}{non_rel} eq $_) ? " selected='selected'" : '';
+d169 1
+a169 1
+	foreach ('metrics','reports','non_rel') {
+@
+
+
+1.6
+log
+@micro fix
+@
+text
+@d4 1
+a4 1
+# $Id: Metric.pm,v 1.5 2004/03/16 15:29:11 jiri_schmid Exp $
+d71 2
+a72 1
+$$obj->{filter_intersect} = 'na' if !$$obj->{filter_intersect};
+@
+
+
+1.5
+log
+@filter and aggregation level handling rules on metric page changed
+@
+text
+@d4 1
+a4 1
+# $Id: Metric.pm,v 1.4 2003/12/04 10:44:36 jiri_schmid Exp $
+a71 1
+my $disabled = $$obj->{filter_intersect}{metrics} ? "" : "disabled='disabled'";
+d80 1
+a80 1
+$disabled = @@dsbl == 2 ? "" : "disabled='disabled'";
+d89 1
+d110 1
+a110 1
+$$obj->{aggr_type} = 'none' if !$$obj->{aggr_type};
+@
+
+
+1.4
+log
+@visaul changes and improvments
+@
+text
+@d4 1
+a4 1
+# $Id: Metric.pm,v 1.3 2003/11/18 14:38:40 jiri_schmid Exp $
+d65 1
+a65 7
+	<tr><td><img src="$${skinPath}img/filter.$$imgType"</td>
+		<td align="center">
+			<input onclick="drop_input(this)" id="metric_filter" value="" name="filter" type="text" size="$Const::wb_const->{ $$variables->{wb} }{itemWidth}" maxlength="100" readonly/>
+			<input type="hidden" id="metric_filter_id" name="filter_id" value="$$obj->{filter_def}"/>
+		</td>
+		<td><img class="cursor" src="$${skinPath}img/delete.$$imgType" title="$$lang->{Delete}" onclick="clearItem('metric_filter')"></td></tr>
+	<tr><td colspan="3" style="text-align:right">
+d71 5
+a75 3
+$$obj->{filter_intersect} = 'all' if !$$obj->{filter_intersect};
+foreach ('all','non_rel','na') {
+	$checked = ($$obj->{filter_intersect} eq $_) ? " checked='true'" : '';
+d78 10
+a87 1
+	print "<span class='rule' title='$$lang->{$viewTitle}' onclick='next(this)'><input type='radio' value='$_' name='intersect'$checked>$$lang->{$viewName}</span>";
+d89 1
+d92 6
+d107 13
+d122 1
+a122 1
+			<select onclick="drop_select(this)" id="metric_attributes" name="agreg" maxlength="100" readonly size="4" style="width:100%" multiple>
+a133 12
+	<tr><td colspan="3" style="text-align:right">
+		<span class="rule">$$lang->{'Metric Rule'}</span>
+END
+$$obj->{aggr_type} = 'specific' if !$$obj->{aggr_type};
+foreach ('specific','report','none') {
+	$checked = ($$obj->{aggr_type} eq $_) ? " checked='true'" : '';
+	$viewName = "Metric $_";
+	$viewTitle = "Metric $_ Title";
+	print "<span class='rule' onclick='next(this)' title='$$lang->{$viewTitle}'><input type='radio' value='$_' name='aggr_rule'$checked>$$lang->{$viewName}</span>";
+}
+print <<END;
+	</td></tr>
+d167 6
+a172 2
+	$$o->{filter_intersect} = $$q->param('intersect');
+	$$o->{aggr_def} = [$$q->param('agreg')];	# format_name should be replaced to format in form as well
+@
+
+
+1.3
+log
+@auto save when changing tabs implemented
+@
+text
+@d4 1
+a4 1
+# $Id: Metric.pm,v 1.2 2003/11/04 15:19:00 jiri_schmid Exp $
+d28 1
+a28 1
+	<tr>	<td valign="top"><img src="$${skinPath}img/tree/metric.$$imgType" vspace="5"><br><img src="$${skinPath}img/tree/attr.$$imgType"><br><img src="$${skinPath}img/tree/fact.$$imgType" vspace="5"><br><img src="$${skinPath}img/tree/attr_form.$$imgType"></td>
+@
+
+
+1.2
+log
+@save as - modperl fixies, code improvments
+@
+text
+@d4 1
+a4 1
+# $Id: Metric.pm,v 1.1 2003/10/31 12:47:57 jiri_schmid Exp $
+d21 1
+a21 2
+	(my $allParams = $ENV{QUERY_STRING}) =~ s/item[^&]*//;
+	print <<END;
+d128 3
+a130 3
+		<tr>	<td class="buttons"><input type="submit" name="Action" value="$$lang->{'Save'}" onclick="multiple(); return metric_checker()"/></td>
+				<td class="buttons">	<input type="submit" name="Action" value="$$lang->{'Save As'}" onclick="multiple(); return readName('metric');"/>
+							<input type="hidden" name="saveAsName" id="saveAsName" value="" /></td>
+a141 1
+	var params = "$allParams";
+@
+
+
+1.1
+log
+@mod perl rocks!
+@
+text
+@d4 1
+a4 1
+# $Id: Metric.pm,v 1.4 2003/10/16 14:08:53 jiri_schmid Exp $
+d130 1
+a130 1
+				<td class="buttons">	<input type="submit" name="Action" value="$$lang->{'Save As'}" onclick="multiple(); return readName();"/>
+@
+

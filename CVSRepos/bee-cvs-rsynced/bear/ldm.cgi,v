@@ -1,0 +1,284 @@
+head	1.7;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.7
+date	2004.04.13.12.42.23;	author michald;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	2004.02.18.16.19.06;	author jiri_schmid;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	2004.02.13.17.09.33;	author jiri_schmid;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2003.11.12.12.44.21;	author jiri_schmid;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2003.11.06.09.56.47;	author jiri_schmid;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2003.10.31.12.47.54;	author jiri_schmid;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2003.10.01.05.38.25;	author michald;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.7
+log
+@foundation for N:M relations
+@
+text
+@#!/usr/bin/perl
+# $Id: ldm.cgi,v 1.6 2004/02/18 16:19:06 jiri_schmid Exp $
+
+use strict;
+use utf8;
+
+use CGI qw( :standard );
+use CGI::Pretty;
+require "const/Const.pm";
+require "local/Local.pm";
+
+# ---- init SOAP ---------
+#-------------------------
+my $load = 0;
+if (!$load) {	# ensure require will be performed only once in case of mod_perl execution
+	eval "use SOAP::Lite +autodispatch => 
+		uri => 'Bear', 
+		proxy => ['http://$Const::bearHost:$Const::bearPort/',
+		options => {compress_threshold => $Const::compressThreshold}];
+		1"
+	or ( &Local::ErrorDie("ERROR in eval of \"use SOAP::Lite ...\".") );
+	$load++;
+}
+my $q = new CGI;
+
+# --- test SOAP connection ---
+#-----------------------------
+my $serverVerbName="SOAP Server http://$Const::bearHost:$Const::bearPort/";
+if (! eval "SOAP::Lite->self->fault") {
+	&Local::ErrorDie('ERROR: '.$serverVerbName.' not responding<br><form><input type="submit" name="Refresh" value="Refresh" /></form>');
+}
+
+# --- determine user and his preferences ---
+#-------------------------------------------
+my $user = $q->remote_user() ? $q->remote_user() : 'anonymous';
+my $use_lang = ($q->param('Lang')) ? $q->param('Lang') : $Const::defaultLanguage;
+my $project = ($q->param('Proj')) ? $q->param('Proj') : '';
+my $use_enc = $Const::languages->{$use_lang}->{enc};
+
+# --- determine skin ---
+#-----------------------
+my $skinPath;
+my $wb = $q->user_agent()=~/MSIE/ ? 'msie' : 'mozilla';
+if ($q->param('Skin')) {	# takes it as param from index.cgi
+	$skinPath = "skins/".$q->param('Skin');
+} elsif ($q->param('skin')) {	# I've received parameter from myself after Save
+	$skinPath = "$Const::wb_const->{$wb}{skinDir}/".$q->param('skin');
+} else {
+	$skinPath = "$Const::wb_const->{$wb}{skinDir}/default";	#let use default
+}
+
+# --- print out html form ---
+#----------------------------
+print $q->header(-charset=>$use_enc);
+
+print $q->start_html(
+	-title=>"LDM",
+  	-lang=>$Const::languages->{$use_lang}->{lang},	#return language specification in format: language-country (it differs from param Lang)
+	-encoding=>$use_enc,
+	-head=>meta({ -http_equiv => 'Content-Type', -content => "text/html; charset=$use_enc" }),
+#	-style=>{-src=>"${skinPath}/css.css"},
+);
+
+# img reference
+if (SOAP->CheckAccess('L',$user,$q->param('Proj'))) {
+	my $filePath = "$Const::myPath$Const::ldmPath$project/Ldm/";
+	my $img = $q->param('Image');
+	if ($img && -e "$filePath$img") {
+		print $q->img({src=>"$Const::ldmPath$project/Ldm/$img"});
+	}
+} else {
+	&Local::accessForbidden('Access Forbidden');
+}
+print $q->end_html;
+
+#---------------------------------------------------
+
+1
+@
+
+
+1.6
+log
+@rights implemented
+@
+text
+@d2 1
+a2 1
+# $Id: ldm.cgi,v 1.5 2004/02/13 17:09:33 jiri_schmid Exp $
+d66 1
+a66 1
+	my $filePath = "$Const::myPath$Const::bearMData$project/Ldm/";
+d69 1
+a69 1
+		print $q->img({src=>"$Const::bearMData$project/Ldm/$img"});
+@
+
+
+1.5
+log
+@major tabs control implemented
+@
+text
+@d2 1
+a2 1
+# $Id: ldm.cgi,v 1.4 2003/11/12 12:44:21 jiri_schmid Exp $
+d72 1
+a72 1
+	&Local::accessForbidden('LDM',$user);
+@
+
+
+1.4
+log
+@ldm multiimages implemented
+@
+text
+@d2 1
+a2 1
+# $Id: ldm.cgi,v 1.3 2003/11/06 09:56:47 jiri_schmid Exp $
+d35 1
+a35 1
+my $User = $q->remote_user() ? $q->remote_user() : 'anonymous';
+d65 8
+a72 4
+my $filePath = "$Const::myPath$Const::bearMData$project/Ldm/";
+my $img = $q->param('Image');
+if ($img && -e "$filePath$img") {
+	print $q->img({src=>"$Const::bearMData$project/Ldm/$img"});
+@
+
+
+1.3
+log
+@ldm implemented over all projects
+@
+text
+@d2 1
+a2 1
+# $Id: ldm.cgi,v 1.2 2003/10/31 12:47:54 jiri_schmid Exp $
+d66 3
+a68 5
+my $imgType = &Local::getImageType($filePath);
+if (-e "$filePath${project}_$use_lang.$imgType") {
+	print $q->img({src=>"$Const::bearMData$project/Ldm/${project}_$use_lang.$imgType"});
+} else {
+	print "<h3>NO LDM IMAGE FOUND UNDER PATH:</h3>$Const::bearMData$project/Ldm/";
+@
+
+
+1.2
+log
+@mod perl rocks!
+@
+text
+@d2 1
+a2 1
+# $Id: ldm.cgi,v 1.1 2003/10/01 05:38:25 michald Exp $
+d10 1
+d21 1
+a21 1
+	or ( &ErrorDie("ERROR in eval of \"use SOAP::Lite ...\".") );
+d30 1
+a30 1
+	ErrorDie('ERROR: '.$serverVerbName.' not responding<br><form><input type="submit" name="Refresh" value="Refresh" /></form>');
+d36 2
+a37 1
+my $use_lang = (param('Lang')) ? param('Lang') : $Const::defaultLanguage;
+a39 2
+my $ID=&SetParam($q,'ID','gid','');
+
+d64 8
+a71 2
+# static img reference is there for testing purposes only
+print $q->img ({src=>'beard/mdata/BeeDemo/ldm/BeeDemo.gif'});
+d76 1
+a76 1
+1@
+
+
+1.1
+log
+@basic impl. of LDM preview
+@
+text
+@d2 1
+a2 1
+# $Id: run.cgi,v 1.50 2003/09/30 07:10:53 michald Exp $
+a5 2
+binmode(STDOUT, ":utf8");
+binmode(STDIN, ":utf8");
+d9 1
+a9 13
+our $q = new CGI;
+use vars qw($StyleSheet $bearHost $bearPort $compress_threshold $MyName $Languages $DefaultLanguage $texture_dir $cache3Dreport $cache2Dreport);
+require "const.def";
+our $ID;
+our $User=$q->remote_user();
+
+# --- make SOAP connection ---
+eval "use SOAP::Lite +autodispatch => 
+	uri => 'Bear', 
+	proxy => ['http://$bearHost:$bearPort/', 
+	options => {compress_threshold => $compress_threshold}]; 
+	1"
+or ( &ErrorDie("ERROR in eval of \"use SOAP::Lite ...\".") );
+d11 17
+a27 1
+my $serverVerbName="SOAP Server http://$bearHost:$bearPort/";
+a30 1
+#*SOAP::Serializer::as_string = \&SOAP::Serializer::as_base64;	#reducing number of XML::Parser char() callbaks  for every single portion of processed stream (e.g. \n)
+d32 19
+a50 8
+my $user = $ENV{REMOTE_USER};
+my $ObjPref={};
+$ObjPref->{Beard} = SOAP->GetUserPref($user,'Beard');
+our $use_lang = $ObjPref->{'Beard'}->{'language'} ? $ObjPref->{'Beard'}->{'language'} : $DefaultLanguage;
+our $use_enc = $Languages->{$use_lang}->{enc};
+require $Languages->{$use_lang}->{'src'};
+our $skin = (param('Skin')) ? param('Skin') : (param('skin')) ? param('skin') : "";
+our $skinPath = ($skin) ? "skins/$skin/" : "";
+d52 2
+d58 1
+a58 1
+	-lang=>$Languages->{$use_lang}->{lang},	#return language specification in format: language-country (it differs from param Lang)
+d60 2
+a61 2
+	-head=>meta({	-http_equiv => 'Content-Type', 
+			-content => "text/html; charset=$use_enc" }),
+d70 1
+@
+

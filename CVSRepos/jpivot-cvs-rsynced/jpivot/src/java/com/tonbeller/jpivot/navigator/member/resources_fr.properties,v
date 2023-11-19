@@ -1,0 +1,42 @@
+head	1.1;
+access;
+symbols
+	jpivot_1_8_0:1.1
+	focus_1_6_0:1.1.0.4
+	jpivot_1_7_0:1.1
+	jpivot_1_6_0:1.1
+	jpivot_1_5_0:1.1.0.2
+	Root_jpivot_1_5_0:1.1
+	sourceforge_sync:1.1;
+locks; strict;
+comment	@# @;
+
+
+1.1
+date	2005.12.13.11.56.40;	author avix;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@Synchronized with Tonbeller CVS:
+  * Supports Mondrian 2.x API
+  * Added BEA / Websphere Support
+  * More tags in wcf tag library
+  * Bugfixes
+@
+text
+@MemberNavigator.ok.title=OK
+MemberNavigator.cancel.title=Annuler
+MemberNavigator.selectVisible.title=Tous
+MemberNavigator.selectNone.title=Aucun
+MemberNavigator.enableGrouping.title=Grouper
+MemberNavigator.disableGrouping.title=Plat
+MemberNavigator.overflowOccurred=Trop d'éléments
+
+@

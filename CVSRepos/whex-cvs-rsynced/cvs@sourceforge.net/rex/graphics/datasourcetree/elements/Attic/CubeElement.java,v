@@ -1,0 +1,163 @@
+head	1.2;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2005.06.28.13.38.26;	author igorludi;	state dead;
+branches;
+next	1.1;
+
+1.1
+date	2005.06.28.11.35.03;	author igorludi;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@*** empty log message ***
+@
+text
+@package rex.graphics.datasourcetree.elements;
+
+
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+
+import rex.utils.*;
+import rex.metadata.ServerMetadata;
+import javax.swing.ImageIcon;
+
+/**
+ * <p>Title: WHEX</p>
+ * <p>Description: </p>
+ * <p>Copyright: Copyright (c) 2003</p>
+ * <p>Company: </p>
+ * @@author igor
+ * @@version 1.0
+ */
+
+/*
+  <CATALOG_NAME>Test</CATALOG_NAME>
+  <CUBE_NAME>Ispit</CUBE_NAME>
+  <CUBE_TYPE>CUBE</CUBE_TYPE>
+  <LAST_SCHEMA_UPDATE>2003-09-17T11:23:21</LAST_SCHEMA_UPDATE>
+  <LAST_DATA_UPDATE>2003-09-17T11:23:21</LAST_DATA_UPDATE>
+  <IS_DRILLTHROUGH_ENABLED>false</IS_DRILLTHROUGH_ENABLED>
+  <IS_LINKABLE>true</IS_LINKABLE>
+  <IS_WRITE_ENABLED>false</IS_WRITE_ENABLED>
+  <IS_SQL_ENABLED>true</IS_SQL_ENABLED>
+
+*/
+public class CubeElement  implements DataSourceTreeElement{
+   private String dataSourceInfo;
+   private String catalogName;
+   private String cubeName;
+   private String cubeType;
+   private String lastSchemaUpdate;
+   private String lastDataUpdate;
+   private String isDrillthroughEnabled;
+   private String isLinkable;
+   private String isWriteEnabled;
+   private String isSQLEnabled;
+   private ServerMetadata parent;
+
+   static ImageIcon icon;
+   static {
+      icon = S.getAppIcon("cube.gif");
+   }
+
+/*
+   public CubeElement(ServerMetadata svm) {
+      parent = svm;
+   }
+*/
+   public CubeElement(ServerMetadata svm, Node rowNode, String myDataSourceInfo) {
+      parent = svm;
+      dataSourceInfo = myDataSourceInfo;
+      NodeList nl = rowNode.getChildNodes();
+
+      for(int i=0; i < nl.getLength(); i++){
+         //S.out("nl.getNodeType = " + nl.item(i).getNodeType() + " node name = " +  nl.item(i).getNodeName() + " text = " + DOM.getTextFromDOMElement(nl.item(i)));
+         if (nl.item(i).getNodeType() == 1){
+            if (nl.item(i).getNodeName().equals("CATALOG_NAME")) {
+               catalogName = DOM.getTextFromDOMElement(nl.item(i));
+            }else if (nl.item(i).getNodeName().equals("CUBE_NAME")) {
+               cubeName = DOM.getTextFromDOMElement(nl.item(i));
+            }else if (nl.item(i).getNodeName().equals("CUBE_TYPE")) {
+               cubeType = DOM.getTextFromDOMElement(nl.item(i));
+            }else if (nl.item(i).getNodeName().equals("LAST_SCHEMA_UPDATE")) {
+               lastSchemaUpdate = DOM.getTextFromDOMElement(nl.item(i));
+            }else if (nl.item(i).getNodeName().equals("LAST_DATA_UPDATE")) {
+               lastDataUpdate = DOM.getTextFromDOMElement(nl.item(i));
+            }else if (nl.item(i).getNodeName().equals("IS_DRILLTHROUGH_ENABLED")) {
+               isDrillthroughEnabled = DOM.getTextFromDOMElement(nl.item(i));
+            }else if (nl.item(i).getNodeName().equals("IS_LINKABLE")) {
+               isLinkable = DOM.getTextFromDOMElement(nl.item(i));
+            }else if (nl.item(i).getNodeName().equals("IS_WRITE_ENABLED")) {
+               isWriteEnabled = DOM.getTextFromDOMElement(nl.item(i));
+            }else if (nl.item(i).getNodeName().equals("IS_SQL_ENABLED")) {
+               isSQLEnabled = DOM.getTextFromDOMElement(nl.item(i));
+            }
+         }
+      }
+   }
+   public DataSourceTreeElement[] getChildren(){
+      return null;
+   }
+
+
+   public String toString(){
+      if (cubeName == null)
+         return "not initialized";
+      else
+         return "" + cubeName;
+   }
+
+   public ImageIcon getIcon(){
+      return icon;
+   }
+
+   public String getToolTip(){
+      if (catalogName == null)
+         return "not initialized";
+      else
+         return "" + cubeName
+            + " TYPE:" + cubeType
+            + " LAST SCHEMA UPDATE:" + lastSchemaUpdate
+            + " LAST DATA UPDATE:" + lastDataUpdate;
+   }
+   public String[] getPopUpActionList(){
+      return new String[] {"Explore!", "Explore with MDX Editor!"};
+   }
+   public ServerMetadata getServerMetaData(){
+      return parent;
+   }
+
+   public String getDataSourceInfo(){
+      return dataSourceInfo;
+   }
+   public String getCubeName(){
+      return cubeName;
+   }
+   public String getCatalogName(){
+      return catalogName;
+   }
+}
+@
+
+
+1.1
+log
+@first time commit
+@
+text
+@@
+

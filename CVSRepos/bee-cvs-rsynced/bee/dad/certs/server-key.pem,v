@@ -1,0 +1,38 @@
+head	1.1;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.1
+date	2003.02.05.17.20.41;	author numberone;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@otec deleted
+@
+text
+@-----BEGIN RSA PRIVATE KEY-----
+MIICWwIBAAKBgQCpHNmbggyFdUh2boohQx/0krMJIDs4qXeUYnXYkRqHR/QmjssI
+KNy2/8lYkAZ7k6FNeWvJkQ35TGpC5UYPU9yNqD8iY7GqQ7aYqcvWRXzZu4Rw0Aei
+Oq1tFnYqkS9y0H/f0ByzQaeeMSzij0DRry8BBu1r3KMEw5tfE0peetYIoQIDAQAB
+AoGAYak2hdbBkmTbtwE5JeJU1vHNEM0bRiqf0wJVWf7aGhvUhFvcJlcqt0faKBns
+lHr6IPqo45uwPTMC/qTXI8zjRb7ktm5MXC29c2tyXTGTqIwU+eUdofarGASCAbEK
+yCK/gUlZXNgGcQeFwuHWUDWJZx5jLUKh3PiqnUyF3TBGuR0CQQDV/XJggH+Zbf5K
+azqW55cH7yWlfTedDuSEiGjeEJg7N3Rqdw9daFn8/+wFxWbbRSWhQq2rBc8pGOYu
+3/fMkWzPAkEAyk/9yuHt1cymde4mG/PQkq+ZaZJQ/cikWJUuAXjuCjBYj2I93BFD
+eTmI4ybye3uLRXRVyOmBC+YPWfeoQevvjwJAVzaCZR454vhXSVFGgbZFcbBf8YCF
+J/en3vQReV/eC1Rgl/uKQZGEC37qXLfFYdxep8ibKzak5aUGO1iAj9k9NQJATsbt
+DQYCZUDmBH+yCSpcKfIEa65UqS1qiS+1lU8waXk/0r0vVzTFsDtuCP1OaDTIG0hc
+avo5jJeNnLupodmsEwJAA09a9TCRw6lPTGiMnh3wBPJHWsWuY6NG6YYfFhazX499
+DzhfkU8wjvStwbyfpwZUYOxVMPzSVLQtV7o/IKs/mg==
+-----END RSA PRIVATE KEY-----
+@

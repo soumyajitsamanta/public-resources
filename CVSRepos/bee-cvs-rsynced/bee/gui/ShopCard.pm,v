@@ -1,0 +1,757 @@
+head	1.9;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.9
+date	2004.06.09.13.26.43;	author tuco80;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	2004.03.10.14.57.00;	author tuco80;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	2003.12.18.12.26.57;	author tuco80;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	2003.08.05.15.21.56;	author tuco80;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	2003.06.26.14.11.46;	author spanhel;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2003.05.30.16.22.17;	author spanhel;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2003.05.26.14.03.36;	author spanhel;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2003.05.22.13.55.33;	author spanhel;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2003.05.16.07.02.43;	author spanhel;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.9
+log
+@Fixed fatal bug in creation of Logical Model
+@
+text
+@#-----------------------------------------------------
+# Shoping Card Form
+#-----------------------------------------------------
+# $Id: ShopCard.pm,v 1.8 2004/03/10 14:57:00 tuco80 Exp $
+
+
+use strict;
+package ShopCard;
+
+use Tk::Balloon;
+require Tk::Widget;
+use prop;
+#require "prop.pl";
+use Data::Dumper;
+use DSI;
+
+=head1 NAME
+
+ShopCard - class to implement "Shoping Card" form interface
+
+=head1 SYNOPSIS
+
+ use ShopCard;
+
+ #################
+ # class methods #
+ #################
+ $sc = ShopCard->new;
+
+ #######################
+ # object data methods #
+ #######################
+
+ ### show  ###
+ $sc->show;
+
+=head1 DESCRIPTION
+
+=cut
+
+##################################################
+## the object constructor                       ##
+##################################################
+
+sub new {
+	# GetListProc - reference to function which get set of available items
+	my $proto=shift;
+
+	my $class = ref($proto) || $proto;
+	my $self  = {};
+
+	$self->{Widget} = shift;		# Parent Widget to draw in
+	$self->{bWidget} = shift;		# Widget to attach ballon
+	$self->{ObjName} = shift;		# Name of selected object - for descriptoion purposes only
+	$self->{GetListProc} = shift;		# reference to procedure returning list of available objects
+									# if undef, then available obj will be collected from $self->{avObj}
+        $self->{AddListProc} = shift;		# reference to procedure adding list of selected objects to project hash
+
+	$self->{avObj} = shift;			# parameter for $self->{GetListProc} 
+									# or hash of available objects in case $self->{GetListProc} is undefined	
+	$self->{selObj} = shift;		# hash of selected objects
+	#$self->{avArr};					#Array of id's of available objects
+	#$self->{selArr};				#Array of id's of selected objects
+        
+	$self->{prj} = shift;			# \$Project
+	$self->{tree} = shift;			# \$TreeList
+	$self->{layer} = shift;		        # \$Layer
+	$self->{schema} = shift;		#\$tSchemaC
+	$self->{layerID} = shift;		
+
+	$self->{entryW} = 30; 			# list width
+	$self->{entryH} = 12; 			# list height	
+	
+	$self->{btnFL} = ''; 			# left button frame - in Available frame
+	$self->{btnFR} = ''; 			# right button frame - in Selected frame	
+	
+	# hide Refresh button in case GetListProc is not defined
+
+	if ($self->{GetListProc}) {
+	   $self->{ShowBut}->{Ref} = 1;
+	}
+	else {
+           $self->{ShowBut}->{Ref} = 0;
+	}  
+	$self->{ShowBut}->{New} = 1;
+	$self->{ShowBut}->{UpDown} = 1;
+
+	$self->{BalloonFont} = '-*-verdana-normal-r-normal-*-10-*-iso8859-2';
+	$self->{baloon} = $self->{bWidget}->Balloon(-font=>$self->{BalloonFont});
+	
+	$self->{Img}->{SELECT} = $self->{Widget}->Pixmap(-file => 'img/yes_12.xpm');
+	$self->{Img}->{UNSELECT} = $self->{Widget}->Pixmap(-file => 'img/no_12.xpm');
+	$self->{Img}->{REFRESH} = $self->{Widget}->Pixmap(-file => 'img/refresh.xpm');
+	$self->{Img}->{R_ARR} = $self->{Widget}->Pixmap(-file => 'img/leftArr.xpm');
+	$self->{Img}->{L_ARR} = $self->{Widget}->Pixmap(-file => 'img/rightArr.xpm');
+	$self->{Img}->{NEW} = $self->{Widget}->Pixmap(-file => 'img/new_16.xpm');
+	$self->{Img}->{U_ARR} = $self->{Widget}->Pixmap(-file => 'img/upArr.xpm');
+	$self->{Img}->{D_ARR} = $self->{Widget}->Pixmap(-file => 'img/downArr.xpm');
+
+	bless ($self, $class);
+	return $self;
+
+}
+
+##############################################
+## methods to access per-object data        ##
+##                                          ##
+## With args, they set the value.  Without  ##
+## any, they only retrieve it/them.         ##
+##############################################
+
+
+sub MoveObj {
+	my $self = shift;
+	my $fromL=shift;
+	my $toL=shift;
+	my $dir=shift; #if defined, we are moving from left to right!
+	my $from;
+	my $to;
+	if($dir){
+		$to = \@@{$self->{avArr}};
+		$from = \@@{$self->{selArr}};
+	}
+	else{
+		$from = \@@{$self->{avArr}};
+		$to = \@@{$self->{selArr}};
+	}
+	#print Dumper("\nFrom is:",@@$from,"\n\n\nto is:",@@$to);
+	foreach (reverse($fromL->curselection())) {
+		$toL->insert('end',$fromL->get($_));
+		$toL->selectionSet('end');
+		#print "\nPushing $$from[$_]";
+		push(@@$to,$$from[$_]);
+		splice(@@$from,$_,1);
+		$fromL->delete($_);
+	}
+	
+	#print Dumper("\nFrom is:",$from,"\n\n\nto is:",$to);
+}
+
+sub NewObj {
+	my $self = shift;
+}
+
+sub UpObj {
+	my $self = shift;
+	my $list=shift;
+	foreach ($list->curselection()) {
+		my $itm=$list->get($_);
+		$list->delete($_);
+		$list->insert($_-1,$itm);
+		$list->selectionSet($_-1);
+	}
+}
+
+sub DownObj {
+	my $self = shift;
+	my $list=shift;
+	foreach (reverse($list->curselection())) {
+		my $itm=$list->get($_);
+		$list->delete($_);
+		$list->insert($_+1,$itm);
+		$list->selectionSet($_+1);
+	}
+}
+
+sub FiltSel {
+	my $self = shift;
+	my $list=shift;
+	my $selS=shift;
+	my $selT=shift;	# 0...selectionSet, 1...selectionClear
+	$selS='.*' if (!$selS);
+	foreach (0..$list->size()-1) {
+		($selT ? $list->selectionClear($_) : $list->selectionSet($_)) if ($list->get($_)=~/$selS/);
+	}
+}
+
+sub FiltObj {
+	my $self = shift;
+	my ($AvailF,$avL,$AvFiltS,$entryW)=@@_;
+	my $aux = $entryW-4;
+	$AvailF->Entry(-relief=>'sunken', -width=>$aux, -textvariable=>\$AvFiltS)
+		->grid(qw/-row 1 -column 0 -sticky w -padx 1/);
+	my $fB=$AvailF->Button(
+        	-image    => $self->{Img}->{SELECT},
+        	-command => sub{$self->FiltSel($avL,$AvFiltS)},
+        )->grid(qw/-row 1 -column 1 -sticky w -padx 0/);
+	$self->{baloon}->attach($fB, -balloonmsg => "Set Selection on Filter");
+	my $ufB=$AvailF->Button(
+        	-image    => $self->{Img}->{UNSELECT},
+        	-command => sub{$self->FiltSel($avL,$AvFiltS,1)},
+        )->grid(qw/-row 1 -column 2 -sticky w -padx 0/);
+	$self->{baloon}->attach($ufB, -balloonmsg => "Clear Selection on Filter");
+}
+
+sub AddButton {
+  my $self = shift;
+  my $pos = shift; # left or right side
+  my $img = shift; # image of btn
+  my $msg = shift; # mesage for baloon
+  my $fce = shift; # reference to function
+  my $fr;
+  
+  if ($pos eq 'L') {
+    $fr=$self->{btnFL};
+  }
+  else {
+    $fr = $self->{btnFR};
+  }
+  my $B=$fr->Button(
+        		-image    => $self->{Img}->{$img},
+        		-command => sub{&$fce(\$self);},
+        	)->pack();
+		$self->{baloon}->attach($B, -balloonmsg => "$msg\"");  
+}
+
+sub show {	#shows shoping card form for selection and ordering of specific objects
+	my $self = shift;	
+	my $lang = shift;
+	my ($avL,$selL,$uB,$nB,$upB,$dwB,$uBb);
+	my ($AvFiltS,$SelFiltS);        
+	my $st = $self->{Widget}->Frame()->pack(-anchor=>"nw");
+	#********************* Available objects *************
+	my $AvailF = $st->LabFrame(-label => "Available $self->{ObjName}", -labelside=>"acrosstop")->pack(-anchor=>"nw",-side=>'left',-padx => 5);
+	$avL = $AvailF->Scrolled(qw/Listbox -selectmode extended -setgrid 1 -scrollbars oe/, -height=>$self->{entryH}, -width=>$self->{entryW} );
+	$avL->grid(qw/-row 0 -column 0 -sticky w -padx 1/);
+        #frame form buttons see function AddButton
+	$self->{btnFL} = $AvailF->Frame()->grid(qw/-row 0 -column 1 -sticky n  -padx 1/);	
+	
+        $self->{avL}= \$avL;
+	$self->FiltObj($AvailF->Frame()->grid(qw/-row 1 -column 0 -sticky w/), $avL, $AvFiltS,$self->{entryW});
+
+	my $tl = $st->Frame->pack(-anchor=>"center",-side=>'left',-padx => 5);
+	my $sB=$tl->Button(
+        	-image    => $self->{Img}->{R_ARR},
+        	-command => sub{$self->MoveObj($selL,$avL,1)},
+        )->pack(qw/-side bottom -anchor n /);
+	$self->{baloon}->attach($sB, -balloonmsg => "Select $self->{ObjName}");
+	
+	
+	my $dB=$tl->Button(
+        	-image    => $self->{Img}->{L_ARR},
+        	-command => sub{$self->MoveObj($avL,$selL)},
+        )->pack(qw/-side bottom -anchor n /);
+	$self->{baloon}->attach($dB, -balloonmsg => "Unselect $self->{ObjName}");
+
+	#********************* Selected objects *************
+	my $SelF = $st->LabFrame(-label => "Selected $self->{ObjName}", -labelside=>"acrosstop")->pack(-anchor=>"nw",-side=>'left',-padx => 5);
+	$selL = $SelF->Scrolled(qw/Listbox -selectmode extended -setgrid 1 -scrollbars oe/, -height=>$self->{entryH}, -width=>$self->{entryW} );
+	$selL->grid(qw/-row 0 -column 0 -sticky w -padx 1/);
+        $self->{SelL}= \$selL;        
+	if ($self->{ShowBut}->{Ref}) {  	    
+	    foreach (keys( %{$self->{selObj}})) {	# populate selected list
+		    #$selL->insert('end', $_);
+			if ($lang){
+	   		   $selL->insert('end', $self->{selObj}->{$_}->{name}->{$lang});
+		    }
+		    else{
+	   		   $selL->insert('end', $self->{selObj}->{$_}->{name}); # if (!/$l/);	#don't insert if object is already presented in one of lists
+		    }
+			push(@@{$self->{selArr}},$_);
+	    }
+	}   
+
+        #frame form buttons see function AddButton
+	$self->{btnFR} = $SelF->Frame()->grid(qw/-row 0 -column 1 -sticky n -padx 1/);	
+	if ($self->{ShowBut}->{New}) {
+		$nB=$self->{btnFR}->Button(
+        		-image    => $self->{Img}->{NEW},
+        		-command => sub{$self->NewObj($selL)},
+        	)->pack(qw/-side top -anchor n -padx 1/);
+		$self->{baloon}->attach($nB, -balloonmsg => "Add New $self->{ObjName}");
+	}
+	if ($self->{ShowBut}->{UpDown}) {
+		$upB=$self->{btnFR}->Button(
+        		-image    => $self->{Img}->{U_ARR},
+        		-command => sub{$self->UpObj($selL)},
+        	)->pack(qw/-side top -anchor n -padx 1/);
+		$self->{baloon}->attach($upB, -balloonmsg => "Move Up");
+		$dwB=$self->{btnFR}->Button(
+        		-image    => $self->{Img}->{D_ARR},
+        		-command => sub{$self->DownObj($selL)},
+        	)->pack(qw/-side top -anchor n -padx 1/);
+		$self->{baloon}->attach($dwB, -balloonmsg => "Move Down");
+	}
+	$self->FiltObj($SelF->Frame()->grid(qw/-row 1 -column 0 -sticky w/), $selL, $SelFiltS, $self->{entryW});
+}
+
+
+sub ShowSelObj {
+  my $self = shift;
+  my $obj = shift;
+  my $id_l = shift; # layer id
+  my $lang = shift;
+  #my $list2 = $self->{avL};
+  my $list = $self->{SelL};
+  #my $l = '^'.join('$|^',$$list->get(0,'end')).'$|^'.join('$|^',$$list2->get(0,'end')).'$';
+  $$list->delete(0,'end');
+  foreach(keys %{$obj}) {
+     if (exists $obj->{$_}->{'gui-presentation'}->{$id_l}) {
+       if ($lang){
+	   		$$list->insert('end', $obj->{$_}->{name}->{$lang});
+	   }
+	   else{
+	   	   $$list->insert('end', $obj->{$_}->{name}); # if (!/$l/);	#don't insert if object is already presented in one of lists
+	   }
+	   push(@@{$self->{selArr}},$_);
+     }  
+  }
+  #print Dumper("Este es selected al principio:",@@{$self->{selArr}});
+}
+
+sub ShowAvObj {
+  my $self = shift;
+  my $obj = shift;
+  my $lang = shift;
+  my $list = $self->{avL};
+  my $list2 = $self->{SelL};
+  $$list->delete(0,'end');
+  my $l = '^'.join('$|^',$$list2->get(0,'end')).'$';  
+  foreach(keys %{$obj}) {
+		if ($lang){
+			$$list->insert('end', $obj->{$_}->{name}->{$lang}) if ($obj->{$_}->{name}->{$lang}!~/$l/);#don't insert if object is already presented in one of lists
+			push(@@{$self->{avArr}},$_) if ($obj->{$_}->{name}->{$lang}!~/$l/);
+		}
+		else{
+			$$list->insert('end', $obj->{$_}->{name}) if ($obj->{$_}->{name}!~/$l/);#don't insert if object is already presented in one of lists
+			push(@@{$self->{avArr}},$_) if ($obj->{$_}->{name}!~/$l/);
+		}
+		
+  }
+ # print Dumper("Este es available al principio:",@@{$self->{avArr}});
+  $$list->selectionSet(0,'end');    
+}
+
+1
+
+__END__
+
+@
+
+
+1.8
+log
+@Use id's instead of names internally, it caused problems
+@
+text
+@d4 1
+a4 1
+# $Id: ShopCard.pm,v 1.7 2003/12/18 12:26:57 tuco80 Exp $
+d128 1
+a128 1
+	print Dumper("\nFrom is:",@@$from,"\n\n\nto is:",@@$to);
+d132 1
+a132 1
+		print "\nPushing $$from[$_]";
+d138 1
+a138 1
+	print Dumper("\nFrom is:",$from,"\n\n\nto is:",$to);
+d310 1
+a310 1
+  print Dumper("Este es selected al principio:",@@{$self->{selArr}});
+d332 1
+a332 1
+  print Dumper("Este es available al principio:",@@{$self->{avArr}});
+@
+
+
+1.7
+log
+@ShopCard displays Names, not IDs
+@
+text
+@d4 2
+a5 1
+# $Id: ShopCard.pm,v 1.6 2003/08/05 15:21:56 tuco80 Exp $
+d62 2
+d117 12
+d132 3
+d137 2
+d236 1
+a236 1
+        	-command => sub{$self->MoveObj($selL,$avL)},
+d261 1
+d307 1
+d310 1
+d324 1
+d328 1
+d330 1
+d332 1
+@
+
+
+1.6
+log
+@changes in Edit.pm (prop.pl now prop.pm)
+@
+text
+@d4 1
+a4 1
+# $Id: ShopCard.pm,v 1.5 2003/06/26 14:11:46 spanhel Exp $
+d199 1
+d234 7
+a240 1
+		    $selL->insert('end', $_);
+d273 1
+d280 6
+a285 1
+       $$list->insert('end', $_); # if (!/$l/);	#don't insert if object is already presented in one of lists
+d293 1
+d299 6
+a304 1
+     $$list->insert('end', $_) if (!/$l/);	#don't insert if object is already presented in one of lists
+@
+
+
+1.5
+log
+@logical and fys. model
+@
+text
+@d4 1
+a4 1
+# $Id: ShopCard.pm,v 1.4 2003/05/30 16:22:17 spanhel Exp $
+d11 2
+a12 1
+require "prop.pl";
+@
+
+
+1.4
+log
+@logical model
+@
+text
+@d4 1
+a4 1
+# $Id: ShopCard.pm,v 1.3 2003/05/26 14:03:36 spanhel Exp $
+a268 2
+#  print Dumper($id_l);
+#  print Dumper($obj);
+a270 1
+       print Dumper($_);
+@
+
+
+1.3
+log
+@change connection to DB, ShopCard - AddButton Function
+@
+text
+@d4 1
+a4 1
+# $Id: ShopCard.pm,v 1.2 2003/05/22 13:55:33 spanhel Exp $
+d230 2
+a231 2
+	if ($self->{ShowBut}->{Ref}) {
+  	    foreach (keys( %{$self->{selObj}})) {	# populate selected list
+d269 2
+d273 1
+@
+
+
+1.2
+log
+@attributes added into groups (+ color of groups)
+@
+text
+@d4 1
+a4 1
+# $Id: ShopCard.pm,v 1.1 2003/05/16 07:02:43 spanhel Exp $
+d11 1
+d60 7
+a66 2
+	$self->{dbConn} = shift;			# database connection hash (part of hash $Project)
+	$self->{md} = shift;			# SQL form
+d70 3
+a119 14
+sub RefObj {
+	my $self = shift;
+	my $list=shift;
+	my $list2=shift;
+	my $GetListProc=shift;
+	my $avObj=shift;
+	my $l = '^'.join('$|^',$list->get(0,'end')).'$|^'.join('$|^',$list2->get(0,'end')).'$';	
+	my $obj = &$GetListProc($avObj,$self->{dbConn},$self->{md});
+	foreach(keys %{$$obj->{'obj'}}) {
+		$list->insert('end', $_) if (!/$l/);	#don't insert if object is already presented in one of lists
+	}
+	$list->selectionSet(0,'end');
+}
+
+d175 21
+d197 2
+a198 10
+	my $self = shift;
+	my $prj = shift;
+	my $tree = shift;
+	my $layer = shift;
+	my $refProc = shift;
+	my $clearProc = shift;
+	my $showLProc = shift;
+	my $schema = shift;	
+	my $layerId = shift;
+	my ($avL,$selL,$uB,$nB,$upB,$dwB);
+d201 1
+d205 3
+a207 9
+	if ($self->{ShowBut}->{Ref}) {
+		$uB=$AvailF->Button(
+        		-image    => $self->{Img}->{REFRESH},
+        		-command => sub{			                
+					$self->RefObj($avL,$selL,$self->{GetListProc},$self->{avObj})
+					},
+        	)->grid(qw/-row 0 -column 1 -sticky n -padx 1/);
+		$self->{baloon}->attach($uB, -balloonmsg => "Refresh Available $self->{ObjName}\"");
+	}
+d224 2
+a225 1
+	
+d229 1
+a229 1
+        $self->{SelL}= \$selL;
+d235 3
+a237 1
+	my $SelBF=$SelF->Frame()->grid(qw/-row 0 -column 1 -sticky n -padx 1/);
+d239 1
+a239 1
+		$nB=$SelBF->Button(
+d246 1
+a246 1
+		$upB=$SelBF->Button(
+d251 1
+a251 1
+		$dwB=$SelBF->Button(
+a256 14
+	my $saveB=$SelBF->Button(
+        	-image    => $self->{Img}->{SELECT},
+        	-command => sub{
+				my $rObj;
+		                my $updProc = $self->{'AddListProc'};	
+				foreach ($selL->get(0,'end')) {$rObj->{'obj'}->{$_}=$_;};
+				&$clearProc($layer,$schema);
+				&$updProc($self->{avObj},$prj,\$rObj,$layerId);				
+				$$tree->delete('all');			
+				undef $$layer;				
+				&$refProc($$prj,$layer);				
+			       },
+        )->pack(qw/-side top -anchor n -padx 1/);
+	$self->{baloon}->attach($saveB, -balloonmsg => "Use selection of $self->{ObjName}");
+a273 1
+  #$$list->selectionSet(0,'end');    
+@
+
+
+1.1
+log
+@adding and removing object from Layers
+@
+text
+@d4 1
+a4 1
+# $Id$
+a12 10
+#require "img.pl";	# img deffinitions
+#require "ptree.pl";
+
+
+#use base  qw(Tk::Widget);
+#use vars qw($buttonWindow $relief);
+#Tk::Methods('deselect','flash','invoke','select','toggle');
+#Construct Tk::Widget qw('ShopCard');
+
+
+d43 1
+a43 1
+
+a299 2
+
+
+a301 112
+sub name {
+	my $self = shift;
+	if (@@_) { 
+    		$self->{NAME} = shift;
+		if ($self->{CANV_ID}[2]) {
+			$self->{CANVAS}->itemconfigure($self->{CANV_ID}[2], -text=>$self->{NAME});
+		}
+	}
+	return $self->{NAME};
+}
+
+sub desc {
+	my $self = shift;
+	if (@@_) { $self->{DESC} = shift }
+	return $self->{DESC};
+}
+
+sub value {
+	my $self = shift;
+	if (@@_) {
+		$self->{VALUE} = shift;
+		if ($self->{CANV_ID}[1]) {
+			$self->{CANVAS}->itemconfigure($self->{CANV_ID}[1], -text=>$self->{VALUE});
+			my @@w=$self->{CANVAS}->bbox($self->{CANV_ID}[1]);	# check text outline coords
+			$self->{TEXT_W}=$w[2]-$w[0];
+			my ($x1, $y1, $x2, $y2) = $self->{CANVAS}->coords($self->{CANV_ID}[0]);
+			$x1=$x2-$self->{TEXT_W}-$attrXpad*2;
+			$self->{CANVAS}->coords($self->{CANV_ID}[0], $x1, $y1, $x2, $y2);
+			$self->coords($x1, $y1, $x2, $y2);
+		}
+	}
+	return $self->{VALUE};
+}
+
+sub coords {
+	my $self = shift;
+	if (@@_) {
+		my ($x1,$y1,$x2,$y2) = @@_;
+		$self->{COORDS} = [$x1,$y1,$x2,$y2];
+		$self->{CANVAS}->coords($self->{CANV_ID}[0],$x1,$y1,$x2,$y2);
+	}
+	return $self->{CANVAS}->coords($self->{CANV_ID}[0]);
+}
+
+sub getAttrY {	#return Y coordinate of connection point
+	my $self = shift;
+	return $self->{COORDS}[3]-$self->{COORDS}[1];
+}
+
+sub getAttrX {	#return X coordinate of connection point
+	my $self = shift;
+	return $self->{COORDS}[3]-$self->{COORDS}[1];
+}
+
+sub relation {
+	my $self = shift;
+	if (@@_) {
+		my ($id,$edge) = @@_;	# relation id, edge position [0,1] ... first or last
+        	push (@@{$self->{REL}}, $id);
+	}
+	return $self->{REL}
+}
+
+sub move {
+	my $self = shift;
+	my ($c,$x,$y) = @@_;	# canvas,x,y
+	my $tag_name = '_CONST/'.$self->{ID};
+	$c->move('_'.$tag_name, $x, $y);
+	foreach (@@{$self->relation}) {	#move all connected relations
+		$_->adjustCoords;
+	};
+}
+
+sub draw {
+	my ($self,$c) = @@_;	# canvas
+	$self->{CANVAS}=$c;
+	my ($x1,$y1) = @@{$self->{COORDS}};
+	my $tag_name = '__CONST/'.$self->{ID};
+
+	$self->{CANV_ID}[0]=$c->createRectangle(0,0,0,0, -width=>1, -fill => $uBannerClr, -tags=>[$tag_name,'item']);
+	$self->{CANV_ID}[1]=$c->createText(0,0, qw/-anchor e -fill white/,-text=>$self->{VALUE},-font=>$EntityFont, -tags=>[$tag_name,'item']);
+	$self->{CANV_ID}[2]=$c->createText(0,0, qw/-anchor e -fill black/,-text=>$self->{NAME},-font=>$NameFont, -tags=>[$tag_name,'item']);
+
+	my @@w=$c->bbox($self->{CANV_ID}[1]);	# check text outline coords
+	$self->{TEXT_W}=$w[2]-$w[0];
+	my $x2=$x1+$self->{TEXT_W}+$attrXpad*2;
+	my $y2=$y1+$tblHeadY;
+
+	@@w=$c->bbox($self->{CANV_ID}[2]);	# check name outline coords
+	my $xx2=$x2-$attrXpad;
+	my $yy2=$y1-$attrYpad;
+
+	$c->coords($self->{CANV_ID}[0], $x1, $y1, $x2, $y2);
+	$c->coords($self->{CANV_ID}[1], ($x1+$x2)/2+$attrXpad, ($y1+$y2)/2);
+	$c->coords($self->{CANV_ID}[2], $xx2, $yy2);
+	$self->coords($x1, $y1, $x2, $y2);
+
+}
+
+#-----------------------------
+
+sub clear {
+	my $self = shift;
+	foreach (@@{$self->{CANV_ID}}) {
+		$self->{CANVAS}->delete($_);
+	}
+	$self->{CANV_ID}=();
+}
+
+#-----------------------------
+
+1;
+@
+

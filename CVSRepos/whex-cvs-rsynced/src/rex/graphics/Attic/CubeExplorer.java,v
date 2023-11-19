@@ -1,0 +1,454 @@
+head	1.2;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2005.10.18.13.40.37;	author igorludi;	state dead;
+branches;
+next	1.1;
+
+1.1
+date	2005.06.28.14.10.46;	author igorludi;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@*** empty log message ***
+@
+text
+@package rex.graphics;
+
+
+import org.tempuri.type.*;
+import rex.graphics.tables.CellTable;
+import javax.swing.JFrame;
+import java.awt.BorderLayout;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import rex.utils.*;
+import rex.metadata.resultelements.Member;
+import java.util.Vector;
+import rex.metadata.resultelements.Tuple;
+import java.awt.GridBagLayout;
+import java.awt.GridBagConstraints;
+import javax.swing.JPanel;
+import javax.swing.Box;
+import java.awt.Component;
+import java.awt.Dimension;
+import javax.swing.JSplitPane;
+import javax.swing.BoxLayout;
+import java.awt.event.ComponentListener;
+import java.awt.event.ComponentEvent;
+import javax.swing.JScrollPane;
+import java.awt.Color;
+import javax.swing.JLabel;
+import javax.swing.BorderFactory;
+
+
+import java.awt.Graphics;
+import java.awt.Toolkit;
+import rex.graphics.tables.CellTableModel;
+import javax.swing.JButton;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import rex.metadata.*;
+import rex.graphics.filtertree.*;
+
+/**
+ * <p>Title: WHEX</p>
+ * <p>Description: </p>
+ * <p>Copyright: Copyright (c) 2003</p>
+ * <p>Company: </p>
+ * @@author igor
+ * @@version 1.0
+ */
+
+public class CubeExplorer extends JPanel{
+   JPanel rightPane, leftPane;
+   CellTable  ct;
+   JSplitPane splitPane;
+   double divLoc;
+   private ExecuteResult execResult;
+   private JPanel westPane;
+   private JPanel northPane;
+   private CubeSlicer cubeSlicer;
+   private JLabel btnCopyTable;
+
+   public CubeExplorer(ExecuteResult _execResult
+                       , CubeSlicer _cubeSlicer
+                       , boolean showColumnTotalsOn
+                       , boolean showRowTotalsOn) {
+      execResult = _execResult;
+      cubeSlicer = _cubeSlicer;
+      ct = new CellTable(execResult, cubeSlicer, this, showColumnTotalsOn, showRowTotalsOn);
+      int rh = ct.getRowHeight();
+      int rw = ct.getWidth() / ct.getColumnCount();
+
+      northPane = execResult.getHorizontalTreePanel("Axis0", rw, rh, showRowTotalsOn);
+      westPane  = execResult.getVerticalTreePanel("Axis1", 40, rh, showColumnTotalsOn);
+
+      leftPane  = new JPanel();
+      leftPane.setLayout(new BoxLayout(leftPane,BoxLayout.Y_AXIS));
+      leftPane.setOpaque(false);
+//      S.out("execResult.getAxis(Axis0).getHierarchyInfoCount()=" + execResult.getAxis("Axis0").getHierarchyInfoCount());
+//      S.out("execResult.getAxis(Axis1).getHierarchyInfoCount()=" + execResult.getAxis("Axis1").getHierarchyInfoCount());
+
+
+//      JLabel dummy = new JLabel("dummy");
+//      dummy.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+//      dummy.setPreferredSize(new Dimension(30, execResult.getAxis("Axis0").getHierarchyInfoCount() * rh ));
+//      dummy.setMinimumSize(new Dimension(30, execResult.getAxis("Axis0").getHierarchyInfoCount() * rh ));
+//      dummy.setMaximumSize(new Dimension(30, execResult.getAxis("Axis0").getHierarchyInfoCount() * rh ));
+      btnCopyTable = new JLabel(S.getAppIcon("copy.gif"));
+      btnCopyTable.setToolTipText("Copy table to clipboard");
+      Dimension prefSize = new Dimension(execResult.getAxis("Axis1").getHierarchyInfoCount() * 40, execResult.getAxis("Axis0").getHierarchyInfoCount() * rh );
+      btnCopyTable.setMinimumSize(prefSize);
+      btnCopyTable.setMaximumSize(prefSize);
+      btnCopyTable.setPreferredSize(prefSize);
+      btnCopyTable.addMouseListener(new MouseAdapter() {
+         public void mouseClicked(MouseEvent e) {
+            CubeExplorer.this.copyTableToClipboard();
+         }
+      });
+
+//      leftPane.add(Box.createRigidArea(new Dimension(1, execResult.getAxis("Axis0").getHierarchyInfoCount() * rh )));
+      leftPane.add(btnCopyTable);
+
+//      westPane.setMinimumSize(new Dimension(Short.MAX_VALUE, rh * execResult.getAxis("Axis1").getTupleCount()));
+//      westPane.setMaximumSize(new Dimension(Short.MAX_VALUE, rh * execResult.getAxis("Axis1").getTupleCount()));
+//      S.out("westPane.setMinimumSize = " + rh * execResult.getAxis("Axis1").getTupleCount());
+      leftPane.add(westPane);
+      leftPane.add(Box.createVerticalGlue());
+
+
+
+      rightPane  = new JPanel();
+      rightPane.setLayout(new BoxLayout(rightPane,BoxLayout.Y_AXIS));
+      rightPane.setOpaque(false);
+//      northPane.setAlignmentX(Component.LEFT_ALIGNMENT);
+//      ct2.setAlignmentX(Component.LEFT_ALIGNMENT);
+
+      northPane.setMaximumSize(new Dimension(Short.MAX_VALUE, execResult.getAxis("Axis0").getHierarchyInfoCount() * rh));
+      northPane.setMinimumSize(new Dimension(0, execResult.getAxis("Axis0").getHierarchyInfoCount() * rh));
+
+      //rightPane.add(Box.createVerticalGlue());
+      rightPane.add(northPane);
+      rightPane.add(ct);
+      rightPane.add(Box.createVerticalGlue());
+
+      rightPane.addComponentListener(new ComponentListener(){
+
+         public void componentHidden(ComponentEvent e) {}
+
+         public void componentMoved(ComponentEvent e) {}
+
+         public void componentResized(ComponentEvent e){
+            /// this is an integer div!
+            int w = rightPane.getWidth()/ct.getColumnCount();
+            // this method adjusts/compensates the size of the left/right pane
+            // so that there is no integer divide error that causes the labels
+            // in the header to be out of sync with columns in a cell table
+            // (JTable - if there width/column_count is not an
+            // integer then it paints some columns wider than the other,
+            // and then the columns fall out of sync with header)
+            //
+//            S.out("w=" + w
+//                  + " ct.getColumnCount()=" + ct.getColumnCount()
+//                  + " w*ct.getColumnCount()=" + ct.getColumnCount() * w
+//                  + " rightPane.getWidth()=" + rightPane.getWidth());
+            if (w * ct.getColumnCount() != rightPane.getWidth()){
+//               S.out("splitPane.getDividerLocation()="+splitPane.getDividerLocation());
+               int reduce;
+               reduce = ct.getColumnCount() - rightPane.getWidth()%ct.getColumnCount();
+//               S.out("Reducing by " + reduce + " to :" + rightPane.getWidth() + reduce);
+               splitPane.setDividerLocation(splitPane.getDividerLocation() - reduce);
+//               rightPane.setSize(w * ct.getColumnCount(), rightPane.getHeight());
+//               rightPane.revalidate();
+//               rightPane.repaint();
+            }
+         }
+
+         public void componentShown(ComponentEvent e) {}
+      }
+      );
+
+      splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, leftPane, rightPane){
+//  MUST FIX THIS: THIS IS NOT GOOD
+//  JScrollPane should be simply transparent, but I can't get setOpaque(false) to do the trick!
+//  so I should deal with this later...
+         {setOpaque(false);}
+         public void paintComponent(Graphics g) {
+            S.paintBackground(g, this);
+            super.paintComponent(g);
+         }
+      };
+      splitPane.setContinuousLayout(false);
+      splitPane.setOneTouchExpandable(true);
+      splitPane.setDividerSize(3);
+      splitPane.setOpaque(false);
+
+      this.add(splitPane);
+      // simple, stupid calculation:
+//      splitPane.setDividerLocation(divLoc);
+      this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
+
+      this.setOpaque(true);
+      this.setBorder(AppColors.CUBE_EXPLORER_BORDER);
+
+
+
+      setPrefferedDividerLocation();
+   }
+
+   public void copyTableToClipboard(){
+      ct.copyTableToClipboard();
+   }
+
+   private double getPrefferedDividerLocation(){
+      // this is not a sophisticated calculation
+      return divLoc;
+   }
+   public void setPrefferedDividerLocation(){
+      divLoc = ((Toolkit.getDefaultToolkit().getScreenSize()).getWidth()-leftPane.getMinimumSize().getWidth());
+      divLoc *= (double)execResult.getAxis("Axis1").getHierarchyInfoCount()/(execResult.getAxis("Axis1").getHierarchyInfoCount() + execResult.getAxis("Axis0").getTupleCount());
+      splitPane.setDividerLocation((int)divLoc);
+//      S.out("Setting div loc at:" + divLoc
+//            + "\nleftPane.getMinimumSize().getWidth()" + leftPane.getMinimumSize().getWidth()
+//            + "\nexecResult.getAxis(\"Axis1\").getHierarchyInfoCount()=" + execResult.getAxis("Axis1").getHierarchyInfoCount()
+//            + "\nexecResult.getAxis(Axis0).getTupleCount()=" + execResult.getAxis("Axis1").getTupleCount()
+//            + "\n(Toolkit.getDefaultToolkit().getScreenSize()).getWidth() = " + (Toolkit.getDefaultToolkit().getScreenSize()).getWidth());
+   }
+   public void highlightRows(int rowNum, int colNum){
+      Tuple t = execResult.getAxis("Axis1").getTupleAt(rowNum);
+      int memberOrdinal = execResult.getAxis("Axis1").getHierarchyInfoCount();
+
+      int levelsHighlighted = 0; // boost performance
+      int i;
+      for(i=0; i < westPane.getComponentCount() && (levelsHighlighted <= memberOrdinal); i++){
+         if (westPane.getComponent(i) instanceof RowTupleMemberLabel) {
+            levelsHighlighted += ((RowTupleMemberLabel)westPane.getComponent(i)).setHighlight(t, memberOrdinal);
+         }
+      }
+      if (i < westPane.getComponentCount()){
+         for(; i < westPane.getComponentCount(); i++)
+            ((JLabel)westPane.getComponent(i)).setOpaque(false);
+      }
+      westPane.revalidate();
+      westPane.repaint();
+   }
+   public void highlightColumns(int rowNum, int colNum){
+      Tuple t = execResult.getAxis("Axis0").getTupleAt(colNum);
+      int memberOrdinal = execResult.getAxis("Axis0").getHierarchyInfoCount();
+//      S.out("t=" + t);
+      int levelsHighlighted = 0; // boost performance
+      int i;
+      for (i = 0;i < northPane.getComponentCount() && (levelsHighlighted <= memberOrdinal); i++) {
+         if (northPane.getComponent(i) instanceof ColumnTupleMemberLabel){
+            levelsHighlighted +=((ColumnTupleMemberLabel) northPane.getComponent(i)).setHighlight(t, memberOrdinal);
+         }
+      }
+      if (i < northPane.getComponentCount()) {
+         for (; i < northPane.getComponentCount(); i++)
+            ( (JLabel) northPane.getComponent(i)).setOpaque(false);
+      }
+      northPane.revalidate();
+      northPane.repaint();
+   }
+   public void highlightRowsAndColumns(int rowNum, int colNum){
+      highlightRows(rowNum, colNum);
+      highlightColumns(rowNum, colNum);
+   }
+   public void setShowColumnTotalsOn(boolean showColumnTotalsOn){
+      // table sets it's model
+      // this doesn't work:
+      ct.setShowColumnTotalsOn(showColumnTotalsOn);
+//      ct.invalidate();
+//      ct.revalidate();
+//      ct.repaint();
+//      ct = new CellTable(execResult, cubeSlicer, this, showColumnTotalsOn, ((CellTableModel)ct.getModel()).isShowRowTotalsOn());
+      // redo leftPane:
+      int rh = ct.getRowHeight();
+      westPane  = execResult.getVerticalTreePanel("Axis1", 40, rh, showColumnTotalsOn);
+      leftPane.removeAll();
+      leftPane.add(btnCopyTable);
+      leftPane.add(westPane);
+      leftPane.add(Box.createVerticalGlue());
+      // refresh all
+      this.invalidate();
+      this.revalidate();
+      this.repaint();
+   }
+   public void setShowRowTotalsOn(boolean showRowTotalsOn){
+      // table sets it's model
+      ct.setShowRowTotalsOn(showRowTotalsOn);
+//      ct.invalidate();
+//      ct.revalidate();
+//      ct.repaint();
+      // redo rightPane:
+      int rh = ct.getRowHeight();
+      int rw = ct.getWidth() / ct.getColumnCount();
+
+      northPane = execResult.getHorizontalTreePanel("Axis0", rw, rh, showRowTotalsOn);
+      northPane.setMaximumSize(new Dimension(Short.MAX_VALUE, execResult.getAxis("Axis0").getHierarchyInfoCount() * rh));
+      northPane.setMinimumSize(new Dimension(0, execResult.getAxis("Axis0").getHierarchyInfoCount() * rh));
+
+      rightPane.removeAll();
+      rightPane.add(northPane);
+      rightPane.add(ct);
+      rightPane.add(Box.createVerticalGlue());
+
+      // refresh all
+      this.invalidate();
+      this.revalidate();
+      this.repaint();
+   }
+
+   public static void main(String[] args) {
+
+/*
+     ServerMetadata svm = new ServerMetadata("http://localhost/xmla/msxisapi.dll");
+
+
+     ClsXMLAProxExecuteProperties   properties   = new ClsXMLAProxExecuteProperties();
+     ClsXMLAProxExecutePropertyList pl = new ClsXMLAProxExecutePropertyList();
+
+     pl.setDataSourceInfo("Local Analysis Server");
+     pl.setCatalog("Foodmart 2000");
+
+     properties.setPropertyList(pl);
+
+     ClsXMLAProxExecuteResult r = svm.execute("SELECT {[Measures].members * [1997].children} ON COLUMNS "
+                                            +  ", {[Store].[usa].children * [Position].[All Position].children * [Pay Type].[Pay Type].Members } DIMENSION PROPERTIES [Store].[Store SQFT] ON ROWS"
+                                           + " , {[Department].Members} on pages "
+                                           + " FROM [Hr]"
+                                           , properties);
+     //S.out("" + r);
+
+     ExecuteResult r1 = new ExecuteResult(r);
+     // r1.debugPrintAxesTable();
+*/
+//     S.out("result:\n" + r1);
+///*
+//     String row = "";
+//     for(int i = 0; i < r1.getMemberCount(1); i++ ){
+//        row = "";
+//        for(int j = 0; j < r1.getMemberCount(0); j++ ){
+//           row += "\t" + r1.getRowCol(i ,j ,cs);
+//        }
+//        S.out(row);
+//     }
+//*/
+//
+//
+//
+//
+//
+//
+//
+/*
+      UIPropertyManager  pm = new UIPropertyManager();
+      pm.setSystemUI();
+      //[Department].[All Department].[HQ Finance and Accounting]
+      Member m = new Member("Department", "[Department].[All Department]", "All Department", true);
+      Vector v = new Vector();
+      v.add(m);
+      Tuple t = new Tuple(v);
+      short[] aa = new short[1];
+      aa[0] = 2;
+      Tuple[] ta = new Tuple[1];
+      ta[0]  = t;
+
+      CubeSlicer cs = new CubeSlicer((short)1, (short)0, aa, ta);
+
+
+      JFrame frame = new JFrame("Test CubeExplorer 1");
+
+      frame.getContentPane().add(new CubeExplorer(r1, cs), BorderLayout.CENTER );
+
+      frame.addWindowListener(new WindowAdapter() {
+         public void windowClosing(WindowEvent e) {
+            System.exit(0);
+         }
+      });
+      frame.pack();
+      frame.setVisible(true);
+*/
+      ServerMetadata svm2 = new ServerMetadata("http://skladiste.zpm.fer.hr/xmla/msxisapi.dll");
+
+
+      ClsXMLAProxExecuteProperties   properties2   = new ClsXMLAProxExecuteProperties();
+      ClsXMLAProxExecutePropertyList pl2 = new ClsXMLAProxExecutePropertyList();
+
+      pl2.setDataSourceInfo("Local Analysis Server");
+      pl2.setCatalog("Foodmart 2000");
+
+      properties2.setPropertyList(pl2);
+//
+//      ClsXMLAProxExecuteResult r2 = svm2.execute("SELECT"
+//                                            +  " NON EMPTY"
+//                                            +  "{{[IzvodjacPismeni].[Spol].[Spol].Members} * {[OcjenaPismeni].[Ocjena Pozitivna].Members} * {[Student].[CistaGeneracija].[Cista Generacija].Members} * {[Measures].[MeasuresLevel].Members}} ON COLUMNS,"
+//                                            + " NON EMPTY "
+//                                            + "{{[IzvodjacUsmeni].[Spol].[Spol].Members} * {[RbrIzlaskaNaIspit].[NazivRbrIzlaskaNaIspit].Members} * {[Student].[NivoPrava].[Nivo prava prehrana].Members}} ON ROWS"
+//                                            + " FROM Ispit "
+//                                            , properties2);
+
+      try{
+         ClsXMLAProxExecuteResult r2 = svm2.execute("SELECT"
+            + " NON EMPTY"
+            + "{ {[Measures].Members}} ON COLUMNS, "
+            + " NON EMPTY "
+            + "{[Gender].[Gender].Members} ON ROWS"
+            + " FROM Sales "
+            , properties2);
+
+         // S.out("" + r);
+
+         ExecuteResult r12 = new ExecuteResult(r2, null);
+         CubeExplorer ceTest= new CubeExplorer(r12, new CubeSlicer((short)1, (short)0), true, true);
+         JFrame frame2 = new JFrame("Test CubeExplorer 2");
+
+         frame2.setBackground(Color.GREEN);
+         frame2.getContentPane().add(ceTest, BorderLayout.CENTER);
+
+         frame2.addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent e) {
+               System.exit(0);
+            }
+         });
+         frame2.pack();
+         frame2.setVisible(true);
+
+      }catch(Exception e){
+         e.printStackTrace();
+      }
+
+
+//      for(int c=0; c< ceTest.westPane.getComponentCount(); c++){
+//         S.out("Component(" + c + ")" + " HEIGHT = " + ceTest.westPane.getComponent(c).getHeight() + " -->" + ceTest.westPane.getComponent(c) );
+//      }
+//      S.out("PACK: westPane.height =" + ceTest.westPane.getHeight() + " cellTable.height=" + ceTest.ct.getHeight());
+
+  }
+
+
+
+}
+@
+
+
+1.1
+log
+@*** empty log message ***
+@
+text
+@@
+

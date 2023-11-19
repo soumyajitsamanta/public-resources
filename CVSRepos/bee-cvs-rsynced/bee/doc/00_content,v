@@ -1,0 +1,64 @@
+head	1.1;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.1
+date	2003.11.06.14.31.46;	author numberone;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@demo updates (display:// problem)
+@
+text
+@
+The BEE Project Documentation
+
+Contents
+
+D Intoduction 
+	- homepage
+	- obtaining
+
+D Architecture
+	- client/server
+	- gui, dad, bee, [auth]
+	- bear
+
+M How to set up BEE
+	- [linux] host for GUI
+	- hosts with resources with dads
+
+M Data access
+	- files?, CSV
+	- DBI, DBD modules
+
+M Install -- generic
+	- supported platforms
+	- perl, CPAN
+	- server vs. client requirements (Tk)
+
+M Install dad
+	- linux
+	- windows
+
+D Install GUI
+	- linux
+	- [windows]
+
+M Setup DAD daemon
+	- linux (/etc/init.d/)
+	- windows (On Startup folder?)
+
+M Demo
+
+@

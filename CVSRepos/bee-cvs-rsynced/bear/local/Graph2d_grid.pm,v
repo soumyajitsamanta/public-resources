@@ -1,0 +1,625 @@
+head	1.4;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.4
+date	2004.05.10.11.11.55;	author vacula;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2004.05.03.16.22.40;	author michald;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2004.04.28.13.55.02;	author vacula;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2004.04.22.16.05.15;	author vacula;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.4
+log
+@y label with names of metrics, if group of metrics in grid is set to cols
+@
+text
+@
+
+package Graph2d_grid;
+
+use strict;
+
+use Data::Dumper;
+ 
+ 
+#--------------------------------------------------------------------------------------------------------------------------------------------
+
+sub data {				# # from dataset extract datas an labels for graph 
+	my $dataset = shift;
+	my $datasheet = shift;
+	my $distance_o = shift;
+	
+	if ( scalar @@{$$dataset->{col}} == 0 ) {
+		if ( exists $$dataset->{colHeader} ) {
+			$$dataset->{col}[0] = ["$$dataset->{colHeader}{0}{name}|$$dataset->{colHeader}{0}{id}"] ;
+		}
+		else {
+			foreach ( keys %{$$dataset->{rowHeader}} ) {
+				if ( $$dataset->{rowHeader}{$_}{id} eq '-METRICS-' ) {
+					$$dataset->{col}[0] = ["$$dataset->{rowHeader}{$_}{name}|$$dataset->{rowHeader}{$_}{id}"];
+				}
+			}	
+		}
+	}
+	if ( scalar @@{$$dataset->{row}} == 0 ) {
+		if ( exists $$dataset->{rowHeader} ) {
+			$$dataset->{row}[0] = ["$$dataset->{rowHeader}{0}{name}|$$dataset->{rowHeader}{0}{id}"] ;
+		}
+		else {
+			foreach ( keys %{$$dataset->{colHeader}} ) {
+				if ( $$dataset->{colHeader}{$_}{id} eq '-METRICS-' ) {
+					$$dataset->{row}[0] = ["$$dataset->{colHeader}{$_}{name}|$$dataset->{colHeader}{$_}{id}"];
+				}
+			}	
+		}
+	}
+	
+	my ($id_row,$at_row,@@datarow) = joinDataset(\$$dataset->{row}) ;
+	my ($id_col,$at_col,@@datacol) = joinDataset(\$$dataset->{col}) ;
+
+	my ( @@data, $legend, @@lhrefs, $x_label, $y_label ,$drill, @@ids_col, @@ids_row, @@ids, );
+
+	for (my $i=0;$i < @@{$id_col};$i++ ) {
+	     my @@elements = split(/\t/,$id_col->[$i]);
+	     push(@@ids_col,$elements[$#elements]);
+	}
+	for (my $i=0;$i < @@{$id_row};$i++ ) {
+	     my @@elements = split(/\t/,$id_row->[$i]);
+	     push(@@ids_row,$elements[$#elements]);
+	}
+
+	my (@@rowHeader,@@colHeader);
+	foreach ( keys(%{$$dataset->{rowHeader}}) ) {
+	     push(@@rowHeader,$_);
+	}
+	foreach ( keys(%{$$dataset->{colHeader}}) ) {
+	     push(@@colHeader,$_);
+	}
+	my @@sortHeaderR = sort {$a<=>$b} @@rowHeader;
+	my @@sortHeaderC = sort {$a<=>$b} @@colHeader;
+
+	if ( $datasheet eq 'rows' ) {
+	   if ( scalar(@@datacol) == 0 ) {
+	   	push(@@datacol,$$dataset->{colHeader}{0}{name});
+	   }
+	   if ( scalar(@@datarow) == 0 ) {
+	   	push(@@datarow,$$dataset->{rowHeader}{0}{name});
+	   }
+	   for ( my $i=0;$i<@@datarow;$i++ ) {
+	       my @@datas;
+	       for ( my $j=0;$j<@@datacol;$j++ ) {
+	  	   push(@@datas,(exists $$dataset->{c}{$i}{$j}) ? $$dataset->{c}{$i}{$j} : undef);
+	       }
+	       push(@@{$data[$i]},@@datas);
+	   }
+	   unshift(@@data,\@@datacol);
+	   my $key = 0;
+	   foreach ( sort ( keys %{$$dataset->{colHeader}} ) ) {
+	      if ( $at_col->[$key] == 0  ) {
+	      	 my ($name,$id)	= split(/\|/,$$dataset->{col}[0][$key]);
+		 $x_label .= ($key == ( keys(%{$$dataset->{colHeader}}) - 1) ) ? $$dataset->{colHeader}{$_}{name}."(".$name.")" : $$dataset->{colHeader}{$_}{name}."(".$name.")"."  **  ";
+	      }
+	      else {
+	      	 $x_label .= ($key == ( keys(%{$$dataset->{colHeader}}) - 1) ) ? $$dataset->{colHeader}{$_}{name} : $$dataset->{colHeader}{$_}{name}."  **  ";
+	      }
+	      $key++;
+	   }
+	   if ( exists $$dataset->{metric} ) {	# only 1 metric on y axis
+	       $y_label = $$dataset->{metric};
+	   }
+	   else {	# metrics and attributes on y axis
+			for ( my $i=0; $i < keys %{$$dataset->{rowHeader}};$i++ ) {
+	   			if ( $$dataset->{rowHeader}{$i}{id} eq '-METRICS-' ) {	# metrics
+					my @@cr_id_sm = (); 	# store id of metric
+					my @@cr_name_sm = (); 	# store name of metric
+					foreach my $current_row ( @@{$$dataset->{row}} ) {
+						my ($cr_name,$cr_id) = split(/\|/,$current_row->[$i]);
+						my $occur = 0;
+						foreach my $id_sm ( @@cr_id_sm ) {
+							if ( $id_sm eq "$cr_id" ) {
+								$occur = 1;
+								last;
+							}
+						}
+						if ( $occur == 0 ) {
+							push(@@cr_id_sm,$cr_id);
+							push(@@cr_name_sm,$cr_name);
+						}
+					}
+					for ( my $pos=0; $pos <  scalar @@cr_name_sm; $pos++) {
+						$y_label .= ( $pos == ( scalar @@cr_name_sm - 1 ) ) ? $cr_name_sm[$pos] : $cr_name_sm[$pos]."  **  ";
+					}
+				}
+				else {	# attributes
+					$y_label .= ($i == ( keys(%{$$dataset->{rowHeader}}) - 1) ) ? $$dataset->{rowHeader}{$i}{name} : $$dataset->{rowHeader}{$i}{name}."  **  ";
+	  			}
+			}
+	   }	 
+	   $legend = \@@datarow;
+	   $drill = $$dataset->{colHeader}{@@sortHeaderC[$#sortHeaderC]}{id};
+	   for ( my $i=0; $i<@@ids_row; $i++ ) {
+	   	for ( my $j=0; $j<@@ids_col; $j++ ) {
+			$ids[$i][$j] = "c.$#sortHeaderC|$ids_col[$i],r.$#sortHeaderR|$ids_row[$j]";
+		}
+	   }
+	   
+	}
+	if ( $datasheet eq 'cols' ) {
+	   if ( scalar(@@datacol) == 0 ) {
+	   	push(@@datacol,$$dataset->{colHeader}{0}{name});
+	   }
+	   if ( scalar(@@datarow) == 0 ) {
+	   	push(@@datarow,$$dataset->{rowHeader}{0}{name});
+	   }
+	   for ( my $i=0;$i<@@datacol;$i++ ) {
+	       my @@datas;
+	       for ( my $j=0;$j<@@datarow;$j++ ) {
+	  	  push(@@datas,(exists $$dataset->{c}{$j}{$i}) ? $$dataset->{c}{$j}{$i} : undef);
+	       }
+	       push(@@{$data[$i]},@@datas);
+	   }
+	   unshift(@@data,\@@datarow);
+	   my $key = 0;
+	   foreach ( sort ( keys %{$$dataset->{rowHeader}} ) ) {
+	      if ( $at_row->[$key] == 0  ) {
+	      	my ($name,$id)	= split(/\|/,$$dataset->{row}[0][$key]);
+	      	$x_label .= ($key == ( keys(%{$$dataset->{rowHeader}}) - 1) ) ? $$dataset->{rowHeader}{$_}{name}."(".$name.")" : $$dataset->{rowHeader}{$_}{name}."(".$name.")"."  **  ";
+	      }
+	      else {
+	      	$x_label .= ($key == ( keys(%{$$dataset->{rowHeader}}) - 1) ) ? $$dataset->{rowHeader}{$_}{name} : $$dataset->{rowHeader}{$_}{name}."  **  ";
+	      }
+	      $key++;
+	   }
+	   if ( exists $$dataset->{metric} ) {  # only 1 metric on y axis
+	       $y_label = $$dataset->{metric};
+	   }
+	   else {	# metrics and attributes on y axis
+			for ( my $i=0; $i < keys %{$$dataset->{colHeader}}; $i++ ) {
+	   			if ( $$dataset->{colHeader}{$i}{id} eq '-METRICS-' ) {	# metrics
+					my @@cr_id_sm = (); 	# store id of metric
+					my @@cr_name_sm = (); 	# store name of metric
+					foreach my $current_col ( @@{$$dataset->{col}} ) {
+						my ($cr_name,$cr_id) = split(/\|/,$current_col->[$i]);
+						my $occur = 0;
+						foreach my $id_sm ( @@cr_id_sm ) {
+							if ( $id_sm eq "$cr_id" ) {
+								$occur = 1;
+								last;
+							}
+						}
+						if ( $occur == 0 ) {
+							push(@@cr_id_sm,$cr_id);
+							push(@@cr_name_sm,$cr_name);
+						}
+					}
+					for ( my $pos=0; $pos <  scalar @@cr_name_sm; $pos++) {
+						$y_label .= ( $pos == ( scalar @@cr_name_sm - 1 ) ) ? $cr_name_sm[$pos] : $cr_name_sm[$pos]."  **  ";
+					}
+				}
+				else {	# attributes
+					$y_label .= ($i == ( keys(%{$$dataset->{colHeader}}) - 1) ) ? $$dataset->{colHeader}{$i}{name} : $$dataset->{colHeader}{$i}{name}."  **  ";
+	  			}
+			}
+	   }
+	   $legend = \@@datacol;
+	   $drill = $$dataset->{rowHeader}{@@sortHeaderR[$#sortHeaderR]}{id};
+	   for ( my $i=0; $i<@@ids_col; $i++ ) {
+	   	for ( my $j=0; $j<@@ids_row; $j++ ) {
+			$ids[$i][$j] = "c.$#sortHeaderC|$ids_col[$i],r.$#sortHeaderR|$ids_row[$j]";
+		}
+	   }
+
+	}
+	
+	for ( my $dist=0; $dist < $distance_o; $dist++ ) {
+		push (@@data,['undef']);
+	}
+	#my $distance = ['undef'];	# for distance between set of attributes in bar graph curently = width of 1 column
+	#push (@@data,$distance);
+	
+	return ( $x_label, $y_label, $drill, \@@ids, $legend, \@@data, );
+}
+
+#--------------------------------------------------------------------------------------------------------------------------------------------
+
+sub joinDataset {		# 
+	my $dataset = shift;
+	my (@@data,@@ids,@@at);
+
+#	if ((exists $$dataset->[0])&&( scalar @@{$$dataset->[0]} > 1 )) {
+	if ( scalar @@{$$dataset} != 0 ) {
+#	if ( exists $$dataset->[0] ) {
+		if ( scalar @@{$$dataset->[0]} > 1 ) {
+			for ( my $i=0; $i<scalar @@{$$dataset->[0]}; $i++ ) {
+				$at[$i] = 0;  my $item = $$dataset->[0][$i];
+				for ( my $j=0; $j<scalar @@{$$dataset}; $j++ ) {
+	    				if ( $$dataset->[$j][$i] ne $item ) {
+						$at[$i] = 1 ;				## draw label of item of attribute
+					}
+				}	
+			}
+		}
+		else {
+			$at[0] = 1;							## if number of items = 1 or less label of item will be drawn
+		}
+		for ( my $i=0; $i<scalar @@{$$dataset}; $i++ ) {
+		    my ($rowItem,$idItem);
+		    for ( my $j=0;$j<scalar @@{$$dataset->[$i]};$j++ ){
+				my ($name,$id) = split(/\|/,$$dataset->[$i][$j]);
+				$idItem .= ($j == (scalar @@{$$dataset->[$i]}-1)) ? $id : $id."\t";
+	    			if ( $at[$j] == 1 ) {
+	        			$rowItem .= ($j == (scalar @@{$$dataset->[$i]}-1)) ? $name : $name."  **  ";
+	    			}
+		    }
+		    push(@@data,$rowItem);
+		    push(@@ids,$idItem);
+		}
+		return (\@@ids,\@@at,@@data);
+	}
+
+}
+
+#--------------------------------------------------------------------------------------------------------------------------------------------
+
+sub mapdata {				# from dataset extract datas an labels for map
+	my $dataset = shift;
+	my $datasheet = shift;
+
+	if ( scalar @@{$$dataset->{col}} == 0 ) {
+		if ( exists $$dataset->{colHeader} ) {
+			$$dataset->{col}[0] = ["$$dataset->{colHeader}{0}{name}|$$dataset->{colHeader}{0}{id}"] ;
+		}
+		else {
+			foreach ( keys %{$$dataset->{rowHeader}} ) {
+				if ( $$dataset->{rowHeader}{$_}{id} eq '-METRICS-' ) {
+					$$dataset->{col}[0] = ["$$dataset->{rowHeader}{$_}{name}|$$dataset->{rowHeader}{$_}{id}"];
+				}
+			}	
+		}
+	}
+	if ( scalar @@{$$dataset->{row}} == 0 ) {
+		if ( exists $$dataset->{rowHeader} ) {
+			$$dataset->{row}[0] = ["$$dataset->{rowHeader}{0}{name}|$$dataset->{rowHeader}{0}{id}"] ;
+		}
+		else {
+			foreach ( keys %{$$dataset->{colHeader}} ) {
+				if ( $$dataset->{colHeader}{$_}{id} eq '-METRICS-' ) {
+					$$dataset->{row}[0] = ["$$dataset->{colHeader}{$_}{name}|$$dataset->{colHeader}{$_}{id}"];
+				}
+			}	
+		}
+	}
+
+	my ($id_row,@@datarow) = joinDataset(\$$dataset->{row}) ;
+	my ($id_col,@@datacol) = joinDataset(\$$dataset->{col}) ;
+	
+	my ( @@rowHeader, @@colHeader, @@ids_col, @@ids_row  );
+	for (my $i=0;$i < @@{$id_col};$i++ ) {
+	     my @@elements = split(/\t/,$id_col->[$i]);
+	     push(@@ids_col,$elements[$#elements]);
+	}
+	for (my $i=0;$i < @@{$id_row};$i++ ) {
+	     my @@elements = split(/\t/,$id_row->[$i]);
+	     push(@@ids_row,$elements[$#elements]);
+	}
+	foreach ( keys(%{$$dataset->{rowHeader}}) ) {
+	     push(@@rowHeader,$_);
+	}
+	foreach ( keys(%{$$dataset->{colHeader}}) ) {
+	     push(@@colHeader,$_);
+	}
+	my @@sortHeaderR = sort {$a<=>$b} @@rowHeader;
+	my @@sortHeaderC = sort {$a<=>$b} @@colHeader;
+
+	my (@@metric,@@attr,@@title,$header,$drill,@@ids);
+	if ( $datasheet eq 'rows' ) { 
+		$header = $$dataset->{rowHeader}{@@sortHeaderR[$#sortHeaderR]}{id};
+		for ( my $i=0;$i < @@{$$dataset->{row}};$i++ ) {
+			push(@@metric,$$dataset->{c}{$i}{0});
+			my ($at_short,$id_s) = split(/\|/,$$dataset->{row}[$i][$#sortHeaderR]); 
+			#push(@@attr, ($at_short ne '') ? $at_short : $id_s);
+			push(@@attr,$at_short);
+			my ($at_name,$id_n) = split(/\|/,$$dataset->{row}[$i][$#sortHeaderR-1]); 
+			my $title;
+			if ( $id_s eq $id_n ) {
+				$title = ($at_name ne '') ? $at_name : $id_n ;
+			}
+			else {
+				$title = ($at_short ne '') ? $at_short : $id_s;
+			}
+			push(@@title,$title);
+		}
+		$drill = $$dataset->{rowHeader}{@@sortHeaderR[$#sortHeaderR]}{id};
+
+		for ( my $i=0; $i<@@ids_col; $i++ ) {
+	   	     for ( my $j=0; $j<@@ids_row; $j++ ) {
+			     $ids[$i][$j] = "c.$#sortHeaderC|$ids_col[$i],r.$#sortHeaderR|$ids_row[$j]";
+			     #$ids[$i][$j] = "c.$#sortHeaderC|*,r.$#sortHeaderR|*";
+		     }
+		}
+	}
+
+	if ( $datasheet eq 'cols' ) { 
+		my (@@colHeader,@@sortHeader);
+		foreach ( keys(%{$$dataset->{colHeader}}) ) {
+			push(@@colHeader,$_);
+		}
+		@@sortHeader = sort {$a<=>$b} @@colHeader;
+		$header = $$dataset->{colHeader}{@@sortHeader[$#sortHeader]}{id};
+		for ( my $i=0;$i < @@{$$dataset->{col}};$i++ ) {
+			push(@@metric,$$dataset->{c}{0}{$i});
+			my ($at_short,$id_s) = split(/\|/,$$dataset->{col}[$i][$#sortHeader]); 
+			#push(@@attr, ($at_short ne '') ? $at_short : $id_s);
+			push(@@attr,$at_short);
+			my ($at_name,$id_n) = split(/\|/,$$dataset->{col}[$i][$#sortHeader-1]); 
+			my $title;
+			if ( $id_s eq $id_n ) {
+				$title = ($at_name ne '') ? $at_name : $id_n ;
+			}
+			else {
+				$title = ($at_short ne '') ? $at_short : $id_s;
+			}
+			push(@@title,$title);
+		}
+		$drill = $$dataset->{colHeader}{@@sortHeaderC[$#sortHeaderC]}{id};
+		for ( my $i=0; $i<@@ids_row; $i++ ) {
+	   	     for ( my $j=0; $j<@@ids_col; $j++ ) {
+			     $ids[$i][$j] = "c.$#sortHeaderC|$ids_col[$i],r.$#sortHeaderR|$ids_row[$j]";
+			     #$ids[$i][$j] = "c.$#sortHeaderC|*,r.$#sortHeaderR|*";
+		     }
+		}
+
+	}
+
+	return ( \@@metric,\@@attr,\@@title, $header, $drill, \@@ids );
+
+}
+
+
+#--------------------------------------------------------------------------------------------------------------------------------------------
+
+sub areaGraph { 	# define click area for graphs
+	my $form = shift;
+	my $data_o = shift;
+	my $legend_o = shift;
+	my $drill_id_o = shift;
+	my $ids_o = shift;
+	
+	my ( @@hrefs, @@lhrefs, @@contexts, @@drills );
+	
+	if ( $form eq 'bars' or $form eq 'points' or $form eq 'linespoints' ) {
+		for ( my $i=0; $i < (scalar @@{$data_o})-1; $i++ ) {
+		    	my ( @@hfs, @@cts, @@drs );
+		    	for ( my $j=0; $j < @@{$data_o->[0]}; $j++ ) {
+		        	push(@@hfs,"javascript:alert('x : $data_o->[0][$j] \n y : $data_o->[$i+1][$j]\n')");
+		        	push(@@cts,"return showMenu(this,'$drill_id_o')");
+				push(@@drs,$ids_o->[$i][$j]);
+		    	}
+		    	push(@@{$hrefs[$i]},@@hfs);
+			push(@@{$contexts[$i]},@@cts);
+			push(@@{$drills[$i]},@@drs);
+			push(@@lhrefs,"javascript:alert('$legend_o->[$i]')");
+		}
+	}	
+	elsif ( $form eq 'lines' or $form eq 'area' ) {
+		for ( my $i=0; $i < (scalar @@{$data_o})-1; $i++ ) {
+		    	my ( @@hfs, @@cts, @@drs );
+		    	for ( my $j=0; $j < @@{$data_o->[0]}; $j++ ) {
+		        	push(@@hfs,"javascript:alert('x : $data_o->[0][$j] \n y : $data_o->[$i+1][$j]\n')");
+		        	push(@@cts,"return showMenu(this,'$drill_id_o')");
+				push(@@drs,$ids_o->[$i][$j]);
+		    	}
+		    	push(@@{$hrefs[$i]},@@hfs);
+			push(@@{$contexts[$i]},@@cts);
+			push(@@{$drills[$i]},@@drs);
+			push(@@lhrefs,"javascript:alert('$legend_o->[$i]')");
+		}
+=block
+		for ( my $i=0; $i < (scalar @@{$data_o})-1; $i++ ) {
+			push(@@contexts,"return showMenu(this,'$drill_id_o')");
+			push(@@lhrefs,"javascript:alert('$legend_o->[$i]')");
+		}
+		for ( my $i=0; $i < (scalar @@{$data_o})-1; $i++ ) {
+		    	my ( @@hfs, @@drs );
+		    	for ( my $j=0; $j < @@{$data_o->[0]}; $j++ ) {
+		        	push(@@hfs,"javascript:alert('x : $data_o->[0][$j] \n y : $data_o->[$i+1][$j]\n')");
+				push(@@drs,$ids_o->[$i][$j]);
+		    	}
+		    	push(@@{$hrefs[$i]},@@hfs);
+			push(@@{$drills[$i]},@@drs);
+		}
+=cut
+	}
+	elsif ( $form eq 'pie' or $form eq 'pie3d' ) {
+	    	for ( my $i=0;$i<@@{$data_o->[0]};$i++ ) {
+	        	push(@@hrefs,"javascript:alert('$data_o->[0][$i]\n')");
+		       	push(@@contexts,"return showMenu(this,'$drill_id_o')");
+		    }
+		for ( my $i=0; $i < (scalar @@{$data_o})-1; $i++ ) {
+		    	my ( @@drs );
+		    	for ( my $j=0; $j < @@{$data_o->[0]}; $j++ ) {
+				push(@@drs,$ids_o->[$i][$j]);
+		    	}
+			push(@@{$drills[$i]},@@drs);
+		}
+
+		@@lhrefs = ();
+	}
+
+	return ( \@@hrefs, \@@lhrefs, \@@contexts, \@@drills );
+}
+
+#--------------------------------------------------------------------------------------------------------------------------------------------
+
+sub sortCascade {		## for cascade drawing attributes (lines and areas)
+	my $data_o = shift;
+	my $legend_o = shift;
+	
+	my ($sortData,$sortLegend);
+	my @@moas=(); 							## moas = maximum of attributes
+	my @@avg=(); 							## avg = average of attributes	
+	my @@x = shift(@@{$data_o});				## first row of data contains labels
+	
+	for ( my $i=0; $i < @@{$data_o}; $i++) {
+		#my $max = $data_o->[$i][0];
+		my $sum;
+		for ( my $j=0; $j < @@{$data_o->[0]}; $j++ ) {
+		#	if ( $max < $data_o->[$i][$j] ) {
+		#		$max = $data_o->[$i][$j];
+		#	}
+			$sum += $data_o->[$i][$j];
+		}
+		#$moas[$i] = $max;
+		$avg[$i] = $sum / @@{$data_o->[$i]};
+	}
+
+	#my @@sortMoas = sort {$b<=>$a} @@moas;
+	my @@sortAvg = sort {$b<=>$a} @@avg;
+	
+	#for ( my $i=0; $i < @@sortMoas; $i++ ) {
+	#	for ( my $j=0; $j<@@moas;$j++ )  {
+	#		if ( $sortMoas[$i] == $moas[$j]) {
+	#			$sortData->[$i] = $data_o->[$j];
+	#			$sortLegend->[$i] = $legend_o->[$j] ;
+	#		}
+	#	}
+	#}
+	for ( my $i=0; $i < @@sortAvg; $i++ ) {
+		for ( my $j=0; $j<@@avg;$j++ )  {
+			if ( $sortAvg[$i] == $avg[$j]) {
+				$sortData->[$i] = $data_o->[$j];
+				$sortLegend->[$i] = $legend_o->[$j] ;
+			}
+		}
+	}
+	
+	unshift(@@{$sortData},@@x);				## labels return back to begining
+	#$data = $sortData;
+	#$legend = $sortLegend;
+
+	return ( $sortData,$sortLegend );
+}
+
+#--------------------------------------------------------------------------------------------------------------------------------------------
+
+1;
+@
+
+
+1.3
+log
+@some fixes from Vlada
+@
+text
+@d92 1
+a92 1
+	   if ( exists $$dataset->{metric} ) {
+d95 17
+a111 12
+	   else {
+	   	for ( my $i=0; $i < keys %{$$dataset->{rowHeader}};$i++ ) {
+	   		if ( $$dataset->{rowHeader}{$i}{id} eq '-METRICS-' ) {
+				my @@cr_id_sm = (); 	# store id of metric
+				my @@cr_name_sm = (); 	# store name of metric
+				foreach my $current_row ( @@{$$dataset->{row}} ) {
+					my ($cr_name,$cr_id) = split(/\|/,$current_row->[$i]);
+					my $occur = 0;
+					foreach my $id_sm ( @@cr_id_sm ) {
+						if ( $id_sm eq "$cr_id" ) {
+							$occur = 1;
+							last;
+d114 2
+a115 3
+					if ( $occur == 0 ) {
+						push(@@cr_id_sm,$cr_id);
+						push(@@cr_name_sm,$cr_name);
+d118 3
+a120 3
+				for ( my $pos=0; $pos <  scalar @@cr_name_sm; $pos++) {
+					$y_label .= ( $pos == ( scalar @@cr_name_sm - 1 ) ) ? $cr_name_sm[$pos] : $cr_name_sm[$pos]."  **  ";
+				}
+a121 4
+			else {
+				$y_label .= ($i == ( keys(%{$$dataset->{rowHeader}}) - 1) ) ? $$dataset->{rowHeader}{$i}{name} : $$dataset->{rowHeader}{$i}{name}."  **  ";
+	  		}
+		}
+d158 1
+a158 1
+	   if ( exists $$dataset->{metric} ) {
+d161 27
+a187 4
+	   else {
+	   	for ( my $i=0; $i < keys %{$$dataset->{colHeader}}; $i++ ) {
+	      		$y_label .= ($i == ( keys(%{$$dataset->{colHeader}}) - 1) ) ? $$dataset->{colHeader}{$i}{name} : $$dataset->{colHeader}{$i}{name}."  **  ";
+	   	}
+@
+
+
+1.2
+log
+@minor changes
+@
+text
+@d15 2
+a16 1
+
+d85 1
+a85 1
+		 $x_label .= ($key == ( keys(%{$$dataset->{colHeader}}) - 1) ) ? $$dataset->{colHeader}{$_}{name}."(".$name.")" : $$dataset->{colHeader}{$_}{name}."(".$name.")"." ** ";
+d88 1
+a88 1
+	      	 $x_label .= ($key == ( keys(%{$$dataset->{colHeader}}) - 1) ) ? $$dataset->{colHeader}{$_}{name} : $$dataset->{colHeader}{$_}{name}." ** ";
+d97 25
+a121 2
+	   		$y_label .= ($i == ( keys(%{$$dataset->{rowHeader}}) - 1) ) ? $$dataset->{rowHeader}{$i}{name} : $$dataset->{rowHeader}{$i}{name}." ** ";
+	  	}
+d151 1
+a151 1
+	      	$x_label .= ($key == ( keys(%{$$dataset->{rowHeader}}) - 1) ) ? $$dataset->{rowHeader}{$_}{name}."(".$name.")" : $$dataset->{rowHeader}{$_}{name}."(".$name.")"." ** ";
+d154 1
+a154 1
+	      	$x_label .= ($key == ( keys(%{$$dataset->{rowHeader}}) - 1) ) ? $$dataset->{rowHeader}{$_}{name} : $$dataset->{rowHeader}{$_}{name}." ** ";
+d163 1
+a163 1
+	      		$y_label .= ($i == ( keys(%{$$dataset->{colHeader}}) - 1) ) ? $$dataset->{colHeader}{$i}{name} : $$dataset->{colHeader}{$i}{name}." ** ";
+d175 7
+a181 1
+
+d213 1
+a213 1
+	        			$rowItem .= ($j == (scalar @@{$$dataset->[$i]}-1)) ? $name : $name." ** ";
+@
+
+
+1.1
+log
+@library which define grid of graph
+@
+text
+@d183 1
+a183 1
+	        			$rowItem .= ($j == (scalar @@{$$dataset->[$i]}-1)) ? $name : $name."**";
+@
+

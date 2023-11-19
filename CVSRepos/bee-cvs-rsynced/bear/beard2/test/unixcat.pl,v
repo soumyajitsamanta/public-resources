@@ -1,0 +1,38 @@
+head	1.1;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.1
+date	2004.03.01.16.16.49;	author numberone;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@
+Added beard2 -- new bear daemon source tree.
+
+mdata subsystem works, some docs, some tests, etc.
+
+cached in progress
+@
+text
+@#!/usr/bin/perl -w
+
+use Socket;
+
+socket(SOCK,PF_UNIX,SOCK_STREAM,0) or die $!;
+connect(SOCK,sockaddr_un(shift));
+shutdown(SOCK,1); # I/we have stopped writing data
+while(defined($line=<SOCK>)) {
+	print $line;
+}
+@

@@ -1,0 +1,3057 @@
+head	1.34;
+access;
+symbols
+	start:1.1.1.1 vendor:1.1.1;
+locks; strict;
+comment	@# @;
+
+
+1.34
+date	2004.01.08.13.48.00;	author tuco80;	state Exp;
+branches;
+next	1.33;
+
+1.33
+date	2003.11.20.16.48.03;	author tuco80;	state Exp;
+branches;
+next	1.32;
+
+1.32
+date	2003.11.19.12.27.14;	author tuco80;	state Exp;
+branches;
+next	1.31;
+
+1.31
+date	2003.11.07.15.38.54;	author tuco80;	state Exp;
+branches;
+next	1.30;
+
+1.30
+date	2003.11.06.12.28.24;	author tuco80;	state Exp;
+branches;
+next	1.29;
+
+1.29
+date	2003.10.20.09.42.18;	author tuco80;	state Exp;
+branches;
+next	1.28;
+
+1.28
+date	2003.10.01.08.20.59;	author tuco80;	state Exp;
+branches;
+next	1.27;
+
+1.27
+date	2003.09.25.09.50.12;	author tuco80;	state Exp;
+branches;
+next	1.26;
+
+1.26
+date	2003.09.12.11.06.25;	author tuco80;	state Exp;
+branches;
+next	1.25;
+
+1.25
+date	2003.09.12.08.25.41;	author tuco80;	state Exp;
+branches;
+next	1.24;
+
+1.24
+date	2003.09.10.13.10.26;	author tuco80;	state Exp;
+branches;
+next	1.23;
+
+1.23
+date	2003.09.08.14.07.20;	author tuco80;	state Exp;
+branches;
+next	1.22;
+
+1.22
+date	2003.09.02.08.17.54;	author tuco80;	state Exp;
+branches;
+next	1.21;
+
+1.21
+date	2003.09.01.14.22.24;	author tuco80;	state Exp;
+branches;
+next	1.20;
+
+1.20
+date	2003.08.29.11.45.22;	author tuco80;	state Exp;
+branches;
+next	1.19;
+
+1.19
+date	2003.08.22.09.34.49;	author spanhel;	state Exp;
+branches;
+next	1.18;
+
+1.18
+date	2003.08.21.13.20.48;	author tuco80;	state Exp;
+branches;
+next	1.17;
+
+1.17
+date	2003.08.19.14.32.16;	author spanhel;	state Exp;
+branches;
+next	1.16;
+
+1.16
+date	2003.08.18.07.11.30;	author spanhel;	state Exp;
+branches;
+next	1.15;
+
+1.15
+date	2003.08.14.11.55.59;	author tuco80;	state Exp;
+branches;
+next	1.14;
+
+1.14
+date	2003.08.13.10.52.28;	author tuco80;	state Exp;
+branches;
+next	1.13;
+
+1.13
+date	2003.08.12.09.07.23;	author tuco80;	state Exp;
+branches;
+next	1.12;
+
+1.12
+date	2003.08.08.14.57.37;	author tuco80;	state Exp;
+branches;
+next	1.11;
+
+1.11
+date	2003.07.31.06.37.44;	author michald;	state Exp;
+branches;
+next	1.10;
+
+1.10
+date	2003.07.30.11.10.59;	author spanhel;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	2003.06.30.07.23.24;	author spanhel;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	2003.06.26.14.11.46;	author spanhel;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	2003.05.30.16.22.18;	author spanhel;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	2003.05.22.13.55.33;	author spanhel;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	2003.05.16.07.02.43;	author spanhel;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2003.04.28.07.36.33;	author michald;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2003.04.24.20.01.41;	author michald;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2003.03.12.23.37.52;	author numberone;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2002.09.24.01.34.20;	author michald;	state Exp;
+branches
+	1.1.1.1;
+next	;
+
+1.1.1.1
+date	2002.09.24.01.34.20;	author michald;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.34
+log
+@Fixed bug with double click on canvas and items
+@
+text
+@#-----------------------------------------------------
+# Schema
+#-----------------------------------------------------
+# $Id: schema.pl,v 1.33 2003/11/20 16:48:03 tuco80 Exp $
+
+use strict;
+
+use vars qw($tSchemaC $Layer $mainTabs $lang $VisibleLayer);
+
+
+
+sub CreateSchPage {
+
+	my($Page) = @@_;
+
+	$tSchemaC = $Page->Scrolled(qw/Canvas -width 1000 -height 800 -relief sunken
+			       -borderwidth 2 -scrollbars osoe -scrollregion/ =>
+			       [qw/0 0 1000 800/]);
+	$tSchemaC->pack(qw/-expand no -fill both/);
+
+	my %iinfo = ();		# item information hash
+	$iinfo{areaX1} = 0;
+	$iinfo{areaY1} = 0;
+	$iinfo{areaX2} = 0;
+	$iinfo{areaY2} = 0;
+	$iinfo{restore_cmd} = '';
+	$iinfo{sel_obj} = '';
+	$iinfo{move_obj} = '';
+	$iinfo{xinit} = -100;
+	$iinfo{yinit} = -100;
+	$iinfo{isDrag} = 0;
+
+	# Display a rectangular grid
+	$tSchemaC->createGrid(qw/0  0 10 10 -width 1/);
+
+	# Set up event bindings for canvas.
+	$tSchemaC->bind('item', '<Any-Enter>' => [\&items_enter, \%iinfo]);
+	$tSchemaC->bind('item', '<Any-Leave>' => [\&items_leave, \%iinfo]);
+	$tSchemaC->bind('item', '<1>' =>         sub {&items_start_drag($tSchemaC, $Tk::event->x, $Tk::event->y, \%iinfo, 'current')});
+	#$tSchemaC->bind('item', '<Double-1>' =>         sub {print "\n como debe ser!";&SelItem($tSchemaC,'current',\%iinfo)});
+	$tSchemaC->bind('item', '<B1-Motion>' => sub {&items_drag($tSchemaC, $Tk::event->x, $Tk::event->y, \%iinfo)});
+	$tSchemaC->bind('item', '<ButtonRelease-1>' => sub {&items_stop_drag($tSchemaC, $Tk::event->x, $Tk::event->y, \%iinfo)});
+	#$tSchemaC->bind('item', '<Double-1>' => sub{&itemProps(\%iinfo)});
+	
+	#Bindings for drag-and-drop creation of relations
+	$tSchemaC->bind('attr', '<Any-Enter>' => [\&attr_enter, \%iinfo]);
+	$tSchemaC->bind('attr', '<Any-Leave>' => [\&items_leave, \%iinfo]);
+	$tSchemaC->bind('attr', '<ButtonPress-1>' => sub {&attr_start_drag($tSchemaC, $Tk::event->x, $Tk::event->y, \%iinfo, 'current')});
+	$tSchemaC->bind('attr', '<B1-Motion>' => sub {&attr_drag($tSchemaC, $Tk::event->x, $Tk::event->y, \%iinfo)});
+	$tSchemaC->bind('attr', '<ButtonRelease-1>' => sub {&attr_end_drag($tSchemaC, $Tk::event->x, $Tk::event->y, \%iinfo)});
+
+
+	$tSchemaC->CanvasBind('<Any-Enter>' => sub {$_[0]->CanvasFocus});
+	$tSchemaC->CanvasBind('<<Copy>>' =>    sub {print Dumper($Project->{attr}); });
+	$tSchemaC->CanvasBind('<Control-a>' => sub {&select_all()});
+	$tSchemaC->CanvasBind('<Control-e>' => sub {&::SaveProjAsScheme()});
+	$tSchemaC->CanvasBind('<Control-s>' => \&SaveProj );
+	$tSchemaC->CanvasBind('<Control-z>' => \&UndoProp );
+	$tSchemaC->CanvasBind('<Shift-Delete>' => sub{&items_delete(1)});
+	$tSchemaC->CanvasBind('<Delete>' => sub{&items_delete(undef)});
+	$tSchemaC->CanvasBind('<ButtonPress-1>' => sub {&items_mark_press($tSchemaC, $Tk::event->x, $Tk::event->y, \%iinfo)});
+	$tSchemaC->CanvasBind('<Double-1>' => sub{print "\ncomo??";&SelItem($tSchemaC,'current',\%iinfo)});
+	$tSchemaC->CanvasBind('<B1-Motion>' => sub {&items_stroke($tSchemaC, $Tk::event->x, $Tk::event->y, \%iinfo)});
+	$tSchemaC->CanvasBind('<Control-B1-Motion>' => sub {&items_stroke_control($tSchemaC, $Tk::event->x, $Tk::event->y, \%iinfo)});
+	$tSchemaC->CanvasBind('<ButtonRelease-1>' => sub {&items_mark_release($tSchemaC, $Tk::event->x, $Tk::event->y, \%iinfo)});
+	$tSchemaC->CanvasBind('<2>' =>         sub {shift->scan('mark', $Tk::event->x, $Tk::event->y)});
+	$tSchemaC->CanvasBind('<B2-Motion>' => sub {shift->scan('dragto', $Tk::event->x, $Tk::event->y)});
+	$tSchemaC->CanvasBind('<Control-f>' => [sub {
+	    my($tSchemaC, $iinfo) = @@_;
+            my $e = $tSchemaC->XEvent;
+	    &items_under_area($tSchemaC, $iinfo);
+	}, \%iinfo]);
+
+} # end items
+
+#-----------------------------------------------------
+
+
+
+sub SelItem {
+        my $c = shift;
+	my $item = shift;	
+	my $iinfo = shift;
+	my $ji = '|'.join('|',$c->gettags($item)).'|';	
+	my $jim = shift;
+	(($jim = $ji)=~s/^.*\|_([^|]+)\|.*$/$1/) || ($jim = "_LAYER/$VisibleLayer"); #select tags starting '__'
+	if (($jim =~/_LOBJ\/_ATTR\/(.+)/)) {
+		#print "\nEste es 574747: $jim";
+		$ji = $1;
+		#print "\n y ahora este es ji: $ji";
+		if(exists($Project->{attr}->{$ji}->{group})){
+			$item= $Project->{attr}->{$ji}->{group};
+			$jim="_LOBJ/_ATTR/__G.$item";
+			foreach(keys %{$Project->{group}->{$item}->{role}}){
+				$jim.="/R.$_";
+				last;
+			}
+			$jim.="/$ji";
+		}
+	}
+	#print "\nsalimos con esto: $jim";
+	$TreeList->selectionClear();
+	if ($TreeList->info('exists',$jim)){
+	  $TreeList->show('entry',$jim);
+	  $TreeList->see($jim);
+	  $TreeList->selectionSet($jim);
+	  $TreeList->anchorSet($jim);
+	} 
+	$Layer->{$VisibleLayer}->{$iinfo->{sel_obj}}->set_deselected();
+	&ShowProperties;
+	&Debug::UpdateObj;
+	$mainTabs->raise('prop'); 
+		
+}
+
+# Utility procedures for highlighting the item under the pointer:
+
+sub items_start_drag {
+	my($c, $x, $y, $iinfo, $item) = @@_;
+	$iinfo->{xinit} = $x;
+	$iinfo->{yinit} = $y;
+	$iinfo->{lastX} = $c->canvasx($x);
+	$iinfo->{lastY} = $c->canvasy($y);	
+	my $ji = '|'.join('|',$c->gettags($item)).'|';	
+	my $jim;
+	#print "\nEste es ji: $ji";
+	(($jim = $ji)=~s/^.*\|_([^|]+)\|.*$/$1/) || ($jim = ''); #select tags starting '__'
+	#(($iinfo->{sel_obj} = $ji)=~s/^.*\|\.([^|]+)\|.*$/$jim\/$1/) || ($iinfo->{sel_obj} = $jim); #select tags starting '.'
+	$iinfo->{sel_obj} = $jim;
+        $iinfo->{move_obj} = $Layer->{$VisibleLayer}->{$jim};	
+	
+	#if (!($jim =~/_LOBJ/)) {
+	#     print 'jo';
+	     #following statements moves Tree selection and anchor
+	     #$TreeList->selectionClear();
+	     #$TreeList->show('entry',$iinfo->{sel_obj});
+	     #$TreeList->see($iinfo->{sel_obj});
+	     #$TreeList->selectionSet($iinfo->{sel_obj});
+	     #$TreeList->anchorSet($iinfo->{sel_obj});
+	     #&ShowProperties;
+	#}     
+} # end items_start_drag
+
+#-----------------------------------------------------
+
+#Here we must deselect everything in the list but the object that was clicked
+sub items_stop_drag {
+	#my($c, $iinfo) = @@_;
+	my($c, $xend, $yend, $iinfo) = @@_;
+	if ($iinfo->{move_obj}) {
+		# nutne dodelat foreach, $iinfo->{move_obj} muze obsahovat vice tabulek "tab1|tab2"
+			my ($x1,$y1,$x2,$y2)=$iinfo->{move_obj}->coords();
+			if ($iinfo->{xinit} == $xend && $iinfo->{yinit} == $yend) {				
+				if ($iinfo->{move_obj}->selected()){
+					$iinfo->{move_obj}->set_deselected();
+					$TreeList->selectionClear();
+				}
+				else{
+					 $iinfo->{move_obj}->set_selected();
+					 $TreeList->selectionClear();
+					 my $tentry = $iinfo->{sel_obj};
+					 if (($tentry =~/_LOBJ\/_ATTR\/(.+)/)) {
+						my $id = $1;
+						if(exists($Project->{attr}->{$id}->{group})){
+							 my $group = $Project->{attr}->{$id}->{group};
+							 $tentry="_LOBJ/_ATTR/__G.$group";
+							 foreach(keys %{$Project->{group}->{$group}->{role}}){
+								 $tentry.="/R.$_";
+								 last;
+							 }
+							 $tentry.="/$id";
+						 }
+					 }
+					 $tentry =~s/HREL/REL/;
+					 if ($TreeList->info('exists',$tentry)){
+	    				 $TreeList->show('entry',$tentry);
+	    				 $TreeList->see($tentry);
+	    				 $TreeList->selectionSet($tentry);
+	    				 $TreeList->anchorSet($tentry);
+					 }
+					
+				}
+			}
+			else{
+				my ($p,$id)=&Path2ProjHash($iinfo->{sel_obj});
+				# save old properties
+				push (@@Changes, {p=>$p, id=>$id, cont=>$p->{$id}} );
+				#my ($x1,$y1,$x2,$y2)=$iinfo->{move_obj}->coords();
+				if ($x1 && $y1){
+					if ($iinfo->{move_obj}->selected()){
+						foreach (keys %{$Layer->{$VisibleLayer}}){
+							if (($Layer->{$VisibleLayer}->{$_}->selected) &&
+								(!($_=~/^_REL|^_CONN|^_SIGNAL|^_HREL/))){
+								($p,$id)=&Path2ProjHash($_);
+								my ($newX,$newY) = $Layer->{$VisibleLayer}->{$_}->coords();
+								$p->{$id}->{'gui-presentation'}->{$VisibleLayer}->{coord}->{$lang}="$newX $newY";
+								#$Layer->{$VisibleLayer}->{$_}->coords($x1,$y1,$x2,$y2);
+							}
+						}
+					}
+					else{
+						$p->{$id}->{'gui-presentation'}->{$VisibleLayer}->{coord}->{$lang}="$x1 $y1";
+						#$Layer->{$VisibleLayer}->{$iinfo->{sel_obj}}->coords($x1,$y1,$x2,$y2);
+					}
+				}
+				
+			}
+			#$xinit=$yinit=undef;
+			undef $iinfo->{move_obj};
+	}
+}
+
+#-----------------------------------------------------
+
+sub items_drag {
+    my($c, $x, $y, $iinfo) = @@_;
+
+    $x = $c->canvasx($x);
+    $y = $c->canvasy($y);
+
+    # nutne dodelat foreach, $iinfo->{move_obj} muze obsahovat vice tabulek "tab1|tab2"
+    
+	if($iinfo->{move_obj}->selected()){
+		foreach (keys %{ $Layer->{$VisibleLayer} }) {		
+    		if ($Layer->{$VisibleLayer}->{$_}->selected()) {
+				$Layer->{$VisibleLayer}->{$_}->move($c,$x-$iinfo->{lastX}, $y-$iinfo->{lastY});	
+			}
+		}
+	}
+	else{
+		$iinfo->{move_obj}->move($c,$x-$iinfo->{lastX}, $y-$iinfo->{lastY});
+	}
+		
+		
+		
+    $iinfo->{lastX} = $x;
+    $iinfo->{lastY} = $y;
+} # end items_drag
+
+#-----------------------------------------------------
+
+sub items_enter {
+
+    my($c, $iinfo) = @@_;
+
+    $iinfo->{restore_cmd} = '';
+
+    my $type = $c->type('current');
+    if ($type eq 'window') {
+	return;
+    }
+	
+    my $fill = ($c->itemconfigure(qw/current -fill/))[4];
+    my $stipple = ($c->itemconfigure(qw/current -stipple/))[4];
+    if (defined $stipple) {
+	$iinfo->{restore_cmd} = "\$c->itemconfigure('current', -stipple => '$stipple')";
+	$c->itemconfigure(qw/current -stipple /,'');
+    } elsif (($type eq 'rectangle' or $type eq 'oval' or $type eq 'arc') and not defined $fill) {
+	my $outline = ($c->itemconfigure(qw/current -outline/))[4];
+	$iinfo->{restore_cmd} = "\$c->itemconfigure('current', -outline => '$outline')";
+	$c->itemconfigure(qw/current -outline Gray/);
+    } else {
+	$iinfo->{restore_cmd} = "\$c->itemconfigure('current', -fill => '$fill')";
+	$c->itemconfigure(qw/current -fill Gray/);
+    }
+
+} # end items_enter
+
+#-----------------------------------------------------
+
+sub items_leave {
+
+	my($c, $iinfo) = @@_;
+	eval $iinfo->{restore_cmd};
+	$iinfo->{xinit}=$iinfo->{yinit}=-100;
+	
+
+} # end items_leave
+
+#-----------------------------------------------------
+
+sub items_mark_press {
+
+    my($c, $x, $y, $iinfo) = @@_;
+	unless($c->gettags('current')){
+		$iinfo->{xinit} = $x;
+		$iinfo->{yinit} = $y;
+		$iinfo->{areaX1} = $c->canvasx($x);
+    	$iinfo->{areaY1} = $c->canvasy($y);
+		$c->addtag('area', 'withtag', $c->create('rectangle',$x, $y, $x, $y, -outline => 'black', -dash=>'.'));
+	}
+} # end items_mark
+
+#-----------------------------------------------------
+sub items_mark_release {
+
+    my($c, $x, $y, $iinfo) = @@_;
+	$iinfo->{areaX1} = $c->canvasx($x);
+    $iinfo->{areaY1} = $c->canvasy($y);
+    $c->delete('area');
+	if ($iinfo->{xinit} == $x && $iinfo->{yinit} == $y) {
+		deselect_all($c)
+	}
+	else{
+		foreach (keys %{ $Layer->{$VisibleLayer} }) {		
+			if (!($_=~/^_REL|^_CONN|^_SIGNAL|^_HREL/)) {
+				if($Layer->{$VisibleLayer}->{$_}->selected()==2){
+					$Layer->{$VisibleLayer}->{$_}->set_selected();
+				}
+			}
+		}
+	}
+
+} # end items_mark
+
+#-----------------------------------------------------
+
+sub items_stroke {
+
+    my($c, $x, $y, $iinfo) = @@_;
+	unless ($c->gettags('current')){
+    	$x = $c->canvasx($x);
+    	$y = $c->canvasy($y);
+    	my $ax = $iinfo->{areaX1};
+    	my $ay = $iinfo->{areaY1};	
+    	if (($iinfo->{areaX1} != $x) and ($iinfo->{areaY1} != $y)) {
+			$c->coords('area', $ax, $ay, $x, $y);
+			$iinfo->{areaX2} = $x;
+			$iinfo->{areaY2} = $y;
+			foreach (keys %{ $Layer->{$VisibleLayer} }) {		
+				if (!($_=~/^_REL|^_CONN|^_SIGNAL|^_HREL/)) {
+					my($x1,$y1,$x2,$y2)=$Layer->{$VisibleLayer}->{$_}->coords();
+					if (($x1 >= &min($ax,$x)) && ($y1 >= &min($ay,$y)) &&
+			    		($x2 <= &max($ax,$x)) && ($y2 <= &max($ay,$y))) {			    	
+						$Layer->{$VisibleLayer}->{$_}->set_selected() unless $Layer->{$VisibleLayer}->{$_}->selected();
+					}
+					else{
+						$Layer->{$VisibleLayer}->{$_}->set_deselected() if $Layer->{$VisibleLayer}->{$_}->selected();
+					}
+				}		
+			}
+		}
+	}
+} # end items_stroke
+#-----------------------------------------------------
+
+sub items_stroke_control {
+
+    my($c, $x, $y, $iinfo) = @@_;
+	unless ($c->gettags('current')){
+    	$x = $c->canvasx($x);
+    	$y = $c->canvasy($y);
+    	my $ax = $iinfo->{areaX1};
+    	my $ay = $iinfo->{areaY1};
+    	if (($iinfo->{areaX1} != $x) and ($iinfo->{areaY1} != $y)) {
+			$c->coords('area', $ax, $ay, $x, $y);
+			$iinfo->{areaX2} = $x;
+			$iinfo->{areaY2} = $y;
+			foreach (keys %{ $Layer->{$VisibleLayer} }) {		
+				if (!($_=~/^_REL|^_CONN|^_SIGNAL|^_HREL/)) {
+					my($x1,$y1,$x2,$y2)=$Layer->{$VisibleLayer}->{$_}->coords();
+					if (($x1 >= &min($ax,$x)) && ($y1 >= &min($ay,$y)) &&
+			    		($x2 <= &max($ax,$x)) && ($y2 <= &max($ay,$y))) {
+			    		unless($Layer->{$VisibleLayer}->{$_}->selected()){
+							$Layer->{$VisibleLayer}->{$_}->set_selected();
+							$Layer->{$VisibleLayer}->{$_}->selected(2);
+						}
+					}
+					else{
+						if($Layer->{$VisibleLayer}->{$_}->selected()==2){
+							$Layer->{$VisibleLayer}->{$_}->set_deselected();
+						}
+					}
+				}
+			}
+    	}
+	}
+} # end items_stroke_control
+
+#-----------------------------------------------------
+
+sub items_delete{
+	my ($complete) = @@_;
+	my @@rels;
+	my $relType;
+	foreach (keys %{ $Layer->{$VisibleLayer} }) {
+		if (exists $Layer->{$VisibleLayer}->{$_}){
+			if($Layer->{$VisibleLayer}->{$_}->selected()){
+				my ($pointer,$id,$ObjType) = &Path2ProjHash($_);
+				my $current = $_; 
+				if ($complete){#This means we have to delete from the whole project
+					print "\nDeleting from whole project...";
+					if ($ObjType == 3){ #This means it's an attribute
+						#We need to get the group(s) also!
+						my ($color_a, $color_r);
+						my $gr = $pointer->{$id}->{group};
+	        			my $role = 0; 
+						if ($gr) { 
+							# each attribute is deleted from each role
+							foreach (keys %{$Project->{group}->{$gr}->{role}}) {
+								$TreeList->delete('entry',"_LOBJ/_ATTR/__G.$gr/__R.$_/$id");
+								$role++;
+							}
+							# attribute has only group; not any role
+							unless($role){$TreeList->delete('entry',"_LOBJ/_ATTR/__G.$gr/$id");}		 
+						}
+						else {	
+							#Attribute Has no Group
+							$TreeList->delete('entry',"_LOBJ/_ATTR/$id");
+
+						}
+					}
+					else{
+						my $tentry = $_;
+						$tentry =~s/HREL/REL/;
+						$TreeList->delete('entry',$tentry);
+					}
+					delete($pointer->{$id});
+				}
+				else{
+					delete($pointer->{$id}->{'gui-presentation'}->{$VisibleLayer});
+					if($ObjType == 1){
+						#Path2ProjHash determines if it's a table or View and sets ObjType (tv in Path2ProjHash) accordingly!!
+						foreach(keys %{$pointer->{$id}->{column}}){
+							delete($pointer->{$id}->{column}->{$_}->{'gui-presentation'}->{$VisibleLayer});
+						}						
+					}
+					elsif($ObjType == 2){
+						foreach(keys %{$pointer->{$id}->{input}}){
+							delete($pointer->{$id}->{input}->{$_}->{'gui-presentation'}->{$VisibleLayer});
+						}
+						foreach(keys %{$pointer->{$id}->{output}}){
+							delete($pointer->{$id}->{output}->{$_}->{'gui-presentation'}->{$VisibleLayer});
+						}
+					}
+				}
+				@@rels=$Layer->{$VisibleLayer}->{$current}->delFromGUI($VisibleLayer);
+				delete($Layer->{$VisibleLayer}->{$current});
+				foreach (@@rels) {
+					$relType = '_'.$_->type.'/'.$_->id;
+					delete($Layer->{$VisibleLayer}->{$relType});
+					($pointer,$id) = &Path2ProjHash($relType);
+					if ($complete){
+						delete($pointer->{$id});
+						$relType=~s/HREL/REL/;
+						$TreeList->delete('entry',$relType);
+					}
+					else{
+						delete($pointer->{$id}->{'gui-presentation'}->{$VisibleLayer});
+					}
+				}	
+			}
+		}
+	}
+	print " ...done Deleting!";
+}
+
+#-----------------------------------------------------
+
+sub attr_enter {
+
+    my($c, $iinfo) = @@_;
+
+    $iinfo->{restore_cmd} = '';
+    my $type = $c->type('current');
+    if ($type eq 'window') {
+	return;
+    }
+	
+    my $fill = ($c->itemconfigure(qw/current -fill/))[4];
+    my $stipple = ($c->itemconfigure(qw/current -stipple/))[4];
+    if (defined $stipple) {
+	$iinfo->{restore_cmd} = "\$c->itemconfigure('current', -stipple => '$stipple')";
+	$c->itemconfigure(qw/current -stipple /,'');
+    } elsif (($type eq 'rectangle' or $type eq 'oval' or $type eq 'arc') and not defined $fill) {
+	my $outline = ($c->itemconfigure(qw/current -outline/))[4];
+	$iinfo->{restore_cmd} = "\$c->itemconfigure('current', -outline => '$outline')";
+	$c->itemconfigure(qw/current -outline LightBlue/);
+    } else {
+	$iinfo->{restore_cmd} = "\$c->itemconfigure('current', -fill => '$fill')";
+	#$c->itemconfigure(qw/current -fill wheat1/); 
+	$c->itemconfigure(qw/current -fill LightSkyBlue1/); 
+    }
+
+} # end attr_enter
+
+#-----------------------------------------------------
+
+sub attr_start_drag {
+	my($c, $x, $y, $iinfo, $item) = @@_;
+	$iinfo->{lastX} = $c->canvasx($x);
+	$iinfo->{lastY} = $c->canvasy($y);	
+	my $ji = '|'.join('|',$c->gettags($item)).'|';	
+	my $jim;
+	(($jim = $ji)=~s/^.*\|_([^|]+)\|.*$/$1/) || ($jim = ''); #select tags starting '__'
+	(($iinfo->{sel_obj} = $ji)=~s/^.*\|\.([^|]+)\|.*$/$jim\/$1/) || ($iinfo->{sel_obj} = $jim); #select tags starting '__'
+	$iinfo->{move_obj} = $Layer->{$VisibleLayer}->{$jim};
+	
+	$ji = '|'.join('|',$c->gettags($item)).'|';	
+	#print "\nEste es ji: $ji";
+	(($jim = $ji)=~s/^.*\|\.([^|]+)\|.*$/$1/) || ($jim = ''); #select tags starting '.'
+	(($iinfo->{sel_attr} = $ji)=~s/^.*\|\.([^|]+)\|.*$/$jim/) || ($iinfo->{sel_attr} = $jim); #select tags starting '.'
+
+	$ji = '|'.join('|',$c->gettags($item)).'|';	
+	#print "\nEste es ji: $ji";
+	(($jim = $ji)=~s/^.*\|#([^|]+)\|.*$/$1/) || ($jim = ''); #select tags starting '.'
+	(($iinfo->{sel_attr_num} = $ji)=~s/^.*\|#([^|]+)\|.*$/$jim/) || ($iinfo->{sel_attr_num} = $jim); #select tags starting '.'
+	print "\nes la bolita numero: $iinfo->{sel_attr_num}";
+	$jim=$iinfo->{move_obj}->type;
+	my ($tag_name,$color,$width,@@dash,@@arrow,@@shape);
+	$arrow[0]='none';
+	$shape[0]=[0,0,0];
+	$arrow[1]='first';
+	$shape[1]=[7,7,3];
+	$tag_name='newConn';
+	$color = 'wheat3';
+	$width = 1;
+	if ($jim eq 'TRAN'){
+		if ($iinfo->{sel_attr}){
+			$shape[1]=[7,10,3];
+		}
+		else{
+			$iinfo->{sel_attr} = '_STAT';
+			$width++;
+			$dash[0]=[8,2];
+			$dash[1]=$dash[0];
+			$dash[2]=$dash[0];
+			$arrow[0]='none';
+			$arrow[1]='first';
+			$shape[0]=[0,0,0];
+			$shape[1]=[12,12,4];
+		}
+	}
+	elsif ($jim eq 'TAB'){
+		$shape[1]=[7,0,3];
+	}
+		
+	
+	#First Line is the FROM, second is TO, third is the line in between.
+	$c->createLine(0,0,0,0, -fill=>$color, -dash=>$dash[0], -width=>$width, -join=>'round', -arrow=>$arrow[0], -arrowshape=>$shape[0],-tags=>[$tag_name.'from']);
+	$c->createLine(0,0,0,0, -fill=>$color, -dash=>$dash[1], -width=>$width, -join=>'round', -arrow=>$arrow[1], -arrowshape=>$shape[1],-tags=>[$tag_name.'to']);
+	$c->createLine(0,0,0,0, -fill=>$color, -dash=>$dash[2], -width=>$width, -join=>'round', -tags=>[$tag_name.'mid']);
+	$iinfo->{isDrag} = 1;
+}
+
+#-----------------------------------------------------
+
+sub attr_drag {
+	my($c, $x, $y, $iinfo) = @@_;
+	if ($iinfo->{isDrag}){
+		#this means a new connection (signal, rel, etc!) is being dragged (created!)
+		my ($x11,$y11,$x12,$y12) = $iinfo->{move_obj}->coords();
+		my $LinePad = 20;
+		my ($x1,$x2,$mpx,$mpy,$lp1,$lp2);
+		my ($y1,$y2);
+		my $tag_name='newConn';
+		my $type = $iinfo->{move_obj}->type();
+		#All we need to know is if there's a type in the object, since only 
+		#DBConn and DBLogObj have type, and it will never be a DBConn.
+		#Lines Are calculated differently for Logical Objects only.
+		if ($type eq 'ATTR' || $type eq 'FACT'){
+			my ($k1, $k2);
+			$k1 = $y - (($y12-$y11)/($x12-$x11))*($x-$x11) - $y11;
+			$k2 = $y - (($y12-$y11)/($x11-$x12))*($x-$x12) - $y11;
+			$mpx = abs($x12-$x11)/2;
+			$mpy = abs($y12-$y11)/2;
+			my (@@A,@@B,@@C,@@D);
+			if (($k1 >= 0) && ($k2 >= 0)) {
+			# I  Top
+			$A[0] = $x;$A[1]= $y;
+			$B[0] = $A[0];$B[1]=$y-$LinePad;
+			$C[0] = $x11+$mpx;$C[1]=$y12+$LinePad;
+			$D[0] = $C[0];$D[1]=$y12;    	    
+			}
+			if (($k1 <= 0) && ($k2 >= 0)) { 
+			# II  Right
+			$A[0] = $x;$A[1]= $y;
+			$B[0] = $x-$LinePad;$B[1]=$A[1];
+			$C[0] = $x12+$LinePad;$C[1]=$y11+$mpy;
+			$D[0] = $x12;$D[1]=$C[1];
+			}
+			if (($k1 <= 0) && ($k2 <= 0)) { 
+			 # III Down	     
+			$A[0] = $x;$A[1]= $y;
+			$B[0] = $A[0];$B[1]=$y+$LinePad;
+			$C[0] = $x11+$mpx;$C[1]=$y11-$LinePad;
+			$D[0] = $C[0];$D[1]=$y11;
+			}		
+			if (($k1 >= 0) && ($k2 <= 0)) { 	    
+			 # IV Left 	
+			$A[0] = $x;$A[1]= $y;
+			$B[0] = $x+$LinePad;$B[1]=$A[1];
+			$C[0] = $x11-$LinePad;$C[1]=$y11+$mpy;
+			$D[0] = $x11;$D[1]=$C[1];
+			}
+			$c->coords($tag_name.'from', $D[0],$D[1], $C[0], $C[1]);
+			$c->coords($tag_name.'to',   $A[0],$A[1], $B[0], $B[1]);		
+			$c->coords($tag_name.'mid',  $B[0],$B[1], $C[0], $C[1]);
+		}
+		else{
+			$y1=$y11+($iinfo->{move_obj}->getAttrY($iinfo->{sel_attr},$iinfo->{sel_attr_num})||0);
+	  		$y2=$y;
+			if ($x>$x12) {
+				$x1=$x12;
+				$x2=$x;
+				$lp1=$LinePad;
+				$lp2=$LinePad;
+			} 
+			else {
+				$x1=$x11;
+				$x2=$x;
+				$lp1=-$LinePad;
+				$lp2=-$LinePad;
+			}
+			#Lines are a little more restricted when connected from/to Transformations
+			if ($iinfo->{move_obj}->type() eq 'TRAN'){
+				$x1 = $x12;
+				$lp1 = $LinePad;
+			}
+			$c->coords($tag_name.'from', $x1, $y1, $x1+$lp1, $y1);
+			$c->coords($tag_name.'to',   $x2, $y2, $x2-$lp2, $y2);		
+			$c->coords($tag_name.'mid',  $x1+$lp1,$y1,$x2-$lp2,$y2);
+		}
+			
+	}
+	else{
+		print "\n";
+	}
+}
+
+#-----------------------------------------------------
+
+#Here we actually mae the relation beteween the objects
+#prior to that we must verify that the button was release
+#in an object (and a valid one) of course!!
+sub attr_end_drag {
+	my($c, $x, $y, $iinfo) = @@_;
+	$c->delete('newConnfrom','newConnto', 'newConnmid');
+	foreach (keys %{ $Layer->{$VisibleLayer} }) {		
+		if (!($_=~/^_REL|^_CONN|^_SIGNAL|^_HREL/)) { 
+			my($x1,$y1,$x2,$y2)=$Layer->{$VisibleLayer}->{$_}->coords();
+			my $ObjType = $Layer->{$VisibleLayer}->{$_}->type();
+			if ($ObjType eq 'TAB' || $ObjType eq 'TRAN'){
+				#in these cases we need to adjust the coordinates, because
+				#they are not set to cover the ATTR's
+				$y2=$Layer->{$VisibleLayer}->{$_}->coordsAround();
+			}
+			if (($x >= &min($x1,$x2)) && ($y >= &min($y1,$y2)) &&
+			    ($x <= &max($x1,$x2)) && ($y <= &max($y1,$y2))) {			    	
+				unless ($iinfo->{move_obj}->id() eq $Layer->{$VisibleLayer}->{$_}->id()){
+					#This is the object on top of which the button was released
+					#that means we want the relation to go to this object, of course.
+					my $from = $iinfo->{move_obj}->type();
+					my $to = $Layer->{$VisibleLayer}->{$_}->type();
+					my $fid = $iinfo->{move_obj}->id();
+					my $tid = $Layer->{$VisibleLayer}->{$_}->id();
+					my $newID;
+					my $makenew=1;
+					#print "\nEsto fue loque salio de las llamadas a type: from: $from, y to: $to";
+					if (($from eq 'ATTR' || $from eq 'FACT') && 
+						($to   eq 'ATTR' || $to   eq 'FACT')){
+						#this means that both are Logical objects, so we create HREL
+						#or add this layer to the hash of layers it can be seen at
+						#if it already exists
+						$newID = &prop::IDGen();
+						my $name = "New HRel ID: $newID";
+						my $desc = "Goes From $from to $to";
+						$from = "_LOBJ/_$from/$fid";
+						$to = "_LOBJ/_$to/$tid";
+						foreach(keys %{$Project->{hrelation}}){
+							my $ptr=$Project->{hrelation}->{$_};
+							if ($ptr->{to}->{content} eq $tid && $ptr->{from}->{content} eq $fid){
+								$name = ($ptr->{name})? $ptr->{name} : "\[$_\]";
+								$desc = ($ptr->{description})?$ptr->{description}:"No Description";
+								$newID = $_;
+								$ptr->{'gui-presentation'}->{$VisibleLayer}->{description}="No Description input yet";
+								$makenew = undef;
+								print "\nHicimos nueva GUI en relacion existente";
+								last;
+							}
+						}
+						if($makenew){
+
+							#First add the new relation to the Tree
+							$TreeList->add("_REL/$newID", -text => $name, -image => $Img{REL}, -data => 'REL');
+
+							# add the relation to the project variable
+							$Project->{hrelation}->{$newID}->{to}->{content}=$tid;
+							$Project->{hrelation}->{$newID}->{to}->{cardinality}='N';
+							$Project->{hrelation}->{$newID}->{to}->{optional}='true';
+							$Project->{hrelation}->{$newID}->{from}->{content}=$fid;
+							$Project->{hrelation}->{$newID}->{from}->{cardinality}='1';
+							$Project->{hrelation}->{$newID}->{from}->{optional}='false';
+							$Project->{hrelation}->{$newID}->{'gui-presentation'}->{$VisibleLayer}->{description}="No Description input yet";
+							$Project->{hrelation}->{$newID}->{name}= $name;
+							$Project->{hrelation}->{$newID}->{description}= $desc;
+							print "\nHicimos nueva relacion completamente";
+						}					
+
+						#print "\nTuanis, creamos Hrelation entonces!!";
+						my $toCard = $Project->{hrelation}->{$newID}->{to}->{cardinality};
+						my $toOpt = $Project->{hrelation}->{$newID}->{to}->{optional};
+						my $fCard = $Project->{hrelation}->{$newID}->{from}->{cardinality};
+						my $fOpt = $Project->{hrelation}->{$newID}->{from}->{optional};
+						#then, create the DBConn object and put it in the layer
+						my $l=DBConn->new($newID,$name,$desc,'HREL',$from,$to,$Layer->{$VisibleLayer},$fCard,$toCard,$fOpt,$toOpt);
+						if ($l) {
+			   				$Layer->{$VisibleLayer}->{"_HREL/$newID"}=$l ;
+							$l->draw($c);
+						}
+
+
+
+
+					}
+					elsif($from eq 'TAB'){
+						$newID = &prop::IDGen();
+						my $name = "";
+						my $desc = "Goes From $from to $to";
+						if ($to eq 'TAB'){
+							#This means we have to create a relation between those tables
+							$from = $fid."/".$iinfo->{sel_attr};
+							$to = $tid."/".$Layer->{$VisibleLayer}->{$_}->getByCoord($y);
+							$name = "New Rel ID: $newID";
+							foreach(keys %{$Project->{relation}}){
+								my $ptr=$Project->{relation}->{$_};
+								if ($ptr->{to}->{content} eq $to && $ptr->{from}->{content} eq $from){
+									$name = ($ptr->{name})? $ptr->{name} : "\[$_\]";
+									$desc = ($ptr->{description})?$ptr->{description}:"No Description";
+									$newID = $_;
+									$ptr->{'gui-presentation'}->{$VisibleLayer}->{description}="No Description input yet";
+									$makenew = undef;
+									print "\nHicimos nueva GUI en relacion existente";
+									last;
+								}
+							}
+							if($makenew){					
+
+								#First add the new relation to the Tree
+								$TreeList->add("_REL/$newID", -text => $name, -image => $Img{REL}, -data => 'REL');					
+
+								#add the relation to the project variable
+								$Project->{relation}->{$newID}->{to}->{content}=$to;
+								$Project->{relation}->{$newID}->{to}->{cardinality}='N';
+								$Project->{relation}->{$newID}->{to}->{optional}='true';
+								$Project->{relation}->{$newID}->{from}->{content}=$from;
+								$Project->{relation}->{$newID}->{from}->{cardinality}='1';
+								$Project->{relation}->{$newID}->{from}->{optional}='false';
+								$Project->{relation}->{$newID}->{'gui-presentation'}->{$VisibleLayer}->{description}="No Description input yet";
+								$Project->{relation}->{$newID}->{name}= $name;
+								$Project->{relation}->{$newID}->{description}= $desc;
+								print "\nHicimos neva relacion completamente";
+							}
+							my $toCard = $Project->{relation}->{$newID}->{to}->{cardinality};
+							my $toOpt = $Project->{relation}->{$newID}->{to}->{optional};
+							my $fCard = $Project->{relation}->{$newID}->{from}->{cardinality};
+							my $fOpt = $Project->{relation}->{$newID}->{from}->{optional};
+							#then, create the DBConn object and put it in the layer
+							my $l=DBConn->new($newID,$name,$desc,'REL',$from,$to,$Layer->{$VisibleLayer},$fCard,$toCard,$fOpt,$toOpt);
+							if ($l) {
+			   					$Layer->{$VisibleLayer}->{"_REL/$newID"}=$l ;
+								$l->draw($c);
+							}	
+						}
+						elsif ($to eq 'TRAN'){
+							$name = "New Conn ID: $newID";
+							$from = $iinfo->{sel_attr};
+							my @@toArr = $Layer->{$VisibleLayer}->{$_}->getByCoord($y);
+							unless ($toArr[0] eq '_TRIG'){
+								$from = $fid."/$from";
+								$to = $tid."/$toArr[0]-$toArr[1]";
+								if($toArr[2]){
+									#We need to increment the input arity in the project
+									my($pointer,$id)=&Path2ProjHash($_);
+									$pointer->{$id}->{input}->{$toArr[0]}->{length}=$toArr[1];
+									#print "\n$pointer->{$id}->{input}->{$id}->{length}";
+								}
+								#print "\nto es: $to";
+								foreach(keys %{$Project->{connection}}){
+									my $ptr=$Project->{connection}->{$_};
+									if ($ptr->{to} eq $to && $ptr->{from} eq $from){
+										$name = ($ptr->{name})? $ptr->{name} : "\[$_\]";
+										$desc = ($ptr->{description})?$ptr->{description}:"No Description";
+										$newID = $_;
+										$ptr->{'gui-presentation'}->{$VisibleLayer}->{description}="No Description input yet";
+										$makenew = undef;
+										print "\nHicimos nueva GUI en conn existente";
+										last;
+									}
+								}
+								if($makenew){					
+
+									#First add the new connection to the Tree
+									$TreeList->add("_CONN/$newID", -text => $name, -image => $Img{CONN}, -data => 'CONN');					
+
+									#add the connection to the project variable
+									$Project->{connection}->{$newID}->{to}=$to;
+									$Project->{connection}->{$newID}->{from}=$from;
+									$Project->{connection}->{$newID}->{'gui-presentation'}->{$VisibleLayer}->{description}="No Description input yet";
+									$Project->{connection}->{$newID}->{name}= $name;
+									$Project->{connection}->{$newID}->{description}= $desc;
+									print "\nHicimos nueva conn completamente";
+								}
+								#then, create the DBConn object and put it in the layer
+								my $l=DBConn->new($newID,$name,$desc,'CONN',$from,$to,$Layer->{$VisibleLayer});
+								if ($l) {
+			   						$Layer->{$VisibleLayer}->{"_CONN/$newID"}=$l ;
+									$l->draw($c);
+								}
+							}
+						}	
+					}
+					elsif($from eq 'TRAN' ){
+						if ($to eq 'TRAN' || $to eq 'TAB'){
+							$from = $iinfo->{sel_attr};
+							my @@toArr = $Layer->{$VisibleLayer}->{$_}->getByCoord($y);
+							$newID = &prop::IDGen();
+							my $name = "";
+							my $desc = "Goes From $from to $to";
+							if ($from eq '_STAT'){
+								if ($toArr[0] eq '_TRIG'){
+									#we have to create a new signal in this case.
+									$name = "New Signal ID: $newID";
+									$from = $fid."/_STAT";
+									$to = $tid."/_TRIG";
+									foreach(keys %{$Project->{signal}}){
+										my $ptr=$Project->{signal}->{$_};
+										if ($ptr->{to} eq $to && $ptr->{from} eq $from){
+											$name = ($ptr->{name})? $ptr->{name} : "\[$_\]";
+											$desc = ($ptr->{description})?$ptr->{description}:"No Description";
+											$newID = $_;
+											$ptr->{'gui-presentation'}->{$VisibleLayer}->{description}="No Description input yet";
+											$makenew = undef;
+											print "\nHicimos nueva GUI en senal existente";
+											last;
+										}
+									}
+									if($makenew){					
+
+										#First add the new signal to the Tree
+										$TreeList->add("_SIGNAL/$newID", -text => $name, -image => $Img{SIGNAL}, -data => 'SIGNAL');					
+
+										#add the signal to the project variable
+										$Project->{signal}->{$newID}->{to}=$to;
+										$Project->{signal}->{$newID}->{from}=$from;
+										$Project->{signal}->{$newID}->{'gui-presentation'}->{$VisibleLayer}->{description}="No Description input yet";
+										$Project->{signal}->{$newID}->{name}= $name;
+										$Project->{signal}->{$newID}->{description}= $desc;
+										print "\nHicimos nueva senal completamente";
+									}
+									#then, create the DBConn object and put it in the layer
+									my $l=DBConn->new($newID,$name,$desc,'SIGNAL',$from,$to,$Layer->{$VisibleLayer});
+									if ($l) {
+			   							$Layer->{$VisibleLayer}->{"_SIGNAL/$newID"}=$l ;
+										$l->draw($c);
+									}
+								}
+							}#if from eq _STAT
+							else{
+								#We have to create a connection here
+								$name = "New Conn ID: $newID";
+								unless ($toArr[0] eq '_TRIG'){
+									$from = $fid."/$from-$iinfo->{sel_attr_num}";
+									$to = $tid."/$toArr[0]";
+									if($toArr[1]){$to = $to."-$toArr[1]";}
+									if($toArr[2]){
+										#We need to increment the input arity in the project
+										my($pointer,$id)=&Path2ProjHash($_);
+										$pointer->{$id}->{input}->{$toArr[0]}->{length}=$toArr[1];
+										#print "\n$pointer->{$id}->{input}->{$id}->{length}";
+									}
+									#print "\nfrom $from to $to";
+									foreach(keys %{$Project->{connection}}){
+										my $ptr=$Project->{connection}->{$_};
+										if ($ptr->{to} eq $to && $ptr->{from} eq $from){
+											$name = ($ptr->{name})? $ptr->{name} : "\[$_\]";
+											$desc = ($ptr->{description})?$ptr->{description}:"No Description";
+											$newID = $_;
+											$ptr->{'gui-presentation'}->{$VisibleLayer}->{description}="No Description input yet";
+											$makenew = undef;
+											print "\nHicimos nueva GUI en conn existente";
+											last;
+										}
+									}
+									if($makenew){					
+
+										#First add the new connection to the Tree
+										$TreeList->add("_CONN/$newID", -text => $name, -image => $Img{CONN}, -data => 'CONN');					
+
+										#add the connection to the project variable
+										$Project->{connection}->{$newID}->{to}=$to;
+										$Project->{connection}->{$newID}->{from}=$from;
+										$Project->{connection}->{$newID}->{'gui-presentation'}->{$VisibleLayer}->{description}="No Description input yet";
+										$Project->{connection}->{$newID}->{name}= $name;
+										$Project->{connection}->{$newID}->{description}= $desc;
+										print "\nHicimos nueva conn completamente";
+									}
+									#then, create the DBConn object and put it in the layer
+									my $l=DBConn->new($newID,$name,$desc,'CONN',$from,$to,$Layer->{$VisibleLayer});
+									if ($l) {
+			   							$Layer->{$VisibleLayer}->{"_CONN/$newID"}=$l ;
+										$l->draw($c);
+									}#if $l
+								}#unless toArr[0] eq _TRIG
+							}#else (if from eq _STAT
+						}#if to eq TRAN or TAB
+						elsif($to eq 'FILE'){
+							$from = $iinfo->{sel_attr};
+							unless ($from eq '_STAT'){
+								$newID = &prop::IDGen();
+								my $name = "";
+								my $desc = "Goes From $from to $to";
+								$from = $fid."/$from-$iinfo->{sel_attr_num}";
+								$to = $tid;
+								print "\nEsto es tid: $tid";
+								foreach(keys %{$Project->{connection}}){
+									my $ptr=$Project->{connection}->{$_};
+									if ($ptr->{to} eq $to && $ptr->{from} eq $from){
+										$name = ($ptr->{name})? $ptr->{name} : "\[$_\]";
+										$desc = ($ptr->{description})?$ptr->{description}:"No Description";
+										$newID = $_;
+										$makenew = undef;
+										print "\nHicimos nueva GUI en conn existente";
+										last;
+									}
+								}
+								&make_conn($newID,$name,$desc,$to,$from,$makenew,$c);
+							}#unless from eq _STAT
+						
+						}#elsif to EQ FILE
+					}#elsif from eq TRAN
+					elsif (($from eq 'CONST' || $from eq 'FILE') && $to eq 'TRAN'){
+						my @@toArr = $Layer->{$VisibleLayer}->{$_}->getByCoord($y);
+						$newID = &prop::IDGen();
+						my $name = "New Conn ID: $newID";
+						my $desc = "Goes From $from to $to";
+						unless ($toArr[0] eq '_TRIG'){
+							print "\nAqui en schema tenemos $fid";
+							$from = $from eq 'FILE' ? $fid : "_CONST/$fid";
+							$to = $tid."/$toArr[0]-$toArr[1]";
+							print "\nEstamos mandando: $from";
+							if($toArr[2]){
+								#We need to increment the input arity in the project
+								my($pointer,$id)=&Path2ProjHash($_);
+								my($host,$id2)=($_=~m|^([\w.]+)/_TRAN/(\w+)$|);
+								$pointer->{$id}->{input}->{$toArr[0]}->{length}=$toArr[1];
+							}
+							foreach(keys %{$Project->{connection}}){
+								my $ptr=$Project->{connection}->{$_};
+								if ($ptr->{to} eq $to && $ptr->{from} eq $from){
+									$name = ($ptr->{name})? $ptr->{name} : "\[$_\]";
+									$desc = ($ptr->{description})?$ptr->{description}:"No Description";
+									$newID = $_;
+									$makenew = undef;
+									print "\nHicimos nueva GUI en conn existente";
+									last;
+								}
+							}
+							&make_conn($newID,$name,$desc,$to,$from,$makenew,$c);
+						}
+					}
+				}
+				last;		
+			}
+		}		
+	}
+	$iinfo->{isDrag} = 0;
+	undef $iinfo->{move_obj};
+	$iinfo->{xinit}=$iinfo->{yinit}=-100;
+}
+
+#-----------------------------------------------------
+
+sub make_conn{
+	my($newID,$name,$desc,$to,$from,$new,$c)=@@_;	
+	if($new){
+		#First add the new connection to the Tree
+		$TreeList->add("_CONN/$newID", -text => $name, -image => $Img{CONN}, -data => 'CONN');					
+
+		#add the connection to the project variable
+		$Project->{connection}->{$newID}->{to}=$to;
+		$Project->{connection}->{$newID}->{from}=$from;
+		$Project->{connection}->{$newID}->{name}= $name;
+		$Project->{connection}->{$newID}->{description}= $desc;
+		print "\nHicimos nueva conn completamente";
+	}
+	$Project->{connection}->{$newID}->{'gui-presentation'}->{$VisibleLayer}->{description}="No Description input yet";
+
+	#then, create the DBConn object and put it in the layer
+	my $l=DBConn->new($newID,$name,$desc,'CONN',$from,$to,$Layer->{$VisibleLayer});
+	if ($l) {
+		$Layer->{$VisibleLayer}->{"_CONN/$newID"}=$l ;
+		$l->draw($c);
+	}
+}
+
+#-----------------------------------------------------
+
+sub deselect_all {
+	my ($c) = @@_;
+	my $ji = $c->gettags('current');	
+	unless ($ji){
+		foreach (keys %{ $Layer->{$VisibleLayer} }) {		
+    		if ($Layer->{$VisibleLayer}->{$_}->selected()) {
+				$Layer->{$VisibleLayer}->{$_}->set_deselected();;	
+			}  
+		}
+	}
+}
+
+#-----------------------------------------------------
+
+sub select_all {
+	foreach (keys %{ $Layer->{$VisibleLayer} }) {
+    	$Layer->{$VisibleLayer}->{$_}->set_selected();  
+	}
+}
+
+#-----------------------------------------------------
+
+sub min{
+  my ($a,$b) = @@_;
+  return $a > $b ? $b : $a;
+}
+
+#-----------------------------------------------------
+
+sub max{
+  my ($a,$b) = @@_;
+  return $a > $b ? $a : $b;
+}
+
+#-----------------------------------------------------
+
+sub items_under_area {
+
+    my($c, $iinfo) = @@_;
+
+    my $area = $c->find('withtag', 'area');
+    my @@items  = ();
+    my $i;
+    foreach $i ($c->find('enclosed', $iinfo->{areaX1},
+            $iinfo->{areaY1}, $iinfo->{areaX2}, $iinfo->{areaY2})) {
+	my @@tags = $c->gettags($i); 
+	
+	if (defined($tags[0]) and grep $_ eq 'item', @@tags) {
+	    push @@items, $i;
+	}
+    }
+    @@items = 'None' unless @@items;
+    print STDOUT 'Items enclosed by area:  ', join(' ', @@items), ".\n";
+    @@items = ();
+    foreach $i ($c->find('overlapping', $iinfo->{areaX1}, $iinfo->{areaY1},
+            $iinfo->{areaX2}, $iinfo->{areaY2})) {
+	my @@tags = $c->gettags($i); 
+	if (defined($tags[0]) and grep $_ eq 'item', @@tags) {
+	    push @@items, $i;
+	}
+    }
+    @@items = 'None' unless @@items;
+    print STDOUT 'Items overlapping area:  ', join(' ', @@items), ".\n";
+
+} # end items_under_area
+
+#-----------------------------------------------------
+
+sub ShowLayer {
+
+	
+	my ($Layer,$tSchemaC) = @@_;
+	my $CanvasBal;
+	#print $VisibleLayer;
+	my $i = 1;
+	foreach (keys %{ $$Layer->{$VisibleLayer} }) {		
+		if (!($_=~/^_REL|^_CONN|^_SIGNAL|^_HREL/)) {	# create different objects as connections at first
+		  $$Layer->{$VisibleLayer}->{$_}->draw($tSchemaC);
+		  my $d=$$Layer->{$VisibleLayer}->{$_}->desc;
+		  $CanvasBal->{'_'.$_} = $d ? $d : '';
+		}  
+	}
+	foreach (keys %{ $$Layer->{$VisibleLayer} }) {		
+		if ($_=~/^_REL|^_CONN|^_SIGNAL|^_HREL/) {	# create connections now
+		  $$Layer->{$VisibleLayer}->{$_}->draw($tSchemaC);
+		  my $d=$$Layer->{$VisibleLayer}->{$_}->desc;
+		  $CanvasBal->{'_'.$_} = $d ? $d : '';
+		}  
+	}
+
+	$baloon->attach($tSchemaC->Subwidget('scrolled'), 
+			-balloonposition => 'mouse',
+			-msg => $CanvasBal);
+
+}
+
+
+#-----------------------------------------------------
+
+sub UpdateCanvasBalloons {
+	my ($Layer,$tSchemaC) = @@_;
+	$baloon->detach($tSchemaC->Subwidget('scrolled'));
+	my $CanvasBal;
+	foreach (keys %{ $$Layer->{$VisibleLayer} }) {
+		$CanvasBal->{'_'.$_}=$$Layer->{$VisibleLayer}->{$_}->desc;
+	}
+	$baloon->attach($tSchemaC->Subwidget('scrolled'), 
+			-balloonposition => 'mouse',
+			-msg => $CanvasBal);
+}
+
+#-----------------------------------------------------
+
+sub ClearLayer {
+
+	my ($Layer,$tSchemaC) = @@_;
+	foreach (keys %{ $$Layer->{$VisibleLayer} }) {
+		$$Layer->{$VisibleLayer}->{$_}->clear;
+	}
+	$baloon->detach($tSchemaC->Subwidget('scrolled'));
+}
+
+sub ClearSchema {
+  my $tSchemaC = shift;
+  $$tSchemaC->delete('all');
+  $$tSchemaC->createGrid(qw/0  0 10 10 -width 1/);
+}
+#-----------------------------------------------------
+
+sub Path2ProjHash {	# transfer Layer Path to Project Hash Node and ID
+
+	my ($SLSel)=@@_;
+	my ($p,$id,$ObjType,$tv,$subs);
+	#$tv determines wether it's Table, View, etc., which we need for items-delete
+	$tv = 0; #For this:  Table = 1| View = 1| Transformation = 2|  Attribute = 3| all others = 0
+	$subs=$SLSel=~s/HREL/REL/;
+	if ($SLSel=~/_LOBJ\/_ATTR\//) {
+            $ObjType= 'ATTR';
+	}
+	else {
+  	  $ObjType=$TreeList->info('data', $SLSel);        
+	}  
+	
+	if ($ObjType eq 'CONST') {
+		($id=$SLSel)=~s|^_CONST/||;
+		$p=$Project->{const};
+
+	} 
+	elsif ($ObjType eq 'CONN') {
+		($id=$SLSel)=~s|^_CONN/||;
+		$p=$Project->{connection};
+
+	} 
+	elsif ($ObjType eq 'SIGNAL') {
+		($id=$SLSel)=~s|^_SIGNAL/||;
+		$p=$Project->{signal};
+
+	} 
+	elsif ($ObjType eq 'REL') {
+		($id=$SLSel)=~s|^_REL/||;
+		if($subs){
+			$p=$Project->{hrelation};
+		}
+		else{
+			$p=$Project->{relation};
+		}
+    } 
+	elsif ($ObjType eq 'HREL') {
+		($id=$SLSel)=~s|^_HREL/||;
+		$p=$Project->{hrelation};
+		print "\nfound hrelation!!";		
+
+	} 
+	elsif ($ObjType eq 'ATTR') {		
+		# attributes can be in group or not
+		($id=$SLSel)=~s|^_LOBJ/_ATTR/||;		
+		$p=$Project->{attr};
+		$tv=3;
+
+	} 
+	elsif ($ObjType eq 'FACT') {
+		($id=$SLSel)=~s|^_LOBJ/_FACT/||;
+		$p=$Project->{fact};
+
+	} 
+	elsif ($ObjType eq 'TRIG') {
+		($id=$SLSel)=~s|^_TRIG/||;
+		$p=$Project->{trigger};
+
+	} 
+	elsif ($ObjType eq 'TRAN') {
+		my ($host);
+		($host,$id)=($SLSel=~m|^([\w.]+)/_TRAN/(\w+)$|);
+		$p=$Project->{host}->{$host}->{transformation};
+		$tv = 2;
+
+	} 
+	elsif ($ObjType eq 'TRAN_I') {
+		my ($host,$tr,$col)=($SLSel=~m|^([\w.]+)/_TRAN/(\w+)/(\w+)$|);
+		$p=$Project->{host}->{$host}->{transformation}->{$tr}->{input};
+		$id=$col;
+
+	} 
+	elsif ($ObjType eq 'TRAN_O') {
+		my ($host,$tr,$col)=($SLSel=~m|^([\w.]+)/_TRAN/(\w+)/(\w+)$|);
+		$p=$Project->{host}->{$host}->{transformation}->{$tr}->{output};
+		$id=$col;
+
+	} 
+	elsif ($ObjType eq 'HOST') {
+		$p=$Project->{host};
+		$id=$SLSel;
+		
+	} 
+	elsif ($ObjType eq 'FILE') {
+		my ($host,$fil)=($SLSel=~m|^([\w.]+)/_FILE/(\w+)$|);
+		$p=$Project->{host}->{$host}->{file};
+		$id=$fil;
+		
+	} 
+	elsif ($ObjType eq 'SRC') {
+		my ($host,$src)=($SLSel=~m|^([\w.]+)/(\w+)$|);
+		$p=$Project->{host}->{$host}->{source};
+		$id=$src;
+		
+	} 
+	elsif ($ObjType eq 'TAB') {
+		my ($host,$src,$tbl)=($SLSel=~m|^([\w.]+)/(\w+)/(\w+)$|);
+		$p=$Project->{host}->{$host}->{source}->{$src}->{table};
+		$id=$tbl;
+		$tv = 1;
+
+	} 
+	elsif ($ObjType eq 'VIEW') {
+		my ($host,$src,$v)=($SLSel=~m|^([\w.]+)/(\w+)/(\w+)$|);
+		$p=$Project->{host}->{$host}->{source}->{$src}->{view};
+		$id=$v;
+		$tv = 1;
+
+	} 
+	elsif ($ObjType eq 'COL') {
+		my ($host,$src,$tbl,$col)=($SLSel=~m|^([\w.]+)/(\w+)/(\w+)/(\w+)$|);
+		$p=$Project->{host}->{$host}->{source}->{$src}->{table}->{$tbl}->{column};
+		$id=$col;
+
+	} 
+	elsif ($ObjType eq 'VCOL') {
+		my ($host,$src,$v,$col)=($SLSel=~m|^([\w.]+)/(\w+)/(\w+)/(\w+)$|);
+		$p=$Project->{host}->{$host}->{source}->{$src}->{view}->{$v}->{column};
+		$id=$col;
+	}
+	return ($p,$id,$tv);
+
+}
+
+
+#-----------------------------------------------------
+
+1;
+
+__END__
+@
+
+
+1.33
+log
+@Position is language dependant
+@
+text
+@d4 1
+a4 1
+# $Id: schema.pl,v 1.32 2003/11/19 12:27:14 tuco80 Exp $
+d8 1
+a8 1
+use vars qw($tSchemaC $Layer $mainTabs $lang);
+d16 1
+a16 1
+	$tSchemaC = $Page->Scrolled(qw/Canvas -width 700 -height 500 -relief sunken
+d18 2
+a19 2
+			       [qw/0c 0c 265m 200m/]);
+	$tSchemaC->pack(qw/-expand yes -fill both/);
+d40 1
+a40 1
+	$tSchemaC->bind('item', '<Double-1>' =>         sub {&SelItem($tSchemaC,'current')});
+d43 1
+a43 1
+	$tSchemaC->bind('item', '<Double-1>' => sub{&itemProps(\%iinfo)});
+d62 1
+a62 1
+	$tSchemaC->CanvasBind('<Double-1>' => sub{&itemProps(\%iinfo)});
+d78 1
+a78 7
+sub itemProps{
+	my $iinfo = shift;
+	$Layer->{$VisibleLayer}->{$iinfo->{sel_obj}}->set_deselected();
+	&ShowProperties;
+	&Debug::UpdateObj;
+	$mainTabs->raise('prop');
+}
+d83 1
+d85 19
+a103 4
+	my $jim;
+	(($jim = $ji)=~s/^.*\|_([^|]+)\|.*$/$1/) || ($jim = ''); #select tags starting '__'
+	if (!($jim =~/_LOBJ/)) {
+	  $TreeList->selection();
+d108 6
+a113 1
+	}  	
+d131 1
+a131 1
+	#print "\nEste es sel_obj: $iinfo->{sel_obj}";
+d156 1
+d162 12
+@
+
+
+1.32
+log
+@Double click on objects raises properties page
+@
+text
+@d4 1
+a4 1
+# $Id: schema.pl,v 1.31 2003/11/07 15:38:54 tuco80 Exp $
+d8 1
+a8 1
+use vars qw($tSchemaC $Layer $mainTabs);
+d161 18
+a178 2
+				if ($x1 && $y1){$p->{$id}->{'gui-presentation'}->{$VisibleLayer}->{coord}="$x1 $y1"}
+				$Layer->{$VisibleLayer}->{$iinfo->{sel_obj}}->coords($x1,$y1,$x2,$y2);
+@
+
+
+1.31
+log
+@Support for files complete. Naming of bees,ins,outs to name, not ID
+@
+text
+@d4 1
+a4 1
+# $Id: schema.pl,v 1.30 2003/11/06 12:28:24 tuco80 Exp $
+d43 1
+d62 1
+d78 8
+d161 1
+a161 1
+				$p->{$id}->{'gui-presentation'}->{$VisibleLayer}->{coord}="$x1 $y1";
+a162 1
+				undef $iinfo->{move_obj};
+d165 1
+@
+
+
+1.30
+log
+@+Color changing for Groups, +Property edition for groups/roles
+@
+text
+@d4 1
+a4 1
+# $Id: schema.pl,v 1.29 2003/10/20 09:42:18 tuco80 Exp $
+d804 1
+a804 1
+							}
+d849 22
+d873 5
+a877 3
+							}
+						}
+					}
+a899 1
+									$ptr->{'gui-presentation'}->{$VisibleLayer}->{description}="No Description input yet";
+d905 1
+a905 19
+							if($makenew){					
+
+								#First add the new connection to the Tree
+								$TreeList->add("_CONN/$newID", -text => $name, -image => $Img{CONN}, -data => 'CONN');					
+
+								#add the connection to the project variable
+								$Project->{connection}->{$newID}->{to}=$to;
+								$Project->{connection}->{$newID}->{from}=$from;
+								$Project->{connection}->{$newID}->{'gui-presentation'}->{$VisibleLayer}->{description}="No Description input yet";
+								$Project->{connection}->{$newID}->{name}= $name;
+								$Project->{connection}->{$newID}->{description}= $desc;
+								print "\nHicimos nueva conn completamente";
+							}
+							#then, create the DBConn object and put it in the layer
+							my $l=DBConn->new($newID,$name,$desc,'CONN',$from,$to,$Layer->{$VisibleLayer});
+							if ($l) {
+			   					$Layer->{$VisibleLayer}->{"_CONN/$newID"}=$l ;
+								$l->draw($c);
+							}
+d916 25
+@
+
+
+1.29
+log
+@Ctrl-e to Export the project
+@
+text
+@d4 1
+a4 1
+# $Id: schema.pl,v 1.28 2003/10/01 08:20:59 tuco80 Exp $
+d281 1
+a281 1
+						$Layer->{$VisibleLayer}->{$_}->set_selected();
+d284 1
+a284 1
+						$Layer->{$VisibleLayer}->{$_}->set_deselected();
+d310 4
+a313 2
+			    		$Layer->{$VisibleLayer}->{$_}->set_selected();
+						$Layer->{$VisibleLayer}->{$_}->selected(2);
+d854 1
+a854 1
+					elsif ($from eq 'CONST' && $to eq 'TRAN'){
+d860 2
+a861 1
+							$from = "_CONST/$fid";
+d863 1
+a868 2
+								#print "\n$pointer->{$id}->{input}->{$id}->{length}";
+								print "\n pointer is: $pointer->{$id} and project is: $Project->{host}->{$host}->{transformation}->{$id}";
+d1062 2
+a1063 1
+	} elsif ($ObjType eq 'CONN') {
+d1067 2
+a1068 1
+	} elsif ($ObjType eq 'SIGNAL') {
+d1072 2
+a1073 1
+	} elsif ($ObjType eq 'REL') {
+d1081 2
+a1082 1
+    } elsif ($ObjType eq 'HREL') {
+d1087 2
+a1088 1
+	} elsif ($ObjType eq 'ATTR') {		
+d1094 2
+a1095 1
+	} elsif ($ObjType eq 'FACT') {
+d1099 2
+a1100 1
+	} elsif ($ObjType eq 'TRIG') {
+d1104 2
+a1105 1
+	} elsif ($ObjType eq 'TRAN') {
+d1111 2
+a1112 1
+	} elsif ($ObjType eq 'TRAN_I') {
+d1117 2
+a1118 1
+	} elsif ($ObjType eq 'TRAN_O') {
+d1123 2
+a1124 1
+	} elsif ($ObjType eq 'HOST') {
+d1128 8
+a1135 1
+	} elsif ($ObjType eq 'SRC') {
+d1140 2
+a1141 1
+	} elsif ($ObjType eq 'TAB') {
+d1147 2
+a1148 1
+	} elsif ($ObjType eq 'VIEW') {
+d1154 2
+a1155 1
+	} elsif ($ObjType eq 'COL') {
+d1160 2
+a1161 1
+	} elsif ($ObjType eq 'VCOL') {
+@
+
+
+1.28
+log
+@Fixed bug in name/desc editing.  +Deletion of objects from visible layer (Del) or project (Shift-Del)
+@
+text
+@d4 1
+a4 1
+# $Id: schema.pl,v 1.27 2003/09/25 09:50:12 tuco80 Exp $
+d55 1
+a812 3
+										$::ptr=$pointer;
+										$::tempid = $id;
+										$::inpid = $toArr[0];
+@
+
+
+1.27
+log
+@Arity of Transformation I/O complete
+@
+text
+@d4 1
+a4 1
+# $Id: schema.pl,v 1.26 2003/09/12 11:06:25 tuco80 Exp $
+d57 2
+a58 1
+	$tSchemaC->CanvasBind('<Shift-Delete>' => sub{&items_delete($tSchemaC,$Project)});
+d134 8
+a141 4
+	    			 $TreeList->show('entry',$iinfo->{sel_obj});
+	    			 $TreeList->see($iinfo->{sel_obj});
+	    			 $TreeList->selectionSet($iinfo->{sel_obj});
+	    			 $TreeList->anchorSet($iinfo->{sel_obj});
+d326 1
+a326 2
+	my $self = shift;
+	my ($c,$proj) = @@_;
+d332 30
+a361 7
+				my ($pointer,$id,$ObjType) = &Path2ProjHash($_); 
+				delete($pointer->{$id}->{'gui-presentation'}->{$VisibleLayer});
+				if($ObjType == 1){
+					#Path2ProjHash determines if it's a table or View and sets ObjType (tv in Path2ProjHash) accordingly!!
+					foreach(keys %{$pointer->{$id}->{column}}){
+						delete($pointer->{$id}->{column}->{$_}->{'gui-presentation'}->{$VisibleLayer});
+					}						
+d363 7
+a369 3
+				elsif($ObjType == 2){
+					foreach(keys %{$pointer->{$id}->{input}}){
+						delete($pointer->{$id}->{input}->{$_}->{'gui-presentation'}->{$VisibleLayer});
+d371 7
+a377 2
+					foreach(keys %{$pointer->{$id}->{output}}){
+						delete($pointer->{$id}->{output}->{$_}->{'gui-presentation'}->{$VisibleLayer});
+d380 2
+a381 2
+				@@rels=$Layer->{$VisibleLayer}->{$_}->delFromGUI($VisibleLayer);
+				delete($Layer->{$VisibleLayer}->{$_});
+d386 8
+a393 1
+					delete($pointer->{$id}->{'gui-presentation'}->{$VisibleLayer});
+d398 1
+d583 1
+a583 1
+		if (!($_=~/^_REL|^_CONN|^_SIGNAL|^_HREL/)) {
+d718 1
+a718 1
+									$pointer->{$id}->{input}->{$id}->{length}++;
+d812 4
+a815 1
+										$pointer->{$id}->{input}->{$id}->{length}++;
+d866 1
+a866 1
+								$pointer->{$id}->{input}->{$id}->{length}++;
+d1048 2
+a1049 2
+	#$tv determines wether it's Table or View, which we need for items-delete
+	$tv = 0; #For this:  Table = 1| View = 1| Transformation = 2|  all others = 0
+d1087 1
+@
+
+
+1.26
+log
+@Fixed small bugs that were giving problems with new face of Transformations
+@
+text
+@d4 1
+a4 1
+# $Id: schema.pl,v 1.25 2003/09/12 08:25:41 tuco80 Exp $
+d99 1
+a99 1
+	print "\nEste es ji: $ji";
+d104 1
+a104 1
+	print "\nEste es sel_obj: $iinfo->{sel_obj}";
+a272 1
+					#print ($_,"\n");
+d275 1
+a275 1
+						$Layer->{$VisibleLayer}->{$_}->set_selected();		     		
+a336 1
+					print "\nEs una transformacion!!";
+d399 1
+d402 6
+d500 1
+a500 1
+			$y1=$y11+($iinfo->{move_obj}->getAttrY($iinfo->{sel_attr})||0);
+d667 2
+a668 2
+							$to = $Layer->{$VisibleLayer}->{$_}->getByCoord($y);
+							unless ($to eq '_TRIG'){
+d670 8
+a677 1
+								$to = $tid."/$to";
+d715 1
+a715 1
+							$to = $Layer->{$VisibleLayer}->{$_}->getByCoord($y);
+d720 1
+a720 1
+								if ($to eq '_TRIG'){
+d761 11
+a771 3
+								unless ($to eq '_TRIG'){
+									$from = $fid."/$from";
+									$to = $tid."/$to";
+d808 1
+a808 1
+						$to = $Layer->{$VisibleLayer}->{$_}->getByCoord($y);
+d812 1
+a812 1
+						unless ($to eq '_TRIG'){
+d814 9
+a822 1
+							$to = $tid."/$to";
+@
+
+
+1.25
+log
+@Fixed small bug of transformations connecting to themselves + same line thing as in DBConn.pm
+@
+text
+@d4 1
+a4 1
+# $Id: schema.pl,v 1.24 2003/09/10 13:10:26 tuco80 Exp $
+d99 1
+d101 2
+a102 1
+	(($iinfo->{sel_obj} = $ji)=~s/^.*\|\.([^|]+)\|.*$/$jim\/$1/) || ($iinfo->{sel_obj} = $jim); #select tags starting '__'
+d104 1
+d1019 1
+a1019 1
+		$p=$Project->{triger};
+@
+
+
+1.24
+log
+@Moved IDGen from schema.pl to prop.pm
+@
+text
+@d4 1
+a4 1
+# $Id: schema.pl,v 1.23 2003/09/08 14:07:20 tuco80 Exp $
+d128 7
+a134 1
+					$iinfo->{move_obj}->set_selected();
+d506 5
+d541 23
+a563 77
+				#This is the object on top of which the button was released
+				#that means we want the relation to go to this object, of course.
+				my $from = $iinfo->{move_obj}->type();
+				my $to = $Layer->{$VisibleLayer}->{$_}->type();
+				my $fid = $iinfo->{move_obj}->id();
+				my $tid = $Layer->{$VisibleLayer}->{$_}->id();
+				my $newID;
+				my $makenew=1;
+				#print "\nEsto fue loque salio de las llamadas a type: from: $from, y to: $to";
+				if (($from eq 'ATTR' || $from eq 'FACT') && 
+					($to   eq 'ATTR' || $to   eq 'FACT')){
+					#this means that both are Logical objects, so we create HREL
+					#or add this layer to the hash of layers it can be seen at
+					#if it already exists
+					$newID = &prop::IDGen();
+					my $name = "New HRel ID: $newID";
+					my $desc = "Goes From $from to $to";
+					$from = "_LOBJ/_$from/$fid";
+					$to = "_LOBJ/_$to/$tid";
+					foreach(keys %{$Project->{hrelation}}){
+						my $ptr=$Project->{hrelation}->{$_};
+						if ($ptr->{to}->{content} eq $tid && $ptr->{from}->{content} eq $fid){
+							$name = ($ptr->{name})? $ptr->{name} : "\[$_\]";
+							$desc = ($ptr->{description})?$ptr->{description}:"No Description";
+							$newID = $_;
+							$ptr->{'gui-presentation'}->{$VisibleLayer}->{description}="No Description input yet";
+							$makenew = undef;
+							print "\nHicimos nueva GUI en relacion existente";
+							last;
+						}
+					}
+					if($makenew){
+						
+						#First add the new relation to the Tree
+						$TreeList->add("_REL/$newID", -text => $name, -image => $Img{REL}, -data => 'REL');
+						
+						# add the relation to the project variable
+						$Project->{hrelation}->{$newID}->{to}->{content}=$tid;
+						$Project->{hrelation}->{$newID}->{to}->{cardinality}='N';
+						$Project->{hrelation}->{$newID}->{to}->{optional}='true';
+						$Project->{hrelation}->{$newID}->{from}->{content}=$fid;
+						$Project->{hrelation}->{$newID}->{from}->{cardinality}='1';
+						$Project->{hrelation}->{$newID}->{from}->{optional}='false';
+						$Project->{hrelation}->{$newID}->{'gui-presentation'}->{$VisibleLayer}->{description}="No Description input yet";
+						$Project->{hrelation}->{$newID}->{name}= $name;
+						$Project->{hrelation}->{$newID}->{description}= $desc;
+						print "\nHicimos nueva relacion completamente";
+					}					
+					
+					#print "\nTuanis, creamos Hrelation entonces!!";
+					my $toCard = $Project->{hrelation}->{$newID}->{to}->{cardinality};
+					my $toOpt = $Project->{hrelation}->{$newID}->{to}->{optional};
+					my $fCard = $Project->{hrelation}->{$newID}->{from}->{cardinality};
+					my $fOpt = $Project->{hrelation}->{$newID}->{from}->{optional};
+					#then, create the DBConn object and put it in the layer
+					my $l=DBConn->new($newID,$name,$desc,'HREL',$from,$to,$Layer->{$VisibleLayer},$fCard,$toCard,$fOpt,$toOpt);
+					if ($l) {
+			   			$Layer->{$VisibleLayer}->{"_HREL/$newID"}=$l ;
+						$l->draw($c);
+					}
+					
+															
+					
+					 
+				}
+				elsif($from eq 'TAB'){
+					$newID = &prop::IDGen();
+					my $name = "";
+					my $desc = "Goes From $from to $to";
+					if ($to eq 'TAB'){
+						#This means we have to create a relation between those tables
+						$from = $fid."/".$iinfo->{sel_attr};
+						$to = $tid."/".$Layer->{$VisibleLayer}->{$_}->getByCoord($y);
+						$name = "New Rel ID: $newID";
+						foreach(keys %{$Project->{relation}}){
+							my $ptr=$Project->{relation}->{$_};
+							if ($ptr->{to}->{content} eq $to && $ptr->{from}->{content} eq $from){
+d573 1
+a573 1
+						if($makenew){					
+d576 1
+a576 1
+							$TreeList->add("_REL/$newID", -text => $name, -image => $Img{REL}, -data => 'REL');					
+d578 18
+a595 16
+							#add the relation to the project variable
+							$Project->{relation}->{$newID}->{to}->{content}=$to;
+							$Project->{relation}->{$newID}->{to}->{cardinality}='N';
+							$Project->{relation}->{$newID}->{to}->{optional}='true';
+							$Project->{relation}->{$newID}->{from}->{content}=$from;
+							$Project->{relation}->{$newID}->{from}->{cardinality}='1';
+							$Project->{relation}->{$newID}->{from}->{optional}='false';
+							$Project->{relation}->{$newID}->{'gui-presentation'}->{$VisibleLayer}->{description}="No Description input yet";
+							$Project->{relation}->{$newID}->{name}= $name;
+							$Project->{relation}->{$newID}->{description}= $desc;
+							print "\nHicimos neva relacion completamente";
+						}
+						my $toCard = $Project->{relation}->{$newID}->{to}->{cardinality};
+						my $toOpt = $Project->{relation}->{$newID}->{to}->{optional};
+						my $fCard = $Project->{relation}->{$newID}->{from}->{cardinality};
+						my $fOpt = $Project->{relation}->{$newID}->{from}->{optional};
+d597 1
+a597 1
+						my $l=DBConn->new($newID,$name,$desc,'REL',$from,$to,$Layer->{$VisibleLayer},$fCard,$toCard,$fOpt,$toOpt);
+d599 1
+a599 1
+			   				$Layer->{$VisibleLayer}->{"_REL/$newID"}=$l ;
+d601 5
+a605 1
+						}	
+d607 12
+a618 10
+					elsif ($to eq 'TRAN'){
+						$name = "New Conn ID: $newID";
+						$from = $iinfo->{sel_attr};
+						$to = $Layer->{$VisibleLayer}->{$_}->getByCoord($y);
+						unless ($to eq '_TRIG'){
+							$from = $fid."/$from";
+							$to = $tid."/$to";
+							foreach(keys %{$Project->{connection}}){
+								my $ptr=$Project->{connection}->{$_};
+								if ($ptr->{to} eq $to && $ptr->{from} eq $from){
+d624 1
+a624 1
+									print "\nHicimos nueva GUI en conn existente";
+d630 2
+a631 2
+								#First add the new connection to the Tree
+								$TreeList->add("_CONN/$newID", -text => $name, -image => $Img{CONN}, -data => 'CONN');					
+d633 11
+a643 7
+								#add the connection to the project variable
+								$Project->{connection}->{$newID}->{to}=$to;
+								$Project->{connection}->{$newID}->{from}=$from;
+								$Project->{connection}->{$newID}->{'gui-presentation'}->{$VisibleLayer}->{description}="No Description input yet";
+								$Project->{connection}->{$newID}->{name}= $name;
+								$Project->{connection}->{$newID}->{description}= $desc;
+								print "\nHicimos nueva conn completamente";
+d645 4
+d650 1
+a650 1
+							my $l=DBConn->new($newID,$name,$desc,'CONN',$from,$to,$Layer->{$VisibleLayer});
+d652 1
+a652 1
+			   					$Layer->{$VisibleLayer}->{"_CONN/$newID"}=$l ;
+d654 1
+a654 1
+							}
+d656 1
+a656 50
+					}	
+				}
+				elsif($from eq 'TRAN' ){
+					if ($to eq 'TRAN' || $to eq 'TAB'){
+						$from = $iinfo->{sel_attr};
+						$to = $Layer->{$VisibleLayer}->{$_}->getByCoord($y);
+						$newID = &prop::IDGen();
+						my $name = "";
+						my $desc = "Goes From $from to $to";
+						if ($from eq '_STAT'){
+							if ($to eq '_TRIG'){
+								#we have to create a new signal in this case.
+								$name = "New Signal ID: $newID";
+								$from = $fid."/_STAT";
+								$to = $tid."/_TRIG";
+								foreach(keys %{$Project->{signal}}){
+									my $ptr=$Project->{signal}->{$_};
+									if ($ptr->{to} eq $to && $ptr->{from} eq $from){
+										$name = ($ptr->{name})? $ptr->{name} : "\[$_\]";
+										$desc = ($ptr->{description})?$ptr->{description}:"No Description";
+										$newID = $_;
+										$ptr->{'gui-presentation'}->{$VisibleLayer}->{description}="No Description input yet";
+										$makenew = undef;
+										print "\nHicimos nueva GUI en senal existente";
+										last;
+									}
+								}
+								if($makenew){					
+
+									#First add the new signal to the Tree
+									$TreeList->add("_SIGNAL/$newID", -text => $name, -image => $Img{SIGNAL}, -data => 'SIGNAL');					
+
+									#add the signal to the project variable
+									$Project->{signal}->{$newID}->{to}=$to;
+									$Project->{signal}->{$newID}->{from}=$from;
+									$Project->{signal}->{$newID}->{'gui-presentation'}->{$VisibleLayer}->{description}="No Description input yet";
+									$Project->{signal}->{$newID}->{name}= $name;
+									$Project->{signal}->{$newID}->{description}= $desc;
+									print "\nHicimos nueva senal completamente";
+								}
+								#then, create the DBConn object and put it in the layer
+								my $l=DBConn->new($newID,$name,$desc,'SIGNAL',$from,$to,$Layer->{$VisibleLayer});
+								if ($l) {
+			   						$Layer->{$VisibleLayer}->{"_SIGNAL/$newID"}=$l ;
+									$l->draw($c);
+								}
+							}
+						}
+						else{
+							#We have to create a connection here
+d658 2
+d695 87
+d784 19
+a802 19
+				}
+				elsif ($from eq 'CONST' && $to eq 'TRAN'){
+					$to = $Layer->{$VisibleLayer}->{$_}->getByCoord($y);
+					$newID = &prop::IDGen();
+					my $name = "New Conn ID: $newID";
+					my $desc = "Goes From $from to $to";
+					unless ($to eq '_TRIG'){
+						$from = "_CONST/$fid";
+						$to = $tid."/$to";
+						foreach(keys %{$Project->{connection}}){
+							my $ptr=$Project->{connection}->{$_};
+							if ($ptr->{to} eq $to && $ptr->{from} eq $from){
+								$name = ($ptr->{name})? $ptr->{name} : "\[$_\]";
+								$desc = ($ptr->{description})?$ptr->{description}:"No Description";
+								$newID = $_;
+								$ptr->{'gui-presentation'}->{$VisibleLayer}->{description}="No Description input yet";
+								$makenew = undef;
+								print "\nHicimos nueva GUI en conn existente";
+								last;
+d804 1
+a804 2
+						}
+						if($makenew){					
+d806 2
+a807 2
+							#First add the new connection to the Tree
+							$TreeList->add("_CONN/$newID", -text => $name, -image => $Img{CONN}, -data => 'CONN');					
+d809 14
+a822 13
+							#add the connection to the project variable
+							$Project->{connection}->{$newID}->{to}=$to;
+							$Project->{connection}->{$newID}->{from}=$from;
+							$Project->{connection}->{$newID}->{'gui-presentation'}->{$VisibleLayer}->{description}="No Description input yet";
+							$Project->{connection}->{$newID}->{name}= $name;
+							$Project->{connection}->{$newID}->{description}= $desc;
+							print "\nHicimos nueva conn completamente";
+						}
+						#then, create the DBConn object and put it in the layer
+						my $l=DBConn->new($newID,$name,$desc,'CONN',$from,$to,$Layer->{$VisibleLayer});
+						if ($l) {
+			   				$Layer->{$VisibleLayer}->{"_CONN/$newID"}=$l ;
+							$l->draw($c);
+@
+
+
+1.23
+log
+@Added creation of relations between objects (Hrel,Sign,Rel & Conn)
+@
+text
+@d4 1
+a4 1
+# $Id: schema.pl,v 1.22 2003/09/02 08:17:54 tuco80 Exp $
+d206 1
+d322 1
+a322 1
+				if($ObjType){
+d328 9
+d442 1
+a442 1
+		my $type = $iinfo->{move_obj}->type;
+d476 1
+a476 1
+			$A[0] = $x;$A[1]= $y+$mpy;
+d544 1
+a544 1
+					$newID = &IDGen();
+d596 1
+a596 1
+					$newID = &IDGen();
+d689 1
+a689 1
+						$newID = &IDGen();
+d774 1
+a774 1
+					$newID = &IDGen();
+d819 1
+a852 35
+my $IDGen=int(rand 199888);
+my $IDSt;
+my $IDa='abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';	# lenght 52
+my $IDb=$IDa.'0123456789';	# lenght 62
+
+sub IDGen {	# singular ID generator
+# returns singular string (starting with letter) contains:
+#   3 chars are representing sequence of ID (with period 199888)
+#   4 chars are representing time (with period 171 days)
+#   3 chars are representing PID (max PID should be 62**3)
+	unless($IDSt) {
+		$IDSt = '';
+		my $t=time%62**4;	# we are using only part of time information to save string space; resulting 171 days period seems enough to ensure ID singularity
+		foreach (62**3, 62**2, 62) {	# we are setting 4 chars string depending on time
+			$IDSt .= substr($IDb, int($t/$_), 1);
+			$t = $t%$_;
+		}
+		$IDSt .= substr($IDb, $t, 1);
+		$t=$$%62**3;
+		foreach (62**2, 62) {	# we are setting 3 chars string depending on PID
+			$IDSt .= substr($IDb, int($t/$_), 1);
+			$t = $t%$_;
+		}
+		$IDSt .= substr($IDb, $t, 1);
+	}
+	if ($IDGen==199888) {$IDGen=0} else {$IDGen++};	# 199888=52*62*62; we are returning about 100000 IDs/s on P4/1.6 GHz into empty loop, so such 3 chars string seems enough to keep sequence
+
+	my $i1 = int($IDGen/3844);	# 3844=62*62
+	my $i2 = $IDGen%3844;
+	return substr($IDa, $i1, 1).substr($IDb, int($i2/62), 1).substr($IDb, $i2%62, 1).$IDSt;	# we are converting $IDGen to 3 char string in space 'aaa','aab',...,'zzz'; returning string is starting with this string to ensure ID is not starting with number
+
+}
+
+#-----------------------------------------------------
+
+d958 1
+a958 1
+	$tv = 0;
+d1009 1
+@
+
+
+1.22
+log
+@Fixed bug in deletion of HRelations, got rid of some unnecesary prints and comments
+@
+text
+@d4 1
+a4 1
+# $Id: schema.pl,v 1.21 2003/09/01 14:22:24 tuco80 Exp $
+d10 1
+a10 2
+my $xinit;
+my $yinit;
+d29 3
+a36 1
+
+d43 7
+d52 1
+d58 1
+a58 1
+	$tSchemaC->CanvasBind('<2>' =>         sub {shift->scan('mark', $Tk::event->x, $Tk::event->y)});
+a59 1
+	$tSchemaC->CanvasBind('<B2-Motion>' => sub {shift->scan('dragto', $Tk::event->x, $Tk::event->y)});
+d62 2
+a63 2
+	$tSchemaC->CanvasBind('<ButtonPress-1>' => sub {&items_mark_press($tSchemaC, $Tk::event->x, $Tk::event->y, \%iinfo)});
+	
+a68 1
+	$tSchemaC->CanvasBind('<Any-Enter>' => sub {$_[0]->CanvasFocus});
+d93 2
+a94 2
+	$xinit = $x;
+	$yinit = $y;
+d123 1
+a123 1
+			if ($xinit == $xend && $yinit == $yend) {				
+d206 1
+d216 2
+a217 2
+		$xinit = $x;
+		$yinit = $y;
+d231 1
+a231 1
+	if ($xinit == $x && $yinit == $y) {
+d255 1
+a255 1
+    	my $ay = $iinfo->{areaY1};
+d273 1
+a273 1
+    	}
+d322 1
+a322 1
+					#Path2ProjHash determines if it's a table or View and sets ObjType accordingly!!
+d339 472
+a829 1
+		print Dumper($_);
+d838 35
+@
+
+
+1.21
+log
+@Deletion of Objects Complete
+@
+text
+@d4 1
+a4 1
+# $Id: schema.pl,v 1.20 2003/08/29 11:45:22 tuco80 Exp $
+d45 1
+a45 1
+	$tSchemaC->CanvasBind('<Control-a>' => sub {&select_all()});    #print Dumper($Layer->{2}->{'_HREL/vyrobek#datum'}); } );
+a47 1
+#<<<<<<< schema.pl
+a48 9
+	#$tSchemaC->CanvasBind('<Control-t>' => sub {print Dumper($Page->bindtags())});
+	#$tSchemaC->CanvasBind('<<Delete>>' => sub {print "si funca\n";});
+    #    $c->CanvasBind('<1>' =>         sub {&items_start_drag($tSchemaC, $Tk::event->x, $Tk::event->y, \%iinfo)});
+    #    $tSchemaC->CanvasBind('<B1-Motion>' => sub {&items_drag($tSchemaC, $Tk::event->x, $Tk::event->y, \%iinfo, 'current')});
+	#$tSchemaC->CanvasBind('<1>' =>         sub {&deselect_all($tSchemaC,'current')});
+
+	#$tSchemaC->CanvasBind('<Shift-Delete>' => sub{&items_delete($tSchemaC,$Project)});
+	
+#>>>>>>> 1.19
+a49 1
+
+a51 1
+	
+d150 1
+a150 4
+				#$Layer->{$VisibleLayer}->{$_}->set_selected();
+				$Layer->{$VisibleLayer}->{$_}->move($c,$x-$iinfo->{lastX}, $y-$iinfo->{lastY});
+		    	#$Layer->{$VisibleLayer}->{$_}->clear();
+				#$Layer->{$VisibleLayer}->{$_}->draw($c);	
+d176 1
+a176 1
+
+a206 1
+	
+a207 1
+		#print "deberia hacerlo\n";
+a211 1
+    	#$c->delete('area');
+a213 11
+	
+    
+=pod	foreach (keys %{ $Layer->{$VisibleLayer} }) {		
+		if (!($_=~/^_REL|^_CONN|^_SIGNAL|^_HREL/)) {
+			if($Layer->{$VisibleLayer}->{$_}->selected()==2){
+				$Layer->{$VisibleLayer}->{$_}->set_selected();
+			}
+		}
+	}
+=cut
+
+d220 11
+a230 13
+	#unless($c->gettags('current')){
+		$iinfo->{areaX1} = $c->canvasx($x);
+    	$iinfo->{areaY1} = $c->canvasy($y);
+    	$c->delete('area');
+		if ($xinit == $x && $yinit == $y) {
+			deselect_all($c)
+		}
+		else{
+			foreach (keys %{ $Layer->{$VisibleLayer} }) {		
+				if (!($_=~/^_REL|^_CONN|^_SIGNAL|^_HREL/)) {
+					if($Layer->{$VisibleLayer}->{$_}->selected()==2){
+						$Layer->{$VisibleLayer}->{$_}->set_selected();
+					}
+d234 1
+a234 1
+	#}
+a247 3
+    	#print "prueba de min: \n antes:";
+    	#print ($x,",",$ax);
+    	#print ("\n minimo es:", &min($x,$ax),"\n");
+a248 2
+			#$c->delete('area');
+			#$c->addtag('area', 'withtag', $c->create('rectangle',$ax, $ay, $x, $y, -outline => 'black', -dash=>'.'));
+a277 3
+    	#print "prueba de min: \n antes:";
+    	#print ($x,",",$ax);
+    	#print ("\n minimo es:", &min($x,$ax),"\n");
+a278 2
+			#$c->delete('area');
+			#$c->addtag('area', 'withtag', $c->create('rectangle',$ax, $ay, $x, $y, -outline => 'black', -dash=>'.'));
+a288 2
+		     			#$Layer->{$VisibleLayer}->{$_}->clear();
+			    		#$Layer->{$VisibleLayer}->{$_}->draw($c);
+d311 1
+a311 4
+				print ("\nEste hay que borrarlo: ",$_);	
+				my $temp=$_;
+				$temp=~s/HREL/REL/;
+				my ($pointer,$id,$ObjType) = &Path2ProjHash($temp); 
+a322 1
+					print "\nbefore transf it is: $relType";
+a323 3
+					$relType =~s/HREL/REL/;
+					print "\nAfter transf it is: $relType";
+					print "\nstill going";
+a335 1
+	#print ($ji,"\n");
+d339 1
+a339 3
+				$Layer->{$VisibleLayer}->{$_}->set_deselected();
+		    	#$Layer->{$VisibleLayer}->{$_}->clear();
+				#$Layer->{$VisibleLayer}->{$_}->draw($c);	
+a340 1
+
+d466 1
+a466 1
+	my ($p,$id,$ObjType,$tv);
+d469 1
+d491 6
+a496 2
+		$p=$Project->{relation};
+
+d499 2
+a500 1
+		$p=$Project->{hrelation};		
+@
+
+
+1.20
+log
+@Deletion of objects almost complete
+@
+text
+@d4 1
+a4 1
+# $Id: schema.pl,v 1.19 2003/08/22 09:34:49 spanhel Exp $
+d350 1
+a350 1
+	my ($id,$pointer);
+d354 4
+a357 2
+				print ("\nEste hay que borrarlo: ",$_);			
+				($pointer,$id) = &Path2ProjHash($_); 
+d359 6
+d368 8
+a375 2
+					print("\n Nos vamos a volar a ",'_'.$_->type.'/'.$_->id,"de la capa actual");
+					delete($Layer->{$VisibleLayer}->{'_'.$_->type.'/'.$_->id});
+d520 3
+a522 1
+	my ($p,$id,$ObjType);
+d546 1
+a546 1
+      	} elsif ($ObjType eq 'HREL') {
+d591 1
+d597 1
+d609 1
+a609 1
+	return ($p,$id);
+@
+
+
+1.19
+log
+@fix bug - drag and drop
+@
+text
+@d4 1
+a4 1
+# $Id: schema.pl,v 1.18 2003/08/21 13:20:48 tuco80 Exp $
+d48 1
+d50 7
+d58 1
+d346 23
+d375 1
+a375 1
+    		if (!($_=~/^_REL|^_CONN|^_SIGNAL/)) {
+d390 1
+@
+
+
+1.18
+log
+@+ usage of "SELECTED" tags, move all selected objects at once and selection box with left mouse button instead of right
+@
+text
+@d4 1
+a4 1
+# $Id: schema.pl,v 1.17 2003/08/19 14:32:16 spanhel Exp $
+d39 1
+a39 3
+	$tSchemaC->bind('item', '<Double-1>' =>         sub {&SelItem($tSchemaC,'current')}
+								#$mainTabs->raise('prop')}
+								);
+d43 1
+d48 2
+a49 4
+	$tSchemaC->CanvasBind('<Control-t>' => sub {print Dumper($Page->bindtags())});
+    #    $c->CanvasBind('<1>' =>         sub {&items_start_drag($tSchemaC, $Tk::event->x, $Tk::event->y, \%iinfo)});
+    #    $tSchemaC->CanvasBind('<B1-Motion>' => sub {&items_drag($tSchemaC, $Tk::event->x, $Tk::event->y, \%iinfo, 'current')});
+	#$tSchemaC->CanvasBind('<1>' =>         sub {&deselect_all($tSchemaC,'current')});
+d51 2
+d54 1
+a54 2
+	#$tSchemaC->CanvasBind('<3>' =>         sub {&items_mark($tSchemaC, $Tk::event->x, $Tk::event->y, \%iinfo)});
+	$tSchemaC->CanvasBind('<B1-Motion>' => sub {&items_stroke($tSchemaC, $Tk::event->x, $Tk::event->y, \%iinfo)});
+d58 1
+a81 1
+	 # print "doble click en el arbol!\n\n";
+a82 1
+	#else {print "doble click en otro lado! \n\n";}
+d97 1
+a97 3
+        $iinfo->{move_obj} = $Layer->{$VisibleLayer}->{$jim};
+
+	
+a127 1
+				#print "4\n";
+a134 1
+				#print("se movio!\n");
+a294 1
+
+@
+
+
+1.17
+log
+@view data
+@
+text
+@d4 1
+a4 1
+# $Id: schema.pl,v 1.16 2003/08/18 07:11:30 spanhel Exp $
+d46 1
+a46 1
+	$tSchemaC->CanvasBind('<Control-a>' => sub {print Dumper($Layer->{2}->{'_HREL/vyrobek#datum'}); } );
+d49 1
+d52 1
+a52 1
+	$tSchemaC->CanvasBind('<1>' =>         sub {&deselect_all($tSchemaC,'current')});
+d55 5
+a59 4
+	$tSchemaC->CanvasBind('<3>' =>         sub {&items_mark($tSchemaC, $Tk::event->x, $Tk::event->y, \%iinfo)});
+	$tSchemaC->CanvasBind('<B3-Motion>' => sub {&items_stroke($tSchemaC, $Tk::event->x, $Tk::event->y, \%iinfo)});
+	$tSchemaC->CanvasBind('<Control-B3-Motion>' => sub {&items_stroke_control($tSchemaC, $Tk::event->x, $Tk::event->y, \%iinfo)});
+	$tSchemaC->CanvasBind('<ButtonRelease-3>' => sub {&items_mark($tSchemaC, $Tk::event->x, $Tk::event->y, \%iinfo)});
+a130 4
+				#$iinfo->{move_obj}->clear;
+				#$iinfo->{move_obj}->draw($c);
+				#print ("Ahora esta: ",$iinfo->{move_obj}->selected(),"\n\n");
+					
+d133 1
+a133 1
+				print "4\n";
+d143 1
+a143 2
+			
+			
+a144 4
+	#if (($xinit == $x2) && ($yinit == $y2)) {
+		#		print "deberia seleccionar, no se movio!!\n";
+			#}
+	#print("Las finales son:(",$xend,",", $yend,")\n\n");
+d156 17
+a172 1
+    $iinfo->{move_obj}->move($c,$x-$iinfo->{lastX}, $y-$iinfo->{lastY});
+d217 1
+a217 1
+sub items_mark {
+d220 13
+a232 5
+
+    $iinfo->{areaX1} = $c->canvasx($x);
+    $iinfo->{areaY1} = $c->canvasy($y);
+    $c->delete('area');
+	foreach (keys %{ $Layer->{$VisibleLayer} }) {		
+d239 25
+d272 29
+a300 27
+
+    $x = $c->canvasx($x);
+    $y = $c->canvasy($y);
+    my $ax = $iinfo->{areaX1};
+    my $ay = $iinfo->{areaY1};
+    #print "prueba de min: \n antes:";
+    #print ($x,",",$ax);
+    #print ("\n minimo es:", &min($x,$ax),"\n");
+    if (($iinfo->{areaX1} != $x) and ($iinfo->{areaY1} != $y)) {
+		$c->delete('area');
+		$c->addtag('area', 'withtag', $c->create('rectangle',$ax, $ay, $x, $y, -outline => 'black', -dash=>'.'));
+		$iinfo->{areaX2} = $x;
+		$iinfo->{areaY2} = $y;
+		foreach (keys %{ $Layer->{$VisibleLayer} }) {		
+			if (!($_=~/^_REL|^_CONN|^_SIGNAL|^_HREL/)) {
+				my($x1,$y1,$x2,$y2)=$Layer->{$VisibleLayer}->{$_}->coords();
+				print ($_,"\n");
+				if (($x1 >= &min($ax,$x)) && ($y1 >= &min($ay,$y)) &&
+			    	($x2 <= &max($ax,$x)) && ($y2 <= &max($ay,$y))) {			    	
+					$Layer->{$VisibleLayer}->{$_}->set_selected();		     		
+				}
+				else{
+					$Layer->{$VisibleLayer}->{$_}->set_deselected();
+				}
+			}		
+		}
+    }
+d308 28
+a335 26
+
+    $x = $c->canvasx($x);
+    $y = $c->canvasy($y);
+    my $ax = $iinfo->{areaX1};
+    my $ay = $iinfo->{areaY1};
+    #print "prueba de min: \n antes:";
+    #print ($x,",",$ax);
+    #print ("\n minimo es:", &min($x,$ax),"\n");
+    if (($iinfo->{areaX1} != $x) and ($iinfo->{areaY1} != $y)) {
+		$c->delete('area');
+		$c->addtag('area', 'withtag', $c->create('rectangle',$ax, $ay, $x, $y, -outline => 'black', -dash=>'.'));
+		$iinfo->{areaX2} = $x;
+		$iinfo->{areaY2} = $y;
+		foreach (keys %{ $Layer->{$VisibleLayer} }) {		
+			if (!($_=~/^_REL|^_CONN|^_SIGNAL|^_HREL/)) {
+				my($x1,$y1,$x2,$y2)=$Layer->{$VisibleLayer}->{$_}->coords();
+				if (($x1 >= &min($ax,$x)) && ($y1 >= &min($ay,$y)) &&
+			    	($x2 <= &max($ax,$x)) && ($y2 <= &max($ay,$y))) {
+			    	$Layer->{$VisibleLayer}->{$_}->set_selected();
+					$Layer->{$VisibleLayer}->{$_}->selected(2);
+		     		#$Layer->{$VisibleLayer}->{$_}->clear();
+			    	#$Layer->{$VisibleLayer}->{$_}->draw($c);
+				}
+				else{
+					if($Layer->{$VisibleLayer}->{$_}->selected()==2){
+						$Layer->{$VisibleLayer}->{$_}->set_deselected();
+d339 2
+a340 2
+		}
+    }
+d346 2
+a347 2
+	my ($c,$item) = @@_;
+	my $ji = $c->gettags($item);	
+d358 8
+@
+
+
+1.16
+log
+@fixed the selection of hrelation
+@
+text
+@d4 1
+a4 1
+# $Id: schema.pl,v 1.15 2003/08/14 11:55:59 tuco80 Exp $
+d305 2
+a306 2
+    		#if (!($_=~/^_REL|^_CONN|^_SIGNAL/)) {
+				#$Layer->{$VisibleLayer}->{$_}->set_deselected();
+d309 1
+a309 1
+			#}  
+@
+
+
+1.15
+log
+@Added ShopCard for View, trig, transf & const. (only hrelation not selectable)
+@
+text
+@d4 1
+a4 1
+# $Id: schema.pl,v 1.14 2003/08/13 10:52:28 tuco80 Exp $
+d39 1
+a39 1
+	$tSchemaC->bind('item', '<Double-1>' =>         sub { &SelItem($tSchemaC,'current')}
+d82 1
+a82 1
+	}  
+d93 1
+a93 4
+	$iinfo->{lastY} = $c->canvasy($y);
+	#print "aqui es la jugada menen \n";
+	#print ("Coord inic:(",$xinit,",",$yinit,")\n"); 
+#	($iinfo->{move_obj} = '|'.join('|',$c->gettags($item)))=~s/^.*\|_([^|]+)\|?.*$/$1/; #select tags starting '__'
+a95 1
+	#print ($jim,"\n");
+d99 1
+d109 1
+a109 1
+	     &ShowProperties;
+a120 1
+		#print Dumper($iinfo->{sel_obj} =~/_LOBJ/);
+d122 1
+a122 1
+			if ($xinit == $xend && $yinit == $yend) {
+d135 1
+d216 1
+a216 1
+		if (!($_=~/^_REL|^_CONN|^_SIGNAL/)) {
+a242 3
+		#my $i = 1;
+		#print "ok\n";
+		#print Dumper($Layer);
+d244 1
+a244 1
+			if (!($_=~/^_REL|^_CONN|^_SIGNAL/)) {
+d248 2
+a249 5
+			    	($x2 <= &max($ax,$x)) && ($y2 <= &max($ay,$y))) {
+			    	
+					$Layer->{$VisibleLayer}->{$_}->set_selected();
+		     		#$Layer->{$VisibleLayer}->{$_}->clear();
+			    	#$Layer->{$VisibleLayer}->{$_}->draw($c);
+a276 3
+		#my $i = 1;
+		#print "ok\n";
+		#print Dumper($Layer);
+d278 1
+a278 1
+			if (!($_=~/^_REL|^_CONN|^_SIGNAL/)) {
+d306 1
+a306 1
+				$Layer->{$VisibleLayer}->{$_}->set_deselected();
+a343 2
+	    #print Dumper($_);
+	    #$_->selected(1);
+d371 1
+a371 1
+		if (!($_=~/^_REL|^_CONN|^_SIGNAL/)) {	# create different objects as connections at first
+d378 1
+a378 1
+		if ($_=~/^_REL|^_CONN|^_SIGNAL/) {	# create connections now
+@
+
+
+1.14
+log
+@Selection of objects complete, except relations
+@
+text
+@d4 1
+a4 1
+# $Id: schema.pl,v 1.13 2003/08/12 09:07:23 tuco80 Exp $
+d252 1
+d255 2
+a256 1
+			    	$Layer->{$VisibleLayer}->{$_}->set_selected();
+d263 1
+a263 1
+			}
+d317 1
+a317 1
+    		if (!($_=~/^_REL|^_CONN|^_SIGNAL/)) {
+d321 1
+a321 1
+			}  
+@
+
+
+1.13
+log
+@Selection of elements in GUI layers, not finished though
+@
+text
+@d4 1
+a4 1
+# $Id: schema.pl,v 1.12 2003/08/08 14:57:37 tuco80 Exp $
+d51 1
+d56 2
+d99 1
+d103 1
+d127 9
+a135 23
+=pod				print "ok, solo good\n";
+				print ($x1,",",$y1, "  ", $x2,",",$y2, "\n");
+				$x1 -= 5;
+				$y1 -= 5;
+				$x2 += 5;
+				$y2 += 5;
+				print($x1,",",$y1,"  ", $x2,",",$y2,"\n");
+				#$c->createRectangle(qw/  $x1 $y1 $x2 $y2 -tags item/, -outline => undef,
+	                	#-stipple => '@@'.Tk->findINC('demos/images/grey.25'),
+	                	#-fill => 'blue');
+				$c->delete('marked');
+				$c->addtag('marked', 'withtag', $c->create('rectangle',$x1,$y1, $x2, $y2, -outline => undef,
+	                	-stipple => '@@'.Tk->findINC('demos/images/grey.25'),
+	                	-fill => 'blue'));
+				
+=cut				#$Layer->{$VisibleLayer}->{$iinfo->{sel_obj}}->selected(1);
+				my $state = $iinfo->{move_obj}->selected();
+				my $newState = $state == 1?0:1;
+				#print($newState,"Asi deberia quedar\n");
+				$iinfo->{move_obj}->selected($newState);
+				$iinfo->{move_obj}->clear;
+				$iinfo->{move_obj}->draw($c);
+				print ("Ahora esta: ",$iinfo->{move_obj}->selected(),"\n\n");
+d139 8
+a146 8
+			my ($p,$id)=&Path2ProjHash($iinfo->{sel_obj});
+			# save old properties
+			push (@@Changes, {p=>$p, id=>$id, cont=>$p->{$id}} );
+			#my ($x1,$y1,$x2,$y2)=$iinfo->{move_obj}->coords();
+			$p->{$id}->{'gui-presentation'}->{$VisibleLayer}->{coord}="$x1 $y1";
+			$Layer->{$VisibleLayer}->{$iinfo->{sel_obj}}->coords($x1,$y1,$x2,$y2);
+			undef $iinfo->{move_obj};
+			print("se movio!\n");
+d218 7
+d236 5
+d242 62
+a303 5
+	$c->delete('area');
+	$c->addtag('area', 'withtag', $c->create('rectangle',
+	    $iinfo->{areaX1}, $iinfo->{areaY1}, $x, $y, -outline => 'black', -dash=>'.'));
+	$iinfo->{areaX2} = $x;
+	$iinfo->{areaY2} = $y;
+d305 1
+d307 31
+a337 1
+} # end items_stroke
+d351 1
+d354 2
+@
+
+
+1.12
+log
+@Added prop.pm and selection property of objects
+@
+text
+@d4 1
+a4 1
+# $Id: schema.pl,v 1.11 2003/07/31 06:37:44 michald Exp $
+d91 2
+a92 2
+	print "aqui es la jugada menen \n";
+	print ("Coord inic:(",$xinit,",",$yinit,")\n"); 
+d113 1
+d138 6
+a143 1
+				$iinfo->{move_obj}->selected(1);
+d163 1
+a163 1
+	print("Las finales son:(",$xend,",", $yend,")\n\n");
+@
+
+
+1.11
+log
+@some fixes for processing of transformation schema
+@
+text
+@d4 1
+a4 1
+# $Id: schema.pl,v 1.10 2003/07/30 11:10:59 spanhel Exp $
+d10 3
+d43 1
+a43 1
+	$tSchemaC->bind('item', '<ButtonRelease-1>' => sub {&items_stop_drag($tSchemaC, \%iinfo)});
+d78 1
+d80 1
+d87 2
+d91 2
+d114 2
+a115 1
+	my($c, $iinfo) = @@_;
+d119 23
+d145 1
+a145 1
+			my ($x1,$y1,$x2,$y2)=$iinfo->{move_obj}->coords();
+d149 4
+d154 4
+@
+
+
+1.10
+log
+@LM, FM
+@
+text
+@d4 1
+a4 1
+# $Id: schema.pl,v 1.9 2003/06/30 07:23:24 spanhel Exp $
+d242 1
+a242 1
+		if (!($_=~/_REL/)) {  		  
+d249 1
+a249 1
+		if ($_=~/_REL/) {  		  
+@
+
+
+1.9
+log
+@changes in role order (logical model)
+@
+text
+@d4 1
+a4 1
+# $Id: schema.pl,v 1.8 2003/06/26 14:11:46 spanhel Exp $
+d70 1
+a70 1
+	  $TreeList->selectionClear();
+d288 5
+@
+
+
+1.8
+log
+@logical and fys. model
+@
+text
+@d4 1
+a4 1
+# $Id: schema.pl,v 1.7 2003/05/30 16:22:18 spanhel Exp $
+d36 3
+a38 1
+	$tSchemaC->bind('item', '<Double-1>' =>         sub {$mainTabs->raise('prop')});
+d62 16
+d90 2
+a91 2
+	if (!($jim =~/_LOBJ/)) {
+	     
+d93 5
+a97 5
+	     $TreeList->selectionClear();
+	     $TreeList->show('entry',$iinfo->{sel_obj});
+	     $TreeList->see($iinfo->{sel_obj});
+	     $TreeList->selectionSet($iinfo->{sel_obj});
+	     $TreeList->anchorSet($iinfo->{sel_obj});
+d99 1
+a99 1
+	}     
+@
+
+
+1.7
+log
+@logical model
+@
+text
+@d4 1
+a4 1
+# $Id: schema.pl,v 1.6 2003/05/22 13:55:33 spanhel Exp $
+a63 1
+
+d67 1
+a67 1
+	my $ji = '|'.join('|',$c->gettags($item)).'|';
+d71 11
+a81 9
+
+	$iinfo->{move_obj} = $Layer->{$VisibleLayer}->{$jim};
+	#following statements moves Tree selection and anchor
+	$TreeList->selectionClear();
+	$TreeList->show('entry',$iinfo->{sel_obj});
+	$TreeList->see($iinfo->{sel_obj});
+	$TreeList->selectionSet($iinfo->{sel_obj});
+	$TreeList->anchorSet($iinfo->{sel_obj});
+	&ShowProperties;
+d90 8
+a97 7
+		my ($p,$id)=&Path2ProjHash($iinfo->{sel_obj});
+		# save old properties
+		push (@@Changes, {p=>$p, id=>$id, cont=>$p->{$id}} );
+		my ($x1,$y1,$x2,$y2)=$iinfo->{move_obj}->coords();
+		$p->{$id}->{'gui-presentation'}->{$VisibleLayer}->{coord}="$x1 $y1";
+		$Layer->{$VisibleLayer}->{$iinfo->{sel_obj}}->coords($x1,$y1,$x2,$y2);
+		undef $iinfo->{move_obj};
+a98 1
+
+a112 1
+
+d221 1
+a221 1
+	print $VisibleLayer;
+a223 2
+#		print Dumper($i,$_);
+#		$i++;
+d275 7
+a281 2
+	my ($p,$id);
+	my $ObjType=$TreeList->info('data', $SLSel);        
+d305 1
+a305 6
+		if ($SLSel=~/^_LOBJ\/_ATTR\/.*\/.*/) {
+                   ($id=$SLSel)=~s|^_LOBJ/_ATTR/.*/||;
+		}
+		else {
+		  ($id=$SLSel)=~s|^_LOBJ/_ATTR/||;
+		}
+@
+
+
+1.6
+log
+@attributes added into groups (+ color of groups)
+@
+text
+@d4 1
+a4 1
+# $Id: schema.pl,v 1.5 2003/05/16 07:02:43 spanhel Exp $
+d41 1
+d221 17
+a237 4
+	foreach (keys %{ $$Layer->{$VisibleLayer} }) {
+		$$Layer->{$VisibleLayer}->{$_}->draw($tSchemaC);
+		my $d=$$Layer->{$VisibleLayer}->{$_}->desc;
+		$CanvasBal->{'_'.$_} = $d ? $d : '';
+d295 4
+@
+
+
+1.5
+log
+@adding and removing object from Layers
+@
+text
+@d4 1
+a4 1
+# $Id: schema.pl,v 1.4 2003/04/28 07:36:33 michald Exp $
+d40 1
+a40 1
+	$tSchemaC->CanvasBind('<<Copy>>' =>    sub {print Dumper($Project); });
+a61 1
+
+a65 3
+
+#print "\n".join('|',$c->gettags($item))."\n";
+
+d71 1
+a72 1
+
+a84 1
+
+a101 1
+
+d264 2
+a265 2
+	my $ObjType=$TreeList->info('data', $SLSel);
+
+d282 8
+a289 2
+	} elsif ($ObjType eq 'ATTR') {
+		($id=$SLSel)=~s|^_LOBJ/_ATTR/||;
+a343 1
+
+@
+
+
+1.4
+log
+@introduction of Debug package
+@
+text
+@d4 1
+a4 1
+# $Id: schema.pl,v 1.3 2003/04/24 20:01:41 michald Exp $
+d223 1
+@
+
+
+1.3
+log
+@prototype for reverse engineering
+@
+text
+@d4 1
+a4 1
+# $Id: schema.pl,v 1.2 2003/03/12 23:37:52 numberone Exp $
+d8 1
+a8 1
+use vars qw($tSchemaC %Layer $mainTabs);
+d75 1
+a75 1
+	$iinfo->{move_obj} = %Layer->{$VisibleLayer}->{$jim};
+d98 1
+a98 1
+		%Layer->{$VisibleLayer}->{$iinfo->{sel_obj}}->coords($x1,$y1,$x2,$y2);
+d225 3
+a227 3
+	foreach (keys %{ $Layer->{$VisibleLayer} }) {
+		$Layer->{$VisibleLayer}->{$_}->draw($tSchemaC);
+		my $d=$Layer->{$VisibleLayer}->{$_}->desc;
+d244 2
+a245 2
+	foreach (keys %{ $Layer->{$VisibleLayer} }) {
+		$CanvasBal->{'_'.$_}=$Layer->{$VisibleLayer}->{$_}->desc;
+d257 2
+a258 2
+	foreach (keys %{ $Layer->{$VisibleLayer} }) {
+		$Layer->{$VisibleLayer}->{$_}->clear;
+@
+
+
+1.2
+log
+@typo
+@
+text
+@d4 1
+a4 1
+# $Id: schema.pl,v 1.1.1.1 2002/09/24 01:34:20 michald Exp $
+a76 2
+#print ":$iinfo->{move_obj}\n";
+#print "::$iinfo->{sel_obj}\n";
+d225 1
+a225 1
+	foreach (keys %{ %$Layer->{$VisibleLayer} }) {
+d244 1
+a244 1
+	foreach (keys %{ %$Layer->{$VisibleLayer} }) {
+d257 1
+a257 1
+	foreach (keys %{ %$Layer->{$VisibleLayer} }) {
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d4 1
+a4 1
+# $Id: schema.pl,v 1.2 2002/08/27 19:09:19 michal Exp $
+d349 1
+@
+
+
+1.1.1.1
+log
+@Initial public release of BEE Project.
+@
+text
+@@

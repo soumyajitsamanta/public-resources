@@ -1,0 +1,395 @@
+head	1.9;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.9
+date	2003.10.31.12.47.57;	author jiri_schmid;	state dead;
+branches;
+next	1.8;
+
+1.8
+date	2003.10.16.14.08.53;	author jiri_schmid;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	2003.09.17.11.41.25;	author jiri_schmid;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	2003.08.13.14.22.03;	author jiri_schmid;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	2003.07.18.10.51.02;	author jiri_schmid;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2003.05.16.11.28.26;	author jiri_schmid;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2003.05.14.14.28.21;	author jiri_schmid;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2003.05.13.15.19.00;	author jiri_schmid;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2003.05.08.15.35.51;	author jiri_schmid;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.9
+log
+@mod perl rocks!
+@
+text
+@#-----------------------------------------------------
+#  Report Editation
+#-----------------------------------------------------
+# $Id: report_filter_ed.pl,v 1.8 2003/10/16 14:08:53 jiri_schmid Exp $
+
+use strict;
+require "local/generate.pl";
+
+#-----------------------------------------------------
+
+sub generateContent {
+my($variables, $lang, $obj) = (shift, shift, shift);
+
+my $saved = $$variables->{saved} if exists $$variables->{saved};
+my $saveRun = $$variables->{saveRun} if exists $$variables->{saveRun};
+my $copy = $$variables->{contentVars} if exists $$variables->{contentVars};
+
+if ($copy) {
+my $hlp;
+if ($copy eq '1') {
+	loadMetadata($$obj->{filter_def});
+	$hlp->{filter_def} = $$obj;
+} else {
+	$hlp->{filter_def}->{expr} = "";
+};
+$$obj = $hlp;
+};
+
+
+if (ref($$obj->{filter_def})) {
+
+print <<END ;
+<script src='js/report.js' type='text/javascript'></script>
+<script src="js/filter_metric.js" type="text/javascript"></script>
+<br />
+<table class="page_skeleton">
+<tr class="page_skeleton">
+<td class="page_skeleton">
+
+END
+
+&generateFilterEdit($lang,$$variables->{skinPath},$$variables->{imgType},$obj);
+
+print <<END ;
+</td></tr>
+<tr class="page_skeleton">
+<td class="page_skeleton">
+	<table class="neutral_100">
+	<tr><td align="right">
+		<table class="buttons" cellpading="0" cellspacing="0">
+		<tr>	<td class="buttons"><input type="submit" name="Action" value="$$lang->{'Save'}" onclick="return filter_checker()"/></td>
+			<td class="buttons"><input type="submit" name="Action" value="$$lang->{'Save and Run'}" onclick="return filter_checker()" /></td>
+			<td class="buttons">	<input type="submit" name="Action" value="$$lang->{'Save As Filter'}" onclick="readName(); return filter_checker()"/>
+						<input type="hidden" name="saveAsName" id="saveAsName" value="" /></td>
+			<td class="buttons"><input type="button" name="reset" value="$$lang->{'Reset'}" onclick="subst_ID_expr('object_filter');"/></td>
+		</tr>
+		</table>
+	</td></tr>
+	</table>
+</td></tr>
+</table>
+<script type="text/javascript">
+<!--
+	var saveAsMsg = "$$lang->{SaveAsMsg}$$lang->{'New Filter'}";
+	var msg="$$lang->{'New Save Part1'}$$lang->{'New Filter Save'}$$lang->{'New Save Part2'}";
+	subst_ID_expr('object_filter');
+	$saveRun
+	reloadTree($saved);
+-->
+</script>
+END
+} else {
+print "<p><b>&nbsp;$$lang->{'Report Lfilter'}</b>$$lang->{'Report No Filter'}<ul>";
+if ($$obj->{filter_def}) {
+	print "<li><a href=\"javascript: editOriginal('$$obj->{filter_def}','Fi');\">$$lang->{'Report Global Edit'}</a></li>";
+	print "<li><a href=\"javascript: editLocal('filter','1');\">$$lang->{'Report Local Edit'}</a></li>";
+};
+print "<li><a href=\"javascript: editLocal('filter');\">$$lang->{'Report New Local'}</a></li></ul></p>";
+print "<script type='text/javascript'>reloadTree($saved)</script>";
+}}
+
+#---------------------------------------------------
+sub set_next_param {
+	my $o=shift;
+my $hlp;
+$hlp->{orig_id} = (ref($o->{filter_def})) ? $o->{filter_def}->{orig_id} : $o->{filter_def};
+$hlp->{'expr'} = param('expr_id');
+
+$o->{filter_def} = $hlp;
+
+#use Data::Dumper;
+#print "<pre>".Dumper($o)."</pre>";
+}
+1
+@
+
+
+1.8
+log
+@mod-perl implementation stage 1, rebuilding global vars in .pl to global pointers
+@
+text
+@d4 1
+a4 1
+# $Id: report_filter_ed.pl,v 1.7 2003/09/17 11:41:25 jiri_schmid Exp $
+@
+
+
+1.7
+log
+@bug fixies
+@
+text
+@d4 1
+a4 1
+# $Id: report_filter_ed.pl,v 1.6 2003/08/13 14:22:03 jiri_schmid Exp $
+d7 1
+a7 7
+use CGI qw( :standard );
+use CGI::Pretty;
+
+require "const.def";
+require "local_lib.pl";
+
+use vars qw($ID $Obj $ObjT $ObjPref $descr_w $descr_r $name_w $use_lang $open $sqlCols $sqlRows $lang $saved $saveRun);
+d12 5
+a16 2
+#use Data::Dumper;
+#print "<pre>".Dumper($Obj)."</pre>";
+a17 1
+my $copy = shift;
+d21 2
+a22 2
+	loadMetadata($Obj->{filter_def});
+	$hlp->{filter_def} = $Obj;
+d26 1
+a26 1
+$Obj = $hlp;
+d30 1
+a30 1
+if (ref($Obj->{filter_def})) {
+d42 1
+a42 1
+&generateFilterEdit();
+d51 3
+a53 3
+		<tr>	<td class="buttons"><input type="submit" name="Action" value="$lang->{'Save'}" onclick="return filter_checker()"/></td>
+			<td class="buttons"><input type="submit" name="Action" value="$lang->{'Save and Run'}" onclick="return filter_checker()" /></td>
+			<td class="buttons">	<input type="submit" name="Action" value="$lang->{'Save As Filter'}" onclick="readName(); return filter_checker()"/>
+d55 1
+a55 1
+			<td class="buttons"><input type="button" name="reset" value="$lang->{'Reset'}" onclick="subst_ID_expr('object_filter');"/></td>
+d64 2
+a65 2
+	var saveAsMsg = "$lang->{SaveAsMsg}$lang->{'New Filter'}";
+	var msg="$lang->{'New Save Part1'}$lang->{'New Filter Save'}$lang->{'New Save Part2'}";
+d73 4
+a76 4
+print "<p><b>&nbsp;$lang->{'Report Lfilter'}</b>$lang->{'Report No Filter'}<ul>";
+if ($Obj->{filter_def}) {
+	print "<li><a href=\"javascript: editOriginal('$Obj->{filter_def}','Fi');\">$lang->{'Report Global Edit'}</a></li>";
+	print "<li><a href=\"javascript: editLocal('filter','1');\">$lang->{'Report Local Edit'}</a></li>";
+d78 1
+a78 1
+print "<li><a href=\"javascript: editLocal('filter');\">$lang->{'Report New Local'}</a></li></ul></p>";
+@
+
+
+1.6
+log
+@code clearing and improvment
+@
+text
+@d4 1
+a4 1
+# $Id: report_filter_ed.pl,v 1.5 2003/07/18 10:51:02 jiri_schmid Exp $
+d57 1
+a57 1
+			<td class="buttons">	<input type="submit" name="Action" value="$lang->{'Save As'}" onclick="readName(); return filter_checker()"/>
+@
+
+
+1.5
+log
+@format3d implemented, format changed all dependencies fixed
+@
+text
+@d4 1
+a4 1
+# $Id: report_filter_ed.pl,v 1.4 2003/05/16 11:28:26 jiri_schmid Exp $
+a87 1
+	my($cgi) = shift;
+@
+
+
+1.4
+log
+@report page - save as functionality implemented
+@
+text
+@d4 1
+a4 1
+# $Id: report_filter_ed.pl,v 1.3 2003/05/14 14:28:21 jiri_schmid Exp $
+d13 1
+a13 1
+use vars qw($ID $Obj $ObjT $ObjPref $descr_w $descr_r $name_w $use_lang $open $sqlCols $sqlRows $lang $saved);
+d56 1
+d70 2
+a72 1
+	subst_ID_expr('object_filter');
+d83 1
+@
+
+
+1.3
+log
+@next report improvment
+@
+text
+@d4 1
+a4 1
+# $Id: report_filter_ed.pl,v 1.2 2003/05/13 15:19:00 jiri_schmid Exp $
+d13 1
+a13 1
+use vars qw($ID $Obj $ObjT $ObjPref $descr_w $descr_r $name_w $use_lang $open $sqlCols $sqlRows $lang);
+d56 2
+d67 3
+@
+
+
+1.2
+log
+@new report page seems to be fullfunctional, javascript code huge improvment
+@
+text
+@d4 1
+a4 1
+# $Id: report_filter_ed.pl,v 1.1 2003/05/08 15:35:51 jiri_schmid Exp $
+d25 2
+a26 2
+	loadMetadata($Obj->{filter});
+	$hlp->{'expr'} = $Obj->{expr};
+d28 1
+a28 1
+	$hlp->{'expr'} = "";
+d30 1
+a30 1
+$Obj->{filter} = $hlp;
+d34 1
+a34 1
+if (ref($Obj->{filter})) {
+a62 1
+
+d64 1
+d66 1
+d70 3
+a72 4
+print "<ul><b>$lang->{'Report Lfilter'}</b>";
+if ($Obj->{filter}) {
+	print "$lang->{'Report No Filter'}";
+	print "<li><a href=\"javascript: editOriginal('$Obj->{filter}','Fi');\">$lang->{'Report Global Edit'}</a></li>";
+d75 1
+a75 1
+print "<li><a href=\"javascript: editLocal('filter');\">$lang->{'Report New Local'}</a></li></ul>";
+d83 1
+a83 1
+$hlp->{'orig_filter'} = (ref($o->{filter})) ? $o->{filter}->{'orig_filter'} : $o->{filter};
+d86 1
+a86 1
+$o->{filter} = $hlp;
+@
+
+
+1.1
+log
+@report huge improvment
+@
+text
+@d4 1
+a4 1
+# $Id: report_ed.pl,v 1.40 2003/05/08 07:42:46 michald Exp $
+d18 2
+d21 14
+a34 1
+loadMetadata($Obj->{filter});
+d43 17
+a59 21
+<table class = "neutral" cellpading="0" cellspacing="0">
+  <tr>	<td class="neutral_bold" colspan="3">$lang->{'Filter expresion'}</td></tr>
+  <tr>
+  	<td valign="top"><img src="img/tree/metric.gif" vspace="5"><br><img src="img/tree/attr.gif"><br><img src="img/tree/fact.gif" vspace="5"><br><img src='img/tree/attr_form.gif'></td>
+    	<td>
+		<textarea id="report_local_filter" onclick="drop_textarea(this)" name="expr" cols="$descr_w" rows="$descr_r"></textarea>
+		<input type="hidden" name="expr_id" id="report_local_filter_id" value="$Obj->{expr}"/>
+	</td>
+	<td valign="bottom" align="center" width="20"><img class="cursor" src="img/delete.gif" onclick='clear_name(document.report.expr);return true;'></td>
+  </tr>
+  <tr><td align="center" colspan="3">
+  <table width="60%">
+    <tr><td class="visual_down">
+	<table class="visual_up" cellpading="0" cellspacing="0">
+	<tr>
+	 <td class="visual_up_button" onmouseover='active(this)' onmouseout='passive(this)' onclick='exprr(document.report.expr,"(");'><a name="lb">(</a></td>
+	 <td class="visual_up_button" onmouseover='active(this)' onmouseout='passive(this)' onclick='exprr(document.report.expr,")");'><a name="rb">)</a></td>
+         <td class="visual_up_button" onmouseover='active(this)' onmouseout='passive(this)' onclick='exprr(document.report.expr,"=");'><a name="eq">=</a></td>
+	 <td class="visual_up_button" onmouseover='active(this)' onmouseout='passive(this)' onclick='exprr(document.report.expr,"<");'><a name="lr">&lt;</a></td>
+	 <td class="visual_up_button" onmouseover='active(this)' onmouseout='passive(this)' onclick='exprr(document.report.expr,">");'><a name="gr">&gt;</a></td>
+	</tr>
+a60 13
+   </td></tr>
+   <tr><td class="visual_down">
+	<table class="visual_up" cellpading="0" cellspacing="0">
+	<tr>
+	 <td class="visual_up_button" onmouseover='active(this)' onmouseout='passive(this)' onclick='exprr(document.report.expr,"AND");'><a name="AND">AND</a></td>
+	 <td class="visual_up_button" onmouseover='active(this)' onmouseout='passive(this)' onclick='exprr(document.report.expr,"OR");'><a name="OR">OR</a></td>
+         <td class="visual_up_button" onmouseover='active(this)' onmouseout='passive(this)' onclick='exprr(document.report.expr,"NOT");'><a name="NOT">NOT</a></td>
+	</tr>
+	</table>
+   </td></tr>
+   </table>
+   </td></tr>
+</table>
+d64 2
+a65 2
+<script language="JAVASCRIPT" type="text/javascript">
+	subst_ID_expr('report_local_filter');
+d68 9
+a76 1
+}
+d79 8
+d88 3
+@
+

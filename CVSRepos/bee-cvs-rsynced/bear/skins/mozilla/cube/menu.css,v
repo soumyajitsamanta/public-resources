@@ -1,0 +1,57 @@
+head	1.2;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2004.03.09.14.43.54;	author jiri_schmid;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2003.10.02.17.22.47;	author vasekd;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@fixed right menu after right scroll
+@
+text
+@DIV.Menu {	color: inherit;
+		background-color: transparent;
+		padding:5px 5px 5px 5px;
+		background-image: url('menu.png');
+		border: 1px solid #000;
+		font-size: 12px;
+		text-decoration: none;
+		font-weight: bold;
+		cursor:default;
+	}
+SPAN.cursor {font-size: inherit;font-weight: inherit; cursor:pointer; cursor:hand}
+DIV.Menu A {color: #000; font-weight: bold; font-size: 12px; text-decoration: none; }
+DIV.Menu A:hover {color: #000; font-weight: bold; font-size: 12px; text-decoration: underline; }
+DIV.Menu A.pivot {color: #000; font-weight: bold; font-size: 12px; text-decoration: none; }
+DIV.Menu A.pivot:hover {font-weight: bold; font-size: 12px; text-decoration: none; }
+DIV.Menu Span {white-space:nowrap; text-decoration: none;  }
+DIV.Menu Span:hover {white-space:nowrap; text-decoration: underline;  }
+DIV.Menu SPAN.none {font-size: inherit;font-weight: inherit; text-decoration:none;}
+DIV.Menu SPAN.none:hover {font-size: inherit;font-weight: inherit; text-decoration:none;}
+@
+
+
+1.1
+log
+@new style cube
+@
+text
+@d18 2
+@
+

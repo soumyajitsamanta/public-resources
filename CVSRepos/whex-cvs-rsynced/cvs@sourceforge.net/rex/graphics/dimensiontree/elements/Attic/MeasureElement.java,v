@@ -1,0 +1,219 @@
+head	1.2;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2005.06.28.13.38.27;	author igorludi;	state dead;
+branches;
+next	1.1;
+
+1.1
+date	2005.06.28.11.35.03;	author igorludi;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@*** empty log message ***
+@
+text
+@package rex.graphics.dimensiontree.elements;
+
+import javax.swing.ImageIcon;
+import rex.metadata.ServerMetadata;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+
+import rex.utils.*;
+import org.tempuri.type.ClsXMLAProxDiscoverPropertyList;
+
+import org.tempuri.type.ClsXMLAProxDiscoverRestrictions;
+import org.tempuri.type.ClsXMLAProxDiscoverProperties;
+import org.tempuri.type.ClsXMLAProxDiscoverRestrictionList;
+import rex.metadata.QueryElement;
+
+
+/**
+ * <p>Title: WHEX</p>
+ * <p>Description: </p>
+ * <p>Copyright: Copyright (c) 2003</p>
+ * <p>Company: </p>
+ * @@author igor
+ * @@version 1.0
+ */
+
+/*
+ <row>
+  <CATALOG_NAME>Test</CATALOG_NAME>
+  <CUBE_NAME>Ispit</CUBE_NAME>
+  <MEASURE_NAME>Prolaznost</MEASURE_NAME>
+  <MEASURE_UNIQUE_NAME>[Measures].[Prolaznost]</MEASURE_UNIQUE_NAME>
+  <MEASURE_CAPTION>Prolaznost</MEASURE_CAPTION>
+  <MEASURE_AGGREGATOR>127</MEASURE_AGGREGATOR>
+  <DATA_TYPE>12</DATA_TYPE>
+  <NUMERIC_PRECISION>65535</NUMERIC_PRECISION>
+  <NUMERIC_SCALE>-1</NUMERIC_SCALE>
+  <EXPRESSION>[Measures].[Broj položenih ispita]/[Measures].[Broj ispita]</EXPRESSION>
+  <MEASURE_IS_VISIBLE>true</MEASURE_IS_VISIBLE>
+  <MEASURE_NAME_SQL_COLUMN_NAME>Measures:Prolaznost</MEASURE_NAME_SQL_COLUMN_NAME>
+  </row>
+ */
+
+public class MeasureElement implements DimensionTreeElement, QueryElement{
+
+   private String catalogName;
+   private String cubeName;
+   private String measureName;
+   private String measureUniqueName;
+   private String measureCaption;
+   private String expression;
+   private boolean nodeEnabled;
+
+
+   private ClsXMLAProxDiscoverRestrictions restrictions;
+   private ClsXMLAProxDiscoverProperties   properties;
+
+   private ServerMetadata parent;
+
+   static ImageIcon icon;
+
+   static {
+       icon = S.getAppIcon("measure.gif");
+   }
+   public MeasureElement(  ServerMetadata svm
+                           , Node rowNode
+                           , ClsXMLAProxDiscoverRestrictions _restrictions
+                           , ClsXMLAProxDiscoverProperties   _properties) {
+
+      parent = svm;
+      nodeEnabled = true;
+      NodeList nl = rowNode.getChildNodes();
+
+      for(int i=0; i < nl.getLength(); i++){
+         // TO BE DONE: OTHER VARS...
+
+         if (nl.item(i).getNodeType() == 1){
+            if (nl.item(i).getNodeName().equals("CATALOG_NAME")) {
+               catalogName = DOM.getTextFromDOMElement(nl.item(i));
+            }else if (nl.item(i).getNodeName().equals("CUBE_NAME")) {
+               cubeName = DOM.getTextFromDOMElement(nl.item(i));
+            }else if (nl.item(i).getNodeName().equals("MEASURE_NAME")) {
+               measureName = DOM.getTextFromDOMElement(nl.item(i));
+            }else if (nl.item(i).getNodeName().equals("MEASURE_UNIQUE_NAME")) {
+               measureUniqueName = DOM.getTextFromDOMElement(nl.item(i));
+            }else if (nl.item(i).getNodeName().equals("MEASURE_CAPTION")) {
+               measureCaption = DOM.getTextFromDOMElement(nl.item(i));
+            }else if (nl.item(i).getNodeName().equals("EXPRESSION")) {
+               expression = DOM.getTextFromDOMElement(nl.item(i));
+            }
+         }
+      }
+
+
+   }
+
+   public DimensionTreeElement[] getChildren(){
+      return null;
+   }
+
+
+   public String toString(){
+      if (measureCaption == null)
+         return "not initialized";
+      else
+         return measureCaption;
+
+   }
+
+   public ImageIcon getIcon(){
+      return icon;
+   }
+
+   public String getToolTip(){
+      if (measureCaption == null)
+         return "not initialized";
+      else
+         return "<html>"
+                + "Measure name:" + measureName
+                + "<BR>Measure unique name:" + measureUniqueName
+                + "<BR>Measure caption:" + measureCaption
+                + "<BR>Measure expression:" + expression
+                + "</html>";
+   }
+
+
+
+
+   public String[] getPopUpActionList(){
+      if (isEnabled()){
+         return new String[] {
+              PopUpActions.SEND_TO_MEASURES
+//            , PopUpActions.SEND_TO_ROWS
+         };
+      }else{
+         return null;
+      }
+   }
+   public String getUniqueName(){
+      return measureUniqueName;
+   }
+   public String getCaption(){
+      return measureCaption;
+   }
+   public String getQueryMembersExpression(){
+      return measureUniqueName;
+   }
+
+   public boolean isEnabled(){
+      return nodeEnabled;
+   }
+   public void setEnabled(boolean newValue){
+      nodeEnabled = newValue;
+   }
+   public String getHierarchyUniqueName(){
+//       <MEASURE_UNIQUE_NAME>[Measures].[Prolaznost]</MEASURE_UNIQUE_NAME>
+      return measureUniqueName.substring(0, measureUniqueName.lastIndexOf(".") - 1);
+//       return measureUniqueName;
+   }
+   public String getDimensionUniqueName(){
+      // this will not be called by anyone, anyhow
+      S.out("assert:Someone is calling  getDimensionUniqueName() on a MEASURE element!?");
+      return "[Measures]";
+   }
+   public boolean isMeasure(){
+      return true;
+   }
+   public int getChildrenCount(){
+      return 0;
+   }
+
+   public ServerMetadata getServerMetadata(){
+      return parent;
+   }
+   public ClsXMLAProxDiscoverRestrictions getRestrictions(){
+      return restrictions;
+   }
+   public ClsXMLAProxDiscoverProperties   getProperties(){
+      return properties;
+   }
+
+
+}
+@
+
+
+1.1
+log
+@first time commit
+@
+text
+@@
+

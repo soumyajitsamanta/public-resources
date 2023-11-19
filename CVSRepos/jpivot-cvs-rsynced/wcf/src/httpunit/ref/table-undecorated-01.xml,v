@@ -1,0 +1,399 @@
+head	1.3;
+access;
+symbols
+	jpivot_1_8_0:1.3
+	focus_1_6_0:1.3.0.2
+	wcf_1_7_0:1.3
+	wcf_1_6_0:1.3
+	jpivot_1_5_0:1.2.0.2
+	Root_jpivot_1_5_0:1.2
+	mondrian_xmla_2005_08_25:1.1.0.2
+	sourceforge_sync:1.3;
+locks; strict;
+comment	@# @;
+
+
+1.3
+date	2006.11.09.13.24.02;	author avix;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2005.09.14.08.22.46;	author avix;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2005.07.05.14.04.29;	author avix;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.3
+log
+@synchronized with tonbeller cvs
+@
+text
+@<?xml version="1.0" encoding="UTF-8"?>
+<form method="post" action="undecorated-table.jsp">
+<table border="1" cellspacing="0" cellpadding="2">
+<tr>
+<td class="xtable-data">
+<input type="checkbox"/>
+<input type="hidden"/>
+</td>
+<td align="left" class="xtable-data">Hello World: 0</td>
+<td align="left" class="xtable-data">02/01/2002</td>
+<td align="right" class="xtable-data">26.07</td>
+<td align="right" class="xtable-data">876</td>
+<td align="right" class="xtable-data">
+<a>47</a>
+</td>
+<td class="xtable-data">
+<a>
+<img src="wcf/table/sort-dn.png" border="0"/>
+</a> </td>
+<td align="left" class="xtable-data">
+<a>
+<img src="wcf/table/sort-ac.png" border="0"/> Text 88</a>
+</td>
+</tr>
+<tr>
+<td class="xtable-data">
+<input type="checkbox"/>
+<input type="hidden"/>
+</td>
+<td align="left" class="xtable-data">Hello World: 1</td>
+<td align="left" class="xtable-data">02/02/2002</td>
+<td align="right" class="xtable-data">4.98</td>
+<td align="right" class="xtable-data">217</td>
+<td align="right" class="xtable-data">
+<a>628</a>
+</td>
+<td class="xtable-data">
+<a>
+<img src="wcf/table/sort-dn.png" border="0"/>
+</a> </td>
+<td align="left" class="xtable-data">
+<a>
+<img src="wcf/table/sort-dn.png" border="0"/> Text 21</a>
+</td>
+</tr>
+<tr>
+<td class="xtable-data">
+<input type="checkbox"/>
+<input type="hidden"/>
+</td>
+<td align="left" class="xtable-data">Hello World: 10</td>
+<td align="left" class="xtable-data">02/11/2002</td>
+<td align="right" class="xtable-data">48.99</td>
+<td align="right" class="xtable-data">777</td>
+<td align="right" class="xtable-data">
+<a>149</a>
+</td>
+<td class="xtable-data">
+<a>
+<img src="wcf/table/sort-ac.png" border="0"/>
+</a> </td>
+<td align="left" class="xtable-data">
+<a>
+<img src="wcf/table/sort-ac.png" border="0"/> Text 80</a>
+</td>
+</tr>
+<tr>
+<td class="xtable-data">
+<input type="checkbox"/>
+<input type="hidden"/>
+</td>
+<td align="left" class="xtable-data">Hello World: 11</td>
+<td align="left" class="xtable-data">02/12/2002</td>
+<td align="right" class="xtable-data">67.15</td>
+<td align="right" class="xtable-data">966</td>
+<td align="right" class="xtable-data">
+<a>509</a>
+</td>
+<td class="xtable-data">
+<a>
+<img src="wcf/table/sort-ac.png" border="0"/>
+</a> </td>
+<td align="left" class="xtable-data">
+<a>
+<img src="wcf/table/sort-dn.png" border="0"/> Text 88</a>
+</td>
+</tr>
+<tr>
+<td class="xtable-data">
+<input type="checkbox"/>
+<input type="hidden"/>
+</td>
+<td align="left" class="xtable-data">Hello World: 12</td>
+<td align="left" class="xtable-data">02/13/2002</td>
+<td align="right" class="xtable-data">40.36</td>
+<td align="right" class="xtable-data">776</td>
+<td align="right" class="xtable-data">
+<a>684</a>
+</td>
+<td class="xtable-data">
+<a>
+<img src="wcf/table/sort-dn.png" border="0"/>
+</a> </td>
+<td align="left" class="xtable-data">
+<a>
+<img src="wcf/table/sort-ac.png" border="0"/> Text 62</a>
+</td>
+</tr>
+<tr>
+<td class="xtable-data">
+<input type="checkbox"/>
+<input type="hidden"/>
+</td>
+<td align="left" class="xtable-data">Hello World: 13</td>
+<td align="left" class="xtable-data">02/14/2002</td>
+<td align="right" class="xtable-data">47.13</td>
+<td align="right" class="xtable-data">620</td>
+<td align="right" class="xtable-data">
+<a>970</a>
+</td>
+<td class="xtable-data">
+<a>
+<img src="wcf/table/sort-ac.png" border="0"/>
+</a> </td>
+<td align="left" class="xtable-data">
+<a>
+<img src="wcf/table/sort-dn.png" border="0"/> Text 22</a>
+</td>
+</tr>
+<tr>
+<td class="xtable-data">
+<input type="checkbox"/>
+<input type="hidden"/>
+</td>
+<td align="left" class="xtable-data">Hello World: 14</td>
+<td align="left" class="xtable-data">02/15/2002</td>
+<td align="right" class="xtable-data">705.54</td>
+<td align="right" class="xtable-data">30</td>
+<td align="right" class="xtable-data">
+<a>535</a>
+</td>
+<td class="xtable-data">
+<a>
+<img src="wcf/table/sort-dn.png" border="0"/>
+</a> </td>
+<td align="left" class="xtable-data">
+<a>
+<img src="wcf/table/sort-dn.png" border="0"/> Text 89</a>
+</td>
+</tr>
+<tr>
+<td class="xtable-data">
+<input type="checkbox"/>
+<input type="hidden"/>
+</td>
+<td align="left" class="xtable-data">Hello World: 15</td>
+<td align="left" class="xtable-data">02/16/2002</td>
+<td align="right" class="xtable-data">64.49</td>
+<td align="right" class="xtable-data">990</td>
+<td align="right" class="xtable-data">
+<a>222</a>
+</td>
+<td class="xtable-data">
+<a>
+<img src="wcf/table/sort-dn.png" border="0"/>
+</a> </td>
+<td align="left" class="xtable-data">
+<a>
+<img src="wcf/table/sort-ac.png" border="0"/> Text 64</a>
+</td>
+</tr>
+<tr>
+<td class="xtable-data">
+<input type="checkbox"/>
+<input type="hidden"/>
+</td>
+<td align="left" class="xtable-data">Hello World: 16</td>
+<td align="left" class="xtable-data">02/17/2002</td>
+<td align="right" class="xtable-data">109.84</td>
+<td align="right" class="xtable-data">625</td>
+<td align="right" class="xtable-data">
+<a>24</a>
+</td>
+<td class="xtable-data">
+<a>
+<img src="wcf/table/sort-ac.png" border="0"/>
+</a> </td>
+<td align="left" class="xtable-data">
+<a>
+<img src="wcf/table/sort-ac.png" border="0"/> Text 63</a>
+</td>
+</tr>
+<tr>
+<td class="xtable-data">
+<input type="checkbox"/>
+<input type="hidden"/>
+</td>
+<td align="left" class="xtable-data">Hello World: 17</td>
+<td align="left" class="xtable-data">02/18/2002</td>
+<td align="right" class="xtable-data">25.37</td>
+<td align="right" class="xtable-data">840</td>
+<td align="right" class="xtable-data">
+<a>446</a>
+</td>
+<td class="xtable-data">
+<a>
+<img src="wcf/table/sort-ac.png" border="0"/>
+</a> </td>
+<td align="left" class="xtable-data">
+<a>
+<img src="wcf/table/sort-dn.png" border="0"/> Text 78</a>
+</td>
+</tr>
+<tr>
+<td colspan="8" class="xtable-data"> Page 1/2 <input type="image" border="0" src="/wcf/wcf/table/page-next.png"/>
+<input type="image" border="0" src="/wcf/wcf/table/page-last.png"/>  Goto Page <input type="text" maxlength="3" size="3"/> <input type="image" border="0" src="/wcf/wcf/table/gotopage.png"/>  Rows/page <input type="text" maxlength="3" size="3"/> <input type="image" border="0" src="/wcf/wcf/table/gotopage.png"/>
+</td>
+</tr>
+</table>
+<p/>
+</form>
+@
+
+
+1.2
+log
+@Fixed Test for JDK 1.5
+Made Table Test Data time zone independent
+@
+text
+@d216 1
+a216 1
+<input type="image" border="0" src="/wcf/wcf/table/page-last.png"/>  Goto Page <input type="text" maxlength="3" size="3"/> <input type="image" border="0" src="/wcf/wcf/table/gotopage.png"/>
+@
+
+
+1.1
+log
+@initial version
+@
+text
+@d10 3
+a12 3
+<td align="left" class="xtable-data">05/06/2003</td>
+<td align="right" class="xtable-data">21.83</td>
+<td align="right" class="xtable-data">628</td>
+d31 3
+a33 3
+<td align="left" class="xtable-data">04/13/2003</td>
+<td align="right" class="xtable-data">38.30</td>
+<td align="right" class="xtable-data">41</td>
+d35 1
+a35 1
+<a>194</a>
+d43 1
+a43 1
+<img src="wcf/table/sort-dn.png" border="0"/> Text 99</a>
+d52 3
+a54 3
+<td align="left" class="xtable-data">04/28/2003</td>
+<td align="right" class="xtable-data">105.53</td>
+<td align="right" class="xtable-data">213</td>
+d56 1
+a56 1
+<a>451</a>
+d64 1
+a64 1
+<img src="wcf/table/sort-dn.png" border="0"/> Text 89</a>
+d73 3
+a75 3
+<td align="left" class="xtable-data">04/06/2003</td>
+<td align="right" class="xtable-data">17.81</td>
+<td align="right" class="xtable-data">545</td>
+d77 1
+a77 1
+<a>220</a>
+d81 1
+a81 1
+<img src="wcf/table/sort-dn.png" border="0"/>
+d85 1
+a85 1
+<img src="wcf/table/sort-ac.png" border="0"/> Text 76</a>
+d94 3
+a96 3
+<td align="left" class="xtable-data">03/24/2003</td>
+<td align="right" class="xtable-data">23.68</td>
+<td align="right" class="xtable-data">613</td>
+d98 1
+a98 1
+<a>454</a>
+d102 1
+a102 1
+<img src="wcf/table/sort-ac.png" border="0"/>
+d106 1
+a106 1
+<img src="wcf/table/sort-dn.png" border="0"/> Text 35</a>
+d115 3
+a117 3
+<td align="left" class="xtable-data">04/05/2003</td>
+<td align="right" class="xtable-data">64.49</td>
+<td align="right" class="xtable-data">990</td>
+d119 1
+a119 1
+<a>30</a>
+d127 1
+a127 1
+<img src="wcf/table/sort-dn.png" border="0"/> Text 3</a>
+d136 3
+a138 3
+<td align="left" class="xtable-data">05/06/2003</td>
+<td align="right" class="xtable-data">343.08</td>
+<td align="right" class="xtable-data">446</td>
+d140 1
+a140 1
+<a>24</a>
+d144 1
+a144 1
+<img src="wcf/table/sort-ac.png" border="0"/>
+d148 1
+a148 1
+<img src="wcf/table/sort-ac.png" border="0"/> Text 63</a>
+d157 3
+a159 3
+<td align="left" class="xtable-data">04/07/2003</td>
+<td align="right" class="xtable-data">1,960.00</td>
+<td align="right" class="xtable-data">573</td>
+d161 1
+a161 1
+<a>563</a>
+d165 1
+a165 1
+<img src="wcf/table/sort-ac.png" border="0"/>
+d169 1
+a169 1
+<img src="wcf/table/sort-ac.png" border="0"/> Text 21</a>
+d178 3
+a180 3
+<td align="left" class="xtable-data">04/30/2003</td>
+<td align="right" class="xtable-data">133.07</td>
+<td align="right" class="xtable-data">583</td>
+d182 1
+a182 1
+<a>504</a>
+d190 1
+a190 1
+<img src="wcf/table/sort-ac.png" border="0"/> Text 60</a>
+d199 3
+a201 3
+<td align="left" class="xtable-data">04/21/2003</td>
+<td align="right" class="xtable-data">381.16</td>
+<td align="right" class="xtable-data">580</td>
+d203 1
+a203 1
+<a>673</a>
+d211 1
+a211 1
+<img src="wcf/table/sort-ac.png" border="0"/> Text 5</a>
+@
+

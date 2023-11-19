@@ -1,0 +1,145 @@
+head	1.1;
+access;
+symbols
+	focus_1_6_0:1.1.0.2;
+locks; strict;
+comment	@# @;
+
+
+1.1
+date	2008.05.19.06.10.13;	author kunarief;	state dead;
+branches
+	1.1.2.1;
+next	;
+
+1.1.2.1
+date	2008.05.19.06.10.13;	author kunarief;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@file MondrianHideMember.java was initially added on branch focus_1_6_0.
+@
+text
+@@
+
+
+1.1.2.1
+log
+@* adding feature for hidden member selection
+@
+text
+@a0 105
+package com.tonbeller.jpivot.mondrian;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.w3c.dom.Element;
+
+import com.tonbeller.jpivot.core.ExtensionSupport;
+import com.tonbeller.jpivot.olap.navi.HideMember;
+import com.tonbeller.wcf.controller.Dispatcher;
+import com.tonbeller.wcf.controller.RequestContext;
+import com.tonbeller.wcf.controller.RequestListener;
+import com.tonbeller.wcf.utils.DomUtils;
+
+public class MondrianHideMember extends ExtensionSupport implements HideMember {
+
+	private class VisibleButtonHandler implements RequestListener {
+
+		private String label;
+
+		public VisibleButtonHandler(String label) {
+			this.label = label;
+		}
+
+		public void request(RequestContext context) throws Exception {
+			// add label to hiddenList
+			hiddenList.add(label);
+		}
+
+	}
+
+	private class HideButtonHandler implements RequestListener {
+
+		private String label;
+
+		public HideButtonHandler(String label) {
+			this.label = label;
+		}
+
+		public void request(RequestContext context) throws Exception {
+			// remove label from hiddenList
+			hiddenList.remove(label);
+		}
+
+	}
+
+	private Dispatcher dispatcher;
+	private List hiddenList;
+	private static final String HIDE_BUTTON = "hide-button";
+	private static final String VISIBLE_BUTTON = "visible-button";
+
+	public MondrianHideMember(Dispatcher dispatcher) {
+		this.dispatcher = dispatcher;
+		this.hiddenList = new ArrayList();
+		super.setId(ID);
+	}
+
+	public void render(Element treeComponent) {
+		Element treeNode = (Element) treeComponent.getFirstChild();
+		creatButtonElement(treeNode);
+	}
+
+	private void creatButtonElement(Element element) {
+		String id = DomUtils.randomId();
+		String label = element.getAttribute("label");
+		if (hiddenList.contains(label)) {
+			// create hidden button
+			Element buttonElement = element.getOwnerDocument().createElement(HIDE_BUTTON);
+			element.appendChild(buttonElement);
+			buttonElement.setAttribute("id", id);
+			dispatcher.addRequestListener(id, null, new HideButtonHandler(label));
+		}
+		else {
+			// create visible button
+			Element buttonElement = element.getOwnerDocument().createElement(VISIBLE_BUTTON);
+			element.appendChild(buttonElement);
+			buttonElement.setAttribute("id", id);
+			dispatcher.addRequestListener(id, null, new VisibleButtonHandler(label));
+		}
+
+		// recursive to first child
+		if (element.getFirstChild() instanceof Element) {
+			Element child = (Element) element.getFirstChild();
+			if (child != null) {
+				if("tree-node".equals(child.getTagName()))
+					creatButtonElement(child);
+			}
+		}
+
+		// recursive to next sibling
+		if (element.getNextSibling() instanceof Element) {
+			Element sibling = (Element) element.getNextSibling();
+			if (sibling != null) {
+				if("tree-node".equals(sibling.getTagName()))
+					creatButtonElement(sibling);
+			}
+		}
+	}
+
+	public List getHiddenList() {
+		return hiddenList;
+	}
+
+
+}
+@
+

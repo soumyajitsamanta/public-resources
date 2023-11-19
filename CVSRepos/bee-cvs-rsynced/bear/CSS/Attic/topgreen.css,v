@@ -1,0 +1,141 @@
+head	1.4;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.4
+date	2004.05.06.00.29.52;	author michald;	state dead;
+branches;
+next	1.3;
+
+1.3
+date	2003.10.01.19.38.22;	author vasekd;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2003.09.22.16.26.28;	author vasekd;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2003.09.22.13.55.05;	author vasekd;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.4
+log
+@removing of the old report CSS
+@
+text
+@/* this part does not affect the REPORT, is used to proper view of style in format page on both Mozilla and IE based web browsers*/
+BODY.graph {background-color:transparent; padding: 0; margin: 0px, 0px, 0px, 5px;}
+TABLE.graph {border-style: none; empty-cells:show; padding:0; border-spacing:0;}
+TABLE.graph  TD { color: inherit; background-color: inherit; text-align: center;}
+SPAN.cursor {white-space:nowrap; font-weight:normal; cursor:pointer; cursor:hand;}
+TABLE.Neutral {	color: inherit;
+		background-color: inherit;
+		border: none;
+		text-align:left;
+		margin:0px; }
+TD.Neutral {text-align:left; font-weight:bold; padding:5px;}
+TD.bcg { background-color: #eee; }
+
+THEAD.t{ background-color: #70cc70; border-bottom: 2px solid #b5d594; padding: inherit; margin: inherit;}	/*color even even (first dark) */
+TBODY.t1 {background-color: #d8d84b; border-bottom: 2px solid #b5d594; padding: inherit; margin: inherit;}	/*color odd even (second dark)*/
+TR.t1 {background-color: #f2f27b;}									/*color odd odd (second light)*/
+TBODY.t2 {background-color: #70cc70; border-bottom: 2px solid #b5d594; padding: inherit; margin: inherit;}	/*color even even (first dark) */
+TR.t2 {background-color: #a0e5a0}									/*color even odd (first light)*/
+
+TD.None { color: inherit;  background-color: inherit;  border: none;}
+
+/* this part defines fonts, colors and borders of the REPORT*/
+BODY {background-color:#eee}
+/*T A B L E  L A Y O U T*/
+TABLE {	font-family: Arial, sans-serif;
+	font-size: 10px;
+	color: #000000;
+	border: 4px solid #716205;
+	border-collapse: collapse;
+	padding: 1px;
+	margin: 5px;
+	white-space: nowrap;
+	empty-cells: show;
+	cursor:default}
+
+TH {padding: 2px; margin: 0; text-align: center !important; white-space: nowrap;}
+TR {padding: 1px; margin: 0; white-space: nowrap;}
+TD {padding: 1px; margin: 0; text-align: right; white-space: nowrap;}
+
+/*B O R D E R S*/
+.t { border-top: 1px solid #716205; padding: 1px; margin: 0;}	/*top*/
+.r { border-right: 2px solid #716205; padding: 1px; margin: 0;}				/*vertical border bold*/
+.d { border-right: 1px dashed #b5d594; padding: 1px; margin: 0;} 				/*vertical border thin-dashed*/
+.tt{ border-top: 2px solid #716205 !important; padding: 1px; margin: 0;}				/*horizontal border bold */
+.tr{ border-top: 1px solid #b5d594; border-right: 2px solid #716205;}  /*horizontal and vertical border thin*/
+.td{ border-top: 1px solid #b5d594; border-right: 1px dashed #b5d594;} /*horizontal and vertical border thin-dashed*/
+.ttr{ border-top: 2px solid #716205 ; border-right: 2px solid #716205;} /*horizontal and vertical border bold*/
+.ttd{ border-top: 2px solid #716205; border-right: 1px dashed #b5d594;}/*horizontal and vertical border bold-dashed*/
+
+/*C O L O R S*/
+.ee{ background-color: white ; text-align:right;padding: 5px;}	/*color even even (first dark) */
+.eo{ background-color: white; text-align:right;padding: 5px;}	/*color even odd (first light)*/
+.oe{ background-color: white; text-align:right;padding: 5px;}	/*color odd even (second dark)*/
+.oo{ background-color: white; text-align:right;padding: 5px;}	/*color odd odd (second light)*/
+.set { background-color: #629c21 !important; color:#fff}
+
+/*color row header */
+TH.ee{ background-color: #598818 ;  text-align:right;}	/*color even even (first dark) */
+TH.eo{ background-color: white; text-align:right;}	/*color even odd (first light)*/
+TH.oe{ background-color: white;  text-align:right;}	/*color odd even (second dark)*/
+TH.oo{ background-color: white; text-align:right;}	/*color odd odd (second light)*/
+
+TH.ch{ background-color: #598818; padding: 5px; margin: 0; text-align:right;color:#effee9}	/*color row header */ 
+
+/*border column header */
+TH.tt{ border-top: 2px solid #b5d594; border-right: 1px solid #b5d594 ; padding: 5px; background-color:white}	/*color odd column header*/
+TH.tr{ border-top: 1px solid #b5d594; border-right: 2px solid #716205; padding: 5px; background-color:white}	/*color odd row header*/
+TH.ttr{ border-top: 2px solid #716205; border-right: 2px solid #716205;  padding: 5px;background-color:white}	/*color 1st even row header*/
+TH.t{ border-top: 1px solid #b5d594; border-right: 1px solid #b5d594;  padding: 5px;background-color:white}  /*color 1st even row header*/
+@
+
+
+1.3
+log
+@new skin cube
+@
+text
+@@
+
+
+1.2
+log
+@bug fixies
+@
+text
+@d2 1
+a2 1
+BODY.graph {background-color:#5190e2; padding: 0; margin: 0px, 0px, 0px, 5px;}
+@
+
+
+1.1
+log
+@Added new table formats
+@
+text
+@d66 1
+a66 1
+TH.tt{ border-top: 2px solid #b5d594; border-right: 1px solid #b5d594 ; padding: 5px; background-color:white!important;}	/*color odd column header*/
+d69 1
+a69 1
+TH.t{ border-top: 1px solid #b5d594; border-right: 1px solid #b5d594;  padding: 5px;background-color:white!important;}  /*color 1st even row header*/
+@
+

@@ -1,0 +1,38 @@
+head	1.2;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2003.10.29.07.20.17;	author numberone;	state dead;
+branches;
+next	1.1;
+
+1.1
+date	2003.09.19.11.23.42;	author numberone;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@beed -- removing. will be moved to next branch (toplevel directory)
+@
+text
+@Martin Sarfy <sarfy@@insightstrategy.cz>
+@
+
+
+1.1
+log
+@BEE dad daemon -- new branch
+@
+text
+@@
+

@@ -1,0 +1,223 @@
+head	1.2;
+access;
+symbols
+	jpivot_1_8_0:1.2
+	focus_1_6_0:1.2.0.4
+	jpivot_1_7_0:1.2
+	jpivot_1_6_0:1.2
+	jpivot_1_5_0:1.2.0.2
+	Root_jpivot_1_5_0:1.2
+	mondrian_xmla_2005_08_25:1.1.0.2
+	sourceforge_sync:1.2;
+locks; strict;
+comment	@# @;
+expand	@k@;
+
+
+1.2
+date	2005.09.08.22.13.42;	author sgwood;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2005.07.05.14.19.47;	author avix;	state Exp;
+branches
+	1.1.2.1;
+next	;
+
+1.1.2.1
+date	2005.08.29.20.24.19;	author paullucas;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@Mondrian as a Provider
+@
+text
+@/*
+ * ====================================================================
+ * This software is subject to the terms of the Common Public License
+ * Agreement, available at the following URL:
+ *   http://www.opensource.org/licenses/cpl.html .
+ * Copyright (C) 2003-2004 TONBELLER AG.
+ * All Rights Reserved.
+ * You must accept the terms of that agreement to use this software.
+ * ====================================================================
+ *
+ * 
+ */
+package com.tonbeller.jpivot.olap.model;
+
+import java.util.List;
+
+
+/**
+ * Browse an OLAP dataSource in order to retrieve
+ * specific Olap Items as dimensions, levels, members
+ */
+public interface OlapDiscoverer {
+
+  public static final int PROVIDER_MICROSOFT = 1;
+  public static final int PROVIDER_SAP = 2;
+  public static final int PROVIDER_MONDRIAN = 3;
+
+  /**
+   * retrieve catalogs in data source
+   * @@return List of OlapItems for the catalogs
+   * @@throws OlapException
+   */
+  public java.util.List discoverCat() throws OlapException;
+
+  /**
+   * retrieve cubes in data source for a given catalog
+   * @@param cat catalog
+   * @@return List of OlapItems for the cubes
+   * @@throws OlapException
+   */
+  public java.util.List discoverCube(String cat) throws OlapException;
+
+  /**
+   * retrieve dimensions in data source for given catalog, cube
+   * @@param cat catalog name
+   * @@param cube cube name 
+   * @@return List of OlapItems for the dimensions
+   * @@throws OlapException
+   */
+  public java.util.List discoverDim(String cat, String cube) throws OlapException;
+
+  /**
+   * retrieve hierarchies in data source for given catalog, cube, dimension 
+   * @@param cat name of catalog 
+   * @@param cube name of cube  
+   * @@param dimension unique name of dimension, can be null
+   * @@return List of OlapItems for the hierarchies
+   * @@throws OlapException
+   */
+  public java.util.List discoverHier(String cat, String cube, String dimension)
+    throws OlapException;
+
+  /**
+   * retrieve levels in data source for given catalog, cube, dimension 
+   * @@param cat name of catalog 
+   * @@param cube name of cube  
+   * @@param dimension unique name of dimension, can be null 
+   * @@param hier unique name of hierarchy, can be null
+   * @@return List of OlapItems for the levels
+   * @@throws OlapException
+   */
+  public java.util.List discoverLev(String cat, String cube, String dimension, String hier)
+    throws OlapException;
+
+  /**
+   * retrieve members in data source for given catalog, cube, dimension, level
+   * @@param cat name of catalog 
+   * @@param cube name of cube  
+   * @@param dimension unique name of dimension
+   * @@param hierarchy unique name of hierarchy   
+   * @@param level unique name of level
+   * @@return List of OlapItems for the members
+   * @@throws OlapException
+   */
+  public java.util.List discoverMem(
+    String cat,
+    String cube,
+    String dimension,
+    String hierarchy,
+    String level)
+    throws OlapException;
+
+  /**
+   * retrieve member tree in data source for given catalog, cube, member
+   * @@param cat name of catalog 
+   * @@param cube name of cube  
+   * @@param member unique name of member
+   * @@param treeop bit combination according to TREEOP specification
+   *               MDTREEOP_CHILDREN = 1
+   *               MDTREEOP_SIBLINGS = 2
+   *               MDTREEOP_PARENT = 4
+   *               MDTREEOP_SELF = 8
+   *               MDTREEOP_DESCENDANTS = 16
+   *               MDTREEOP_ANCESTORS = 32
+   * @@return List of OlapItems for the members
+   * @@throws OlapException
+   */
+  public java.util.List discoverMemTree(String cat, String cube, String member, int treeop)
+    throws OlapException;
+
+  /**
+   * retrieve a map describing the datasource 
+   * @@return map of key, value strings
+   *             keys are, for instance, DataSourceName and DataSourceDescription
+   * @@throws OlapException
+   */
+  public java.util.Map discoverDS() throws OlapException;
+
+  /**
+   * retrieve member properties in data source for given catalog, cube, dimension, hierarchy, level
+   * @@param cat name of catalog 
+   * @@param cube name of cube  
+   * @@param dimension unique name of dimension
+   * @@param hierarchy unique name of hierarchy   
+   * @@param level unique name of level
+   * @@return List of OlapItems for the members
+   * @@throws OlapException
+   */
+  public java.util.List discoverProp(
+    String cat,
+    String cube,
+    String dimension,
+    String hierarchy,
+    String level)
+    throws OlapException;
+
+
+  /**
+     * retrieve SAP variables for given catalog, cube
+     * @@param cat name of catalog 
+     * @@param cube name of cube  
+     * @@return List of OlapItems for the members
+     * @@throws OlapException
+     * @@see com.tonbeller.jpivot.olap.model.OlapDiscoverer#discoverProp 
+     */
+   public java.util.List discoverSapVar(String cat, String cube) throws OlapException ;
+
+  /**
+   * @@return provider
+   */
+  public int getProvider();
+
+  /**
+   * retrieve datasource properties
+   * @@return List of OlapItems for the datasource properties
+   */
+  public List discoverDSProps() throws OlapException;
+  
+} // OlapDiscoverer
+@
+
+
+1.1
+log
+@initial version
+@
+text
+@d26 1
+@
+
+
+1.1.2.1
+log
+@mondrian xmla support, mondrian provider, MondrianMemberTree - temp fix to get it to compile with mondrian-head
+PROPERTY_VISIBLE is no longer in mondrian-head
+@
+text
+@a25 1
+  public static final int PROVIDER_MONDRIAN = 3;
+@
+

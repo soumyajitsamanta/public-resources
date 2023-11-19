@@ -1,0 +1,54 @@
+head	1.2;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2008.05.17.15.40.42;	author fsaz;	state dead;
+branches;
+next	1.1;
+
+1.1
+date	2005.11.28.15.13.35;	author fsaz;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@borrando viejos
+@
+text
+@# properties file 
+#
+# 
+
+PluginCaption=Layout
+PluginDesc=Show project layout
+actionDespliege=Deploy
+actionDespliegeDes=Show deploy
+actionMasterDespliege=Master deploy
+actionMasterDespliegeDes=Show master deploy
+Error=Error
+OK=OK
+Cancel=Cancel
+HDiv=Division Horizontal
+VDiv=Division Vertical
+olpaJobs=Olap Jobs
+fiexedJobs=Fixeds Jobs
+runJob=Run Job@
+
+
+1.1
+log
+@*** empty log message ***
+@
+text
+@@
+

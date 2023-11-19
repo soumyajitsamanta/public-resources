@@ -1,0 +1,45 @@
+head	1.2;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2003.06.03.13.19.46;	author numberone;	state dead;
+branches;
+next	1.1;
+
+1.1
+date	2003.03.12.23.23.39;	author numberone;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@mergeII
+@
+text
+@Net		T_PTROBJ
+const char *	T_PV  
+@
+
+
+1.1
+log
+@Net-1.2
+
+Networking library wrotten in lowlevel C
+
+inet - tcp inet connection
+unix - unix sockets, socketpair
+ssl  - openssl wrapper, *.pem keys
+@
+text
+@@
+

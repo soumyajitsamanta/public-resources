@@ -1,0 +1,103 @@
+head	1.2;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2003.11.06.12.08.47;	author numberone;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2003.06.03.13.16.14;	author numberone;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@renaming .xml to .scheme and .bee
+@
+text
+@Priloha k Bakalarske praci Davida Pavlika, 2003
+
+Popis konfigurace BEE na spusteni parsovani web logu
+ve formatu CLF.
+----------------------------------------------------
+
+
+INSTALACE
+-------
+
+-	je nutno nainstalovat sitovou knihovnu NetLib:
+
+	cd Net-1.2
+	perl Makefile.PL LIB=.../bee/lib
+	make
+	make install
+-	pro spusteni klienta jsou nezbytne tyto knihovny:
+	Net::SSLeay
+	IO::Socket::SSL
+	Frontier::RPC2
+	XML::Parser
+	XML::Simple
+	DBI
+	DBD::mysql
+	FreezeThaw
+
+
+SPUSTENI BEE
+-----------
+Jedna se pouze o ukazku konkretni aplikace vcely.
+
+Idealne by po spusteni mela provest toto:
+	-	rozparsovat zaznamy ve web logu (podporovan je prozatim pouze format CLF)
+	-	tyto rozparsovane zaznamy ulozit do specifikovaneho souboru
+
+Nastaveni vstupu a vystupu:
+	- predpoklada se, ze log je v souboru  "/etc/httpd/logs/access_log" na 
+	lokalnim pocitaci
+	-	vystup je nastaven do /tmp/parsed_access_log na lokalnim pocitaci
+	- obe tyto hodnoty lze menit v souboru "client/log/log.scheme"
+
+Neni dosahovano vysoke rychlosti, nebot projekt BEE je stale ve vyvoji
+Maximalni dosazena rychlost: prumerne 67 radku/sek u logu s desetitisici
+zaznamy.
+
+
+1) spusteni autority
+	cd auth
+	perl auth.pl
+
+2) spusteni otce 
+	cd dad
+	perl dad.pl
+
+3) spusteni klienta - analyza web logu
+	cd client
+	perl task.pl log log.scheme
+
+
+
+@
+
+
+1.1
+log
+@0.9.1 -- version merge
+@
+text
+@d40 1
+a40 1
+	- obe tyto hodnoty lze menit v souboru "client/log/log.xml"
+d57 1
+a57 1
+	perl task.pl log log.xml
+@
+

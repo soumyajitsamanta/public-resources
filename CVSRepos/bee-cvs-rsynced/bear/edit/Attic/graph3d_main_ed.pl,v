@@ -1,0 +1,186 @@
+head	1.6;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.6
+date	2003.10.13.14.43.23;	author jiri_schmid;	state dead;
+branches;
+next	1.5;
+
+1.5
+date	2003.09.17.14.51.14;	author jiri_schmid;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2003.08.26.15.35.45;	author jiri_schmid;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2003.08.13.13.16.29;	author jiri_schmid;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2003.08.05.13.03.01;	author jiri_schmid;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2003.07.10.12.58.44;	author jiri_schmid;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.6
+log
+@description tab defined under two files, bug fixies
+@
+text
+@#-----------------------------------------------------
+#  Format Editation
+#-----------------------------------------------------
+# $Id: graph3d_main_ed.pl,v 1.5 2003/09/17 14:51:14 jiri_schmid Exp $
+
+use strict;
+use CGI qw( :standard );
+use CGI::Pretty;
+
+require "const.def";
+require "local_lib.pl";
+
+use vars qw($ID $Obj $ObjT $descr_w $descr_r $name_w $lang $saved @@Languages $DefaultLanguage);
+
+#-----------------------------------------------------
+# print_form is called from edit.cgi
+
+sub generateContent() {
+#	use Data::Dumper;
+#       print "<PRE>A".Dumper($Obj)."</PRE>";
+print <<END ;
+
+<br>
+<table class="page_skeleton">
+<tr class="page_skeleton">
+<td class="page_skeleton">
+	<table class="neutral">
+	<tr><td class="neutral_bold">$lang->{'Name'}</td></tr>
+	<tr><td align="center">
+		<span class='nowrap'>
+		<input value="" onchange="object_changed()" type="text" name="name" id="NAME" size="$name_w" maxlength="100"/>
+		<select name="langSpec" id="langSpec" onchange="tmpChangeLocal()">
+END
+foreach (@@Languages) {
+	my $lcL = lc($_);
+	my $name = LocalizedObj($Obj->{name}, "Object #$ID", $lcL, $DefaultLanguage);
+	print "<option value='$name'>$_</option>";
+}
+print <<END;
+		</select>
+		<input type="hidden" name="item_id" id="ITEM_ID" value="$ID"/>
+		</span>
+	</td></tr>
+	<tr><td><hr></td></tr>
+	<tr><td class="neutral_bold">$lang->{'Description'}</td></tr>
+	<tr><td align="center"><textarea onchange="object_changed()" cols="$descr_w" rows="$descr_r" name="desc" id="DESC">$Obj->{description}</textarea></td></tr>
+	<tr><td><hr></td></tr>
+	<tr><td align="center">
+	<table class="buttons" cellpading="0" cellspacing="0">
+	<tr>	<td class="buttons"><input type="submit" name="Action" value="$lang->{'Save'}" onclick="check_name()"/></td>
+			<td class="buttons">	<input type="submit" name="Action" value="$lang->{'Save As'}" onclick="return readName();"/>
+						<input type="hidden" name="saveAsName" id="saveAsName" value="" /></td>
+		<td class="buttons"><input type="button" name="reset" value="$lang->{'Reset'}" onclick="subst_item_id()"/></td>
+	</tr>
+	</table>
+	</td></tr>
+	</table>
+</td></tr></table>
+<script type="text/javascript">
+	subst_item_id();
+	var saveAsMsg = "$lang->{SaveAsMsg}$lang->{'New Format'}";
+	reloadTree($saved);
+</script>
+END
+}
+
+#---------------------------------------------------
+sub set_next_param {
+	
+}
+
+1
+@
+
+
+1.5
+log
+@tabed rights on graph3d and report
+@
+text
+@d4 1
+a4 1
+# $Id: graph3d_main_ed.pl,v 1.4 2003/08/26 15:35:45 jiri_schmid Exp $
+@
+
+
+1.4
+log
+@rights improvment, create delete duplicate rule implemented
+@
+text
+@d4 1
+a4 1
+# $Id: graph3d_main_ed.pl,v 1.3 2003/08/13 13:16:29 jiri_schmid Exp $
+a53 1
+		<td class="buttons"><input type="submit" name="Rights" value="$lang->{'Right'}" onclick='setRightsPage()' /></td>
+@
+
+
+1.3
+log
+@setting up rights inetrface for each object implemnted
+@
+text
+@d4 1
+a4 1
+# $Id: graph3d_main_ed.pl,v 1.2 2003/08/05 13:03:01 jiri_schmid Exp $
+d54 1
+a54 1
+		<td class="buttons"><input type="submit" name="Rights" value="$lang->{'Right'}"/></td>
+@
+
+
+1.2
+log
+@noWrap on name and language
+@
+text
+@d4 1
+a4 1
+# $Id: graph3d_main_ed.pl,v 1.1 2003/07/10 12:58:44 jiri_schmid Exp $
+d54 2
+a55 1
+	</td></tr>
+@
+
+
+1.1
+log
+@files for tabed graph3d
+@
+text
+@d4 1
+a4 1
+# $Id: format_main_ed.pl,v 1.1 2003/06/19 14:59:45 jiri_schmid Exp $
+d30 1
+d42 1
+@
+

@@ -1,0 +1,43 @@
+head	1.1;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.1
+date	2004.04.16.16.51.11;	author vacula;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@new
+@
+text
+@<?xml version="1.0" encoding="ISO-8859-1" standalone="yes"?>
+<map>
+  <measurement width="29.7cm" height="21cm" />
+  <object id="B" y="10.56cm" x="9.425cm">
+    <points>4750,7217 18160,5113 8239,0 0,8420 4750,7217</points>
+	<points_clickmap>4750,7217 18160,5113 8239,0 0,8420 4750,7217</points_clickmap>
+  </object>
+  <object id="H" y="1.886cm" x="4.25cm">
+    <points>0,0 0,7517 8058,7517 8058,0 0,0</points>
+ 	<points_clickmap>0,0 0,7517 8058,7517 8058,0 0,0</points_clickmap> 
+  </object>
+  <object id="M" y="6.886cm" x="1.25cm">
+    <points>0,0 0,7517 8058,7517 8058,0 0,0</points>
+  	<points_clickmap>0,0 0,7517 8058,7517 8058,0 0,0</points_clickmap>
+  </object>
+  <object id="X" y="4.886cm" x="2.25cm">
+    <points>0,0 0,5000 3000,3000 5000,0 0,0</points>
+  	<points_clickmap>0,0 0,5000 3000,3000 5000,0 0,0</points_clickmap>
+  </object>
+</map>
+@

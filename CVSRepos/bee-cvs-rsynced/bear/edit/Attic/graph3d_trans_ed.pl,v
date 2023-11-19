@@ -1,0 +1,139 @@
+head	1.3;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.3
+date	2003.08.05.08.25.10;	author jiri_schmid;	state dead;
+branches;
+next	1.2;
+
+1.2
+date	2003.07.25.10.53.21;	author jiri_schmid;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2003.07.22.15.17.20;	author jiri_schmid;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.3
+log
+@removed unused edit file
+@
+text
+@#-----------------------------------------------------
+#  Grid Editation
+#-----------------------------------------------------
+# $Id: graph3d_trans_ed.pl,v 1.2 2003/07/25 10:53:21 jiri_schmid Exp $
+
+use strict;
+use CGI qw( :standard );
+use CGI::Pretty;
+
+require "const.def";
+require "local_lib.pl";
+
+
+use vars qw($Obj $descr_w $use_lang $saved $lang $localTab);
+
+#-----------------------------------------------------
+sub generateContent() {
+	my $cgi = shift;
+	my $fill;
+print <<END;
+<br>
+<table class="page_skeleton">
+<tr class="page_skeleton"><td class="page_skeleton_ex" align="center">
+END
+if (&existsDefinition) {
+if ($Obj->{$localTab}{quantity} eq "off" || @@{$Obj->{$localTab}{items}} == 0) {
+	print "<span style='padding: 15px; line-height: 30px'>$lang->{'Report Qualitative'}</span>"
+} elsif ($localTab eq 'transparency') {
+	my @@reload;
+	my @@ids;
+	my $name = "Graph3d Item$localTab";
+		print "<table><tr><th style='text-align:left'>$lang->{$name}</th><td style='text-align:center'>$lang->{'Graph3d Interval'}</td>";
+	foreach (0..$#{$Obj->{$localTab}{items}}) {
+		my $id = @@{$Obj->{$localTab}{items}}[$_];
+		print "<tr><td id='$id'>$id :</td><td><input type='text' name='$id' id='input$id' size='$descr_w' value='' onchange='checkNum(this)'/></td></tr>";
+		push(@@ids,$id);
+		push(@@reload,${$Obj->{$localTab}{intervals}}[$_]);
+	}
+	print "<tr><td><input type='hidden' id='ids' value='".join("|",@@ids)."'/><input type='hidden' id='reload' value='".join("|",@@reload)."'/></td></tr>";
+	$fill = "fillAxis(true);";
+	print <<END;
+		</table>
+	</td></tr>	
+	<tr class="page_skeleton">
+	<td class="page_skeleton">
+		<table class="neutral_100">
+		<tr><td align="right">
+			<table class="buttons" cellpading="0" cellspacing="0">
+			<tr>	<td class="buttons"><input type="submit" name="Action" value="$lang->{'Save'}" onclick="" /></td>
+				<td class="buttons"><input type="button" name="reset" value="$lang->{'Reset'}" onclick="fillAxis()" /></td>
+			</tr>
+			</table>
+		</td></tr>
+		</table>
+	</td></tr>
+END
+}}
+print <<END;
+</td></tr>
+</table>
+<script type="text/javascript" src="js/graph3d.js"></script>	
+<script type="text/javascript">
+	var msg="$lang->{'New Save Part1'}$lang->{'New Graph3d Save'}$lang->{'New Save Part2'}";
+	var saveAsMsg = "$lang->{SaveAsMsg}$lang->{'New Graph3d'}";
+	reloadTree($saved);
+	$fill
+</script>
+END
+}
+
+#---------------------------------------------------
+
+sub set_next_param {
+#	foreach (0..$#{$Obj->{$localTab}{items}}) {
+#		@@{$Obj->{$localTab}{intervals}}[$_] = param(${$Obj->{$localTab}{items}}[$_]);
+#	}
+}
+
+1
+@
+
+
+1.2
+log
+@switching tab bug fixed
+@
+text
+@d4 1
+a4 1
+# $Id: graph3d_trans_ed.pl,v 1.1 2003/07/22 15:17:20 jiri_schmid Exp $
+@
+
+
+1.1
+log
+@added files defining tabs on graph3d page
+@
+text
+@d4 1
+a4 1
+# $Id: graph3d_def_ed.pl,v 1.2 2003/07/11 16:00:53 jiri_schmid Exp $
+d25 1
+d57 1
+a57 1
+}
+@
+

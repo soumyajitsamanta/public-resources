@@ -1,0 +1,1960 @@
+head	1.6;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.6
+date	2004.03.18.16.33.05;	author vacula;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	2004.03.18.16.29.48;	author vacula;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2004.03.17.17.41.10;	author vacula;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2004.03.16.23.44.32;	author vacula;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2003.11.12.09.25.13;	author vacula;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2003.09.22.11.06.48;	author vacula;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.6
+log
+@removed check writing
+@
+text
+@#------------------------------------------------------------------------------------
+#	  package
+#------------------------------------------------------------------------------------
+
+
+package Style;
+
+#use Exporter;
+#ISA = qw(Exporter);
+#@@EXPORT = qw( &report &defineAxis &defineLattice &defineObject &defineViewpoint @@Data $Style $Map);
+#use vars qw( $bearHost $bearPort $compress_threshold );
+
+#require "const/Const.pm";
+
+use XML::Simple;
+use SOAP::Lite;
+use CGI qw(:standard);
+
+use Data::Dumper;
+
+##############################################################################################################################################
+#---------------------------------------------------------------------------------------------------------------------------------------------
+
+sub getStyle {							## return definition of graph style 
+	my $form = shift;
+
+	my $fn = (-e "$Const::myPath$Const::graph3Ddefinitions/$form.xml" ) ? "$Const::myPath$Const::graph3Ddefinitions/$form.xml" : "$Const::myPath$Const::graph3Ddefinitions/default_format.xml" ;
+	my $PFormat = new XML::Simple(rootname=>'format',forcearray=>['x','y','z','colors','color','shapes','default']);
+	my $gstyle = $PFormat->XMLin($fn);
+
+	return ($gstyle);						## return style
+} 
+
+#---------------------------------------------------------------------------------------------------------------------------------------------
+
+sub getMap {							
+	my $gmap = shift;
+	my $Style = shift;
+
+	if ( exists $gmap->{x} ) {
+		my $segments;
+		$gmap->{X} = delete($gmap->{x});
+		if ( $gmap->{X}{type} eq 'quantit' ) {
+		 	if (! defined $gmap->{X}{min}) { $gmap->{X}{min} = min($gmap->{X}{values}); }
+			if (! defined $gmap->{X}{max}) { $gmap->{X}{max} = max($gmap->{X}{values}); }
+			$gmap->{X}{rmax} = round( $gmap->{X}{max}, 'up' );	# rounded maximum
+			$gmap->{X}{rmin} = round( $gmap->{X}{min}, 'down' );	# rounded minimum
+			$segments =  $gmap->{X}{rmax} - $gmap->{X}{rmin} ;
+		}
+		if ( $gmap->{X}{type} eq 'qualit' ) {
+			$gmap->{X}{min} = 1; 
+			$gmap->{X}{max} = @@{$gmap->{X}{values}}; 
+			$segments = $gmap->{X}{max} - $gmap->{X}{min} ;
+		}
+		
+		($gmap->{X}{minstep},$gmap->{X}{scale}) = minStep( $Style->{axis}{X}{length}, $segments );
+	}
+	if ( exists $gmap->{y} ) {
+		my $segments;
+		$gmap->{Y} = delete($gmap->{y});
+		if ( $gmap->{Y}{type} eq 'quantit' ) {
+			if (! defined $gmap->{Y}{min}) { $gmap->{Y}{min} = min($gmap->{Y}{values}); }
+			if (! defined $gmap->{Y}{max}) { $gmap->{Y}{max} = max($gmap->{Y}{values}); }
+			$gmap->{Y}{rmax} = round( $gmap->{Y}{max}, 'up' );	# rounded maximum
+			$gmap->{Y}{rmin} = round( $gmap->{Y}{min}, 'down' );	# rounded minimum
+			$segments =  $gmap->{Y}{rmax} - $gmap->{Y}{rmin} ;
+		} 
+		if ( $gmap->{Y}{type} eq 'qualit' ) {
+			$gmap->{Y}{min} = 1; 
+			$gmap->{Y}{max} = @@{$gmap->{Y}{values}}; 
+			$segments = $gmap->{Y}{max} - $gmap->{Y}{min} ;
+		}
+		
+		($gmap->{Y}{minstep},$gmap->{Y}{scale}) = minStep( $Style->{axis}{X}{length}, $segments );
+	}
+	if ( exists $gmap->{z} ) {
+		my $segments;
+		$gmap->{Z} = delete($gmap->{z});
+		if ( $gmap->{Z}{type} eq 'quantit' ) {
+			if (! defined $gmap->{Z}{min}) { $gmap->{Z}{min} = min($gmap->{Z}{values}); }
+			if (! defined $gmap->{Z}{max}) { $gmap->{Z}{max} = max($gmap->{Z}{values}); }
+			$gmap->{Z}{rmax} = round( $gmap->{Z}{max}, 'up' );	# rounded maximum
+			$gmap->{Z}{rmin} = round( $gmap->{Z}{min}, 'down' );	# rounded minimum
+			$segments =  $gmap->{Z}{rmax} - $gmap->{Z}{rmin} ;
+		} 
+		if ( $gmap->{Z}{type} eq 'qualit' ) {
+			$gmap->{Z}{min} = 1; 
+			$gmap->{Z}{max} = @@{$gmap->{Z}{values}}; 
+			$segments = $gmap->{Z}{max} - $gmap->{Z}{min} ;
+		}
+		
+		($gmap->{Z}{minstep},$gmap->{Z}{scale}) = minStep( $Style->{axis}{X}{length}, $segments );
+	}
+	if ( exists $gmap->{diameter} ) {
+		$gmap->{DI} = delete($gmap->{diameter});
+		if ( $gmap->{DI}{type} eq 'quantit' ) {
+			if (! defined $gmap->{DI}{min} or $gmap->{DI}{min} eq '') { $gmap->{DI}{min} = min($gmap->{DI}{values}); }
+			if (! defined $gmap->{DI}{max} or $gmap->{DI}{max} eq '') { $gmap->{DI}{max} = max($gmap->{DI}{values}); }
+		} 
+		if ( $gmap->{DI}{type} eq 'qualit' ) {
+			$gmap->{DI}{min} = 1; 
+			$gmap->{DI}{max} = @@{$gmap->{DI}{values}}; 
+		}
+	}
+	if ( exists $gmap->{transparency} ) {
+		$gmap->{TR} = delete($gmap->{transparency});
+		if ( $gmap->{TR}{type} eq 'quantit' ) {
+			if (! defined $gmap->{TR}{min} or $gmap->{TR}{min} eq '') { $gmap->{TR}{min} = min($gmap->{TR}{values}); }
+			if (! defined $gmap->{TR}{max} or $gmap->{TR}{max} eq '') { $gmap->{TR}{max} = max($gmap->{TR}{values}); }
+		} 
+		if ( $gmap->{TR}{type} eq 'qualit' ) {
+			$gmap->{TR}{min} = 1; 
+			$gmap->{TR}{max} = @@{$gmap->{TR}{values}}; 
+		}
+	}
+	if ( exists $gmap->{shape} ) {
+		$gmap->{SH} = delete($gmap->{shape});
+		if ( $gmap->{SH}{type} eq 'quantit' ) {
+			if (! defined $gmap->{SH}{min} or $gmap->{SH}{min} eq '') { $gmap->{SH}{min} = min($gmap->{SH}{values}); }
+			if (! defined $gmap->{SH}{max} or $gmap->{SH}{max} eq '') { $gmap->{SH}{max} = max($gmap->{SH}{values}); }
+		} 
+		if ( $gmap->{SH}{type} eq 'qualit' ) {
+			$gmap->{SH}{min} = 1; 
+			$gmap->{SH}{max} = @@{$gmap->{SH}{values}}; 
+		}
+	}
+	if ( exists $gmap->{color} ) {
+		$gmap->{CLR} = delete($gmap->{color});
+		if ( $gmap->{CLR}{type} eq 'quantit' ) {
+			if (! defined $gmap->{CLR}{min} or $gmap->{CLR}{min} eq '') { $gmap->{CLR}{min} = min($gmap->{CLR}{values}); }
+			if (! defined $gmap->{CLR}{max} or $gmap->{CLR}{max} eq '') { $gmap->{CLR}{max} = max($gmap->{CLR}{values}); }
+		} 
+		if ( $gmap->{CLR}{type} eq 'qualit' ) {
+			$gmap->{CLR}{min} = 1; 
+			$gmap->{CLR}{max} = @@{$gmap->{CLR}{values}}; 
+		}
+	}
+
+	return $gmap;
+} 
+
+#---------------------------------------------------------------------------------------------------------------------------------------------
+
+sub defineAxis {							## Define hash of parameters about each axis
+	my $axis = shift;
+	my $Map = shift;
+	my $Style = shift;
+	my ($ptr_axis);
+
+	if ( defined $Map->{$axis} ) { 
+		$ptr_axis = {
+				length		=> $Style->{axis}{$axis}{length},
+				size  		=> size( $Style->{axis}{$axis}{size}, $Style->{axis}{$axis}{length} ),
+				color 		=> $Style->{axis}{$axis}{color},
+				format		=> $Style->{axis}{$axis}{format},
+				transparency 	=> $Style->{axis}{$axis}{transparency},
+				indent 		=> $Style->{axis}{$axis}{indent},
+		};
+
+		if ($axis eq 'X') {							
+ 	  		$ptr_axis->{translation} = [$ptr_axis->{length}/2,0,0];
+ 	  		$ptr_axis->{rotation}    = [0,0,1,270];
+		}
+		if ($axis eq 'Y') {							
+	   		$ptr_axis->{translation} = [0,$ptr_axis->{length}/2,0];
+	   		$ptr_axis->{rotation}    = [0,0,1,0];
+		}
+		if ($axis eq 'Z') {							
+	   		$ptr_axis->{translation} = [0,0,$ptr_axis->{length}/2];
+	   		$ptr_axis->{rotation}    = [1,0,0,90];
+		}
+
+		if ( $Style->{axis}{$axis}{crowfoot}{visible} ) {			
+ 	  		$ptr_axis->{crowfoot}{size} = size( $Style->{axis}{$axis}{crowfoot}{size}, $Style->{axis}{$axis}{length} );
+  	  		$ptr_axis->{crowfoot}{format} = $Style->{axis}{$axis}{crowfoot}{format};
+ 	 		$ptr_axis->{crowfoot}{transparency} = $Style->{axis}{$axis}{crowfoot}{transparency};
+ 	  		$ptr_axis->{crowfoot}{color} = $Style->{axis}{$axis}{crowfoot}{color};
+			$ptr_axis->{crowfoot}{length} = $Style->{axis}{$axis}{indent};
+ 			if ($axis eq 'X') {							
+ 				$ptr_axis->{crowfoot}{translation} = [$ptr_axis->{length}+($ptr_axis->{indent}/2),0,0];
+ 				$ptr_axis->{crowfoot}{rotation}    = [0,0,1,270]; #$ptr_axis->{rotation};
+ 			}
+ 			if ($axis eq 'Y') {							
+	   			$ptr_axis->{crowfoot}{translation} = [0,$ptr_axis->{length}+($ptr_axis->{indent}/2),0];
+	   			$ptr_axis->{crowfoot}{rotation}    = [0,0,1,0]; #$ptr_axis->{rotation};
+ 			}
+ 			if ($axis eq 'Z') {							
+	   			$ptr_axis->{crowfoot}{translation} = [0,0,$ptr_axis->{length}+($ptr_axis->{indent}/2)];
+	   			$ptr_axis->{crowfoot}{rotation}    = [1,0,0,90]; #$ptr_axis->{rotation};
+ 			}
+		} else  {
+     			undef $ptr_axis->{crowfoot};
+		}
+
+		if ( $Style->{axis}{$axis}{label}{visible}) {
+			my ($falign);			
+			$ptr_axis->{label}{string} = $Map->{$axis}{values}[0]; 
+			$ptr_axis->{label}{font} = $Style->{axis}{$axis}{label}{font};
+			$ptr_axis->{label}{fontsize} = $Style->{axis}{$axis}{label}{fontsize};
+			$ptr_axis->{label}{color} = $Style->{axis}{$axis}{label}{color};
+			$ptr_axis->{label}{align} = $Style->{axis}{$axis}{label}{align};
+			$ptr_axis->{label}{fheight} = $Style->{axis}{$axis}{label}{fontsize}/20;			## define height of texture
+			$ptr_axis->{label}{fwidth} = length($ptr_axis->{label}{string}) * $ptr_axis->{label}{fheight};	## define width of texture
+
+			if ( $ptr_axis->{label}{align} eq 'top' ) {
+				$falign = -$ptr_axis->{label}{fheight};
+			}
+			elsif ( $ptr_axis->{label}{align} eq 'middle' ) {
+				$falign = -$ptr_axis->{label}{fheight}/2;
+			}
+			elsif ( $ptr_axis->{label}{align} eq 'bottom' ) {
+				$falign = 0;
+			}
+
+			if ($axis eq 'X') {
+				$ptr_axis->{label}{translation} = [$ptr_axis->{length}+$ptr_axis->{crowfoot}{length}+$ptr_axis->{indent},$falign,0];
+				$ptr_axis->{label}{rotation} = [0,0,1,0,];
+				$ptr_axis->{label}{coord} = 0;
+				$ptr_axis->{label}{switch} = 0;
+			}
+			if ($axis eq 'Y') {					
+				$ptr_axis->{label}{translation} = [-$falign,$ptr_axis->{length}+$ptr_axis->{crowfoot}{length}+$ptr_axis->{indent},0];
+				$ptr_axis->{label}{rotation} = [0,0,1,90,];
+				$ptr_axis->{label}{coord} = 0;
+				$ptr_axis->{label}{switch} = 0;
+			}
+			if ($axis eq 'Z') {
+				$ptr_axis->{label}{translation} = [0,$falign,$ptr_axis->{length}+$ptr_axis->{crowfoot}{length}+$ptr_axis->{indent}];
+				$ptr_axis->{label}{rotation} = [0,1,0,270,];
+				$ptr_axis->{label}{coord} = 270;
+				$ptr_axis->{label}{switch} = 0;
+			}
+		}  else {
+			undef $ptr_axis->{label} ;
+		}
+	}else {
+		undef $ptr_axis;
+	}
+
+	return $ptr_axis;
+}
+
+#---------------------------------------------------------------------------------------------------------------------------------------------
+
+sub defineLattice {			
+	my $Style = shift;
+	my $lattice = shift;
+	my $minstep = shift;
+	my ($axis,$tendency) = $lattice =~ /(.)(.)/ ;			## draw on $axis (X ->step), tendency drawing (Y->length)
+	my ($ptr_lattice);
+	
+	
+	for ( my $i=0;$i<@@{$Style->{lattice}{$axis}};$i++ ) {
+		$ptr_lattice->{steps}[$i]= {
+     		        			length		=> $Style->{axis}{uc($tendency)}{length},
+	        				size  		=> size( $Style->{lattice}{$axis}[$i]{size}, $Style->{axis}{uc($tendency)}{length}  ),
+						color 		=> $Style->{lattice}{$axis}[$i]{color},
+						format		=> $Style->{lattice}{$axis}[$i]{format},
+						transparency 	=> $Style->{lattice}{$axis}[$i]{transparency},
+						indent 		=> $Style->{axis}{uc($axis)}{indent},
+						step		=> $Style->{lattice}{$axis}[$i]{step}*$minstep, 
+		};  
+		if ( $Style->{lattice}{$axis}[$i]{label}{visible} ) {
+			if ( $lattice eq 'xz' or $lattice eq 'yx' or $lattice eq 'zx') {	## define, where will be draw labels
+    				my ($falign);
+				$ptr_lattice->{steps}[$i]{label}{string} = "N/A";		## real string will be supply in function "generateLattice" in Run_graph3d.pm
+				$ptr_lattice->{steps}[$i]{label}{font} = $Style->{lattice}{$axis}[$i]{label}{font};
+				$ptr_lattice->{steps}[$i]{label}{fontsize} = $Style->{lattice}{$axis}[$i]{label}{fontsize};
+				$ptr_lattice->{steps}[$i]{label}{color} = $Style->{lattice}{$axis}[$i]{label}{color};
+				$ptr_lattice->{steps}[$i]{label}{align} = $Style->{lattice}{$axis}[$i]{label}{align};
+				$ptr_lattice->{steps}[$i]{label}{fheight} = $Style->{lattice}{$axis}[$i]{label}{fontsize}/20;	## define height of texture
+				#$ptr_lattice->{steps}[$i]{label}{fwidth} = length($ptr_lattice->{steps}[$i]{label}{string})*$ptr_lattice->{steps}[$i]{label}{fheight};
+
+				if ( $ptr_lattice->{steps}[$i]{label}{align} eq 'top' ) {
+      					$falign = -$ptr_lattice->{steps}[$i]{label}{fheight};
+        			}
+   				elsif ( $ptr_lattice->{steps}[$i]{label}{align} eq 'middle' ) {
+      					$falign = -$ptr_lattice->{steps}[$i]{label}{fheight}/2;
+   				}
+   				elsif ( $ptr_lattice->{steps}[$i]{label}{align} eq 'bottom' ) {
+      					$falign = 0;
+   				}
+				if ( $lattice eq 'xz' ) {
+					$ptr_lattice->{steps}[$i]{label}{translation} = [$falign,0,$ptr_lattice->{steps}[$i]{length}+$ptr_lattice->{steps}[$i]{indent}];
+					$ptr_lattice->{steps}[$i]{label}{rotation} = [1,0,0,90];								
+					$ptr_lattice->{steps}[$i]{label}{coord} = 90;						
+					$ptr_lattice->{steps}[$i]{label}{switch} = 1;						
+				}
+				if ( $lattice eq 'yx' ) {
+					$ptr_lattice->{steps}[$i]{label}{translation} = [$ptr_lattice->{steps}[$i]{length}+$ptr_lattice->{steps}[$i]{indent},$falign,0];
+					$ptr_lattice->{steps}[$i]{label}{rotation} = [0,0,1,0];								
+					$ptr_lattice->{steps}[$i]{label}{coord} = 0;						
+					$ptr_lattice->{steps}[$i]{label}{switch} = 0;					
+				}
+				if ( $lattice eq 'zx' ) {
+					$ptr_lattice->{steps}[$i]{label}{translation} = [$ptr_lattice->{steps}[$i]{length}+$ptr_lattice->{steps}[$i]{indent},0,-$falign];
+					$ptr_lattice->{steps}[$i]{label}{rotation} = [1,0,0,270];								
+					$ptr_lattice->{steps}[$i]{label}{coord} = 0;						
+					$ptr_lattice->{steps}[$i]{label}{switch} = 0;					
+				}
+			}
+		}
+	}
+
+	#$ptr_lattice = sortBySize($ptr_lattice);	# sort steps by size of step (longer steps before shorter)
+	
+	$ptr_lattice->{lattice} = $lattice;
+	$ptr_lattice->{axis} = uc($axis);
+	$ptr_lattice->{axis_length} = $Style->{axis}{uc($axis)}{length};
+	$ptr_lattice->{tendency} = uc($tendency);
+
+	if ($tendency eq 'x') {							
+  		$ptr_lattice->{translation} = [$ptr_lattice->{steps}[0]{length}/2,0,0];
+  	  	$ptr_lattice->{rotation}    = [0,0,1,270];
+	}
+	if ($tendency eq 'y') {							
+ 		$ptr_lattice->{translation} = [0,$ptr_lattice->{steps}[0]{length}/2,0];
+ 		$ptr_lattice->{rotation}    = [0,0,1,0];
+	}
+	if ($tendency eq 'z') {							
+ 		$ptr_lattice->{translation} = [0,0,$ptr_lattice->{steps}[0]{length}/2];
+ 		$ptr_lattice->{rotation}    = [1,0,0,90];
+	}
+
+	
+	return $ptr_lattice;
+}
+
+#---------------------------------------------------------------------------------------------------------------------------------------------
+
+sub defineObject {
+	my $obj = shift;
+	my $Style = shift;
+	my $Map = shift;
+	my $object;
+	my $map = convert($Map,$Style);	# convert Map to old appearance for using funciton linear and constant
+#open TEST,">$Const::myPath/html/data.tst";
+#print TEST Dumper($Map);
+#print TEST Dumper($map);
+#print TEST Dumper($Style);
+#close TEST;
+
+	$object->{translation} 	= [0,0,0];
+	$object->{rotation} 	= [0,0,1,0] if ( $Style->{base} eq 'xz' or $Style->{base} eq 'zx' );
+	$object->{rotation} 	= [0,0,1,270] if ( $Style->{base} eq 'yz' or $Style->{base} eq 'zy');
+	$object->{rotation}	= [1,0,0,90] if ( $Style->{base} eq 'yz' or $Style->{base} eq 'zy');
+	$object->{bottom} 	= $Style->{DI}{default};
+	$object->{height} 	= $Style->{DI}{default};
+	$object->{transparency} = $Style->{TR}{default};
+	$object->{shape} 	= $Style->{SH}{default};
+	$object->{color} 	= str2array($Style->{CLR}{default});
+
+	for ( my $i=0; $i < scalar @@{$obj}; $i++ ) {
+		if ( $i eq $Map->{X}{column} ) {
+			if ( $Map->{X}{type} eq 'qualit' ) {
+				$object->{translation}[0] = $obj->[$i] * $Map->{X}{minstep} * $Map->{X}{scale};
+			}
+			elsif ( $Map->{X}{type} eq 'quantit' ) {
+				$object->{translation}[0] = ( $Map->{X}{values}[$obj->[$i]] - $Map->{X}{rmin} ) * $Map->{X}{minstep} * $Map->{X}{scale};
+			}	
+		}
+		if ( $i eq $Map->{Y}{column} ) {
+			if ( $Map->{Y}{type} eq 'qualit' ) {
+				$object->{translation}[1] = $obj->[$i] * $Map->{Y}{minstep} * $Map->{Y}{scale};
+			}
+			elsif ( $Map->{Y}{type} eq 'quantit' ) {
+				$object->{translation}[1] = ( $Map->{Y}{values}[$obj->[$i]] - $Map->{Y}{rmin} ) * $Map->{Y}{minstep} * $Map->{Y}{scale}; 
+			}	
+		}
+		if ( $i eq $Map->{Z}{column} ) {
+			if ( $Map->{Z}{type} eq 'qualit' ) {
+				$object->{translation}[2] = $obj->[$i] * $Map->{Z}{minstep} * $Map->{Z}{scale};
+			}
+			elsif ( $Map->{Z}{type} eq 'quantit' ) {
+				$object->{translation}[2] = ( $Map->{Z}{values}[$obj->[$i]] - $Map->{Z}{rmin} ) * $Map->{Z}{minstep} * $Map->{Z}{scale};
+			}	
+		}
+		if ( $i eq $Map->{DI}{column} ) { 
+			my $diameter = DI( $obj->[$i], $map->{DI}, $Style->{DI} );
+			$object->{bottom} = $diameter;
+			$object->{height} = $diameter;
+		}
+		if ( $i eq $Map->{TR}{column} ) { 
+			$object->{transparency} = TR( $obj->[$i], $map->{TR}, $Style->{TR} );
+		}
+		if ( $i eq $Map->{SH}{column} ) { 
+			$object->{shape} = SH( $obj->[$i], $map->{SH}, $Style->{SH} );
+		}
+		if ( $i eq $Map->{CLR}{column} ) { 
+			$object->{color} = CLR( $obj->[$i], $map->{CLR}, $Style->{CLR} );
+		}
+	}    
+
+	if ( $Style->{graph} eq 'Histogram' ) {
+		if ( $Style->{base} eq 'xz' or $Style->{base} eq 'zx' ) {
+        		$object->{height} = ($object->{translation}[1] != 0) ? $object->{translation}[1] : $object->{height};
+			$object->{translation}[1] = $object->{height}/2;
+		}  
+		if ( $Style->{base} eq 'xy' or $Style->{base} eq 'yx' ) {
+			$object->{height} = ($object->{translation}[2] != 0) ? $object->{translation}[2] : $object->{height};
+			$object->{translation}[2] = $object->{height}/2;
+		}  
+		if ( $Style->{base} eq 'zy' or $Style->{base} eq 'yz' ) {
+			$object->{height} = ($object->{translation}[0] != 0) ? $object->{translation}[0] : $object->{height};
+			$object->{translation}[0] = $object->{height}/2;
+		}
+	}
+
+	if ($object->{translation}[0] == 0 and $object->{translation}[1] == 0 and $object->{translation}[2] == 0 ) {
+		undef $object;
+	}
+	if ( ! defined $object->{bottom} and ! defined $object->{height} ) {
+		undef $object;
+	}
+	if ( ! defined $object->{transparency} ) {
+		undef $object;
+	}
+	if ( ! defined $object->{shape} ) {
+		undef $object;
+	}
+	if ( ! defined $object->{color} ) {
+		undef $object;
+	}
+
+	return $object;
+}
+
+#---------------------------------------------------------------------------------------------------------------------------------------------
+
+sub size {							## return real size of object (unit meter)
+	my $size = shift;					## size object loaded from style
+	my $length = shift;					## length of object
+
+	my $convert_size = $size / $length;
+	if ( $convert_size > 1 ) {
+		$convert_size = 1;
+	}
+	elsif ( $convert_size < 0 ) {
+		$convert_size = 0;
+	}
+	
+	return $convert_size;
+}
+
+#---------------------------------------------------------------------------------------------------------------------------------------------
+
+sub minStep {							## return min step from length of axis and number of items on axis
+	my $length = shift;					## length of axis
+	my $segments = shift;					## number of items on axis
+	my $limit = 20;						## max number of lattices on axis 
+	my ($digit,$exponent);
+
+	if ( $segments > $limit ) {
+		#my $rsegments = round($segments,'up');
+		my $rsegments = $segments;
+		my ($rsegments1,$rsegments2) = $rsegments =~ /(.)(.)/ ;	
+		if ($rsegments1 == 1){
+			$segments = $rsegments1.$rsegments2; 
+			$exponent = length($rsegments)-2;
+			$digit = eval("1e$exponent"); 
+		}
+		else {
+			$segments = $rsegments1;
+			$exponent = length($rsegments)-1;
+			$digit = eval("1e$exponent"); 
+		}
+	}
+	else {
+		$digit = 1;
+	}
+
+	my $min_step = $length/$segments;;
+	my $scale = 1/$digit;
+	
+	return ($min_step,$scale);
+}
+
+#---------------------------------------------------------------------------------------------------------------------------------------------
+sub round {							## return rounded number
+	my $item = shift;						## number
+	my $trend = shift;						## trend of rounding => up or down  
+	my ($round,$exponent,$mantisa,$mantisa1,$mantisa2,);
+
+	if ($item <= 10) {
+		$round = $item;
+	}
+	else {
+		($mantisa1,$mantisa2) = $item =~ /(.)(.)/ ;
+		$exponent = length($item)-2;					
+		if (  ( $item / ( 10*(eval("$mantisa1.e$exponent")) ) ) == 1 ){
+		   $round = $item;
+		}
+		else {
+			if ($trend eq 'up') {
+				if ($mantisa1 == 1 and $mantisa2 <= 5){
+      					$mantisa = 15 ;					
+    		     		}
+    				else {
+      					$mantisa = ($mantisa1 + 1).0;				
+    				}				
+			}
+			if ($trend eq 'down') {
+        			$mantisa = $mantisa1.0;	
+			}
+			$round = eval("$mantisa.e$exponent");
+		}
+	}
+
+	return ($round);						
+}
+
+#---------------------------------------------------------------------------------------------------------------------------------------------
+
+sub max {							## return max from array -  from index 1 to index "n" (not from 0 to "n-1") 
+	my $array = shift;					## array
+	
+	my $name = shift(@@{$array});				## delete first item of array
+	
+	my $max_orig = $max = shift(@@{$array});				
+	foreach (@@{$array}) {
+		if ($max < $_) {
+			$max = $_;
+        	}
+	}
+	unshift(@@{$array},$max_orig);				
+	unshift(@@{$array},$name);
+       
+	return $max;							
+}
+
+#---------------------------------------------------------------------------------------------------------------------------------------------
+
+sub min {							## return min from array -  from index 1 to index "n" (not from 0 to "n-1") 
+	my $array = shift;					## array
+
+	my $name = shift(@@{$array});				## delete first item of array
+	
+	my $min_orig = $min = shift(@@{$array});				
+	foreach (@@{$array}) {
+		if ($min > $_) {
+			$min = $_;
+        	}
+	}
+	unshift(@@{$array},$min_orig);				
+        unshift(@@{$array},$name);
+	
+	return $min;							
+}
+
+#---------------------------------------------------------------------------------------------------------------------------------------------
+
+sub sortBySize {
+	my $ptr_lattice = shift;
+	my (@@sizes,$ptr);
+ 
+	for ( my $i=0; $i < scalar @@{$ptr_lattice->{steps}}; $i++ ) {
+		push(@@sizes,$ptr_lattice->{steps}[$i]{size});    
+	}
+	my @@sort_sizes = sort(numeric @@sizes);
+
+	#---------------------
+	sub numeric {
+		if ($a < $b) {
+     			1;
+  		}
+		elsif ($a == $b) {
+      			0;
+  		}
+		elsif ($a > $b) {
+     			-1;
+  		}
+	}
+	#--------------------
+
+	for ( my $i=0; $i < scalar @@sort_sizes; $i++ ) {
+		for (my $j=0; $j < scalar @@{$ptr_lattice->{steps}}; $j++ ) {
+			if ($sort_sizes[$i] == $ptr_lattice->{steps}[$j]{size}) {
+        			$ptr->{steps}[$i] = $ptr_lattice->{steps}[$j]; 
+	      		} 
+	  	}
+	}
+	
+	return $ptr;
+}
+
+#---------------------------------------------------------------------------------------------------------------------------------------------
+
+sub defineViewpoint {
+	my $Style = shift;
+
+	my $viewpointX = ($Style->{axis}{X}{length} + $Style->{axis}{X}{indent}) * 2;
+	my $viewpointY = ($Style->{axis}{Y}{length} + $Style->{axis}{Y}{indent}) / 2;
+	my $viewpointZ = ($Style->{axis}{Z}{length} + $Style->{axis}{Z}{indent}) * 2;
+ 
+	return ($viewpointX,$viewpointY,$viewpointZ);
+}
+
+#---------------------------------------------------------------------------------------------------------------------------------------------
+
+sub DI {					## return real diameter of object in vrml file
+	my $item = shift;							## index (pointer to array values)
+	my $map_DI = shift;
+	my $style_DI = shift;
+
+	my $maxdiameter = $style_DI->{max};
+	my $mindiameter = $style_DI->{min};
+	my ($diameter);
+
+
+	if ( ! defined $item ) { 
+		return undef;
+	}
+	else {
+		if ( $map_DI->{type} eq 'qualit' ) {
+			$diameter = $map_DI->{array}[$item];
+		} 
+		if ( $map_DI->{type} eq 'quantit' ) {
+			if ( $map_DI->{values}[$item] < $map_DI->{min} or $map_DI->{values}[$item] > $map_DI->{max} ) {
+				return undef;
+			}
+			elsif ($map_DI->{interpolation} eq 'constant' or $map_DI->{interpolation} eq undef ) {				
+				$diameter = Constant($item,$map_DI,'DI');	
+			}										
+			elsif ($map_DI->{interpolation} eq 'linear') {					
+				$diameter = Linear($item,$map_DI,'DI');
+			}
+		}
+
+		if ($diameter eq '') {
+			$diameter = $map_DI->{default};
+		}
+		else {
+			$diameter = $mindiameter + ($diameter * ($maxdiameter - $mindiameter));
+		}
+		
+		return $diameter;
+	}	
+
+}
+
+#---------------------------------------------------------------------------------------------------------------------------------------------
+
+sub TR {							## podprogram vrati hodnotu transparency	
+	my $item = shift;							## aktualni hodnota z pole vstupnich dat
+	my $map_TR = shift;
+	my $style_TR = shift;
+
+	#my $maxtransparency = $format->{parameters}{maxtransparency};	
+	#my $mintransparency = $format->{parameters}{mintransparency};
+	#my ($transparency);
+	my $maxtransparency = $style_TR->{max};
+	my $mintransparency = $style_TR->{min};
+	my ($transparency);
+
+	if ( ! defined $item ) { 
+		return undef;
+	}
+	else {
+		if ( $map_TR->{type} eq 'qualit' ) {
+			$transparency = $map_TR->{array}[$item];
+		} 
+		if ( $map_TR->{type} eq 'quantit' ) {
+			if ( $map_TR->{values}[$item] < $map_TR->{min} or $map_TR->{values}[$item] > $map_TR->{max} ) {
+				return undef;
+			}
+			elsif ($map_TR->{interpolation} eq 'constant' or $map_TR->{interpolation} eq undef ) {				
+				$transparency = Constant($item,$map_TR,'TR');
+			}										
+			elsif ($map_TR->{interpolation} eq 'linear') {					
+				$transparency = Linear($item,$map_TR,'TR');
+			}
+		}
+
+		if ($transparency eq '') {
+			$transparency = $map_TR->{default};
+		}
+		else {
+			$transparency = $mintransparency + ($transparency * ($maxtransparency - $mintransparency));
+		}
+		
+		return $transparency;
+	}	
+}
+
+#---------------------------------------------------------------------------------------------------------------------------------------------
+
+sub SH {									## 
+	my $item = shift;							## aktualni hodnota z pole vstupnich dat
+	my $map_SH = shift;
+	my $style_SH = shift;
+	my $shape;
+
+	#my $item = shift;
+	#my $datacol = shift;		
+	#my ($shape,$range,$index,);
+
+	if ( ! defined $item ) { 
+		return undef;
+	}
+	else {
+		if ( $map_SH->{type} eq 'qualit' ) {
+			for (my $i = 0; $i < scalar @@{$map_SH->{value}}; $i++ ) {
+				if ( $map_SH->{values}[$item] eq $map_SH->{value}[$i] ) {
+					$shape = $map_SH->{array}[$i];
+				}
+			}		
+		} 
+		if ( $map_SH->{type} eq 'quantit' ) {
+			if ( $map_SH->{values}[$item] < $map_SH->{min} or $map_SH->{values}[$item] > $map_SH->{max} ) {
+				return undef;
+			}
+			elsif ( $map_SH->{interpolation} eq 'constant' or $map_SH->{interpolation} eq undef ) {				
+				$shape = Constant($item,$map_SH,'SH');
+			}										
+		}
+
+		if ($shape eq '') {
+			$shape = $map_SH->{default};
+		}
+	
+		return $shape;
+
+	}	
+}
+
+#---------------------------------------------------------------------------------------------------------------------------------------------
+
+sub CLR {									## 
+	my $item = shift;							## aktualni hodnota z pole vstupnich dat
+	my $map_CLR = shift;
+	my $style_CLR = shift;
+	my $color;
+
+	if ( ! defined $item ) { 
+		return undef;
+	}
+	else {
+		if ( $map_CLR->{type} eq 'qualit' ) {
+			for (my $i = 0; $i < scalar @@{$map_CLR->{value}}; $i++ ) {
+				if ( $map_CLR->{values}[$item] eq $map_CLR->{value}[$i] ) {
+					$color = $map_CLR->{array}[$i];
+				}
+			}		
+		} 
+		if ( $map_CLR->{type} eq 'quantit' ) {
+			if ( $map_CLR->{values}[$item] < $map_CLR->{min} or $map_CLR->{values}[$item] > $map_CLR->{max} ) {
+				return undef;
+			}
+			elsif ( $map_CLR->{interpolation} eq 'constant' or $map_CLR->{interpolation} eq undef ) {				
+				$color = Constant($item,$map_CLR,'CLR');
+			}										
+			elsif ($map_CLR->{interpolation} eq 'linear') {					
+				$color = Linear($item,$map_CLR,'CLR');
+			}
+		}
+
+		if ($color eq '') {
+			$color = $map_CLR->{default};
+		}
+	}
+
+	return $color;
+
+}
+
+#---------------------------------------------------------------------------------------------------------------------------------------------
+
+sub Constant {								## return procentual atribute of object
+	my $it_value = shift;	# index of value in array @@values
+	my $map = shift;
+	my $str_map = shift;	# string map ('DI','TR' ...)
+
+	my ($range,$index); 
+	my $maxdata = $map->{max};
+	my $mindata = $map->{min};
+	my $item = $map->{values}[$it_value];	# $item is real data value
+
+  if ( ! exists  $map->{interval} ) {
+     my $arrays = @@{$map->{array}};
+     $range = ($maxdata - $mindata) / $arrays ;
+     for (my $i=0;$i<$arrays;$i++) {
+      if ( $item == $maxdata ) {
+         $index = $arrays -1;
+      }
+      elsif ( $item >= ( $mindata + ($range*$i) ) and $item < ( $mindata + ($range*($i+1)) ) ) {		
+          $index = $i;
+          last;
+      }
+      else {
+          $index = '';
+      }
+    }
+  }
+  if ( exists  $map->{interval} ) {
+    my $intervals = @@{$map->{interval}}; 
+    my $arrays = @@{$map->{array}};
+    for (my $i=0;$i<$intervals;$i++) {
+      if ( $item == $maxdata ) {
+         $index = $arrays -1;
+      }
+      elsif ( $item >= $map->{interval}[$i][0] and $item < $map->{interval}[$i][1] ) {		
+        $index = $i;
+        last;
+      }
+      else {
+        $index = '';
+      }
+    }
+  }
+
+ if ($index ne '') {
+
+   if ($str_map eq 'DI') {
+  	 my $diameter = $map->{array}[$index];
+   	return ($diameter);
+   }
+   if ($str_map eq 'TR') {
+   	my $transparency = $map->{array}[$index];
+   	return ($transparency);
+   }
+   if ($str_map eq 'SH') {
+   	my $shape = $map->{array}[$index];
+   	return ($shape);
+   }
+   if ($str_map eq 'CLR') {
+   	my $color = $map->{array}[$index];
+   	return ($color);
+   }
+   
+ }
+ else {
+   return '';
+ }
+
+}
+
+#---------------------------------------------------------------------------------------------------------------------------------------------
+
+sub Linear {					## vrati barvu ve tvaru pole (R,G,B) pro pripad zadani rozsahu barev (linearni interpolace)
+	my $it_value = shift;	# index of value in array @@values
+	my $map = shift;
+	my $str_map = shift;	# string map ('DI','TR' ...)
+#my $item = shift;
+#my $maxdata = shift;
+#my $mindata = shift;
+#my $map = shift;
+	my $maxdata = $map->{max};
+	my $mindata = $map->{min};
+	my $item = $map->{values}[$it_value];	# $item is real data value
+
+  if ( ! exists  $map->{interval} ) {
+     my $arrays = @@{$map->{array}} - 1;
+     my $range = ($maxdata - $mindata)/$arrays ;
+
+     for (my $i=0;$i < $arrays;$i++ ) {
+         if ( $item >= ($mindata+(($range) * ($i))) and $item <= ($mindata+(($range) * ($i+1))) ) {
+           if ($str_map eq 'CLR') {
+              my $rangeR = $map->{array}[$i+1][0] - $map->{array}[$i][0];
+              my $rangeG = $map->{array}[$i+1][1] - $map->{array}[$i][1];
+              my $rangeB = $map->{array}[$i+1][2] - $map->{array}[$i][2];
+	      my $R = $map->{array}[$i][0] + ( ($item - ($mindata+($range*$i))) * ($rangeR / $range) );
+	      my $G = $map->{array}[$i][1] + ( ($item - ($mindata+($range*$i))) * ($rangeG / $range) );
+	      my $B = $map->{array}[$i][2] + ( ($item - ($mindata+($range*$i))) * ($rangeB / $range) );
+              my @@color = ($R,$G,$B);
+	      return (\@@color);
+	   }
+	   else {
+               my $rangeT = $map->{array}[$i+1] - $map->{array}[$i];
+               my $ret = $map->{array}[$i] + ( ($item - ($mindata+($range*$i))) * ($rangeT / $range) );
+	       return ($ret);
+	   }
+         }
+	 else { 
+	   if ($str_map eq 'CLR') {
+ 	      return $map->{default}; 
+	   }
+	 }
+     }
+  }
+  if ( exists  $map->{interval} ) {					
+    my $intervals = @@{$map->{interval}} ;
+    for (my $i=0;$i < $intervals;$i++ ) {
+	if ($item >= $map->{interval}[$i][0] and $item <= $map->{interval}[$i][1]) {
+          if ($str_map eq 'CLR') {
+            my $range = $map->{interval}[$i][1] - $map->{interval}[$i][0];
+	    my $rangeR = $map->{array}[$i+1][0] - $map->{array}[$i][0];
+            my $rangeG = $map->{array}[$i+1][1] - $map->{array}[$i][1];
+            my $rangeB = $map->{array}[$i+1][2] - $map->{array}[$i][2];
+	    my $R = $map->{array}[$i][0] + ( ( $item - $map->{interval}[$i][0] ) * ($rangeR / $range) );
+            my $G = $map->{array}[$i][1] + ( ( $item - $map->{interval}[$i][0] ) * ($rangeG / $range) );
+	    my $B = $map->{array}[$i][2] + ( ( $item - $map->{interval}[$i][0] ) * ($rangeB / $range) );
+            my @@color = ($R,$G,$B);
+	    return (\@@color);
+	  }
+          else {
+            my $range = $map->{interval}[$i][1] - $map->{interval}[$i][0];
+	    my $rangeT = $map->{array}[$i+1] - $map->{array}[$i];
+	    $ret = $map->{array}[$i] + ( ( $item - $map->{interval}[$i][0] ) * ($rangeT / $range) );
+	    return ($ret);
+	  }
+	    
+	}
+	else { 
+	   if ($str_map eq 'CLR') {
+ 	      return $map->{default}; 
+	   }
+	}
+    }
+  }
+
+
+}
+
+#---------------------------------------------------------------------------------------------------------------------------------------------
+
+sub convert {
+	my $Map = shift;
+	my $Style = shift;
+	my $map;
+	
+
+	foreach (keys %{$Map}) {
+		if ( $_=~/^TR$|^DI$|^SH$|^CLR$/ ) {
+			$map->{$_}{interpolation} = $Map->{$_}{interpolation};
+			$map->{$_}{type} = $Map->{$_}{type};
+			#$map->{$_}{default} = (defined $Map->{$_}{default}) ? $Map->{$_}{default}/100 : $Style->{$_}{default};
+			$map->{$_}{min} = $Map->{$_}{min};
+			$map->{$_}{max} = $Map->{$_}{max};
+			$map->{$_}{values} = $Map->{$_}{values};
+			if ( $Map->{$_}{type} eq 'qualit') {
+				if ( $_=~/^DI$/ ) {
+					my $proof_DI = ( $Style->{DI}{max} - $Style->{DI}{min} ) / 100 ;
+					if ($Map->{$_}{rules} ne undef or $Map->{$_}{rules}[0] ne undef or $Map->{$_}{rules}[0] ne '' or $Map->{$_}{rules}[0][0] ne '' or $Map->{$_}{rules}[0][0] ne undef) {						
+						foreach my $array ( @@{$Map->{$_}{rules}} ) {
+							push(@@{$map->{$_}{value}},$array->[0]);
+							push(@@{$map->{$_}{array}},$array->[1]*$proof_DI);
+						}
+					}
+					$map->{DI}{default} = (defined $Map->{DI}{default} and $Map->{DI}{default} ne '') ? $Map->{DI}{default}/100 : $Style->{DI}{default};	
+				}
+				if ( $_=~/^TR$/ ) {
+					my $proof_TR = ( $Style->{TR}{max} - $Style->{TR}{min} ) / 100 ;
+					if ($Map->{$_}{rules} ne undef or $Map->{$_}{rules}[0] ne undef or $Map->{$_}{rules}[0] ne '' or $Map->{$_}{rules}[0][0] ne '' or $Map->{$_}{rules}[0][0] ne undef) {						
+						foreach my $array ( @@{$Map->{$_}{rules}} ) {
+							push(@@{$map->{$_}{value}},$array->[0]);
+							push(@@{$map->{$_}{array}},$array->[1]*$proof_TR);
+						}
+					}
+					$map->{TR}{default} = (defined $Map->{TR}{default} and $Map->{TR}{default} ne '') ? $Map->{TR}{default}/100 : $Style->{TR}{default};	
+				}
+				if ( $_=~/^SH$/ ) {
+					if ($Map->{$_}{rules} ne undef or $Map->{$_}{rules}[0] ne undef or $Map->{$_}{rules}[0] ne '' or $Map->{$_}{rules}[0][0] ne '' or $Map->{$_}{rules}[0][0] ne undef) {						
+						foreach my $array ( @@{$Map->{$_}{rules}} ) {
+							push(@@{$map->{$_}{value}},$array->[0]);
+							push(@@{$map->{$_}{array}},$array->[1]);
+						}
+					}
+					$map->{SH}{default} = (defined $Map->{SH}{default} and $Map->{SH}{default} ne '') ? $Map->{SH}{default} : $Style->{SH}{default};	
+				}
+				if ( $_=~/^CLR$/ ) {
+					if ($Map->{$_}{rules} ne undef or $Map->{$_}{rules}[0] ne undef or $Map->{$_}{rules}[0] ne '' or $Map->{$_}{rules}[0][0] ne '' or $Map->{$_}{rules}[0][0] ne undef) {						
+						foreach my $array ( @@{$Map->{$_}{rules}} ) {
+							push(@@{$map->{$_}{value}},$array->[0]);
+							push(@@{$map->{$_}{array}},str2array($array->[1]));
+						}
+					}
+					$map->{CLR}{default} = (defined $Map->{CLR}{default} and $Map->{CLR}{default} ne '') ? str2array($Map->{CLR}{default}) : $Style->{CLR}{default};	
+				}
+			}
+			if ( $Map->{$_}{type} eq 'quantit') {
+				if ( $_=~/^DI$/ ) {
+					$map->{DI}{default} = (defined $Map->{DI}{default} and $Map->{DI}{default} ne '') ? $Map->{DI}{default}/100 : $Style->{DI}{default};	
+					my $proof_DI = ( $Style->{DI}{max} - $Style->{DI}{min} ) / 100 ;
+					if ( scalar(@@{$Map->{$_}{rules}[0]} != 0) and scalar(@@{$Map->{$_}{rules}} != 0) and $Map->{$_}{rules}[0] ne undef and $Map->{$_}{rules} ne undef and $Map->{$_}{rules}[0] ne undef and $Map->{$_}{rules}[0] ne '' and $Map->{$_}{rules}[0][0] ne '' and $Map->{$_}{rules}[0][0] ne undef )  {
+						if ( $Map->{$_}{interpolation} eq 'constant' or $Map->{$_}{interpolation} eq undef ) {
+							my $rules;
+							foreach my $element ( @@{$Map->{$_}{rules}} ) {	# transform data to 2 dimensional array
+								my $j = 0;
+								for ( my $i = 0; $i < scalar @@{$element}; $i++ ) {
+									if ( $i%2 == 0 ) {
+										$rules->[$j][0] = $element->[$i];
+										$j++;
+									}
+									else {
+										$rules->[$j-1][1] = $element->[$i];
+									}
+								}
+							}
+							foreach my $array ( @@{$rules} ) {
+								push(@@{$map->{$_}{array}},$array->[1]*$proof_DI);
+								my @@interval = split(/-/,$array->[0]);
+								push(@@{$map->{$_}{interval}},\@@interval);
+							}
+						}
+						if ( $Map->{$_}{interpolation} eq 'linear' ) {
+							my $rules;
+							foreach my $element ( @@{$Map->{$_}{rules}} ) {	# transform data to 2 dimensional array
+								my $j = 0;
+								for ( my $i = 0; $i < scalar @@{$element}; $i++ ) {
+									if ( $i%2 == 0 ) {
+										$rules->[$j][0] = $element->[$i];
+										$j++;
+									}
+									else {
+										$rules->[$j-1][1] = $element->[$i];
+									}
+								}
+							}
+							foreach my $array ( @@{$rules} ) {
+								my @@int_array = split(/-/,$array->[1]);
+								foreach my $int ( @@int_array ) {
+									push( @@{$map->{$_}{array}},($int * $proof_DI) );
+								}
+								#push(@@{$map->{$_}{array}},$array->[1]*$proof_DI);
+								my @@interval = split(/-/,$array->[0]);
+								push(@@{$map->{$_}{interval}},\@@interval);
+							}
+						}
+					}
+					else {
+						push(@@{$map->{$_}{array}},$map->{$_}{default});
+					}
+				}	
+				if ( $_=~/^TR$/ ) {
+					$map->{TR}{default} = (defined $Map->{TR}{default} and $Map->{TR}{default} ne '') ? $Map->{TR}{default}/100 : $Style->{TR}{default};	
+					my $proof_TR = ( $Style->{TR}{max} - $Style->{TR}{min} ) / 100 ;
+					if ( scalar(@@{$Map->{$_}{rules}[0]} != 0) and scalar(@@{$Map->{$_}{rules}} != 0) and $Map->{$_}{rules}[0] ne undef and $Map->{$_}{rules} ne undef and $Map->{$_}{rules}[0] ne undef and $Map->{$_}{rules}[0] ne '' and $Map->{$_}{rules}[0][0] ne '' and $Map->{$_}{rules}[0][0] ne undef )  {
+						if ( $Map->{$_}{interpolation} eq 'constant' or $Map->{$_}{interpolation} eq undef ) {
+							my $rules;
+							foreach my $element ( @@{$Map->{$_}{rules}} ) {	# transform data to 2 dimensional array
+								my $j = 0;
+								for ( my $i = 0; $i < scalar @@{$element}; $i++ ) {
+									if ( $i%2 == 0 ) {
+										$rules->[$j][0] = $element->[$i];
+										$j++;
+									}
+									else {
+										$rules->[$j-1][1] = $element->[$i];
+									}
+								}
+							}
+							foreach my $array ( @@{$rules} ) {
+								push(@@{$map->{$_}{array}},$array->[1]*$proof_TR);
+								my @@interval = split(/-/,$array->[0]);
+								push(@@{$map->{$_}{interval}},\@@interval);
+							}
+						}
+						if ( $Map->{$_}{interpolation} eq 'linear' ) {
+							my $rules;
+							foreach my $element ( @@{$Map->{$_}{rules}} ) {	# transform data to 2 dimensional array
+								my $j = 0;
+								for ( my $i = 0; $i < scalar @@{$element}; $i++ ) {
+									if ( $i%2 == 0 ) {
+										$rules->[$j][0] = $element->[$i];
+										$j++;
+									}
+									else {
+										$rules->[$j-1][1] = $element->[$i];
+									}
+								}
+							}
+							foreach my $array ( @@{$rules} ) {
+								my @@int_array = split(/-/,$array->[1]);
+								foreach my $int ( @@int_array ) {
+									push( @@{$map->{$_}{array}},($int * $proof_TR) );
+								}
+								#push(@@{$map->{$_}{array}},$array->[1]*$proof_TR);
+								my @@interval = split(/-/,$array->[0]);
+								push(@@{$map->{$_}{interval}},\@@interval);
+							}
+						}
+					}
+					else {
+						push(@@{$map->{$_}{array}},$map->{$_}{default});
+					}
+				}	
+				if ( $_=~/^SH$/ ) {
+					$map->{SH}{default} = (defined $Map->{SH}{default} and $Map->{SH}{default} ne '') ? $Map->{SH}{default} : $Style->{SH}{default};	
+					if ( scalar(@@{$Map->{$_}{rules}[0]} != 0) and scalar(@@{$Map->{$_}{rules}} != 0) and $Map->{$_}{rules}[0] ne undef and $Map->{$_}{rules} ne undef and $Map->{$_}{rules}[0] ne undef and $Map->{$_}{rules}[0] ne '' and $Map->{$_}{rules}[0][0] ne '' and $Map->{$_}{rules}[0][0] ne undef )  {
+						my $rules;
+						foreach my $element ( @@{$Map->{$_}{rules}} ) {	# transform data to 2 dimensional array
+							my $j = 0;
+							for ( my $i = 0; $i < scalar @@{$element}; $i++ ) {
+								if ( $i%2 == 0 ) {
+									$rules->[$j][0] = $element->[$i];
+									$j++;
+								}
+								else {
+									$rules->[$j-1][1] = $element->[$i];
+								}
+							}
+						}
+						foreach my $array ( @@{$rules} ) {
+							push(@@{$map->{$_}{array}},$array->[1]);
+							my @@interval = split(/-/,$array->[0]);
+							push(@@{$map->{$_}{interval}},\@@interval);
+						}
+						
+					}
+					else {
+						push(@@{$map->{$_}{array}},$map->{$_}{default});
+					}
+				}	
+				if ( $_=~/^CLR$/ ) {
+					$map->{CLR}{default} = (defined $Map->{CLR}{default} and $Map->{CLR}{default} ne '') ? str2array($Map->{CLR}{default}) : \@@{$Style->{CLR}{default}};	
+					if ( scalar(@@{$Map->{$_}{rules}[0]} != 0) and scalar(@@{$Map->{$_}{rules}} != 0) and $Map->{$_}{rules}[0] ne undef and $Map->{$_}{rules} ne undef and $Map->{$_}{rules}[0] ne undef and $Map->{$_}{rules}[0] ne '' and $Map->{$_}{rules}[0][0] ne '' and $Map->{$_}{rules}[0][0] ne undef )  {
+						if ( $Map->{$_}{interpolation} eq 'constant' or $Map->{$_}{interpolation} eq undef ) {
+							my $rules;
+							foreach my $element ( @@{$Map->{$_}{rules}} ) {	# transform data to 2 dimensional array
+								my $j = 0;
+								for ( my $i = 0; $i < scalar @@{$element}; $i++ ) {
+									if ( $i%2 == 0 ) {
+										$rules->[$j][0] = $element->[$i];
+										$j++;
+									}
+									else {
+										$rules->[$j-1][1] = str2array( $element->[$i] );
+									}
+								}
+							}
+							foreach my $array ( @@{$rules} ) {
+								push(@@{$map->{$_}{array}},$array->[1]);
+								my @@interval = split(/-/,$array->[0]);
+								push(@@{$map->{$_}{interval}},\@@interval);
+							}
+						}
+						if ( $Map->{$_}{interpolation} eq 'linear' ) {
+							my $rules;
+							foreach my $element ( @@{$Map->{$_}{rules}} ) {	# transform data to 2 dimensional array
+								my $j = 0;
+								for ( my $i = 0; $i < scalar @@{$element}; $i++ ) {
+									if ( $i%2 == 0 ) {
+										$rules->[$j][0] = $element->[$i];
+										$j++;
+									}
+									else {
+										$rules->[$j-1][1] = $element->[$i];
+									}
+								}
+							}
+							foreach my $array ( @@{$rules} ) {
+								my @@int_array = split(/-/,$array->[1]);
+								foreach my $int ( @@int_array ) {
+									push( @@{$map->{$_}{array}},str2array($int) );
+								}
+								#push(@@{$map->{$_}{array}},$array->[1]);
+								my @@interval = split(/-/,$array->[0]);
+								push(@@{$map->{$_}{interval}},\@@interval);
+							}
+						}
+					}
+					else {
+						push(@@{$map->{$_}{array}},$map->{CLR}{default});
+					}
+				}	
+			}
+		}
+	}
+	
+	return $map;
+}
+
+#---------------------------------------------------------------------------------------------------------------------------------------------
+
+sub str2array {
+	my $str = shift;
+	my @@rgb = split(/,/,$str);
+	
+	return \@@rgb;
+}
+
+#---------------------------------------------------------------------------------------------------------------------------------------------
+
+1;
+@
+
+
+1.5
+log
+@fix implicit parameters of attributes
+@
+text
+@d337 5
+a341 5
+open TEST,">$Const::myPath/html/data.tst";
+print TEST Dumper($Map);
+print TEST Dumper($map);
+print TEST Dumper($Style);
+close TEST;
+@
+
+
+1.4
+log
+@minor changes
+@
+text
+@d337 5
+a341 4
+#open TEST,">$Const::myPath/html/data.tst";
+#print TEST Dumper($Map);
+#print TEST Dumper($map);
+#close TEST;
+d351 1
+a351 1
+	$object->{color} 	= $Style->{CLR}{default};
+d630 1
+a630 1
+			$diameter = $style_DI->{default};
+d675 1
+a675 1
+			$transparency = $style_TR->{default};
+d718 1
+a718 1
+			$shape = ( $map_SH eq '' ) ? $style_SH->{default} : $map_SH->{default};
+d753 1
+a753 1
+				$transparency = Linear($item,$map_CLR,'CLR');
+d758 1
+a758 1
+			$color = ( $map_CLR eq '' ) ? $style_CLR->{default} : $map_CLR->{default};
+d926 1
+a926 1
+			$map->{$_}{default} = (defined $Map->{$_}{default}) ? $Map->{$_}{default} : $Style->{default};
+d938 2
+a939 1
+					}	
+d948 2
+a949 1
+					}	
+d957 2
+a958 1
+					}	
+d966 2
+a967 2
+						$map->{$_}{default} = str2array( $map->{$_}{default} );
+					}	
+d972 1
+d1021 1
+a1021 1
+						push(@@{$map->{$_}{array}},$Style->{DI}{default});
+d1025 1
+d1074 1
+a1074 1
+						push(@@{$map->{$_}{array}},$Style->{TR}{default});
+d1078 1
+d1101 1
+a1101 1
+						push(@@{$map->{$_}{array}},$Style->{SH}{default});
+d1105 1
+d1153 1
+a1153 1
+						push(@@{$map->{$_}{array}},$Style->{CLR}{default});
+a1154 1
+					$map->{$_}{default} = str2array( $map->{$_}{default} );
+@
+
+
+1.3
+log
+@finaly data generation from bear
+@
+text
+@d337 4
+a340 4
+open TEST,">$Const::myPath/html/data.tst";
+print TEST Dumper($Map);
+print TEST Dumper($map);
+close TEST;
+@
+
+
+1.2
+log
+@fit to modperl
+@
+text
+@d13 1
+a13 1
+require "const/Const.pm";
+d21 1
+d24 9
+a32 21
+# ---- init SOAP ---------
+#-------------------------
+our $load = 1;
+if ($load) {	# ensure require will be performed only once in case of mod_perl execution
+	eval "use SOAP::Lite +autodispatch => 
+		uri => 'Bear', 
+		proxy => ['http://$Const::bearHost:$Const::bearPort/', 
+		options => {compress_threshold => $Const::compressThreshold}]; 
+		1"
+	or ( &Local::ErrorDie("ERROR in eval of \"use SOAP::Lite ...\".") );
+	undef $load;
+}
+my $q = new CGI;
+
+# --- test SOAP connection ---
+#-----------------------------
+my $serverVerbName="SOAP Server http://$Const::bearHost:$Const::bearPort/";
+if (! eval "SOAP::Lite->self->fault") {
+	&Local::ErrorDie('ERROR: '.$serverVerbName.' not responding<br><form><input type="submit" name="Refresh" value="Refresh" /></form>');
+}
+#*SOAP::Serializer::as_string = \&SOAP::Serializer::as_base64;	#reducing number of XML::Parser char() callbaks  for every single portion of processed stream (e.g. \n)
+a33 1
+##############################################################################################################################################
+d36 105
+a140 1
+#our ($Style,$Map,@@Data,$mdata);
+d144 95
+a238 4
+sub report {							## define "ID of style", "ID of mapping", "ID of data" from report $ID, 
+ my ($ID,$lang) = @@_;
+ 
+ my $Report = SOAP->Get3dReport($ID);
+d240 1
+a240 7
+ my $Style = &getStyle($Report->{format_def});		
+ my ($mdata,@@Data) = &getData($ID);
+ my $Map = &getMap($mdata,$lang);
+
+ undef $mdata;
+#print "<pre>".Dumper($Map)."</pre>";
+ return $Report;							 ## return report $ID
+d245 59
+a303 2
+sub getStyle {							## define style from "ID of style"
+  my $id_style = shift;
+d305 6
+a310 5
+  my $Obj_style = SOAP->GetMetadata($id_style);
+  my $form = $Obj_style->{format3d}{$id_style}{form};
+  my $fn = (-e "$Const::myPath$Const::graph3Ddefinitions/$form.xml" ) ? "$Const::myPath$Const::graph3Ddefinitions/$form.xml" : "$Const::myPath$Const::graph3Ddefinitions/default_format.xml" ;
+  my $PFormat = new XML::Simple(rootname=>'format',forcearray=>['x','y','z','colors','color','shapes','default']);
+  my $gstyle = $PFormat->XMLin($fn);
+d312 16
+a327 2
+  return ($gstyle);						## return style
+} 
+d331 92
+a422 2
+sub getData {
+my $reportID = shift;
+d424 2
+a425 1
+my ($mdata,@@gdata) = SOAP->Get3dData($reportID);
+d427 1
+a427 2
+return ($mdata,@@gdata);
+} 
+d429 14
+d446 24
+a469 18
+sub getMap {							
+my $id_map = shift;
+my $lang = shift;
+my $gmap = SOAP->Get3dMap($id_map,$lang);
+
+if ( exists $gmap->{x} ) {
+   $gmap->{X} = delete($gmap->{x});
+   if ( $gmap->{X}{type} eq 'quantit' ) {
+      if (! defined $gmap->{X}{min}) { $gmap->{X}{min} = &min($gmap->{X}{column}); }
+      if (! defined $gmap->{X}{max}) { $gmap->{X}{max} = &max($gmap->{X}{column}); }
+   }
+   if ( $gmap->{X}{type} eq 'qualit' ) {
+      $gmap->{X}{min} = 1; 
+      $gmap->{X}{max} = @@{$gmap->{X}{values}}; 
+   }
+   my $segments = $gmap->{X}{max} - $gmap->{X}{min} ;
+   $gmap->{X}{minstep} = &minStep("X",$segments);
+}
+d471 4
+a474 57
+if ( exists $gmap->{y} ) {
+   $gmap->{Y} = delete($gmap->{y});
+   if ( $gmap->{Y}{type} eq 'quantit' ) {
+      if (! defined $gmap->{Y}{min}) { $gmap->{Y}{min} = &min($gmap->{Y}{column}); }
+      if (! defined $gmap->{Y}{max}) { $gmap->{Y}{max} = &max($gmap->{Y}{column}); }
+   } 
+   if ( $gmap->{Y}{type} eq 'qualit' ) {
+      $gmap->{Y}{min} = 1; 
+      $gmap->{Y}{max} = @@{$gmap->{Y}{values}}; 
+   }
+   my $segments = $gmap->{Y}{max} - $gmap->{Y}{min} ;
+   $gmap->{Y}{minstep} = &minStep("Y",$segments);
+}
+if ( exists $gmap->{z} ) {
+   $gmap->{Z} = delete($gmap->{z});
+   if ( $gmap->{Z}{type} eq 'quantit' ) {
+      if (! defined $gmap->{Z}{min}) { $gmap->{Z}{min} = &min($gmap->{Z}{column}); }
+      if (! defined $gmap->{Z}{max}) { $gmap->{Z}{max} = &max($gmap->{Z}{column}); }
+   } 
+   if ( $gmap->{Z}{type} eq 'qualit' ) {
+      $gmap->{Z}{min} = 1; 
+      $gmap->{Z}{max} = @@{$gmap->{Z}{values}}; 
+   }
+   my $segments = $gmap->{Z}{max} - $gmap->{Z}{min} ;
+   $gmap->{Z}{minstep} = &minStep("Z",$segments);
+}
+if ( exists $gmap->{diameter} ) {
+   $gmap->{DI} = delete($gmap->{diameter});
+   if ( $gmap->{DI}{type} eq 'quantit' ) {
+      if (! defined $gmap->{DI}{min}) { $gmap->{DI}{min} = &min($gmap->{DI}{column}); }
+      if (! defined $gmap->{DI}{max}) { $gmap->{DI}{max} = &max($gmap->{DI}{column}); }
+   } 
+   if ( $gmap->{DI}{type} eq 'qualit' ) {
+      $gmap->{DI}{min} = 1; 
+      $gmap->{DI}{max} = @@{$gmap->{DI}{values}}; 
+   }
+}
+if ( exists $gmap->{transparency} ) {
+   $gmap->{TR} = delete($gmap->{transparency});
+   if ( $gmap->{TR}{type} eq 'quantit' ) {
+      if (! defined $gmap->{TR}{min}) { $gmap->{TR}{min} = &min($gmap->{TR}{column}); }
+      if (! defined $gmap->{TR}{max}) { $gmap->{TR}{max} = &max($gmap->{TR}{column}); }
+   } 
+}
+if ( exists $gmap->{shape} ) {
+   $gmap->{SH} = delete($gmap->{shape});
+   if ( $gmap->{SH}{type} eq 'quantit' ) {
+      if (! defined $gmap->{SH}{min}) { $gmap->{SH}{min} = &min($gmap->{SH}{column}); }
+      if (! defined $gmap->{SH}{max}) { $gmap->{SH}{max} = &max($gmap->{SH}{column}); }
+   } 
+}
+if ( exists $gmap->{color} ) {
+   $gmap->{CLR} = delete($gmap->{color});
+   if ( $gmap->{CLR}{type} eq 'quantit' ) {
+      if (! defined $gmap->{CLR}{min}) { $gmap->{CLR}{min} = &min($gmap->{CLR}{column}); }
+      if (! defined $gmap->{CLR}{max}) { $gmap->{CLR}{max} = &max($gmap->{CLR}{column}); }
+   } 
+d477 5
+a481 2
+return $gmap;
+} 
+d483 24
+a506 1
+#---------------------------------------------------------------------------------------------------------------------------------------------
+d508 2
+a509 3
+sub defineAxis {							## Define hash of parameters about each axis
+  my $axis = shift;
+  my ($ptr_axis);
+d511 1
+a511 1
+  if ( defined $Map->{$axis} ) { 
+d513 2
+a514 53
+		 $ptr_axis = {
+  	     		          length	=> $Style->{axis}{$axis}{length},
+      		        	  size  	=> &size($Style->{axis}{$axis}{size}),
+				  color 	=> $Style->{axis}{$axis}{color},
+				  format	=> $Style->{axis}{$axis}{format},
+				  transparency 	=> $Style->{axis}{$axis}{transparency},
+				  indent 	=> $Style->{axis}{$axis}{indent},
+		 };
+
+	if ($axis eq 'X') {							
+ 	  	$ptr_axis->{translation} = [$ptr_axis->{length}/2,0,0];
+ 	  	$ptr_axis->{rotation}    = [0,0,1,270];
+	}
+	if ($axis eq 'Y') {							
+	   	$ptr_axis->{translation} = [0,$ptr_axis->{length}/2,0];
+	   	$ptr_axis->{rotation}    = [0,0,1,0];
+	}
+	if ($axis eq 'Z') {							
+	   	$ptr_axis->{translation} = [0,0,$ptr_axis->{length}/2];
+	   	$ptr_axis->{rotation}    = [1,0,0,90];
+	}
+
+	if ( $Style->{axis}{$axis}{crowfoot}{visible} ) {			
+ 	  	$ptr_axis->{crowfoot}{size} = &size($Style->{axis}{$axis}{crowfoot}{size});
+  	  	$ptr_axis->{crowfoot}{format} = $Style->{axis}{$axis}{crowfoot}{format};
+ 	 	$ptr_axis->{crowfoot}{transparency} = $Style->{axis}{$axis}{crowfoot}{transparency};
+ 	  	$ptr_axis->{crowfoot}{color} = $Style->{axis}{$axis}{crowfoot}{color};
+		$ptr_axis->{crowfoot}{length} = $Style->{axis}{$axis}{indent};
+ 	   if ($axis eq 'X') {							
+ 		$ptr_axis->{crowfoot}{translation} = [$ptr_axis->{length}+($ptr_axis->{indent}/2),0,0];
+ 		$ptr_axis->{crowfoot}{rotation}    = [0,0,1,270]; #$ptr_axis->{rotation};
+ 	   }
+ 	   if ($axis eq 'Y') {							
+	   	$ptr_axis->{crowfoot}{translation} = [0,$ptr_axis->{length}+($ptr_axis->{indent}/2),0];
+	   	$ptr_axis->{crowfoot}{rotation}    = [0,0,1,0]; #$ptr_axis->{rotation};
+ 	   }
+ 	   if ($axis eq 'Z') {							
+	   	$ptr_axis->{crowfoot}{translation} = [0,0,$ptr_axis->{length}+($ptr_axis->{indent}/2)];
+	   	$ptr_axis->{crowfoot}{rotation}    = [1,0,0,90]; #$ptr_axis->{rotation};
+ 	   }
+	}  else {
+     		undef $ptr_axis->{crowfoot};
+	}
+
+	if ( $Style->{axis}{$axis}{label}{visible}) {
+	my ($falign);			
+	   $ptr_axis->{label}{string} = $Map->{$axis}{values}[0]; 
+	   $ptr_axis->{label}{font} = $Style->{axis}{$axis}{label}{font};
+	   $ptr_axis->{label}{fontsize} = $Style->{axis}{$axis}{label}{fontsize};
+	   $ptr_axis->{label}{color} = $Style->{axis}{$axis}{label}{color};
+	   $ptr_axis->{label}{align} = $Style->{axis}{$axis}{label}{align};
+	   $ptr_axis->{label}{fheight} = $Style->{axis}{$axis}{label}{fontsize}/20;				## define height of texture
+#	   $ptr_axis->{label}{fwidth} = length($ptr_axis->{label}{string}) * $ptr_axis->{label}{fheight};	## define width of texture
+d516 1
+a516 9
+	   if ( $ptr_axis->{label}{align} eq 'top' ) {
+	      $falign = -$ptr_axis->{label}{fheight};
+	   }
+	   elsif ( $ptr_axis->{label}{align} eq 'middle' ) {
+	      $falign = -$ptr_axis->{label}{fheight}/2;
+	   }
+	   elsif ( $ptr_axis->{label}{align} eq 'bottom' ) {
+	      $falign = 0;
+	   }
+d518 5
+a522 20
+	    if ($axis eq 'X') {
+	       $ptr_axis->{label}{translation} = [$ptr_axis->{length}+$ptr_axis->{crowfoot}{length}+$ptr_axis->{indent},$falign,0];
+	       $ptr_axis->{label}{rotation} = [0,0,1,0,];
+	       $ptr_axis->{label}{coord} = 0;
+	       $ptr_axis->{label}{switch} = 0;
+	    }
+	    if ($axis eq 'Y') {					
+	       $ptr_axis->{label}{translation} = [-$falign,$ptr_axis->{length}+$ptr_axis->{crowfoot}{length}+$ptr_axis->{indent},0];
+	       $ptr_axis->{label}{rotation} = [0,0,1,90,];
+	       $ptr_axis->{label}{coord} = 0;
+	       $ptr_axis->{label}{switch} = 0;
+	    }
+	    if ($axis eq 'Z') {
+	       $ptr_axis->{label}{translation} = [0,$falign,$ptr_axis->{length}+$ptr_axis->{crowfoot}{length}+$ptr_axis->{indent}];
+	       $ptr_axis->{label}{rotation} = [0,1,0,270,];
+	       $ptr_axis->{label}{coord} = 270;
+	       $ptr_axis->{label}{switch} = 0;
+	    }
+	}  else {
+	   undef $ptr_axis->{label} ;
+d524 7
+a530 3
+  }else {
+     undef $ptr_axis;
+  }
+d532 2
+d535 12
+a546 1
+  return $ptr_axis;
+d551 29
+a579 53
+sub defineLattice {			
+my $lattice = shift;
+my ($axis,$tendency) = $lattice =~ /(.)(.)/ ;			## draw on $axis (X ->step), tendency drawing (Y->length)
+my ($ptr_lattice);
+print $lattice;
+for ( my $i=0;$i<@@{$Style->{lattice}{$axis}};$i++ ) {
+ $ptr_lattice->{steps}[$i]= {
+     		        		length		=> $Style->{axis}{uc($axis)}{length},
+	        			size  		=> &size($Style->{lattice}{$axis}[$i]{size}),
+					color 		=> $Style->{lattice}{$axis}[$i]{color},
+					format		=> $Style->{lattice}{$axis}[$i]{format},
+					transparency 	=> $Style->{lattice}{$axis}[$i]{transparency},
+					indent 		=> $Style->{axis}{uc($axis)}{indent},
+					step		=> $Style->{lattice}{$axis}[$i]{step}*$Map->{uc($axis)}{minstep}, 
+			     };  
+ if ( $Style->{lattice}{$axis}[$i]{label}{visible} ) {
+    if ( $lattice eq 'xz' or $lattice eq 'yx' or $lattice eq 'zx') {  
+    	my ($falign);
+#	$ptr_lattice->{steps}[$i]{label}{values} = $Map->{uc($axis)}{values}; 
+	$ptr_lattice->{steps}[$i]{label}{string} = "N/A";						##	!!! doplnit string z metadat !!!
+	$ptr_lattice->{steps}[$i]{label}{font} = $Style->{lattice}{$axis}[$i]{label}{font};
+	$ptr_lattice->{steps}[$i]{label}{fontsize} = $Style->{lattice}{$axis}[$i]{label}{fontsize};
+	$ptr_lattice->{steps}[$i]{label}{color} = $Style->{lattice}{$axis}[$i]{label}{color};
+	$ptr_lattice->{steps}[$i]{label}{align} = $Style->{lattice}{$axis}[$i]{label}{align};
+	$ptr_lattice->{steps}[$i]{label}{fheight} = $Style->{lattice}{$axis}[$i]{label}{fontsize}/20;	## define height of texture
+#	$ptr_lattice->{steps}[$i]{label}{fwidth} = length($ptr_lattice->{steps}[$i]{label}{string})*$ptr_lattice->{steps}[$i]{label}{fheight};
+
+	if ( $ptr_lattice->{steps}[$i]{label}{align} eq 'top' ) {
+      	   $falign = -$ptr_lattice->{steps}[$i]{label}{fheight};
+        }
+   	elsif ( $ptr_lattice->{steps}[$i]{label}{align} eq 'middle' ) {
+      	   $falign = -$ptr_lattice->{steps}[$i]{label}{fheight}/2;
+   	}
+   	elsif ( $ptr_lattice->{steps}[$i]{label}{align} eq 'bottom' ) {
+      	   $falign = 0;
+   	}
+	if ( $lattice eq 'xz' ) {
+	   $ptr_lattice->{steps}[$i]{label}{translation} = [$falign,0,$ptr_lattice->{steps}[$i]{length}+$ptr_lattice->{steps}[$i]{indent}];
+	   $ptr_lattice->{steps}[$i]{label}{rotation} = [1,0,0,90];								
+	   $ptr_lattice->{steps}[$i]{label}{coord} = 90;						
+	   $ptr_lattice->{steps}[$i]{label}{switch} = 1;						
+	}
+	if ( $lattice eq 'yx' ) {
+	   $ptr_lattice->{steps}[$i]{label}{translation} = [$ptr_lattice->{steps}[$i]{length}+$ptr_lattice->{steps}[$i]{indent},$falign,0];
+	   $ptr_lattice->{steps}[$i]{label}{rotation} = [0,0,1,0];								
+	   $ptr_lattice->{steps}[$i]{label}{coord} = 0;						
+	   $ptr_lattice->{steps}[$i]{label}{switch} = 0;					
+	}
+	if ( $lattice eq 'zx' ) {
+	   $ptr_lattice->{steps}[$i]{label}{translation} = [$ptr_lattice->{steps}[$i]{length}+$ptr_lattice->{steps}[$i]{indent},0,-$falign];
+	   $ptr_lattice->{steps}[$i]{label}{rotation} = [1,0,0,270];								
+	   $ptr_lattice->{steps}[$i]{label}{coord} = 0;						
+	   $ptr_lattice->{steps}[$i]{label}{switch} = 0;					
+d581 2
+a582 2
+    }
+ }
+d585 4
+d590 5
+a594 13
+ if ($tendency eq 'x') {							
+  	  	$ptr_lattice->{translation} = [$ptr_lattice->{steps}[0]{length}/2,0,0];
+  	  	$ptr_lattice->{rotation}    = [0,0,1,270];
+ }
+ if ($tendency eq 'y') {							
+ 	   	$ptr_lattice->{translation} = [0,$ptr_lattice->{steps}[0]{length}/2,0];
+ 	   	$ptr_lattice->{rotation}    = [0,0,1,0];
+ }
+ if ($tendency eq 'z') {							
+ 	   	$ptr_lattice->{translation} = [0,0,$ptr_lattice->{steps}[0]{length}/2];
+ 	   	$ptr_lattice->{rotation}    = [1,0,0,90];
+ }
+return $ptr_lattice;
+d599 9
+a607 99
+sub defineObject {
+  my $obj = shift;
+  my $object;
+  
+$object->{translation} = [0,0,0];
+$object->{rotation} = [0,0,1,0] if ( $Style->{base} eq 'xz' or $Style->{base} eq 'zx' );
+$object->{rotation} = [0,0,1,270] if ( $Style->{base} eq 'yz' or $Style->{base} eq 'zy');
+$object->{rotation} = [1,0,0,90] if ( $Style->{base} eq 'yz' or $Style->{base} eq 'zy');
+$object->{bottom} 	= $Style->{DI}{default};
+$object->{height} 	= $Style->{DI}{default};
+$object->{transparency} = $Style->{TR}{default};
+$object->{shape} 	= $Style->{SH}{default};
+$object->{color} 	= $Style->{CLR}{default};
+
+  for ( my $i=0;$i < @@{$obj};$i++ ) {
+         if ( $i eq $Map->{X}{column} ) {
+	    $object->{translation}[0] = $obj->[$i]*$Map->{X}{minstep};
+	 }
+         if ( $i eq $Map->{Y}{column} ) {
+	    $object->{translation}[1] = $obj->[$i]*$Map->{Y}{minstep};
+	 }
+         if ( $i eq $Map->{Z}{column} ) {
+	    $object->{translation}[2] = $obj->[$i]*$Map->{Z}{minstep};
+	 }
+#         if ( $i eq $Map->{DI}{column} ) { 
+#	    $object->{DI} = &DI($obj->[$i]);
+#	 }
+  }    
+
+   if ( $Style->{graph} eq 'Histogram' ) {
+       if ( $Style->{base} eq 'xz' or $Style->{base} eq 'zx' ) {
+          $object->{height} = ($object->{translation}[1] != 0) ? $object->{translation}[1] : $object->{height};
+          $object->{translation}[1] = $object->{height}/2;
+       }  
+       if ( $Style->{base} eq 'xy' or $Style->{base} eq 'yx' ) {
+          $object->{height} = ($object->{translation}[2] != 0) ? $object->{translation}[2] : $object->{height};
+          $object->{translation}[2] = $object->{height}/2;
+       }  
+       if ( $Style->{base} eq 'zy' or $Style->{base} eq 'yz' ) {
+          $object->{height} = ($object->{translation}[0] != 0) ? $object->{translation}[0] : $object->{height};
+          $object->{translation}[0] = $object->{height}/2;
+       }  
+   }   
+
+if ($object->{translation}[0] == 0 and $object->{translation}[1] == 0 and $object->{translation}[2] == 0 ) {
+    undef $object;
+}
+
+return $object;
+}
+
+#---------------------------------------------------------------------------------------------------------------------------------------------
+
+sub size {							## return real size of object
+my $size = shift;
+my ($convert_size); 
+
+if ($size == 0) { $convert_size = 0; }	
+if ($size == 1) {$convert_size = 0.1;}
+if ($size == 2) {$convert_size = 0.2;}
+if ($size == 3) {$convert_size = 0.3;}
+if ($size == 4) {$convert_size = 0.4;}
+if ($size == 5) {$convert_size = 0.5;}
+if ($size == 6) {$convert_size = 0.6;}
+if ($size == 7) {$convert_size = 0.7;}
+if ($size == 8) {$convert_size = 0.8;}
+if ($size == 9) {$convert_size = 0.9;}
+if ($size == 10) {$convert_size = 1;}
+else { 
+   if ($size < 1 or $size > 10) { $convert_size = 0.1;}
+}
+
+return $convert_size;
+}
+
+#---------------------------------------------------------------------------------------------------------------------------------------------
+
+sub minStep {							## return min step from "length,number of items,max number of lattices"
+my $axis = shift;
+my $segments = shift;
+my $limit = 20;							## max number of lattices on axis
+
+my $length = $Style->{axis}{$axis}{length};
+
+if ( $segments > $limit ) {
+   my $rsegments = &round($segments,'up');
+   my ($rsegments1,$rsegments2) = $rsegments =~ /(.)(.)/ ;	
+   my ($digit,$exponent);
+   if ($rsegments1 == 1){
+      $segments = $rsegments1.$rsegments2; 
+      $exponent = length($rsegments)-2;
+      $digit = eval("1e$exponent"); 
+   }
+   else {
+      $segments = $rsegments1;
+      $exponent = length($rsegments)-1;
+      $digit = eval("1e$exponent"); 
+   } 
+}
+d609 28
+a636 1
+my $min_step = $length/$segments;;
+a637 1
+return $min_step;
+a640 29
+sub round {							## return rounded number
+my $item = shift;						## number
+my $trend = shift;						## trend => up or down  
+my ($round,$exponent,$mantisa,$mantisa1,$mantisa2,);
+
+if ($item <= 10) {
+   $round = $item;
+}
+else {
+   ($mantisa1,$mantisa2) = $item =~ /(.)(.)/ ;
+   $exponent = length($item)-2;					
+   if (  ( $item / ( 10*(eval("$mantisa1.e$exponent")) ) ) == 1 ){
+      $round = $item;
+   }
+   else {
+      if ($trend eq 'up') {
+	 if ($mantisa1 == 1 and $mantisa2 <= 5){
+      	    $mantisa = 15 ;					
+    	 }
+    	 else {
+      	    $mantisa = ($mantisa1 + 1).0;				
+    	 }				
+      }
+      if ($trend eq 'down') {
+         $mantisa = $mantisa1.0;	
+      }
+      $round = eval("$mantisa.e$exponent");
+   }
+}
+d642 40
+a681 1
+return ($round);						
+d686 35
+a720 2
+sub max {							## return max data  
+my $col = shift;						## $col = nymber of column (data source)
+d722 1
+a722 9
+my $max = $Data[0][$col];
+my $rows = @@Data;						## number of rows
+for (my $row = 0;$row < $rows;$row++) {
+    if ($Data[$row][$col] > $max ){ 
+       $max = $Data[$row][$col];
+    }  
+}
+       
+return $max;							
+d727 35
+a761 2
+sub min {							## return min of data  
+my $col = shift;						## $col = nymber of column (data source)
+a762 9
+my $min = $Data[0][$col];
+my $rows = @@Data;						## number of rows
+for (my $row = 0;$row < $rows;$row++) {
+       if ($Data[$row][$col] < $min ){ 
+          $min = $Data[$row][$col];
+       }  
+}
+       
+return $min;							
+d767 67
+a833 6
+sub sortBySize {
+my $ptr_lattice = shift;
+my (@@sizes,$ptr);
+ 
+for ( my $i=0;$i<@@{$ptr_lattice->{steps}};$i++ ) {
+    push(@@sizes,$ptr_lattice->{steps}[$i]{size});    
+a834 1
+my @@sort_sizes = sort(numeric @@sizes);
+d836 42
+a877 4
+#---------------------
+sub numeric {
+  if ($a < $b) {
+     1;
+d879 29
+a907 2
+  elsif ($a == $b) {
+      0;
+a908 5
+  elsif ($a > $b) {
+     -1;
+  }
+}
+#--------------------
+d910 1
+a910 8
+for ( my $i=0;$i<@@sort_sizes;$i++ ) {
+  for (my $j=0;$j < @@{$ptr_lattice->{steps}};$j++ ) {
+      if ($sort_sizes[$i] == $ptr_lattice->{steps}[$j]{size}) {
+         $ptr->{steps}[$i] = $ptr_lattice->{steps}[$j]; 
+      } 
+  }
+}
+return $ptr;
+d915 239
+a1153 6
+sub defineViewpoint {
+ my $viewpointX = ($Style->{axis}{X}{length} + $Style->{axis}{X}{indent}) * 2;
+ my $viewpointY = ($Style->{axis}{Y}{length} + $Style->{axis}{Y}{indent}) / 2;
+ my $viewpointZ = ($Style->{axis}{Z}{length} + $Style->{axis}{Z}{indent}) * 2;
+ 
+ return ($viewpointX,$viewpointY,$viewpointZ);
+d1158 5
+a1162 5
+sub DI {
+my $item = shift;
+
+
+ return 1;
+@
+
+
+1.1
+log
+@script for definition graph
+@
+text
+@d8 6
+a13 3
+use Exporter;
+@@ISA = qw(Exporter);
+@@EXPORT = qw( &report &defineAxis &defineLattice &defineObject &defineViewpoint @@Data $Style $Map);
+a14 1
+use vars qw( $bearHost $bearPort $compress_threshold );
+d18 1
+a19 1
+require "../const.def";
+d23 17
+a39 9
+# --- make SOAP connection ---
+eval "use SOAP::Lite +autodispatch => 
+	uri => 'Bear', 
+	proxy => ['http://$bearHost:$bearPort/', 
+	options => {compress_threshold => $compress_threshold}]; 
+	1"
+or ( &ErrorDie("ERROR in eval of \"use SOAP::Lite ...\".") );
+
+my $serverVerbName="SOAP Server http://$bearHost:$bearPort/";
+d41 1
+a41 1
+	ErrorDie('ERROR: '.$serverVerbName.' not responding<br><form><input type="submit" name="Refresh" value="Refresh" /></form>');
+d48 1
+a48 1
+our ($Style,$Map,@@Data,$mdata);
+d55 5
+a59 1
+my $Report = SOAP->Get3dReport($ID);
+a60 3
+ $Style = &getStyle($Report->{format_def});		
+ ($mdata,@@Data) = &getData($ID);
+ $Map = &getMap($mdata,$lang);
+d62 1
+d69 1
+a69 1
+my $id_style = shift;
+d71 5
+a75 5
+my $Obj_style = SOAP->GetMetadata($id_style);
+my $form = $Obj_style->{format3d}{$id_style}{form};
+my $fn = (-e "data/$form.xml" ) ? "data/$form.xml" : "data/default_format.xml" ;
+my $PFormat = new XML::Simple(rootname=>'format',forcearray=>['x','y','z','colors','color','shapes','default']);
+my $gstyle = $PFormat->XMLin($fn);
+d77 1
+a77 1
+return ($gstyle);						## return style
+d90 1
+d177 2
+a178 2
+my $axis = shift;
+my ($ptr_axis);
+d180 1
+a180 1
+if ( defined $Map->{$axis} ) { 
+d267 3
+a269 3
+}else {
+   undef $ptr_axis;
+}
+d272 1
+a272 1
+return $ptr_axis;
+d281 1
+a281 1
+
+@
+

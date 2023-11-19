@@ -1,0 +1,234 @@
+head	1.2;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2003.10.31.12.47.57;	author jiri_schmid;	state dead;
+branches;
+next	1.1;
+
+1.1
+date	2003.10.16.14.08.53;	author jiri_schmid;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@mod perl rocks!
+@
+text
+@#!/usr/bin/perl
+#-----------------------------------------------------
+# generate tree
+#-----------------------------------------------------
+# $Id: tree.pl,v 1.1 2003/10/16 14:08:53 jiri_schmid Exp $
+
+use strict;
+our @@icons;
+our @@folderIcons;
+our $iconSrc;
+our $itemType;
+our @@structure;
+our $AAB = ' align="absbottom"'; #fixing of MSIE bug
+
+#expected structure of HASH for proper generating tree:
+#	$VAR -> {FOLDER_ID1} -> {'~name'} = 'Folder 1';
+#	$VAR -> {FOLDER_ID1} -> {'~content'} = 'CONTENT_TYPE_1';
+#	$VAR -> {FOLDER_ID1} -> {ITEM_ID1} -> {'name'} = 'Item 1';
+#	$VAR -> {FOLDER_ID1} -> {ITEM_ID2} -> {'name'} = 'Item 2';
+#	..................
+#	$VAR -> {FOLDER_ID1} -> {FOLDER_ID10} -> {'~name'} = 'Folder 10';
+#	$VAR -> {FOLDER_ID1} -> {FOLDER_ID10} -> {'~content'} = 'CONTENT_TYPE_10';
+#	$VAR -> {FOLDER_ID1} -> {FOLDER_ID10} -> {ITEM_ID100} -> {'name'} = 'Item 100';
+#	$VAR -> {FOLDER_ID1} -> {FOLDER_ID10} -> {ITEM_ID101} -> {'name'} = 'Item 101';
+#	..................
+#	$VAR -> {FOLDER_ID2} -> {'~name'} = 'Folder 2';
+#	$VAR -> {FOLDER_ID1} -> {'~content'} = 'CONTENT_TYPE_2';
+#	..................
+# {HASH_NAME}->{~content} defines type of folder's content 
+#	exactly: should match with icon of same name and eventualy of name "~contentFolder" spcified in hash iconSrc
+#	eg: {HASH_NAME}->{~content} = 'TYPE'
+#	relevant icon's hashes:
+#	$iconSrc->{'TYPE'} = 'image0.(gif,png...)';	-- custom item icon
+#	$iconSrc->{'TYPEClose'} = 'image1.(gif,png...)' -- custom folder icon
+#	$iconSrc->{'TYPEOpen'} = 'image2.(gif,png...)'	-- custom folder icon
+# {HASH_NAME}->{~name} defines Folder
+# {HASH_NAME}->{name} defines folder's Item
+# {name} or {~name} may content language 
+# hashnames MUST BE UNIQUE !!! for proper work of javascript on client side
+
+#-------------------------------------------------------
+sub createTree {
+my ($tree,$variables,$title)= (shift,shift,shift);
+
+my $imgType = \$$variables->{imgType};
+my $skinPath = \$$variables->{skinPath};
+
+
+$iconSrc={
+#tree icons - neccessary
+	plus=>"$${skinPath}img/tree/plus.$$imgType",
+	plusBottom=>"$${skinPath}img/tree/plusbottom.$$imgType",
+	minus=>"$${skinPath}img/tree/minus.$$imgType",
+	minusBottom=>"$${skinPath}img/tree/minusbottom.$$imgType",
+	line=>"$${skinPath}img/tree/line.$$imgType",
+	base=>"$${skinPath}img/tree/base.$$imgType",
+	join=>"$${skinPath}img/tree/join.$$imgType",
+	joinBottom=>"$${skinPath}img/tree/joinbottom.$$imgType",
+	empty=>"$${skinPath}img/tree/empty.$$imgType",
+#folder icons
+	folderClose=>"$${skinPath}img/tree/folder.$$imgType",	#default close folder icon
+	folderOpen=>"$${skinPath}img/tree/folderopen.$$imgType",	#default open folder icon
+	groupClose=>"$${skinPath}img/tree/folder.$$imgType",	#custom folder icon
+	userClose=>"$${skinPath}img/tree/folder.$$imgType",	# -//- 
+	roleClose=>"$${skinPath}img/tree/folder.$$imgType",	# -//-
+#item icons
+	item=>"",		#default item icon
+	group=>"$${skinPath}img/group.$$imgType",	#custom item icon
+	user=>"$${skinPath}img/single.$$imgType",	# -//- 
+	role=>"$${skinPath}img/role.$$imgType",	# -//- 
+};
+
+$itemType={
+	user=>'U',
+	group=>'G',
+	role=>'R',
+};
+
+foreach (SOAP->GetProjects) {
+	$itemType->{$_} = $itemType->{role};
+}
+
+print "<div id='content' class='folder'><table><tr><td><span class='tree'><img src='$${skinPath}img/tree/base.$$imgType' style='vertical-align:bottom' alt='base'/>&nbsp;$title</span></td></tr></table>";
+&processTree($tree);
+print "</div>";
+
+my @@object;
+my ($type, $src);
+foreach (keys %{$iconSrc}) { push(@@object,"\n$_:'$iconSrc->{$_}'") }
+my $objectIcons = join(",",@@object);
+my $structure = join(",",@@structure);
+
+print "\n<script type='text/javascript'>var icons={$objectIcons};\nvar structure = new Array($structure);</script>";
+
+}
+
+#------------------------------------------
+sub processTree {
+my $tree = shift;
+my @@root = sort(keys(%{$$tree}));
+my $lastItem = $root[$#root];
+foreach my $rootItem (@@root) {
+	my $depth = 0;
+	if (exists($$tree->{$rootItem}{'~name'})) {
+		if ($lastItem eq $rootItem) {
+			$icons[$depth] = $iconSrc->{empty};
+			$folderIcons[$depth] = ($$tree->{$rootItem}{'~content'}) ? $iconSrc->{plusBottom} : $iconSrc->{join};
+		} else {
+			$icons[$depth] = $iconSrc->{line};
+			$folderIcons[$depth] = ($$tree->{$rootItem}{'~content'}) ?  $iconSrc->{plus} : $iconSrc->{joinBottom};
+		}
+		&printFolder($$tree->{$rootItem},$rootItem,$depth,$$tree->{$rootItem}{'~content'},0);
+		if ($$tree->{$rootItem}{'~content'}) {
+			my $reType = delete $$tree->{$rootItem}{'~content'};
+			print "<div id='segment$rootItem' style='display:none'>";
+			$depth++;
+			&createTreeSegment(\$$tree->{$rootItem},$depth,$reType,$rootItem) ;
+			print "</div>";
+		}
+	}
+}
+}
+
+#------------------------------------------
+sub createTreeSegment {
+my ($tree, $inDepth, $type, $parent) = @@_;		
+my @@items = sort(keys(%{$$tree}));
+my $lastItem = $items[$#items];
+my @@fixFolderIcons = @@folderIcons;
+my @@fixIcons = @@icons;
+foreach (@@items) {
+	my $outDepth = $inDepth;
+	if (exists $$tree->{$_}{name}) {
+		$icons[$inDepth] = ($lastItem eq $_) ? $iconSrc->{join} : $iconSrc->{joinBottom};
+		&printItem($$tree->{$_},$_,$type,$parent);
+	} elsif (exists $$tree->{$_}{'~name'}) {
+		if ($lastItem eq $_) {
+			$icons[$outDepth] = $iconSrc->{empty};
+			$folderIcons[$outDepth] = ($$tree->{$_}{'~content'}) ? $iconSrc->{plusBottom} : $iconSrc->{join};
+		} else {
+			$icons[$outDepth] = $iconSrc->{line};
+			$folderIcons[$outDepth] = ($$tree->{$_}{'~content'}) ?  $iconSrc->{plus} : $iconSrc->{joinBottom};
+		}
+		$folderIcons[$inDepth-1] = $icons[$inDepth-1];
+		&printFolder($$tree->{$_},$_,$inDepth,$$tree->{$_}{'~content'},$parent);
+		if ($$tree->{$_}{'~content'}) {
+			my $reType = delete $$tree->{$_}{'~content'};
+			print "<div id='segment$_' style='display:none'>";
+			$outDepth++;
+			&createTreeSegment(\$$tree->{$_},$outDepth,$reType,$_);
+			print "</div>";
+		}
+		@@folderIcons = @@fixFolderIcons;
+		@@icons = @@fixIcons;
+	}
+}
+return 
+}
+
+#------------------------------------------
+sub printFolder {
+my ($item, $id, $depth, $content, $parent) = @@_;
+	print "<span>";	#keeps the row unbreakable
+	my ($class, $onclick, $folderIcon);
+	if ($content) {
+		$onclick = "onclick='ocFolder(this)'";
+		$folderIcon = $content."Close";
+	} else {
+		$class = "class='inactive'";
+	}
+	$folderIcon = (exists $iconSrc->{$folderIcon}) ? $iconSrc->{$folderIcon} : $iconSrc->{folderClose};
+	for (0..($#folderIcons-1)) { print "<img$AAB src='$folderIcons[$_]' />" }
+	print "<a href='javascript:{}'><span id='$id' $onclick><img$AAB id='icon$id' src='$folderIcons[$#folderIcons]'><img$AAB id='folderIcon$id' name='$content|$id' src='$folderIcon'/><span id='view$id' $class title=\"$item->{'~desc'}\">&nbsp;$item->{'~name'}&nbsp;</span></span></a>";
+	delete $item->{'~name'};
+	delete $item->{'~desc'} if exists $item->{'~desc'};
+	print "</span><br />";	#break for new row
+	push (@@structure,"\n'$parent|$id'");
+}
+
+#------------------------------------------
+sub printItem {
+my ($item, $id, $type, $parent) = @@_;
+	print "<span>";	#keeps the row unbreakable
+	my $itemIcon = (exists $iconSrc->{$type}) ? $iconSrc->{$type} : $iconSrc->{item};
+	for (0..$#icons) { print "<img$AAB src='$icons[$_]' />" }
+	print "<a href='javascript:{}'><span id='$id' onclick='showMe(this)' ondblclick='jump(this)'><img$AAB name='$item->{name}|$itemType->{$type}' id='icon$id' src='$itemIcon'/><span id='view$id' title='$item->{desc}'>&nbsp;$item->{name}&nbsp;</span></span></a>";
+	print "</span><br />";	#break for new row
+	push (@@structure,"'$parent|$id'");
+	# emtpy anchor <a href='javascript:{}'> inhibits auto-selecting text on doubleclick on both Mozilla and IE browsers
+}
+
+1
+
+__END__
+@
+
+
+1.1
+log
+@mod-perl implementation stage 1, rebuilding global vars in .pl to global pointers
+@
+text
+@d5 1
+a5 1
+# $Id: tree.pl,v 1.17 2003/09/15 13:04:03 jiri_schmid Exp $
+@
+

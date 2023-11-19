@@ -1,0 +1,162 @@
+head	1.2;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2006.01.13.12.21.31;	author igorludi;	state dead;
+branches;
+next	1.1;
+
+1.1
+date	2005.10.18.14.04.41;	author igorludi;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@*** empty log message ***
+@
+text
+@package rex.graphics.mdxeditor.mdxbuilder.nodes;
+
+import javax.swing.*;
+import javax.swing.tree.*;
+
+import rex.graphics.dimensiontree.elements.*;
+import rex.graphics.mdxeditor.*;
+import rex.graphics.mdxeditor.mdxbuilder.dnd.*;
+import rex.utils.*;
+import java.io.Serializable;
+/**
+ *
+ * Node representing WITH node. Can have calculated members and named sets as children.
+ * @@author Igor Mekterovic
+ * @@version 0.3
+ */
+public class MBTWithMembersNode extends DefaultMBTAxisNode implements Serializable{
+
+   static ImageIcon icon;
+   static {
+      icon = S.getAppIcon("MBTWithMembersNode.gif");
+   }
+   private static String childrenIndent = "  ";
+
+   public MBTWithMembersNode(  String _axisCaption) {
+      super(_axisCaption, false);
+   }
+
+   /**
+    *
+    * @@param indent String
+    * @@return String
+    */
+   public  String getMdx(String indent){
+      if (this.getChildren() == null) return "";
+      int i;
+      String mdx = indent + "WITH ";
+      for (i=0; i < this.getChildren().size(); i++){
+         mdx += "\n" + indent + this.getChild(i).getMdx(indent + childrenIndent);
+      }
+      return mdx;
+   }
+
+
+   /**
+    * Accepts only DimensionElements.
+    */
+   void setAcceptableFlavorsArray(){
+      acceptableFlavorsMimeTypes = new String[] {TransferableMdxBuilderTreeNode.DIMENSION_TREE_NODE_DIMENSION_FLAVOR_STRING};
+   }
+
+   /**
+    * Returns an icon representing WHERE node.
+    * @@return ImageIcon
+    */
+   public ImageIcon getIcon(){ return icon; }
+
+
+   public String[] getPopUpActionList(){
+      return new String[] {
+           MBTPopUpActions.DELETE_CHILDREN
+      };
+   }
+
+
+   /**
+    * Displays a dialog for the user to choose weather to make a calculated member or named set.
+    * <br>Accordingly, takes actions and created children nodes.
+    * @@see rex.graphics.mdxeditor.NewMemberOrSetDialog
+    * @@param droppedData Object
+    * @@param containerNode DefaultMutableTreeNode
+    * @@param treeModel DefaultTreeModel
+    */
+   public  void handleDrop(Object droppedData, DefaultMutableTreeNode containerNode, DefaultTreeModel treeModel){
+      if (droppedData instanceof DimensionTreeElement){
+         NewMemberOrSetDialog dialog = new NewMemberOrSetDialog(null);
+         if (dialog.getName().equals("")) return; // if user cancels the action
+         if (dialog.selected().equals(NewMemberOrSetDialog.MEMBERS_SELECTED)){
+            MBTCalculatedMemberNode     calcMembNode  = new MBTCalculatedMemberNode(((DimensionTreeElement)droppedData).getUniqueName()
+                                                                                    , dialog.getName());
+            MBTArgAcceptAllStringNode   valExprNode   = new MBTArgAcceptAllStringNode("<value expression>");
+//            MBTArgNumericNode           optIntNode    = new MBTArgNumericNode(false, "SOLVE ORDER", false, true);
+            MBTCellPropertyNode            cellProperties = new MBTCellPropertyNode();
+
+            this.addChild(calcMembNode);
+            calcMembNode.addChild(valExprNode);
+//            calcMembNode.addChild(optIntNode);
+            calcMembNode.addChild(cellProperties);
+
+
+            DefaultMutableTreeNode treeCalcMemberNode =  new DefaultMutableTreeNode(calcMembNode);
+
+            treeModel.insertNodeInto(    treeCalcMemberNode
+                                       , containerNode
+                                       , containerNode.getChildCount());
+            treeModel.insertNodeInto(     new DefaultMutableTreeNode(valExprNode)
+                                       , treeCalcMemberNode
+                                       , treeCalcMemberNode.getChildCount());
+//            treeModel.insertNodeInto(    new DefaultMutableTreeNode(optIntNode)
+//                                       , treeCalcMemberNode
+//                                       , treeCalcMemberNode.getChildCount());
+            treeModel.insertNodeInto(    new DefaultMutableTreeNode(cellProperties)
+                                       , treeCalcMemberNode
+                                       , treeCalcMemberNode.getChildCount());
+
+         }else{
+            MBTNamedSetNode     namedSetNode  = new MBTNamedSetNode( dialog.getName());
+
+
+            this.addChild(namedSetNode);
+
+            DefaultMutableTreeNode treeNamedSetNode =  new DefaultMutableTreeNode(namedSetNode);
+
+            treeModel.insertNodeInto(    treeNamedSetNode
+                                       , containerNode
+                                       , containerNode.getChildCount());
+
+
+
+         }
+
+//         S.out("child count = " + containerNode.getChildCount());
+      }
+   }
+}
+@
+
+
+1.1
+log
+@*** empty log message ***
+@
+text
+@@
+

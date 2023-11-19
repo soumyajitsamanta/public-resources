@@ -1,0 +1,42 @@
+head	1.1;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.1
+date	2003.12.15.21.36.16;	author michald;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@patch concerning beard run under Apache mod_perl
+@
+text
+@*** ./lib/SOAP/Transport/HTTP.pm	2002-04-16 06:43:02.000000000 +0200
+--- /usr/lib/perl5/site_perl/5.8.0/SOAP/Transport/HTTP.pm	2003-12-14 17:03:44.000000000 +0100
+*************** sub handler { 
+*** 441,447 ****
+    $self->response->headers->scan(sub { $r->header_out(@@_) });
+    $r->send_http_header(join '; ', $self->response->content_type);
+    $r->print($self->response->content);
+!   &Apache::Constants::OK;
+  }
+  
+  sub configure {
+--- 441,447 ----
+    $self->response->headers->scan(sub { $r->header_out(@@_) });
+    $r->send_http_header(join '; ', $self->response->content_type);
+    $r->print($self->response->content);
+!   $Apache::Constants::OK;
+  }
+  
+  sub configure {
+@

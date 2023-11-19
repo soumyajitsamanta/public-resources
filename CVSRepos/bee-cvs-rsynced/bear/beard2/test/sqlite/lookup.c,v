@@ -1,0 +1,96 @@
+head	1.1;
+access;
+symbols;
+locks; strict;
+comment	@ * @;
+
+
+1.1
+date	2004.03.01.16.16.49;	author numberone;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@
+Added beard2 -- new bear daemon source tree.
+
+mdata subsystem works, some docs, some tests, etc.
+
+cached in progress
+@
+text
+@#include<stdio.h>
+#include<stdlib.h>
+#include<unistd.h>
+#include<sqlite.h>
+#include<sys/times.h>
+
+char* err = NULL;
+
+void error(char *msg) {
+	fprintf(stderr,"%s: %s\n",msg,err ? err : "?");
+	exit(2);
+}
+
+int calls = 0;
+
+int my_callback(void* data,int argc,char** argv,char** names) {
+	calls++;
+	return 0;
+}
+
+int main(int argc, char **argv){
+	int i,rows,count,ticks;
+	struct tms t1,t2;
+	sqlite *db;
+	char* file;
+
+	if(argc != 4) {
+		fprintf(stderr, "usage: %s [i|f] rows count\n", argv[0]);
+		return 1;
+	}
+
+	file = (argv[1][0] == 'f') ? "lookup.db" : NULL;
+	if(file) unlink(file);
+
+	db = sqlite_open(file ? file : ":memory:", 0, &err);
+	if(!db) error("sqlite_open");
+
+	sqlite_exec(db,"create table lookup (id int primary key, value)",
+					NULL,NULL,&err);
+
+	rows = atoi(argv[2]);
+	sqlite_exec(db,"begin",NULL,NULL,NULL);
+	for(i=0;i<rows;i++) {
+		sqlite_exec_printf(db,"insert into lookup values "
+					          "(%d,\"%s\")",NULL,NULL,&err,i,"test");
+	}
+	sqlite_exec(db,"commit",NULL,NULL,NULL);
+
+	printf("lookup cache generated\n");
+
+	times(&t1);
+	count = atoi(argv[3]);
+	sqlite_exec(db,"begin",NULL,NULL,NULL);
+	for(i=0;i<count;i++) {
+		sqlite_exec_printf(db,"select value from lookup where id = %d",
+						my_callback,NULL,&err, (i%rows));
+	}
+	times(&t2);
+	sqlite_exec(db,"commit",NULL,NULL,NULL);
+
+	printf("lookup performed %d times\n",calls);
+	ticks = sysconf(_SC_CLK_TCK);
+	printf("user:   %0.3lf\n",(t2.tms_utime - t1.tms_utime)/(double)ticks);
+	printf("system: %0.3lf\n",(t2.tms_stime - t1.tms_stime)/(double)ticks);
+
+	sqlite_close(db);
+	return 0;
+}
+@

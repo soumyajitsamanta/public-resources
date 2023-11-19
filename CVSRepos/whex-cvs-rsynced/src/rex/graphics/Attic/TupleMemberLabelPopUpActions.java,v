@@ -1,0 +1,122 @@
+head	1.4;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.4
+date	2006.01.13.12.21.13;	author igorludi;	state dead;
+branches;
+next	1.3;
+
+1.3
+date	2005.10.18.14.04.40;	author igorludi;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2005.10.18.13.40.38;	author igorludi;	state dead;
+branches;
+next	1.1;
+
+1.1
+date	2005.06.28.14.10.46;	author igorludi;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.4
+log
+@*** empty log message ***
+@
+text
+@package rex.graphics;
+
+import java.util.HashMap;
+/**
+ * <p>Title: WHEX</p>
+ * <p>Description: </p>
+ * <p>Copyright: Copyright (c) 2003</p>
+ * <p>Company: </p>
+ * @@author igor
+ * @@version 1.0
+ */
+
+public class TupleMemberLabelPopUpActions {
+
+   public static final String
+       MOVE_DIMENSION_UP,
+       MOVE_DIMENSION_FIRST,
+       MOVE_DIMENSION_LAST,
+       REMOVE_DIMENSION_FROM_QUERY,
+       REMOVE_MEMBER_FROM_QUERY,
+       KEEP_THIS_MEMBER_ONLY,
+       SEND_MEMBER_TO_FILTER,
+       SORT_BY_THIS_ASCENDING,
+       SORT_BY_THIS_DESCENDING,
+       SORT_BY_THIS_BASCENDING,
+       SORT_BY_THIS_BDESCENDING;
+
+    public static HashMap popUpCaptions;
+    static {
+       MOVE_DIMENSION_UP           = "0";
+       MOVE_DIMENSION_FIRST        = "1";
+       MOVE_DIMENSION_LAST         = "2";
+       REMOVE_DIMENSION_FROM_QUERY = "3";
+       REMOVE_MEMBER_FROM_QUERY    = "4";
+       KEEP_THIS_MEMBER_ONLY       = "5";
+       SEND_MEMBER_TO_FILTER       = "6";
+       SORT_BY_THIS_ASCENDING      = "7";
+       SORT_BY_THIS_DESCENDING     = "8";
+       SORT_BY_THIS_BASCENDING     = "9";
+       SORT_BY_THIS_BDESCENDING    = "10";
+
+
+       popUpCaptions = new HashMap(10);
+       popUpCaptions.put(MOVE_DIMENSION_UP          , "Move dimension up");
+       popUpCaptions.put(MOVE_DIMENSION_FIRST       , "Move dimension first");
+       popUpCaptions.put(MOVE_DIMENSION_LAST        , "Move dimension last");
+       popUpCaptions.put(REMOVE_DIMENSION_FROM_QUERY, "Remove dimension from query");
+       popUpCaptions.put(REMOVE_MEMBER_FROM_QUERY   , "Remove this member from query");
+       popUpCaptions.put(KEEP_THIS_MEMBER_ONLY      , "Keep this member only");
+       popUpCaptions.put(SEND_MEMBER_TO_FILTER      , "Send this member to filter");
+       popUpCaptions.put(SORT_BY_THIS_ASCENDING     , "Sort by this member(dim.) ASCending (keep hier.)");
+       popUpCaptions.put(SORT_BY_THIS_DESCENDING    , "Sort by this member(dim.) DESCending (keep hier.)");
+       popUpCaptions.put(SORT_BY_THIS_BASCENDING    , "Sort by this member(dim.) ASCnding (Break.hier.)");
+       popUpCaptions.put(SORT_BY_THIS_BDESCENDING   , "Sort by this member(dim.) DESCending (Break.hier.)");
+
+
+    }
+
+}
+@
+
+
+1.3
+log
+@*** empty log message ***
+@
+text
+@@
+
+
+1.2
+log
+@*** empty log message ***
+@
+text
+@@
+
+
+1.1
+log
+@*** empty log message ***
+@
+text
+@@
+

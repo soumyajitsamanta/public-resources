@@ -1,0 +1,103 @@
+head	1.3;
+access;
+symbols
+	jpivot_1_8_0:1.3
+	focus_1_6_0:1.3.0.2
+	wcf_1_7_0:1.3
+	wcf_1_6_0:1.3
+	jpivot_1_5_0:1.2.0.2
+	Root_jpivot_1_5_0:1.2
+	mondrian_xmla_2005_08_25:1.1.0.2
+	sourceforge_sync:1.3;
+locks; strict;
+comment	@# @;
+
+
+1.3
+date	2006.11.09.13.24.02;	author avix;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2005.09.14.08.22.46;	author avix;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2005.07.05.14.04.29;	author avix;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.3
+log
+@synchronized with tonbeller cvs
+@
+text
+@
+
+<html>
+<head>
+<title>WCF Table Test</title>
+  <link rel="stylesheet" type="text/css" href="wcf/form/xform.css">
+  <link rel="stylesheet" type="text/css" href="wcf/table/xtable.css">
+  <script src="wcf/scroller.js" language="JavaScript1.2" type="text/javascript"></script>
+</head>
+<body bgcolor=white>
+
+<h2>WCF Table Test</h2>
+
+
+
+
+This page shows a table cooperating with a form.
+
+
+<form action="tabledemo.jsp" method="post" id="form01">
+
+<!-- optional: keep browser window position when switching between pages -->
+<input type="hidden" name="wcfXCoord" value="0"/><input type="hidden" name="wcfYCoord" value="0"/>
+
+<table cellpadding="2" cellspacing="0" id="t1" border="1"><tr><th class="xtable-title" colspan="8"><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><th class="xtable-title" align="left"><input height="16" width="16" name="t1.edit" src="/wcf/wcf/table/edit.png" type="image"></th><th width="100%" class="xtable-title" align="left">&nbsp;Test Table model</th><td class="xtable-title" align="right"><input height="16" width="16" name="t1.close" src="/wcf/wcf/form/cancel.png" type="image"></td></tr></table></th></tr><tr><th class="xtable-heading"><input height="16" width="16" src="/wcf/wcf/table/select.png" name="t1.select" border="0" type="image"></th><th class="xtable-heading"><input height="9" width="9" src="/wcf/wcf/table/sort-dc.png" name="wcf8828e88b" border="0" type="image"> String</th><th class="xtable-heading"><input height="9" width="9" src="/wcf/wcf/table/sort-dn.png" name="wcf431c0040" border="0" type="image"> Date</th><th class="xtable-heading"><input height="9" width="9" src="/wcf/wcf/table/sort-dn.png" name="wcf48006210" border="0" type="image"> Double</th><th class="xtable-heading"><input height="9" width="9" src="/wcf/wcf/table/sort-dn.png" name="wcff9344319" border="0" type="image"> Integer</th><th class="xtable-heading"><input height="9" width="9" src="/wcf/wcf/table/sort-dn.png" name="wcf30e017b9" border="0" type="image"> Click Me</th><th class="xtable-heading"><input height="9" width="9" src="/wcf/wcf/table/sort-dn.png" name="wcf867ba274" border="0" type="image"> Image 1</th><th class="xtable-heading"><input height="9" width="9" src="/wcf/wcf/table/sort-dn.png" name="wcfe321ff92" border="0" type="image"> Image 2</th></tr><tr><td class="xtable-data"><input value="x" name="wcf8c6d548c" type="checkbox" id="wcf8c6d548c"><input value="x" name="wcf8c6d548c.valid" type="hidden"></td><td class="xtable-data" align="left">Hello World: 2</td><td class="xtable-data" align="left">02/03/2002</td><td class="xtable-data" align="right">181.51</td><td class="xtable-data" align="right">912</td><td class="xtable-data" align="right"><a href="/">884</a></td><td class="xtable-data"><a href="/"><img border="0" src="wcf/table/sort-dn.png"> </a></td><td class="xtable-data" align="left"><a href="/"><img border="0" src="wcf/table/sort-ac.png"> Text 13</a></td></tr><tr><td class="xtable-data"><input value="x" name="wcfdc2d348a" type="checkbox" id="wcfdc2d348a"><input value="x" name="wcfdc2d348a.valid" type="hidden"></td><td class="xtable-data" align="left">Hello World: 3</td><td class="xtable-data" align="left">02/04/2002</td><td class="xtable-data" align="right">229.86</td><td class="xtable-data" align="right">596</td><td class="xtable-data" align="right"><a href="/">948</a></td><td class="xtable-data"><a href="/"><img border="0" src="wcf/table/sort-dn.png"> </a></td><td class="xtable-data" align="left"><a href="/"><img border="0" src="wcf/table/sort-ac.png"> Text 88</a></td></tr><tr><td class="xtable-data"><input value="x" name="wcf20ffa8ed" type="checkbox" id="wcf20ffa8ed"><input value="x" name="wcf20ffa8ed.valid" type="hidden"></td><td class="xtable-data" align="left">Hello World: 4</td><td class="xtable-data" align="left">02/05/2002</td><td class="xtable-data" align="right">568.18</td><td class="xtable-data" align="right">249</td><td class="xtable-data" align="right"><a href="/">168</a></td><td class="xtable-data"><a href="/"><img border="0" src="wcf/table/sort-dn.png"> </a></td><td class="xtable-data" align="left"><a href="/"><img border="0" src="wcf/table/sort-ac.png"> Text 73</a></td></tr><tr><td class="xtable-data"><input value="x" name="wcf2f91bb51" type="checkbox" id="wcf2f91bb51"><input value="x" name="wcf2f91bb51.valid" type="hidden"></td><td class="xtable-data" align="left">Hello World: 5</td><td class="xtable-data" align="left">02/06/2002</td><td class="xtable-data" align="right">117.69</td><td class="xtable-data" align="right">594</td><td class="xtable-data" align="right"><a href="/">762</a></td><td class="xtable-data"><a href="/"><img border="0" src="wcf/table/sort-ac.png"> </a></td><td class="xtable-data" align="left"><a href="/"><img border="0" src="wcf/table/sort-ac.png"> Text 65</a></td></tr><tr><td class="xtable-data" colspan="8">&nbsp;<input height="16" width="16" src="/wcf/wcf/table/page-first.png" name="wcf7d7980f5" border="0" type="image"><input height="16" width="16" src="/wcf/wcf/table/page-prev.png" name="wcf300f746b" border="0" type="image">&nbsp;Page 4/5&nbsp;<input height="16" width="16" src="/wcf/wcf/table/page-next.png" name="wcf4ee53f97" border="0" type="image"><input height="16" width="16" src="/wcf/wcf/table/page-last.png" name="wcf22c3d91d" border="0" type="image">&nbsp; Goto Page <input size="3" maxlength="3" value="4" name="t1.goto.input" type="text"> <input height="16" width="16" src="/wcf/wcf/table/gotopage.png" name="t1.goto.button" border="0" type="image">&nbsp; Rows/page <input size="3" maxlength="3" value="4" name="t1.pageSize.input" type="text"> <input height="16" width="16" src="/wcf/wcf/table/gotopage.png" name="t1.pageSize.button" border="0" type="image"></td></tr></table>
+
+<p>
+
+
+
+</form>
+<p><a href="index.jsp">back to index</a>
+<br><a href="wcf/showxml.jsp?render=t1&amp;iehack=file.xml">show xml</a>
+
+</body>
+</html>
+@
+
+
+1.2
+log
+@Fixed Test for JDK 1.5
+Made Table Test Data time zone independent
+@
+text
+@d25 1
+a25 1
+<table cellpadding="2" cellspacing="0" id="t1" border="1"><tr><th class="xtable-title" colspan="8"><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><th class="xtable-title" align="left"><input height="16" width="16" name="t1.edit" src="/wcf/wcf/table/edit.png" type="image"></th><th width="100%" class="xtable-title" align="left">&nbsp;Test Table model</th><td class="xtable-title" align="right"><input height="16" width="16" name="t1.close" src="/wcf/wcf/form/cancel.png" type="image"></td></tr></table></th></tr><tr><th class="xtable-heading"><input height="16" width="16" src="/wcf/wcf/table/select.png" name="t1.select" border="0" type="image"></th><th class="xtable-heading"><input height="9" width="9" src="/wcf/wcf/table/sort-dc.png" name="wcf35877a3c" border="0" type="image"> String</th><th class="xtable-heading"><input height="9" width="9" src="/wcf/wcf/table/sort-dn.png" name="wcfdf7549ed" border="0" type="image"> Date</th><th class="xtable-heading"><input height="9" width="9" src="/wcf/wcf/table/sort-dn.png" name="wcfa40c005b" border="0" type="image"> Double</th><th class="xtable-heading"><input height="9" width="9" src="/wcf/wcf/table/sort-dn.png" name="wcfd15404ad" border="0" type="image"> Integer</th><th class="xtable-heading"><input height="9" width="9" src="/wcf/wcf/table/sort-dn.png" name="wcf5cae8259" border="0" type="image"> Click Me</th><th class="xtable-heading"><input height="9" width="9" src="/wcf/wcf/table/sort-dn.png" name="wcff6b79aab" border="0" type="image"> Image 1</th><th class="xtable-heading"><input height="9" width="9" src="/wcf/wcf/table/sort-dn.png" name="wcfb2791a95" border="0" type="image"> Image 2</th></tr><tr><td class="xtable-data"><input value="x" name="wcf631f3d7" type="checkbox" id="wcf631f3d7"><input value="x" name="wcf631f3d7.valid" type="hidden"></td><td class="xtable-data" align="left">Hello World: 2</td><td class="xtable-data" align="left">02/03/2002</td><td class="xtable-data" align="right">181.51</td><td class="xtable-data" align="right">912</td><td class="xtable-data" align="right"><a href="/">884</a></td><td class="xtable-data"><a href="/"><img border="0" src="wcf/table/sort-dn.png"> </a></td><td class="xtable-data" align="left"><a href="/"><img border="0" src="wcf/table/sort-ac.png"> Text 13</a></td></tr><tr><td class="xtable-data"><input value="x" name="wcfd2b5a636" type="checkbox" id="wcfd2b5a636"><input value="x" name="wcfd2b5a636.valid" type="hidden"></td><td class="xtable-data" align="left">Hello World: 3</td><td class="xtable-data" align="left">02/04/2002</td><td class="xtable-data" align="right">229.86</td><td class="xtable-data" align="right">596</td><td class="xtable-data" align="right"><a href="/">948</a></td><td class="xtable-data"><a href="/"><img border="0" src="wcf/table/sort-dn.png"> </a></td><td class="xtable-data" align="left"><a href="/"><img border="0" src="wcf/table/sort-ac.png"> Text 88</a></td></tr><tr><td class="xtable-data"><input value="x" name="wcf18f42515" type="checkbox" id="wcf18f42515"><input value="x" name="wcf18f42515.valid" type="hidden"></td><td class="xtable-data" align="left">Hello World: 4</td><td class="xtable-data" align="left">02/05/2002</td><td class="xtable-data" align="right">568.18</td><td class="xtable-data" align="right">249</td><td class="xtable-data" align="right"><a href="/">168</a></td><td class="xtable-data"><a href="/"><img border="0" src="wcf/table/sort-dn.png"> </a></td><td class="xtable-data" align="left"><a href="/"><img border="0" src="wcf/table/sort-ac.png"> Text 73</a></td></tr><tr><td class="xtable-data"><input value="x" name="wcf2e265408" type="checkbox" id="wcf2e265408"><input value="x" name="wcf2e265408.valid" type="hidden"></td><td class="xtable-data" align="left">Hello World: 5</td><td class="xtable-data" align="left">02/06/2002</td><td class="xtable-data" align="right">117.69</td><td class="xtable-data" align="right">594</td><td class="xtable-data" align="right"><a href="/">762</a></td><td class="xtable-data"><a href="/"><img border="0" src="wcf/table/sort-ac.png"> </a></td><td class="xtable-data" align="left"><a href="/"><img border="0" src="wcf/table/sort-ac.png"> Text 65</a></td></tr><tr><td class="xtable-data" colspan="8">&nbsp;<input height="16" width="16" src="/wcf/wcf/table/page-first.png" name="wcfe8316db3" border="0" type="image"><input height="16" width="16" src="/wcf/wcf/table/page-prev.png" name="wcfa3a501a5" border="0" type="image">&nbsp;Page 4/5&nbsp;<input height="16" width="16" src="/wcf/wcf/table/page-next.png" name="wcf3cff41ea" border="0" type="image"><input height="16" width="16" src="/wcf/wcf/table/page-last.png" name="wcfdccdf289" border="0" type="image">&nbsp; Goto Page <input size="3" maxlength="3" value="4" name="t1.goto.input" type="text"> <input height="16" width="16" src="/wcf/wcf/table/gotopage.png" name="t1.goto.button" border="0" type="image"></td></tr></table>
+@
+
+
+1.1
+log
+@initial version
+@
+text
+@d8 1
+d22 2
+d25 1
+a25 1
+<table cellpadding="2" cellspacing="0" id="t1" border="1"><tr><th class="xtable-title" colspan="8"><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><th class="xtable-title" align="left"><input height="16" width="16" name="t1.edit" src="/wcf/wcf/table/edit.png" type="image"></th><th width="100%" class="xtable-title" align="left">&nbsp;Test Table model</th><td class="xtable-title" align="right"><input height="16" width="16" name="t1.close" src="/wcf/wcf/form/cancel.png" type="image"></td></tr></table></th></tr><tr><th class="xtable-heading"><input height="16" width="16" src="/wcf/wcf/table/select.png" name="t1.select" border="0" type="image"></th><th class="xtable-heading"><input height="9" width="9" src="/wcf/wcf/table/sort-dc.png" name="wcf6bd0034b" border="0" type="image"> String</th><th class="xtable-heading"><input height="9" width="9" src="/wcf/wcf/table/sort-dn.png" name="wcfa3dfa95e" border="0" type="image"> Date</th><th class="xtable-heading"><input height="9" width="9" src="/wcf/wcf/table/sort-dn.png" name="wcfa82f523c" border="0" type="image"> Double</th><th class="xtable-heading"><input height="9" width="9" src="/wcf/wcf/table/sort-dn.png" name="wcf685b0003" border="0" type="image"> Integer</th><th class="xtable-heading"><input height="9" width="9" src="/wcf/wcf/table/sort-dn.png" name="wcfdc093778" border="0" type="image"> Click Me</th><th class="xtable-heading"><input height="9" width="9" src="/wcf/wcf/table/sort-dn.png" name="wcf8dddbc94" border="0" type="image"> Image 1</th><th class="xtable-heading"><input height="9" width="9" src="/wcf/wcf/table/sort-dn.png" name="wcf847cdfbc" border="0" type="image"> Image 2</th></tr><tr><td class="xtable-data"><input value="x" name="wcfc1a9b475" type="checkbox" id="wcfc1a9b475"><input value="x" name="wcfc1a9b475.valid" type="hidden"></td><td class="xtable-data" align="left">Hello World: 2</td><td class="xtable-data" align="left">04/16/2003</td><td class="xtable-data" align="right">688.31</td><td class="xtable-data" align="right">888</td><td class="xtable-data" align="right"><a href="/">913</a></td><td class="xtable-data"><a href="/"><img border="0" src="wcf/table/sort-ac.png"> </a></td><td class="xtable-data" align="left"><a href="/"><img border="0" src="wcf/table/sort-ac.png"> Text 42</a></td></tr><tr><td class="xtable-data"><input value="x" name="wcfa13e6410" type="checkbox" id="wcfa13e6410"><input value="x" name="wcfa13e6410.valid" type="hidden"></td><td class="xtable-data" align="left">Hello World: 3</td><td class="xtable-data" align="left">04/02/2003</td><td class="xtable-data" align="right">43.14</td><td class="xtable-data" align="right">410</td><td class="xtable-data" align="right"><a href="/">276</a></td><td class="xtable-data"><a href="/"><img border="0" src="wcf/table/sort-ac.png"> </a></td><td class="xtable-data" align="left"><a href="/"><img border="0" src="wcf/table/sort-dn.png"> Text 7</a></td></tr><tr><td class="xtable-data"><input value="x" name="wcfbe026c17" type="checkbox" id="wcfbe026c17"><input value="x" name="wcfbe026c17.valid" type="hidden"></td><td class="xtable-data" align="left">Hello World: 4</td><td class="xtable-data" align="left">03/23/2003</td><td class="xtable-data" align="right">61.99</td><td class="xtable-data" align="right">827</td><td class="xtable-data" align="right"><a href="/">250</a></td><td class="xtable-data"><a href="/"><img border="0" src="wcf/table/sort-dn.png"> </a></td><td class="xtable-data" align="left"><a href="/"><img border="0" src="wcf/table/sort-dn.png"> Text 49</a></td></tr><tr><td class="xtable-data"><input value="x" name="wcf5410e264" type="checkbox" id="wcf5410e264"><input value="x" name="wcf5410e264.valid" type="hidden"></td><td class="xtable-data" align="left">Hello World: 5</td><td class="xtable-data" align="left">03/24/2003</td><td class="xtable-data" align="right">35.40</td><td class="xtable-data" align="right">537</td><td class="xtable-data" align="right"><a href="/">775</a></td><td class="xtable-data"><a href="/"><img border="0" src="wcf/table/sort-dn.png"> </a></td><td class="xtable-data" align="left"><a href="/"><img border="0" src="wcf/table/sort-dn.png"> Text 46</a></td></tr><tr><td class="xtable-data" colspan="8">&nbsp;<input height="16" width="16" src="/wcf/wcf/table/page-first.png" name="wcff742bf0b" border="0" type="image"><input height="16" width="16" src="/wcf/wcf/table/page-prev.png" name="wcf8a1ceff0" border="0" type="image">&nbsp;Page 4/5&nbsp;<input height="16" width="16" src="/wcf/wcf/table/page-next.png" name="wcfc7f7769d" border="0" type="image"><input height="16" width="16" src="/wcf/wcf/table/page-last.png" name="wcfdb804706" border="0" type="image">&nbsp; Goto Page <input size="3" maxlength="3" value="4" name="t1.goto.input" type="text"> <input height="16" width="16" src="/wcf/wcf/table/gotopage.png" name="t1.goto.button" border="0" type="image"></td></tr></table>
+@
+

@@ -1,0 +1,35 @@
+head	1.1;
+access;
+symbols
+	jpivot_1_8_0:1.1
+	focus_1_6_0:1.1.0.2
+	jpivot_1_7_0:1.1;
+locks; strict;
+comment	@# @;
+
+
+1.1
+date	2006.11.24.14.42.31;	author zapodot;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@New translation for Norwegian bokmaal (nb) which is more or less similar to the Norwegian (no) translation
+@
+text
+@MemberNavigator.ok.title=OK
+MemberNavigator.cancel.title=Avbryt
+MemberNavigator.selectVisible.title=Alle
+MemberNavigator.selectNone.title=Ingen
+MemberNavigator.enableGrouping.title=Gruppér
+MemberNavigator.disableGrouping.title=Flat
+MemberNavigator.overflowOccurred=For mange medlemmer
+
+# MemberNavigator.groupingMemberCount=10
+@

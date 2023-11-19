@@ -1,0 +1,66 @@
+head	1.1;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.1
+date	2003.02.17.23.34.48;	author numberone;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@Msg - some changes forced by moving to libnet
+certs: clear 'auth' key semantics, README for generating CA keys
+switch to new Net-1.2: libnet + ssl layer
+@
+text
+@
+# Bee is supplied with some demo keys for auth, dad and client on localhost. 
+# Root Certification Authority private key is not included with this bundle,
+# so if you want another key(s), you must generate our own CA keys:
+
+# edit config file - set country name, organization, ...
+vi openssl.cnf
+
+# every signed key will be stored in ./issued directory too
+mkdir issued
+# create database of issued keys
+touch index.txt
+echo 01 > serial
+# disable accessing this directory to others 
+chmod go-x .
+
+# create root certification authority, choose RootCA password
+# copy root.pem (CA public key) to every bee host, 
+# but keep root-privatekey.pem (CA private key) on safe place!
+# set common name to something like 'OurFirm BEE Root CA'
+openssl req -config ./openssl.cnf \
+			-new -x509 -keyout root-privatekey.pem -out root.pem -days 3650
+
+# create new key - issue request for new key
+# set common name (/CN/) according to bee auth key scheme: 
+# [user/]role@@host[:port] -- where host must be FQDN && canonical name of host
+# e.g.: auth@@trusted.our.com:2332 or martin/client@@somemachine
+openssl req -config ./openssl.cnf -new -keyout private.pem -out request.pem
+
+# remove password if you wish to run daemons without interaction - NOT WORKING
+# openssl rsa -in private.pem -out private2.pem && mv private2.pem private.pem
+
+# sign it by our root authority - enter RootCA password
+openssl ca -config ./openssl.cnf -in request.pem -notext \
+           -cert root.pem -keyfile root-privatekey.pem -out certificate.pem
+
+# result is concatenation of private key and certificate files
+cat private.pem certificate.pem > output/beedir/auth.pem
+rm request.pem private.pem certificate.pem
+
+
+@

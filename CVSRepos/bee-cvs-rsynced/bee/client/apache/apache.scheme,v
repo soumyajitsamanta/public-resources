@@ -1,0 +1,86 @@
+head	1.2;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2003.08.11.06.53.57;	author numberone;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2003.07.10.07.45.13;	author numberone;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@merging old version to cvs
+@
+text
+@<?xml version="1.0" encoding="ISO-8859-2"?>
+
+<task>
+<otec host='localhost' port='2333' >
+
+    <bee name='split' script='split.bee'>
+		<input input='1' separator='^' 
+			   url='dir://localhost/home/sarfy/bee/client/apache/access_log' />
+	</bee>
+
+	<bee name='time' script='time.bee' />
+	<bee name='domain' script='domain.bee'>
+		<input input='2' 
+			url="dbi://tiger/sarfy/lu_domain:id:name" />
+		<output output='2' 
+			url="dbi://tiger/sarfy/lu_domain:id:name" />
+	</bee>
+
+<!--	<bee name='filepath' script='filepath.bee' />-->
+
+	<bee name='fact' script='fact.bee' />
+
+</otec>
+
+<link>
+	<src  bee='split' output='1' />
+	<dest bee='time'  input ='1' />
+</link>
+<link>
+	<src  bee='split'   output='2' />
+	<dest bee='domain'  input ='1' />
+</link>
+
+<link>
+	<src  bee='time' output='1' />
+	<dest bee='fact' input ='1' />
+</link>
+<link>
+	<src  bee='domain' output='1' />
+	<dest bee='fact'   input ='2' />
+</link>
+
+
+</task>
+
+
+@
+
+
+1.1
+log
+@demo example -- apache
+@
+text
+@d12 6
+a17 1
+	<bee name='domain' script='domain.bee' />
+@
+

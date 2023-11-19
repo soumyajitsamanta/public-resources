@@ -1,0 +1,1157 @@
+head	1.17;
+access;
+symbols
+	start:1.1.1.1 vendor:1.1.1;
+locks; strict;
+comment	@# @;
+
+
+1.17
+date	2004.05.18.12.47.32;	author tuco80;	state Exp;
+branches;
+next	1.16;
+
+1.16
+date	2003.11.20.16.48.03;	author tuco80;	state Exp;
+branches;
+next	1.15;
+
+1.15
+date	2003.11.06.12.28.24;	author tuco80;	state Exp;
+branches;
+next	1.14;
+
+1.14
+date	2003.10.20.09.41.09;	author tuco80;	state Exp;
+branches;
+next	1.13;
+
+1.13
+date	2003.10.02.16.53.43;	author tuco80;	state Exp;
+branches;
+next	1.12;
+
+1.12
+date	2003.09.25.09.50.12;	author tuco80;	state Exp;
+branches;
+next	1.11;
+
+1.11
+date	2003.09.22.09.48.35;	author tuco80;	state Exp;
+branches;
+next	1.10;
+
+1.10
+date	2003.09.08.14.07.20;	author tuco80;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	2003.09.02.08.17.54;	author tuco80;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	2003.09.01.14.22.24;	author tuco80;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	2003.08.29.11.45.22;	author tuco80;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	2003.08.21.13.20.48;	author tuco80;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	2003.08.13.10.52.28;	author tuco80;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2003.08.12.09.07.23;	author tuco80;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2003.08.08.14.57.37;	author tuco80;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2003.04.24.20.39.59;	author michald;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2002.09.24.01.34.14;	author michald;	state Exp;
+branches
+	1.1.1.1;
+next	;
+
+1.1.1.1
+date	2002.09.24.01.34.14;	author michald;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.17
+log
+@Support for diferent bee types. (Not exported to .schema files yet though)
+@
+text
+@#-----------------------------------------------------
+# Transformation Object
+#-----------------------------------------------------
+# $Id: DBTransf.pm,v 1.16 2003/11/20 16:48:03 tuco80 Exp $
+
+package DBTransf;
+use base Tk::Canvas;
+use strict;
+
+my $EntityFont='-*-verdana-bold-r-normal-*-11-*-iso8859-2';
+my $AttributeFont='-*-verdana-medium-r-normal-*-10-*-iso8859-2';
+my $uBannerClr = 'DarkGoldenrod2';
+my $attrYstep = 11;
+my $tblHeadY = 16;
+my $blPad = 10;
+my $attrXpad = 10;
+my $attrYpad = 6;  #Should be attrYstep/2  but only for appearance simetry (i.e. it CAN be anything)
+my $TabElemN = 5; # No of fixed table dwawing elements (ID numbering of I/O elements will start on this)
+my $selBoxWidth = 3;  #width that selection box will have around the object
+my $selBoxCol = 'blue'; #fill color of the selection box
+my $divLineWidth = 1;
+my $divLineCol = 'black';
+
+##################################################
+## the object constructor                       ##
+##################################################
+
+sub new {
+
+    my $proto = shift;
+    my $id = shift;
+    my $name = shift;
+    my $desc = shift;
+    my $x = shift;
+    my $y = shift;
+	my $type = shift;
+
+    my $class = ref($proto) || $proto;
+    my $self  = {};
+
+    $self->{ID}    = $id;
+    $self->{NAME}    = $name;
+    $self->{DESC}    = $desc;
+    $self->{I}    = ();	# hash of Inputs
+    $self->{O}    = ();	# hash of Outputs
+    $self->{I_Y}  = ();	# hash of Inputs Y coords
+    $self->{O_Y}  = ();	# hash of Outputs Y coords
+    $self->{I_N}  = 0;		# No of Outputs
+    $self->{O_N}  = 0;		# No of Inputs
+    $self->{REL}     = [];	# array of relations
+    $self->{LAYERS}  = [1];	# table is visible in Layers
+    $self->{CANV_ID} = [];	# list of canvas identifiers [head_text,head_rect,body_rect,...]
+    $self->{CANVAS} = '';	# canvas
+    $self->{COORDS}  = [$x,$y,$x,$y];	# coords of table box presentation
+    $self->{TEXT_W}  = 0;	# largest text width
+    $self->{SELECTED} = 0;  # To know if the object is selected or not
+	$self->{TYPE} = $type;  #Determine the bee type (Implicit,Explicit or DBI);
+    bless ($self, $class);
+    return $self;
+
+}
+
+##############################################
+## methods to access per-object data        ##
+##                                          ##
+## With args, they set the value.  Without  ##
+## any, they only retrieve it/them.         ##
+##############################################
+
+sub name {
+    my $self = shift;
+    if (@@_) { $self->{NAME} = shift }
+    return $self->{NAME};
+}
+
+sub desc {
+	my $self = shift;
+	if (@@_) { $self->{DESC} = shift }
+	return $self->{DESC};
+}
+
+sub id{
+	my $self = shift;
+	if(@@_){
+		$self->{ID} = shift;
+	}
+	return $self->{ID};
+}
+
+#Only for compliance of the objects, needed for creations of new relations beteween objects
+sub type{
+	return 'TRAN';
+}
+
+#WARNING This method has nothing to do with the previous!!!
+#they refer to different things, type refers to the kind of object
+#this is (a transformation) this one is about the type of transformation
+#it is (DBI, Explicit select or Implicit select).
+sub connType{
+	my $self = shift;
+	if(@@_){
+		$self->{TYPE} = shift;
+	}
+	else{
+		return $self->{TYPE};
+	}
+}
+
+sub in_len{
+	my $self = shift;
+	my $attr = shift;
+	return $self->{I}{$attr}{len};
+}
+
+sub selected {
+	my $self = shift;
+	if (@@_) { $self->{SELECTED} = shift }
+	return $self->{SELECTED};
+}
+
+sub set_selected{
+	my $self = shift;
+	$self->{SELECTED} = 1;
+	my($x1,$y1,$x2,$y2)=$self->coords();
+	my $temp = $selBoxWidth;
+	my $count = $self->{LENGTH};
+	$temp--;
+	my $sx1 = $x1-$temp;
+	my $sy1 = $y1-$temp;
+	my $sx2 = $x2+$temp;
+	my $sy2 = $y1+$tblHeadY + $attrYpad + ($count-0.5) * $attrYstep+$temp;
+	$self->{CANVAS}->coords($self->{CANV_ID}[3], $sx1, $sy1, $sx2, $sy2);
+}
+
+sub set_deselected{
+	my $self = shift;
+	$self->{SELECTED} = 0;
+	$self->{CANVAS}->coords($self->{CANV_ID}[3], -10, -10, -10, -10);
+}
+
+sub coords {
+	my $self = shift;
+	if (@@_) {
+		my ($x1,$y1,$x2,$y2) = @@_;
+		$self->{COORDS} = [$x1,$y1,$x2,$y2];
+		$self->{CANVAS}->coords($self->{CANV_ID}[0],$x1,$y1,$x2,$y2);
+	}
+	return ($self->{CANV_ID}[0]) ? $self->{CANVAS}->coords($self->{CANV_ID}[0]) : [0,0,0,0];
+}
+
+#CAREFUL!!! This method only exists in DBTable and DBTrans
+sub coordsAround {
+	my $self = shift;
+	my ($x1,$y1,$x2,$y2) = $self->coords();
+	my $count = $self->{LENGTH};
+	$count++;
+	$y2 = $y1+$tblHeadY + $attrYpad + ($count-0.5) * $attrYstep;
+	return $y2;
+}
+
+sub getAttrY {
+    my $self = shift;
+    my ($name,$number) = @@_;
+	my $y = $self->{I_Y}{$name} || $self->{O_Y}{$name}; # ??? || $self->{I_Y}{_TRIG} || $self->{O_Y}{_STAT};
+	if ($y && $number){
+		if($self->{I_Y}{$name}){
+			if($self->{I}{$name}{len} && ($number>$self->{I}{$name}{len})){
+				$self->{I}{$name}{len}=$number;
+				$self->clear();
+				$self->draw($self->{CANVAS});
+			}
+		}
+		elsif($self->{O_Y}{$name}){
+			if($self->{O}{$name}{len} && ($number>$self->{O}{$name}{len})){
+				$self->{O}{$name}{len}=$number;
+				$self->clear();
+				$self->draw($self->{CANVAS});
+			}
+		}
+		$y+= --$number * $attrYstep;
+	}
+		
+    return 	$y;  
+}
+
+sub getByCoord{
+	my $self = shift;
+	my ($y) = @@_;
+	my ($x1,$y1) = $self->coords();
+	my $mid;
+	my $pad = ($attrYstep/2);
+	my $temp=0;
+	my @@ret;
+	foreach(keys %{$self->{I_Y}}){
+		$mid = $self->{I_Y}{$_};
+		if ($_ eq "_TRIG"){
+			$temp = $pad;
+		}
+		else{
+			$temp = (($self->{I}{$_}{len})-1)*$attrYstep+$pad;
+		}
+		if($y>=($y1+$mid-$pad)&& $y<=($y1+$mid+$temp)){
+			push(@@ret,$_);
+			my $attr = $_;
+			#Now we check if all the entry points are taken or not
+			my $count=0;
+			foreach (@@{$self->relation}) {
+				if ($_->to_id eq $attr){
+					$count++;
+				}
+			}
+			if ($self->{I}{$_}{len} > $count){
+				if ($self->{I}{$_}{len} <= 1){#It should never be less than one, but just in case ;)
+					push(@@ret,1);
+				}
+				else{
+					$temp = int(abs($y-($y1+$mid-$pad))/$attrYstep);
+					$temp++;
+					push(@@ret,$temp);
+				}
+			}
+			else{
+				push(@@ret,++$self->{I}{$_}{len});
+				push(@@ret,1);
+				$self->clear();
+				$self->draw($self->{CANVAS});
+			}
+			return @@ret;
+		}
+	}
+	return undef;	
+}
+
+#This returns the attribute in a given position
+#if undef then there is no attribute in such position
+#which should happen if 1<$ord>number of inputs
+sub getInByOrder{
+	my $self = shift;
+	my ($ord) = @@_;
+	my $attr;
+	foreach(keys %{$self->{I_Y}}){
+		if ($self->{I}{$_}{order} == $ord){
+			$attr = $_;
+			last;
+		}
+	}
+	return $attr;
+}
+
+sub getAttrOrd {
+    my $self = shift;
+    my ($name,$number) = @@_;
+	my $ret = $self->{I}{$name}{order} || $self->{O}{$name}{order}; # ??? || $self->{I_Y}{_TRIG} || $self->{O_Y}{  
+	return ++$ret;
+}
+			
+
+sub addInp {
+	my $self = shift;
+	my ($id,$name,$desc,$type,$len,$lineOrder) = @@_;
+	if ($lineOrder) {$lineOrder--} else { $lineOrder=$self->{I_N} };
+	unless ($len){$len = 1;}
+	my $canv_id=$self->{O_N}+$self->{I_N}+$TabElemN;
+	$self->{I}{$id} = {name=>$name, type=>$type, desc=>$desc, len=>$len, order=>$lineOrder, canv_id=>$canv_id };
+	#print "\n este es lineorder: $self->{I}{$id}{order} para id = $id";
+	$self->{I_N}++;
+}
+
+sub addOut {
+	my $self = shift;
+	my ($id,$name,$desc,$type,$len,$lineOrder) = @@_;
+	if ($lineOrder) {$lineOrder--} else { $lineOrder=$self->{O_N} };
+	unless ($len){$len = 1;}
+	my $canv_id=$self->{O_N}+$self->{I_N}+$TabElemN;
+	$self->{O}{$id} = {name=>$name, type=>$type, desc=>$desc, len=>$len, order=>$lineOrder, canv_id=>$canv_id };
+	$self->{O_N}++;
+}
+
+sub getInOrder{
+	my $self = shift;
+	return $self->{I_N}+1;
+}
+
+sub getOutOrder{
+	my $self = shift;
+	return $self->{O_N}+1;
+}
+
+
+
+sub relation {
+    my $self = shift;
+    my ($id,$edge) = @@_;	# relation id, edge position [0,1] ... first or last
+    if (@@_) { 
+        push (@@{$self->{REL}}, $id);
+    }
+    return $self->{REL}
+}
+
+sub delRelation{
+	my $self = shift;
+	my ($relID) = @@_;
+	my @@newRels;
+	foreach (@@{$self->relation}) {	#delete all connected relations
+		unless ($_->id eq $relID){
+			push(@@newRels,$_);
+		}
+	}
+	@@{$self->{REL}}=@@newRels;
+} 
+
+sub move {
+	my $self = shift;
+	my $c = shift;	# canvas
+	my ($x,$y) = @@_;
+	my $tag_name = "_".$self->{ID};
+	my $cir_tag = "circle".$self->{ID};
+	$c->move($tag_name, $x, $y);
+	$c->move($cir_tag, $x, $y);
+	if ($self->{SELECTED}){	$c->move($self->{CANV_ID}[3], $x, $y);}
+	foreach (@@{$self->relation}) {	#move all connected relations
+		$_->adjustCoords;
+	};
+	$self->{COORDS} = $self->{CANVAS}->coords($self->{CANV_ID}[0]);
+}
+
+
+	
+sub draw {
+	our ($self) = shift;
+	my $c = shift;	# canvas
+	$self->{CANVAS}=$c;
+	my ($x1,$y1) = @@{$self->{COORDS}};
+	my $move_tag = "_".$self->{ID};
+	my $y2=$y1+$tblHeadY;
+	my $type = $self->{TYPE};
+	if($type=~/DBI/i){
+		$uBannerClr = 'firebrick3';
+	}
+	elsif($type=~/Explicit/i){
+		#$uBannerClr = 'palegreen4';
+		#print " Match!!";
+		$uBannerClr = 'orchid3';
+	}
+	else{ #it HAS to be Implicit then
+		$uBannerClr = 'DarkGoldenrod2';
+	}
+	#This is the selection Box which will remain hidden until object is selected
+	$self->{CANV_ID}[3]=$c->createRectangle(-10,-10,-10,-10,-width=>$selBoxWidth, -outline => $selBoxCol,-tags=>['SELECTED'.$move_tag]);
+	#$self->{CANV_ID}[0]=$c->createRectangle(0,0,0,0, -width=>1, -fill => 'black', -tags=>[$move_tag]);
+	print "\ncolor es: $uBannerClr";
+	$self->{CANV_ID}[0]=$c->createRectangle(0,0,0,0, -width=>1,-fill => $uBannerClr, -tags=>[$move_tag,'item']);
+	$self->{CANV_ID}[1]=$c->createText(0,0, qw/-anchor c -fill white/,-text=>$self->{NAME},-font=>$EntityFont, -tags=>[$move_tag,'item']);
+	$self->{CANV_ID}[2]=$c->createRectangle(0,0,0,0, -width=>1, -fill => 'white', -tags=>[$move_tag]);
+	$self->{CANV_ID}[4]=$c->createLine(0,0,0,0, -fill=>$divLineCol,-width=>$divLineWidth, -join=>'round', -tags=>[$move_tag,'item']);
+	#$self->{CANV_ID}[5]=$c->createText(0,0, qw/-anchor c -fill white/,-text=>'S',-font=>$EntityFont, -tags=>[$move_tag,'attr']);
+
+	$self->{I_Y}{_TRIG}=$tblHeadY/2;
+	$self->{O_Y}{_STAT}=$tblHeadY/2;
+	
+	my $ant;
+	my $lenI=0;
+	sub byLineOrderIn{
+		return $self->{I}{$a}{order} <=> $self->{I}{$b}{order};
+	}
+	foreach( sort byLineOrderIn keys %{$self->{I}}){
+		$self->{I_Y}{$_} = $tblHeadY + $attrYpad + ($lenI) * $attrYstep;
+		$lenI += $self->{I}{$_}{len};
+		$ant = $_;
+	}
+	
+	
+	my $lenO = 0;
+	sub byLineOrderOut{
+		return $self->{O}{$a}{order} <=> $self->{O}{$b}{order};
+	}
+	foreach( sort byLineOrderOut keys %{$self->{O}}){	
+		$self->{O_Y}{$_} = $tblHeadY + $attrYpad + ($lenO) * $attrYstep;
+		$lenO += $self->{O}{$_}{len};
+		$ant = $_;
+	}
+	
+	$self->{LENGTH}= $lenI>$lenO?$lenI:$lenO;
+	$self->setTextWidth;
+	$self->adjustCoords();
+	
+	foreach (keys %{$self->{I}}) {$self->drawInp($_);}
+	foreach (keys %{$self->{O}}) {$self->drawOut($_)};
+	
+	if ($self->{SELECTED}){$self->set_selected();}
+
+}
+
+sub adjustCoords {
+	my $self = shift;
+	my $len = $self->{LENGTH};
+	my ($x1,$y1) = @@{$self->{COORDS}};
+	my $x2=$x1+$self->{TEXT_W}+$attrXpad*2;
+	my $y2=$y1+$tblHeadY;
+	my $half=$x1+(abs($x1-$x2)/2);
+	my $bottom=$y1+$tblHeadY + $attrYpad + ($len-0.5) * $attrYstep;
+	#$self->{CANVAS}->coords($self->{CANV_ID}[0], $x1, $y1, $x2, $y2);
+	#$self->{CANVAS}->coords($self->{CANV_ID}[1], $x1+$blPad, $y1, $x2-$blPad, $y2);
+	$self->{CANVAS}->coords($self->{CANV_ID}[0], $x1, $y1, $x2, $y2);
+	$self->{CANVAS}->coords($self->{CANV_ID}[1], ($x1+$x2)/2, ($y1+$y2)/2);
+	####
+	#$self->{CANVAS}->coords($self->{CANV_ID}[2], $x1, $y2, $x2, $y1+($self->{I_N}+1)*$attrYstep+$attrYpad*2);
+	####
+	$self->{CANVAS}->coords($self->{CANV_ID}[2], $x1, $y2, $x2, $bottom);
+	$self->{CANVAS}->coords($self->{CANV_ID}[4], $half,$y2,$half,$bottom);
+	#$self->{CANVAS}->coords($self->{CANV_ID}[5], $x2-$blPad/2, ($y1+$y2)/2);
+	
+	$self->coords($x1, $y1, $x2, $y2);
+	foreach (@@{$self->relation}) {	#adjust all connected relations
+		$_->adjustCoords;
+	};
+#	foreach (keys %{$self->{I}}) {
+#		$self->{CANVAS}->coords($self->{CANV_ID}[$self->{I}{$_}{order}+$TabElemN],$x1+$attrXpad,$y1+$self->{I_Y}{$_});
+#	}
+#	foreach (keys %{$self->{O}}) {
+#		$self->{CANVAS}->coords($self->{CANV_ID}[$self->{O}{$_}{order}+$self->{I_N}+$TabElemN],$x2-$attrXpad,$y1+$self->{O_Y}{$_});
+#	}
+}
+
+sub setTextWidth {
+	my $self = shift;
+
+	$self->{TEXT_W}=0;
+	foreach (keys %{$self->{I}}) {
+		my @@w = $self->{CANVAS}->bbox($self->{CANV_ID}[$self->{I}{$_}{order}+$TabElemN]);
+		if ((@@w)&&($self->{TEXT_W} < $w[2]-$w[0])) { $self->{TEXT_W} = $w[2]-$w[0] };
+	}
+	foreach (keys %{$self->{O}}) {
+		my @@w = $self->{CANVAS}->bbox($self->{CANV_ID}[$self->{O}{$_}{order}+$self->{I_N}+$TabElemN]);
+		if ((@@w)&&($self->{TEXT_W} < $w[2]-$w[0])) { $self->{TEXT_W} = $w[2]-$w[0] };
+	}
+	$self->{TEXT_W}*=2;
+	my @@w=$self->{CANVAS}->bbox($self->{CANV_ID}[1]);
+	my $ww=$w[2]-$w[0]+2*$blPad;
+	if ($self->{TEXT_W} < $ww) { $self->{TEXT_W} = $ww };	# is label longer than 2* max inp/out string
+
+}
+
+sub drawInp {
+	my $self = shift;
+	my $id = shift;	# inp name
+	my $move_tag = "_".$self->{ID};
+	my $sel_tag = ".$id";
+	my $cir_tag = "circle".$self->{ID};
+	my ($x1,$y1,$x2,$y2) = @@{$self->{COORDS}};
+	#print "\nse hace input $id en $self->{ID}";
+	#$self->{I_Y}{$id} = $tblHeadY + $attrYpad + ($self->{I}{$id}{len}-1) * $attrYstep;
+	$y1 += $self->{I_Y}{$id};
+	$self->{CANV_ID}[$self->{I}{$id}{canv_id}]=$self->{CANVAS}->createText($x1+$attrXpad, $y1+ ((($self->{I}{$id}{len})-1)*$attrYstep/2), -anchor=>'w', -fill=>'black',-text=>$self->{I}{$id}{name}, -font=>$AttributeFont, -tags=>[$move_tag,$sel_tag,'item']);
+	#print "\nlength is: $self->{I}{$id}{len}";
+	for (my $i=1; $i<=$self->{I}{$id}{len};$i++){
+		#print "\n i es:$i";
+		$self->{CANVAS}->createOval($x1-2,$y1-2,$x1+2,$y1+2,-fill => 'black', -tags => [$cir_tag]);
+		$y1 += $attrYstep;
+	}
+	$y1-= $attrYstep;
+	$self->{CANVAS}->createLine($x1,$y1+($attrYstep/2),$x1+(abs($x1-$x2)/2),$y1+($attrYstep/2), -fill=>$divLineCol, -join=>'round', -width=>$divLineWidth, -tags=>[$cir_tag]);	
+}
+
+sub drawOut {
+	my $self = shift;
+	my $id = shift;	# attr name
+	my $move_tag = "_$self->{ID}";
+	my $sel_tag = ".$id";
+	my $cir_tag = "2circle".$self->{ID};
+#	return if (!($self->{O}{$name}));
+	my ($x1,$y1,$x2,$y2) = @@{$self->{COORDS}};
+	#$self->{O_Y}{$id} = $tblHeadY + $attrYpad + $self->{O}{$id}{order} * $attrYstep;
+	$y1 += $self->{O_Y}{$id};
+	$self->{CANV_ID}[$self->{O}{$id}{canv_id}]=$self->{CANVAS}->createText($x2-$attrXpad, $y1+ ((($self->{O}{$id}{len})-1)*$attrYstep/2), -anchor=>'e', -fill=>'black',-text=>$self->{O}{$id}{name}, -font=>$AttributeFont, -tags=>[$move_tag,$sel_tag,'item']);
+	for (my $i=1; $i<=$self->{O}{$id}{len};$i++){
+		$self->{CANVAS}->createOval($x2-2,$y1-2,$x2+2,$y1+2,-fill => 'black', -tags => [$move_tag,$sel_tag,'attr',"#$i",$cir_tag]);
+		$y1 += $attrYstep;
+	}
+	$y1-= $attrYstep;
+	$self->{CANVAS}->createLine($x2,$y1+($attrYstep/2),$x1+(abs($x1-$x2)/2),$y1+($attrYstep/2), -fill=>$divLineCol, -join=>'round', -width=>$divLineWidth, -tags=>[$move_tag,$cir_tag]);
+}
+
+sub delFromGUI{
+	my $self = shift;
+	my ($layerID) = @@_;
+	$self->clear;
+	
+	foreach (@@{$self->relation}) {	#delete all connected relations;
+		$_->delFromGUI($layerID, $self->{ID});
+	};
+	return @@{$self->relation};
+}
+
+#-----------------------------
+
+sub clear {
+	my $self = shift;
+	my $cir_tag = "circle".$self->{ID};
+	my $tag_name = "_".$self->{ID};
+	foreach (@@{$self->{CANV_ID}}) {
+		$self->{CANVAS}->delete($_);
+	}
+	$self->{CANVAS}->delete($cir_tag);
+	$self->{CANVAS}->delete("2".$cir_tag);
+	$self->{CANV_ID}=();
+}
+
+#-----------------------------
+
+1;
+@
+
+
+1.16
+log
+@Position is language dependant
+@
+text
+@d4 1
+a4 1
+# $Id: DBTransf.pm,v 1.15 2003/11/06 12:28:24 tuco80 Exp $
+d36 1
+d57 1
+d95 14
+d336 12
+d351 2
+a352 1
+	$self->{CANV_ID}[0]=$c->createRectangle(0,0,0,0, -width=>1, -fill => $uBannerClr, -tags=>[$move_tag,'item']);
+@
+
+
+1.15
+log
+@+Color changing for Groups, +Property edition for groups/roles
+@
+text
+@d4 1
+a4 1
+# $Id: DBTransf.pm,v 1.14 2003/10/20 09:41:09 tuco80 Exp $
+d308 1
+@
+
+
+1.14
+log
+@Project exported to .scheme and .bee xml scripts
+@
+text
+@d4 1
+a4 1
+# $Id: DBTransf.pm,v 1.13 2003/09/25 09:50:12 tuco80 Exp $
+d13 1
+a13 1
+my $attrYstep = 14;
+d17 1
+a17 1
+my $attrYpad = 7;  #Should be attrYstep/2  but only for appearance simetry (i.e. it CAN be anything)
+@
+
+
+1.13
+log
+@Fixed bug in placement of new connections
+@
+text
+@d4 1
+a4 1
+# $Id: DBTransf.pm,v 1.12 2003/09/25 09:50:12 tuco80 Exp $
+d218 24
+d288 1
+a288 1
+	foreach (@@{$self->relation}) {	#move all connected relations
+d294 1
+a294 1
+}
+@
+
+
+1.12
+log
+@Arity of Transformation I/O complete
+@
+text
+@d4 1
+a4 1
+# $Id: DBTransf.pm,v 1.11 2003/09/22 09:48:35 tuco80 Exp $
+d93 6
+d191 1
+a191 1
+			foreach (@@{$self->relation}) {	#move all connected relations
+a195 2
+			#print "\n este es count: $count";
+			
+d201 1
+a201 1
+					$temp = int((abs($y1+$mid+$pad-$y)/$attrYstep));
+a207 1
+				#print "\nEste es len $self->{I}{$_}{len}";
+d416 1
+a416 1
+	my $cir_tag = "circle".$self->{ID};
+d423 1
+a423 1
+		$self->{CANVAS}->createOval($x2-2,$y1-2,$x2+2,$y1+2,-fill => 'black', -tags => [$move_tag,$sel_tag,'attr',"#$i"]);
+d427 1
+a427 1
+	$self->{CANVAS}->createLine($x2,$y1+($attrYstep/2),$x1+(abs($x1-$x2)/2),$y1+($attrYstep/2), -fill=>$divLineCol, -join=>'round', -width=>$divLineWidth, -tags=>[$cir_tag]);
+d446 1
+d451 1
+@
+
+
+1.11
+log
+@fixed select in draw().  DBtransf & DBConn + arity butnot finished
+@
+text
+@d4 1
+a4 1
+# $Id: DBTransf.pm,v 1.10 2003/09/08 14:07:20 tuco80 Exp $
+d18 1
+a18 1
+my $TabElemN=4; # No of fixed table dwawing elements (ID numbering of I/O elements will start on this)
+d144 15
+a158 1
+		$y-= --$number * $attrYstep;
+d170 1
+a170 2
+	$pad--;
+	my $temp;
+d174 7
+a180 2
+		$temp = (($self->{I}{$_}{len})-1)*$attrYstep+$pad;
+		if($y>=($y1+$mid-$temp)&& $y<=($y1+$mid+$pad)){
+d182 19
+a200 2
+			if ($self->{I}{$_}{len} <= 1){#It should never be less than one, but just in case ;)
+				push(@@ret,1);
+d203 5
+a207 3
+				$temp = int((abs($y1+$mid+$pad-$y)/$attrYstep));
+				$temp++;
+				push(@@ret,$temp);
+d236 10
+d277 1
+a277 1
+	if ($self->{SELECTED}){$c->move($self->{CANV_ID}[6], $x, $y);}
+a305 1
+	
+a306 1
+		#print "\n este es a: $a y este es b: $b";
+a308 5
+
+	sub byLineOrderOut{
+		#print "\n este es a: $a y este es b: $b";
+		return $self->{O}{$a}{order} <=> $self->{O}{$b}{order};
+	}
+d310 1
+a310 1
+		#print "\nnumero $self->{I}{$_}{order}\n";
+a311 8
+		#if ($ant){
+			#$len = $self->{I}{$_}{len}+$self->{I}{$ant}{len};
+			#$self->{I}{$_}{len}= $len;
+			
+			$self->{I_Y}{$_} = $tblHeadY + $attrYpad + ($lenI-1) * $attrYstep;
+			#print "\nHizo la suma $_ = $len\n";
+			#last;
+		#}
+d314 2
+d317 5
+a321 2
+	foreach( sort byLineOrderOut keys %{$self->{O}}){
+		#print "\nnumero $self->{I}{$_}{order}\n";
+a322 8
+		#if ($ant){
+			#$len = $self->{I}{$_}{len}+$self->{I}{$ant}{len};
+			#$self->{I}{$_}{len}= $len;
+			
+			$self->{O_Y}{$_} = $tblHeadY + $attrYpad + ($lenO-1) * $attrYstep;
+			#print "\nHizo la suma $_ = $len\n";
+			#last;
+		#}
+a328 2
+	if ($self->{SELECTED}){$self->set_selected();}
+	
+d330 2
+d333 1
+a333 6
+
+	foreach (keys %{$self->{I}}) {
+		$self->drawInp($_);
+		#print "\nahora si esta definido, $_ =:$self->{I}{$_}{len}\n";
+	}
+	foreach (keys %{$self->{O}}) {$self->drawOut($_)};
+d397 1
+a397 2
+	$self->{CANV_ID}[$self->{I}{$id}{canv_id}]=$self->{CANVAS}->createText($x1+$attrXpad, $y1- ((($self->{I}{$id}{len})-1)*$attrYstep/2), -anchor=>'w', -fill=>'black',-text=>$self->{I}{$id}{name}, -font=>$AttributeFont, -tags=>[$move_tag,$sel_tag,'item']);
+	$self->{CANVAS}->createLine($x1,$y1+($attrYstep/2),$x1+(abs($x1-$x2)/2),$y1+($attrYstep/2), -fill=>$divLineCol, -join=>'round', -width=>$divLineWidth, -tags=>[$cir_tag]);
+d402 4
+a405 2
+		$y1 -= $attrYstep;
+	}	
+d418 1
+a418 2
+	$self->{CANV_ID}[$self->{O}{$id}{canv_id}]=$self->{CANVAS}->createText($x2-$attrXpad, $y1- ((($self->{O}{$id}{len})-1)*$attrYstep/2), -anchor=>'e', -fill=>'black',-text=>$self->{O}{$id}{name}, -font=>$AttributeFont, -tags=>[$move_tag,$sel_tag]);
+	$self->{CANVAS}->createLine($x2,$y1+($attrYstep/2),$x1+(abs($x1-$x2)/2),$y1+($attrYstep/2), -fill=>$divLineCol, -join=>'round', -width=>$divLineWidth, -tags=>[$cir_tag]);
+d421 1
+a421 1
+		$y1 -= $attrYstep;
+d423 2
+@
+
+
+1.10
+log
+@Added creation of relations between objects (Hrel,Sign,Rel & Conn)
+@
+text
+@d4 1
+a4 1
+# $Id: DBTransf.pm,v 1.9 2003/09/02 08:17:54 tuco80 Exp $
+d13 1
+a13 1
+my $attrYstep = 10;
+d17 2
+a18 2
+my $attrYpad = 10;
+my $TabElemN=7; # No of fixed table dwawing elements (ID numbering of I/O elements will start on this)
+d21 2
+d104 1
+a104 1
+	my $count = $self->{I_N}>$self->{O_N}? $self->{I_N} : $self->{O_N};
+a105 1
+	$count++;
+d109 2
+a110 2
+	my $sy2 = $y1+($count*$attrYstep+$attrYpad*2)+$temp;
+	$self->{CANVAS}->coords($self->{CANV_ID}[6], $sx1, $sy1, $sx2, $sy2);
+d116 1
+a116 1
+	$self->{CANVAS}->coords($self->{CANV_ID}[6], -10, -10, -10, -10);
+d133 1
+a133 1
+	my $count = $self->{I_N}>$self->{O_N}? $self->{I_N} : $self->{O_N};
+d135 1
+a135 1
+	$y2 = $y1+($count*$attrYstep+$attrYpad*2);
+d141 7
+a147 2
+    my $name = shift;
+    return $self->{I_Y}{$name} || $self->{O_Y}{$name};	# ??? || $self->{I_Y}{_TRIG} || $self->{O_Y}{_STAT};
+d155 4
+a158 1
+	my $pad = 4;
+d161 12
+a172 2
+		if($y>=($y1+$mid-$pad)&& $y<=($y1+$mid+$pad)){
+			return $_;
+d182 1
+d185 1
+d193 1
+d227 1
+d229 1
+d236 2
+d239 1
+a239 1
+	my $self = shift;
+d246 7
+a252 7
+	$self->{CANV_ID}[6]=$c->createRectangle(-10,-10,-10,-10,-width=>$selBoxWidth, -outline => $selBoxCol,-tags=>['SELECTED'.$move_tag]);
+	$self->{CANV_ID}[0]=$c->createRectangle(0,0,0,0, -width=>1, -fill => 'black', -tags=>[$move_tag]);
+	$self->{CANV_ID}[1]=$c->createRectangle(0,0,0,0, -width=>1, -fill => $uBannerClr, -tags=>[$move_tag,'item']);
+	$self->{CANV_ID}[2]=$c->createText(0,0, qw/-anchor c -fill white/,-text=>$self->{NAME},-font=>$EntityFont, -tags=>[$move_tag,'item']);
+	$self->{CANV_ID}[3]=$c->createRectangle(0,0,0,0, -width=>1, -fill => 'white', -tags=>[$move_tag]);
+	$self->{CANV_ID}[4]=$c->createText(0,0, qw/-anchor c -fill white/,-text=>'T',-font=>$EntityFont, -tags=>[$move_tag,'item']);
+	$self->{CANV_ID}[5]=$c->createText(0,0, qw/-anchor c -fill white/,-text=>'S',-font=>$EntityFont, -tags=>[$move_tag,'attr']);
+d257 41
+d299 5
+a303 1
+	$self->adjustCoords;
+d305 4
+a308 1
+	foreach (keys %{$self->{I}}) {$self->drawInp($_)};
+d315 1
+d319 4
+d324 7
+a330 5
+	$self->{CANVAS}->coords($self->{CANV_ID}[1], $x1+$blPad, $y1, $x2-$blPad, $y2);
+	$self->{CANVAS}->coords($self->{CANV_ID}[2], ($x1+$x2)/2, ($y1+$y2)/2);
+	$self->{CANVAS}->coords($self->{CANV_ID}[3], $x1, $y2, $x2, $y1+($self->{I_N}+1)*$attrYstep+$attrYpad*2);
+	$self->{CANVAS}->coords($self->{CANV_ID}[4], $x1+$blPad/2, ($y1+$y2)/2);
+	$self->{CANVAS}->coords($self->{CANV_ID}[5], $x2-$blPad/2, ($y1+$y2)/2);
+d357 1
+a357 1
+	my @@w=$self->{CANVAS}->bbox($self->{CANV_ID}[2]);
+d366 1
+a366 1
+	my $move_tag = "_$self->{ID}";
+d368 4
+a371 2
+	my ($x1,$y1) = @@{$self->{COORDS}};
+	$self->{I_Y}{$id} = $tblHeadY + $attrYpad + $self->{I}{$id}{order} * $attrYstep;
+d373 8
+a380 1
+	$self->{CANV_ID}[$self->{I}{$id}{canv_id}]=$self->{CANVAS}->createText($x1+$attrXpad, $y1, -anchor=>'w', -fill=>'black',-text=>$self->{I}{$id}{name}, -font=>$AttributeFont, -tags=>[$move_tag,$sel_tag,'item']);
+d388 1
+d391 1
+a391 1
+	$self->{O_Y}{$id} = $tblHeadY + $attrYpad + $self->{O}{$id}{order} * $attrYstep;
+d393 6
+a398 1
+	$self->{CANV_ID}[$self->{O}{$id}{canv_id}]=$self->{CANVAS}->createText($x2-$attrXpad, $y1, -anchor=>'e', -fill=>'black',-text=>$self->{O}{$id}{name}, -font=>$AttributeFont, -tags=>[$move_tag,$sel_tag,'attr']);
+d416 1
+d420 1
+@
+
+
+1.9
+log
+@Fixed bug in deletion of HRelations, got rid of some unnecesary prints and comments
+@
+text
+@d4 1
+a4 1
+# $Id: DBTransf.pm,v 1.8 2003/09/01 14:22:24 tuco80 Exp $
+d86 5
+d102 1
+d104 1
+d108 1
+a108 1
+	my $sy2 = $y1+(($self->{I_N}+1)*$attrYstep+$attrYpad*2)+$temp;
+d128 10
+d144 15
+d226 1
+a226 1
+	$self->{CANV_ID}[5]=$c->createText(0,0, qw/-anchor c -fill white/,-text=>'S',-font=>$EntityFont, -tags=>[$move_tag,'item']);
+d302 1
+a302 1
+	$self->{CANV_ID}[$self->{O}{$id}{canv_id}]=$self->{CANVAS}->createText($x2-$attrXpad, $y1, -anchor=>'e', -fill=>'black',-text=>$self->{O}{$id}{name}, -font=>$AttributeFont, -tags=>[$move_tag,$sel_tag,'item']);
+@
+
+
+1.8
+log
+@Deletion of Objects Complete
+@
+text
+@d4 1
+a4 1
+# $Id: DBTransf.pm,v 1.7 2003/08/29 11:45:22 tuco80 Exp $
+a94 3
+	#$self->clear;
+	#$self->draw($self->{CANVAS});
+#	my $tag_name = '_'.$self->{ID};
+a102 1
+	#$self->{CANVAS}->addtag('SELECTED', $tag_name);
+d108 1
+a108 3
+	#$self->clear;
+	#$self->draw($self->{CANVAS});
+	$self->{CANVAS}->coords($self->{CANV_ID}[6], 0, 0, 0, 0);
+a159 1
+	#print ("\n esta es la id de la relacion a borrar: ",$relID);
+a162 1
+			#print ("\nse hace push de: ",$_->id);
+a163 1
+		#print ("este es un ID en el arreglo: ", $_->id);
+d187 2
+a188 6
+	#my $sel = $self->{SELECTED};
+	#if ($sel){
+	#	print "Si se metio tuanis\n";
+		#print ($self->{SELECTED},"\n");
+		$self->{CANV_ID}[6]=$c->createRectangle(0,0,0,0,-width=>$selBoxWidth, -outline => $selBoxCol,-tags=>['SELECTED'.$move_tag]);
+	#}
+a211 16
+=pod	my $sel = $self->{SELECTED};
+	if ($sel){
+		my $sx1 = $x1-$selBoxWidth;
+		my $sy1 = $y1-$selBoxWidth;
+		my $sx2 = $x2+$selBoxWidth;
+		#my $sy2 = $y2+$selBoxWidth;
+		my $sy2 = $y1+(($self->{I_N}+1)*$attrYstep+$attrYpad*2)+$selBoxWidth;
+		#my ($sx1, $sy1, $sx2, $sy2) = {($x1-$selBoxWidth), ($y1-$selBoxWidth), ($x2+$selBoxWidth), ($y2+$selBoxWidth)};
+		#print ("las coords son: (",$sx1,",", $sy1,") (" ,$sx2,",", $sy2,")\n");
+		$self->{CANVAS}->coords($self->{CANV_ID}[6], $sx1, $sy1, $sx2, $sy2);
+	}
+	
+	#else {
+		#$self->{CANVAS}->coords($self->{CANV_ID}[6], 0, 0, 0, 0);
+	#}
+=cut
+a273 3
+	#first we are only going to delete from gui-layer
+	#after that it's just determining wether hash is empty or not
+	#and if it is, it must be deleted from project completely
+@
+
+
+1.7
+log
+@Deletion of objects almost complete
+@
+text
+@d4 1
+a4 1
+# $Id: DBTransf.pm,v 1.6 2003/08/21 13:20:48 tuco80 Exp $
+d166 1
+a166 1
+	print ("\n esta es la id de la relacion a borrar: ",$relID);
+d170 1
+a170 1
+			print ("\nse hace push de: ",$_->id);
+@
+
+
+1.6
+log
+@+ usage of "SELECTED" tags, move all selected objects at once and selection box with left mouse button instead of right
+@
+text
+@d4 1
+a4 1
+# $Id: DBTransf.pm,v 1.5 2003/08/13 10:52:28 tuco80 Exp $
+d78 8
+d162 15
+d300 14
+@
+
+
+1.5
+log
+@Selection of objects complete, except relations
+@
+text
+@d4 1
+a4 1
+# $Id: DBTransf.pm,v 1.4 2003/08/12 09:07:23 tuco80 Exp $
+d87 12
+a98 2
+	$self->clear;
+	$self->draw($self->{CANVAS});
+d104 3
+a106 2
+	$self->clear;
+	$self->draw($self->{CANVAS});
+d160 1
+d173 3
+a175 3
+	my $sel = $self->{SELECTED};
+	if ($sel){
+		print "Si se metio tuanis\n";
+d177 2
+a178 2
+		$self->{CANV_ID}[6]=$c->createRectangle(0,0,0,0,-width=>1, -fill => $selBoxCol,-tags=>[$move_tag,'item']);
+	}
+d202 1
+a202 1
+	my $sel = $self->{SELECTED};
+d213 1
+d217 1
+@
+
+
+1.4
+log
+@Selection of elements in GUI layers, not finished though
+@
+text
+@d4 1
+a4 1
+# $Id: DBTransf.pm,v 1.3 2003/08/08 14:57:37 tuco80 Exp $
+d84 14
+d132 2
+d162 1
+a162 2
+	my $positive = 1;
+	if ($sel eq $positive){
+d191 1
+a191 2
+	my $positive = 1;
+	if ($sel == $positive){
+@
+
+
+1.3
+log
+@Added prop.pm and selection property of objects
+@
+text
+@d4 1
+a4 1
+# $Id: DBTransf.pm,v 1.2 2003/04/24 20:39:59 michald Exp $
+d18 1
+a18 1
+my $TabElemN=6; # No of fixed table dwawing elements (ID numbering of I/O elements will start on this)
+d145 5
+a149 3
+	#esto pertenece al antiguo comando de crear el rectangulo, tomado del 
+	# ejemplo de widget: -stipple => '@@'.Tk->findINC('demos/images/grey.25'),
+	if ($self->{SELECTED}){
+d175 15
+a189 3
+	my ($sx1, $sy1, $sx2, $sy2) = {($x1-$selBoxWidth), ($y1-$selBoxWidth), ($x2+$selBoxWidth), ($y2+$selBoxWidth)};
+	print ($sx1, $sy1, $sx2, $sy2);
+	$self->{CANVAS}->coords($self->{CANV_ID}[6], $sx1, $sy1, $sx2, $sy2);
+@
+
+
+1.2
+log
+@simple autoplacement of DBConn
+@
+text
+@d4 1
+a4 1
+# $Id: DBTransf.pm,v 1.1.1.1 2002/09/24 01:34:14 michald Exp $
+d19 2
+d53 1
+d78 6
+d145 5
+d173 3
+d182 1
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d4 1
+a4 1
+# $Id: DBTransf.pm,v 1.2 2002/08/27 19:09:19 michal Exp $
+d125 1
+a125 1
+		$_->moveEdge($self->{ID}, $x, $y);
+@
+
+
+1.1.1.1
+log
+@Initial public release of BEE Project.
+@
+text
+@@

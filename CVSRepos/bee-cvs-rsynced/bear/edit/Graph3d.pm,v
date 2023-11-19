@@ -1,0 +1,113 @@
+head	1.2;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2003.11.18.14.38.40;	author jiri_schmid;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2003.10.31.12.47.57;	author jiri_schmid;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@auto save when changing tabs implemented
+@
+text
+@#-----------------------------------------------------
+#  Grid Editation
+#-----------------------------------------------------
+# $Id: Graph3d.pm,v 1.1 2003/10/31 12:47:57 jiri_schmid Exp $
+
+package Graph3d;
+
+use strict;
+require "local/Generate.pm";
+
+#-----------------------------------------------------
+sub generateContent() {
+my($variables, $lang, $obj) = (shift, shift, shift);
+my $saved = $$variables->{saved} if exists $$variables->{saved};
+
+print <<END;
+<br>
+<table class="page_skeleton">
+<tr class="page_skeleton"><td class="page_skeleton_ex" align="center">
+END
+&Generate::generateGraph3DEdit($lang,$$variables->{skinPath},$$variables->{imgType});
+print "</td><td>";
+&Generate::generateGraph3DEditFields($obj);
+print <<END;
+</td></tr>
+<tr class="page_skeleton">
+<td class="page_skeleton">
+	<table class="neutral_100">
+	<tr><td align="center">
+		<table class="buttons" cellpading="0" cellspacing="0">
+		<tr>	<td class="buttons"><input id='SAVE' type="submit" name="Action" value="$$lang->{'Save'}" onclick="fill_selects()" /></td>
+			<td class="buttons">	<input type="submit" name="Action" value="$$lang->{'Save As'}" onclick="fill_selects(); return readName();"/>
+						<input type="hidden" name="saveAsName" id="saveAsName" value="" /></td>
+			<td class="buttons"><input type="button" name="reset" value="$$lang->{'Reset'}" onclick="fill_tables()" /></td>
+		</tr>
+		</table>
+	</td></tr>
+	</table>
+</td></tr>
+</table>
+<script type="text/javascript" src="js/graph3d.js"></script>	
+<script type="text/javascript">
+	var msg="$$lang->{'New Save Part1'}$$lang->{'New Graph3d Save'}$$lang->{'New Save Part2'}";
+	fill_tables();
+	var saveAsMsg = "$$lang->{SaveAsMsg}$$lang->{'New Graph3d'}";
+	reloadTree($saved);
+</script>
+END
+}
+
+#---------------------------------------------------
+
+sub set_next_param {
+	my ($o,$q) = (shift, shift);
+	foreach ('pages','y','x','z','transparency','diameter','shape','color') {
+		my @@param = $$q->param($_);
+		if (@@param) {
+			if (exists $$o->{$_}{items}) {
+				$$o->{$_}{rules} = [] if ( join(",",@@{$$o->{$_}{items}}) ne join(",",@@param) );
+			}
+			$$o->{$_}{items} = [@@param];
+		} else {
+			undef $$o->{$_};
+		}
+		my $qKey = "${_}Q";
+		$$o->{$_}{quantity} = $$q->param($qKey) ? 'on' : 'off';
+	}
+}
+
+1
+@
+
+
+1.1
+log
+@mod perl rocks!
+@
+text
+@d4 1
+a4 1
+# $Id: graph3d_def_ed.pl,v 1.9 2003/10/17 11:36:16 jiri_schmid Exp $
+d31 1
+a31 1
+		<tr>	<td class="buttons"><input type="submit" name="Action" value="$$lang->{'Save'}" onclick="fill_selects()" /></td>
+@
+

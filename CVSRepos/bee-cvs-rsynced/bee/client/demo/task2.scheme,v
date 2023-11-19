@@ -1,0 +1,41 @@
+head	1.1;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.1
+date	2003.11.06.12.04.20;	author numberone;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@renaming .xml to .scheme and .bee
+@
+text
+@<?xml version="1.0" encoding="ISO-8859-2"?>
+
+<task>
+<otec host='localhost' port='2333' ssl='off'>
+
+	<bee name='id' script='id.bee'>
+
+		<input input='1' separator=':' 
+			   url='dir://localhost/etc/passwd' />
+
+		<output output='1' url='display://uid:shell' />
+
+	</bee>
+
+</otec>
+
+</task>
+
+@

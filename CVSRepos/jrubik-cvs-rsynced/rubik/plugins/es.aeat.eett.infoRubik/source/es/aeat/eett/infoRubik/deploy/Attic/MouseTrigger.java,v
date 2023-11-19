@@ -1,0 +1,201 @@
+head	1.2;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2008.05.17.15.37.41;	author fsaz;	state dead;
+branches;
+next	1.1;
+
+1.1
+date	2005.11.28.14.44.05;	author fsaz;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@Borrando
+@
+text
+@/*
+ * Created on 27-may-2005
+ *
+ * MouseTrigger.java
+ *
+ */
+package es.aeat.eett.infoRubik.deploy;
+
+import java.awt.Cursor;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import java.util.Enumeration;
+
+import javax.swing.JTree;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.TreeNode;
+import javax.swing.tree.TreePath;
+
+import com.tonbeller.jpivot.olap.model.Level;
+
+import es.aeat.eett.rubik.core.cell.RubikCell;
+
+/**
+ * @@author f00992
+ *
+ * Esta clase gestiona los eventos del raton originados en jTreeElegidas
+ *
+ */
+class MouseTrigger extends MouseAdapter {
+    private DefaultMutableTreeNode firstNode=null;
+
+    /* (non-Javadoc)
+     * @@see java.awt.event.MouseListener#mousePressed(java.awt.event.MouseEvent)
+     */
+    public void mousePressed(MouseEvent e) {
+		if(firstNode!=null) firstNode=null;
+		if ((e.getButton()==MouseEvent.BUTTON1)&&(e.getClickCount() < 2)){
+			if(e.getSource() instanceof JTree){
+				JTree tree=(JTree) e.getSource();
+	    		int x = e.getX();
+	    		int y = e.getY();
+	    		int row = tree.getRowForLocation(x, y);
+	    		TreePath  path = tree.getPathForRow(row);
+	    		if (path != null) {
+	    		    firstNode=(DefaultMutableTreeNode)path.getLastPathComponent();
+	    		    if(firstNode.getParent()!=null)
+		    			((JTree) e.getSource()).setCursor(Cursor.getPredefinedCursor(Cursor.MOVE_CURSOR));
+	    		}
+			}
+		}
+    }
+    /* (non-Javadoc)
+     * @@see java.awt.event.MouseListener#mouseReleased(java.awt.event.MouseEvent)
+     */
+    public void mouseReleased(MouseEvent e) {
+		if ((e.getButton()==MouseEvent.BUTTON1)&&(e.getClickCount() < 2)){
+			if(e.getSource() instanceof JTree){
+				JTree tree=(JTree) e.getSource();
+	    		int x = e.getX();
+	    		int y = e.getY();
+	    		int row = tree.getRowForLocation(x, y);
+	    		TreePath  path = tree.getPathForRow(row);
+	    		if (path != null && firstNode!=null) { //Moviendo
+	    		    DefaultMutableTreeNode lastNode=(DefaultMutableTreeNode)path.getLastPathComponent();
+    		        TreeNode nParent=move(firstNode,lastNode);
+	    		    if(nParent!=null){//Se cambio el orden
+	    		        DefaultTreeModel tm= (DefaultTreeModel) tree.getModel();
+	    		        tm.nodeStructureChanged(nParent);
+	    		    }
+	    		}else if(firstNode != null ){//Eliminando
+	    		    if(canRemove(firstNode)){
+	    		        TreeNode nParent=(TreeNode)firstNode.getParent();
+	    		        remove(firstNode);
+	    		        DefaultTreeModel tm= (DefaultTreeModel) tree.getModel();
+	    		        tm.nodeStructureChanged(nParent);
+	    		    }
+	    		}
+			}
+		}
+		if(firstNode!=null){
+		    firstNode=null;
+			((JTree) e.getSource()).setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+		}
+    }
+    private boolean canRemove(DefaultMutableTreeNode node){
+        if(node.getParent()!=null){
+            if(node.getUserObject() instanceof RubikCell){
+            RubikCell rc=(RubikCell) node.getUserObject();
+            if( node.getParent().getChildCount()>1){
+                return true;
+            }else  if(rc.getDisplayable() instanceof Level)
+                return true;
+            }else
+                return false;
+        }
+        return false;
+    }
+    private void remove(DefaultMutableTreeNode node){
+        if(canRemove((DefaultMutableTreeNode) node)){
+            DefaultMutableTreeNode nParent=(DefaultMutableTreeNode) node.getParent();
+            nParent.remove(node);
+        }
+    }
+    private boolean canMove(DefaultMutableTreeNode firstNode, DefaultMutableTreeNode lastNode){
+        if(firstNode.getParent()!=null && lastNode.getParent()!=null && firstNode!=lastNode){
+            if( firstNode.getParent()==lastNode.getParent()) return true;// Moviendo Hermanos
+            RubikCell firstRc=(RubikCell) firstNode.getUserObject();
+            RubikCell lastRc=(RubikCell) lastNode.getUserObject();
+            if(firstRc.getDisplayable() instanceof Level && lastRc.getDisplayable() instanceof Level){
+                return lastNode.isNodeDescendant(firstNode); //Moviendo Level
+            }
+        }
+        return false;
+    }
+    private DefaultMutableTreeNode move(DefaultMutableTreeNode firstNode, DefaultMutableTreeNode lastNode){
+        DefaultMutableTreeNode nParent= null;
+        if(canMove(firstNode,lastNode )){
+            if( firstNode.getParent()==lastNode.getParent()){// Moviendo Hermanos
+                nParent= (DefaultMutableTreeNode)firstNode.getParent();
+                moveHermanos(firstNode,lastNode);
+            }else if(lastNode.isNodeDescendant(firstNode)){
+                nParent=(DefaultMutableTreeNode) lastNode.getParent();
+                int first=nParent.getIndex(lastNode);
+                nParent.remove(lastNode);
+                nParent.insert(firstNode, first);
+            }
+        }
+        return nParent;
+    }
+    private void moveHermanos(DefaultMutableTreeNode firstNode, DefaultMutableTreeNode lastNode){
+        DefaultMutableTreeNode nParent= (DefaultMutableTreeNode)firstNode.getParent();
+        if( nParent==lastNode.getParent()){
+            int first=nParent.getIndex(firstNode);
+            int last=nParent.getIndex(lastNode);
+            nParent.remove(first);
+            nParent.remove(lastNode);
+            ArrayList list=new ArrayList();
+            for(Enumeration e=nParent.children(); e.hasMoreElements();list.add(e.nextElement()));
+            for(int i=nParent.getChildCount()-1; i>-1; i--){//Vaciando nParent
+                nParent.remove(i);
+            }
+            //Restaurando con el nuevo orden nParent
+            if(list.size()>0){
+                int offset=0;
+                for(int i=0; i<list.size()+2; i++) {
+                    if(i==first){
+                        nParent.insert(lastNode, i);
+                        offset++;
+                    }else if(i==last){
+                        nParent.insert(firstNode, i);
+                        offset++;
+                    }else
+                        nParent.insert((DefaultMutableTreeNode) list.get(i-offset), i);
+                }
+            }else{//El nodo solo tiene los dos hijo que se intercambian
+                nParent.insert(lastNode, 0);
+                nParent.insert(firstNode, 1);
+            }
+
+        }
+    }
+}// Fin class MouseTrigger
+@
+
+
+1.1
+log
+@*** empty log message ***
+@
+text
+@@
+

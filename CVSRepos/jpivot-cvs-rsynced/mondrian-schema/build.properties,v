@@ -1,0 +1,45 @@
+head	1.1;
+access;
+symbols
+	test_tag:1.1
+	sfsync:1.1;
+locks; strict;
+comment	@# @;
+
+
+1.1
+date	2004.06.09.20.29.55;	author avix;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@initial checkin
+@
+text
+@<!--
+/**
+ * <copyright>
+ * </copyright>
+ *
+ * $Id$
+ */
+-->
+bin.includes = plugin.xml,\
+               runtime/net.sourceforge.mondrian.schema.jar,\
+               plugin.properties,\
+               icons/,\
+               src/,\
+               build.properties,\
+               .project,\
+               .classpath,\
+               toc.xml,\
+               html/
+jars.compile.order = runtime/net.sourceforge.mondrian.schema.jar
+source.runtime/net.sourceforge.mondrian.schema.jar = src/
+output.runtime/net.sourceforge.mondrian.schema.jar = bin/@

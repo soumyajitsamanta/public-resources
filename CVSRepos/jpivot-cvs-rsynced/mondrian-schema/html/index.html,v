@@ -1,0 +1,65 @@
+head	1.2;
+access;
+symbols
+	test_tag:1.2
+	sfsync:1.2;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2004.06.09.22.50.17;	author avix;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2004.06.09.20.35.53;	author avix;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@*** empty log message ***
+@
+text
+@<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+	<head>
+		<meta http-equiv="content-type" content="text/html;charset=iso-8859-1"/>
+		<title>Mondrian Schema Eclipse Plugin</title>
+		<style type="text/css" media="screen"><!--
+body { font-family: Arial, Helvetica, Geneva, Swiss, SunSans-Regular }
+--></style>
+	</head>
+
+	<body bgcolor="#ffffff">
+		<a href="http://sourceforge.net"><img  align="right" src="http://sourceforge.net/sflogo.php?group_id=58645&amp;type=4" width="125" height="37" border="0" alt="SourceForge.net Logo"/></a>
+		<h3>Mondrian Schema Eclipse Plugin</h3>
+		
+		<ul>
+			<li><a href="schema/index.html">Mondrian Schema Editor</a></li>
+			<li><a href="develop/index.html">Developer information</a></li>
+		</ul>
+		Up-to-date versions can be found at <a href="http://jpivot.sourceforge.net">jpivot.sourceforge.net</a>.
+	</body>
+
+</html>@
+
+
+1.1
+log
+@initial checkin
+@
+text
+@d15 1
+d17 1
+@
+

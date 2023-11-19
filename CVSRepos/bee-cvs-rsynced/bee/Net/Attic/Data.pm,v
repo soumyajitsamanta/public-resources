@@ -1,0 +1,50 @@
+head	1.2;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2003.10.27.15.12.23;	author numberone;	state dead;
+branches;
+next	1.1;
+
+1.1
+date	2003.10.27.14.58.50;	author numberone;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@ok
+@
+text
+@package Data;
+
+use strict;
+use warnings;
+
+use XSLoader ();
+
+our $VERSION = "1.5";
+
+XSLoader::load 'Data', $VERSION;
+
+1;
+
+@
+
+
+1.1
+log
+@Data: files added
+@
+text
+@@
+

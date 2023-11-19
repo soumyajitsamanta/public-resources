@@ -1,0 +1,159 @@
+head	1.2;
+access;
+symbols
+	jpivot_1_8_0:1.2
+	focus_1_6_0:1.2.0.4
+	wcf_1_7_0:1.2
+	wcf_1_6_0:1.2
+	jpivot_1_5_0:1.2.0.2
+	Root_jpivot_1_5_0:1.2
+	mondrian_xmla_2005_08_25:1.1.0.2
+	sourceforge_sync:1.2;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2005.12.13.11.54.18;	author avix;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2005.07.05.14.05.03;	author avix;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@Synchronized with Tonbeller CVS:
+  * Added BEA / Websphere Support
+  * More tags in wcf tag library
+  * Bugfixes
+@
+text
+@package com.tonbeller.wcf.format;
+
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.Locale;
+
+import junit.framework.TestCase;
+
+
+/**
+ * @@author av
+ *
+ * To change this generated comment edit the template variable "typecomment":
+ * Window>Preferences>Java>Templates.
+ * To enable and disable the creation of type comments go to
+ * Window>Preferences>Java>Code Generation.
+ */
+public class FormatterTest extends TestCase {
+
+  Formatter en;
+  Formatter de;
+
+  /**
+   * Constructor for FormatterTest.
+   * @@param arg0
+   */
+  public FormatterTest(String arg0) {
+    super(arg0);
+  }
+
+  /**
+   * @@see junit.framework.TestCase#setUp()
+   */
+  protected void setUp() throws Exception {
+    en = FormatterFactory.instance(Locale.ENGLISH);
+    de = FormatterFactory.instance(Locale.GERMAN);
+  }
+
+  public void testString() {
+    assertEquals("123", de.parse("string", "123", null));
+    assertEquals("123", de.format("string", "123", null));
+    assertEquals("", de.format("string", null, null));
+  }
+
+  public void testInteger() {
+    assertEquals(new Integer(123), de.parse("int", "123", null));
+    try {
+      en.parse("int", "1x23", null);
+      assertEquals("should throw exception", true, false);
+    }
+    catch (FormatException e) {
+    }
+  }
+
+
+  public void testDouble() {
+    FormatHandler h = en.getHandler("double");
+    assertEquals(new Double(123.45), h.parse("123.45", null));
+    h = de.getHandler("double");
+    assertEquals(new Double(123.45), h.parse("123,45", null));
+    assertEquals("123,45", h.format(new Double(123.45), null));
+  }
+
+  public void testNaNDouble() {
+    FormatHandler h = en.getHandler("nandouble");
+    assertEquals(new Double(123.45), h.parse("123.45", null));
+    h = de.getHandler("nandouble");
+    assertEquals(new Double(123.45), h.parse("123,45", null));
+    assertEquals("123,45", h.format(new Double(123.45), null));
+    assertEquals(new Double(Double.NaN), h.parse("", null));
+    assertEquals("", h.format(new Double(Double.NaN), null));
+  }
+
+  public void testDate() {
+    GregorianCalendar gc = new GregorianCalendar(2000, Calendar.AUGUST, 12);
+    assertEquals("08/12/2000", en.format("date", gc.getTime(), null));
+  }
+
+
+  public void testRegex() {
+    assertEquals("abc@@de.com", de.parse("email", "abc@@de.com", null));
+    try {
+      en.parse("email", "abcde.com", null);
+      assertEquals("should throw exception", "abcde.com", null);
+    }
+    catch (FormatException e) {
+    }
+  }
+
+
+}
+@
+
+
+1.1
+log
+@initial version
+@
+text
+@d38 1
+a38 1
+  
+d44 1
+a44 1
+  
+d54 1
+a54 1
+  
+d62 12
+a73 3
+  }  
+  
+  
+d78 1
+a78 1
+  
+d89 1
+a89 1
+  
+@
+

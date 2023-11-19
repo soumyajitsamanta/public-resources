@@ -1,0 +1,69 @@
+head	1.2;
+access;
+symbols
+	start:1.1.1.1 vendor:1.1.1;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2003.06.03.13.16.16;	author numberone;	state dead;
+branches;
+next	1.1;
+
+1.1
+date	2002.09.24.01.34.14;	author michald;	state Exp;
+branches
+	1.1.1.1;
+next	;
+
+1.1.1.1
+date	2002.09.24.01.34.14;	author michald;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@0.9.1 -- version merge
+@
+text
+@-----BEGIN RSA PRIVATE KEY-----
+Proc-Type: 4,ENCRYPTED
+DEK-Info: DES-EDE3-CBC,33ED3B346C76719A
+
+d/Qs0Emvmi9gNuplgarb6oowsAVMf3yK8vSGV/XedxddPg+QWG3fBY9b+KFAcJIg
+7QF9aDy8pJ01Tp7axtbZG1D0ecm+qGVd5qqpo5LXiS6Ff9QhvfvdpNJ7QUlSzoUB
+uxvpRR0qMZ/rrZRKl9acf5D7RMHslF5t2Zo6aVH9hypHiGJ4Z3sD/yE5mPZgPS07
+FieqLv1+Rpa5RVaPd1fX9I2fjxsTzzPo4R7QSIG7c+zOkMNIuCnaVCOLapi1Bhn1
+LPenZp6IMXFfHs/nffvRiElIHD3UhmChgdg1Z2FC3P/LtGzISjJHtdQ2qsWgS5co
+Ne12fSUg4CUzM/l7+St0F5LDyZcjPiVoqFsGTEjZ/LoPQM6ZIRWPGOkRfJplUzyr
+0qp3i/TQl8CNqLVkRz8OtnAfk7V4FJHM4YhNtX/5jX6qN78iYQlJUgPgq59aNRUz
+VNWGiKTLaHODa2Dse6RayEEEOyuWtc1Fs9vDXsuctVu6x0lfAjw06oQFrtqadplx
+AYOMeeaekU2aLq4ImuwSrCOJtgMLHZVvxEzWtvlFs38ojfyxfrwi0p9C1cwf+EvL
+mvWWlqnx+ETOCblfiNfTTpbrSbF9M2TEcVumUKrAyMqUIOIt/SoMUwoMCth3g3Ek
+xpvmgbxXQ6ofNQJ6P72nkbrdo4db4bM8jXJzzBFVtRetujelbdHj4/T89VJMt9WQ
+ubxAbebWgkOVujl5YmGEkI9L0p+PkTS22Nm0fuBAyffu0CpSEjugHrkh0qu1zZvP
+mxQpzKrcV1Byx/XSavsjYQSWJ079ezVyyjPROgo27s8gv6PKG0HsBA==
+-----END RSA PRIVATE KEY-----
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@@
+
+
+1.1.1.1
+log
+@Initial public release of BEE Project.
+@
+text
+@@

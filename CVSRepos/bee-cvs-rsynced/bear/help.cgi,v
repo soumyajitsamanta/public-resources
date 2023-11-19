@@ -1,0 +1,76 @@
+head	1.1;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.1
+date	2004.04.14.12.21.26;	author jiri_schmid;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@added help tab
+@
+text
+@#!/usr/bin/perl
+# $Id: help.cgi,v 1.6 2004/02/18 16:19:06 jiri_schmid Exp $
+
+use strict;
+use utf8;
+
+use CGI qw( :standard );
+use CGI::Pretty;
+require "const/Const.pm";
+
+my $q = new CGI;
+# --- determine user and his preferences ---
+#-------------------------------------------
+my $user = $q->remote_user() ? $q->remote_user() : 'anonymous';
+my $use_lang = ($q->param('Lang')) ? $q->param('Lang') : $Const::defaultLanguage;
+my $project = ($q->param('Proj')) ? $q->param('Proj') : '';
+my $use_enc = $Const::languages->{$use_lang}->{enc};
+
+# --- determine skin ---
+#-----------------------
+my $skinPath;
+my $wb = $q->user_agent()=~/MSIE/ ? 'msie' : 'mozilla';
+if ($q->param('Skin')) {	# takes it as param from index.cgi
+	$skinPath = "skins/".$q->param('Skin');
+} elsif ($q->param('skin')) {	# I've received parameter from myself after Save
+	$skinPath = "$Const::wb_const->{$wb}{skinDir}/".$q->param('skin');
+} else {
+	$skinPath = "$Const::wb_const->{$wb}{skinDir}/default";	#let use default
+}
+
+# --- print out html form ---
+#----------------------------
+print $q->header(-charset=>$use_enc);
+print $q->start_html(
+	-title=>"Help",
+	-lang=>$Const::languages->{$use_lang}->{lang},	#return language specification in format: language-country (it differs from param Lang)
+	-encoding=>$use_enc,
+	-head=>meta({ -http_equiv => 'Content-Type', -content => "text/html; charset=$use_enc" }),
+	-style=>{-src=>"${skinPath}/css.css"},
+	-class=>'help',
+	-onload=>'reload()',
+);
+
+if (-e $Const::myPath.$Const::help.$use_lang."/".$Const::helpIndex) { #load into self html framae page with help
+	print "<script type='text/javascript'>function reload() {self.location.href = '$Const::help$use_lang/$Const::helpIndex'}</script>"
+} else {
+	require "lang/$use_lang.utf"; #show error message
+	print "$Const::lang->{$use_lang}->{'Help None'}<br/>$Const::help$use_lang/$Const::helpIndex<script type='text/javascript'>function relaod() {}</script>";
+}
+print $q->end_html;
+#---------------------------------------------------
+
+1
+@

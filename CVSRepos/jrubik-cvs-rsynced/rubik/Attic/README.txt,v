@@ -1,0 +1,86 @@
+head	1.2;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2008.05.17.15.43.49;	author fsaz;	state dead;
+branches;
+next	1.1;
+
+1.1
+date	2005.11.28.14.02.36;	author fsaz;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@borrando viejos
+@
+text
+@- Install:
+	a) mkdir jrubik.
+	b) Copy the jar file JRubik-bin-version.zip to folder jrubik.
+		cp JRubik-bin-version.zip ./jrubik
+	c) cd ./rubik
+	d)unzip JRubik-bin-version.zip.
+	e)Finally exec run.bat (java -Xms100m -Xmx500m -jar JRubik.jar)
+
+Main changes:
+- This JRubik version runs using JPF plugin framework http://sourceforge.net/projects/jpf 
+- The folder resources had been moved to : ./data
+- The catalogs (ej.FoodMart.xml) are located on the directory: ./data/resources/catalog
+- Menus are located on : ./data/resources/mdxmenu
+- Bookmark are located on : ./data/resources/mdxbookmark
+- This version contains a Foodmart memory database version (smallFoodmart) 
+	located on: ./data/resources/hsql/smallFoodmart.script
+	the first query is very slow because is necessary to load the DB in memory.
+- The plugins has been renamed:
+chat_ComponentPlugin is now es.aeat.eett.rubik.chart
+tableRubikPlugin is now es.aeat.eett.rubik.tableRubik
+
+This changes on the plugin names could affect the previus defined menus and bookmarks by the user.
+If you are interested into mantain you have to replace the plugin name on the bookmark or menu file. 
+This files are located on the directories: ./data/resources/mdxmenu and ./data/resources/mdxbookmark
+
+- How to Add a new jdbc driver:
+	1- Copy the jar file to the folder ./plugins/es.aeat.eett.rubik.core/lib
+	2- Edit file ./es.aeat.eett.rubik.core/plugin.xml
+		the last lines are:
+				<library id="hsqldb_1.8.02" path="lib/hsqldb.jar" type="code">		
+				</library>		
+				<library id="mysql-connector-java" path="lib/mysql-connector-java-3.1.7-bin.jar" type="code">		
+				</library>
+			</runtime>
+		</plugin>		
+		If the new driver is named "otherDriver.jar" create a new 
+		 tag defining the library in this way:		 
+				<library id="hsqldb_1.8.02" path="lib/hsqldb.jar" type="code">		
+				</library>		
+				<library id="mysql-connector-java" path="lib/mysql-connector-java-3.1.7-bin.jar" type="code">		
+				</library>
+				
+				<library id="otherDriver.jar" path="lib/otherDriver.jar" type="code">		
+				</library>
+			</runtime>
+		</plugin>		
+	3) Update mondrian.properties the file:
+		mondrian.jdbcDrivers=com.mysql.jdbc.Driver,org.hsqldb.jdbcDriver
+		
+		Finally save the file@
+
+
+1.1
+log
+@*** empty log message ***
+@
+text
+@@
+

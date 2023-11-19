@@ -1,0 +1,120 @@
+head	1.1;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.1
+date	2004.03.17.15.56.00;	author vasekd;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@added new directory doc
+@
+text
+@#!/bin/bash
+#
+# Startup script for the Bear Server
+#
+# chkconfig: - 85 15
+# description: Starts and stops the Beard server
+# processname: beard
+# pidfile: /var/run/beard.pid
+# config: /etc/beard.conf
+
+# Source function library.
+if [ -f /etc/init.d/functions ] ; then
+  . /etc/init.d/functions
+elif [ -f /etc/rc.d/init.d/functions ] ; then
+  . /etc/rc.d/init.d/functions
+else
+  exit 0
+fi
+
+bear=${BEAR-/var/www/html/bear}
+beard=${BEARD-$bear/beard}
+cache=${CACHE-$bear/html}
+beard_pl="beard"
+
+prog="Beard Server"
+RETVAL=0
+user="root"
+
+if [ -f $beard/$beard_pl ] ; then 
+  echo -n ""
+else
+  echo "The script $beard/$beard_pl don't exist... "
+  exit 1
+fi
+
+start() {
+    echo -n "Starting $prog: "
+    daemon --user $user $beard/$beard_pl -d
+    RETVAL=$?
+    echo
+    [ $RETVAL -eq 0 ] && touch /var/lock/subsys/beard 
+    return $RETVAL
+}	
+
+stop() {
+    echo -n "Shutting down $prog: "
+    killproc $beard_pl 
+    RETVAL=$?
+    [ $RETVAL -eq 0 ] && rm -f /var/lock/subsys/beard
+    echo''
+    return $RETVAL
+}	
+
+restart() {
+    stop
+    start
+}	
+
+rhstatus() {
+    status $beard_pl 
+    RETVAL=$?
+}
+
+clear() {
+    if [ -d $cache ] ; then 
+       echo -n ""
+    else
+      echo "The directory $cache don't exist... "
+      exit 1
+    fi
+    rm -rf $cache/*.*
+}
+
+case "$1" in
+  start)
+	clear
+  	start
+	;;
+  stop)
+  	stop
+	;;
+  restart)
+	clear
+  	restart
+	;;
+  status)
+  	rhstatus
+	;;
+  clear)
+  	clear
+	;;
+  *)
+	echo "Usage: $0 {start|stop|restart|status|clear}"
+	exit 1
+esac
+
+exit $?
+@

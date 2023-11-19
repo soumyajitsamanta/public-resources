@@ -1,0 +1,68 @@
+head	1.2;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2004.03.23.07.33.25;	author numberone;	state dead;
+branches;
+next	1.1;
+
+1.1
+date	2004.03.01.16.16.48;	author numberone;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@
+beard2/cached
+
+funkcni metoda 'start <report_id>' (krome samotneho vraceni dotazu)
+
+xml konfigurace prepsana na includovany .pm soubor
+
+do MData.pm pripravena metoda get_report a sql_gen pro cached
+@
+text
+@
+package Report;
+
+use beard;
+use Data::Dumper;
+
+# report-cache
+sub report_main {
+
+	while(accept(Client,::RSOCK)) {
+		print "$$: accept\n";
+		print Client "Hello, I'm report-cache $$\n";
+		close(Client);
+	}
+
+}
+
+
+1;
+@
+
+
+1.1
+log
+@
+Added beard2 -- new bear daemon source tree.
+
+mdata subsystem works, some docs, some tests, etc.
+
+cached in progress
+@
+text
+@@
+

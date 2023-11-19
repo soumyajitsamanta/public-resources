@@ -1,0 +1,303 @@
+head	1.12;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.12
+date	2004.04.16.16.43.16;	author vacula;	state Exp;
+branches;
+next	1.11;
+
+1.11
+date	2004.04.14.14.39.29;	author jiri_schmid;	state Exp;
+branches;
+next	1.10;
+
+1.10
+date	2004.04.14.12.21.33;	author jiri_schmid;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	2004.02.24.10.21.48;	author jiri_schmid;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	2004.02.13.17.09.40;	author jiri_schmid;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	2004.02.12.16.24.27;	author jiri_schmid;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	2004.02.05.08.54.01;	author jiri_schmid;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	2004.01.20.13.06.08;	author jiri_schmid;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2003.12.04.15.56.30;	author jiri_schmid;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2003.12.04.15.28.12;	author jiri_schmid;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2003.11.25.10.07.42;	author michald;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2003.10.31.12.47.56;	author jiri_schmid;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.12
+log
+@changes for new interface
+@
+text
+@#!/usr/bin/perl
+#-----------------------------------------------------
+#  Bear Tabs Structure Definition
+#-----------------------------------------------------
+# $Id: Tabs.pm,v 1.11 2004/04/14 14:39:29 jiri_schmid Exp $
+
+package Tabs;
+
+use utf8;
+
+our $Tabs={
+	H=>{name=>'Help',bg=>'8AC',bgg=>'68A',cgi=>'help.cgi',img=>'help',order=>'9'},
+	R=>{name=>'Result',bg=>'006666',bgg=>'555555',cgi=>'run.cgi',img=>'table',order=>'6'},
+	D=>{name=>'Debug',bg=>'666666',bgg=>'444444',cgi=>'debug.cgi',img=>'debug',order=>'5'},
+	P=>{name=>'Preferences',bg=>'dd9900',bgg=>'885500',cgi=>'prefer.cgi',img=>'prefer',order=>'2'},
+	A=>{name=>'Admin',bg=>'0099CC',bgg=>'005588',cgi=>'admin.cgi',img=>'admin',order=>'3'},
+	E=>{name=>'Edit',bg=>'003c9b',bgg=>'002077',cgi=>'edit.cgi',img=>'edit',order=>'1'},
+	L=>{name=>'LDM',bg=>'007040',bgg=>'005030',cgi=>'ldm.cgi',img=>'ldm',order=>'4'},
+	M=>{name=>'Derivated',bg=>'005566',bgg=>'003344',cgi=>'derivate.cgi',img=>'derivate',order=>'8'},
+	C=>{name=>'Collected',bg=>'006666',bgg=>'002222',cgi=>'collect.cgi',img=>'collect',order=>'7'},
+};
+
+our @@Tabs=('E','P','A','L','D','C','M','H'); #have to be set manualy to define order of tabs
+our @@TabsCntrl=('A','L','D','E','R','H'); #C a M are forbidden, carefully with 'P', defines tabs viewed by role managed on admin page
+our @@TabsCntrlUser=('A','L','D','H'); #C a M are forbidden in this list, defines tabs viewed by user managed on prefer page
+our $Derivated = 'M'; #derivated reports tab identifier
+our $Collected = 'C'; #collected reports tab identifier
+
+our $TabsDef={
+	G=>{name=>'New Grid',id=>'NewGrid',cgi=>'edit.cgi?Action=NewGrid&',img=>'grid',target=>'body'},
+	G3=>{name=>'New Graph3d',id=>'NewGraph3d',cgi=>'edit.cgi?Action=NewGraph3d&',img=>'graph3d',target=>'body'},
+	Fi=>{name=>'New Filter',id=>'NewFilter',cgi=>'edit.cgi?Action=NewFilter&',img=>'filter',target=>'body'},
+	R=>{name=>'New Report',id=>'NewReport',cgi=>'edit.cgi?Action=NewReport&',img=>'report',target=>'body'},
+	Fo=>{name=>'New Format',id=>'NewFormat',cgi=>'edit.cgi?Action=NewFormat&',img=>'format',target=>'body'},
+	F3=>{name=>'New Format3d',id=>'NewFormat3d',cgi=>'edit.cgi?Action=NewFormat3d&',img=>'format3d',target=>'body'},
+	F2=>{name=>'New Format2d',id=>'NewFormat2d',cgi=>'edit.cgi?Action=NewFormat2d&',img=>'format2d',target=>'body'},
+	F2M=>{name=>'New Format2d_map',id=>'NewFormat2d_map',cgi=>'edit.cgi?Action=NewFormat2d_map&',img=>'format2d_map',target=>'body'},
+	M=>{name=>'New Metric',id=>'NewMetric',cgi=>'edit.cgi?Action=NewMetric&',img=>'metric',target=>'body'},
+	P=>{name=>'New Param',id=>'NewParam',cgi=>'edit.cgi?Action=NewParam&',img=>'param',target=>'body'},
+	Cop=>{name=>'Tabs Duplicate',id=>'Duplicate',cgi=>'edit.cgi?',img=>'copy',target=>'body'},	
+	Del=>{name=>'Tabs Delete',id=>'Remove',cgi=>'edit.cgi?',img=>'delete',target=>'body'},
+	UU=>{name=>'New User',id=>'NewUser',cgi=>'admin.cgi?Action=NewUser',img=>'single',target=>'body'},
+	UR=>{name=>'New Role',id=>'NewRole',cgi=>'admin.cgi?Action=NewRole',img=>'role',target=>'body'},
+	UG=>{name=>'New Group',id=>'NewGroup',cgi=>'admin.cgi?Action=NewGroup',img=>'group',target=>'body'}
+
+};
+
+our @@TabsEdit=('M','Fi','Fo','F2','F2M','F3','G','G3','P','R','|','Cop','Del');
+
+our @@TabsAdmin=('UU','UG','UR','|','Cop','Del');
+
+#__________________________________________________________
+#
+
+1;
+@
+
+
+1.11
+log
+@help tab can be disabled now
+@
+text
+@d5 1
+a5 1
+# $Id: Tabs.pm,v 1.10 2004/04/14 12:21:33 jiri_schmid Exp $
+d37 1
+d48 1
+a48 1
+our @@TabsEdit=('M','Fi','Fo','F2','F3','G','G3','P','R','|','Cop','Del');
+@
+
+
+1.10
+log
+@added help tab
+@
+text
+@d5 1
+a5 1
+# $Id: Tabs.pm,v 1.9 2004/02/24 10:21:48 jiri_schmid Exp $
+d24 2
+a25 2
+our @@TabsCntrl=('A','L','D','E','R'); #C a M are forbidden in this list, carefully with 'P'
+our @@TabsCntrlUser=('A','L','D'); #C a M are forbidden in this list, applies to prefer page only
+@
+
+
+1.9
+log
+@prefer access and rights logic changed
+@
+text
+@d5 1
+a5 1
+# $Id: Tabs.pm,v 1.8 2004/02/13 17:09:40 jiri_schmid Exp $
+d12 9
+a20 9
+#	H=>{name=>'Home',bg=>'006600',bgg=>'555555',cgi=>'home.shtml',img=>'home'},
+	R=>{name=>'Result',bg=>'006666',bgg=>'555555',cgi=>'run.cgi',img=>'table'},
+	D=>{name=>'Debug',bg=>'666666',bgg=>'444444',cgi=>'debug.cgi',img=>'debug'},
+	P=>{name=>'Preferences',bg=>'dd9900',bgg=>'885500',cgi=>'prefer.cgi',img=>'prefer'},
+	A=>{name=>'Admin',bg=>'0099CC',bgg=>'005588',cgi=>'admin.cgi',img=>'admin'},
+	E=>{name=>'Edit',bg=>'003c9b',bgg=>'002077',cgi=>'edit.cgi',img=>'fold'},
+	L=>{name=>'LDM',bg=>'007040',bgg=>'005030',cgi=>'ldm.cgi',img=>'fold'},
+	M=>{name=>'Derivated',bg=>'005566',bgg=>'003344',cgi=>'derivate.cgi',img=>'derive'},
+	C=>{name=>'Collected',bg=>'006666',bgg=>'002222',cgi=>'collect.cgi',img=>'collect'},
+d23 1
+a23 1
+our @@Tabs=('E','P','A','L','D'); #have to be set manualy to define order of tabs
+@
+
+
+1.8
+log
+@major tabs control implemented
+@
+text
+@d5 1
+a5 1
+# $Id: Tabs.pm,v 1.7 2004/02/12 16:24:27 jiri_schmid Exp $
+d24 1
+a24 1
+our @@TabsCntrl=('P','A','L','D','E','R'); #C a M are forbidden in this list
+@
+
+
+1.7
+log
+@prototype of tabs hidding implemented
+@
+text
+@d5 1
+a5 1
+# $Id: Tabs.pm,v 1.6 2004/02/05 08:54:01 jiri_schmid Exp $
+d24 2
+a25 1
+our @@TabsCntrl=('P','A','L','D'); #C a M are forbidden in this list
+@
+
+
+1.6
+log
+@derivated reports redesigned
+@
+text
+@d5 1
+a5 1
+# $Id: Tabs.pm,v 1.5 2004/01/20 13:06:08 jiri_schmid Exp $
+d24 1
+@
+
+
+1.5
+log
+@collected reports tab implementation started
+@
+text
+@d5 1
+a5 1
+# $Id: Tabs.pm,v 1.4 2003/12/04 15:56:30 jiri_schmid Exp $
+d19 1
+a19 1
+	M=>{name=>'Modified',bg=>'005566',bgg=>'003344',cgi=>'modified.cgi',img=>'modify'},
+@
+
+
+1.4
+log
+@minor changes in derived reports tab
+@
+text
+@d5 1
+a5 1
+# $Id: Tabs.pm,v 1.3 2003/12/04 15:28:12 jiri_schmid Exp $
+d20 1
+d24 2
+a25 1
+our $Derivated = 'M';
+@
+
+
+1.3
+log
+@starting implementation of history of derivated (modified) reports
+@
+text
+@d5 1
+a5 1
+# $Id: Tabs.pm,v 1.2 2003/11/25 10:07:42 michald Exp $
+d19 1
+a19 1
+	M=>{name=>'Modified',bg=>'005566',bgg=>'666666',cgi=>'modified.cgi',img=>'modify'},
+d22 2
+a23 1
+our @@Tabs=('E','P','A','L','D','M'); #have to be set manualy to define order of tabs
+@
+
+
+1.2
+log
+@Project ACL implementation
+@
+text
+@d5 1
+a5 1
+# $Id: Tabs.pm,v 1.1 2003/10/31 12:47:56 jiri_schmid Exp $
+d19 1
+d22 1
+a22 1
+our @@Tabs=('E','P','A','L','D'); #have to be set manualy to define order of tabs
+@
+
+
+1.1
+log
+@mod perl rocks!
+@
+text
+@d5 1
+a5 1
+# $Id: tabs.def,v 1.4 2003/10/01 15:29:37 jiri_schmid Exp $
+a12 1
+#	F=>{name=>'Folders',bg=>'660000',bgg=>'555555',cgi=>'fold.cgi',img=>'edit'},
+@
+

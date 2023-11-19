@@ -1,0 +1,502 @@
+head	1.12;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.12
+date	2004.05.10.13.15.45;	author numberone;	state Exp;
+branches;
+next	1.11;
+
+1.11
+date	2004.05.08.10.28.12;	author numberone;	state Exp;
+branches;
+next	1.10;
+
+1.10
+date	2004.02.10.16.02.18;	author numberone;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	2003.10.30.10.32.45;	author numberone;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	2003.10.30.09.05.55;	author numberone;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	2003.10.29.18.49.24;	author numberone;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	2003.10.29.12.25.27;	author numberone;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	2003.10.29.11.50.24;	author numberone;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2003.08.11.06.53.58;	author numberone;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2003.07.08.17.55.32;	author numberone;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2003.03.12.23.35.13;	author numberone;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2003.02.05.17.20.20;	author numberone;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.12
+log
+@
+path-17x100k benchmark
+
+some dad cleanups
+@
+text
+@# $Id: bee.pm,v 1.11 2004/05/08 10:28:12 numberone Exp $
+
+package bee;
+
+use lib '.';
+use inout;
+use input;
+use output;
+
+use lib '../lib';
+use Msg;
+
+use Data::Dumper;
+use XML::Simple;
+use FileHandle;
+use strict;
+
+# install
+#   ~/bee/dad/lib   (lib??)
+# client nainstaluje name.pm do $LIB diru
+# auth povie prefix pre clienta, kam moze instalvoat - 
+#     / - do celeho
+#     client_name/  - do svojho
+#     ...
+#	  undef - nikam
+
+my $bee_id = 0; # unique bee id counter
+
+# FIX: script_p - modules will have to be installed first!
+sub new {
+	my($pkg,$name,$scriptfile) = @@_;
+
+	my $script = eval { 
+		XMLin($scriptfile, forcearray => [qw/input output field/],
+						   keyattr	  => undef); 
+	};
+	if(not $script or $@@) {
+		print "error: $@@\n";
+		return undef;
+	}
+
+	# ===================--------------------
+	# pl script generation
+	my $file = "bee/".(++$bee_id).".pl";
+	open(OUT,">$file ") or die "$file\: $!\n";
+	print OUT $script->{code};
+	close OUT;
+	# ============-------------
+
+#	$SIG{CHLD} = sub { die "child exited :-( ($?)" };
+
+	my $s_out = Msg->server("SSL") or die;
+	my $s_in  = Msg->server("SSL") or die;
+
+	my $command = "perl -w -Mruntime -I../lib -I. $file ".
+					$s_out->port." ".$s_in->port." ".$name;
+
+	print "executing: $command\n";
+	my $fh = new FileHandle;
+#	my $pid = $fh->open("|".$command." >$name.out");
+	my $pid = $fh->open("|".$command);
+	print "new process pid: $pid\n";
+
+	unless(defined $pid) {
+		print STDERR "error: $!\n";
+		return undef;
+	}
+
+	my $bee_msg = $s_out->accept(1);
+	my $dad_msg = $s_in->accept(1);
+	print "bee $pid `$name' connected\n";
+
+	my @@input  = map $_->{type}, @@{$script->{input}};
+	my @@output = map $_->{type}, @@{$script->{output}};
+
+	my $one = $bee_msg->call("create",$script);
+	die "sanity check failed" if($one != 1);
+	print "bee $pid `$name' created\n";
+
+	my $bee = bless {
+		id	   => $pid,
+		name   => $name,
+		handle => $fh,
+		input  => \@@input,
+		output => \@@output,
+		script => $script,
+		code   => $script->{code},
+		state  => 'init',
+		client => $bee_msg,
+		server => $dad_msg,
+	}, $pkg;
+
+	return $bee;
+};
+
+
+
+1;
+
+
+@
+
+
+1.11
+log
+@
+elegant client speedup -- do not sleep if there was message last cycle
+@
+text
+@d1 1
+a1 1
+# $Id: bee.pm,v 1.10 2004/02/10 16:02:18 numberone Exp $
+d56 1
+a56 1
+					$s_out->port." ".$s_in->port;
+d60 1
+@
+
+
+1.10
+log
+@executing bee with perl's -w switch
+thx to Dan Badilla - sorry for that 3 hours you've been debuging code ;-)
+@
+text
+@d1 1
+a1 1
+# $Id: bee.pm,v 1.9 2003/10/30 10:32:45 numberone Exp $
+d58 1
+a58 1
+	print "executing: $command\n";
+d61 1
+a61 1
+	print "new process pid: $pid\n";
+d69 1
+a69 1
+	my $dad_msg = $s_in->accept(1);
+d81 1
+a81 1
+		name   => $name,
+d91 1
+a91 1
+
+@
+
+
+1.9
+log
+@Data works on windows.. maybe on unix too, not tested..
+@
+text
+@d1 1
+a1 1
+# $Id: bee.pm,v 1.8 2003/10/30 09:05:55 numberone Exp $
+d55 1
+a55 1
+	my $command = "perl -Mruntime -I../lib -I. $file ".
+@
+
+
+1.8
+log
+@ok, windows running, executes too processes, Data still doesn't work..
+@
+text
+@d1 1
+a1 1
+# $Id: bee.pm,v 1.7 2003/10/29 18:49:24 numberone Exp $
+d50 1
+a50 1
+	$SIG{CHLD} = sub { die "child exited :-(" };
+@
+
+
+1.7
+log
+@windoze fails..
+@
+text
+@d1 1
+a1 1
+# $Id: bee.pm,v 1.6 2003/10/29 12:25:27 numberone Exp $
+d50 1
+a50 1
+#	$SIG{CHLD} = sub { die "child exited :-(" };
+d52 2
+a53 2
+	my $s_out = Msg->server("INET") or die;
+	my $s_in  = Msg->server("INET") or die;
+d58 1
+d60 2
+a61 2
+
+	my $pid = $fh->open($command." |");
+d69 2
+a70 1
+	my $dad_msg = $s_in->accept(1);
+d81 2
+a82 1
+		name   => $name,
+d91 1
+a91 1
+
+@
+
+
+1.6
+log
+@instead of creating pipes between dad and bee, we now
+use tcp/ip connection.
+
+it's because of windows, where it didn't work (maybe perl fault, i dunno)
+@
+text
+@d1 1
+a1 1
+# $Id: bee.pm,v 1.5 2003/10/29 11:50:24 numberone Exp $
+d59 1
+d61 1
+a78 1
+		handle => $fh,
+@
+
+
+1.5
+log
+@'dad/bee dir -- not empty so cvs co -P don\'t delete it
+@
+text
+@d1 1
+a1 1
+# $Id: bee.pm,v 1.4 2003/08/11 06:53:58 numberone Exp $
+d50 4
+a53 4
+	my $s_out = Msg->server or die;
+	my $s_in  = Msg->server or die;
+#	my $bee_server = Msg->server or die; # -> 
+#	my $dad_server = Msg->server or die; # <-
+a54 2
+#	my($bee_server,$dad_client) = Msg->socketpair(); # ->
+#	my($dad_server,$bee_client) = Msg->socketpair(); # <-
+d71 1
+a71 1
+	my $one = $dad_msg->call("create",$script);
+@
+
+
+1.4
+log
+@merging old version to cvs
+@
+text
+@d1 1
+a1 1
+# $Id: bee.pm,v 1.3 2003/07/08 17:55:32 numberone Exp $
+d50 9
+a58 4
+	my($bee_server,$dad_client) = Msg->socketpair(); # ->
+	my($dad_server,$bee_client) = Msg->socketpair(); # <-
+	my $command = "perl -Mruntime -I../lib -I/home/sarfy/perl -I. $file ".
+					$bee_server->sock." ".$bee_client->sock;
+d67 3
+d73 1
+a73 1
+	my $one = $dad_client->call("create",$script);
+d86 2
+a87 2
+		client => $dad_client,
+		server => $dad_server,
+@
+
+
+1.3
+log
+@send/recv, in C, optimized, LEN_ code, small integers
+@
+text
+@d1 1
+a1 1
+# $Id: bee.pm,v 1.2 2003/03/12 23:35:13 numberone Exp $
+d67 1
+a67 1
+	print "bee $pid $name\n";
+@
+
+
+1.2
+log
+@bee/ directory - where to store temporary script files
+dad now use processes (fork and exec) to run bee instead
+of forking and `eval`-uating.
+perl -e "use DBI; fork;" sigfaults on Microsoft Windows
+so this fixes this problem
+@
+text
+@d1 1
+a1 1
+# $Id: bee.pm,v 1.1 2003/02/05 17:20:20 numberone Exp $
+d52 1
+a52 1
+	my $command = "perl -Mruntime -I../lib -I. $file ".
+@
+
+
+1.1
+log
+@otec deleted
+@
+text
+@d1 1
+a1 1
+# $Id: bee.pm,v 1.4 2002/09/28 18:02:47 numberone Exp $
+d14 2
+d31 37
+a67 1
+	my($pkg,$name,$input,$output,$script_p) = @@_;
+d70 2
+d73 4
+a76 3
+		input  => $input,
+		output => $output,
+		script => $script_p,
+d78 2
+a81 18
+	my($dad_client,$bee_server) = Msg->socketpair();
+	my($dad_server,$bee_client) = Msg->socketpair();
+	$bee->{client} = $dad_client;
+	$bee->{server} = $dad_server;
+
+	$bee->{id} = fork();
+	return undef unless defined $bee->{id};
+
+	unless($bee->{id}) {
+#		close STDIN; # ctrl-c
+#		close STDOUT;
+#		close STDERR;
+		$bee->process($$,$bee_server,$bee_client);
+		exit;
+	}
+
+	print "bee ".$bee->{id}." $name\n";
+
+a83 77
+
+
+# =======================================================================
+our($name,$intype,$outtype,$script,$dad_server,$dad_client,$id);
+
+my @@input  = ();
+my @@output = ();
+
+my $fly  = 0;
+my $land = 0;
+
+my $methods = {
+	input  => \&rpc_input,
+	output => \&rpc_output,
+	letfly => sub { $fly = 1 },
+};
+
+
+sub rpc_input {
+	my($num,$arg) = @@_;
+#	print "rpc_input: num=$num, arg=",Dumper($arg),"--------------\n";
+	return inout::new("input",$intype->[$num],\$input[$num],$arg);
+}
+
+sub rpc_output {
+	my($num,$arg) = @@_;
+#	print "rpc_output: num=$num, arg=",Dumper($arg),"--------------\n";
+	return inout::new("output",$outtype->[$num],\$output[$num],$arg);
+}
+
+
+# FIX: we will change this code in next release:
+# we will move this function to bee.pl script, here we will
+# fork and execv("perl -Mscript bee.pl <in_socket> <out_socket>")
+# reasons: plaintext passwords in accessible dad's address space
+# `use DBI; fork` - SIGSEGV on moft :-(
+
+sub process {
+	$SIG{INT} = sub { $land = 1 };
+
+	my $self = shift;
+	($id,$dad_server,$dad_client) = @@_;
+
+	$name    = $self->{name};
+	$intype  = $self->{input};
+	$outtype = $self->{output};
+
+	# compile script, create `script' function
+	$script  = eval "sub script { ".${$self->{script}}."\n}";
+	die $@@ if($@@);
+
+	while(1) {
+		$dad_server->serve($methods) if($dad_server->peek);
+
+		input::listen();
+
+		if($fly) {
+
+			 input::init($intype, \@@input);
+			output::init($outtype,\@@output);
+
+			$land = $fly = 0;
+			my $result = script(@@input, @@output); # eval?
+
+			 input::close($intype, \@@input);
+			output::close($outtype,\@@output);
+
+			# send `landed' echo
+
+			# fix: use dad_client msg !
+			$dad_server->send("landed ".
+				   ($land? '':(defined $result? $result : 0)));
+		}
+	}
+
+	# never reached
+}
+@
+

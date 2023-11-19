@@ -1,0 +1,130 @@
+head	1.2;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2006.01.13.12.21.31;	author igorludi;	state dead;
+branches;
+next	1.1;
+
+1.1
+date	2005.10.18.14.04.41;	author igorludi;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@*** empty log message ***
+@
+text
+@package rex.graphics.mdxeditor.mdxbuilder.nodes;
+
+import javax.swing.ImageIcon;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
+import rex.utils.S;
+
+/**
+ * This is a node that hold a constant MDX expression. Unlike MBTMembers node, this node doesn't append
+* some member function to it's content (like Members or AllMembers).
+ * @@author Igor Mekterovic
+ * @@version 0.3
+ */
+public class MBTImmutableMembersNode extends DefaultMBTNode {
+
+   private String membersMdxExpression;
+
+   static ImageIcon icon;
+   static {
+      icon = S.getAppIcon("MBTMembersNode.gif");
+   }
+
+   /**
+    *
+    * @@param _membersMdxExpression String
+    */
+   public MBTImmutableMembersNode(String _membersMdxExpression, String dimensionUniqueName) {
+      super();
+      membersMdxExpression = _membersMdxExpression;
+   }
+
+   /**
+    *
+    * @@param indent String
+    * @@return String
+    */
+   public  String getMdx(String indent){
+      return indent + membersMdxExpression;
+   }
+
+   /**
+    *
+    * @@return String
+    */
+   public  String toString(){
+      return membersMdxExpression;
+   }
+
+   /**
+    *
+    */
+   void setAcceptableFlavorsArray(){
+//    I'm not accepting anyone
+   }
+
+   public ImageIcon getIcon(){ return icon; }
+
+   /**
+    *
+    * @@return String[]
+    */
+   public String[] getPopUpActionList(){
+      return new String[] {MBTPopUpActions.REMOVE};
+   }
+
+   /**
+    *
+    * @@param droppedData Object
+    * @@param containerNode DefaultMutableTreeNode
+    * @@param treeModel DefaultTreeModel
+    */
+   public  void handleDrop( Object droppedData
+                           , DefaultMutableTreeNode containerNode
+                           , DefaultTreeModel treeModel){
+   }
+
+
+   /**
+    *
+    * @@param action String
+    * @@param actionNode DefaultMutableTreeNode
+    * @@param treeModel DefaultTreeModel
+    */
+   public void handlePopUpAction(  String action
+                                 , DefaultMutableTreeNode actionNode
+                                 , DefaultTreeModel treeModel){
+
+      if (action.equals(MBTPopUpActions.REMOVE)){
+         super.removeMySelfFromTheParent(actionNode, treeModel);
+      }
+   }
+
+}
+@
+
+
+1.1
+log
+@*** empty log message ***
+@
+text
+@@
+

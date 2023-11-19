@@ -1,0 +1,805 @@
+head	1.31;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.31
+date	2004.05.10.07.49.28;	author vacula;	state Exp;
+branches;
+next	1.30;
+
+1.30
+date	2004.05.06.00.32.26;	author michald;	state Exp;
+branches;
+next	1.29;
+
+1.29
+date	2004.04.26.18.37.22;	author vasekd;	state Exp;
+branches;
+next	1.28;
+
+1.28
+date	2004.04.09.07.04.06;	author michald;	state Exp;
+branches;
+next	1.27;
+
+1.27
+date	2004.03.29.06.04.47;	author michald;	state Exp;
+branches;
+next	1.26;
+
+1.26
+date	2004.03.27.09.00.17;	author michald;	state Exp;
+branches;
+next	1.25;
+
+1.25
+date	2004.03.16.09.47.27;	author vasekd;	state Exp;
+branches;
+next	1.24;
+
+1.24
+date	2004.03.15.19.38.56;	author vasekd;	state Exp;
+branches;
+next	1.23;
+
+1.23
+date	2004.03.15.12.46.42;	author vasekd;	state Exp;
+branches;
+next	1.22;
+
+1.22
+date	2004.03.12.15.27.14;	author vasekd;	state Exp;
+branches;
+next	1.21;
+
+1.21
+date	2004.03.12.14.25.51;	author vasekd;	state Exp;
+branches;
+next	1.20;
+
+1.20
+date	2004.03.11.07.58.58;	author michald;	state Exp;
+branches;
+next	1.19;
+
+1.19
+date	2004.03.04.14.43.08;	author jiri_schmid;	state Exp;
+branches;
+next	1.18;
+
+1.18
+date	2004.02.25.16.05.02;	author jiri_schmid;	state Exp;
+branches;
+next	1.17;
+
+1.17
+date	2004.02.13.17.09.33;	author jiri_schmid;	state Exp;
+branches;
+next	1.16;
+
+1.16
+date	2004.02.11.12.22.16;	author michald;	state Exp;
+branches;
+next	1.15;
+
+1.15
+date	2004.01.13.12.17.52;	author vasekd;	state Exp;
+branches;
+next	1.14;
+
+1.14
+date	2003.12.12.23.06.21;	author vasekd;	state Exp;
+branches;
+next	1.13;
+
+1.13
+date	2003.11.19.15.42.49;	author vacula;	state Exp;
+branches;
+next	1.12;
+
+1.12
+date	2003.11.18.11.59.01;	author vacula;	state Exp;
+branches;
+next	1.11;
+
+1.11
+date	2003.11.10.20.37.01;	author michald;	state Exp;
+branches;
+next	1.10;
+
+1.10
+date	2003.10.04.11.46.34;	author michald;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	2003.10.04.10.30.24;	author michald;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	2003.09.01.13.35.13;	author jiri_schmid;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	2003.09.01.12.40.02;	author jiri_schmid;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	2003.07.08.10.39.01;	author jiri_schmid;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	2003.07.04.06.19.13;	author michald;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2003.06.20.08.42.29;	author michald;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2003.05.29.11.55.07;	author jiri_schmid;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2003.05.28.12.56.12;	author jiri_schmid;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2002.09.24.15.42.37;	author michald;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.31
+log
+@minor changes
+@
+text
+@This directory contains client side of BEAR Portal.
+
+--------------------------
+
+Full control over Bear !!!
+
+To get full control over Bear you need to create user account with Bear-root privileges.
+To do this, create acount for accessing HTTPD using any name
+and add user of the same name into /mdata/[project]/Roles/root.xml <uuser>name</uuser>
+
+from command line: htpasswd httpd_access_file name
+......................
+ex.: htpasswd /etc/httpd/conf/users name
+......................
+
+
+the structure for root.xml:
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<project>
+  <urole tabs="" rights="RWED" id="[Project]_root" acl="[Project]_root" change="on" name='root' description='root'>
+    <uuser>name</uuser>
+  </urole>
+</project>
+
+------------------------------
+
+HTTP Server has to be configured properly to allow Perl Scripts to run there. Example of Apache Server configuration ("/etc/httpd/conf/httpd.conf"):
+
+	....................................
+	AddHandler cgi-script .cgi
+	Alias /bear/ /var/www/html/bear/
+	<Directory "/var/www/html/bear/">
+    	Options Indexes ExecCGI
+		Order deny,allow
+		allow from localhost .localdomain host .domain.com
+		deny from all
+		AuthType Basic
+		AuthName Bear
+		AuthUserFile _place_of_auth_file_
+		require valid-user
+		DirectoryIndex index.cgi
+	</Directory> 
+	....................................
+
+
+------------------------------
+
+mod_perl configuration:
+
+Following example assuming startup file in /etc/httpd/conf.d/startup.pl. Contents of the /etc/httpd/conf/httpd.conf (or e.g. /etc/httpd/conf.d/perl.conf if "Include conf.d/*.conf" is presented in httpd.conf):
+
+	....................................
+	LoadModule perl_module modules/mod_perl.so
+	PerlRequire "/etc/httpd/conf.d/startup.pl"
+
+	<Directory "/var/www/html/bear/">
+	  <Files ~ "\.(cgi|pl)$">
+    	SetHandler perl-script
+    	PerlHandler ModPerl::Registry
+    	PerlSendHeader Off
+    	PerlSetupEnv On
+    	Options +ExecCGI
+	  </Files>
+	  Order deny,allow
+	  allow from localhost .localdomain bear teddy .instrat.cz
+	  deny from all
+	  AuthType Basic
+	  AuthName BEE
+	  AuthUserFile /etc/httpd/passwd
+	  require valid-user
+	  DirectoryIndex index.cgi
+	</Directory>
+	....................................
+
+Module mod_perl has to be able to find out Bear package under Library path. You can define such specific path as part of the /etc/httpd/conf.d/startup.pl file, containing:
+	....................................
+	use Apache2 ();
+	use Apache::compat ();
+	use lib qw(/path/to/modules);
+	1
+	....................................
+
+
+------------------------------
+
+"html/" directory is the place where HTML report cache is located, therefore it has to be writable for CGI scripts, e.g. usually for user "apache" ("chgrp apache html/"),
+"CSS/" directory is the place where CSS style cache is located, therefore it has to be writable for CGI scripts, e.g. usually for user "apache" ("chgrp apache CSS/"),
+
+"beard/" directory contains BEAR SOAP Server itself, can be located on a different place as BEAR Portal or on a different host,
+"beard/mdata/" directory is the place where project meta-data are stored, has to be writable for user under which "beard" server daemon runs itself,
+"beard/mdata/Prefer" directory is place where user preferences are stored. Any user has to be authorized by http server itself and has to have got their own preferences XML file. Without it user will be asked for set and save preferences during first login.
+
+------------------------------
+
+Character encoding:
+
+Characters can be stored in any coding in DW database, however corresponding code
+page has to be set in <source><src-conn><enc> entity in metadata (see beard/mdata/test.xml example).
+
+For proper processing of UTF-8 strings is necessary to run perl 5.8.0 and above
+and to patch SOAP::Lite by SOAP-Lite-0.55.patch (temporary workaround till
+SOAP::Lite and/or MIME::Base64 will be fixed), e.g.:
+
+	patch /usr/lib/perl5/site_perl/5.8.0/SOAP/Lite.pm SOAP-Lite-0.55.patch
+
+After patching SOAP::Lite, this will be NOT ASCII and EBCDIC chars compatible.
+
+------------------------------
+
+Character encoding on Apache/CGI site:
+
+The Apache/CGI script recognize from web browser received UTF8 string as ISO-8859-1, thus
+is necessary to handle with care these strings when direct accessing and
+manipulating received parameters.
+
+In case sending data through-back patched SOAP::Lite (Save into MetaData - Load from MetaData as most common), 
+these will be on recipient site recognized as UTF8 or other flagged encoding (see man Encoding).
+Thus data passed patched SOAP::Lite server will be properly converted into Perl internal characters structures.
+
+------------------------------
+
+Skins:
+
+Directory ./skins/ contains subdirectories, one for each suported browser
+platform (mozilla and msie in present), which is selected automaticly. Browser
+specific directory (e.g. ./skins/mozilla) contains distinct subdirectories
+for each specific skin.
+All Images in specific skin directory have to be of the same type.
+
+------------------------------
+
+Right Click Menu on Graphs:
+
+For enabling of the right click menu on graphs is necessary to patch
+GD::Graph::Map by GDGraph-Map-1.05.patch (temporary workaround fix), e.g.:
+
+	patch /usr/lib/perl5/site_perl/5.8.0/GD/Graph/Map.pm GDGraph-Map-1.05.patch
+
+Right Click Menu is now available for graphs type : Bars,Points,Lines,Pie,Pie3d  .
+
+------------------------------
+
+Recommended versions (and later version already tested) of perl modules:
+
+CGI.pm-3.00 (3.04)
+Compress-Zlib-1.33
+DateManip-5.40 (5.42)
+DBD-mysql-2.9003 (! ver. 2.9.* is required)
+DBIx-Admin-TableInfo-1.00 (1.01)
+DBI-1.41
+gd-2.0.12
+GD-2.11 (2.12) (gd is required)
+GDGraph-1.43
+GD-Graph3d-0.63
+GDGraph-Map-1.05 (need patch)
+GD-Polyline-0.1 (0.2)
+GDTextUtil-0.86
+VRML-1.06 (download from http://dc.gfz-potsdam.de/~palm/)
+Graph-0.20101
+Heap-0.70
+HTML-HTMLDoc-0.07 (htmldoc is required)
+IO-String-1.01 (1.04)
+libwww-perl-5.76
+MIME-Lite-2.117 (3.01)
+Parse-Yapp-1.05
+SOAP-Lite-0.55 (0.60) (need patch)
+Statistics::Descriptive -- 2.6
+Time-HiRes-1.55 (1.56)
+URI-1.27
+XML-Parser-2.34
+XML-Simple-2.09
+GraphViz-1.8
+Math-Bezier-0.01
+IPC-Run-0.78
+
+Recommended versions (and later version already tested) of other programs:
+htmldoc-1.8.23 (download from http://www.easysw.com/htmldoc/)
+gd-2.0.12 (2.0.22)
+httpd-2.0.40
+MySQL-4.0.15 (4.1.0 - not recomended for production environment)
+perl-5.8.0 (5.8.3)
+graphviz-1.12-1 (download from http://www.research.att.com/sw/tools/graphviz/download.html)
+
+@
+
+
+1.30
+log
+@list of required libraries updated
+@
+text
+@d151 2
+a152 5
+GD-Dashboard-0.04
+GDGraph-boxplot-1.00
+GDGraph-Map-1.05 (need patch)
+GD-Graph-radar-0.10
+GDGraph-XY-0.92
+d155 1
+d158 1
+a158 1
+GD-2.11 (2.12) (gd is required)
+@
+
+
+1.29
+log
+@added new format definitions
+@
+text
+@d169 1
+@
+
+
+1.28
+log
+@Directed Graph visualization for debugging purposes implemented - need to install GraphViz (look at README)
+@
+text
+@d87 1
+@
+
+
+1.27
+log
+@new lookup cache management
+@
+text
+@d172 3
+d182 1
+@
+
+
+1.26
+log
+@patch for SOAP::Lite 0.60
+@
+text
+@d142 1
+a142 1
+Recommended versions of perl modules:
+d144 1
+a144 2
+
+CGI.pm-3.00
+d146 3
+a148 3
+DateManip-5.42
+DBD-mysql-2.9003 (! ver. 2.9* is important for function)
+DBIx-Admin-TableInfo-1.01
+d157 1
+a157 1
+GD-Polyline-0.2
+d159 1
+a159 2
+gd-2.0.12
+GD-2.11 (gd-2.0.12 is required)
+d161 3
+a163 5
+Heap-0.50
+htmldoc-1.8.23(for using HTML-HTMLDoc-0.07 download from http://www.easysw.com/htmldoc/)
+HTML-HTMLDoc-0.07
+httpd-2.0.40
+IO-String-1.01
+d165 1
+a165 2
+MIME-Lite-2.117 (can be 3.01 )
+MySQL-4.0.15
+d167 2
+a168 4
+perl-5.8.0(5.8.1)
+Recommended versions of other programs:
+SOAP-Lite-0.55 (need patch)
+Time-HiRes-1.56
+d172 8
+@
+
+
+1.25
+log
+@fix version of DBD::mysql
+@
+text
+@d143 3
+d147 3
+a150 2
+DBIx-Admin-TableInfo-1.01
+DBD-mysql-2.9003 (! ver. 2.9* is important for function)
+d160 2
+a161 1
+GD-2.11 (gd-2.0.12 as a C script)
+d164 1
+d166 1
+d168 1
+d170 4
+d175 3
+a178 15
+XML-Parser-2.34
+CGI.pm-3.00
+DateManip-5.42
+URI-1.27
+Time-HiRes-1.56
+Parse-Yapp-1.05
+libwww-perl-5.76
+
+Recommended versions of other programs:
+httpd-2.0.40
+MySQL-4.0.15
+perl-5.8.0(5.8.1)
+htmldoc-1.8.23(for using HTML-HTMLDoc-0.07 download from http://www.easysw.com/htmldoc/)
+gd-2.0.12
+
+@
+
+
+1.24
+log
+@tested some new perl::mod
+@
+text
+@d146 1
+a146 1
+DBD-mysql-2.1028 (!important for function)
+@
+
+
+1.23
+log
+@added ver. of programs
+@
+text
+@d143 2
+a144 2
+Compress-Zlib-1.22
+DBI-1.32
+d146 1
+a146 1
+DBD-mysql-2.1018 (!important for function)
+d163 1
+a163 1
+XML-Simple-2.08
+d166 1
+a166 1
+DateManip-5.42a
+d170 1
+d177 1
+a177 1
+
+@
+
+
+1.22
+log
+@added new package
+@
+text
+@a142 1
+perl-5.8.0,5.8.1
+a146 1
+DBD-SQLite-0.28
+a159 1
+htmldoc-1.8.23(HTML-HTMLDoc-0.07 from http://www.easysw.com/htmldoc/)
+a162 1
+Statistics-Descriptive-2.6
+d170 8
+@
+
+
+1.21
+log
+@added new package
+@
+text
+@d146 1
+d173 1
+a173 1
+
+@
+
+
+1.20
+log
+@initial implementation of caches in the local DB
+@
+text
+@d171 1
+a171 1
+
+@
+
+
+1.19
+log
+@fixing bugs and improving useability and performance
+@
+text
+@a167 1
+Clone-0.13
+@
+
+
+1.18
+log
+@fixed rights logic and folder XML definition files are specific for each project now
+@
+text
+@d20 1
+a20 1
+  <urole tabs="" rights="RWED" id="[Project]_root" change="on" name='root' description='root'>
+d143 1
+a143 1
+perl-5.8.0
+@
+
+
+1.17
+log
+@major tabs control implemented
+@
+text
+@d1 1
+a1 1
+This directory contains client side of BEAR Portal. 
+d3 1
+a3 1
+------------------------------
+d6 1
+a24 1
+
+@
+
+
+1.16
+log
+@fix of wrong usage of non numeric attribute IDs for drilling
+@
+text
+@d5 22
+@
+
+
+1.15
+log
+@fix
+@
+text
+@d135 1
+a135 1
+GD-2.11 (gd-2.0.12 as a C scrypt)
+d138 2
+a139 1
+htmldoc-1.8.23(HTML-HTMLDoc-0.07 as a C script from http://www.easysw.com/htmldoc/)
+@
+
+
+1.14
+log
+@added advise modules of perl
+@
+text
+@d120 1
+a120 1
+Advise versions of perl modules:
+@
+
+
+1.13
+log
+@added pie3d map
+@
+text
+@d119 32
+@
+
+
+1.12
+log
+@right click for Bar,Point,Line,Pie graphs
+@
+text
+@d116 1
+a116 1
+Right Click Menu is now available for graphs type : Bar,Point,Line,Pie  .
+@
+
+
+1.11
+log
+@README update
+@
+text
+@d116 1
+a116 1
+Right Click Menu is available for Bar graphs only in present.
+@
+
+
+1.10
+log
+@README update
+@
+text
+@d3 2
+d7 54
+a60 13
+AddHandler cgi-script .cgi
+Alias /bear/ /var/www/html/bear/
+<Directory "/var/www/html/bear/">
+    Options Indexes ExecCGI
+	Order deny,allow
+	allow from localhost .localdomain host .domain.com
+	deny from all
+	AuthType Basic
+	AuthName Bear
+	AuthUserFile _place_of_auth_file_
+	require valid-user
+	DirectoryIndex index.cgi
+</Directory> 
+d62 1
+@
+
+
+1.9
+log
+@prototype of right click menu in graphs - need patch GDGraph-Map-1.05.patch
+@
+text
+@d45 3
+a47 2
+The Apache/CGI script recognize from webbrowser recived UTF8 string as ISO-8859-1, thus
+is necessary to handle with care these strings when direct accesing and manipulating recived params.
+d49 3
+a51 3
+In case sending datas through-back patched SOAP::Lite (Save into MetaData - Load from MetaData as most common), 
+these will be on recipient site recognized as UTF8 or other flaged encoding (see man Encoding).
+Thus datas passed patched SOAP::Lite server will be properly converted into perl internal characters structures.
+d57 4
+a60 1
+Directory skins contains subdirectories, where each represents one separate skin.
+@
+
+
+1.8
+log
+@finishing imlementation of skins
+@
+text
+@d56 15
+a70 2
+Directory skins contains subdirectories, where each means one separet skin.
+Images in skin directory have to be of same type.@
+
+
+1.7
+log
+@skins implemented. mozilla skin - temporarily copy msie content
+@
+text
+@d57 1
+a57 3
+Images in skin directory have to be of same type.
+
+Temporarily copy content of msie skins into mozilla directory, mozilla skins come soon@
+
+
+1.6
+log
+@minor utf8 final changes
+@
+text
+@d53 7
+@
+
+
+1.5
+log
+@some fixes for proper utf8 encoding, see README for details
+@
+text
+@d38 15
+@
+
+
+1.4
+log
+@introduction of new directed graph structures MDga and MDgo
+@
+text
+@d25 13
+@
+
+
+1.3
+log
+@bug fixies
+@
+text
+@d1 1
+a1 1
+This directory contains client side of BEAR Portal.
+d3 1
+a3 1
+beard directory contains BEAR SOAP Server itself.
+d5 20
+a24 5
+Directory "html/" have to be writeable for CGI engine (usually apache / under root: chgrp apache html),
+this directory is used as HTML cache.
+Directory "beard/mdata/Prefer/" and directories where project stored, have to be writeable for user who started the Beard server,
+directory Prefer is used for storing user preferences, without existing user preferences file (*.xml) all tabs are unaccesible,
+directories where project stored are used for saving metadatas.
+@
+
+
+1.2
+log
+@forcearray fixies
+@
+text
+@d5 5
+a9 3
+Directory html/, beard/mdata/Prefer/, and directories where project stored, needs to be 
+accessible for cgi engine (usually apache - chgrp apache html beard/mdata/Prefer) and
+for user who started the Beard server.@
+
+
+1.1
+log
+@minor change of cvs tree structure
+@
+text
+@d4 4
+@
+

@@ -1,0 +1,92 @@
+head	1.1;
+access;
+symbols
+	jpivot_1_8_0:1.1
+	focus_1_6_0:1.1.0.6
+	wcf_1_7_0:1.1
+	wcf_1_6_0:1.1
+	jpivot_1_5_0:1.1.0.4
+	Root_jpivot_1_5_0:1.1
+	mondrian_xmla_2005_08_25:1.1.0.2
+	sourceforge_sync:1.1;
+locks; strict;
+comment	@# @;
+
+
+1.1
+date	2005.07.05.14.04.30;	author avix;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@initial version
+@
+text
+@<?xml version="1.0" encoding="UTF-8"?>
+<form method="post" action="catdemo.jsp">
+<table cellpadding="1" cellspacing="0" border="1">
+<tr>
+<th align="left" class="navi-axis">
+<img src="/wcf/wcf/catedit/category1.png"/> Category 1</th>
+</tr>
+<tr>
+<td class="navi-hier">
+<input border="0" type="image" src="/wcf/wcf/catedit/category2.png"/> <input border="0" type="image" src="/wcf/wcf/catedit/category3.png"/> <input border="0" type="image" src="/wcf/wcf/changeorder/move-down.png"/>Item 1[1]</td>
+</tr>
+<tr>
+<td class="navi-hier">
+<input border="0" type="image" src="/wcf/wcf/catedit/category2.png"/> <input border="0" type="image" src="/wcf/wcf/catedit/category3.png"/> <input border="0" type="image" src="/wcf/wcf/changeorder/move-up.png"/>Item 1[2]</td>
+</tr>
+<tr>
+<th align="left" class="navi-axis">
+<img src="/wcf/wcf/catedit/category2.png"/> Category 2</th>
+</tr>
+<tr>
+<td class="navi-hier">
+<input border="0" type="image" src="/wcf/wcf/catedit/category1.png"/> <input border="0" type="image" src="/wcf/wcf/catedit/category3.png"/> <input border="0" type="image" src="/wcf/wcf/changeorder/move-down.png"/>Item 2[0]</td>
+</tr>
+<tr>
+<td class="navi-hier">
+<input border="0" type="image" src="/wcf/wcf/catedit/category1.png"/> <input border="0" type="image" src="/wcf/wcf/catedit/category3.png"/> <input border="0" type="image" src="/wcf/wcf/changeorder/move-up.png"/>Item 1[0]</td>
+</tr>
+<tr>
+<th align="left" class="navi-axis">
+<img src="/wcf/wcf/catedit/category3.png"/> Category 3</th>
+</tr>
+<tr>
+<td class="navi-hier">
+<input border="0" type="image" src="/wcf/wcf/catedit/category1.png"/> <input border="0" type="image" src="/wcf/wcf/catedit/category2.png"/> Item 3[0]</td>
+</tr>
+<tr>
+<td class="navi-hier">
+<input border="0" type="image" src="/wcf/wcf/catedit/category1.png"/> <input border="0" type="image" src="/wcf/wcf/catedit/category2.png"/> Item 3[1]</td>
+</tr>
+<tr>
+<td class="navi-hier">
+<input border="0" type="image" src="/wcf/wcf/catedit/category1.png"/> <input border="0" type="image" src="/wcf/wcf/catedit/category2.png"/> Item 3[2]</td>
+</tr>
+<tr>
+<td class="navi-hier">
+<input border="0" type="image" src="/wcf/wcf/catedit/category1.png"/> <input border="0" type="image" src="/wcf/wcf/catedit/category2.png"/> Item 3[3]</td>
+</tr>
+<tr>
+<td class="navi-hier">
+<input border="0" type="image" src="/wcf/wcf/catedit/category1.png"/> <input border="0" type="image" src="/wcf/wcf/catedit/category2.png"/> Item 3[4]</td>
+</tr>
+<tr>
+<td class="navi-hier">
+<input border="0" type="image" src="/wcf/wcf/catedit/category1.png"/> <input border="0" type="image" src="/wcf/wcf/catedit/category2.png"/> Item 3[5]</td>
+</tr>
+<tr>
+<td class="navi-hier">
+<input border="0" type="image" src="/wcf/wcf/catedit/category1.png"/> <input border="0" type="image" src="/wcf/wcf/catedit/category2.png"/> Item 3[6]</td>
+</tr>
+</table>
+</form>
+@

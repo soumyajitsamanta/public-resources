@@ -1,0 +1,59 @@
+head	1.3;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.3
+date	2003.08.11.06.58.05;	author numberone;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2003.07.09.11.20.04;	author numberone;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2003.07.07.11.06.24;	author numberone;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.3
+log
+@merging Data to cvs
+@
+text
+@Revision history for Perl extension Data.
+
+0.01  Mon Jul  7 11:47:45 2003
+	- original version; created by h2xs 1.22 with options
+		-O -n Data Data/libdata/data.h
+
+@
+
+
+1.2
+log
+@cvs fix II
+@
+text
+@a6 1
+
+@
+
+
+1.1
+log
+@Data module added (empty)
+@
+text
+@d7 1
+@
+

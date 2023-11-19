@@ -1,0 +1,207 @@
+head	1.4;
+access;
+symbols
+	start:1.1.1.1 vendor:1.1.1;
+locks; strict;
+comment	@# @;
+
+
+1.4
+date	2003.06.03.13.16.16;	author numberone;	state dead;
+branches;
+next	1.3;
+
+1.3
+date	2003.02.17.23.38.18;	author numberone;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2002.09.26.07.52.42;	author numberone;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2002.09.24.01.40.58;	author michald;	state Exp;
+branches
+	1.1.1.1;
+next	;
+
+1.1.1.1
+date	2002.09.24.01.40.58;	author michald;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.4
+log
+@0.9.1 -- version merge
+@
+text
+@# $Id: SSL.pm,v 1.3 2003/02/17 23:38:18 numberone Exp $
+
+package Net::SSL;
+use strict;
+
+use Data::Dumper;
+use IO::Socket::SSL;
+
+use base "Net";
+
+# trusted issuer
+my $kerberos = "kerberos";
+
+sub server {
+	my($pkg,$port) = @@_; # fix: SUPER
+	my ($cert,$key) = ("./root.pem","key.pem");
+	$port = getservbyname($port,'tcp') if($port =~ /\D/);
+
+	my $sock = new IO::Socket::SSL(LocalPort=>$port, Proto=>'tcp',
+			Listen=>5, Reuse=>1,SSL_verify_mode => 0x01,
+			SSL_key_file => $key, SSL_cert_file => $cert)
+									
+		or die &IO::Socket::SSL::errstr;
+	return $pkg->Net::_create($sock,"_server_",$port);
+}
+
+#$IO::Socket::SSL::DEBUG = 1;
+
+sub verify {
+	my $sock = shift;
+
+#	my $issuer  = $sock->peer_certificate("issuer");
+#	my $subject = $sock->get_peer_certificate("subject");
+
+	my $cert  = $sock->get_peer_certificate();
+	my $issuer= $cert->issuer_name;
+	my $subject= $cert->subject_name;
+
+
+	# fix: kerberos->auth
+	die "issuer $issuer untrusted" if($issuer ne "\/CN=$kerberos");
+
+	die "subject $subject" if($subject !~ /^\/CN=([a-zA-Z]\w+)$/);
+
+	return $1;
+}
+
+sub accept {
+	my($net,$block) = @@_;
+
+	my $sock = undef;
+	if($block) {
+		$sock = $net->{sock}->accept() or die;
+	} else {
+		$net->{sock}->blocking(0);
+		$sock = $net->{sock}->accept() or return undef;
+		$net->{sock}->blocking(1);
+	}
+
+	$sock->blocking(0);
+	$sock->autoflush(1);
+
+	return Net::SSL->Net::_create( $sock,
+			$sock->peerhost(),$sock->peerport(), verify($sock) );
+}
+
+
+sub connect {
+	my($pkg,$peer,$port,$cert,$key) = @@_;
+	($cert,$key) = ("./root.pem","key.pem") unless($cert.$key);
+
+	$port = getservbyname($port,'tcp') if($port =~ /\D/);
+
+	my $sock = undef;
+	eval { $sock = new IO::Socket::SSL(
+			PeerAddr=>$peer, PeerPort=>$port, Proto=>'tcp',
+			SSL_key_file => $key, SSL_cert_file => $cert, 
+			SSL_use_cert => 1, SSL_verify_mode => 0x01)
+	};
+	die "ssl connect: ".&IO::Socket::SSL::errstr."\n" unless($sock);
+
+	$sock->blocking(0);
+	$sock->autoflush(1);
+
+	return $pkg->Net::_create( $sock,
+			$sock->peerhost(),$sock->peerport(), verify($sock));
+}
+
+sub syswrite {
+	my($net,$p_buff,$offset) = @@_;
+	my $length = length($$p_buff) - $offset;
+	return syswrite($net->{sock},$$p_buff,$length,$offset);
+}
+
+sub sysread {
+	my($net,$p_buff) = @@_;
+	my $bytes = sysread($net->{sock},$$p_buff,32768,length($$p_buff));	
+	return $bytes ? $bytes : undef if(defined $bytes);
+	return 0; # fixme: die unless(EAGAIN|EWOULDBLOCK)
+}
+
+sub close { 
+	my $net = shift;
+	$net->{sock}->close() if(defined $net->{sock});
+}
+
+1;
+
+
+@
+
+
+1.3
+log
+@demo certificate + some keys
+certs/newkey.sh - script for automated key generation
+@
+text
+@d1 1
+a1 1
+# $Id: SSL.pm,v 1.2 2002/09/26 07:52:42 numberone Exp $
+@
+
+
+1.2
+log
+@version merging with my cvs
+@
+text
+@d1 1
+a1 1
+# $Id: SSL.pm,v 1.1.1.1 2002/09/24 01:40:58 michald Exp $
+d16 1
+d18 1
+d20 3
+a22 2
+									Listen=>5, Reuse=>1,
+									SSL_verify_mode => 0x01)
+d70 2
+d77 1
+a77 1
+#			SSL_key_file => $key, SSL_cert_file => $cert, 
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d1 1
+a1 1
+# $Id: SSL.pm,v 1.7 2002/08/28 08:29:10 martin Exp $
+d103 1
+@
+
+
+1.1.1.1
+log
+@Initial public release of BEE Project.
+@
+text
+@@

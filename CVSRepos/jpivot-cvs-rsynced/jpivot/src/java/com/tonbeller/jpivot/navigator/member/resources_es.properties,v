@@ -1,0 +1,36 @@
+head	1.1;
+access;
+symbols
+	jpivot_1_8_0:1.1
+	focus_1_6_0:1.1.0.2
+	jpivot_1_7_0:1.1;
+locks; strict;
+comment	@# @;
+
+
+1.1
+date	2007.01.29.10.01.55;	author avix;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@added spanish locale (thanks to Pedro Casals)
+@
+text
+@MemberNavigator.ok.title=Aceptar
+MemberNavigator.cancel.title=Cancelar
+MemberNavigator.selectVisible.title=Todos
+MemberNavigator.selectNone.title=Ninguno
+MemberNavigator.enableGrouping.title=Agrupar
+MemberNavigator.disableGrouping.title=Sin agrupar
+MemberNavigator.overflowOccurred=Demasiados miembros
+
+MemberNavigator.groupingMemberCount=12
+
+@

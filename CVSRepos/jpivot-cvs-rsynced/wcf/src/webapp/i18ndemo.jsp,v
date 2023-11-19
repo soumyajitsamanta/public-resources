@@ -1,0 +1,82 @@
+head	1.1;
+access;
+symbols
+	jpivot_1_8_0:1.1
+	focus_1_6_0:1.1.0.6
+	wcf_1_7_0:1.1
+	wcf_1_6_0:1.1
+	jpivot_1_5_0:1.1.0.4
+	Root_jpivot_1_5_0:1.1
+	mondrian_xmla_2005_08_25:1.1.0.2
+	sourceforge_sync:1.1;
+locks; strict;
+comment	@# @;
+
+
+1.1
+date	2005.07.05.14.04.33;	author avix;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@initial version
+@
+text
+@<%@@ page
+  session="true"
+  contentType="text/html; charset=UTF-8"
+  import="com.tonbeller.wcf.controller.*,
+    java.util.*,
+    javax.servlet.http.*,
+    com.tonbeller.tbutils.res.*"
+%>
+<%@@ taglib prefix="wcf" uri="http://www.tonbeller.com/wcf" %>
+<%@@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
+
+<%
+  RequestContext ctx = RequestContext.instance();
+  String lang = ctx.getParameter("lang");
+  if (lang != null) {
+    Locale loc = new Locale(lang, lang.toUpperCase());
+    ctx.setLocale(loc);
+  }
+  Resources res = ctx.getResources(com.tonbeller.wcf.test.TestBean.class);
+%>
+
+<html>
+<head>
+<title>WCF i18n Testpage</title>
+<link rel="stylesheet" type="text/css" href="wcf/form/xform.css">
+</head>
+<body bgcolor=white>
+
+<jsp:useBean id="i18nbean" class="com.tonbeller.wcf.form.TestBean" scope="session" />
+<wcf:form id="i18nform" bundle="com.tonbeller.wcf.test.resources" xmlUri="/WEB-INF/i18nform.xml"  model="#{i18nbean}"/>
+
+<h2>i18n Test</h2>
+
+<form action="i18ndemo.jsp" method="post" id="form01">
+<table>
+  <tr>
+    <td>fmt:message</td>
+    <td><fmt:message key="message.key"/></td>
+  </tr>
+  <tr>
+    <td>resources</td>
+    <td><%= res.getString("test.message") %></td>
+  </tr>
+  <tr>
+</table>
+<wcf:render ref="#{i18nform}" xslUri="/WEB-INF/wcf/wcf.xsl"/>
+</form>
+<p><a href="index.jsp">back to index</a>
+
+</body>
+</html>
+@

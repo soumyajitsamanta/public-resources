@@ -1,0 +1,73 @@
+head	1.2;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2008.05.17.15.40.42;	author fsaz;	state dead;
+branches;
+next	1.1;
+
+1.1
+date	2005.11.28.14.39.23;	author fsaz;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@borrando viejos
+@
+text
+@/*
+ * Created on 11-abr-2005
+ *
+ * Job.java
+ *
+ */
+package es.aeat.eett.infoRubik.jobs.job_core;
+
+import java.io.File;
+
+import org.jdom.Element;
+
+
+
+/**
+ * @@author f00992
+ */
+public interface Job {
+    public static final String KEY_JOB="Job";
+    public static final String KEY_DEPLOY="deployJob";
+    public static final String KEY_JOB_NAME="nameJob";
+    //public static final String KEY_NAME_PLUGIN="namePlugin";
+    public static final String KEY_EXTENSION_ID="ExtensionID";
+    public static final String KEY_CAPTION_PLUGIN="captionPlugin";
+
+	//public String getPuginName();
+	public Element getRootElement();
+	public String getCaption();
+	public void ini() throws Exception;
+	//public boolean  loadRootElement(Element rootElement);
+	public void run() throws Exception;
+	public void createFileOut(File fileOut) throws Exception ;
+	public void show();
+	public File getFileJob();
+	public void setFileJob(File file);
+}
+@
+
+
+1.1
+log
+@*** empty log message ***
+@
+text
+@@
+

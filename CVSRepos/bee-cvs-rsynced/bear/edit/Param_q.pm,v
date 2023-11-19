@@ -1,0 +1,199 @@
+head	1.5;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.5
+date	2004.03.04.14.43.16;	author jiri_schmid;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2004.01.27.15.47.29;	author jiri_schmid;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2003.12.12.16.48.12;	author jiri_schmid;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2003.11.18.14.38.40;	author jiri_schmid;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2003.11.14.11.45.36;	author jiri_schmid;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.5
+log
+@fixing bugs and improving useability and performance
+@
+text
+@#-----------------------------------------------------
+#  Dynami params Editation
+#-----------------------------------------------------
+# $Id: Param_q.pm,v 1.4 2004/01/27 15:47:29 jiri_schmid Exp $
+
+package Param_q;
+
+use strict;
+
+#-----------------------------------------------------
+# print_form is called from edit.cgi
+
+sub generateContent {
+my($variables, $lang, $obj) = (shift, shift, shift);
+my $saved = $$variables->{saved} if exists $$variables->{saved};
+my $localizations = {};
+my $name = &Local::LocalizedObj($$obj->{q}{ask}, "undefined question", $$variables->{useLang}, $$variables->{defaultLang});
+my $desc = &Local::LocalizedObj($$obj->{q}{help}, undef, $$variables->{useLang}, $$variables->{defaultLang});
+print <<END ;   # openNodes ... list of nodes which are currently open
+<br />
+<table class="page_skeleton">
+<tr class="page_skeleton">
+<td class="page_skeleton">
+
+	<table class="neutral">
+	<tr><td class="neutral_bold">$$lang->{'Param Q'}</td></tr>
+	<tr><td align="center">
+		<span class='nowrap'>
+		<input value="$name" onchange="object_changed()" type="text" id='NAME' name="ask" size="$Const::wb_const->{ $$variables->{wb} }{nameWidth}" maxlength="100"/>
+		<select name="langSpec" id="langSpec" onchange="tmpChangeLocal()">
+END
+foreach (keys %{$Const::languages}) {
+	$localizations->{$_}{name} = &Local::LocalizedObj($$obj->{q}{ask}, "no $_ question", $_, $$variables->{defaultLang});
+	$localizations->{$_}{desc} = &Local::ScriptStringView(&Local::LocalizedObj($$obj->{q}{help}, undef, $_, $$variables->{defaultLang}));
+	my $selected = ($$variables->{useLang} eq $_) ? " selected='selected'" : '';
+	print "<option value='$_'$selected>$_</option>";
+}
+
+print <<END;
+		</select>
+		</span>
+	</td></tr>
+	<tr><td><hr></td></tr>
+	<tr><td class="neutral_bold">$$lang->{'Param Q Help'}</td></tr>
+	<tr><td align="center"><textarea name='help' id='DESC' onchange="object_changed()" rows="$Const::descriptionRows" cols="$Const::wb_const->{ $$variables->{wb} }{descriptionWidth}">$desc</textarea></td></tr>
+</table>
+</td>
+</tr>
+<tr class="page_skeleton">
+<td class="page_skeleton" colspan='2'>
+	<table class="neutral_100">
+	<tr><td align="center">
+	<table class="buttons" cellpading="0" cellspacing="0">
+	<tr>	<td class="buttons"><input id='SAVE' type="submit" name="Action" value="$$lang->{'Save'}" /></td>
+		<td class="buttons">	<input type="submit" name="Action" value="$$lang->{'Save As'}" onclick="return readName('param');"/>
+					<input type="hidden" name="saveAsName" id="saveAsName" value="" /></td>
+<!--		<td class="buttons"><input type="reset" name="reset" value="$$lang->{'Reset'}" /></td> -->
+	</tr>
+	</table>
+	</td></tr>
+	</table>
+</td></tr></table>
+END
+print <<END ;
+<script type="text/javascript" src="js/param.js"></script>
+<script type="text/javascript">
+	var msg="$$lang->{'New Save Part1'}$$lang->{'New Param Save'}$$lang->{'New Save Part2'}";
+	var saveAsMsg = "$$lang->{SaveAsMsg}$$lang->{'New Param'}";
+	reloadTree($saved);
+END
+	foreach my $langVar (keys %{$localizations}) {
+		my @@langVar = ();
+		foreach (keys %{$localizations->{$langVar}}) {
+			push (@@langVar,"$_:\"$localizations->{$langVar}{$_}\"");
+		}
+		print "	var $langVar = {".join(",",@@langVar)."};\n";
+	}
+
+print "</script>";
+}
+
+#-----------------------------------------------
+sub set_next_param {
+#	require "local/Local.pm"; #already linked by edit_obj.cgi
+	my ($o,$q) = (shift,shift);
+	$$o->{q}{ask} = &Local::setLocalizedObj($$o->{q}{ask},&Local::param_utf8($q,'ask'),$$q->param('langSpec'));
+	$$o->{q}{help} = &Local::setLocalizedObj($$o->{q}{help},&Local::param_utf8($q,'help'),$$q->param('langSpec'));
+}
+
+1
+@
+
+
+1.4
+log
+@micro bug fix
+@
+text
+@d4 1
+a4 1
+# $Id: Param_q.pm,v 1.3 2003/12/12 16:48:12 jiri_schmid Exp $
+d18 1
+a18 1
+my $desc = &Local::LocalizedObj($$obj->{description}, undef, $$variables->{useLang}, $$variables->{defaultLang});
+d33 2
+a34 4
+	$name = &Local::LocalizedObj($$obj->{q}{ask}, "no $_ question", $_, $$variables->{defaultLang});
+	$localizations->{$_}{name} = $name;
+	$desc = &Local::LocalizedObj($$obj->{q}{help}, "no $_ help", $_, $$variables->{defaultLang});
+	$localizations->{$_}{desc} = $desc;
+@
+
+
+1.3
+log
+@continuing in implementation of dynamic params
+@
+text
+@d4 1
+a4 1
+# $Id: Param_q.pm,v 1.2 2003/11/18 14:38:40 jiri_schmid Exp $
+d18 1
+d20 1
+a20 1
+<br />	
+a31 1
+my $desc;
+@
+
+
+1.2
+log
+@auto save when changing tabs implemented
+@
+text
+@d4 1
+a4 1
+# $Id: Param_q.pm,v 1.1 2003/11/14 11:45:36 jiri_schmid Exp $
+d17 1
+a17 1
+my $name = &Local::LocalizedObj($$obj->{q}{ask}, "undefined name", $$variables->{useLang}, $$variables->{defaultLang});
+@
+
+
+1.1
+log
+@question for dynamic param implemented
+@
+text
+@d4 1
+a4 1
+# $Id: Param.pm,v 1.3 2003/11/13 16:27:50 jiri_schmid Exp $
+d56 1
+a56 1
+	<tr>	<td class="buttons"><input type="submit" name="Action" value="$$lang->{'Save'}" /></td>
+@
+

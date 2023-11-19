@@ -1,0 +1,94 @@
+head	1.3;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.3
+date	2004.04.23.12.58.36;	author vacula;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2004.04.22.11.30.57;	author vacula;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2004.04.16.16.48.48;	author vacula;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.3
+log
+@renamed objects to entities
+@
+text
+@<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<parameters form="mapaCR" type="graph2d">
+	<base b_margin="10" 
+  		t_margin="10" 
+		l_margin="10" 
+		r_margin="10" 
+		width="400"
+		height="300"
+		sets="rows"
+	/>
+	<layout	
+		bg_transparent="1"
+		bgclr="255,255,255" 
+		show_boxclr="0"
+  		boxclr="255,255,255" 
+		show_title="1"
+		title="0,0,0"
+		title_font="serif"
+		title_fontsize="14"		
+		show_line="1"
+		lineclr="0,0,0"			
+	/>
+	<legend
+		show_legend="1"
+		legend_placement="RC"
+		legend_spacing="4"
+		legend_marker_width="12"
+		legend_marker_height="8"
+		cols_compute="1"
+		lg_cols=""
+		show_logo="0"
+		logo_position="LR"
+		src_logo="undef"
+	/>
+	<entities
+			
+	/>
+</parameters>
+@
+
+
+1.2
+log
+@added  few new attributes
+@
+text
+@d35 1
+a35 1
+	<objects
+@
+
+
+1.1
+log
+@new
+@
+text
+@d17 5
+a21 1
+		title="0,0,0"			
+@
+

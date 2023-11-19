@@ -1,0 +1,114 @@
+head	1.2;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2008.05.17.15.40.42;	author fsaz;	state dead;
+branches;
+next	1.1;
+
+1.1
+date	2005.11.28.14.02.37;	author fsaz;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@borrando viejos
+@
+text
+@/*
+ * Created on 10-nov-2005
+ *
+ * JSplitPaneManager.java
+ */
+package es.aeat.eett.infoRubik;
+
+import javax.swing.JSplitPane;
+
+import org.java.plugin.PluginLifecycleException;
+import org.java.plugin.PluginManager;
+
+import es.aeat.eett.infoRubik.layout.LeafPanel;
+import es.aeat.eett.infoRubik.reports.ReportsListener;
+import es.aeat.eett.infoRubik.reports.ScrollReports;
+
+/**
+ * @@author f00992x1
+ *
+ */
+public class JSplitPaneManager implements ReportsListener{
+	private JSplitPane split;
+	private ScrollReports scrollReports;
+	private LeafPanel leafPanel;	
+	private LogPane logPane;
+
+	/**
+	 * @@throws PluginLifecycleException
+	 * 
+	 */
+	JSplitPaneManager() throws PluginLifecycleException {
+	    PluginManager pm= PluginManager.lookup(JSplitPaneManager.class);
+	    InfoRugikPlugin infoRugikPlugin=(InfoRugikPlugin)pm
+			.getPlugin(InfoRugikPlugin.PLUGIN_ID);
+		infoRugikPlugin.addReportsListener(this);
+		
+	}
+	JSplitPane createJSplitPane() throws Exception{
+		leafPanel= new LeafPanel();
+		logPane= new LogPane();
+		//leafPanel.addLeafPaneListener(this);
+		scrollReports= new ScrollReports();
+		//scrollReports.addLeafPaneListener(this);
+		scrollReports.getTreeReports().addTreeSelectionListener(leafPanel);
+		split=new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, scrollReports, null);
+		split.setDividerSize(2);				
+		return split;
+	}
+	
+	
+	////////////// implements ReportsListener /////////////////////
+	public void showRight(int id) {
+		switch (id) {
+		case ReportsListener.RIGHTPANEL:		
+			if(split.getRightComponent()!=leafPanel){
+				split.setRightComponent(leafPanel);
+			}
+			break;
+		case ReportsListener.LOGPANE:		
+			if(split.getRightComponent()!=logPane){
+				split.setRightComponent(logPane);
+			}
+			break;
+
+		default:
+			break;
+		}
+		
+	}
+	public void hideRight() {
+		if(split.getRightComponent()!=null){
+			split.remove(split.getRightComponent());
+		}
+	}
+	/////////// End implements ReportsListener /////////////////////
+	
+}
+@
+
+
+1.1
+log
+@*** empty log message ***
+@
+text
+@@
+

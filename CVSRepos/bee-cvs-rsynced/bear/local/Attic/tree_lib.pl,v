@@ -1,0 +1,313 @@
+head	1.2;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2003.10.31.12.47.57;	author jiri_schmid;	state dead;
+branches;
+next	1.1;
+
+1.1
+date	2003.10.16.14.08.53;	author jiri_schmid;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@mod perl rocks!
+@
+text
+@#-----------------------------------------------------
+#  Bear Local - Tree Library
+#-----------------------------------------------------
+# $Id: tree_lib.pl,v 1.1 2003/10/16 14:08:53 jiri_schmid Exp $
+
+use strict;
+
+#----------------------------------------
+sub DefHiearchy {
+my ($skinPath, $imgType, $pn, $User, $file, $useLang, @@rest) = @@_;
+
+	my $icons={
+		plus=>"${skinPath}img/tree/plus.$imgType",
+		plusBottom=>"${skinPath}img/tree/plusbottom.$imgType",
+		minus=>"${skinPath}img/tree/minus.$imgType",
+		minusBottom=>"${skinPath}img/tree/minusbottom.$imgType",
+		folder=>"${skinPath}img/tree/folder.$imgType",
+		folderOpen=>"${skinPath}img/tree/folderopen.$imgType",
+		line=>"${skinPath}img/tree/line.$imgType",
+		base=>"${skinPath}img/tree/base.$imgType",
+		attr=>"${skinPath}img/tree/attr.$imgType",
+		join=>"${skinPath}img/tree/join.$imgType",
+		joinBottom=>"${skinPath}img/tree/joinbottom.$imgType",
+		empty=>"${skinPath}img/tree/empty.$imgType",
+		attr_form=>"${skinPath}img/tree/attr_form.$imgType",
+		"_METRICS_"=>"${skinPath}img/tree/metric.$imgType",
+		"_GRIDS_"=>"${skinPath}img/tree/grid.$imgType",
+		"_GRAPH3D_"=>"${skinPath}img/tree/graph3d.$imgType",
+		"_FORMAT3D_"=>"${skinPath}img/tree/format3d.$imgType",
+		"_FORMAT2D_"=>"${skinPath}img/tree/format2d.$imgType",
+		"_FILTERS_"=>"${skinPath}img/tree/filter.$imgType",
+		"_FORMATS_"=>"${skinPath}img/tree/format.$imgType",
+		"_REPORTS_"=>"${skinPath}img/tree/report.$imgType",
+		"_FACTS_"=>"${skinPath}img/tree/fact.$imgType",
+		"_ATTRIBUTES_"=>"${skinPath}img/tree/attr.$imgType",
+		"_ROLES_"=>"${skinPath}img/role.$imgType",
+		"_DPARAMS_"=>"${skinPath}img/param.$imgType",
+	};
+	
+	my $i=0;	#Tree id
+	my $l=$i;	#dir level
+	my $AAB = 'align="absbottom"';
+	my $SDN = 'style="display:none"';
+	my ($firstIcon, $secondIcon, @@hlp, $lastInField, $joinIcon);
+
+	my $scriptArray = ("\n<script type=\"text/javascript\">\nvar Tree0 = new Array;\n");
+
+	open(TREE, ">./html/$file.html") || die "print '$file'";
+	binmode(TREE, ":utf8");
+	print TREE "<div id='content' class='folder'><table><tr><td><span class='tree'><img src='$icons->{base}' style='vertical-align:bottom' alt='base'/>&nbsp;$pn</span></td></tr></table>";
+	
+	my $m;
+	my $objTr = { 	# hash for translation from Directory name, this strench method is connected with fixed directory structure and should be removed ASAP
+		'_METRICS_'=>{'type'=>'metric', 'icon'=>'M'},
+		'_GRIDS_'=>{'type'=>'grid', 'icon'=>'G'},
+		'_FORMAT3D_'=>{'type'=>'format3d', 'icon'=>'F3'},
+		'_FORMAT2D_'=>{'type'=>'format2d', 'icon'=>'F2'},
+		'_FORMATS_'=>{'type'=>'format', 'icon'=>'Fo'},
+		'_GRAPH3D_'=>{'type'=>'graph3d', 'icon'=>'G3'},
+		'_FILTERS_'=>{'type'=>'filter', 'icon'=>'Fi'},
+		'_REPORTS_'=>{'type'=>'report', 'icon'=>'R'},
+		'_FACTS_'=>{'type'=>'fact', 'icon'=>'Fa'},
+		'_ROLES_'=>{'type'=>'urole', 'icon'=>'Ro'},
+		'_ATTRIBUTES_'=>{'type'=>'attr', 'icon'=>'A'},
+		'_DPARAMS_'=>{'type'=>'param', 'icon'=>'P'}
+	};
+	
+	$m=SOAP->GetMetadataList($pn, 'folder', $User, $useLang);
+
+	my @@folders = sort(keys(%{$m}));			#get list of folder items
+	my $lastInFolders = $folders[$#folders];    #get the name of last item in a field of folders, needed for setting first icon in tree - line/empty when closing tree structure
+#use Data::Dumper;
+#print TREE "<pre>".Dumper($m)."</pre>";
+
+my $subM;
+foreach my $activeFolderId (@@folders) {			#for each folder item generate childs in tree
+	$firstIcon = $icons->{line};
+	$joinIcon = $icons->{plus};
+	if ($activeFolderId eq '_ATTRIBUTES_') {
+		my $dtn = $m->{$activeFolderId}->{name};
+		$scriptArray .= ("Tree0\[$i\]  = \"$activeFolderId|$i|$m->{$activeFolderId}->{name}|D|$m->{$activeFolderId}->{description}\";\n");
+		$i++;
+		$joinIcon = $icons->{plus};
+
+		print TREE "<span id='$activeFolderId' onclick='ocFolder(this)'><img id='icon$activeFolderId' src='$joinIcon' $AAB/><a href='javascript:{}'><img id='folderIcon$activeFolderId' src='$icons->{folder}' $AAB/><span id='view$activeFolderId' title='$m->{$activeFolderId}->{description}'>$m->{$activeFolderId}->{name}</span></a></span><br />";
+		print TREE "<div id='segment$activeFolderId' $SDN>";
+
+		# Load Attributes
+		$subM=SOAP->GetMetadataList($pn, $objTr->{$activeFolderId}->{type}, $User, $useLang);	#full List is used due need for Attribute Displays information
+#use Data::Dumper;
+#print TREE "<pre>".Dumper($subM)."</pre>";
+
+	my @@group = sort(keys(%{$subM}));
+	my $lastInMainField = $group[$#group];
+	$firstIcon = $icons->{line};
+	my $joinFolderIcon = $icons->{plus};
+	my $joinSubFolder = 0;
+
+	foreach my $group (@@group) {
+		
+		my $displayName = $subM->{$group}->{display}->{name};
+		my $displayDesc = $subM->{$group}->{display}->{description};
+		delete ($subM->{$group}->{display});
+		@@hlp = sort(keys(%{$subM->{$group}}));
+		$lastInField = $hlp[$#hlp];
+		my $previousItemId = $group;
+
+		$scriptArray .= ("Tree0\[$i\]  = \"$group|$activeFolderId|$subM->{$group}->{display}->{name}|D|\";\n");
+		$i++;
+		
+		my $insertIcon;
+		
+		if ($group eq '~group') {
+			$insertIcon = '';
+		} else {
+			if ($lastInMainField eq $group) {
+				$firstIcon = $icons->{empty}; $joinSubFolder=1; $joinFolderIcon = $icons->{plusBottom};
+			} else {
+				$firstIcon = $icons->{line}; $joinSubFolder = 0; $joinFolderIcon = $icons->{plus}; 
+			};
+			$insertIcon = "<img src=\"$firstIcon\" $AAB />";
+			print TREE "<span><img src='$icons->{line}' $AAB /><span id='$group' onclick='ocFolder(this)'><img id='icon$group' src='$joinFolderIcon' $AAB /><a href='javascript:{}'><img id='folderIcon$group' src='$icons->{folder}' $AAB /><span id='view$group' title='$displayDesc'>$displayName</span></a></span></span><br />";
+			print TREE "<div id='segment$group' $SDN>";
+		};
+		
+		$secondIcon = $icons->{line};
+		$joinIcon = $icons->{plus};
+		foreach my $rule (@@hlp) {
+	
+			my $displayName = $subM->{$group}->{$rule}->{display}->{name};
+			my $displayDesc = $subM->{$group}->{$rule}->{display}->{description};
+			delete ($subM->{$group}->{$rule}->{display});
+			my @@rulesField = sort(keys(%{$subM->{$group}->{$rule}}));
+			my $lastInRulesField = $rulesField[$#rulesField];
+			my $shortHash = $subM->{$group}->{$rule};
+			
+			
+			if ($rule eq '~role') {
+				foreach (@@rulesField) {
+				my $des=$shortHash->{$_}->{description}; $des=~s/^(.{77}).{3,}$/$1.../;	#description has to be cutted explicitly as Attributes are not readed thru ShortList
+				$scriptArray .= ("Tree0\[$i\]  = \"$_|$previousItemId|$shortHash->{$_}->{name}|A|$des\";\n");
+				$i++;
+				if (exists $shortHash->{$_}->{display}) {
+					if ($lastInRulesField eq $_) {
+						$secondIcon = $icons->{empty}; $joinIcon = $icons->{plusBottom};
+					}
+				} else {
+					if ($lastInRulesField eq $_) {
+						$secondIcon = $icons->{empty}; $joinIcon = $icons->{join};
+					} else {
+						$secondIcon = $icons->{empty}; $joinIcon = $icons->{joinBottom};
+					}
+				}
+				
+				print TREE "<span><img src='$icons->{line}' $AAB />$insertIcon<img id='Attr$_' onclick=\"ocAttr('$_')\" src='$joinIcon' $AAB />";
+				print TREE "<a href='javascript:{}'><span id='$_' onclick='showMe(this)' ondblclick='jump(this)'><img id='icon$_' name='$shortHash->{$_}->{name}|A' src='$icons->{attr}' $AAB /><span id='view$_' title='$des'>&nbsp;$shortHash->{$_}->{name}&nbsp;</span></span></a></span><br/>";
+				my $ll=$_;
+				print TREE "<div id='segment$_' $SDN>";
+				my @@hlp = sort(keys(%{$shortHash->{$ll}->{display}}));
+				my $lastInSubField = $hlp[$#hlp];
+				my $thirdIcon = $icons->{joinBottom};
+				foreach (@@hlp) {
+					$scriptArray .= ("Tree0\[$i\]  = \"$ll~$_|$ll|$shortHash->{$ll}->{display}->{$_}->{name}|Af|$shortHash->{$ll}->{display}->{$_}->{description}\";\n");
+					$thirdIcon = $icons->{join} if ($lastInSubField eq $_);
+					print TREE "<span><img src='$icons->{line}' $AAB />$insertIcon<img src='$secondIcon' $AAB /><img src='$thirdIcon' $AAB />";
+					print TREE "<a href='javascript:{}'><span id='$ll~$_' onclick='showMe(this)'><img id='icon$ll~$_' name='$_|Af' src='$icons->{attr_form}' $AAB /><span id='view$ll~$_' title='$shortHash->{$ll}->{display}->{$_}->{description}'>&nbsp;$shortHash->{$ll}->{display}->{$_}->{name}&nbsp;</span></span></a></span><br />";
+					$i++;
+				}
+				print TREE "</div>";
+				}
+			} else {
+#			use Data::Dumper;
+#			print TREE "<pre>".Dumper($shortHash)."</pre>";
+				$scriptArray .= ("Tree0\[$i\]  = \"$group.$rule|$group|$rule|D|\";\n");
+				$i++;
+				
+				if ($lastInField eq $rule) {$secondIcon = $icons->{empty}; $joinIcon = $icons->{plusBottom}; $joinFolderIcon = $icons->{plusBottom}; $joinSubFolder=1;}				
+				
+				print TREE "<span><img src='$icons->{line}' $AAB /><img src='$icons->{line}' $AAB /><span id='$group.$rule' onclick='ocFolder(this)'><img id='icon$group.$rule' src='$joinFolderIcon' $AAB /><a href='javascript:{}'><img id='folderIcon$group.$rule' src='$icons->{folder}' $AAB /><span id='view$group.$rule' title='$displayDesc'>$displayName</span></a></span></span><br />";
+				print TREE "<div id='segment$group.$rule' $SDN>";
+				
+				my $thirdIcon = $icons->{line};
+				$joinIcon = $icons->{plus};
+				
+				foreach (@@rulesField) {
+				my $des=$shortHash->{$_}->{description}; $des=~s/^(.{77}).{3,}$/$1.../;	#description has to be cutted explicitly as Attributes are not readed thru ShortList
+				$scriptArray .= ("Tree0\[$i\]  = \"$_|$group.$rule|$shortHash->{$_}->{name}|A|$des\";\n");
+				$i++;
+				
+				if (exists $shortHash->{$_}->{display}) {
+					if ($lastInRulesField eq $_) {
+						$thirdIcon = $icons->{empty}; $joinIcon = $icons->{plusBottom};
+					} else {
+						$thirdIcon = $icons->{line}; $joinIcon = $icons->{plus};
+					}
+				} else {
+					$thirdIcon = $icons->{empty};
+					$joinIcon = ($lastInRulesField eq $_) ? $icons->{join} : $icons->{joinBottom};
+				}
+			
+				print TREE "<span><img src='$icons->{line}' $AAB /><img src='$firstIcon' $AAB /><img src='$secondIcon' $AAB /><img id='Attr$_' onclick=\"ocAttr('$_')\" src='$joinIcon' $AAB />";
+				print TREE "<a href='javascript:{}' ><span id='$_' onclick='showMe(this)' ondblclick='jump(this)'><img id='icon$_' name='$shortHash->{$_}->{name}|A' src='$icons->{attr}' $AAB/><span id='view$_' title='$des'>&nbsp;$shortHash->{$_}->{name}&nbsp;</span></span></a></span><br />";
+				my $ll=$_;
+					print TREE "<div id='segment$_' $SDN>";
+				my @@hlp = sort(keys(%{$shortHash->{$ll}->{display}}));
+				my $lastInSubField = $hlp[$#hlp];
+				my $fourthIcon = $icons->{joinBottom};
+				foreach (@@hlp) {
+					$scriptArray .= ("Tree0\[$i\]  = \"$ll~$_|$ll|$shortHash->{$ll}->{display}->{$_}->{name}|Af|$shortHash->{$ll}->{display}->{$_}->{description}\";\n");
+					$fourthIcon = $icons->{join} if ($lastInSubField eq $_);
+					print TREE "<span><img src='$icons->{line}' $AAB /><img src='$firstIcon' $AAB /><img src='$secondIcon' $AAB /><img src='$thirdIcon' $AAB /><img src='$fourthIcon' $AAB />";
+					print TREE "<a href='javascript:{}'><span id='$ll~$_' onclick='showMe(this)'><img id='icon$ll~$_' name='$_|Af' src='$icons->{attr_form}' $AAB /><span id='view$ll~$_' title='$shortHash->{$ll}->{display}->{$_}->{description}'>&nbsp;$shortHash->{$ll}->{display}->{$_}->{name}&nbsp;</span></span></a></span><br />";
+					$i++;
+				}
+					print TREE "</div>";
+				}
+				print TREE "</div>";
+			}
+			}
+			print TREE "</div>";
+	};
+	print TREE "</div>";
+	} else {
+		my $dtn = $m->{$activeFolderId}->{name};
+		$scriptArray .= "Tree0\[$i\]='$activeFolderId|0|$m->{$activeFolderId}->{name}|D|$m->{$activeFolderId}->{description}';\n";
+
+		$i++;
+		$subM=SOAP->GetMetadataList($pn, $objTr->{$activeFolderId}->{type}, $User, $useLang);#get child for handled folder
+		my @@hlp = keys(%{$subM});
+		$lastInField = ($hlp[$#hlp]) ? ($hlp[$#hlp]) : undef;	#last child in handled folder or none
+
+		if ($lastInFolders eq $activeFolderId) {			#set diferent tree navigation icons for last child in folder
+			$firstIcon = $icons->{empty};
+			$joinIcon = $icons->{plusBottom};
+		}
+
+		if ($lastInField) {	#set active folder if childs present
+			print TREE "<span id='$activeFolderId' onclick='ocFolder(this)'><img id='icon$activeFolderId' src='$joinIcon' $AAB /><a href='javascript:{}'><img id='folderIcon$activeFolderId' src='$icons->{folder}' $AAB /><span id='view$activeFolderId' title='$m->{$activeFolderId}->{description}'>$m->{$activeFolderId}->{name}</span></a></span><br />";
+		} else {
+			my $emptyJoinIcon = ($lastInFolders eq $activeFolderId) ? $icons->{join} : $icons->{joinBottom};	#set diferent navigation tree icons for empty folder
+			print TREE "<span id='$activeFolderId' onclick='ocFolder(this)'><img id='icon$activeFolderId' src='$emptyJoinIcon' $AAB /><a href='javascript:{}'><img id='folderIcon$activeFolderId' src='$icons->{folder}' $AAB /><span id='view$activeFolderId' title='$m->{$activeFolderId}->{description}'>$m->{$activeFolderId}->{name}</span></a></span><br />";
+		}
+
+		print TREE "<div id='segment$activeFolderId' $SDN>";
+
+		$secondIcon = $icons->{joinBottom}; #pre-expected "join" navigation icon (most cases)
+		foreach (@@hlp) {
+			$scriptArray .= ($objTr->{$activeFolderId}->{type} eq "urole") ? "Tree0\[$i\]='$_|$activeFolderId|$subM->{$_}->{name}|$objTr->{$activeFolderId}->{icon}|$subM->{$_}->{description}|$subM->{$_}->{rights}';\n":"Tree0\[$i\]='$_|$activeFolderId|$subM->{$_}->{name}|$objTr->{$activeFolderId}->{icon}|$subM->{$_}->{description}';\n";
+			$secondIcon = $icons->{join} if ($lastInField eq $_); #set diferent navigation tree icons for last child
+
+			print TREE "<span><img src='$firstIcon' $AAB /><img src='$secondIcon' $AAB />";
+			print TREE "<a href='javascript:{}' ><span id='$_' onclick='showMe(this)' ondblclick='jump(this)'><img id='icon$_' name='$subM->{$_}->{name}|$objTr->{$activeFolderId}->{icon}' src='$icons->{$activeFolderId}' $AAB /><span id='view$_' title='$subM->{$_}->{description}'>&nbsp;$subM->{$_}->{name}&nbsp;</span></span></a></span><br />";
+
+			$i++;
+		}					
+		print TREE "</div>";
+	}
+}
+	print "</div>";
+	
+	my @@object;
+	foreach (keys %{$icons}) { push(@@object,"$_:'$icons->{$_}'") }
+	my $objectIcons = join(",",@@object);
+	
+	$scriptArray .= "var icons={$objectIcons};</script>\n";
+	print TREE $scriptArray;
+
+	close(TREE);
+}
+
+#-----------------------------------------
+
+1
+@
+
+
+1.1
+log
+@mod-perl implementation stage 1, rebuilding global vars in .pl to global pointers
+@
+text
+@d4 1
+a4 1
+# $Id: tree_lib.pl,v 1.90 2003/10/04 08:14:34 michald Exp $
+@
+

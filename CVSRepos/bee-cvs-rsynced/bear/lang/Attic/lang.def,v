@@ -1,0 +1,418 @@
+head	1.12;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.12
+date	2003.03.04.08.37.37;	author jiri_schmid;	state dead;
+branches;
+next	1.11;
+
+1.11
+date	2003.02.28.13.43.18;	author jiri_schmid;	state Exp;
+branches;
+next	1.10;
+
+1.10
+date	2003.02.28.10.43.40;	author jiri_schmid;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	2003.02.25.16.46.23;	author jiri_schmid;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	2003.02.24.15.31.25;	author jiri_schmid;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	2003.02.21.15.15.10;	author jiri_schmid;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	2003.01.30.12.50.54;	author jiri_schmid;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	2003.01.27.16.38.51;	author jiri_schmid;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2003.01.24.16.34.34;	author jiri_schmid;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2003.01.24.14.48.50;	author jiri_schmid;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2003.01.21.14.18.05;	author spanhel;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2003.01.21.11.08.46;	author spanhel;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.12
+log
+@lang.def removed
+@
+text
+@# define  terms' interpretation in US and CZ language
+our $lang={
+	   us=>{'Edit'=>'Edit',  # tab_cgi	        
+	        'Result'=>'Result',
+		'Debug'=>'Debug',
+		'Preferences'=>'Preferences',
+		'Admin'=>'Administration',
+		'Name'=>'Name:',
+		'Description'=>'Description:',
+
+		'Admin Title'=>'Beard preferences:',
+		
+		'Prefer Title'=>'Beard preferences:',
+		'Prefer Language'=>'Language localization:',
+		'Prefer Cookie'=>'Use cookies:',
+		'Prefer Open Result'=>'Open result in:',
+		'Prefer OpenR new'=>'Separated windows',
+		'Prefer OpenR self'=>'Actual window',
+		'Prefer OpenR one'=>'One separated window	',
+						
+		'Tabs NGrid'=>'New Grid',    # create new  object
+		'Tabs NMetric'=>'New Metric',
+		'Tabs NFormat'=>'New Format',
+		'Tabs NReport'=>'New Report',
+		'Tabs NFilter'=>'New Filter',
+		'Tabs Duplicate'=>'Duplicate item',
+		'Tabs Delete'=>'Delete item',
+						
+		'Save'=>'Save', # all *_ed.pl
+		'Save As'=>'Save As',
+		'Reset'=>'Reset',
+		'Reload'=>'Reload',
+		
+		'Folder (read only)'=>'Folder (read only)', # folder_ed.pl
+	
+		'Attribut (read only)'=>'Attribut (read only)', # attr_ed.pl
+		
+		'Fact (read only)'=>'Fact (read only)', # fact_ed.pl
+
+		'Report Edit'=>'Report Edit', # report_ed.pl
+		'Report Filter'=>'Filter name', # report_ed.pl
+		'Report Format'=>'Format name', # report_ed.pl
+		'Report Grid'=>'Grid name', # report_ed.pl
+
+		'Grid Edit'=>'Grid Edit', # grid_ed.pl
+		'Grid Data'=>'Data grid:',
+		'Grid Pages'=>'Pages:',
+		'Grid Pages_end'=>'Place to end',
+		'Grid Table'=>'Table data:',
+		'Grid Table_col'=>'Collumns:',
+		'Grid Table_col_end'=>'Collum attr. end',
+		'Grid Table_row'=>'Rows:',
+		'Grid Table_row_end'=>'Row attr. end',
+		'Grid Table_cell'=>'Metrics:',
+		'Grid Table_cell_end'=>'Metrics field end',
+
+		'Filter Edit'=>'Filter Edit', # filter_ed.pl
+		'Filter expresion'=>'Filter expresion:',
+
+		'Metric Edit'=>'Metric Edit', # metric_ed.pl
+		'Metric expresion',=>'Metric expresion:',
+		'Metric Filter'=>'Filter name', # report_ed.pl
+		'Agregation level'=>'Agregation level:',
+
+		'Format Edit'=>'Format Edit', # format_ed.pl
+		'Format radio_btn css',=>'CSS',
+		'Format radio_btn graph',=>'Graph',
+		
+	    },
+	 cz=>{	edit=>'Editace',  # tab_cgi	        
+	        result=>'Výsledek',
+		debug=>'Ladìní',
+		
+		n_grid=>'Nová Møí¾ka',    # create new  object
+		n_metric=>'Nová Metrika',
+		n_format=>'Nový Formát',
+		n_report=>'Nový Report',
+		n_filter=>'Nový Filtr',
+		copy=>'Kopie objektu',
+		delete=>'Smazat object',
+	    }   
+};
+
+
+# which language is active
+
+our $al= $lang->{us};
+
+
+@
+
+
+1.11
+log
+@weekend-leaving commit, (last?) code cleaning
+@
+text
+@@
+
+
+1.10
+log
+@added files admin,prefer.cgi, unused content of *.css removed with minor visual changes
+@
+text
+@d8 2
+d12 9
+a20 7
+		'Admin Language'=>'Language localization:',
+		'Admin Cookie'=>'Use cookies:',
+		'Admin Open Result'=>'Open result in:',
+		'Admin OpenR new'=>'Separated windows',
+		'Admin OpenR self'=>'Actual window',
+		'Admin OpenR one'=>'One separated window	',
+				
+d35 2
+a36 2
+		'Folder Name'=>'Folder name:',
+		'Folder Description'=>'Folder description:',
+a37 4
+		'Attribut (read only)'=>'Attribut (read only)', # attr_ed.pl
+		'Attribut Name'=>'Attribut name:',
+		'Attribut Description'=>'Attribut description:',
+
+a38 2
+		'Fact Name'=>'Fact name:',
+		'Fact Description'=>'Fact description:',
+d41 3
+a43 2
+		'Report name'=>'Report name:',
+		'Report description'=>'Report description:',
+a55 2
+		'Grid name'=>'Grid name:',
+		'Grid description'=>'Grid description:',
+a58 2
+		'Filter name'=>'Filter name:',
+		'Filter description'=>'Filter description:',
+a60 2
+		'Metric name',=>'Metric name:',
+		'Metric description',=>'Metric description:',
+d62 1
+a65 2
+		'Format name'=>'Format name:',
+		'Format description',=>'Format description:',
+@
+
+
+1.9
+log
+@removed unused functions from attr.js, language fixies in tabs.cgi and linked files
+@
+text
+@d6 11
+a16 1
+		
+@
+
+
+1.8
+log
+@new bugs just found fixed, some visual changes
+@
+text
+@d7 7
+a13 7
+		'New Grid'=>'New Grid',    # create new  object
+		'New Metric'=>'New Metric',
+		'New Format'=>'New Format',
+		'New Report'=>'New Report',
+		'New Filter'=>'New Filter',
+		'Copy object'=>'Copy object',
+		'Delete object'=>'Delete object',
+@
+
+
+1.7
+log
+@visual improvments
+@
+text
+@d40 1
+a40 1
+		'Grid Table'=>'Data table',
+@
+
+
+1.6
+log
+@Dad.js seems to be working properly
+@
+text
+@d37 1
+d40 1
+a40 1
+		'Grid Table'=>'Data grid',
+@
+
+
+1.5
+log
+@script improvment in dad.js, unexplaneabale visual bugs fixed by changing page structure of metrics_ed.pl, filter_ed.pl and report_ed.pl, visual improvment of Grid Page
+@
+text
+@d21 2
+a22 2
+		'Folder Name'=>'Folder Name',
+		'Folder Description'=>'Folder Description',
+d25 2
+a26 2
+		'Attribut Name'=>'Attribut Name',
+		'Attribut Description'=>'Attribut Description',
+d29 2
+a30 2
+		'Fact Name'=>'Fact Name',
+		'Fact Description'=>'Fact Description',
+d33 2
+a34 2
+		'Report name'=>'Report name',
+		'Report description'=>'Report description',
+d37 1
+a37 1
+		'Grid Pages'=>'Pages',
+d40 1
+a40 1
+		'Grid Table_col'=>'Collumns',
+d42 1
+a42 1
+		'Grid Table_row'=>'Rows',
+d44 1
+a44 1
+		'Grid Table_cell'=>'Metrics',
+d46 2
+a47 2
+		'Grid name'=>'Grid name',
+		'Grid description'=>'Grid description',
+d50 3
+a52 3
+		'Filter expresion'=>'Filter expresion',
+		'Filter name'=>'Filter name',
+		'Filter description'=>'Filter description',
+d55 10
+a64 6
+		'Metric name',=>'Metric name',
+		'Metric description',=>'Metric description',
+		'Metric expresion',=>'Metric expresion',
+		'Agregation level'=>'Agregation level',
+
+		'Format name'=>'Format name' # metric_ed.pl
+@
+
+
+1.4
+log
+@minor bugs in dad.js fixed, some visual changes in interfaceoB
+@
+text
+@d38 1
+d41 1
+d43 1
+d45 1
+@
+
+
+1.3
+log
+@*** empty log message ***
+@
+text
+@d38 1
+a38 1
+		'Grid Table'=>'Data to view',
+@
+
+
+1.2
+log
+@load metadata to grid_ed.pl
+@
+text
+@d37 5
+a41 2
+		'Pages'=>'Pages',
+		'Data Mining'=>'Data Mining', 
+a43 1
+		'Trash'=>'Trash',
+a48 1
+
+@
+
+
+1.1
+log
+@new lang.def
+@
+text
+@d3 3
+a5 3
+	   us=>{edit=>'Edit',  # tab_cgi	        
+	        result=>'Result',
+		debug=>'Debug',
+d7 7
+a13 7
+		n_grid=>'New Grid',    # create new  object
+		n_metric=>'New Metric',
+		n_format=>'New Format',
+		n_report=>'New Report',
+		n_filter=>'New Filter',
+		copy=>'Copy object',
+		delete=>'Delete object',
+d15 4
+a18 4
+		save=>'Save', # all *_ed.pl
+		saveas=>'Save as',
+		reset=>'Reset',
+		reload=>'Reload',
+d20 36
+a55 3
+		fo_edit=>'Folder Edit', # folder_ed.pl
+		fo_name=>'Folder Name',
+		fo_desc=>'Folder Description',
+a56 14
+		g_edit=>'Grid Edit', # grid_ed.pl
+		g_pag=>'Pages', 
+		g_name=>'Grid name',
+		g_desc=>'Grid description',
+		f_edit=>'Filter Edit', # filter_ed.pl
+		f_expr=>'Filter expresion',
+		f_name=>'Filter name',
+		f_desc=>'Filter description',
+		r_edit=>'Report Edit', # report_ed.pl
+		r_name=>'Report name',
+		r_desc=>'Report description',
+		m_edit=>'Metric Edit', # metric_ed.pl
+		m_name=>'Report name',
+		m_desc=>'Report description'
+d67 2
+a68 2
+		copy=>"Kopie objektu",
+		delete=>"Smazat object",
+@
+

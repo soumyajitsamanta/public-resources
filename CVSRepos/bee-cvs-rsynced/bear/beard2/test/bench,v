@@ -1,0 +1,37 @@
+head	1.1;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.1
+date	2004.03.01.16.16.49;	author numberone;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@
+Added beard2 -- new bear daemon source tree.
+
+mdata subsystem works, some docs, some tests, etc.
+
+cached in progress
+@
+text
+@./mmap 64: 4,57 user 1,11s system 99% cpu 5,682 total
+
+zapis pomoci write (4kB bloky)
+./mmap f 64 XXXXXs user XXXX system XX% cpu 1:45,XX total
+./mmap f 64 95,55s user 2,81 system 97% cpu 1:40,77 total
+
+zapis pomoci mmap
+./mmap i 64 4,22s user 0,09s system 100% cpu 4,291 total
+
+@

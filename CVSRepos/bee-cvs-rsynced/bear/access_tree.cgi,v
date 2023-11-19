@@ -1,0 +1,591 @@
+head	1.19;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.19
+date	2004.04.15.08.41.56;	author jiri_schmid;	state Exp;
+branches;
+next	1.18;
+
+1.18
+date	2004.02.23.12.09.14;	author jiri_schmid;	state Exp;
+branches;
+next	1.17;
+
+1.17
+date	2004.02.18.16.19.06;	author jiri_schmid;	state Exp;
+branches;
+next	1.16;
+
+1.16
+date	2004.02.16.14.55.18;	author jiri_schmid;	state Exp;
+branches;
+next	1.15;
+
+1.15
+date	2003.12.04.12.15.12;	author jiri_schmid;	state Exp;
+branches;
+next	1.14;
+
+1.14
+date	2003.11.25.10.07.42;	author michald;	state Exp;
+branches;
+next	1.13;
+
+1.13
+date	2003.11.05.10.44.47;	author jiri_schmid;	state Exp;
+branches;
+next	1.12;
+
+1.12
+date	2003.10.31.12.47.54;	author jiri_schmid;	state Exp;
+branches;
+next	1.11;
+
+1.11
+date	2003.10.16.14.08.51;	author jiri_schmid;	state Exp;
+branches;
+next	1.10;
+
+1.10
+date	2003.09.29.09.21.54;	author jiri_schmid;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	2003.09.15.13.04.03;	author jiri_schmid;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	2003.09.01.12.40.02;	author jiri_schmid;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	2003.08.28.09.26.11;	author jiri_schmid;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	2003.08.21.12.02.01;	author jiri_schmid;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	2003.08.20.14.23.41;	author jiri_schmid;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2003.08.18.13.17.09;	author jiri_schmid;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2003.08.12.14.09.44;	author jiri_schmid;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2003.08.12.09.19.16;	author jiri_schmid;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2003.08.11.13.51.26;	author jiri_schmid;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.19
+log
+@last used tab is active 4 viewing object, when possible
+@
+text
+@#!/usr/bin/perl
+#-----------------------------------------------------
+#  access tree
+#-----------------------------------------------------
+# $Id: access_tree.cgi,v 1.18 2004/02/23 12:09:14 jiri_schmid Exp $
+
+use strict;
+my $run_mod_perl = defined(&Apache::RequestRec::BINMODE);	# are we running under mod_perl?
+if ($run_mod_perl) { Apache::RequestRec::BINMODE(':utf8') } else { binmode STDOUT,':utf8' }
+
+use CGI qw( :standard );
+use CGI::Pretty;
+require "const/Const.pm";
+require "local/Local.pm";
+
+# ---- init SOAP ---------
+#-------------------------
+our $load = 1;
+if ($load) {	# ensure require will be performed only once in case of mod_perl execution
+	eval "use SOAP::Lite +autodispatch => 
+		uri => 'Bear', 
+		proxy => ['http://$Const::bearHost:$Const::bearPort/', 
+		options => {compress_threshold => $Const::compressThreshold}]; 
+		1"
+	or ( &Local::ErrorDie("ERROR in eval of \"use SOAP::Lite ...\".") );
+	undef $load;
+}
+my $q = new CGI;
+
+# --- test SOAP connection ---
+#-----------------------------
+my $serverVerbName="SOAP Server http://$Const::bearHost:$Const::bearPort/";
+if (! eval "SOAP::Lite->self->fault") {
+	&Local::ErrorDie('ERROR: '.$serverVerbName.' not responding<br><form><input type="submit" name="Refresh" value="Refresh" /></form>');
+}
+#*SOAP::Serializer::as_string = \&SOAP::Serializer::as_base64;	#reducing number of XML::Parser char() callbaks  for every single portion of processed stream (e.g. \n)
+
+# --- determine user and his preferences ---
+#-------------------------------------------
+my $user=$q->remote_user();
+my $variables={};
+$variables->{useLang} = (param('Lang')) ? param('Lang') : param('active_lang'); #active lang defined in *_ed.pl
+$variables->{skin} = (param('Skin')) ? param('Skin') : (param('skin')) ? param('skin') : "";
+$variables->{skinPath} = ($variables->{skin}) ? "skins/$variables->{skin}/" : "";
+($variables->{allParams} = $ENV{QUERY_STRING}) =~ s/&Item[^&]*//g;
+$variables->{useCookie} = param('Cook');
+$variables->{imgType} = 'png';#&Local::getImageType("$Const::myPath$variables->{skinPath}img/");
+$variables->{defaultLang} = $Const::defaultLanguage;
+$variables->{id} = param('Item');
+$variables->{useEnc} = 'UTF-8';
+
+# --- load message dictionary ---
+#---------------------------------
+require "lang/$variables->{useLang}.utf";
+
+print $q->header(-charset=>$variables->{useEnc});
+if (SOAP->CheckAccess('A',$user,$q->param('Proj'))) {
+print $q->start_html(
+	-title=>"iframe",
+	-class=>"list",
+	-lang=>$Const::languages->{ $variables->{useLang} }->{lang},
+	-encoding=>$variables->{useEnc},
+	-head=>meta({	-http_equiv => 'Content-Type', 
+			-content => "text/html; charset=$variables->{useEnc}" }),
+	-script=>[{-language=>'JAVASCRIPT', -src=>'js/access.js'}],
+	-style=>{-src=>"$variables->{skinPath}css.css"},
+	-onload=>"initVars(); openHierarchy()",
+);
+if (!$variables->{useLang} ) {
+	print "<span style=\"color:#f00; font-weight:bold; font-size:20px\">Break! - no user prefernces specified.</span><br/><br/><span><a href=\"index.cgi?TabAct=P\" target=\"_top\">Set and save user preferences first.</a></span></body></html>";
+	die;
+};
+
+print <<END;
+<script type="text/javascript">var all_params="$variables->{allParams}"; var useCookie="$variables->{useCookie}";</script>
+<input type="hidden" value="$variables->{useLang}" id="useLang" />
+<input type="hidden" value="$variables->{id}" id="ITEM_ID" />
+END
+
+my $tree;
+$tree = SOAP->GetAccessTreeDefinition($variables->{useLang}, $user);
+
+require "local/Tree2.pm";
+&Tree2::createTree(\$tree,\$variables,$Const::lang->{ $variables->{useLang} }{'Access list'},$user);
+} else {
+	print $q->start_html(-style=>{-src=>"$variables->{skinPath}css.css"});
+	&Local::accessForbidden("$Const::lang->{$variables->{useLang}}{'Forbidden Tab'}");
+}
+print $q->end_html;
+
+1
+@
+
+
+1.18
+log
+@fixed access tree creation depending on ACL
+@
+text
+@d5 1
+a5 1
+# $Id: access_tree.cgi,v 1.17 2004/02/18 16:19:06 jiri_schmid Exp $
+a77 2
+
+
+@
+
+
+1.17
+log
+@rights implemented
+@
+text
+@d5 1
+a5 1
+# $Id: access_tree.cgi,v 1.16 2004/02/16 14:55:18 jiri_schmid Exp $
+d86 1
+a86 1
+&Tree2::createTree(\$tree,\$variables,$Const::lang->{ $variables->{useLang} }{'Access list'});
+@
+
+
+1.16
+log
+@security improvment for tabs
+@
+text
+@d5 1
+a5 1
+# $Id: access_tree.cgi,v 1.15 2003/12/04 12:15:12 jiri_schmid Exp $
+d89 1
+a89 1
+	&Local::accessForbidden('Admin',$user);
+@
+
+
+1.15
+log
+@img type changes tested and fixed
+@
+text
+@d5 1
+a5 1
+# $Id: access_tree.cgi,v 1.14 2003/11/25 10:07:42 michald Exp $
+d57 1
+a57 1
+
+d87 4
+a90 1
+
+@
+
+
+1.14
+log
+@Project ACL implementation
+@
+text
+@d5 1
+a5 1
+# $Id: access_tree.cgi,v 1.13 2003/11/05 10:44:47 jiri_schmid Exp $
+d47 1
+a47 1
+$variables->{imgType} = &Local::getImageType("$Const::myPath$variables->{skinPath}img/");
+@
+
+
+1.13
+log
+@pointers everywhere, reapply of removed fix
+@
+text
+@d5 1
+a5 1
+# $Id: access_tree.cgi,v 1.12 2003/10/31 12:47:54 jiri_schmid Exp $
+d83 1
+a83 1
+$tree = SOAP->GetAccessTreeDefinition($variables->{useLang});
+@
+
+
+1.12
+log
+@mod perl rocks!
+@
+text
+@d5 1
+a5 1
+# $Id: access_tree.cgi,v 1.11 2003/10/16 14:08:51 jiri_schmid Exp $
+d45 1
+a45 1
+$variables->{allParams} =  $ENV{QUERY_STRING};
+@
+
+
+1.11
+log
+@mod-perl implementation stage 1, rebuilding global vars in .pl to global pointers
+@
+text
+@d5 1
+a5 1
+# $Id: access_tree.cgi,v 1.10 2003/09/29 09:21:54 jiri_schmid Exp $
+d8 3
+d13 2
+a14 2
+our $q = new CGI;
+binmode STDOUT,":utf8";
+d16 26
+a41 7
+require "const.def";
+our($lang,$Languages,$bearHost,$bearPort,$Access,$DefaultLanguage);
+require "local/local_lib.pl";
+
+our $User=$q->remote_user();
+
+our $variables={};
+d47 2
+a48 2
+$variables->{imgType} = getImageType("$variables->{skinPath}img/");
+$variables->{defaultLang} = $DefaultLanguage;
+d50 5
+d56 1
+a56 3
+my $use_enc = 'UTF-8';
+require $Languages->{ $variables->{useLang} }->{'src'};
+print $q->header(-charset=>$use_enc);
+d61 2
+a62 2
+	-lang=>$Languages->{ $variables->{useLang} }->{lang},	#return language specification in format: language-country (it differs from param Lang)
+	-encoding=>$use_enc,
+d64 1
+a64 1
+			-content => "text/html; charset=$use_enc" }),
+a73 15
+eval "use SOAP::Lite +autodispatch => 
+		uri => 'Bear', 
+		proxy => ['http://$bearHost:$bearPort/', 
+		options => {compress_threshold => 10000}],
+		encoding => 'UTF-8';	
+		1"
+	or ( &ErrorDie("ERROR in eval of \"use SOAP::Lite ...\".") );
+
+	my $serverVerbName="SOAP Server http://$bearHost:$bearPort/";
+
+	if (! eval "SOAP::Lite->self->fault") {
+		ErrorDie('ERROR: '.$serverVerbName.' not responding<br><form><input type="submit" name="Refresh" value="Refresh" /></form>');
+	}
+
+
+d83 1
+a83 1
+$tree = SOAP->GetAccessTreeDefinition(lc($variables->{useLang}));
+d85 2
+a86 2
+require "local/tree.pl";
+&createTree(\$tree,\$variables,$lang->{'Access list'});
+d89 2
+@
+
+
+1.10
+log
+@code improvments a fixies
+@
+text
+@d5 1
+a5 1
+# $Id: access_tree.cgi,v 1.9 2003/09/15 13:04:03 jiri_schmid Exp $
+a10 1
+use vars qw($lang $Languages $name_w $descr_w $itemWide $bearHost $bearPort $Access);
+d14 2
+a15 2
+require "tree.pl";
+require "local_lib.pl";
+d19 10
+a28 6
+our $skin = (param('Skin')) ? param('Skin') : (param('skin')) ? param('skin') : "";
+our $skinPath = ($skin) ? "skins/$skin/" : "";
+my $style = ($skin) ? "${skinPath}css.css" : "css.css";
+our $imgType = getImageType("${skinPath}img/");
+my $use_lang = param('Lang');
+my $useCookie = param('Cook');
+d30 1
+a30 2
+my $id = param('Item');
+require $Languages->{$use_lang}->{'src'};
+d36 1
+a36 1
+	-lang=>$Languages->{$use_lang}->{lang},	#return language specification in format: language-country (it differs from param Lang)
+d41 1
+a41 1
+	-style=>{-src=>$style},
+d44 4
+a47 1
+if (! $use_lang) {print "<span style=\"color:#f00; font-weight:bold; font-size:20px\">Break! - no user prefernces specified.</span><br/><br/><span><a href=\"index.cgi?TabAct=P\" target=\"_top\">Set and save user preferences first.</a></span></body></html>"; die;};
+d63 1
+a63 1
+my $allParams = $ENV{QUERY_STRING};
+d65 3
+a67 3
+<script type='text/javascript'>var all_params='$allParams'; var useCookie='$useCookie';</script>
+<input type='hidden' value='$use_lang' id='useLang' />
+<input type='hidden' value='$id' id='ITEM_ID' />
+d72 2
+a73 2
+our $tree;
+$tree = SOAP->GetAccessTreeDefinition(lc($use_lang));
+d75 2
+a76 1
+&createTree($lang->{'Access list'});
+@
+
+
+1.9
+log
+@code changes and improvments
+@
+text
+@d5 1
+a5 1
+# $Id: access_tree.cgi,v 1.8 2003/09/01 12:40:02 jiri_schmid Exp $
+d27 1
+d62 2
+@
+
+
+1.8
+log
+@skins implemented. mozilla skin - temporarily copy msie content
+@
+text
+@d5 1
+a5 1
+# $Id: access_tree.cgi,v 1.7 2003/08/28 09:26:11 jiri_schmid Exp $
+d25 1
+d39 1
+a39 1
+	-onload=>"initVars()",
+d59 1
+a59 1
+<script type='text/javascript'>var all_params='$allParams';</script>
+@
+
+
+1.7
+log
+@tabs.cgi speed improvmnet, visual improvment on trees, rights and some other minor improvments
+@
+text
+@d5 1
+a5 1
+# $Id: access_tree.cgi,v 1.6 2003/08/21 12:02:01 jiri_schmid Exp $
+d15 1
+a16 1
+require "tree.pl";
+d20 4
+d37 1
+a37 1
+	-style=>{-src=>'css.css'},
+d56 1
+d58 1
+d60 1
+@
+
+
+1.6
+log
+@description for access tree changes
+@
+text
+@d5 1
+a5 1
+# $Id: access_tree.cgi,v 1.5 2003/08/20 14:23:41 jiri_schmid Exp $
+d37 2
+a38 9
+my $title = "Access list";
+print <<END;
+<input type='hidden' value='$use_lang' id='useLang' />
+<table><tr><td class='neutral_bold'><span><img src='img/tree/base.gif' style='vertical-align:bottom' alt='base'/>&nbsp;$lang->{$title}</span></td></tr></table>
+<table class="page_skeleton">
+<tr class="page_skeleton">
+<td class="page_skeleton">
+END
+	eval "use SOAP::Lite +autodispatch => 
+d52 4
+d59 1
+a59 3
+&createTree;
+
+print "</td></tr></table>";
+@
+
+
+1.5
+log
+@access object implemented
+@
+text
+@d3 1
+a3 1
+#  Folder Display
+d5 1
+a5 1
+# $Id: access_tree.cgi,v 1.4 2003/08/18 13:17:09 jiri_schmid Exp $
+a60 14
+
+# --adding localized informations for folders in AccessTree--
+foreach (keys %{$tree->{roles}}) {
+	$tree->{roles}{$_}{'~name'} = $_;
+	$tree->{roles}{$_}{'~content'} = $Access->{roles}{'~content'};
+	$tree->{roles}{$_}{'~desc'} = $Access->{roles}{'~desc'};
+}
+
+foreach (keys %{$Access}) {
+	$tree->{$_}{'~name'} = $Access->{$_}{'~name'};
+	$tree->{$_}{'~content'} = $Access->{$_}{'~content'};
+	$tree->{$_}{'~desc'} = $Access->{$_}{'~desc'};
+}
+# --end--
+@
+
+
+1.4
+log
+@admin page reading rutines implemented
+@
+text
+@d5 1
+a5 1
+# $Id: access_tree.cgi,v 1.3 2003/08/12 14:09:44 jiri_schmid Exp $
+d11 1
+a11 1
+use vars qw($lang $Languages $name_w $descr_w $itemWide $bearHost $bearPort);
+d61 14
+@
+
+
+1.3
+log
+@left pane is colapsible now
+@
+text
+@d5 1
+a5 1
+# $Id: access_tree.cgi,v 1.2 2003/08/12 09:19:16 jiri_schmid Exp $
+d58 3
+@
+
+
+1.2
+log
+@ACL implementation, datas moved into beard"s caches
+@
+text
+@d5 1
+a5 1
+# $Id: access_tree.cgi,v 1.1 2003/08/11 13:51:26 jiri_schmid Exp $
+d40 1
+a40 1
+<table><tr><td class='neutral_bold'>$lang->{$title}</td></tr></table>
+@
+
+
+1.1
+log
+@necessary files for admin page added
+@
+text
+@d5 1
+a5 1
+# $Id: access.cgi,v 1.2 2003/08/11 12:30:56 jiri_schmid Exp $
+d11 1
+a11 1
+use vars qw($lang $Languages $name_w $descr_w $itemWide);
+d39 1
+d45 14
+@
+

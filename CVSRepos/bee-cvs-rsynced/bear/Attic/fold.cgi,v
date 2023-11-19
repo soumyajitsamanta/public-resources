@@ -1,0 +1,1240 @@
+head	1.27;
+access;
+symbols
+	start:1.1.1.1 vendor:1.1.1;
+locks; strict;
+comment	@# @;
+
+
+1.27
+date	2003.11.25.10.07.42;	author michald;	state dead;
+branches;
+next	1.26;
+
+1.26
+date	2003.10.16.14.08.51;	author jiri_schmid;	state Exp;
+branches;
+next	1.25;
+
+1.25
+date	2003.07.08.08.24.43;	author jiri_schmid;	state Exp;
+branches;
+next	1.24;
+
+1.24
+date	2003.05.05.06.41.42;	author michald;	state Exp;
+branches;
+next	1.23;
+
+1.23
+date	2003.04.23.14.38.57;	author jiri_schmid;	state Exp;
+branches;
+next	1.22;
+
+1.22
+date	2003.01.20.18.23.45;	author spanhel;	state Exp;
+branches;
+next	1.21;
+
+1.21
+date	2003.01.16.17.20.19;	author spanhel;	state Exp;
+branches;
+next	1.20;
+
+1.20
+date	2003.01.03.11.22.03;	author michald;	state Exp;
+branches;
+next	1.19;
+
+1.19
+date	2002.11.26.12.44.36;	author spanhel;	state Exp;
+branches;
+next	1.18;
+
+1.18
+date	2002.11.22.16.15.40;	author spanhel;	state Exp;
+branches;
+next	1.17;
+
+1.17
+date	2002.11.22.12.54.08;	author spanhel;	state Exp;
+branches;
+next	1.16;
+
+1.16
+date	2002.11.04.05.53.53;	author michald;	state Exp;
+branches;
+next	1.15;
+
+1.15
+date	2002.10.25.15.05.21;	author spanhel;	state Exp;
+branches;
+next	1.14;
+
+1.14
+date	2002.10.25.14.03.18;	author spanhel;	state Exp;
+branches;
+next	1.13;
+
+1.13
+date	2002.10.23.11.17.36;	author michald;	state Exp;
+branches;
+next	1.12;
+
+1.12
+date	2002.10.05.17.32.02;	author michald;	state Exp;
+branches;
+next	1.11;
+
+1.11
+date	2002.10.02.16.53.03;	author michald;	state Exp;
+branches;
+next	1.10;
+
+1.10
+date	2002.10.02.11.14.03;	author michald;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	2002.09.30.13.56.49;	author michald;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	2002.09.30.12.01.16;	author michald;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	2002.09.30.11.53.29;	author spanhel;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	2002.09.30.10.02.21;	author michald;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	2002.09.26.18.21.22;	author michald;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2002.09.25.07.59.27;	author spanhel;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2002.09.24.13.02.50;	author spanhel;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2002.09.24.09.07.22;	author michald;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2002.09.24.01.56.46;	author michald;	state Exp;
+branches
+	1.1.1.1;
+next	;
+
+1.1.1.1
+date	2002.09.24.01.56.46;	author michald;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.27
+log
+@Project ACL implementation
+@
+text
+@#!/usr/bin/perl
+#-----------------------------------------------------
+#  Folder Display
+#-----------------------------------------------------
+# $Id: fold.cgi,v 1.26 2003/10/16 14:08:51 jiri_schmid Exp $
+
+use strict;
+use CGI qw( :standard );
+use CGI::Pretty;
+our $q = new CGI;
+binmode STDOUT, ":utf8";
+use vars qw($StyleSheet $bearHost $bearPort $MyName $ProjectName);
+
+require "const.def";
+require "local/local_lib.pl";
+
+my $ID=&SetParam('ID','id');
+undef ($ID) if ($ID eq -1);
+my $FID=&SetParam('FID','fid');
+undef ($FID) if ($FID eq -1);
+my $User=$q->remote_user();
+
+print $q->header;
+
+print $q->start_html(
+   -title=>"Show Folders",
+   -style=>{-src=>$StyleSheet},
+   -script=>{-language=>'JAVASCRIPT', -src=>'tree2.js'}
+   #,
+   #-onunload=>'alert("5");set_cookie("id");return true;'
+);
+
+#print '<p>ACT:'.param('Action').', ID:'.$ID.', COOK:'.$q->cookie('id').', PAR:'.param('ID').':</p>';
+
+eval "use SOAP::Lite +autodispatch => 
+	uri => 'Bear', 
+	proxy => ['http://$bearHost:$bearPort/', 
+	options => {compress_threshold => 10000}]; 
+	1"
+or ( &ErrorDie("ERROR in eval of \"use SOAP::Lite ...\".") );
+
+my $serverVerbName="SOAP Server http://$bearHost:$bearPort/";
+
+if (! eval "SOAP::Lite->self->fault") {
+	ErrorDie('ERROR: '.$serverVerbName.' not responding<br><form><input type="submit" name="Refresh" value="Refresh" /></form>');
+}
+#*SOAP::Serializer::as_string = \&SOAP::Serializer::as_base64;	#reducing number of XML::Parser char() callbaks  for every single portion of processed stream (e.g. \n)
+
+
+&do_work($q);
+print $q->hidden('ID',$ID);
+
+	print <<END ;   # openNodes ... list of nodes which are currently open
+<script type="text/javascript">
+<!--
+  var openNodes = new Array();
+  var URL = new Array;
+  URL[0]  = "index.cgi?TabAct=E&";	// "D"	
+  URL[1]  = "index.cgi?TabAct=E&"; 	// "G"
+  URL[2]  = "index.cgi?TabAct=E&"; 	// "Fi"
+  URL[3]  = "index.cgi?TabAct=E&"; 	// "R"
+  URL[4]  = "index.cgi?TabAct=E&"; 	// "A"
+  URL[5]  = "index.cgi?TabAct=E&"; 	// "Fa"
+  URL[6]  = "index.cgi?TabAct=E&"; 	// "Fo"
+  URL[7]  = "index.cgi?TabAct=E&"; 	// "M"    
+//-->
+</script>
+<table class="folders"><tr>
+END
+
+my $i=0;
+my $a;
+print "ddddddddddddddfffffffffffffffffff";
+foreach (SOAP->GetProjects) {
+	print "<td class=\"folders\" id=\"sep\">&nbsp;&nbsp;&nbsp;<td>" if ($i);
+	$i++;
+	print "<td class=\"folders\">";
+	&DefHiearchy($_, $User, $i, ".*");	
+	$a='foo';
+	&ListHiearchy($_,$i,$a);
+	print "</td>";
+}
+print "</tr></table>\n";
+
+print $q->end_html;
+
+
+#------------------------
+
+
+
+#------------------------
+
+sub ListHiearchyX {
+	my $pn=shift;
+	my $i=shift;
+	print <<END
+<script type="text/javascript">
+<!--        
+	var id_exst = get_cookie("id");
+	if (id_exst=="ndf") createTree(Tree$i,"<B>$pn</B>",0,0,openNodes);	   
+	else {
+		GID = id_exst;
+		createTree(Tree$i,"<B>$pn</B>",0,id_exst,openNodes);	   
+	}  	
+//-->
+</script>
+END
+}
+
+#------------------------
+
+
+
+#------------------------
+
+sub do_work {
+	my($cgi) = @@_;
+	my $Action=$cgi->param('Action');
+	if ($Action eq 'NewGrid') { NewObject("$ProjectName/Grids/",'New Grid','grid') }
+	elsif ($Action eq 'NewMetric') { NewObject("$ProjectName/Metrics/",'New Metric','metric') }
+	elsif ($Action eq 'NewReport') { NewObject("$ProjectName/Reports/",'New Report','report') }
+	elsif ($Action eq 'NewFilter') { NewObject("$ProjectName/Filters/",'New Filter','filter') }
+	elsif ($Action eq 'NewFormat') { NewObject("$ProjectName/Formats/",'New Format','format') }		
+	
+	elsif ($Action eq 'Drop') { ConfirmDrop($cgi,$ID) }
+	elsif ($Action eq 'Copy') { Copy($cgi,$FID,$ProjectName) }
+	
+	elsif ($Action eq 'Confirm') { 
+		if ($cgi->param('OrigAction') eq 'Drop') { SOAP->DropMData($ProjectName,$ID) }
+	}
+}
+
+#---------------------------------------------------
+sub Copy {
+        my $cgi=shift;
+	my $fid=shift;	#object id
+	return if (!$fid);
+	my $pr=	SOAP->GetProjectName($fid); #project name
+	my $obj = SOAP->GetMetadata($fid);
+	my $objT=(keys %{$obj})[0];	#object type
+	my $name=$obj->{$objT}->{$fid}->{name};
+	my $new_id;
+	if ($objT eq 'format') {$new_id = NewObject("$pr/Formats/",$name.'(Copy)','format')};
+	if ($objT eq 'report') {$new_id = NewObject("$pr/Reports/",$name.'(Copy)','report')};
+	if ($objT eq 'filter') {$new_id = NewObject("$pr/Filters/",$name.'(Copy)','filter')};
+	if ($objT eq 'metric') {$new_id = NewObject("$pr/Metrics/",$name.'(Copy)','metric')};	
+	if ($objT eq 'grid') {$new_id = NewObject("$pr/Grids/",$name.'(Copy)','grid')};	
+	CopyObj($fid, $new_id);
+}
+#---------------------------------------------------
+
+sub ConfirmDrop {
+	my $cgi=shift;
+	my $id=shift;	#object id
+	return if (!$id);
+	my $pr=	SOAP->GetProjectName($id); #project name
+	my $obj = SOAP->GetMetadata($id);
+	my $objT=(keys %{$obj})[0];	#object type
+	my $name=$obj->{$objT}->{$ID}->{name};
+	my $desc=$obj->{$objT}->{$ID}->{description};
+	print	$cgi->table({-border=>0},
+	                    Tr(
+			    [
+			       td([h3("Delete $objT object from project \"$pr\"?")])			     
+			    ]  
+			    )			   
+			   ),
+		$cgi->table({-border=>0},
+	                    Tr(
+			    [
+			       td({-class=>'main'},[h4("Name: \"$name\"")]),
+			       td({-class=>'main'},[h4("Description: \"$desc\"")]),			      
+			    ]  
+			    )			   
+			   ),	   
+	        $cgi->start_form(-action=>$MyName),
+		$cgi->hidden('ID',$id),
+		$cgi->hidden('OrigAction',$cgi->param('Action')),
+		$cgi->submit(-name=>'Action', -value=>'Confirm'),
+		$cgi->submit('Cancel'),
+		
+		$cgi->end_form();
+	exit
+}
+
+#---------------------------------------------------
+
+sub NewObject {
+	my $fp=shift;	# path to save
+	my $fn=shift;	# new object name
+	my $ft=shift;	# new object type
+	
+	my $fnn=$fn;
+	my $fni=0;
+	my $mc=100;		# max attempts to find unique name
+	my $id=SOAP->NewID();
+	my $nob;		# new object
+
+	while ($mc) {
+		$nob->{$ft}->{$id}->{name} = $fnn;	#object name
+		my $r=SOAP->SaveMData($nob,0,$fp);	#don't rewrite
+		if ($r==-1) {	# filename exists, increment suffix and try again
+			$fni++;
+			$fnn=$fn.'_'.$fni;
+		} elsif (!$r) {	# fail
+                     print <<END ;
+		     <span class="error">ERROR: Saving Object [$fn] into metadata failed.</span>
+		     <form action="">
+		     <p><input type="submit" value="Continue"></p>
+		     </form></body></html>
+END
+              	     die
+		} else {	#success
+			$ID=$id;	# set global ID
+			last
+		}
+		$mc--;
+	};
+	
+	if (!$mc) {	# fail
+          print <<END ;
+	  <span class="error">ERROR: Max count of attempts to find unique Object Name was reached.</span>
+	  <form action="">
+	  <p><input type="submit" value="Continue"></p>
+	  </form></body></html>
+END
+	  die
+	}
+	return $id;	
+}
+
+#--------------------------------------------------------------
+sub CopyObj {
+	my $old= shift; # object id already exists
+	my $new = shift; # object id of new
+	my $obj_o = SOAP->GetMetadata($old);
+ 	my $obj_n = SOAP->GetMetadata($new);
+
+	my $type_o = (keys %{$obj_o})[0];		#object type
+	my $data_o = $obj_o->{$type_o}->{$old};	#ptr to main part of data structure
+	my $type_n = (keys %{$obj_n})[0];		#object type
+	my $data_n = $obj_n->{$type_n}->{$new};	#ptr to main part of data structure
+	$data_n->{description}=$data_o->{description};
+        my $pok;
+	if ($type_n eq 'format') {
+		my $graph=$data_o->{graph}->{type};
+		my $css=$data_o->{grid}->{css};
+   		if ($css ne '') {
+			$data_n->{grid}->{css} = $data_o->{grid}->{css};
+		}  
+		if ($graph ne '') {
+			$data_n->{graph}->{type}=$data_o->{graph}->{type};
+		}	
+	}	
+	if ($type_n eq 'filter') {
+   		$data_n->{expr}=$data_o->{expr};
+	}	
+	if ($type_n eq 'metric') {
+   		$data_n->{expr}=$data_o->{expr};
+		$data_n->{filter}=$data_o->{filter};
+		$data_n->{aggr}=$data_o->{aggr};
+	}
+	if ($type_n eq 'report') {
+		$data_n->{filter}=$data_o->{filter};
+		$data_n->{format}=$data_o->{format};
+		$data_n->{grid}=$data_o->{grid};		
+	}
+	if ($type_n eq 'grid') {	
+		$data_n->{row} = $data_o->{row};
+		$data_n->{col} = $data_o->{col};
+		$data_n->{page} =$data_o->{page};
+		$data_n->{metric} =$data_o->{metric};	# nemely by metriky byt vnoreny do row|col|page ?	
+	}	
+	my $r=SOAP->SaveMData($obj_n,1);		
+#	use Data::Dumper;
+#        print "<PRE>A".Dumper($obj_n)."</PRE>";
+}
+
+1
+
+@
+
+
+1.26
+log
+@mod-perl implementation stage 1, rebuilding global vars in .pl to global pointers
+@
+text
+@d5 1
+a5 1
+# $Id: fold.cgi,v 1.25 2003/07/08 08:24:43 jiri_schmid Exp $
+@
+
+
+1.25
+log
+@binmode for STDIN changes
+@
+text
+@d5 1
+a5 1
+# $Id: fold.cgi,v 1.24 2003/05/05 06:41:42 michald Exp $
+d15 1
+a15 1
+require "local_lib.pl";
+@
+
+
+1.24
+log
+@implementation of full localized metadata
+@
+text
+@d5 1
+a5 1
+# $Id: fold.cgi,v 1.23 2003/04/23 14:38:57 jiri_schmid Exp $
+d11 1
+@
+
+
+1.23
+log
+@the tree is generated now on server side in html directory as tree.html
+@
+text
+@d5 1
+a5 1
+# $Id: fold.cgi,v 1.22 2003/01/20 18:23:45 spanhel Exp $
+d77 1
+a77 1
+	&DefHiearchy($_,$i,".*");	
+@
+
+
+1.22
+log
+@reduce number of tabs
+@
+text
+@d5 1
+a5 1
+# $Id: fold.cgi,v 1.21 2003/01/16 17:20:19 spanhel Exp $
+d11 1
+a11 1
+use vars qw($StyleSheet $bearHost $bearPort $MyName);
+a117 1
+	my $Project='StoreDemo';
+d119 5
+a123 5
+	if ($Action eq 'NewGrid') { NewObject("$Project/Grids/",'New Grid','grid') }
+	elsif ($Action eq 'NewMetric') { NewObject("$Project/Metrics/",'New Metric','metric') }
+	elsif ($Action eq 'NewReport') { NewObject("$Project/Reports/",'New Report','report') }
+	elsif ($Action eq 'NewFilter') { NewObject("$Project/Filters/",'New Filter','filter') }
+	elsif ($Action eq 'NewFormat') { NewObject("$Project/Formats/",'New Format','format') }		
+d126 1
+a126 1
+	elsif ($Action eq 'Copy') { Copy($cgi,$FID,$Project) }
+d129 1
+a129 1
+		if ($cgi->param('OrigAction') eq 'Drop') { SOAP->DropMData($Project,$ID) }
+@
+
+
+1.21
+log
+@change edit.cgi - tree and object edit desided into two iframes
+@
+text
+@d5 1
+a5 1
+# $Id: fold.cgi,v 1.19 2002/11/26 12:44:36 spanhel Exp $
+d72 1
+@
+
+
+1.20
+log
+@hard connection to test project in *_ed.pl wa removed
+@
+text
+@d27 3
+a29 2
+   -script=>{-language=>'JAVASCRIPT', -src=>'tree2.js'},
+   -onunload=>'set_cookie("id");return true;'
+d48 1
+d71 1
+d76 3
+a78 2
+	&DefHiearchy($_,$i,".*");
+	&ListHiearchy($_,$i);
+d98 1
+a98 1
+	var id_exst = get_cookie();
+d117 1
+a117 1
+	my $Project=SOAP->GetProjectName($ID);
+d160 17
+a176 2
+	print $cgi->h2("Delete $objT \"$name\" from project \"$pr\"?"),$cgi->p("(ID:$id)"),
+		$cgi->start_form(-action=>$MyName),
+d181 1
+d244 1
+d246 8
+a253 1
+   		$data_n->{css}=$data_o->{css};
+@
+
+
+1.19
+log
+@two types of format grid and graph
+@
+text
+@d5 1
+a5 1
+# $Id: fold.cgi,v 1.18 2002/11/22 16:15:40 spanhel Exp $
+a46 1
+
+d113 1
+a113 1
+	my $Project='StoreDemo';
+@
+
+
+1.18
+log
+@object duplicity - fold.cgi
+@
+text
+@d5 1
+a5 1
+# $Id: fold.cgi,v 1.17 2002/11/22 12:54:08 spanhel Exp $
+a144 1
+	if ($objT eq 'report') {$new_id = NewObject("$pr/Reports/",$name.'(Copy)','report')};	
+d240 6
+@
+
+
+1.17
+log
+@css, copy object in tree
+@
+text
+@d5 1
+a5 1
+# $Id: fold.cgi,v 1.16 2002/11/04 05:53:53 michald Exp $
+d18 2
+d28 1
+a28 1
+   -onunload=>'set_cookie();return true;'
+d79 1
+d123 1
+a123 1
+	elsif ($Action eq 'Copy') { Copy($cgi,$ID,$Project) }
+d132 15
+a146 8
+  	my $cgi =shift;
+	my $id  =shift;	#object id
+	my $pr  =shift; 
+        return if (!$id);
+	my $obj = SOAP->GetMetadata($id);
+        my $objT=(keys %{$obj})[0];	#object type
+	my $name=$obj->{$objT}->{$ID}->{name};
+	if ($objT eq 'format') {NewObject("$pr/Formats/",$name.'(Copy)','format')};
+d211 1
+d213 35
+@
+
+
+1.16
+log
+@fix of GetMetadata usage
+@
+text
+@d5 1
+a5 1
+# $Id: fold.cgi,v 1.15 2002/10/25 15:05:21 spanhel Exp $
+d120 2
+d127 11
+@
+
+
+1.15
+log
+@*** empty log message ***
+@
+text
+@d5 1
+a5 1
+# $Id: fold.cgi,v 1.14 2002/10/25 14:03:18 spanhel Exp $
+d134 1
+a134 1
+	my $name=$obj->{$objT}->{name};
+@
+
+
+1.14
+log
+@edit pages created
+@
+text
+@d5 1
+a5 1
+# $Id: fold.cgi,v 1.13 2002/10/23 11:17:36 michald Exp $
+d72 1
+a72 1
+	&DefHiearchy($_,$i);
+@
+
+
+1.13
+log
+@minor fixes
+@
+text
+@d5 1
+a5 1
+# $Id: fold.cgi,v 1.12 2002/10/05 17:32:02 michald Exp $
+d56 6
+a61 6
+  URL[2]  = "filter.cgi"; 	// "Fi"
+  URL[3]  = "report.cgi"; 	// "R"
+  URL[4]  = "attr.cgi"; 	// "A"
+  URL[5]  = "fact.cgi"; 	// "Fa"
+  URL[6]  = "format.cgi"; 	// "Fo"
+  URL[7]  = "metric.cgi"; 	// "M"    
+d82 1
+a82 13
+sub ListHiearchy {
+	my $pn=shift;
+	my $i=shift;
+	my $IDj=($ID==-1 ? 0 : $ID);
+	print <<END
+<script type="text/javascript">
+<!--        
+	GID = '$ID';
+	createTree(Tree$i,"<B>$pn</B>",0,'$IDj',openNodes);	   
+//-->
+</script>
+END
+}
+a104 37
+sub DefHiearchy {
+	my $pn=shift;	# project name
+	my $ti=shift;	# project id unique on page
+	my $i=0;	#Tree id
+	my $l=$i;	#dir level
+
+	print <<END ;
+<script type="text/javascript">
+<!--
+var Tree$ti = new Array;
+END
+
+	$l=SOAP->NewID();
+	print " Tree${ti}\[$i\]  = \"$l|0|Attributes|D|\";\n";
+	$i++;
+	# Load Attributes
+	my $m=SOAP->GetMetadataList($pn,'attr');	#full List is used due need for Attribute Forms information
+	foreach (keys %{$m}) {
+		my $des=$m->{$_}->{description}; $des=~s/^(.{17}).{3,}$/$1.../;	#description has to be cutted explicitly as Attributes are not readed thru ShortList
+		print "  Tree${ti}\[$i\]  = \"$_|$l|$m->{$_}->{name}|A|$des\";\n";
+		$i++;
+		my $ll=$_;
+		foreach (keys %{$m->{$ll}->{display}}) {
+			print "   Tree${ti}\[$i\]  = \"$ll.$_|$ll|$_|Af|$m->{'$ll'}->{display}->{$_}->{description}\";\n";
+			$i++;
+		}
+	}
+
+	$l=SOAP->NewID();
+	print " Tree${ti}\[$i\]  = \"$l|0|Facts|D|\";\n";
+	$i++;
+	# Load Facts
+	$m=SOAP->GetMetadataShortList($pn,'fact');
+	foreach (keys %{$m}) {
+		print "  Tree${ti}\[$i\]  = \"$_|$l|$m->{$_}->{name}|Fa|$m->{$_}->{description}\";\n";
+		$i++;
+	}
+a105 27
+	my $objTr = { 	# hash for translation from Directory name, this strench method is connected with fixed directory structure and should be removed ASAP
+		'Metrics'=>{'type'=>'metric', 'icon'=>'M'},
+		'Grids'=>{'type'=>'grid', 'icon'=>'G'},
+		'Filters'=>{'type'=>'filter', 'icon'=>'Fi'},
+		'Formats'=>{'type'=>'format', 'icon'=>'Fo'},
+		'Reports'=>{'type'=>'report', 'icon'=>'R'},
+	};
+	$m=SOAP->GetMetadataShortList($pn,'folder');
+	foreach (keys %{$m}) {
+		print "  Tree${ti}\[$i\]  = \"$_|0|$m->{$_}->{name}|D|$m->{$_}->{description}\";\n";
+		$i++;
+		my $l=$_;
+		my $dtn = $m->{$l}->{name};
+#		if ($m->{$l}->{name} eq 'Metrics') {
+			my $m=SOAP->GetMetadataShortList($pn,$objTr->{$dtn}->{type});
+			foreach (keys %{$m}) {
+				print "  Tree${ti}\[$i\]  = \"$_|$l|$m->{$_}->{name}|$objTr->{$dtn}->{icon}|$m->{$_}->{description}\";\n";
+				$i++;
+			}
+#		}
+	}
+
+	print <<END ;
+//-->
+</script>
+END
+}
+d117 2
+a118 2
+	elsif ($Action eq 'NewFormat') { NewObject("$Project/Formats/",'New Format','format') }
+
+d165 5
+a169 5
+			print <<END ;
+<span class="error">ERROR: Saving Object [$fn] into metadata failed.</span>
+<form action="">
+<p><input type="submit" value="Continue"></p>
+</form></body></html>
+d171 1
+a171 1
+			die
+d180 5
+a184 5
+		print <<END ;
+<span class="error">ERROR: Max count of attempts to find unique Object Name was reached.</span>
+<form action="">
+<p><input type="submit" value="Continue"></p>
+</form></body></html>
+d186 1
+a186 1
+		die
+@
+
+
+1.12
+log
+@grid edit window
+@
+text
+@d5 1
+a5 1
+# $Id: fold.cgi,v 1.11 2002/10/02 16:53:03 michald Exp $
+d29 1
+a29 1
+print '<p>ACT:'.param('Action').', ID:'.$ID.', COOK:'.$q->cookie('id').', PAR:'.param('ID').':</p>';
+d139 1
+a139 1
+		foreach (keys %{$m->{'$ll'}->{display}}) {
+d195 1
+a195 1
+	elsif ($Action eq 'Drop') { ConfirmDrop($cgi,$Project,$ID) }
+a204 1
+	my $pr=shift;	#project
+d207 2
+a208 1
+	my $obj = SOAP->GetMetadata($id,$pr);
+d227 1
+d232 2
+a233 1
+	my $nob;
+d235 2
+a236 2
+		$nob->{$ft}->{$id}->{name} = $fnn;
+		my $r=SOAP->SaveMData($nob,$fp);
+d254 1
+@
+
+
+1.11
+log
+@create new object implementation
+@
+text
+@d5 1
+a5 1
+# $Id: fold.cgi,v 1.10 2002/10/02 11:14:03 michald Exp $
+d7 1
+d10 3
+a12 1
+$q = new CGI;
+d16 2
+a17 2
+my $ID=&SetParam('ID','id',-1);
+
+a19 2
+#local($") = ' '; # white-space
+
+d29 16
+a44 5
+use SOAP::Lite +autodispatch => 
+	uri => 'Bear',
+	proxy => ['http://bear.instrat.cz:3000/',
+	options => {compress_threshold => 10000}]
+;
+d54 8
+a61 8
+  URL[0]  = "folder.html";	// "D"	
+  URL[1]  = "grid.html"; 	// "G"
+  URL[2]  = "filter.html"; 	// "Fi"
+  URL[3]  = "report.html"; 	// "R"
+  URL[4]  = "attr.html"; 	// "A"
+  URL[5]  = "fact.html"; 	// "Fa"
+  URL[6]  = "format.html"; 	// "Fo"
+  URL[7]  = "metric.html"; 	// "M"    
+d99 2
+a100 2
+	$pn=shift;
+	$i=shift;
+d118 2
+a119 2
+	$pn=shift;	# project name
+	$ti=shift;	# project id unique on page
+d139 2
+a140 2
+		foreach (keys %{$m->{$ll}->{display}}) {
+			print "   Tree${ti}\[$i\]  = \"$ll.$_|$ll|$_|Af|$m->{$ll}->{display}->{$_}->{description}\";\n";
+d149 1
+a149 1
+	my $m=SOAP->GetMetadataShortList($pn,'fact');
+d162 1
+a162 1
+	my $m=SOAP->GetMetadataShortList($pn,'folder');
+d187 32
+a218 5
+	if ($cgi->param('Action') eq 'NewGrid') { NewObject('StoreDemo/Grids/','New Grid','grid') }
+	elsif ($cgi->param('Action') eq 'NewMetric') { NewObject('StoreDemo/Metrics/','New Metric','metric') }
+	elsif ($cgi->param('Action') eq 'NewReport') { NewObject('StoreDemo/Reports/','New Report','report') }
+	elsif ($cgi->param('Action') eq 'NewFilter') { NewObject('StoreDemo/Filters/','New Filter','filter') }
+	elsif ($cgi->param('Action') eq 'NewFormat') { NewObject('StoreDemo/Formats/','New Format','format') }
+@
+
+
+1.10
+log
+@Create New Objects functionality
+@
+text
+@d5 1
+a5 1
+# $Id: fold.cgi,v 1.9 2002/09/30 13:56:49 michald Exp $
+d42 8
+a49 2
+  URL[0]  = "index.cgi?TabAct=E";	
+  URL[1]  = "index.cgi?TabAct=R";	
+d71 16
+d91 8
+a98 8
+  <!--        
+   	    var id_exst = get_cookie();
+	    if (id_exst=="ndf") createTree(Tree$i,"<B>$pn</B>",0,0,URL,openNodes);	   
+	    else {
+	       GID = id_exst;
+	       createTree(Tree$i,"<B>$pn</B>",0,id_exst,URL,openNodes);	   
+	    }  	
+  //-->
+d143 7
+d155 3
+a157 4
+		if ($m->{$l}->{name} eq 'Metrics') {
+			my $m=SOAP->GetMetadataShortList($pn,'metric');
+use Data::Dumper;
+print Dumper($m);
+d159 1
+a159 1
+				print "  Tree${ti}\[$i\]  = \"$_|$l|$m->{$_}->{name}|D|$m->{$_}->{description}\";\n";
+d162 1
+a162 1
+		}
+d190 3
+a192 1
+	my $mc=100;		# max attempts to find unique name;
+d194 2
+a195 2
+		my $x = { $ft => { 'name'=>$fnn, 'id'=>SOAP->NewID() } };
+		my $r=SOAP->SaveMData($x,$fp);
+d208 1
+@
+
+
+1.9
+log
+@add new icon
+@
+text
+@d5 1
+a5 1
+# $Id: fold.cgi,v 1.8 2002/09/30 12:01:16 michald Exp $
+d24 2
+a25 1
+   -script=>{-language=>'JAVASCRIPT', -src=>'tree2.js'}
+d37 1
+a37 1
+	print <<END ;
+d40 1
+d70 6
+a75 1
+    createTree(Tree$i,"<B>$pn</B>",0,0,URL);
+d96 1
+a96 1
+	print "  Tree${ti}\[$i\]  = \"$l|0|Attributes|D|\";\n";
+d98 2
+a99 1
+	my $m=SOAP->GetMetadataList($pn,'attr');
+d101 2
+a102 1
+		print "  Tree${ti}\[$i\]  = \"$_|$l|$m->{$_}->{name}|A|$m->{$_}->{description}\";\n";
+d104 4
+a107 2
+		foreach (keys %{$m->{display}}) {
+			
+d112 1
+a112 1
+	print "  Tree${ti}\[$i\]  = \"$l|0|Facts|D|\";\n";
+d114 1
+d125 10
+a136 1
+
+a140 1
+
+d146 6
+a151 4
+   my($cgi) = @@_;
+   if ($cgi->param('Action') eq 'Save') {
+
+   }
+d156 36
+@
+
+
+1.8
+log
+@add comments
+@
+text
+@d5 1
+a5 1
+# $Id: fold.cgi,v 1.6 2002/09/30 10:02:21 michald Exp $
+d91 1
+a91 1
+	my $m=SOAP->GetMetadataShortList($pn,'attr');
+d95 3
+d105 1
+a105 1
+		print "  Tree${ti}\[$i\]  = \"$_|$l|$m->{$_}->{name}|F|$m->{$_}->{description}\";\n";
+@
+
+
+1.7
+log
+@tree - string id
+@
+text
+@d44 1
+a44 1
+<table><tr>
+d47 1
+a47 1
+my $i;
+d49 1
+d51 1
+d54 1
+a62 16
+print <<END
+  <div id="tree">
+  <script type="text/javascript">
+    <!--        
+      // counter	
+//      var i = 0; 
+//      if ($ID==-1) i=0
+//      else i = 1;
+//      document.cookie="count="+i;          	
+      // document.cookie="id="+$ID; 
+      var bg = document.bgColor
+      createTree(Tree,"<B>Demo</B>",0,$ID,URL,bg);
+    //-->
+  </script>
+  </div>
+=======
+a65 1
+<div id="tree">
+a70 1
+</div>
+d77 2
+a78 2
+	$pn=shift;
+	$ti=shift;
+d88 1
+a88 1
+	$l=$i;
+d97 2
+a98 1
+	print "  Tree${ti}\[$i\]  = \"2|0|Facts|D|\";\n";
+d100 12
+@
+
+
+1.6
+log
+@client metadata connection, client tree presentation
+@
+text
+@d5 1
+a5 1
+# $Id: fold.cgi,v 1.5 2002/09/26 18:21:22 michald Exp $
+d60 16
+@
+
+
+1.5
+log
+@some new icons
+@
+text
+@d5 1
+a5 1
+# $Id: fold.cgi,v 1.4 2002/09/25 07:59:27 spanhel Exp $
+d17 1
+a17 1
+local($") = ' '; # white-space
+d27 6
+d35 19
+a53 2
+&DefHiearchy;
+&ListHiearchy;
+d60 10
+a69 15
+
+print <<END
+  <div id="tree">
+  <script type="text/javascript">
+    <!--        
+      // counter	
+//      var i = 0; 
+//      if ($ID==-1) i=0
+//      else i = 1;
+//      document.cookie="count="+i;          	
+      // document.cookie="id="+$ID; 
+      createTree(Tree,"<B>Demo</B>",0,$ID,URL);
+    //-->
+  </script>
+  </div>
+d76 9
+a84 7
+print <<END ;
+  <script type="text/javascript">
+  <!--
+  var URL = new Array;
+  URL[0]  = "index.cgi?TabAct=E";	
+  URL[1]  = "index.cgi?TabAct=R";	
+  var Tree = new Array;
+d87 14
+a100 15
+print <<END ;
+  Tree[0]  = "1|0|Grids|D|";
+  Tree[1]  = "5|1|G1|G|";
+  Tree[2]  = "6|1|G2|G|";
+  Tree[3]  = "2|0|Metrics|D|";
+  Tree[4]  = "3|0|Filters|D|";
+  Tree[5]  = "4|0|Reports|D|";
+  Tree[6]  = "7|2|M1|M|";
+  Tree[7]  = "8|2|M2|M|";
+  Tree[8]  = "9|3|F1|F|";
+  Tree[9]  = "10|3|F2|F|";
+  Tree[10] = "11|4|R1|R|";
+  Tree[11] = "111|11|F2|F|";
+  Tree[12] = "112|11|G2|G|";
+  //-->
+d103 1
+@
+
+
+1.4
+log
+@tree changes
+@
+text
+@d5 1
+a5 1
+# $Id: fold.cgi,v 1.3 2002/09/24 13:02:50 spanhel Exp $
+d62 2
+a63 2
+  URL[0]  = "http://kangaroo.instrat.cz/bear/index.cgi?TabAct=E";	
+  URL[1]  = "http://kangaroo.instrat.cz/bear/index.cgi?TabAct=R";	
+@
+
+
+1.3
+log
+@tree folder change
+@
+text
+@d5 1
+a5 1
+# $Id: fold.cgi,v 1.2 2002/09/24 09:07:22 michald Exp $
+d42 6
+a47 1
+
+@
+
+
+1.2
+log
+@minor fixes
+@
+text
+@d5 1
+a5 1
+# $Id: fold.cgi,v 1.2 2002/09/23 18:11:50 spanhel Exp $
+d13 1
+a13 1
+my $ID=&SetParam('ID','id');
+d37 10
+a46 8
+	print <<END
+<div id="tree">
+<script type="text/javascript">
+<!--
+  createTree(Tree,"<B>Demo</B>",0,$ID);
+//-->
+</script>
+</div>
+d53 7
+a59 24
+	print <<END ;
+<script type="text/javascript">
+	<!--
+	var URL = new Array;
+	URL[0]  = "http...";	//R
+	URL[1]  = "http...";	//R
+
+	var Tree = new Array;
+END
+
+	print <<END ;
+	Tree[0]  = "1|0|Grids|D|";
+	Tree[1]  = "55|1|G1|G|";
+	Tree[2]  = "6|1|G2|G|";
+	Tree[3]	 = "2|0|Metrics|D|";
+	Tree[4]  = "3|0|Filters|D|";
+	Tree[5]  = "4|0|Reports|D|";
+	Tree[6]  = "7|2|M1|M|";
+	Tree[7]  = "8|2|M2|M|";
+	Tree[8]  = "9|3|F1|F|";
+	Tree[9]  = "10|3|F2|F|";
+	Tree[10] = "11|4|R1|R|";
+	Tree[11] = "111|11|F2|F|";
+	Tree[12] = "112|11|G2|G|";
+d62 15
+a76 2
+	print <<END ;
+	//-->
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@a49 10
+our $IDGen=0;
+sub IDGen {
+	$IDGen++;
+	$IDGen=0 if ($IDGen==100);
+	return time+$IDGen;
+
+}
+
+#------------------------
+
+d54 4
+@
+
+
+1.1.1.1
+log
+@Initial release of Bear ROLAP Portal
+@
+text
+@@

@@ -1,0 +1,53 @@
+head     1.1;
+branch   1.1.1;
+access   ;
+symbols  start:1.1.1.1 vendor:1.1.1;
+locks    ; strict;
+comment  @# @;
+
+
+1.1
+date     2002.09.24.01.34.07;  author michald;  state Exp;
+branches 1.1.1.1;
+next     ;
+
+1.1.1.1
+date     2002.09.24.01.34.07;  author michald;  state Exp;
+branches ;
+next     ;
+
+
+desc
+@@
+
+
+
+1.1
+log
+@Initial revision
+@
+text
+@-----BEGIN RSA PRIVATE KEY-----
+MIICXwIBAAKBgQDHfgOvgscXZGl3f/J+mgZ2wGRUtWGFVggK7ubRdi8toBFIJNg0
+OJOjTZDlqV5Y62kfx3VhrK8FCABDU02usiRUsBs30aSbtdyBr44gYoNeQu1omSaO
+h0U2WRFy1LSGENmHCbS49hCwq2W9nQ+uFg/6IX8HlvZXy0PVMa41AnKVvwIDAQAB
+AoGBALGBdTIUQaaU2CtWk6UG1D2SDzQ4eF+2H03rKUKz0GLejMIO1roQpX2nJQjV
+XXftcAqw5cdVah4l8mX1l6ecJyoH4aSoWzHeFygpv9L2xfSfFIKvA3/0lslTEKMa
+KJfnbICtDvAN8gI1Iima9v6potQTlzG7lHgjC3TVOjgKPYwRAkEA+DLYKlRritHy
+2PSfC5lQ3Yq4eB5xe88Jd1PcS95X5dpfoFg27BKTU20FZv8TNNpnlBltj4+ud+Z4
+H41BeWPJYwJBAM3DP8yuiaGYAyTG+5cgpjwSBJYhZVAgjXjIs+04ZwuJNghDsw3f
+hjUjtBahMBFPAnGIPfC4pFu3YI/xN6Yl3vUCQQDd6nAWoPaq33839riB4WpJO3Am
+jmm/XmVDWSredwW2UWMw9c7dktpBPHgZGDYvCpyT8YxhUQGY2OtMorsI82yrAkEA
+p8eAu2bKpTBtx8xVFCs0QaEzijObCBYzJX0KcfFe3OI6Y8zIMRTFu4jsbNNsfYCe
+bnL4htQYeQzzOQwpI1qYDQJBAOrf8nFOs7HBOTYtfOF/WA+mFu842u/3XlykJdb8
+VDGZJryVkzP+zvXMB86X7283LTsDn2dUCdTWS1O8X7hp+Uk=
+-----END RSA PRIVATE KEY-----
+@
+
+
+1.1.1.1
+log
+@Initial public release of BEE Project.
+@
+text
+@@

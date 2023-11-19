@@ -1,0 +1,455 @@
+head	1.2;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2004.03.23.07.33.25;	author numberone;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2004.03.01.16.16.48;	author numberone;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@
+beard2/cached
+
+funkcni metoda 'start <report_id>' (krome samotneho vraceni dotazu)
+
+xml konfigurace prepsana na includovany .pm soubor
+
+do MData.pm pripravena metoda get_report a sql_gen pro cached
+@
+text
+@#!/usr/bin/perl -w
+
+BEGIN { chdir '..' if($0 =~ /^\.\/[^\/]+$/ or $0 !~ /\//); }
+
+use Storable qw(nstore_fd retrieve_fd freeze thaw);
+use Time::HiRes qw(time);
+use Digest::MD5 qw(md5_hex);
+use Data::Dumper;
+use Sys::Syslog;
+use Getopt::Std;
+use DBD::SQLite;
+use Socket;
+use DBI;
+use Cwd;
+
+use etc::bear;
+
+our($opt_d,$opt_r,$opt_f);
+getopts("drf"); # --debug --reuse_cache --force_socket
+
+setlogmask(-1) if($opt_d);
+openlog($Config::Cached::ident, "pid", 'daemon');
+
+my $socket = open_socket($opt_f); # opens SOCK socket
+
+my $DWh; # shared by cache_create and zoom_report
+my $dbh = cache_connect();
+cache_initdb() unless $opt_r;
+
+$SIG{CHLD} = 'IGNORE'; # do not create zombies
+$SIG{INT}  = sub { };
+
+print "cached started on $socket\n";
+syslog('notice',"started on $socket\n");
+
+while(my $accept = accept(Client,SOCK)) {
+
+	defined(my $pid = fork()) or die "Can't fork(): $!\n";
+	if($pid) {
+		close(Client);
+		next;
+	}
+	close(SOCK);
+	$SIG{CHLD} = 'DEFAULT';
+	$SIG{INT}  = 'DEFAULT';
+
+	# From this point on, we are the child
+
+	syslog('info',"client connected\n");
+
+	my $thaw = eval { retrieve_fd(\*Client) };
+	my($method,$report_id) = @@$thaw if ref $thaw;
+	my $result;
+
+	$dbh->{InactiveDestroy} = 1;
+	$dbh = cache_connect();
+
+	if(!$method or !$report_id) {
+		syslog('info',"empty request\n");
+
+	} elsif($method eq 'start') {
+		$result = start_report($report_id);
+	} elsif($method eq 'report') {
+		$result = report_report($report_id);
+	} elsif($method eq 'kill') {
+		$result = kill_report($report_id);
+
+	} else {
+		syslog('info',"unknown method: $method\n");
+	}
+
+	nstore_fd($result,\*Client) if $result;
+
+	syslog('info',"closing connection\n");
+	close(Client);
+	$dbh->disconnect();
+	exit(0);
+}
+
+syslog('notice',"exiting");
+
+close(SOCK);
+unlink($socket);
+
+$dbh->disconnect;
+
+exit(0);
+
+# ----------------------------------------------------------------
+
+sub open_socket {
+	my($force) = @@_;
+
+	my $socket = $Config::Cached::socket;
+	my $full_socket = getcwd."/".$socket;
+	my $sock_addr = sockaddr_un($socket);
+	unlink $socket if $force;
+
+	socket(SOCK,PF_UNIX,SOCK_STREAM,0) or die $!;
+	unless(bind(SOCK,$sock_addr)) {
+		die $! if $force;
+		die <<END;
+
+Error: `$full_socket' socket already exists!
+
+This typically means that either another instance of cached is running,
+or cached daemon was not shut down properly last time. In the latter case,
+running cached daemon with -f (force) switch will ignore this error.
+
+END
+	}
+	listen(SOCK,SOMAXCONN) 			   or die $!;
+
+	return $full_socket; # returns mainly SOCK handle
+}
+
+sub cache_connect {
+	my $db = \%Config::Cached::cache_db;
+	my $dbh = DBI->connect($db->{dsn},$db->{user},$db->{pass},
+				{ RaiseError => 1, AutoCommit => 1 });
+	return $dbh or die $DBI::errstr;
+}
+
+sub cache_initdb {
+	local $dbh->{RaiseError}; # undefine, maybe #cache does not exist
+	local $dbh->{PrintError};
+
+	my $cache_sql = <<ENDSQL;
+CREATE TABLE cache (
+	md5    VARCHAR(64) PRIMARY KEY,
+	report VARCHAR(16),
+	sid    INTEGER,
+	start  TIMESTAMP,
+	time   TIMESTAMP
+)
+ENDSQL
+	dbi_drop_table($dbh,"cache");
+	$dbh->do($cache_sql);
+
+	# we must find and drop #_report_* tables
+	my $sth = $dbh->table_info('%','%','%','TABLE') or die;
+	while(my $hash = $sth->fetchrow_hashref) {
+		my $table = $hash->{'TABLE_NAME'} or next;
+		next unless $table =~ /^$Config::Cached::cache_prefix/;
+		$dbh->do("DROP TABLE ?",undef,$table);
+	}
+
+#	my $sth_del = $dbh->prepare("DELETE FROM cache WHERE md5 = ?") or die;
+#	while(my($md5) = $sth_tab->fetchrow_array) {
+#		# TODO: zkontroluj, zda v DW MySQL existuje _cache_<md5>
+#		$sth_del->execute($md5) if not exists(_cache_<md5>);
+#	}
+}
+
+sub cache_done {
+	my $md5 = shift;
+	my($done) = $dbh->selectrow_array(
+		"SELECT time FROM cache WHERE md5 = ?",undef,$md5) or die;
+	return $done;
+}
+
+
+sub mdata_read {
+	my $mdata_socket = $Config::MData_read::socket;
+	socket(MDATA,PF_UNIX,SOCK_STREAM,0)       or die $!;
+	connect(MDATA,sockaddr_un($mdata_socket)) or die
+		"error: connect to mdata failed -- is mdata daemon running?\n";
+	binmode(MDATA,":unix");
+	nstore_fd \@@_, \*MDATA;
+	# flush?
+	my $result = eval { retrieve_fd(\*MDATA) };
+	die $@@ if($@@ or not defined $result);
+	return (ref $result eq 'HASH') ? $result : @@$result;
+}
+
+sub zoom_report {
+	my($id,$md5,$tree) = @@_;
+	my $dest = $Config::Cached::cache_prefix.$id;
+
+	# we need: 
+	#   $DWh -- mozeme tahat z $Config
+	#   $CREATE -- u SQLite staci arita nebo pomoci table_info
+	#   $arity -- moze existovat #cache.arity
+
+	# dbh->do(CREATE ? (...),undef,$dest);
+	# $DWh = DBI->connect(...) unless $DWh
+	# my $select = $DWh->prepare("SELECT * FROM ?",undef,$md5);
+	# dbh->prepare("INSERT INTO $dest VALUES ($arity x '?'))
+
+}
+
+sub dbi_drop_table {
+	my($dbh,$table) = @@_;
+	local $dbh->{RaiseError}; 
+	local $dbh->{PrintError};
+	$dbh->do("DROP TABLE ?",undef,$table);
+}
+
+# ----------------------------------------------------------------
+
+sub start_report {
+	my($id) = @@_;
+	my $tree = mdata_read($Config::API::get_report, $id);
+
+	print "starting report `$id'\n";
+
+	# vytvor (rekurzivne) cache $tree
+	my $md5 = recurse($id,$tree,0);
+
+	zoom_report($id,$md5,$tree);
+
+	# report_id byl veden jen pro delani statusu
+	$dbh->do("UPDATE cache SET report = NULL WHERE report = ?",undef,$id);
+
+	print "report `$id' done\n";
+
+	return ["ok"];
+}
+
+# create cache if necessary and return it's md5 name
+sub recurse {
+	my($id,$tree,$depth) = @@_;
+
+	my @@deps; # dependency s_cache table names
+
+	my $fork = $tree->{$Config::API::fork_tag};
+	if(ref $fork) {
+		foreach my $sub_tree (@@$fork) {
+
+			# create i-th dependency into #_cache_<$deps[i]>
+			push @@deps, recurse($id,$sub_tree,$depth+1);
+		}
+		# cekej na vsechny vytvorene kidy
+		while(wait() != -1) {
+			die "child died unexceptly, giving up too.." if $?;
+		}
+	}
+
+	# Ok, now we have dependencies done
+
+	print "$$ deps done: creating ",join(", ",@@{$tree->{'select'}}),"\n";
+
+	my($md5,$new);
+	{	local $Storable::canonical = "TRUE";
+		local $dbh->{RaiseError}; 
+		local $dbh->{PrintError};
+
+		$md5 = $Config::Cached::DW_prefix.md5_hex(freeze( $tree ));
+		$new = $dbh->do("INSERT INTO cache VALUES (?,?,NULL,NULL,NULL)",
+							   undef,$md5,$id);
+	}
+
+	return $md5 if(not $new and cache_done($md5));
+
+	if($depth) { # fork and return $md5;
+				 return $md5 if(fork);
+				 $dbh->{InactiveDestroy} = 1;
+				 $dbh = cache_connect(); }
+
+		if($new) {
+			cache_create($md5,$id,$tree,@@deps);
+		} else {
+			# we was overtaken, wait actively for completion
+			select(undef,undef,undef,0.1) until(cache_done($md5));
+		}
+
+	if($depth) { $dbh->disconnect() and exit; }
+
+	return $md5;
+}
+
+sub cache_create {
+	my($md5,$id,$tree,@@deps) = @@_;
+	# zacni vytvaret report: get SESSION_ID a NOW()
+
+	my($dw,$names,$CREATE,$SELECT) = 
+			mdata_read($Config::API::sql_gen,$tree,$md5,@@deps);
+
+	# set global variable, zoom_report will reuse it
+	$DWh = DBI->connect($dw->{dsn},$dw->{user},$dw->{pass},
+					{ RaiseError => 1, AutoCommit => 1 });
+	die "Can't connect to DW! dsn=".$dw->{dsn} unless $DWh;
+
+	dbi_drop_table($DWh,$md5);
+
+	$DWh->do($CREATE,undef,$md5);
+
+	my $sid = $$; # get DWh SESSION_ID from DBI somehow
+	my $time = time;
+	$dbh->do("UPDATE cache SET start = ?, sid = ? WHERE md5 = ?",
+			 undef,$time,$sid,$md5);
+	print "$$ creating cache: ",join(", ",@@{$tree->{'select'}})," ($SELECT)\n";
+
+	# prepare for SIG{PIPE}
+
+	# =============---------------
+	# $DWh->do($SELECT); 
+
+	# done: UPDATE .time
+	$dbh->do("UPDATE cache SET time = ?, sid = NULL WHERE md5 = ?",
+			undef,time-$time,$md5);
+}
+
+sub report_report {
+	my($id) = @@_;
+	return ["ok"];
+}
+
+sub kill_report {
+	my($id) = @@_;
+	my $sth = $dbh->prepare("SELECT md5,report,sid FROM cache".
+							" WHERE report = ?",undef,$id);
+	return ["ok"];
+}
+
+
+
+
+@
+
+
+1.1
+log
+@
+Added beard2 -- new bear daemon source tree.
+
+mdata subsystem works, some docs, some tests, etc.
+
+cached in progress
+@
+text
+@d5 5
+d11 1
+a11 1
+use Data::Dumper;
+d13 110
+a122 1
+use POSIX ":sys_wait_h";
+d124 37
+a160 2
+use lib "lib";
+use beard;
+a161 4
+use lib 'cached';
+use Cached;
+use Report;
+use Select;
+d163 35
+a197 2
+our($opt_f);
+getopt("f:");
+d199 1
+a199 4
+my $bear_conf = beard->read_conf($opt_f);
+my $conf    = $bear_conf->{cached};
+my $rconf   = $conf->{rcache};
+my $sconf   = $conf->{scache};
+d201 3
+a203 3
+# prepare report-cache socket
+Cached::prepare_socket(RSOCK,$rconf->{'socket'});
+Cached::prepare_socket(SSOCK,$sconf->{'socket'});
+d205 1
+a205 3
+# kids pids
+my %rcache;
+my %scache;
+d207 2
+a208 4
+# signal handlers
+my $quit  = 0;
+$SIG{CHLD} = sub { };
+$SIG{INT}  = sub { $quit = 1 };
+d210 1
+a210 3
+# create initial pool
+Cached::new_rcache() for(1..$rconf->{'pool'});
+print "report-cache started ".$rconf->{'pool'}." times on $rsock\n";
+d212 2
+a213 2
+Cached::new_scache() for(1..$sconf->{'pool'});
+print "select-cache started ".$sconf->{'pool'}." times on $ssock\n";
+d215 1
+a215 2
+while(1) {
+	my $kid;
+d217 2
+a218 1
+	sleep;
+d220 9
+a228 1
+	last if $quit; 
+d230 2
+a231 5
+	while(($kid = waitpid(-1, WNOHANG)) > 0) {
+		my $cache = undef;
+		if(exists $rcache{$kid}) {
+			$cache = 'r';
+			delete $rcache{$kid};
+d233 3
+a235 3
+		if(exists $scache{$kid}) {
+			$cache = 's';
+			delete $scache{$kid};
+d237 25
+a261 3
+		if($cache) {
+			print "$cache-cache $kid died, status $?, spawning another $cache-cache..\n";
+			create_kid($cache); # if($? ne 2);
+d263 2
+a264 1
+			warn "stepchild kid $kid died :-(\n";
+d266 48
+a313 1
+	}
+d316 2
+a317 2
+unlink($rconf->{'socket'});
+unlink($sconf->{'socket'});
+@
+

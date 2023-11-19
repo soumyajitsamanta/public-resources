@@ -1,0 +1,62 @@
+head	1.2;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2005.06.28.13.38.26;	author igorludi;	state dead;
+branches;
+next	1.1;
+
+1.1
+date	2005.06.28.11.35.03;	author igorludi;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@*** empty log message ***
+@
+text
+@package rex.graphics.datasourcetree.elements;
+
+import javax.swing.ImageIcon;
+import rex.metadata.ServerMetadata;
+
+/**
+ * <p>Title: WHEX</p>
+ * <p>Description: </p>
+ * <p>Copyright: Copyright (c) 2003</p>
+ * <p>Company: </p>
+ * @@author igor
+ * @@version 1.0
+ */
+
+public interface DataSourceTreeElement {
+  // public void refresh();
+   public DataSourceTreeElement[] getChildren();
+   public ImageIcon getIcon();
+   public String getToolTip();
+  // public String getName();
+   public String toString();
+   public String[] getPopUpActionList();
+   public ServerMetadata getServerMetaData();
+   public String getDataSourceInfo();
+
+}@
+
+
+1.1
+log
+@first time commit
+@
+text
+@@
+

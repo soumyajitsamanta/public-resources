@@ -1,0 +1,318 @@
+head	1.5;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.5
+date	2003.05.28.15.33.35;	author michald;	state dead;
+branches;
+next	1.4;
+
+1.4
+date	2003.05.21.07.47.24;	author michald;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2003.05.05.06.41.47;	author michald;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2003.03.20.16.39.45;	author michald;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2003.01.18.12.23.08;	author michald;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.5
+log
+@move of some code into separate modules
+@
+text
+@#-----------------------------------------------------
+#  MySQL specific functions
+#-----------------------------------------------------
+# $Id: dbi_mysql.pl,v 1.4 2003/05/21 07:47:24 michald Exp $
+
+use strict;
+
+use DBI;
+
+our @@SQLErrors = ();
+my $NL="\n";
+my (%dbh, %sth);
+my $LogLevelF;
+my $OLQid=0;	# unique id for SQLFetchOneLineQuery
+
+if ($LogLevel && !$LogLevelF) {
+	$LogLevelF = "sql.log";
+	open (LOG,">>$LogLevelF");
+	my $ofh = select(LOG); $| = 1; select ($ofh); #misto autoflush, ktery nekdy nefunguje
+#	LOG->autoflush(1);
+}
+
+#__________________________________________________________
+#
+
+sub DBConnect {
+	my($DB, $Database, $User, $Password, $Host, $Port) = @@_;
+
+	if (!$Password) {$Password=''};
+	if (!$Host) {$Host="localhost"};
+	if (!$Port) {$Port=3306};
+	$dbh{$DB} = DBI->connect("DBI:mysql:database=$Database;host=$Host;port=$Port", "$User", "$Password")
+		|| (&LogError($DB,undef,undef));
+	if (($LogLevel)&&(!@@SQLErrors)) { print LOG "$NL$DB>---------- CONNECT ".&Time2SQL(time)." ----------".$NL };
+}
+
+#__________________________________________________________
+#
+
+sub IsDBConnected {
+	my $DB=shift;
+	return (ref($dbh{$DB}) eq 'DBI::db');
+}
+
+#__________________________________________________________
+#
+
+sub SQLQuery {
+	my($DB,$Query) = @@_;
+	if ($LogLevel) { print LOG "$NL$DB> ".$Query.$NL };
+	$dbh{$DB}->do($Query) || (&LogError($DB,undef,$Query));
+}
+
+#__________________________________________________________
+#
+
+sub SQLFetchOneLineQuery {
+	my($DB,$Query) = @@_;
+	$OLQid++;
+	my $OLQidL=$OLQid;
+	&SQLPrepareFetch($DB,$OLQidL,$Query);
+	my (@@v)=&SQLFetch($DB,$OLQidL);
+	&SQLFetchClose($DB,$OLQidL);
+	@@v
+}
+
+#__________________________________________________________
+#
+
+sub LogError {
+	my($DB,$QueryID,$Query) = @@_;
+	$QueryID='' if (!$QueryID);
+	$Query='' if (!$Query);
+	if (exists($dbh{$DB})) {
+	    my $err=''; 
+		if (ref($dbh{$DB})=~/HASH/) {	# $dbh{$DB} was set
+			($err=$dbh{$DB}->errstr);
+		}
+	    if ($LogLevel) { print LOG "$NL$DB.$QueryID> ######### $err$NL" };
+	    push (@@SQLErrors, "$DB.$QueryID> $Query <B>$err</B>" );
+	} else {
+	    if ($LogLevel) { print LOG "$NL$DB> ######### Connection Failed.$NL" };
+	    push (@@SQLErrors, "Connection Failed" );
+        } 
+}
+
+#__________________________________________________________
+#
+
+sub SQLPrepareQuery {
+	my($DB,$QueryID,$Query) = @@_;
+	if ($LogLevel) { print LOG "$NL$DB.$QueryID> $Query$NL" };
+	$sth{$DB}{$QueryID} = $dbh{$DB}->prepare($Query) 
+		|| (&LogError($DB,$QueryID,$Query));
+}
+
+#__________________________________________________________
+#
+
+sub SQLExecuteQuery {
+	my($DB,$QueryID,@@val) = @@_;
+	if ($LogLevel) { print LOG "$NL$DB.$QueryID> --- ".join(',',@@val).$NL };
+	$sth{$DB}{$QueryID}->execute(@@val)
+		|| (&LogError($DB,$QueryID,"Execution of Values: ".join('|',@@val)));
+}
+
+#__________________________________________________________
+#
+
+sub SQLPrepareFetch {
+	my($DB,$QueryID,$Query) = @@_;
+	if ($Query) {
+		if ($LogLevel) { print LOG "$NL$DB.$QueryID> $Query$NL" };
+		$sth{$DB}{$QueryID} = $dbh{$DB}->prepare($Query)
+			|| (&LogError($DB,$QueryID,"Preparation of ".$Query));
+		$sth{$DB}{$QueryID}->execute
+			|| (&LogError($DB,$QueryID,"Execution of ".$Query));
+	} else { &LogError($DB,$QueryID,"Query is empty") }
+}
+
+#__________________________________________________________
+#
+
+sub SQLFetch {
+	my($DB,$QueryID) = @@_;
+	$sth{$DB}{$QueryID}->fetchrow_array
+}
+
+#__________________________________________________________
+#
+
+sub SQLFetchRef {
+	my($DB,$QueryID) = @@_;
+	$sth{$DB}{$QueryID}->fetchrow_arrayref
+}
+
+#__________________________________________________________
+#
+
+sub SQLFetchRows {	# rows affected 
+	my($DB,$QueryID) = @@_;
+	$sth{$DB}{$QueryID}->rows
+}
+
+#__________________________________________________________
+#
+
+sub LastInsertedID {	# database specific !!!
+	my($DB,$QueryID) = @@_;
+
+	my $lid=$sth{$DB}{$QueryID}->{'mysql_insertid'};
+	if ($LogLevel) { print LOG "$NL$DB> Last ID = $lid$NL" };
+	$lid
+}
+
+#__________________________________________________________
+#
+
+sub SQLFetchClose {
+	my($DB,$QueryID) = @@_;
+	$sth{$DB}{$QueryID}->finish;
+	delete $sth{$DB}{$QueryID}
+}
+
+#__________________________________________________________
+#
+
+sub DBDisConnect {
+	my($DB) = @@_;
+	if ($LogLevel) { print LOG "$NL$DB> DISCONNECT".$NL };
+	$dbh{$DB}->disconnect;
+	delete $dbh{$DB}
+}
+
+#__________________________________________________________
+#
+
+sub FixSQLString {	# database specific !!!
+	my($DB,$str) = @@_;
+	if ($str) { $dbh{$DB}->quote($str) }
+	else {"''"}
+}
+
+#__________________________________________________________
+#
+
+sub Time2SQL {
+# Usage:  $syst_secs = &Time2SQL(time)
+
+	my ($t)=shift;
+	my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = localtime($t);
+
+	$year+=1900;
+	$mon++;
+	$mon=~s/^(\d)$/0$1/;
+	$mday=~s/^(\d)$/0$1/;
+	$hour=~s/^(\d)$/0$1/;
+	$min=~s/^(\d)$/0$1/;
+	$sec=~s/^(\d)$/0$1/;
+	$year."-".$mon."-".$mday." ".$hour.":".$min.":".$sec
+
+}
+
+#__________________________________________________________
+#
+
+1
+@
+
+
+1.4
+log
+@implementation of attribute roles and groups
+@
+text
+@d4 1
+a4 1
+# $Id: dbi_mysql.pl,v 1.3 2003/05/05 06:41:47 michald Exp $
+@
+
+
+1.3
+log
+@implementation of full localized metadata
+@
+text
+@d4 1
+a4 1
+# $Id: dbi_mysql.pl,v 1.2 2003/03/20 16:39:45 michald Exp $
+d42 1
+a42 1
+	return ($dbh{$DB}=~/HASH/)
+d76 1
+a76 1
+		if ($dbh{$DB}=~/HASH/) {	# $dbh{$DB} was set
+@
+
+
+1.2
+log
+@minor fixes
+@
+text
+@d4 1
+a4 1
+# $Id: dbi_mysql.pl,v 1.1 2003/01/18 12:23:08 michald Exp $
+d40 8
+d72 2
+d75 4
+a78 2
+	    my $err; 
+		($err=$dbh{$DB}->errstr) || ($err='');
+@
+
+
+1.1
+log
+@edit_obj with drag/drop functionality
+@
+text
+@d4 1
+a4 1
+# $Id$
+d65 3
+a67 2
+	    my $err=$dbh{$DB}->errstr;
+	    if ($LogLevel) { print LOG "$NL$DB.$QueryID> ######### $err.$NL" };
+d100 7
+a106 5
+	if ($LogLevel) { print LOG "$NL$DB.$QueryID> $Query$NL" };
+	$sth{$DB}{$QueryID} = $dbh{$DB}->prepare($Query)
+		|| (&LogError($DB,$QueryID,"Preparation of ".$Query));
+	$sth{$DB}{$QueryID}->execute
+		|| (&LogError($DB,$QueryID,"Execution of ".$Query));
+@
+

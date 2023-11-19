@@ -1,0 +1,310 @@
+head	1.10;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.10
+date	2003.10.31.12.47.57;	author jiri_schmid;	state dead;
+branches;
+next	1.9;
+
+1.9
+date	2003.10.17.11.36.16;	author jiri_schmid;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	2003.10.16.15.29.17;	author jiri_schmid;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	2003.10.16.14.08.53;	author jiri_schmid;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	2003.09.11.16.23.06;	author jiri_schmid;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	2003.08.13.14.22.03;	author jiri_schmid;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2003.08.04.14.17.37;	author jiri_schmid;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2003.07.25.10.53.21;	author jiri_schmid;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2003.07.23.11.44.56;	author jiri_schmid;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2003.07.22.15.17.20;	author jiri_schmid;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.10
+log
+@mod perl rocks!
+@
+text
+@#-----------------------------------------------------
+#  Grid Editation
+#-----------------------------------------------------
+# $Id: graph3d_axis_ed.pl,v 1.9 2003/10/17 11:36:16 jiri_schmid Exp $
+
+use strict;
+our ($descr_w);
+
+#-----------------------------------------------------
+sub generateContent() {
+my($variables, $lang, $obj) = (shift, shift, shift);
+my $saved = $$variables->{saved} if exists $$variables->{saved};
+my $localTab = $$variables->{localTab};
+my $fill;
+print <<END;
+<br>
+<table class="page_skeleton">
+<tr class="page_skeleton"><td class="page_skeleton_ex" align="center">
+END
+if (&existsDefinition($obj,$localTab)) {
+if ($$obj->{$localTab}{quantity} eq "off" || @@{$$obj->{$localTab}{items}} == 0) {
+	print "<span style='padding: 15px; line-height: 30px'>$$lang->{'Report Qualitative'}</span>"
+} elsif ($localTab =~ /x|z|y/) {
+	my @@ids;
+	my $name = "Graph3d Item$localTab";
+		print "<table><tr><th style='text-align:left'>$$lang->{$name}</th><td style='text-align:center'>$$lang->{'Graph3d Axis Interval'}</td>";
+	foreach (0..$#{$$obj->{$localTab}{items}}) {
+		my $id = @@{$$obj->{$localTab}{items}}[$_];
+		print "<tr><td id='$id'>$id :</td><td><input type='text' name='$id' id='input$id' size='$descr_w' value='${$$obj->{$localTab}{rules}}[$_]' onchange='checkNum(this)'/></td></tr>";
+		push(@@ids,$id);
+	}
+	print "<tr><td><input type='hidden' id='ids' value='".join("|",@@ids)."'/></td></tr>";
+	$fill = "fillAxis(true);";
+	print <<END;
+		</table>
+	</td></tr>	
+	<tr class="page_skeleton">
+	<td class="page_skeleton">
+		<table class="neutral_100">
+		<tr><td align="center">
+			<table class="buttons" cellpading="0" cellspacing="0">
+			<tr>	<td class="buttons"><input type="submit" name="Action" value="$$lang->{'Save'}" /></td>
+				<td class="buttons">
+						<input type="submit" name="Action" value="$$lang->{'Save As'}" onclick="return readName();"/>
+						<input type="hidden" name="saveAsName" id="saveAsName" value="" />
+				</td>
+				<td class="buttons"><input type="reset" name="reset" value="$$lang->{'Reset'}" /></td>
+			</tr>
+			</table>
+		</td></tr>
+		</table>
+	</td></tr>
+END
+}
+}
+print <<END;
+</td></tr>
+</table>
+<script type="text/javascript" src="js/graph3d.js"></script>	
+<script type="text/javascript">
+	var msg="$$lang->{'New Save Part1'}$$lang->{'New Graph3d Save'}$$lang->{'New Save Part2'}";
+	var saveAsMsg = "$$lang->{SaveAsMsg}$$lang->{'New Graph3d'}";
+	reloadTree($saved);
+	$fill
+</script>
+END
+}
+
+#---------------------------------------------------
+
+sub set_next_param {
+my ($o,$variables) = (shift,shift);
+my $localTab = $$variables->{localTab};
+	foreach (0..$#{$o->{$localTab}{items}}) {
+		@@{$o->{$localTab}{rules}}[$_] = param(${$o->{$localTab}{items}}[$_]);
+	}
+}
+
+1
+@
+
+
+1.9
+log
+@last changes-fixies coresponding mod-perl stage 1
+@
+text
+@d4 1
+a4 1
+# $Id: graph3d_axis_ed.pl,v 1.8 2003/10/16 15:29:17 jiri_schmid Exp $
+@
+
+
+1.8
+log
+@some fixies due to mod-perl changes
+@
+text
+@d4 1
+a4 1
+# $Id: graph3d_axis_ed.pl,v 1.7 2003/10/16 14:08:53 jiri_schmid Exp $
+d40 1
+a40 1
+		<tr><td align="right">
+d42 5
+a46 1
+			<tr>	<td class="buttons"><input type="submit" name="Action" value="$$lang->{'Save'}" onclick="" /></td>
+@
+
+
+1.7
+log
+@mod-perl implementation stage 1, rebuilding global vars in .pl to global pointers
+@
+text
+@d4 1
+a4 1
+# $Id: graph3d_axis_ed.pl,v 1.6 2003/09/11 16:23:06 jiri_schmid Exp $
+d69 3
+a71 3
+my $localTab = $variables->{localTab};
+	foreach (0..$#{$$o->{$localTab}{items}}) {
+		@@{$$o->{$localTab}{rules}}[$_] = param(${$$o->{$localTab}{items}}[$_]);
+@
+
+
+1.6
+log
+@minor code changes and visual improvments
+@
+text
+@d4 1
+a4 1
+# $Id: graph3d_axis_ed.pl,v 1.5 2003/08/13 14:22:03 jiri_schmid Exp $
+d7 1
+a7 8
+use CGI qw( :standard );
+use CGI::Pretty;
+
+require "const.def";
+require "local_lib.pl";
+
+
+use vars qw($Obj $descr_w $use_lang $saved $lang $localTab);
+d11 4
+a14 1
+	my $fill;
+d20 3
+a22 3
+if (&existsDefinition) {
+if ($Obj->{$localTab}{quantity} eq "off" || @@{$Obj->{$localTab}{items}} == 0) {
+	print "<span style='padding: 15px; line-height: 30px'>$lang->{'Report Qualitative'}</span>"
+d26 4
+a29 4
+		print "<table><tr><th style='text-align:left'>$lang->{$name}</th><td style='text-align:center'>$lang->{'Graph3d Axis Interval'}</td>";
+	foreach (0..$#{$Obj->{$localTab}{items}}) {
+		my $id = @@{$Obj->{$localTab}{items}}[$_];
+		print "<tr><td id='$id'>$id :</td><td><input type='text' name='$id' id='input$id' size='$descr_w' value='${$Obj->{$localTab}{rules}}[$_]' onchange='checkNum(this)'/></td></tr>";
+d42 2
+a43 2
+			<tr>	<td class="buttons"><input type="submit" name="Action" value="$lang->{'Save'}" onclick="" /></td>
+				<td class="buttons"><input type="reset" name="reset" value="$lang->{'Reset'}" /></td>
+d57 2
+a58 2
+	var msg="$lang->{'New Save Part1'}$lang->{'New Graph3d Save'}$lang->{'New Save Part2'}";
+	var saveAsMsg = "$lang->{SaveAsMsg}$lang->{'New Graph3d'}";
+d68 4
+a71 2
+	foreach (0..$#{$Obj->{$localTab}{items}}) {
+		@@{$Obj->{$localTab}{rules}}[$_] = param(${$Obj->{$localTab}{items}}[$_]);
+@
+
+
+1.5
+log
+@code clearing and improvment
+@
+text
+@d4 1
+a4 1
+# $Id: graph3d_axis_ed.pl,v 1.4 2003/08/04 14:17:37 jiri_schmid Exp $
+d30 1
+a30 1
+		print "<table><tr><th style='text-align:left'>$lang->{$name}</th><td style='text-align:center'>$lang->{'Graph3d Interval'}</td>";
+@
+
+
+1.4
+log
+@UI improvments
+@
+text
+@d4 1
+a4 1
+# $Id: graph3d_axis_ed.pl,v 1.3 2003/07/25 10:53:21 jiri_schmid Exp $
+a17 1
+	my $cgi = shift;
+@
+
+
+1.3
+log
+@switching tab bug fixed
+@
+text
+@d4 1
+a4 1
+# $Id: graph3d_axis_ed.pl,v 1.2 2003/07/23 11:44:56 jiri_schmid Exp $
+d34 1
+a34 1
+		print "<tr><td id='$id'>$id :</td><td><input type='text' name='$id' id='input$id' size='$descr_w' value='${$Obj->{$localTab}{intervals}}[$_]' onchange='checkNum(this)'/></td></tr>";
+d74 1
+a74 1
+		@@{$Obj->{$localTab}{intervals}}[$_] = param(${$Obj->{$localTab}{items}}[$_]);
+@
+
+
+1.2
+log
+@next tab implemented on graph3d page
+@
+text
+@d4 1
+a4 1
+# $Id: graph3d_axis_ed.pl,v 1.1 2003/07/22 15:17:20 jiri_schmid Exp $
+d25 1
+a25 1
+if (exists $Obj->{$localTab}){
+@
+
+
+1.1
+log
+@added files defining tabs on graph3d page
+@
+text
+@d4 1
+a4 1
+# $Id: graph3d_def_ed.pl,v 1.2 2003/07/11 16:00:53 jiri_schmid Exp $
+d25 1
+d55 1
+@
+

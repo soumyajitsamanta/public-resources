@@ -1,0 +1,111 @@
+head	1.2;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2003.10.27.15.28.43;	author numberone;	state dead;
+branches;
+next	1.1;
+
+1.1
+date	2003.10.27.14.58.59;	author numberone;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@cleaning Data out from Net
+@
+text
+@use ExtUtils::MakeMaker;
+
+my $define = '-DDUFF';
+
+if ($^O eq 'VMS') {  # Old VAXC compiler can't handle Duff's device
+    require Config;
+    $define =~ s/\s+-DDUFF// if $Config::Config{'vms_cc_type'} eq 'vaxc';
+}
+
+my $libs = "";
+
+WriteMakefile(
+	NAME		=> 'libdata',
+#	LINKTYPE	=> 'static',
+	DEFINE		=> $define,
+
+
+	LIBS		=> ["$libs"],
+	INC			=> "",
+
+	INST_ARCHLIB=> '.',
+	SKIP		=> [qw(dynamic dynamic_lib dlsyms)],
+	OBJECT		=> '$(O_FILES)',
+	clean		=> {'FILES' => "libdata$LIB_EXT"},
+	H			=> [qw(data.h $(PERL_INC)/config.h)],
+	C			=> [qw(data.c)],
+);
+
+sub MY::constants {
+  package MY;
+  my $r = shift->SUPER::constants();
+  if ($^O eq 'VMS') {
+    $r =~ s/^INST_STATIC =.*$/INST_STATIC = libdata\$(LIB_EXT)/m
+  }
+  return $r;
+}
+
+sub MY::post_constants {
+  package MY;
+  if ($^O eq 'VMS') {
+    shift->SUPER::post_constants();
+  } else {
+'
+INST_STATIC = libdata$(LIB_EXT)
+'
+  }
+}
+
+sub MY::top_targets {
+    my $noecho = shift->{NOECHO};
+    
+    my $r = '
+all :: static
+	' . $noecho . '$(NOOP)
+
+config ::
+	' . $noecho . '$(NOOP)
+
+lint:
+	lint -abchx $(LIBSRCS)
+
+pureall:
+
+';
+    $r .= '
+# This is a workaround, the problem is that our old GNU make exports
+# variables into the environment so $(MYEXTLIB) is set in here to this
+# value which can not be built.
+libdata/libdata.a:
+	' . $noecho . '$(NOOP)
+' unless $^O eq 'VMS';
+
+    return $r;
+}
+@
+
+
+1.1
+log
+@Data: files added
+@
+text
+@@
+

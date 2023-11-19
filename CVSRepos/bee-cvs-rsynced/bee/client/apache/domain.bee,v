@@ -1,0 +1,85 @@
+head	1.2;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2003.08.11.06.53.57;	author numberone;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2003.07.10.07.45.13;	author numberone;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@merging old version to cvs
+@
+text
+@<?xml version="1.0" encoding="ISO-8859-2"?>
+<script lang="perl" name='domain'>
+
+<input name="Names"  type='stream' arity="1" />
+<input name="Lu_old" type='stream' arity="2" />
+
+<output name="Out"    type='stream' arity="1"/>
+<output name="Lu_new" type='stream' arity="2" />
+
+<code>
+<![CDATA[
+
+my %lu_old,%lu_new;
+my $max = 0;
+print "DOMAIN: reading lu_domain\n";
+while(my($id,$name) = $Lu_old->fetch) {
+	$lu_old{$name} = $id;
+	$max = $id if($id > $max);
+}
+
+print "DOMAIN: main loop\n";
+while(my($name) = $Names->fetch) {
+	if(exists $lu_old{$name}) {
+		$Out->put($lu_old{$name});
+	} else {
+		$Out->put($lu_new{$name} = ++$max);
+	}
+}
+
+print "DOMAIN: updating lu_domain (".(scalar keys %lu_new)." records)\n";
+$Lu_new->put($lu_new{$_},$_) foreach keys %lu_new;
+
+]]>
+</code>
+
+</script>
+
+@
+
+
+1.1
+log
+@demo example -- apache
+@
+text
+@d4 2
+a5 1
+<input name="Domain" type='stream' arity="1" />
+d7 2
+a8 1
+<output name="out" type='stream' arity="1"/>
+d13 6
+a18 2
+while(my($domain) = $Domain->fetch) {
+	$out->put($domain);
+d20 12
+@
+

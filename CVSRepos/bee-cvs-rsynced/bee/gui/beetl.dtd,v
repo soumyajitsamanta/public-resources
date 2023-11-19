@@ -1,0 +1,289 @@
+head     1.1;
+branch   1.1.1;
+access   ;
+symbols  start:1.1.1.1 vendor:1.1.1;
+locks    ; strict;
+comment  @# @;
+
+
+1.1
+date     2002.09.24.01.34.16;  author michald;  state Exp;
+branches 1.1.1.1;
+next     ;
+
+1.1.1.1
+date     2002.09.24.01.34.16;  author michald;  state Exp;
+branches ;
+next     ;
+
+
+desc
+@@
+
+
+
+1.1
+log
+@Initial revision
+@
+text
+@<!--BEE metadata DTD v0.3-->
+
+<!--General definitions-->
+
+<!ENTITY % namedesc "
+	name CDATA #IMPLIED
+	description CDATA #IMPLIED"
+>
+
+<!ENTITY % iddesc "
+	id NMTOKEN #REQUIRED
+	%namedesc;"
+>	<!--id represents unique physical name-->
+
+<!ENTITY % dtype "boolean|integer|float|numeric|char|varchar|date|time|datetime"
+>	<!--list of supported data source data types-->
+
+<!ENTITY % datatype "
+	type (%dtype;) #REQUIRED
+	lenght NMTOKEN #IMPLIED"
+>	<!--data type of data source specification-->
+	<!--length is optional for char|varchar|integer|float and represents byte length-->
+	<!--length in form preciion.scale is optional for numeric type-->
+
+<!ENTITY % vartype "
+	type (%dtype;|table-name|src-name|status) #REQUIRED
+	lenght NMTOKEN #IMPLIED"
+>	<!--data type of general ETL variable type specification-->
+	<!--meaning of length is the same as for %sourcetype;-->
+
+<!--PROJECT-->
+
+<!ELEMENT project (host*,connection*,triger*,const*,gui-layer*)>
+<!ATTLIST project 
+	%iddesc;
+	author CDATA #IMPLIED
+	create-date CDATA #REQUIRED
+	update-date CDATA #IMPLIED
+	version CDATA #IMPLIED
+>
+
+<!-- ********** INVARIABLE ********** -->
+
+<!ELEMENT const (gui-presentation*)>
+<!ATTLIST const
+	%iddesc; 
+	data CDATA #REQUIRED
+>
+
+<!-- ********** CONNECTION ********** -->
+
+<!ELEMENT connection (gui-presentation*,transfer-type*)>
+<!ATTLIST connection
+	%namedesc;
+	from CDATA #REQUIRED
+	to CDATA #REQUIRED
+>	<!--"from" and "to" are defined in form 
+	     /host/source/table/column
+	     /host/_TRANS/transformation/variable
+	     /_CONST/const
+	     /_TRIG/triger-->
+
+<!ELEMENT transfer-type EMPTY>	<!--Attributes of Data Transfer Definition-->
+<!ATTLIST transfer-type 
+	name (simple|crypt|compress) "simple"
+>
+
+<!-- ********** SIGNAL ********** -->
+
+<!ELEMENT signal (gui-presentation*)>
+<!ATTLIST signal
+	%namedesc;
+	from CDATA #REQUIRED
+	to CDATA #REQUIRED
+>	<!--"from" and "to" are defined in form 
+	     /host/_TRANS/transformation/triger
+	     /host/_TRANS/transformation/status
+	     /_TRIG/triger-->
+
+<!-- ********** RELATION ********** -->
+
+<!ELEMENT relation (from,to,gui-presentation*)>
+<!ATTLIST relation
+	%namedesc;
+>
+
+<!ENTITY % cardinality "
+	cardinality (1|N) #IMPLIED 
+	optional (true|false) #IMPLIED"
+>
+<!ELEMENT from (#PCDATA)>	<!--"from" is defined in the same form as for connection-->
+<!ATTLIST from
+	%cardinality;
+>
+<!ELEMENT to (#PCDATA)>	<!--"to" is defined in the same form as for connection-->
+<!ATTLIST to
+	%cardinality;
+>
+
+<!-- ********** TRIGER ********** -->
+
+<!ELEMENT triger (gui-presentation*)>
+<!ATTLIST triger
+	%iddesc; 
+	type (autostart|schedule|manual) "manual"
+	datetime CDATA #IMPLIED
+>	<!--datetime is required for schedule only, enrichment of schedule parameters is expected-->
+
+<!-- ********** HOST ********** -->
+
+<!ELEMENT host (source*,transformation*)>
+<!ATTLIST host
+	%iddesc;
+>	<!--id represents host's domain name-->
+
+<!-- ********** TRANSFORMATION ********** -->
+
+<!ELEMENT transformation (input*,output*,proc?,gui-presentation*,timeout*)>
+<!ATTLIST transformation
+	%iddesc;
+	inherit CDATA #IMPLIED
+>	<!--"inherit" defines inheritance in form "host/transformation"-->
+	<!--"proc" is optional only if "inherit" is defined othervise "def" is required-->
+
+<!ELEMENT input (gui-presentation*)>
+<!ATTLIST input
+	%iddesc;
+	%vartype;
+>
+<!ELEMENT output (gui-presentation*)>
+<!ATTLIST output
+	%iddesc;
+	%vartype;
+>
+<!ELEMENT proc (#PCDATA)>	<!--Transformation definition in specific language-->
+<!ATTLIST proc
+	language (perl) "perl"
+>
+
+<!ELEMENT timeout (#PCDATA)>
+<!ATTLIST timeout
+	type (per-cycle|max-cycles|total) "total"
+	unit (s|m|h) "s"
+>
+
+<!-- ********** SOURCE ********** -->
+
+<!ELEMENT source (src-conn,table*,view*,metadata)>	<!--e.g. database, XLS file, HTTP site-->
+<!ATTLIST source
+	%iddesc;
+	type NMTOKEN #REQUIRED
+>	<!--type of Data Source, e.g. PSQL, ORA, ...-->
+
+<!--source connection parameters-->
+
+<!--name represents e.g. name of DB, DSN, filename, ...-->
+<!ELEMENT src-conn (src-name|user?|password?|port?|param*)>
+<!ATTLIST src-conn
+	driver NMTOKEN #REQUIRED
+>	<!--type of Driver, e.g. dbi:Pg-->
+<!ELEMENT src-name (#PCDATA)>	<!--represents e.g. DB name, DSN or filename-->
+<!ATTLIST src-name
+	gui-line NMTOKEN #IMPLIED
+>
+<!ELEMENT user (#PCDATA)>
+<!ATTLIST user
+	gui-line NMTOKEN #IMPLIED
+>
+<!ELEMENT password (#PCDATA)>
+<!ATTLIST password
+	gui-line NMTOKEN #IMPLIED
+>
+<!ELEMENT port (#PCDATA)>
+<!ATTLIST port
+	gui-line NMTOKEN #IMPLIED
+>
+<!ELEMENT param (#PCDATA)>	<!--optional parameters-->
+<!ATTLIST param
+	name CDATA #REQUIRED
+	gui-line NMTOKEN #IMPLIED
+>
+
+<!--tables and views-->
+
+<!ELEMENT view (column*,input*,proc?,gui-presentation*)>
+<!ATTLIST view
+	%iddesc;
+	query CDATA #REQUIRED
+	type (DB|ETL) "ETL"
+>	<!--'input' and 'proc' is allowed for type="ETL" only-->
+	<!--'input' suports scalars only-->
+	<!--for proc language="perl" 'proc' refferences columns from 'query' as @@_ -->
+
+<!ELEMENT table (column*,gui-presentation*)>
+<!ATTLIST table
+	%iddesc;
+	access (RO|RW) "RO"
+>
+
+<!ELEMENT column (constraint*,gui-presentation*)>
+<!ATTLIST column
+	%iddesc;
+	%datatype;
+>
+
+<!ELEMENT constraint EMPTY>
+<!ATTLIST constraint
+	type (PK|NOTNULL|UNIQUE) #REQUIRED
+>
+
+<!--metadata query-->
+
+<!ENTITY % metadata-query-type "type (SQL|ODBC|TEXT|HTML|Excel) #REQUIRED"
+>	<!--list of supported metadata query types-->
+
+<!ELEMENT metadata (tables-query?,columns-query?)>
+<!ATTLIST metadata 
+	version NMTOKEN #REQUIRED
+>
+<!ELEMENT tables-query (#PCDATA)>	<!--SQL query for list of tables-->
+<!ATTLIST tables-query 
+	%metadata-query-type;
+>
+<!ELEMENT columns-query (#PCDATA)>	<!--SQL query for list of columns-->
+<!ATTLIST columns-query 
+	%metadata-query-type;
+>
+
+<!-- ********** GUI Layer Definition ********** -->
+
+<!ELEMENT gui-layer EMPTY>
+<!ATTLIST gui-layer
+	%iddesc;
+	width NMTOKEN #REQUIRED
+	height NMTOKEN #REQUIRED
+	grid NMTOKEN #IMPLIED
+	visible (NO|YES) "NO"
+>					<!--Layer ID, width and height of drawing area-->
+
+<!--Parameters of Object's Graphical presentation-->
+
+<!ELEMENT gui-presentation EMPTY>	<!--Parameters of preentation in specific GUI Layer-->
+<!ATTLIST gui-presentation 
+	coord NMTOKENS #IMPLIED
+	line NMTOKEN #IMPLIED
+	layer NMTOKEN #REQUIRED
+	descr-coord NMTOKENS #IMPLIED
+>	<!--line represents order of field in GUI presentation - e.g. for field-names in table box-->
+	<!--line is not presented if "coord" is defined and vice versa-->
+	<!--"coord" represents Object's Upper Left Corner X,Y coordinates-->
+	<!--Description of object will be shown at specific X,Y position if "descr-coord" is presented-->
+@
+
+
+1.1.1.1
+log
+@Initial public release of BEE Project.
+@
+text
+@@

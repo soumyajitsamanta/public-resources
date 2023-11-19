@@ -1,0 +1,272 @@
+head	1.4;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.4
+date	2006.01.13.12.21.13;	author igorludi;	state dead;
+branches;
+next	1.3;
+
+1.3
+date	2005.10.18.14.04.40;	author igorludi;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2005.10.18.13.40.37;	author igorludi;	state dead;
+branches;
+next	1.1;
+
+1.1
+date	2005.06.28.14.10.46;	author igorludi;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.4
+log
+@*** empty log message ***
+@
+text
+@package rex.graphics;
+
+import javax.swing.JPanel;
+import javax.swing.ImageIcon;
+import java.awt.FlowLayout;
+import javax.swing.JLabel;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import rex.utils.AppColors;
+import java.awt.Graphics;
+import rex.utils.S;
+import javax.swing.BoxLayout;
+import java.awt.Component;
+import javax.swing.Box;
+import java.awt.Dimension;
+import javax.swing.JOptionPane;
+/**
+ * <p>Title: WHEX</p>
+ * <p>Description: </p>
+ * <p>Copyright: Copyright (c) 2003</p>
+ * <p>Company: </p>
+ * @@author igor
+ * @@version 1.0
+ */
+
+public class Toolbar extends JPanel{
+   private static ImageIcon showRowTotalsIcon;
+   private static ImageIcon showColumnTotalsIcon;
+   private static ImageIcon hideRowTotalsIcon;
+   private static ImageIcon hideColumnTotalsIcon;
+   private static ImageIcon showMDXIcon;
+   private static ImageIcon hideMDXIcon;
+   private static ImageIcon newQueryIcon;
+   private static ImageIcon refreshQueryIcon;
+   private static ImageIcon addChartIcon;
+   private static ImageIcon closeViewerIcon;
+   private static ImageIcon exportToHTMLIcon;
+   static{
+      showRowTotalsIcon      = S.getAppIcon("toolbox_show_row_totals.gif");
+      hideRowTotalsIcon      = S.getAppIcon("toolbox_hide_row_totals.gif");
+      showColumnTotalsIcon   = S.getAppIcon("toolbox_show_column_totals.gif");
+      hideColumnTotalsIcon   = S.getAppIcon("toolbox_hide_column_totals.gif");
+      showMDXIcon            = S.getAppIcon("toolbox_show_mdx.gif");
+      hideMDXIcon            = S.getAppIcon("toolbox_hide_mdx.gif");
+      newQueryIcon           = S.getAppIcon("toolbox_new_query.gif");
+      refreshQueryIcon       = S.getAppIcon("toolbox_refresh_query.gif");
+      addChartIcon           = S.getAppIcon("toolbox_add_chart.gif");
+      closeViewerIcon        = S.getAppIcon("toolbox_close_viewer.gif");
+      exportToHTMLIcon       = S.getAppIcon("toolbox_export_to_html.gif");
+   }
+   private JLabel showRowTotals
+                , showColumnTotals
+                , showMDX
+                , newQuery
+                , refreshQuery
+                , addChart
+                , closeViewer
+                , exportToHTML;
+
+   private boolean showRowTotalsOn, showColumnTotalsOn, showMDXOn;
+   private Viewer viewer;
+
+   public Toolbar(Viewer _viewer) {
+      viewer = _viewer;
+      showRowTotalsOn = false;
+      showColumnTotalsOn = false;
+      showMDXOn    = false;
+//      this.add(newQueryIcon);
+//      this.add(newQueryIcon);
+
+      showColumnTotals = new JLabel(showColumnTotalsIcon);
+      showColumnTotals.setToolTipText("Shows/hides COLUMN totals for query result");
+      showColumnTotals.addMouseListener(new MouseAdapter() {
+         public void mouseClicked(MouseEvent e) {
+            showColumnTotalsOn = !showColumnTotalsOn;
+            if (showColumnTotalsOn) {
+               showColumnTotals.setIcon(hideColumnTotalsIcon);
+            }
+            else {
+               showColumnTotals.setIcon(showColumnTotalsIcon);
+            }
+            viewer.setShowColumnTotalsOn(showColumnTotalsOn);
+         }
+      });
+      showColumnTotals.setBorder(AppColors.TOOLBAR_LABEL_BORDER);
+
+
+
+      showRowTotals = new JLabel(showRowTotalsIcon);
+      showRowTotals.setToolTipText("Shows/hides ROW totals for query result");
+      showRowTotals.addMouseListener(new MouseAdapter(){
+         public void mouseClicked(MouseEvent e){
+            showRowTotalsOn = !showRowTotalsOn;
+            if (showRowTotalsOn){
+               showRowTotals.setIcon(hideRowTotalsIcon);
+            }else{
+               showRowTotals.setIcon(showRowTotalsIcon);
+            }
+            viewer.setShowRowTotalsOn(showRowTotalsOn);
+         }
+      });
+      showRowTotals.setBorder(AppColors.TOOLBAR_LABEL_BORDER);
+
+      showMDX = new JLabel(showMDXIcon);
+      showMDX.setToolTipText("Shows/hides MDX expression for the last 5 queries executed");
+      showMDX.addMouseListener(new MouseAdapter(){
+         public void mouseClicked(MouseEvent e){
+            showMDXOn = !showMDXOn;
+            S.out("showMDXOn is now = " + showMDXOn);
+            if (showMDXOn){
+               viewer.makeMDXViewer();
+               showMDX.setIcon(hideMDXIcon);
+            }else{
+               viewer.removeMDXViewer();
+               showMDX.setIcon(showMDXIcon);
+            }
+         }
+      });
+      showMDX.setBorder(AppColors.TOOLBAR_LABEL_BORDER);
+
+      newQuery = new JLabel(newQueryIcon);
+      newQuery.setToolTipText("Drops current query and starts new query");
+      newQuery.addMouseListener(new MouseAdapter(){
+         public void mouseClicked(MouseEvent e){
+            viewer.newQuery();
+         }
+      });
+      newQuery.setBorder(AppColors.TOOLBAR_LABEL_BORDER);
+
+      refreshQuery = new JLabel(refreshQueryIcon);
+      refreshQuery.setToolTipText("Refresh query");
+      refreshQuery.addMouseListener(new MouseAdapter(){
+         public void mouseClicked(MouseEvent e){
+            viewer.refreshQuery();
+         }
+      });
+      refreshQuery.setBorder(AppColors.TOOLBAR_LABEL_BORDER);
+
+      addChart = new JLabel(addChartIcon);
+      addChart.setToolTipText("Add chart");
+      addChart.addMouseListener(new MouseAdapter(){
+         public void mouseClicked(MouseEvent e){
+            viewer.addChart();
+         }
+      });
+      addChart.setBorder(AppColors.TOOLBAR_LABEL_BORDER);
+
+      closeViewer = new JLabel(closeViewerIcon);
+      closeViewer.setToolTipText("Close this tab");
+      closeViewer.addMouseListener(new MouseAdapter(){
+         public void mouseClicked(MouseEvent e){
+            viewer.closeViewer();
+         }
+      });
+      closeViewer.setBorder(AppColors.TOOLBAR_LABEL_BORDER);
+
+
+      exportToHTML = new JLabel(exportToHTMLIcon);
+      exportToHTML.setToolTipText("Export to HTML");
+      exportToHTML.addMouseListener(new MouseAdapter(){
+         public void mouseClicked(MouseEvent e){
+            JOptionPane.showMessageDialog(null
+                                        , "Sorry, not done yet!"
+                                        , "Export to HTML"
+                                        , JOptionPane.ERROR_MESSAGE);
+
+         }
+      });
+      exportToHTML.setBorder(AppColors.TOOLBAR_LABEL_BORDER);
+
+
+//      this.setLayout(new FlowLayout(FlowLayout.LEFT));
+      this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
+      this.add(Box.createRigidArea(new Dimension(2, 0)));
+      this.add(newQuery);
+      this.add(Box.createRigidArea(new Dimension(2, 0)));
+      this.add(exportToHTML);
+      this.add(Box.createRigidArea(new Dimension(2, 0)));
+      this.add(refreshQuery);
+      this.add(Box.createRigidArea(new Dimension(2, 0)));
+      this.add(showMDX);
+      this.add(Box.createRigidArea(new Dimension(2, 0)));
+      this.add(showColumnTotals);
+      this.add(Box.createRigidArea(new Dimension(2, 0)));
+      this.add(showRowTotals);
+      this.add(Box.createRigidArea(new Dimension(2, 0)));
+      this.add(addChart);
+      this.add(Box.createRigidArea(new Dimension(2, 0)));
+      this.add(closeViewer);
+      this.setBorder(AppColors.TOOLBAR_BORDER);
+      this.setOpaque(false);
+
+   }
+
+   public boolean isShowRowTotalsOn(){
+      return showRowTotalsOn;
+   }
+   public boolean isShowColumnTotalsOn(){
+      return showColumnTotalsOn;
+   }
+
+   public boolean isShowMDXOn(){
+      return showMDXOn;
+   }
+   public void paintComponent(Graphics g) {
+      S.paintBackgroundHorizontal(g, this);
+      super.paintComponent(g);
+   }
+
+}@
+
+
+1.3
+log
+@*** empty log message ***
+@
+text
+@@
+
+
+1.2
+log
+@*** empty log message ***
+@
+text
+@@
+
+
+1.1
+log
+@*** empty log message ***
+@
+text
+@@
+

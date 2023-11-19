@@ -1,0 +1,184 @@
+head	1.5;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.5
+date	2004.06.15.10.11.40;	author numberone;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2004.06.08.15.11.59;	author numberone;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2004.05.10.13.15.44;	author numberone;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2004.05.08.10.26.56;	author numberone;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2003.11.06.12.06.33;	author numberone;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.5
+log
+@
+new Prepare API
+
+This breaks compatibility with old .bee code, because every stream
+input/output must be initialized first, bee has to call ->prepare()
+method on stream objects in .bee code before calling ->put or ->get.
+
+Or, instead of ->prepare(), bee can call general ->prepare_sql($cmd),
+or, in the future, methods like ->prepare_select($table,$cols,$where,..),
+->prepare_update(...), ->prepare_delete(...)
+
+Next new method, execute(), is same as put() for UPDATE or DELETE.
+But note that in order to do SELECT, we need to call DBI's execute().
+Method prepare() with no arguments call's execute() for as.
+
+So, correct is:
+
+$input->prepare()
+$input->fetch, fetch, fetch, ..
+
+$input->prepare_sql("SELECT ...") or die "no SQL stream"
+$input->exeucte() # !
+$input->fetch, fetch, fetch, ..
+
+$input->prepare_sql("UPDATE ...") or die "no SQL stream"
+$input->execute(..), execute, excute (or put())
+
+All stream .bee input/output variables have following methods:
+
+prepare()         -- prepare and execute DBI statement
+prepare_sql($cmd) -- prepare DBI statement
+execute()         -- execute DBI statement
+put()             -- execute DBI statement or write to stream
+fetch()           -- fetch from DBI statement or read to stream
+table()           -- returns table name, from URL
+fields()          -- returns list of fields, from URL
+@
+text
+@<?xml version="1.0" encoding="ISO-8859-2"?>
+<script lang="perl" name='id'>
+<description>
+Identity operation (with arity of 1)
+</description>
+
+<input name="in" type='stream' arity='1' />
+
+<output name="out" type='stream' field='x' />
+
+<code>
+<![CDATA[
+
+print "id: hello\n";
+
+in->prepare();
+out->prepare();
+
+my $i;
+while(my(@@x) = $in->fetch) {
+	$out->put(@@x);
+	$i++;
+}
+
+print "id: $i rows copied\n";
+
+]]>
+</code>
+
+</script>
+
+
+@
+
+
+1.4
+log
+@
+Prepare API
+
+every bee must call ->prepare() before ->put()/->fetch()
+
+or they can call ->prepare_sql("SELECT/INSERT ...")
+
+->put() is identical to new ->execute()
+@
+text
+@d16 3
+@
+
+
+1.3
+log
+@
+path-17x100k benchmark
+
+some dad cleanups
+@
+text
+@d14 1
+a14 1
+print "id: hello, i'm $$\n";
+a18 1
+
+a19 1
+#	print "id: $i \"$x[0]\"\n" if(($i % 1000) == 0);
+d22 1
+a22 1
+print "id: finnishing in $i cycles\n";
+@
+
+
+1.2
+log
+@
+demo with two paths of data flow, of different lengths
+@
+text
+@d14 8
+a21 2
+while(my(@@row) = $in->fetch) {
+	$out->put(@@row);
+d24 2
+@
+
+
+1.1
+log
+@renaming .xml to .scheme and .bee
+@
+text
+@d4 1
+a4 1
+---
+d7 1
+a7 1
+<input name="access" type='stream' arity='1' />
+d9 1
+a9 1
+<output name="callco" type='stream' field='request' />
+d14 2
+a15 3
+my @@row;
+while(@@row = $access->fetch) {
+	$callco->put(@@row);
+@
+

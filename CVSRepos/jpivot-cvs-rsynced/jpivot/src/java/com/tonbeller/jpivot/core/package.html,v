@@ -1,0 +1,70 @@
+head	1.1;
+access;
+symbols
+	jpivot_1_8_0:1.1
+	focus_1_6_0:1.1.0.6
+	jpivot_1_7_0:1.1
+	jpivot_1_6_0:1.1
+	jpivot_1_5_0:1.1.0.4
+	Root_jpivot_1_5_0:1.1
+	mondrian_xmla_2005_08_25:1.1.0.2
+	sourceforge_sync:1.1;
+locks; strict;
+comment	@# @;
+expand	@k@;
+
+
+1.1
+date	2005.07.05.14.19.54;	author avix;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@initial version
+@
+text
+@<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!--
+Copyright goes here
+-->
+</head>
+<body bgcolor="white">
+
+Defines core interfaces and classes.
+
+<h2>Overview</h2>
+A {@@link Model} provides the minimum functionality that is
+required for the application to work. A {@@link Extension}
+is an extension to a model that provides additional, optional
+functionality. A <code>Model</code> may be queried if it supports
+a specific <code>Extension</code>. This also supports to follow the
+<a href="http://www.brent.worden.org/tips/2001/interfaceSegregationPrinciple.html">Interface Segregation Principle</a>
+
+<p>
+
+In JPivot an OLAP result is a <code>Model</code> because its
+functionality is required to display a table or chart. Navigations
+are optional <code>Extension</code>s hat may be supported by some OLAP 
+server but not necessary by all of them.
+
+<h2>Class Diagram</h2>
+
+<img src="doc-files/class-diagram.gif">
+
+
+<h2>Support Classes</h2>
+
+{@@link ModelFactory}, {@@link ModelSupport} and {@@link ExtensionSupport}
+are default implementations that may be used to derive from.
+
+</body>
+</html>
+@

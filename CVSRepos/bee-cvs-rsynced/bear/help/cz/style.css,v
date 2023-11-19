@@ -1,0 +1,202 @@
+head	1.1;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.1
+date	2004.04.18.02.54.54;	author michald;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@publication of the Czech Help
+@
+text
+@BODY {
+	font-family : Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size : 10pt;
+	margin-left: 20px;
+	margin-right: 20px;
+}
+
+.main {
+	font-family : Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size : 8pt;
+}
+
+h1.home {
+	font-family : Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size : 11pt;
+	font-weight: bold;
+	letter-spacing: 2px;
+	margin-bottom: 3px;
+	margin-top: 0px;
+}
+
+hr.home { 
+  color: #AEAEAE;
+  height: 1px;
+  clear: both;
+  margin-bottom: 8px;
+  margin-top: 8px;
+}
+
+.home_tz { margin-bottom: 15px; }
+
+h1 {
+	font-family : Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size : 13pt;
+	letter-spacing: 2px;
+	color: #303030;
+}
+
+h2 {
+	font-family : Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size : 12pt;
+	color: #4E4E4E;
+	letter-spacing: 1px;
+	padding-top: 20px;
+}
+
+h2.home{
+	font-family : Nimbus Sans L Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size : 16pt;
+	color: #4E4E4E;
+	letter-spacing: 1px;
+	padding-top: 0px;
+}
+
+h3 {
+	font-family : Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size : 11pt;
+	color: #3E3E3E;
+}
+
+h4 {
+	font-family : Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size : 10pt;
+	letter-spacing: 0px;
+	color: #000000;
+	font-weight: bold;
+}
+
+dt { font-weight: bold; }
+
+hr { 
+  color: #AEAEAE;
+  height: 1px;
+}
+
+.bottom {
+	font-family : Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size : 7pt;
+	color: #636363;
+}
+
+.menu_mezera { 
+   font-size: 3px; 
+   margin-top: 3px;
+}
+
+A:ACTIVE {
+	color : #00008B;
+	text-decoration : underline;
+}
+
+A:LINK {
+	color : #00008B;
+	text-decoration : underline;
+}
+
+A:VISITED {
+	color : #00008B;
+	text-decoration : underline;
+}
+
+
+A:HOVER {
+	color : Red;
+	text-decoration : underline;
+}
+
+A.home:LINK {
+	color : #00008B;
+	text-decoration : none;
+	   
+}
+
+A.home:VISITED {
+	color : #00008B;
+	text-decoration : none;
+}
+
+A.home:HOVER {
+	color : Red;
+	text-decoration : none;
+}
+
+.sm {
+	font-size : 1pt;
+}
+
+.menu {
+  font-family : Verdana, Geneva, Arial, Helvetica, sans-serif;
+  font-size : 8pt;
+
+}
+
+.menu1 {
+	font-family : Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size : 8pt;
+	font-weight: bold;
+}
+
+A.menu1:ACTIVE {
+	color : #000000;
+	text-decoration : none;
+}
+
+A.menu1:LINK {
+	color : #000000;
+	text-decoration : none;
+}
+
+A.menu1:VISITED {
+	color : #000000;
+	text-decoration : none;
+}
+
+A.menu1:HOVER {
+	color : #000000;
+	text-decoration : underline;
+}
+
+
+A.menu2:ACTIVE {
+	color : #4C4C4C;
+	text-decoration : none;
+}
+
+A.menu2:LINK {
+	color : #4C4C4C;
+	text-decoration : none;
+}
+
+A.menu2:VISITED {
+	color : #4C4C4C;
+	text-decoration : none;
+}
+
+A.menu2:HOVER {
+	color : #4C4C4C;
+	text-decoration : underline;
+}
+@

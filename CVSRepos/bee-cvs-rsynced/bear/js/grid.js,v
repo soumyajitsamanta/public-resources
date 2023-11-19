@@ -1,0 +1,603 @@
+head	1.18;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.18
+date	2003.12.12.12.12.16;	author jiri_schmid;	state Exp;
+branches;
+next	1.17;
+
+1.17
+date	2003.12.04.12.52.52;	author jiri_schmid;	state Exp;
+branches;
+next	1.16;
+
+1.16
+date	2003.11.11.14.03.19;	author jiri_schmid;	state Exp;
+branches;
+next	1.15;
+
+1.15
+date	2003.09.24.09.43.24;	author jiri_schmid;	state Exp;
+branches;
+next	1.14;
+
+1.14
+date	2003.09.01.13.35.24;	author jiri_schmid;	state Exp;
+branches;
+next	1.13;
+
+1.13
+date	2003.09.01.12.40.09;	author jiri_schmid;	state Exp;
+branches;
+next	1.12;
+
+1.12
+date	2003.08.20.14.23.46;	author jiri_schmid;	state Exp;
+branches;
+next	1.11;
+
+1.11
+date	2003.07.11.16.00.53;	author jiri_schmid;	state Exp;
+branches;
+next	1.10;
+
+1.10
+date	2003.07.09.09.27.12;	author jiri_schmid;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	2003.07.08.10.39.05;	author jiri_schmid;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	2003.05.19.14.18.36;	author jiri_schmid;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	2003.05.13.15.19.00;	author jiri_schmid;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	2003.05.06.10.38.20;	author jiri_schmid;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	2003.05.05.15.16.34;	author jiri_schmid;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2003.04.24.11.29.06;	author jiri_schmid;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2003.04.22.15.29.25;	author jiri_schmid;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2003.04.16.12.17.19;	author jiri_schmid;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2003.04.16.11.18.16;	author jiri_schmid;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.18
+log
+@found a fixed bug manipulating dynamic params in grid
+@
+text
+@// $Id: grid.js,v 1.17 2003/12/04 12:52:52 jiri_schmid Exp $
+
+function subst_grid_ID(source,zone){
+var EID = document.getElementById(zone);
+var lngth = EID.rows.length-1;
+for (i=0; i<lngth;i++) EID.deleteRow(0);
+var content = document.getElementById(source);
+if (content.value) {var poleM = String(content.value).split("|");} else return;
+var MPole = parent.frames['tree_iframe'].Tree0;
+for (i=0; i < poleM.length-1; i++) 
+	{
+	var new_row = EID.insertRow(i);
+	var new_cell = new_row.insertCell(0);
+	var path = (document.getElementById('skin').value) ? "skins/"+document.getElementById('skin').value+"/" : "";
+	 new_cell.className = (source == "metric") ? "metrics_up" : "visual_up";
+	 new_cell.onclick = function() {decide(this);};
+	 new_cell.onmouseover = function() {active(this);};
+	 new_cell.onmouseout = function() {passive(this);};
+		if (poleM[i] == mg) {
+//			new_cell.innerHTML = "<img src='"+path+mg_img+"."+document.getElementById('imgType').value+"' alt='"+mg+"' name='"+mg+"|"+mg_type+"'>&nbsp;"+mg; 
+			new_cell.innerHTML = "<img src='"+path+mg_img+".png' alt='"+mg+"' name='"+mg_local+"|"+mg_type+"'>&nbsp;"+mg_local; 
+			new_row.id = mg;
+			continue;
+		};
+		if (String(poleM[i]).match(/~/)) {
+			var nodeParent = findItemById(String(poleM[i]).match(/^[^~]*/));
+			var nodeChild = findItemById(poleM[i],true);
+			if (String(nodeParent[2]).match(/\?/) || String(nodeChild[2]).match(/\?/)) {
+//				new_cell.innerHTML = "<img src='"+path+"img/bear_tiny."+document.getElementById('imgType').value+"' alt='uknown' name='"+nodeParent[2]+"~"+nodeChild[2]+"|"+nodeChild[3]+"'>&nbsp;"+nodeParent[2]+"~"+nodeChild[2];
+				new_cell.innerHTML = "<img src='"+path+"img/bear_tiny.png' alt='uknown' name='"+nodeParent[2]+"~"+nodeChild[2]+"|"+nodeChild[3]+"'>&nbsp;"+nodeParent[2]+"~"+nodeChild[2];
+			} else {
+				new_cell.innerHTML = "<img src='"+parent.frames['tree_iframe'].document.getElementById("icon"+poleM[i]).src+"' alt='"+nodeChild[0]+"' name='"+nodeParent[2]+"~"+nodeChild[2]+"|"+nodeChild[3]+"'>&nbsp;"+nodeParent[2]+"~"+nodeChild[2];
+			}
+		} else {var node = findItemById(poleM[i]);
+			if (String(node[2]).match(/\?/)) {
+//				new_cell.innerHTML = "<img src='"+path+"img/bear_tiny."+document.getElementById('imgType').value+"' alt='"+node[0]+"' name='"+node[2]+"|"+node[3]+"'>&nbsp;"+node[2];
+				new_cell.innerHTML = "<img src='"+path+"img/bear_tiny.png' alt='"+node[0]+"' name='"+node[2]+"|"+node[3]+"'>&nbsp;"+node[2];
+			} else {
+				new_cell.innerHTML = "<img src='"+parent.frames['tree_iframe'].document.getElementById("icon"+poleM[i]).src+"' alt='"+node[0]+"' name='"+node[2]+"|"+node[3]+"'>&nbsp;"+node[2];
+			}
+		};
+};
+return true;
+}
+function checkContent(isin){
+var original = isin;
+isin = String(isin).replace(/\[/g,"\\[");
+isin = String(isin).replace(/\]/g,"\\]");
+if (isin.match(/~/)){
+	var nodeParent = findItemByName(isin.match(/^[^~]*/));
+	if (nodeParent) {
+		var MPole = top.frames['body'].frames['tree_iframe'].Tree0;
+		var rgxp = new RegExp(nodeParent[0]+"\\|"+isin.match(/[^~]*$/)+"\\|");
+		for (I in MPole)
+	 		if (I>=0)	//IE unbelieveble bug treatment
+				{if (MPole[I].match(rgxp)) {var hlpX = MPole[I].split("|"); return hlpX[0]};
+			} else continue;//IE unbelieveble bug treatment
+	}
+}
+var node = findItemByName(isin);
+if (node) return node[0]
+return original //substitution of name by id failed
+}
+
+function findItemByName(nodeName) {
+var MPole = top.frames['body'].frames['tree_iframe'].Tree0;
+var rgxp = new RegExp("\\|"+nodeName+"\\|");
+for (I in MPole) 
+	if (I>=0){	//IE unbelieveble bug treatment
+		if (MPole[I].match(rgxp)) {return MPole[I].split("|");}
+	} else continue;//IE unbelieveble bug treatment
+return null
+}
+// put item(s) from drag & drop table "Zone" into relevant SELECT object "Obj"
+function fill_select_by_zone(Obj,Zone) {
+var selectobj = document.getElementById(Obj);
+selectobj.length = 0;
+var EID = document.getElementById(Zone).getElementsByTagName('img');
+for (i=0; i<EID.length; i++) {
+	var hlp = EID.item(i).alt;
+	selectobj.options[i]= new Option(hlp,hlp,false,true);
+	}
+return(true);}
+
+// before saving select all item in SELECT objects - PageObj, COlObj, RowObj, Metrics
+function fill_selects(){
+if (dragLocator.mg == mg) {add_metric(); dragLocator.mg=""; dragLocator.name="";}
+       fill_select_by_zone("PageObj","drop_zone_page");
+       fill_select_by_zone("ColObj","drop_zone_collumn");
+       fill_select_by_zone("RowObj","drop_zone_row");
+       fill_select_by_zone("Metrics","drop_zone_metrics");
+       return(true);
+}
+
+function fill_tables(){
+	force_hide_me();
+       subst_grid_ID("page","drop_zone_page");
+       subst_grid_ID("col","drop_zone_collumn");
+       subst_grid_ID("row","drop_zone_row");
+       subst_grid_ID("metric","drop_zone_metrics");
+       return(true);
+}
+
+function clearGrid(gridSegmentId){
+var gridSegment = document.getElementById(gridSegmentId);
+var rgxp = mg;
+if ( String(gridSegment.innerHTML).match(rgxp)) {
+	alert(mg_remove);
+	return;
+}
+var lngth = gridSegment.rows.length-1;
+for (i=0; i<lngth;i++) gridSegment.deleteRow(0);
+if (gridSegmentId == "drop_zone_metrics") {remove_mg()};
+}
+
+//check if the dropped object can be inserted into parent table of active_row, called from drop_me()
+function check_table(active_row){
+var hlp;
+if (document.getElementById("drop_area_0")) {
+	hlp = document.getElementById("drop_area_0").innerHTML;
+	if (hlp.indexOf(dragLocator.name) > -1) { return(1)};
+	var table_section = active_row.parentNode;
+	var pole = dragLocator.name.split("|");
+	switch (pole[1]) {
+		case "A" : if (table_section.parentNode.id == "drop_zone_metrics") {return(1);} else return(0); 
+		case "Af": if (table_section.parentNode.id == "drop_zone_metrics") {return(1);} else return(0);
+		case "P" : if (table_section.parentNode.id == "drop_zone_metrics" && table_section.rows.length == 2) add_metric(); return 0;
+		case "M" : if (table_section.parentNode.id == "drop_zone_metrics") {
+				if (table_section.rows.length == 2) add_metric();
+			 	return(0);
+			   } else {
+				return(1)
+			   }
+	default: return(1);
+	}
+}
+}
+@
+
+
+1.17
+log
+@img type changes implemented into javascript
+@
+text
+@d1 1
+a1 1
+// $Id: grid.js,v 1.16 2003/11/11 14:03:19 jiri_schmid Exp $
+d21 1
+a21 1
+			new_cell.innerHTML = "<img src='"+path+mg_img+".png' alt='"+mg+"' name='"+mg+"|"+mg_type+"'>&nbsp;"+mg; 
+d127 1
+a133 1
+		case "P" : if (table_section.rows.length == 2) add_metric(); return 0;
+@
+
+
+1.16
+log
+@creating report - minor bugs fixed, seems to be working properly
+@
+text
+@d1 1
+a1 1
+// $Id: grid.js,v 1.15 2003/09/24 09:43:24 jiri_schmid Exp $
+d20 2
+a21 1
+			new_cell.innerHTML = "<img src='"+path+mg_img+"."+document.getElementById('imgType').value+"' alt='"+mg+"' name='"+mg+"|"+mg_type+"'>&nbsp;"+mg; 
+d29 2
+a30 1
+				new_cell.innerHTML = "<img src='"+path+"img/bear_tiny."+document.getElementById('imgType').value+"' alt='uknown' name='"+nodeParent[2]+"~"+nodeChild[2]+"|"+nodeChild[3]+"'>&nbsp;"+nodeParent[2]+"~"+nodeChild[2];
+d36 2
+a37 1
+				new_cell.innerHTML = "<img src='"+path+"img/bear_tiny."+document.getElementById('imgType').value+"' alt='"+node[0]+"' name='"+node[2]+"|"+node[3]+"'>&nbsp;"+node[2];
+@
+
+
+1.15
+log
+@fixies
+@
+text
+@d1 1
+a1 1
+// $Id: grid.js,v 1.14 2003/09/01 13:35:24 jiri_schmid Exp $
+d127 4
+a130 1
+				} else return(1);
+@
+
+
+1.14
+log
+@finishing imlementation of skins
+@
+text
+@d1 1
+a1 1
+// $Id: grid.js,v 1.13 2003/09/01 12:40:09 jiri_schmid Exp $
+d28 1
+a28 1
+				new_cell.innerHTML = "<img src='"+path+"img/bear_tiny.gif' alt='uknown' name='"+nodeParent[2]+"~"+nodeChild[2]+"|"+nodeChild[3]+"'>&nbsp;"+nodeParent[2]+"~"+nodeChild[2];
+d34 1
+a34 1
+				new_cell.innerHTML = "<img src='"+path+"img/bear_tiny.gif' alt='"+node[0]+"' name='"+node[2]+"|"+node[3]+"'>&nbsp;"+node[2];
+@
+
+
+1.13
+log
+@skins implemented. mozilla skin - temporarily copy msie content
+@
+text
+@d1 1
+a1 1
+// $Id: grid.js,v 1.12 2003/08/20 14:23:46 jiri_schmid Exp $
+d20 1
+a20 1
+			new_cell.innerHTML = "<img src='"+path+mg_img+"' alt='"+mg+"' name='"+mg+"|"+mg_type+"'>&nbsp;"+mg; 
+@
+
+
+1.12
+log
+@access object implemented
+@
+text
+@d1 1
+a1 1
+// $Id: grid.js,v 1.11 2003/07/11 16:00:53 jiri_schmid Exp $
+d14 1
+d20 1
+a20 1
+			new_cell.innerHTML = "<img src='"+mg_img+"' alt='"+mg+"' name='"+mg+"|"+mg_type+"'>&nbsp;"+mg; 
+d28 1
+a28 1
+				new_cell.innerHTML = "<img src='img/tree/base.gif' alt='uknown' name='"+nodeParent[2]+"~"+nodeChild[2]+"|"+nodeChild[3]+"'>&nbsp;"+nodeParent[2]+"~"+nodeChild[2];
+d34 1
+a34 1
+				new_cell.innerHTML = "<img src='img/tree/base.gif' alt='"+node[0]+"' name='"+node[2]+"|"+node[3]+"'>&nbsp;"+node[2];
+@
+
+
+1.11
+log
+@graph3d next stage
+@
+text
+@d1 1
+a1 1
+// $Id: grid.js,v 1.10 2003/07/09 09:27:12 jiri_schmid Exp $
+d14 1
+a14 1
+	 new_cell.className="visual_up";
+@
+
+
+1.10
+log
+@added javascript for graph3d
+@
+text
+@d1 1
+a1 1
+// $Id: grid.js,v 1.9 2003/07/08 10:39:05 jiri_schmid Exp $
+d110 20
+@
+
+
+1.9
+log
+@minor utf8 final changes
+@
+text
+@d1 1
+a1 1
+// $Id: grid.js,v 1.8 2003/05/19 14:18:36 jiri_schmid Exp $
+d26 2
+a27 2
+			if (String(nodeParent[2]).match(/\?/)) {
+				new_cell.innerHTML = "<img src='img/tree/base.gif' alt='"+nodeChild[0]+"' name='"+nodeParent[2]+"~"+nodeChild[2]+"|"+nodeChild[3]+"'>&nbsp;"+nodeChild[2];
+@
+
+
+1.8
+log
+@very minor fixies and code improvmetns
+@
+text
+@d1 1
+a1 1
+// $Id: grid.js,v 1.7 2003/05/13 15:19:00 jiri_schmid Exp $
+d26 5
+a30 1
+			new_cell.innerHTML = "<img src='"+parent.frames['tree_iframe'].document.getElementById("icon"+poleM[i]).src+"' alt='"+nodeChild[0]+"' name='"+nodeParent[2]+"~"+nodeChild[2]+"|"+nodeChild[3]+"'>&nbsp;"+nodeParent[2]+"~"+nodeChild[2];
+d32 5
+a36 2
+			if (String(node[2]).match(/\?/)) continue;
+			new_cell.innerHTML = "<img src='"+parent.frames['tree_iframe'].document.getElementById("icon"+poleM[i]).src+"' alt='"+node[0]+"' name='"+node[2]+"|"+node[3]+"'>&nbsp;"+node[2];
+@
+
+
+1.7
+log
+@new report page seems to be fullfunctional, javascript code huge improvment
+@
+text
+@d1 1
+a1 1
+// $Id: grid.js,v 1.6 2003/05/06 10:38:20 jiri_schmid Exp $
+d27 2
+a28 2
+		} else {
+			var node = findItemById(poleM[i]);
+d91 12
+@
+
+
+1.6
+log
+@code improvment
+@
+text
+@d1 1
+a1 1
+// $Id: grid.js,v 1.5 2003/05/05 15:16:34 jiri_schmid Exp $
+d76 1
+a76 1
+if (imgID.alt == mg) {add_metric(); imgID.alt=""; divID.name="";}
+@
+
+
+1.5
+log
+@huge code improvment on client side when substituting from/to ID, minor language dependeces fixies
+@
+text
+@d1 1
+a1 1
+// $Id: grid.js,v 1.4 2003/04/24 11:29:06 jiri_schmid Exp $
+d25 1
+a25 1
+			var nodeChild = findItemById(poleM[i]);
+@
+
+
+1.4
+log
+@IE bug fixed, code improvment
+@
+text
+@d1 1
+a1 1
+// $Id: grid.js,v 1.3 2003/04/22 15:29:25 jiri_schmid Exp $
+d19 1
+a19 1
+			new_cell.innerHTML = "<img src='"+mg_img+"' name='"+mg+"|"+mg_type+"'>&nbsp;"+mg; 
+d22 1
+a22 2
+		}
+		
+d24 6
+a29 22
+			var rgxp = new RegExp("^"+String(poleM[i]).match(/^[^~]*/)+"\\|");
+			for (I in MPole) {
+				if (I>=0) {	//IE unbelieveble bug treatment
+					if (MPole[I].match(rgxp)) {
+						var hlpName = String(MPole[I]).split("|");
+						new_cell.innerHTML = "<img src='"+parent.frames['tree_iframe'].document.getElementById("icon"+poleM[i]).src+"'	name='"+hlpName[2]+String(poleM[i]).match(/~.*$/)+"|"+hlpName[3]+"'>&nbsp;"+hlpName[2]+String(poleM[i]).match(/~.*$/);
+						break;
+					};
+				} else continue;//IE unbelieveble bug treatment					
+			};
+		}
+		else {
+			var rgxp = new RegExp("^"+poleM[i]+"\\|");
+			for (I in MPole) {
+				if (I>=0) {	//IE unbelieveble bug treatment
+					if (MPole[I].match(rgxp)) {
+						var hlpName = String(MPole[I]).split("|");
+						new_cell.innerHTML = "<img src='"+parent.frames['tree_iframe'].document.getElementById("icon"+poleM[i]).src+"' name='"+hlpName[2]+"|"+hlpName[3]+"'>&nbsp;"+hlpName[2];
+						break;
+					};
+				} else continue;//IE unbelieveble bug treatment	
+			};
+d31 1
+a31 1
+	};
+d34 2
+a35 3
+
+function check_content(isin){
+var MPole = parent.frames['tree_iframe'].Tree0; //contains arrays of strings
+d38 9
+a46 7
+if (isin.match(/~/)) 
+	{var rgxP = new RegExp("[\|]"+isin.match(/^[^~]*/)+"[\|]");
+	 for (I in MPole)
+	 	if (I>=0)	//IE unbelieveble bug treatment
+			{if (MPole[I].match(rgxP)) {var hlpX = MPole[I].split("|"); return hlpX[0]+isin.match(/~.*$/); break;};
+		} else continue;//IE unbelieveble bug treatment
+		
+d48 9
+a56 2
+if (isin == mg) return isin;
+var rgxp = new RegExp("[\|]"+isin+"[\|]");
+d58 2
+a59 2
+	if (I>=0)	//IE unbelieveble bug treatment
+		{if (MPole[I].match(rgxp)) {var hlpX = MPole[I].split("|");  return (hlpX[0]);}
+d61 1
+a62 1
+
+d67 5
+a71 7
+var hlp = document.getElementById(Zone).innerHTML;
+var pole = hlp.match(/[^"=]*[\|]/g); // --> item|
+for (i in pole) 
+	if (i>=0) {	//IE unbelieveble bug treatment
+	pole[i] = check_content(String(pole[i]).match(/.*[^\|]/)); // item| --> item, String(pole[i]) - necessary for proper functionality on IE
+	selectobj.options[i]= new Option(pole[i],pole[i],false,true);
+	} else continue;//IE unbelieveble bug treatment
+d76 1
+a76 1
+if (imgID.alt != "") {add_metric(); imgID.alt=""; divID.name="";}
+@
+
+
+1.3
+log
+@fixed a modified saving a loadin joined items A~Af
+@
+text
+@d1 1
+a1 1
+// $Id: grid.js,v 1.2 2003/04/16 12:17:19 jiri_schmid Exp $
+d64 1
+@
+
+
+1.2
+log
+@code improvment, minor fixies
+@
+text
+@d1 1
+a1 1
+// $Id: grid.js,v 1.1 2003/04/16 11:18:16 jiri_schmid Exp $
+d23 26
+a48 10
+	  var rgxp = new RegExp('^'+poleM[i]+'\\|');
+		for (I in MPole)
+			if (I>=0) {	//IE unbelieveble bug treatment
+				if (MPole[I].match(rgxp)) {
+					var hlpName = String(MPole[I]).split("|");
+					new_cell.innerHTML = "<img src='"+parent.frames['tree_iframe'].document.getElementById("icon"+poleM[i]).src+"' name='"+hlpName[2]+"|"+hlpName[3]+"'>&nbsp;"+hlpName[2];
+					break;
+				};
+			} else continue;//IE unbelieveble bug treatment
+	}
+d56 2
+a57 4
+if (isin == mg) return isin;
+if (isin.match(/\./)) 
+	{var bckp = isin;
+	 var rgxP = new RegExp("[\|]"+isin.match(/^[^\.]*/)+"[\|]");
+d60 1
+a60 1
+			{if (MPole[I].match(rgxP)) {var hlpX = MPole[I].split("|"); isin = hlpX[0]+isin.match(/\..*$/); break;};
+d65 1
+a65 1
+for (I in MPole)
+d67 1
+a67 1
+		{if (MPole[I].match(rgxp)) {var hlpX = MPole[I].split("|"); return (hlpX[0]);}
+a68 1
+return (bckp) ? bckp : isin.replace(/\\/g,"");
+@
+
+
+1.1
+log
+@id substitution implemented in all of *_ed.pl
+@
+text
+@d1 1
+a1 1
+// $Id: v 1.4 2003/04/10 14:21:35 jiri_schmid Exp $
+d83 4
+a86 4
+       subst_grid_ID("grid_page","drop_zone_page");
+       subst_grid_ID("grid_coll","drop_zone_collumn");
+       subst_grid_ID("grid_row","drop_zone_row");
+       subst_grid_ID("grid_metric","drop_zone_metrics");
+@
+

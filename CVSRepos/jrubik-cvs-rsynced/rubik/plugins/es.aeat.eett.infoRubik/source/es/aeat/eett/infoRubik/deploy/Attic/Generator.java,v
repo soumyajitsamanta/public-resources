@@ -1,0 +1,280 @@
+head	1.2;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2008.05.17.15.37.41;	author fsaz;	state dead;
+branches;
+next	1.1;
+
+1.1
+date	2005.11.28.14.44.05;	author fsaz;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@Borrando
+@
+text
+@/*
+ * Created on 21-mar-2005
+ *
+ * Generator.java
+ *
+ */
+package es.aeat.eett.infoRubik.deploy;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.Hashtable;
+import java.util.List;
+
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.TreeNode;
+
+import org.apache.log4j.Logger;
+import org.java.plugin.PluginManager;
+import org.jdom.Attribute;
+import org.jdom.Element;
+
+import com.tonbeller.jpivot.olap.model.Level;
+import com.tonbeller.jpivot.olap.model.Member;
+import com.tonbeller.jpivot.olap.model.OlapModel;
+import com.tonbeller.jpivot.olap.navi.ChangeSlicer;
+
+import es.aeat.eett.infoRubik.jobs.job_core.Job;
+import es.aeat.eett.infoRubik.layout.LeafReport;
+import es.aeat.eett.rubik.core.RubikPlugin;
+import es.aeat.eett.rubik.core.cell.RubikCell;
+import es.aeat.eett.rubik.core.util.JDomUtil;
+
+/**
+ * @@author f00992
+ *
+ */
+public class Generator {
+    private Logger logger = Logger.getLogger(Generator.class);
+
+	private DeployMutableTreeNode nDeploy=null;
+	private File dirOut;
+	private Member[] membersInSlicer; // Miembros que ya estaban en el slicer
+	private ChangeSlicer changeSlicer;
+	private int counter=0;
+	private String nameJob=null;
+	private Hashtable hash_Names= new Hashtable();
+	private LeafReport leafReport=null;
+
+	private static OlapModel olapModel=null;
+
+	/**
+	 * @@param dirOut
+	 * @@throws Exception
+	 */
+	public Generator(File dirOut) throws Exception {
+		this.dirOut = dirOut;
+		if(olapModel==null){
+	        PluginManager pm = PluginManager.lookup(Generator.class);
+	        RubikPlugin rubikPlugin = ((RubikPlugin) pm.getPlugin(RubikPlugin
+	        		.PLUGIN_ID));
+	        olapModel=rubikPlugin.getOlapModel();			
+		}
+		
+	}
+	public void generaFiles(LeafReport leafReport, Job job) throws Exception{
+	    this.leafReport=leafReport;
+	    nDeploy= new DeployMutableTreeNode(" ");
+		nDeploy.loadRootElement(job.getFileJob());
+
+		String nameJob=job.getFileJob().getName();
+		nameJob=nameJob.substring(0,(nameJob.length()-4));
+	    inicializa(nameJob);
+	    if(nDeploy.getChildCount()==0){
+	    	generaNodo(nDeploy,job);
+	    }else{
+			for(Enumeration e=nDeploy.depthFirstEnumeration(); e.hasMoreElements();){
+			    DeployMutableTreeNode nodo=(DeployMutableTreeNode) e.nextElement();
+				if(nodo.isLeaf() && !nodo.isRoot()){
+					generaNodo(nodo,job);
+				}
+			}
+	    }
+        changeSlicer.setSlicer(membersInSlicer);
+        createIndex("subIndex");
+        //createIndex(aName.getValue());
+	}
+
+	private void generaNodo(DeployMutableTreeNode nodo,Job job) throws Exception{
+		List membersSlicer= new ArrayList();
+		updateLisMembersSlicer(nodo,membersSlicer );
+        Member[] mSlicer= new Member[membersInSlicer.length +membersSlicer.size()];
+        System.arraycopy(membersInSlicer,0,mSlicer,0,membersInSlicer.length);
+        for(int i=0, k=membersInSlicer.length; k<mSlicer.length
+            	;mSlicer[k++]=(Member) membersSlicer.get(i++));
+
+        changeSlicer.setSlicer(mSlicer);
+        String nameFile=nameJob+"_"+(counter++);
+        hash_Names.put(nodo, nameFile);
+        nameFile += ".xml";
+
+		File fileOut=new File(dirOut, nameFile);
+		if(fileOut!=null){
+			job.createFileOut(fileOut);
+			/*
+			if(logger.isDebugEnabled()){
+				String msg="Generando: "+getPathNode(nodo)+" file: "+fileOut.getName();
+				logger.debug(msg);
+			}
+			*/
+			String msg="\tDeploy "+getPathNode(nodo)+" Produce file: "+fileOut.getAbsolutePath();
+			logger.info(msg);			
+		}
+	}
+	private String getPathNode(TreeNode node){
+		String path=node.toString();
+		while(node.getParent()!=null){
+			node=node.getParent();
+			path=node.toString()+"/"+path;
+		}
+		return path;
+	}
+	private void inicializa(String nameJob){
+		this.nameJob=nameJob;
+	    hash_Names.clear();
+		changeSlicer=(ChangeSlicer)olapModel.getExtension(ChangeSlicer.ID);
+		membersInSlicer=changeSlicer.getSlicer();
+		counter=0;
+	}
+	/*
+	private void saveIndex(String caption) throws Exception{
+        String nameFile="index_"+nameJob+".xml";
+        String nameFileOut=dirOut.getAbsolutePath()+Rubik.fileSeparator+nameFile;
+		File fileOut=new File(nameFileOut);
+		if(fileOut!=null){
+		    org.jdom.Document document =new org.jdom.Document (generaIndex(caption),getDocType());
+		    new JDomUtil().saveDocument(document, fileOut);
+		}
+	    hash_Names.clear();
+	}
+	*/
+	public void createIndex(String caption) throws Exception{
+        String nameFile="tmp_"+nameJob+".xml";
+		File fileOut=new File(dirOut, nameFile);
+		if(fileOut!=null){
+		    //org.jdom.Document document =new org.jdom.Document (generaIndex(caption),getDocType());
+			org.jdom.Document document =new org.jdom.Document (generaIndex(caption));
+		    new JDomUtil().saveDocument(document, fileOut);
+		}
+	    hash_Names.clear();
+	}
+	/*
+	private DocType getDocType(){
+	    StringBuffer sb= new StringBuffer();
+	    for(Enumeration e=hash_Names.elements(); e.hasMoreElements(); ){
+	        String entity =(String)e.nextElement();
+	        sb.append("<!ENTITY "+ entity + " SYSTEM \""+ entity +".xml\">\n");
+	    }
+        DocType type  = new DocType("AppEstudios");
+        String dtd = "<!ENTITY meta SYSTEM \"meta.xml\">\n"
+                 + "<!ENTITY metodologia SYSTEM \"metodologia/index.xml\">\n"
+                 + "<!ENTITY ayuda SYSTEM \"ayuda/index.xml\">\n";
+                dtd += sb.toString();
+        type.setInternalSubset(dtd);
+        return type;
+	}
+	*/
+	private Element generaIndex(String caption){
+	    Element eRoot= new Element("estadistica");
+	    eRoot.setAttribute("titulo", caption);
+	    if(nDeploy.getChildCount()>0){
+	        addChildrenIndes(nDeploy, eRoot);
+	    }else{
+	        emptyDeployIndex( eRoot);
+	    }
+	    return eRoot;
+	}
+	void emptyDeployIndex(Element eRoot){
+        Attribute aName=leafReport.getRootElement().getAttribute("name");
+
+	    Element eHijo= new Element("valor");
+		eHijo.setAttribute("fichero",(String) hash_Names.get(nDeploy));
+		Element eCuadro= new Element("cuadro");
+		eCuadro.setAttribute("fichero",(String) hash_Names.get(nDeploy));
+		eCuadro.setAttribute("id",aName.getValue());
+		//EntityRef ref = new EntityRef((String)hash_Names.get(nHijo));
+		//eCuadro.addContent(ref);
+		eHijo.addContent(eCuadro);
+		eRoot.addContent(eHijo);
+	}
+	void addChildrenIndes(DefaultMutableTreeNode nodo, Element eParent){
+		//if(nodo.getChildCount()==0){//No hay deploy
+		for(int i=0; i<nodo.getChildCount(); i++){
+			DefaultMutableTreeNode nHijo=(DefaultMutableTreeNode) nodo.getChildAt(i);
+			RubikCell cHijo=(RubikCell) nHijo.getUserObject();
+			Element eHijo=null;
+			if(cHijo.getDisplayable() instanceof Level){//Variable
+				eHijo= new Element("variable");
+			}else{//Valor
+				eHijo= new Element("valor");
+				if(nHijo.isLeaf()){
+					eHijo.setAttribute("fichero",(String) hash_Names.get(nHijo));
+					Element eCuadro= new Element("cuadro");
+					eCuadro.setAttribute("fichero",(String) hash_Names.get(nHijo));
+					eCuadro.setAttribute("id",cHijo.getCaption());
+					//EntityRef ref = new EntityRef((String)hash_Names.get(nHijo));
+					//eCuadro.addContent(ref);
+					eHijo.addContent(eCuadro);
+				}
+			}
+			eHijo.setAttribute("id",cHijo.getCaption());
+			eParent.addContent(eHijo);
+			addChildrenIndes(nHijo, eHijo);
+		}
+	}
+
+	private void updateLisMembersSlicer(DeployMutableTreeNode node, List membersSlicer){
+		if(node==nDeploy){
+			return;
+		}
+		RubikCell cNodo=(RubikCell) node.getUserObject();
+		if(cNodo.getCellType()!=RubikCell.FALSECELL && cNodo.getDisplayable() instanceof Member){
+			//Si hay un filtro Provincia='Zaragoza'
+			//sobra el filtro comunidad autonoma="Aragon"
+			if(isTopMemberInHierarchy((Member)cNodo.getDisplayable() ,membersSlicer)
+			        && node.isSelected()){
+				membersSlicer.add(cNodo.getDisplayable());
+			}
+		}
+		DeployMutableTreeNode nParent=(DeployMutableTreeNode) node.getParent();
+		if(!nParent.isRoot()){
+			updateLisMembersSlicer(nParent, membersSlicer);
+		}
+	}
+	private boolean isTopMemberInHierarchy(Member m, List membersSlicer){
+		if( membersSlicer.size()>0){
+			Member mUltimo=(Member)membersSlicer.get(membersSlicer.size()-1);
+			if(m.getLevel().getHierarchy().equals(mUltimo.getLevel().getHierarchy()))
+				return false;
+		}
+		return true;
+	}
+}
+@
+
+
+1.1
+log
+@*** empty log message ***
+@
+text
+@@
+

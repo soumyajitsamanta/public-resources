@@ -1,0 +1,53 @@
+head	1.1;
+access;
+symbols
+	jpivot_1_8_0:1.1
+	focus_1_6_0:1.1.0.2
+	wcf_1_7_0:1.1
+	wcf_1_6_0:1.1
+	sourceforge_sync:1.1;
+locks; strict;
+comment	@# @;
+
+
+1.1
+date	2006.11.09.13.24.07;	author avix;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@synchronized with tonbeller cvs
+@
+text
+@
+.dropmenudiv{
+position:absolute;
+top: 0;
+border: 1px solid black;
+border-bottom-width: 0;
+font:normal 12px Verdana;
+line-height:18px;
+z-index:100;
+background-color: #FFFFF0;
+visibility: hidden;
+}
+
+.dropmenudiv a,
+.dropmenudiv strong {
+display: block;
+text-indent: 3px;
+border-bottom: 1px solid black;
+padding: 2px 4px;
+text-decoration: none;
+font-weight: bold;
+}
+
+.dropmenudiv a:hover{ /*Theme Change here*/
+background-color: #DEE3EF;
+}@

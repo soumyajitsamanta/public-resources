@@ -1,0 +1,1067 @@
+head	1.53;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.53
+date	2003.09.01.12.40.04;	author jiri_schmid;	state dead;
+branches;
+next	1.52;
+
+1.52
+date	2003.08.28.09.26.11;	author jiri_schmid;	state Exp;
+branches;
+next	1.51;
+
+1.51
+date	2003.08.25.15.09.09;	author jiri_schmid;	state Exp;
+branches;
+next	1.50;
+
+1.50
+date	2003.08.22.16.00.53;	author jiri_schmid;	state Exp;
+branches;
+next	1.49;
+
+1.49
+date	2003.08.20.14.23.41;	author jiri_schmid;	state Exp;
+branches;
+next	1.48;
+
+1.48
+date	2003.08.19.13.05.55;	author jiri_schmid;	state Exp;
+branches;
+next	1.47;
+
+1.47
+date	2003.08.13.14.22.00;	author jiri_schmid;	state Exp;
+branches;
+next	1.46;
+
+1.46
+date	2003.08.13.13.16.25;	author jiri_schmid;	state Exp;
+branches;
+next	1.45;
+
+1.45
+date	2003.08.12.15.05.58;	author jiri_schmid;	state Exp;
+branches;
+next	1.44;
+
+1.44
+date	2003.08.12.14.09.44;	author jiri_schmid;	state Exp;
+branches;
+next	1.43;
+
+1.43
+date	2003.08.11.13.50.25;	author jiri_schmid;	state Exp;
+branches;
+next	1.42;
+
+1.42
+date	2003.08.11.12.30.57;	author jiri_schmid;	state Exp;
+branches;
+next	1.41;
+
+1.41
+date	2003.08.06.15.22.29;	author jiri_schmid;	state Exp;
+branches;
+next	1.40;
+
+1.40
+date	2003.08.05.12.49.44;	author jiri_schmid;	state Exp;
+branches;
+next	1.39;
+
+1.39
+date	2003.08.01.13.07.11;	author jiri_schmid;	state Exp;
+branches;
+next	1.38;
+
+1.38
+date	2003.07.30.15.30.39;	author jiri_schmid;	state Exp;
+branches;
+next	1.37;
+
+1.37
+date	2003.07.29.12.28.26;	author jiri_schmid;	state Exp;
+branches;
+next	1.36;
+
+1.36
+date	2003.07.25.09.28.48;	author jiri_schmid;	state Exp;
+branches;
+next	1.35;
+
+1.35
+date	2003.07.24.10.37.48;	author jiri_schmid;	state Exp;
+branches;
+next	1.34;
+
+1.34
+date	2003.07.22.08.47.56;	author jiri_schmid;	state Exp;
+branches;
+next	1.33;
+
+1.33
+date	2003.07.21.10.51.39;	author jiri_schmid;	state Exp;
+branches;
+next	1.32;
+
+1.32
+date	2003.07.18.10.50.59;	author jiri_schmid;	state Exp;
+branches;
+next	1.31;
+
+1.31
+date	2003.07.11.16.00.48;	author jiri_schmid;	state Exp;
+branches;
+next	1.30;
+
+1.30
+date	2003.07.10.12.59.59;	author jiri_schmid;	state Exp;
+branches;
+next	1.29;
+
+1.29
+date	2003.06.24.15.17.39;	author jiri_schmid;	state Exp;
+branches;
+next	1.28;
+
+1.28
+date	2003.06.19.14.59.41;	author jiri_schmid;	state Exp;
+branches;
+next	1.27;
+
+1.27
+date	2003.06.03.08.31.09;	author jiri_schmid;	state Exp;
+branches;
+next	1.26;
+
+1.26
+date	2003.05.29.09.52.44;	author jiri_schmid;	state Exp;
+branches;
+next	1.25;
+
+1.25
+date	2003.05.28.15.18.32;	author jiri_schmid;	state Exp;
+branches;
+next	1.24;
+
+1.24
+date	2003.05.28.10.40.10;	author jiri_schmid;	state Exp;
+branches;
+next	1.23;
+
+1.23
+date	2003.05.21.11.39.42;	author jiri_schmid;	state Exp;
+branches;
+next	1.22;
+
+1.22
+date	2003.05.15.14.54.51;	author jiri_schmid;	state Exp;
+branches;
+next	1.21;
+
+1.21
+date	2003.05.15.11.36.04;	author jiri_schmid;	state Exp;
+branches;
+next	1.20;
+
+1.20
+date	2003.05.14.14.28.18;	author jiri_schmid;	state Exp;
+branches;
+next	1.19;
+
+1.19
+date	2003.05.13.15.18.56;	author jiri_schmid;	state Exp;
+branches;
+next	1.18;
+
+1.18
+date	2003.05.08.15.35.44;	author jiri_schmid;	state Exp;
+branches;
+next	1.17;
+
+1.17
+date	2003.05.07.13.11.47;	author jiri_schmid;	state Exp;
+branches;
+next	1.16;
+
+1.16
+date	2003.04.14.12.56.26;	author jiri_schmid;	state Exp;
+branches;
+next	1.15;
+
+1.15
+date	2003.03.14.09.23.43;	author jiri_schmid;	state Exp;
+branches;
+next	1.14;
+
+1.14
+date	2003.03.07.16.18.29;	author jiri_schmid;	state Exp;
+branches;
+next	1.13;
+
+1.13
+date	2003.02.28.13.43.11;	author jiri_schmid;	state Exp;
+branches;
+next	1.12;
+
+1.12
+date	2003.02.28.10.43.31;	author jiri_schmid;	state Exp;
+branches;
+next	1.11;
+
+1.11
+date	2003.02.25.09.18.00;	author jiri_schmid;	state Exp;
+branches;
+next	1.10;
+
+1.10
+date	2003.02.24.15.31.07;	author jiri_schmid;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	2003.02.21.15.14.58;	author jiri_schmid;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	2003.02.14.09.12.46;	author jiri_schmid;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	2003.02.12.15.01.45;	author jiri_schmid;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	2003.02.03.09.25.22;	author jiri_schmid;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	2003.01.27.16.38.43;	author jiri_schmid;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2003.01.24.16.34.21;	author jiri_schmid;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2003.01.24.14.48.41;	author jiri_schmid;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2003.01.21.11.02.56;	author spanhel;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2003.01.18.12.23.06;	author michald;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.53
+log
+@skins implemented. mozilla skin - temporarily copy msie content
+@
+text
+@BODY{color:#000; background-color: #95d8f9; font-size: 15px; margin: 5px 5px 5px 5px;  font-family: sans-serif}
+BODY.elements {color:#000; background-color: #eee; font-size: 15px; margin: 5px 5px 5px 5px}
+BODY.access {color:#000; background-color: #eee; margin: 0px} /*#0082D2*/
+BODY.list {color:#000; background-color: #eee; font-size: 15px; margin: 5px 5px 5px 5px} /*#C3EBFF*/
+BODY.user {color:#000; background-color: #B4E1FF; font-size: 15px; margin: 5px 5px 5px 5px} /*#B4E1FF*/
+BODY.group {color:#000; background-color: #A0CDFF; font-size: 15px; margin: 5px 5px 5px 5px;} /*#A0CDFF*/
+BODY.rule {color:#000; background-color: #93C3FF; font-size: 15px; margin: 5px 5px 5px 5px} /*#93C3FF*/
+DIV.dragObject { display:block; position:absolute; z-index: 5; font-size:12px }
+
+IMG {border:0}
+
+INPUT {font-size: 12px}
+TEXTAREA {font-size: 12px}
+
+TABLE.graph {border-style: none; empty-cells:show; padding:0; border-spacing:0; white-space:normal;}
+TABLE.graph  TD { color: inherit; background-color: inherit; text-align: center; white-space: normal;}
+TABLE.graph TD.preview {text-align:left; white-space: normal;}
+
+TABLE.page_skeleton {background-color: inherit;	color: #000000; border: none; margin: 0; padding: 0; border-spacing: 0;}
+TR.page_skeleton {background-color: inherit; color : inherit; border: none; margin: 0; padding: 0; vertical-align: top; }
+TD.page_skeleton  {background-color: inherit; color : inherit; border: none; vertical-align: top; margin: 0; padding: 0; }
+TD.page_skeleton_ex  {background-color: #5190e2; color : inherit; border: thin solid #424242;}
+TD.page_skeleton_bold {background-color: inherit; color: #000000; border: none; margin: 0; padding: 0; font-weight: bold;}
+TD.shadow {background-color: #eee; color: #000000}
+
+TABLE.visual_down {background-color: #5190e2; color: #000000; border: thin solid #424242; margin: 0; padding: 0;}
+TR.visual_down {background-color: inherit; color: inherit; border-top: thin solid #424242; border-left: thin solid #424242; border-right: thin solid #d3d3d3; border-bottom: thin solid #d3d3d3; margin: 0; padding: 0;}
+TD.visual_down {background-color: inherit; color: inherit; border-top: thin solid #424242; border-left: thin solid #424242; border-right: thin solid #d3d3d3; border-bottom: thin solid #d3d3d3; margin: 0; padding: 0;}
+
+TABLE.visual_grid {background-color: #a8daff; color: #000000; border: thin solid #424242; margin: 0; padding: 0;}
+TABLE.visual_grid_none {background-color: #a8daff; color: #000000; margin: 0; padding: 0;}
+TABLE.visual_grid TR.even {background-color:  #cceeff;}
+
+TABLE.visual_grid_rights {background-color: #ffd691; color: #000000; border: thin solid #424242; margin: 0; padding: 0;}
+TABLE.visual_grid_rights TR.even {background-color: #ffe9c4;}
+TABLE.neutral_rights {background-color: #ffb73a; color: #000000; border: thin solid #424242; margin: 0; padding: 0; width:100%}
+
+TABLE.visual_up {background-color: #5190e2; color: #000000; border: none; width:100%; margin: 0; padding: 0; border-spacing: 0; white-space:nowrap}
+TR.visual_up { background-color: inherit; color : inherit; border-top: thin solid #d3d3d3; border-left: thin solid #d3d3d3; border-right: thin solid #424242; border-bottom: thin solid #424242; margin: 0; padding: 0; cursor: default; white-space:nowrap}
+TD.visual_up { background-color: inherit; color : inherit; border-top: thin solid #d3d3d3; border-left: thin solid #d3d3d3; border-right: thin solid #424242; border-bottom: thin solid #424242; margin: 0; padding: 0; cursor: default; white-space:nowrap}
+TD.visual_upOver { background-color: #d8f2ff; color : inherit; border-top: thin solid #d3d3d3; border-left: thin solid #d3d3d3; border-right: thin solid #424242; border-bottom: thin solid #424242; margin: 0; padding: 0; cursor: default; white-space:nowrap}
+TD.visual_up_special {background-color: #a8daff; color: inherit; border-top: thin solid #d3d3d3; border-left: thin solid #d3d3d3; border-right: thin solid #424242; border-bottom: thin solid #424242; margin: 0; padding: 0; text-align:center; cursor: default; white-space:nowrap}
+TD.visual_up_specialOver {background-color: #d8f2ff; color: inherit; border-top: thin solid #d3d3d3; border-left: thin solid #d3d3d3; border-right: thin solid #424242; border-bottom: thin solid #424242; margin: 0; padding: 0; text-align:center; cursor: default; white-space:nowrap}
+TD.visual_up_button {background-color: inherit; color: inherit; width:40px; border-top: thin solid #d3d3d3; border-left: thin solid #d3d3d3; border-right: thin solid #424242; border-bottom: thin solid #424242; margin: 0; padding: 0; text-align:center; font-size: 10px; cursor: pointer; cursor:hand;}
+TD.visual_up_buttonOver {background-color: #d8f2ff; color: inherit; width:40px; border-top: thin solid #d3d3d3; border-left: thin solid #d3d3d3; border-right: thin solid #424242; border-bottom: thin solid #424242; margin: 0; padding: 0; text-align:center; font-size: 10px; cursor: pointer; cursor:hand;}
+TD.visual_up_run { background-color: inherit; color : inherit; border-top: thin solid #d3d3d3; border-left: thin solid #d3d3d3; border-right: thin solid #424242; border-bottom: thin solid #424242; margin: 0; padding: 0; cursor: pointer; font-weight:bold;}
+TD.visual_up_runOver { background-color: #d8f2ff; color : inherit; border-top: thin solid #d3d3d3; border-left: thin solid #d3d3d3; border-right: thin solid #424242; border-bottom: thin solid #424242; margin: 0; padding: 0; cursor: pointer; font-weight:bold;}
+
+TABLE.metrics_down {background-color: #efef8f; color: #000000; width:100%; border: thin solid #424242; margin: 0; padding: 0; text-align:left; white-space:nowrap}
+TABLE.metrics_up {background-color: #efef8f; color: #000000; border: none; width:100%; margin: 0; padding: 0; border-spacing: 0; cursor: default; white-space:nowrap}
+TD.metrics_up {background-color: inherit; color: inherit; border-top: thin solid #d3d3d3; border-left: thin solid #d3d3d3; border-right: thin solid #424242; border-bottom: thin solid #424242; margin: 0; padding: 0; white-space:nowrap}
+TD.metrics_upOver {background-color: #ffffd8; color: inherit; border-top: thin solid #d3d3d3; border-left: thin solid #d3d3d3; border-right: thin solid #424242; border-bottom: thin solid #424242; margin: 0; padding: 0; white-space:nowrap}
+TD.metrics_special {background-color: #ffffbb; color: inherit; border-top: thin solid #d3d3d3; border-left: thin solid #d3d3d3; border-right: thin solid #424242; border-bottom: thin solid #424242; margin: 0; padding: 0; white-space:nowrap; text-align:center}
+TD.metrics_specialOver {background-color: #ffffd8; color: inherit; border-top: thin solid #d3d3d3; border-left: thin solid #d3d3d3; border-right: thin solid #424242; border-bottom: thin solid #424242; margin: 0; padding: 0; white-space:nowrap; text-align:center}
+ 
+TABLE.neutral {background-color: #5190e2; color: #000000; border: thin solid #424242; margin: 0; padding: 0; text-align:left;}
+TABLE.neutral_100 {background-color: #5190e2; color: #000000; width:100%; border: thin solid #424242; margin: 0; padding: 0; text-align:left;}
+TD.neutral_bold {background-color: inherit; color: inherit; border: none; margin: 0; padding: 0; font-weight:bold;}
+TD.neutral_title {background-color: inherit; color: inherit; border: none; margin: 0; padding: 0; font-weight:bold; font-size: 16px}
+TD.neutral_center {background-color: inherit; color: inherit; border: none; margin: 0; padding: 0; text-align:center;}
+
+TABLE.format_100 {background-color: #5190e2; color: #000000; width:100%; margin: 0; padding: 0; text-align:left; border-collapse:collapse; font-family: Arial, sans-serif;font-size: 14px;}
+TABLE.format_radio_btn {background-color: #5190e2; color: #000000; border: 0; margin: 0; padding: 5px; text-align:left; font-weight:bold; font-family: Arial, sans-serif;font-size: 14px;}
+
+TABLE.buttons {background-color: inherit; color: #000000; border: none; margin: 0; padding: 0;}
+TD.buttons {background-color: inherit; color: inherit; border-top: thin solid #424242; border-left: thin solid #424242; border-right: thin solid #d3d3d3; border-bottom: thin solid #d3d3d3; margin: 0; padding: 0;}
+
+TABLE.local_tabs {background-color: transparent; color: #000; border: none; width:100%}
+TABLE.local_tabs TD.tabs {background-color: #5483bc; color: #000; border: none; text-align:center; white-space:nowrap;}
+TABLE.local_tabs TD.tabsCorner {background-color: #5483bc; color: #000; border: none; padding: 0px 0px 0px 0px; width:7px;vertical-align:top;}
+TABLE.local_tabs TD.active {background-color: #064fa8; color: #fff; border: none; text-align:center; white-space:nowrap;}
+TABLE.local_tabs TD.activeCorner {background-color: #064fa8; color: #000; border: none; padding: 0px 0px 0px 0px; width:7px;vertical-align:top;}
+TABLE.local_tabs TD {background-color: #95d8f9; color: #000; border: none;}
+TABLE.local_tabs A {color: #fff; font-weight:bold; font-size: 11px;text-decoration: none}
+TABLE.local_tabs A:hover {color: #fff; font-weight:bold; font-size: 11px; text-decoration: underline !important}
+TABLE.local_tabline {background-color: #064fa8; color: #fff; border: none; padding:0; border-spacing:0; width:100%;}
+TD.separator {background-color: #000; color: #000; border: none; padding:0}
+
+TABLE.join { width:100%; background-color: inherit; color:#000;  cursor:default; font-size:12px}
+TABLE.join TD.high {border: 1px solid #424242; background-color: #eee; color:#000; padding: 3px; text-align:center}
+TABLE.join TD.subhigh {border: 1px solid #424242; background-color: #eee; color:#000; padding: 3px; text-align:left;}
+TABLE.join TD.low {border: 1px solid #424242; background-color: #e08040; color:#000; padding: 3px; text-align:center}
+
+P {background-color: inherit; color: #f80;}
+P.graph {background-color: inherit; color: #000;}
+UL {background-color: inherit; color: #fd0;}
+LI {background-color: inherit; color: #fd0;}
+LI A {background-color: inherit; color: #fd0; font-weight:bold; font-size: 13px;text-decoration: none}
+LI A:hover {background-color: inherit; color: #fd0; font-weight:bold; font-size: 13px; text-decoration: underline !important}
+
+DIV.invisible {visibility: hidden; z-index: -5;}
+DIV.folder {cursor: default;}
+DIV.folder SPAN {white-space:nowrap; font-size:12px;}
+DIV.folder SPAN.tree {white-space:nowrap; font-size:14px; font-weight:bold;}
+DIV.folder IMG { padding:0px; margin:0px; border: 0}
+SPAN.inactive {color: #0f0f7d; cursor: default; }
+SPAN.selected {background-color: #ffff77; color: #0f0f7d; }
+DIV.folder A {color: #0f0f7d; text-decoration: none; cursor: default; }
+DIV.folder A:hover  { color: #be0000; text-decoration: none; cursor: default; } /* user hovers */
+
+SPAN.cursor {white-space: nowrap; cursor: pointer;cursor:hand;}
+SPAN.range {font-size: 10px; font-weight: bold;}
+SPAN.rule {font-size: 11px; font-weight: bold; margin: 0px 5px 0px 0px; cursor: pointer;cursor:hand;}
+SPAN.preview {white-space:nowrap; margin: 3px;}
+SPAN.nowrap {white-space:nowrap;}
+SPAN.error {white-space:nowrap; margin: 15px; color:red; font-size:16px}
+SPAN.title {position:absolute; top:3px; left:3px; white-space:nowrap; font-size: 14px; font-weight: bold;}
+PRE {font-size: 11px; font-weight:bold;}
+DIV.loading {color:#005; background-color: #95d8f9 ;font-size: 15px; font-weight:bold; font-style:italic; border: 1px solid #000; padding: 15px 15px 15px 15px; position: absolute; top: 5%; left:10%; z-index:10; display:block;}
+IFRAME.formatIframe { border: thin solid #424242; }
+IFRAME.access {border: 1px solid #424242}
+
+.cursor {cursor: pointer;cursor:hand;}
+@
+
+
+1.52
+log
+@tabs.cgi speed improvmnet, visual improvment on trees, rights and some other minor improvments
+@
+text
+@@
+
+
+1.51
+log
+@object acl, owner, modifier, datetime creation and modification implemented
+@
+text
+@d94 1
+a94 1
+DIV.folder SPAN.tree {white-space:nowrap; font-size:16px; font-weight:bold;}
+d96 2
+d99 1
+a99 4
+DIV.folder A:hover {color: #ee0000; text-decoration: none; cursor: default;}
+SPAN.view {color: #0f0f7d; cursor: default; }
+SPAN.selected {background-color: #ffff77; color: #0f0f7d; }
+SPAN.view:hover {color: #be0000; }
+@
+
+
+1.50
+log
+@access - rules changing implemented
+@
+text
+@d32 5
+a36 1
+TABLE.visual_grid TR.even {background-color: #cceeff;}
+d65 1
+a65 1
+TABLE.buttons {background-color: #5190e2; color: #000000; border: none; margin: 0; padding: 0;}
+@
+
+
+1.49
+log
+@access object implemented
+@
+text
+@d90 1
+@
+
+
+1.48
+log
+@formats2d implemented
+@
+text
+@d37 1
+d39 3
+a41 1
+TD.visual_up_button {background-color: #5190e2; color: inherit; width:40px; border-top: thin solid #d3d3d3; border-left: thin solid #d3d3d3; border-right: thin solid #424242; border-bottom: thin solid #424242; margin: 0; padding: 0; text-align:center; font-size: 10px; cursor: pointer; cursor:hand;}
+d43 1
+d47 4
+a50 1
+TD.metrics_special {background-color: #ffffbb; color: inherit; border-top: thin solid #d3d3d3; border-left: thin solid #d3d3d3; border-right: thin solid #424242; border-bottom: thin solid #424242; margin: 0; padding: 0; text-align:center; white-space:nowrap}
+d88 1
+d91 2
+a92 2
+DIV.folder A {color: #0f0f7d; text-decoration: none; }
+DIV.folder A:hover {color: #ee0000; text-decoration: none;}
+d94 2
+a95 2
+SPAN.selected {background-color: #ffff77; color: #0f0f7d; cursor: default; }
+SPAN.view:hover {color: #be0000; cursor: default; }
+@
+
+
+1.47
+log
+@code clearing and improvment
+@
+text
+@d83 2
+@
+
+
+1.46
+log
+@setting up rights inetrface for each object implemnted
+@
+text
+@d84 1
+@
+
+
+1.45
+log
+@MSIE viewtree bug found and fixed
+@
+text
+@d32 1
+@
+
+
+1.44
+log
+@left pane is colapsible now
+@
+text
+@d80 4
+a83 4
+DIV.folder SPAN {white-space:nowrap; font-size:12px; vertical-align:middle;}
+DIV.folder IMG {vertical-align:bottom; padding:0px; margin:0px;}
+SPAN.view {color: #0f0f7d; cursor: default;}
+SPAN.view:hover {color: #be0000; cursor: default;}
+@
+
+
+1.43
+log
+@admin page drag-drop implemented
+@
+text
+@d4 1
+a4 1
+BODY.list {color:#000; background-color: #eee ; font-size: 15px; margin: 5px 5px 5px 5px} /*#C3EBFF*/
+d81 1
+a81 1
+DIV.folder IMG {vertical-align:bottom; padding:0px; margin:0px; border:0px}
+@
+
+
+1.42
+log
+@admin page implementation started
+@
+text
+@a0 2
+
+
+d8 2
+@
+
+
+1.41
+log
+@user ACL implementation started
+@
+text
+@d80 4
+a84 1
+IMG.cursor {cursor: pointer;cursor:hand;}
+@
+
+
+1.40
+log
+@fact input field on right pane implemented
+@
+text
+@d1 9
+a9 2
+BODY{color:#000; background-color: #95d8f9; font-size: 15px; margin: 5px 5px 5px 5px}
+BODY.elements {color:#000; background-color: #eee; font-size: 15px; margin: 5px 5px 5px 5px} /*#0082D2*/
+d92 1
+@
+
+
+1.39
+log
+@graph3d relevant changes made to cooperate with right pane, multiple metric not alowed yet
+@
+text
+@d62 1
+@
+
+
+1.38
+log
+@right pane implementation stage 2
+@
+text
+@d84 2
+@
+
+
+1.37
+log
+@right frame implemented
+@
+text
+@d56 1
+a56 1
+TABLE.local_tabs A:hover {color: #fff; font-weight:bold; font-size: 11px; text-decoration: underline ! important}
+d60 4
+d69 1
+a69 1
+LI A:hover {background-color: inherit; color: #fd0; font-weight:bold; font-size: 13px; text-decoration: underline ! important}
+d80 1
+@
+
+
+1.36
+log
+@minor bug fixies and code improvment
+@
+text
+@d2 1
+@
+
+
+1.35
+log
+@next tab implmented
+@
+text
+@d73 1
+a73 1
+SPAN.q {white-space:nowrap;}
+@
+
+
+1.34
+log
+@axis tabs on 3dgraph page implented
+@
+text
+@d19 1
+d26 1
+d73 1
+@
+
+
+1.33
+log
+@report and format scripts fixies, GUI improvment
+@
+text
+@d58 1
+@
+
+
+1.32
+log
+@format3d implemented, format changed all dependencies fixed
+@
+text
+@a9 1
+SPAN.preview {white-space:nowrap; margin: 3px;}
+d69 2
+@
+
+
+1.31
+log
+@graph3d next stage
+@
+text
+@d7 5
+d72 1
+@
+
+
+1.30
+log
+@tabed graph3d implemnted, code improvment
+@
+text
+@d51 1
+@
+
+
+1.29
+log
+@metric mData change, minor code improvment
+@
+text
+@d42 9
+a50 9
+TABLE.report_tabs {background-color: transparent; color: #000; border: none; width:100%}
+TABLE.report_tabs TD.tabs {background-color: #5483bc; color: #000; border: none; text-align:center; white-space:nowrap;}
+TABLE.report_tabs TD.tabsCorner {background-color: #5483bc; color: #000; border: none; padding: 0px 0px 0px 0px; width:7px;vertical-align:top;}
+TABLE.report_tabs TD.active {background-color: #064fa8; color: #fff; border: none; text-align:center; white-space:nowrap;}
+TABLE.report_tabs TD.activeCorner {background-color: #064fa8; color: #000; border: none; padding: 0px 0px 0px 0px; width:7px;vertical-align:top;}
+TABLE.report_tabs TD {background-color: #95d8f9; color: #000; border: none;}
+TABLE.report_tabs A {color: #fff; font-weight:bold; font-size: 11px;text-decoration: none}
+TABLE.report_tabs A:hover {color: #fff; font-weight:bold; font-size: 11px; text-decoration: underline ! important}
+TABLE.report_tabline {background-color: #064fa8; color: #fff; border: none; padding:0; border-spacing:0; width:100%;}
+@
+
+
+1.28
+log
+@huge improvment on format page
+@
+text
+@d63 1
+@
+
+
+1.27
+log
+@visual improvment/fixies
+@
+text
+@d36 3
+d61 1
+a61 1
+SPAN.cursor {cursor: pointer;cursor:hand;}
+@
+
+
+1.26
+log
+@some code improvment and bug fixies
+@
+text
+@d40 4
+a43 4
+TABLE.report_tabs TD.tabs {background-color: #5483bc; color: #000; border: none; text-align:center; white-space:nowrap}
+TABLE.report_tabs TD.tabsCorner {background-color: #5483bc; color: #000; border: none; padding: 0px 0px 0px 0px; width:7px;}
+TABLE.report_tabs TD.active {background-color: #064fa8; color: #fff; border: none; text-align:center; white-space:nowrap}
+TABLE.report_tabs TD.activeCorner {background-color: #064fa8; color: #000; border: none; padding: 0px 0px 0px 0px; width:7px;}
+@
+
+
+1.25
+log
+@user pref changes
+@
+text
+@d20 3
+a22 3
+TABLE.visual_up {background-color: #5190e2; color: #000000; border: none; width:100%; margin: 0; padding: 0; border-spacing: 0;}
+TD.visual_up { background-color: inherit; color : inherit; border-top: thin solid #d3d3d3; border-left: thin solid #d3d3d3; border-right: thin solid #424242; border-bottom: thin solid #424242; margin: 0; padding: 0; cursor: default;}
+TD.visual_up_special {background-color: #a8daff; color: inherit; border-top: thin solid #d3d3d3; border-left: thin solid #d3d3d3; border-right: thin solid #424242; border-bottom: thin solid #424242; margin: 0; padding: 0; text-align:center; cursor: default;}
+d26 3
+a28 3
+TABLE.metrics_down {background-color: #efef8f; color: #000000; width:100%; border: thin solid #424242; margin: 0; padding: 0; text-align:left;}
+TABLE.metrics_up {background-color: #efef8f; color: #000000; border: none; width:100%; margin: 0; padding: 0; border-spacing: 0; cursor: default;}
+TD.metrics_special {background-color: #ffffbb; color: inherit; border-top: thin solid #d3d3d3; border-left: thin solid #d3d3d3; border-right: thin solid #424242; border-bottom: thin solid #424242; margin: 0; padding: 0; text-align:center;}
+@
+
+
+1.24
+log
+@code-improvment bug removed
+@
+text
+@d59 1
+a59 1
+
+@
+
+
+1.23
+log
+@visual and code improvment
+@
+text
+@d61 1
+@
+
+
+1.22
+log
+@visual imrpovment
+@
+text
+@d1 1
+a1 1
+BODY{ background-color: #95d8f9; font-size: 15px}
+d52 2
+a53 2
+LI A {background-color: inherit; color: inherit; font-weight:bold; font-size: 13px;text-decoration: none}
+LI A:hover {background-color: inherit; color: inherit; font-weight:bold; font-size: 13px; text-decoration: underline ! important}
+@
+
+
+1.21
+log
+@report - sql tab implemented
+@
+text
+@d40 4
+a43 2
+TABLE.report_tabs TD.tabs {background-color: #5483bc; color: #000; border: none; text-align:center;}
+TABLE.report_tabs TD.active {background-color: #064fa8; color: #fff; border: none; text-align:center;}
+@
+
+
+1.20
+log
+@next report improvment
+@
+text
+@d45 1
+a45 1
+TABLE.report_tabline {background-color: #064fa8; color: #0ee; border: none; padding:0; border-spacing:0; width:100%;}
+d57 2
+@
+
+
+1.19
+log
+@new report page seems to be fullfunctional, javascript code huge improvment
+@
+text
+@d7 1
+a7 1
+TABLE.page_skeleton {background-color: #95d8f9;	color: #000000; border: none; margin: 0; padding: 0; border-spacing: 0;}
+d39 3
+a41 3
+TABLE.report_tabs {background-color: transparent; color: #000; border: none;}
+TABLE.report_tabs TD.tabs {background-color: #5483bc; color: #000; border: none;}
+TABLE.report_tabs TD.active {background-color: #064fa8; color: #fff; border: none;}
+d45 7
+a51 1
+TABLE.report_tabline {background-color: #064fa8; color: #000; border: none; padding:0; border-spacing:0; width:100%}
+@
+
+
+1.18
+log
+@report huge improvment
+@
+text
+@d43 2
+a44 2
+TABLE.report_tabs A {color: #fff; font-weight:bold; font-size: 8px;text-decoration: none}
+TABLE.report_tabs A:hover {color: #fff; font-weight:bold; font-size: 8px; text-decoration: underline ! important}
+@
+
+
+1.17
+log
+@bug fixies, code improvment
+@
+text
+@d12 1
+d38 8
+@
+
+
+1.16
+log
+@ID <-> name substitutions implemented on client side in required cases
+@
+text
+@d2 1
+@
+
+
+1.15
+log
+@solved problem with CZ chars, by forced 8bit operating XML-UTF8 files, removed unused images
+@
+text
+@d21 1
+a21 1
+TD.visual_up_button {background-color: #5190e2; color: inherit; width:40px; border-top: thin solid #d3d3d3; border-left: thin solid #d3d3d3; border-right: thin solid #424242; border-bottom: thin solid #424242; margin: 0; padding: 0; text-align:center; font-size: 10px; cursor: pointer;}
+d39 2
+a40 2
+IMG.cursor {cursor: pointer;}
+SPAN.cursor {cursor: pointer;}
+@
+
+
+1.14
+log
+@weekend commit, language not fixed :(
+@
+text
+@d19 1
+a19 1
+TD.visual_up { background-color: inherit; color : inherit; border-top: thin solid #d3d3d3; border-left: thin solid #d3d3d3; border-right: thin solid #424242; border-bottom: thin solid #424242; margin: 0; padding: 0; text-align:left; cursor: default;}
+d22 1
+@
+
+
+1.13
+log
+@weekend-leaving commit, (last?) code cleaning
+@
+text
+@d3 2
+a4 2
+INPUT {font-family:sans-serif; font-size: small;}
+TEXTAREA {font-family:sans-serif; font-size: small;}
+@
+
+
+1.12
+log
+@added files admin,prefer.cgi, unused content of *.css removed with minor visual changes
+@
+text
+@d3 3
+@
+
+
+1.11
+log
+@added checking of unsaved-changed item, when traying to start editing another one
+@
+text
+@d1 1
+a1 1
+BODY{ background-color: #95d8f9;}
+d27 1
+@
+
+
+1.10
+log
+@new bugs just found fixed, some visual changes
+@
+text
+@d16 2
+a17 2
+TD.visual_up { background-color: inherit; color : inherit; border-top: thin solid #d3d3d3; border-left: thin solid #d3d3d3; border-right: thin solid #424242; border-bottom: thin solid #424242; margin: 0; padding: 0; text-align:left;}
+TD.visual_up_special {background-color: #a8daff; color: inherit; border-top: thin solid #d3d3d3; border-left: thin solid #d3d3d3; border-right: thin solid #424242; border-bottom: thin solid #424242; margin: 0; padding: 0; text-align:center;}
+d21 1
+a21 1
+TABLE.metrics_up {background-color: #efef8f; color: #000000; border: none; width:100%; margin: 0; padding: 0; border-spacing: 0;}
+@
+
+
+1.9
+log
+@visual improvments
+@
+text
+@d5 1
+a5 1
+TD.page_skeleton  {background-color: inherit; color : inherit; border: none; text-align:center; vertical-align: top; }
+d12 2
+a13 2
+TABLE.visual_grid {background-color: #eeeeee; color: #000000; border: thin solid #424242; margin: 0; padding: 0;}
+TABLE.visual_grid_none {background-color: #eeeeee; color: #000000; margin: 0; padding: 0;}
+@
+
+
+1.8
+log
+@some code and visual improvment
+@
+text
+@d5 3
+a7 1
+TD.page_skeleton  {background-color: inherit; color : inherit; border: none; text-align:center;}
+d12 2
+a13 1
+TABLE.visual_grid {background-color: #cde9f2; color: #000000; border: thin solid #424242; margin: 0; padding: 0;}
+@
+
+
+1.7
+log
+@format_ed.pl, format.html, format_[css|graph].html fixed and tuned
+@
+text
+@d3 1
+a3 1
+TABLE.page_skeleton {background-color: #95d8f9;	color: #000000; width:100%; border: none; margin: 0; padding: 0; border-spacing: 0;}
+@
+
+
+1.6
+log
+@few MSIE visual bugs found and fixed
+@
+text
+@d32 1
+@
+
+
+1.5
+log
+@script improvment in dad.js, unexplaneabale visual bugs fixed by changing page structure of metrics_ed.pl, filter_ed.pl and report_ed.pl, visual improvment of Grid Page
+@
+text
+@a25 2
+
+
+@
+
+
+1.4
+log
+@minor bugs in dad.js fixed, some visual changes in interfaceoB
+@
+text
+@d16 4
+d25 2
+@
+
+
+1.3
+log
+@*** empty log message ***
+@
+text
+@d7 1
+a7 1
+TABLE.visual_down {background-color: #77bbff; color: #000000; border: thin solid #424242; margin: 0; padding: 0;}
+d10 1
+a10 1
+TABLE.visual_grid {background-color: #e3e8ef; color: #000000; border: thin solid #424242; margin: 0; padding: 0;}
+d12 1
+a12 1
+TABLE.visual_up {background-color: #77bbff; color: #000000; border: none; width:100%; margin: 0; padding: 0; border-spacing: 0;}
+d15 1
+a15 1
+TD.visual_up_button {background-color: #77bbff; color: inherit; width:40px; border-top: thin solid #d3d3d3; border-left: thin solid #d3d3d3; border-right: thin solid #424242; border-bottom: thin solid #424242; margin: 0; padding: 0; text-align:center; font-size: 10px; cursor: pointer;}
+d17 2
+a18 2
+TABLE.neutral {background-color: #77bbff; color: #000000; border: thin solid #424242; margin: 0; padding: 0; text-align:left;}
+TABLE.neutral_100 {background-color: #77bbff; color: #000000; width:100%; border: thin solid #424242; margin: 0; padding: 0; text-align:left;}
+d22 1
+a22 1
+TABLE.buttons {background-color: #77bbff; color: #000000; border: none; margin: 0; padding: 0;}
+@
+
+
+1.2
+log
+@drag and drop + lang version - /lang/lang.def
+@
+text
+@d1 1
+a1 1
+BODY{ background-color: #72d3f9;}
+d3 1
+a3 1
+TABLE.page_skeleton {background-color: #72d3f9;	color: #000000;	border: none; margin: 0; padding: 0; border-spacing: 0;}
+d7 1
+a7 1
+TABLE.visual_down {background-color: #59b0f2; color: #000000; border: thin solid #424242; margin: 0; padding: 0;}
+d10 3
+a12 1
+TABLE.visual_up {background-color: #59b0f2; color: #000000; border: none; width:100%; margin: 0; padding: 0; border-spacing: 0;}
+d15 1
+a15 1
+TD.visual_up_button {background-color: #59b0f2; color: inherit; width:40px; border-top: thin solid #d3d3d3; border-left: thin solid #d3d3d3; border-right: thin solid #424242; border-bottom: thin solid #424242; margin: 0; padding: 0; text-align:center; font-size: 10px; cursor: pointer;}
+d17 2
+a18 1
+TABLE.neutral {background-color: #59b0f2; color: #000000; border: thin solid #424242; margin: 0; padding: 0; text-align:left;}
+d22 1
+a22 1
+TABLE.buttons {background-color: #59b0f2; color: #000000; border: none; margin: 0; padding: 0;}
+@
+
+
+1.1
+log
+@edit_obj with drag/drop functionality
+@
+text
+@a1 1
+DIV.invisible {visibility: hidden; z-index: -5;}
+d3 3
+a5 3
+TABLE.grid_skeleton {background-color: #72d3f9;	color: #000000;	width:100%; border: none; margin: 0; padding: 0; border-spacing: 0;}
+TR.grid_skeleton {background-color: inherit; color : inherit; border: none; margin: 0; padding: 0; vertical-align: top; }
+TD.grid_skeleton  {background-color: inherit; color : inherit; border: none; text-align:center;}
+d13 2
+a14 1
+
+d21 4
+@
+

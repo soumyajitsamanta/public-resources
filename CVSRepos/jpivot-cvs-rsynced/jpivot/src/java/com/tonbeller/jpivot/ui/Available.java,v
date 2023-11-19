@@ -1,0 +1,53 @@
+head	1.1;
+access;
+symbols
+	jpivot_1_8_0:1.1
+	focus_1_6_0:1.1.0.6
+	jpivot_1_7_0:1.1
+	jpivot_1_6_0:1.1
+	jpivot_1_5_0:1.1.0.4
+	Root_jpivot_1_5_0:1.1
+	mondrian_xmla_2005_08_25:1.1.0.2
+	sourceforge_sync:1.1;
+locks; strict;
+comment	@# @;
+expand	@k@;
+
+
+1.1
+date	2005.07.05.14.19.55;	author avix;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@initial version
+@
+text
+@package com.tonbeller.jpivot.ui;
+
+/**
+ * Indicates that the component may not be available in all situations.
+ * An UI component may be not available, if the underlying OLAP server
+ * does not support certain features (Extension's in JPivot).
+ * <p />
+ * For example, if the OLAP model does not support sorting, the UI
+ * UI component for sorting would return false.
+ * 
+ * @@see com.tonbeller.jpivot.core.Extension
+ * @@author av
+ * @@since 08.04.2005
+ */
+public interface Available {
+  
+  /**
+   * return true, if this component currently can be used
+   */
+  boolean isAvailable();
+}
+@

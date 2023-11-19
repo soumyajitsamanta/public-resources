@@ -1,0 +1,97 @@
+head	1.2;
+access;
+symbols
+	jpivot_1_8_0:1.2
+	focus_1_6_0:1.1.0.6
+	jpivot_1_7_0:1.1
+	jpivot_1_6_0:1.1
+	jpivot_1_5_0:1.1.0.4
+	Root_jpivot_1_5_0:1.1
+	mondrian_xmla_2005_08_25:1.1.0.2
+	sourceforge_sync:1.1;
+locks; strict;
+comment	@# @;
+expand	@k@;
+
+
+1.2
+date	2008.03.17.12.53.08;	author avix;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2005.07.05.14.19.55;	author avix;	state Exp;
+branches
+	1.1.6.1;
+next	;
+
+1.1.6.1
+date	2008.04.17.10.44.32;	author hbaier;	state Exp;
+branches;
+next	1.1.6.2;
+
+1.1.6.2
+date	2008.05.19.06.13.46;	author kunarief;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@[ 1882441 ] Selectable properties displaying - patch by kunarief
+@
+text
+@axis.0.name=Spalten
+axis.1.name=Zeilen
+axis.2.name=Seiten
+axis.3.name=Kapitel
+slicer.name=Filter
+
+ok.title=OK
+cancel.title=Abbrechen
+accept.title=Übernehmen
+revert.title=Verwerfen
+
+selection.mustSelectOneOrMore=Sie müssen mindestens ein Element auswählen
+selection.multipleHierarchies=Ausgewählte Elemente müssen aus der selben Hierarchie stammen
+selection.mustSelectOneOrLess=Sie können höchstens ein Element auswählen
+
+properties.visible=Angezeigte Eigenschaften
+properties.available=Verfügbare Eigenschaften@
+
+
+1.1
+log
+@initial version
+@
+text
+@d16 2
+@
+
+
+1.1.6.1
+log
+@* merged focus changes of jpivot into focus_1_6_0
+@
+text
+@a15 2
+properties.visible=Sichtbare Elementeigenschaften
+properties.available=Verborgene Elementeigenschaften
+@
+
+
+1.1.6.2
+log
+@* adding feature for hidden member selection
+@
+text
+@a10 2
+visualTotalsOnRows.title=Zwischensummen (Zeilen)
+visualTotalsOnColumns.title=Zwischensummen (Spalten)
+@
+
+

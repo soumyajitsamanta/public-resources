@@ -1,0 +1,93 @@
+head	1.2;
+access;
+symbols
+	jpivot_1_8_0:1.2
+	focus_1_6_0:1.1.0.6
+	jpivot_1_7_0:1.1
+	jpivot_1_6_0:1.1
+	jpivot_1_5_0:1.1.0.4
+	Root_jpivot_1_5_0:1.1
+	mondrian_xmla_2005_08_25:1.1.0.2
+	sourceforge_sync:1.1;
+locks; strict;
+comment	@# @;
+expand	@k@;
+
+
+1.2
+date	2008.03.17.12.53.08;	author avix;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2005.07.05.14.19.55;	author avix;	state Exp;
+branches
+	1.1.6.1;
+next	;
+
+1.1.6.1
+date	2008.04.17.10.44.30;	author hbaier;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@[ 1882441 ] Selectable properties displaying - patch by kunarief
+@
+text
+@axis.0.name=Columns
+axis.1.name=Rows
+axis.2.name=Pages
+axis.3.name=Chapters
+slicer.name=Filter
+
+axis.0.icon=column.png
+axis.1.icon=row.png
+axis.2.icon=pages.png
+axis.3.icon=chapter.png
+slicer.icon=filter.png
+
+ok.title=OK
+cancel.title=Cancel
+accept.title=Accept
+revert.title=Revert
+
+
+selection.mustSelectOneOrMore=You must select at least one member
+selection.multipleHierarchies=Selected members must belong to the same hierarchy
+selection.mustSelectOneOrLess=You can not select multiple members
+
+properties.visible=Visible Properties
+properties.available=Available Properties@
+
+
+1.1
+log
+@initial version
+@
+text
+@d22 3
+@
+
+
+1.1.6.1
+log
+@* merged focus changes of jpivot into focus_1_6_0
+@
+text
+@d17 1
+a17 2
+visualTotalsOnRows.title=Visual Totals On Rows
+visualTotalsOnColumns.title=Visual Totals On Columns
+a21 3
+
+properties.visible=Visible properties
+properties.available=Available properties
+@
+
+

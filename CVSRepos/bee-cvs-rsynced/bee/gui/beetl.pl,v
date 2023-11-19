@@ -1,0 +1,2216 @@
+head	1.32;
+access;
+symbols
+	start:1.1.1.1 vendor:1.1.1;
+locks; strict;
+comment	@# @;
+
+
+1.32
+date	2004.05.18.12.47.32;	author tuco80;	state Exp;
+branches;
+next	1.31;
+
+1.31
+date	2004.01.13.13.43.40;	author spanhel;	state Exp;
+branches;
+next	1.30;
+
+1.30
+date	2004.01.06.14.12.26;	author tuco80;	state Exp;
+branches;
+next	1.29;
+
+1.29
+date	2003.11.20.16.48.03;	author tuco80;	state Exp;
+branches;
+next	1.28;
+
+1.28
+date	2003.11.06.12.28.24;	author tuco80;	state Exp;
+branches;
+next	1.27;
+
+1.27
+date	2003.11.04.12.23.31;	author tuco80;	state Exp;
+branches;
+next	1.26;
+
+1.26
+date	2003.10.30.12.29.46;	author tuco80;	state Exp;
+branches;
+next	1.25;
+
+1.25
+date	2003.10.24.12.41.03;	author tuco80;	state Exp;
+branches;
+next	1.24;
+
+1.24
+date	2003.10.22.09.04.40;	author tuco80;	state Exp;
+branches;
+next	1.23;
+
+1.23
+date	2003.10.20.09.41.09;	author tuco80;	state Exp;
+branches;
+next	1.22;
+
+1.22
+date	2003.10.16.08.54.40;	author spanhel;	state Exp;
+branches;
+next	1.21;
+
+1.21
+date	2003.09.25.09.50.12;	author tuco80;	state Exp;
+branches;
+next	1.20;
+
+1.20
+date	2003.09.10.15.13.36;	author tuco80;	state Exp;
+branches;
+next	1.19;
+
+1.19
+date	2003.09.10.12.57.04;	author tuco80;	state Exp;
+branches;
+next	1.18;
+
+1.18
+date	2003.08.22.09.34.49;	author spanhel;	state Exp;
+branches;
+next	1.17;
+
+1.17
+date	2003.08.19.08.27.14;	author spanhel;	state Exp;
+branches;
+next	1.16;
+
+1.16
+date	2003.08.18.07.11.30;	author spanhel;	state Exp;
+branches;
+next	1.15;
+
+1.15
+date	2003.08.01.09.18.59;	author spanhel;	state Exp;
+branches;
+next	1.14;
+
+1.14
+date	2003.07.31.07.31.10;	author spanhel;	state Exp;
+branches;
+next	1.13;
+
+1.13
+date	2003.07.30.11.10.59;	author spanhel;	state Exp;
+branches;
+next	1.12;
+
+1.12
+date	2003.06.26.14.11.46;	author spanhel;	state Exp;
+branches;
+next	1.11;
+
+1.11
+date	2003.05.30.16.22.17;	author spanhel;	state Exp;
+branches;
+next	1.10;
+
+1.10
+date	2003.05.20.16.25.53;	author spanhel;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	2003.05.16.07.02.43;	author spanhel;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	2003.05.07.14.28.51;	author spanhel;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	2003.05.06.20.56.17;	author michald;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	2003.05.05.15.36.46;	author spanhel;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	2003.04.30.09.57.45;	author spanhel;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2003.04.28.07.36.32;	author michald;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2003.04.24.20.01.39;	author michald;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2003.03.12.23.36.17;	author numberone;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2002.09.24.01.34.16;	author michald;	state Exp;
+branches
+	1.1.1.1;
+next	;
+
+1.1.1.1
+date	2002.09.24.01.34.16;	author michald;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.32
+log
+@Support for diferent bee types. (Not exported to .schema files yet though)
+@
+text
+@#!/usr/bin/perl -w
+#-----------------------------------------------------
+# BeeTL
+#-----------------------------------------------------
+# $Id: beetl.pl,v 1.31 2004/01/13 13:43:40 spanhel Exp $
+
+use strict;
+use warnings;
+require "const.def";
+require Tk::Splash;
+my $splash = Tk::Splash->Show('img/splash.gif', 300, 300, 'bee', 1);
+
+use Tk;
+use Tk::DialogBox;
+use Tk::NoteBook;
+use Tk::LabEntry;
+use Tk::Table;
+use Tk::BrowseEntry;
+use Tk::ROText;
+use Tk::LabFrame;
+use Tk::Dialog;
+use Tk::HList;
+use Tk::Tree;
+use Tk::Wm;
+use Tk::FileDialog;
+use Tk::Adjuster;
+use Tk::Balloon;
+
+use Tk::DragDrop;
+use Tk::DropSite;
+
+use Data::Dumper;
+use XML::Simple;
+
+use lib qw(../lib .);
+#use auth;
+
+use vars qw($top $baloon $toolbar %Img  $ltName
+	$USER $HOSTNAME $PWD $version $lang $ltSearch $ltKeyName
+	$copyright $DBTypes $Default $VisibleLayer $tranType
+	$BalloonFont $MenuFont $AboutFont $QuestionFont $TreeFont 
+	$TabsFont $ButtonFont $unSortAttr $factColor);
+	
+use vars qw($AuthConnHost);	# Authority Host Name
+use vars qw(@@Changes);	# Array of Changed Objects
+our $Project;		# Project XML Data Hash
+our $ProjectFile;	# Path and Filename of XML Project Definition
+our $TreeList;	# TreeList containing Transf, Libs and Hosts
+our $Layer;		# Hash of object (e.g. Transformation, Table, View) definitions for each Layer
+				# $Layer->{layer_id}->{object_id}
+our $tSchemaC;		# Transformations Schema Canvas
+my @@toolB;	#array of toolbar buttons
+our $mainTabs;	# Main NoteBook Tabs object
+our $lastPath;
+
+$USER=$ENV{LOGNAME};
+$HOSTNAME=$ENV{HOSTNAME} || "";
+$PWD=$ENV{PWD};
+$version="0.6";
+$copyright="(c) Insight Strategy, a. s., 2002";
+$top = MainWindow->new;
+$top->focusFollowsMouse;
+$baloon = $top->Balloon(-font=>$BalloonFont);
+
+require "prop.pl";
+require "dnd.pl";
+require "schema.pl";
+require "log.pl";
+require "ptree.pl";
+require "img.pl";	# img deffinitions
+require "bar.pl";	# toolbar deffinitions
+require "prop_w.pl";	# project properties definition window
+require "pollinate.pl";  #running and exporting
+require "general.pl";
+
+use Debug;	# project properties definition window
+use DBTable;
+use DBTransf;
+use DBConst;
+use DBTrig;
+use DBConn;
+use DBFile;
+use DBLogObj;
+use DSI;	# interface to data sources
+use Edit;
+
+my $MData = new XML::Simple(searchpath=>'.',rootname=>'defaults',keyattr=>['id','layer'],
+				forcearray=>['gui-layer']);
+$Default = $MData->XMLin('default.conf');
+$DBTypes = $MData->XMLin($Default->{'db-def'});
+
+#-----------------------------------------------------
+# Menu
+
+my $menubar = $top->Frame(-relief => 'raised', -borderwidth => 2);
+$menubar->pack(-expand=>'no',-fill=>'x');
+$menubar->Menubutton(-font=>$MenuFont, qw/-text File -underline 0 -menuitems/ =>
+    [
+     [Button => '~Import Library',    -command => [\&OpenLib]],
+     [Button => '~Open Project',    -command => [\&OpenProj]],
+     [Button => '~New Project', -command => [\&NewProj]],
+     [Button => '~Save Project',  -command => [\&SaveProj]],
+     [Button => 'Save Project ~As ...',  -command => [\&SaveProjAs]],
+     [Button => 'Reload Project',  -command => sub{my $pr=$ProjectFile; &CloseProj; &LoadProj($pr)}],
+     [Button => 'Close Project',  -command => [\&CloseProj]],
+     [Separator => ''],
+	 [Button => '~Export Layer',  -command => [\&SaveProjAsScheme]],
+	 [Button => 'R~un Script',  -command => [\&RunScript]], 
+	 [Button => 'E~xecute Layer',  -command => [\&RunBlock]],
+	 [Separator => ''],
+     [Button => 'Project P~roperties ...',   -command => [\&Properties]],
+     [Button => '~Print ...',   -command => [\&Print]],
+     [Separator => ''],
+     [Button => '~Quit',        -command => [\&ConfirmExit]],
+    ])->pack(-side=>'left');
+    
+$menubar->Menubutton(-font=>$MenuFont, qw/-text Edit -underline 0 -menuitems/ =>
+    [
+     [Button => '~Undo',    -command => [\&UndoProp]],
+    ])->pack(-side=>'left');
+    
+$menubar->Menubutton(-font=>$MenuFont, qw/-text New -underline 0 -menuitems/ =>
+    [
+     [Button => '~Host',    -command => [\&NewHost]],
+     [Button => '~Data Source',    -command => {}],
+     [Button => '~Table',    -command => {}],
+     [Button => '~Column',   -command => {}],
+     [Separator => ''],     
+    ])->pack(-side=>'left');
+
+$menubar->Menubutton(-font=>$MenuFont, qw/-text Help -underline 0 -menuitems/ =>
+    [
+     [Button => 'Help ~Index',    -command => [\&HelpIndex]],
+     [Button => '~About',    -command => [\&HelpAbout]],
+    ])->pack(-side=>'right');
+
+#-----------------------------------------------------
+
+sub HelpIndex {
+}
+    
+sub HelpAbout {
+    my $button = $top->messageBox(-icon => 'info', -type => 'OK',
+		-title => 'About',
+        -message => "BeeTL v$version\n$copyright",
+		-font=>$AboutFont);
+}
+    
+#-----------------------------------------------------
+
+sub OpenLib {
+	my($LoadDialog) = $top->FileDialog(-Title =>'Open Library',
+                           -Create => 0,
+						   -Path => $lastPath ? $lastPath : $PWD,
+						   -FPat => '*.xml',
+						   -ShowAll => 'NO');
+	my $fn = $LoadDialog->Show();
+}
+    
+sub OpenProj {
+	&SaveQ||return;
+	my($LoadDialog) = $top->FileDialog(-Title =>'Open Project',
+                           -Create => 0,
+						   -Path => $lastPath ? $lastPath : $PWD,
+						   -FPat => '*.xml',
+						   -ShowAll => 'NO');
+	my $pf = $LoadDialog->Show();
+	if ($pf) {
+		&DestroyProj if $Project;
+		&LoadProj($pf) 
+	}
+}
+
+sub LoadProj {
+	$ProjectFile=$_[0];
+	if ($ProjectFile!~/\//) { $ProjectFile= ($lastPath ? $lastPath : $PWD)."/$ProjectFile" }
+	my($pwd,$pn)=($ProjectFile=~/(.*)\/(.*)\..{2,3}$/);
+	$lastPath = $pwd;
+	$top->title("BeeTL: $pn");
+
+	my $PData = new XML::Simple(rootname=>'project',keyattr=>['id','layer'],
+					forcearray=>['host','source','view','connection',
+					'signal','const','trigger','gui-layer','file',
+					'gui-presentation','transformation','constraint',
+					'input','output','attr','fact','table','column','relation','hrelation',
+					'fk','pk','expr','tran','group',
+					'tree-history', 'LObj','ATTR','GROUP','LAYER','REL']);
+	# 'table','column','relation'
+	$Project = $PData->XMLin($ProjectFile);
+	exists($Project->{language}) ? $lang = $Project->{language} : $Project->{language} = $lang;
+	exists($Project->{ltSearch}) ? $ltSearch = $Project->{ltSearch} : $Project->{ltSearch} = $ltSearch; # lookup tables
+	exists($Project->{ltKeyName}) ? $ltKeyName = $Project->{ltKeyName} : $Project->{ltKeyName} = $ltKeyName;
+	exists($Project->{ltName}) ? $ltName = $Project->{ltName} : $Project->{ltName} = $ltName;
+	exists($Project->{tranType}) ? $tranType = $Project->{tranType} : $Project->{tranType} = $tranType;
+	WriteLog('',"Open Project from $ProjectFile",0);        
+	&arr2hash;# hack for XML::Simple: convert '[{}]' to '{}'	
+    &ClearSchema(\$tSchemaC);
+	$TreeList->delete('all');			     
+	&AddProjObjects2List($Project,\$Layer);
+	&ShowLayer(\$Layer,$tSchemaC);
+	if ($mainTabs->raised() eq 'debug') {
+		Debug::Show($Project, $TreeList->info('anchor'))	# Debug Tab is visible, redraw it
+	} else {
+		Debug::UpToDate(0);	# Debug Tab is not visible, reset UpToDate flag only
+	}	
+}    
+
+sub UpdTree {
+   #GetHistory();
+   #$TreeList->delete('all');			
+   #ClearLayer(\$Layer,$tSchemaC);
+   #&arr2hash;
+   #&AddProjObjects2List($Project,\$Layer);
+   	&arr2hash;# hack for XML::Simple: convert '[{}]' to '{}'	
+   	&ClearSchema(\$tSchemaC);
+	$TreeList->delete('all');			     
+	&AddProjObjects2List($Project,\$Layer);
+	&ShowLayer(\$Layer,$tSchemaC);
+}
+
+sub arr2hash {
+  # hack for XML::Simple: convert '[{}]' to '{}'
+  # problem with forcearray
+  # if in md is '[{}]' - I know that it's empty 
+  
+	#RELATIONS
+	if (ref($Project->{'relation'})=~/^ARRAY/) {
+		$Project->{'relation'}={};
+	}
+	else{
+		foreach (keys %{$Project->{'relation'}}) {
+		if (ref($Project->{'relation'}->{$_}->{'gui-presentation'})=~/^ARRAY/) {
+    		 $Project->{'relation'}->{$_}->{'gui-presentation'}={};	 
+		   }
+		}
+	}
+
+	#HRELATIONS
+	if (ref($Project->{'hrelation'})=~/^ARRAY/) {
+	 	$Project->{'hrelation'}={};
+	}
+	else{
+		foreach (keys %{$Project->{'hrelation'}}) {
+		if (ref($Project->{'hrelation'}->{$_}->{'gui-presentation'})=~/^ARRAY/) {
+    		 $Project->{'hrelation'}->{$_}->{'gui-presentation'}={};	 
+		   }
+		}
+	}
+
+	#CONNECTIONS 
+	if (ref($Project->{'connection'})=~/^ARRAY/) {
+	  	$Project->{'connection'}={};	
+	}
+	else{
+	  	foreach (keys %{$Project->{'connection'}}) {
+    		if (ref($Project->{'connection'}->{$_}->{'gui-presentation'})=~/^ARRAY/) {
+        		 $Project->{'connection'}->{$_}->{'gui-presentation'}={};	 
+    	   	}
+	  	}
+	}
+
+	#SIGNALS
+	if (ref($Project->{'signal'})=~/^ARRAY/) {
+	  	$Project->{'signal'}={};	
+	}
+	else{
+	  	foreach (keys %{$Project->{'signal'}}) {
+    		if (ref($Project->{'signal'}->{$_}->{'gui-presentation'})=~/^ARRAY/) {
+        		 $Project->{'signal'}->{$_}->{'gui-presentation'}={};	 
+    	  	 }
+	  	}
+	}
+
+	#GROUPS
+	if (ref($Project->{'group'})=~/^ARRAY/) {
+	  	print Dumper('ahoj ************************');
+		$Project->{'group'}={};	
+	}
+
+
+	#ATTRIBUTES 
+	if (ref($Project->{'attr'})=~/^ARRAY/) {
+	  	$Project->{'attr'}={};	
+	}
+	else{
+	  	foreach (keys %{$Project->{'attr'}}) {
+    		if (ref($Project->{'attr'}->{$_}->{'gui-presentation'})=~/^ARRAY/) {
+        		$Project->{'attr'}->{$_}->{'gui-presentation'}={};	 
+    	  	}
+	  	}
+	}
+
+	#FACTS 
+	if (ref($Project->{'fact'})=~/^ARRAY/) {
+	  	$Project->{'fact'}={};	
+	}
+	else{
+		foreach (keys %{$Project->{'fact'}}) {
+    		if (ref($Project->{'fact'}->{$_}->{'gui-presentation'})=~/^ARRAY/) {
+        	 	$Project->{'fact'}->{$_}->{'gui-presentation'}={};	 
+    	   	}
+	  	}
+	}
+	
+	#TRIGGERS 
+	if (ref($Project->{'trigger'})=~/^ARRAY/) {
+	  	$Project->{'trigger'}={};	
+	}
+	else{
+		foreach (keys %{$Project->{'trigger'}}) {
+    		if (ref($Project->{'trigger'}->{$_}->{'gui-presentation'})=~/^ARRAY/) {
+        	 	$Project->{'trigger'}->{$_}->{'gui-presentation'}={};	 
+    	   	}
+	  	}
+	}
+	
+	#CONSTANTS 
+	if (ref($Project->{'const'})=~/^ARRAY/) {
+	  	$Project->{'const'}={};	
+	}
+	else{
+		foreach (keys %{$Project->{'const'}}) {
+    		if (ref($Project->{'const'}->{$_}->{'gui-presentation'})=~/^ARRAY/) {
+        	 	$Project->{'const'}->{$_}->{'gui-presentation'}={};	 
+    	   	}
+	  	}
+	}
+
+	if (ref($Project->{'tree-history'})=~/^ARRAY/) {
+	  	$Project->{'tree-history'}={};	
+	}
+
+	#HOSTS
+	if (ref($Project->{'host'})=~/^ARRAY/) {
+	 	$Project->{'host'}={};     
+	}  
+	else {
+		foreach (keys %{$Project->{'host'}}) {
+			my $host = $_;
+			#SOURCES
+			if (ref($Project->{'host'}->{$host}->{'source'})=~/^ARRAY/) {
+				$Project->{'host'}->{$host}->{'source'}={};	 
+			}
+			else {
+				foreach (keys %{$Project->{'host'}->{$host}->{'source'}}) {	  
+					my $source = $_;
+					#TABLES
+					if (ref($Project->{'host'}->{$host}->{'source'}->{$source}->{'table'})=~/^ARRAY/) {
+						$Project->{'host'}->{$host}->{'source'}->{$source}->{'table'}={};	 
+					}
+					else {
+						foreach (keys %{$Project->{'host'}->{$host}->{'source'}->{$source}->{'table'}}) {
+							my $table = $_;
+							if (ref($Project->{'host'}->{$host}->{'source'}->{$source}->{'table'}->{$table}->{'gui-presentation'})=~/^ARRAY/) {
+								$Project->{'host'}->{$host}->{'source'}->{$source}->{'table'}->{$table}->{'gui-presentation'}={};
+							}
+							if (ref($Project->{'host'}->{$host}->{'source'}->{$source}->{'table'}->{$table}->{'column'})=~/^ARRAY/) {
+								$Project->{'host'}->{$host}->{'source'}->{$source}->{'table'}->{$table}->{'column'}={};
+							} 
+							else {
+								foreach (keys %{$Project->{'host'}->{$host}->{'source'}->{$source}->{'table'}->{$table}->{'column'}}) {
+									if (ref($Project->{'host'}->{$host}->{'source'}->{$source}->{'table'}->{$table}->{'column'}->{$_})=~/^ARRAY/) {
+										$Project->{'host'}->{$host}->{'source'}->{$source}->{'table'}->{$table}->{'column'}->{$_}={};
+									}
+									if (ref($Project->{'host'}->{$host}->{'source'}->{$source}->{'table'}->{$table}->{'column'}->{$_}->{'gui-presentation'})=~/^ARRAY/) {
+										$Project->{'host'}->{$host}->{'source'}->{$source}->{'table'}->{$table}->{'column'}->{$_}->{'gui-presentation'}={};
+									}
+								}
+							}   		
+						}
+					}
+					#VIEWS
+					if (ref($Project->{'host'}->{$host}->{'source'}->{$source}->{'view'})=~/^ARRAY/) {
+						$Project->{'host'}->{$host}->{'source'}->{$source}->{'view'}={};	 
+					}
+					else {
+						foreach (keys %{$Project->{'host'}->{$host}->{'source'}->{$source}->{'view'}}) {
+							my $view = $_;
+							if (ref($Project->{'host'}->{$host}->{'source'}->{$source}->{'view'}->{$view}->{'gui-presentation'})=~/^ARRAY/) {
+								$Project->{'host'}->{$host}->{'source'}->{$source}->{'view'}->{$view}->{'gui-presentation'}={};
+							}
+							if (ref($Project->{'host'}->{$host}->{'source'}->{$source}->{'view'}->{$view}->{'column'})=~/^ARRAY/) {
+								$Project->{'host'}->{$host}->{'source'}->{$source}->{'view'}->{$view}->{'column'}={};
+							} 
+							else {
+								foreach (keys %{$Project->{'host'}->{$host}->{'source'}->{$source}->{'view'}->{$view}->{'column'}}) {
+									if (ref($Project->{'host'}->{$host}->{'source'}->{$source}->{'view'}->{$view}->{'column'}->{$_})=~/^ARRAY/) {
+										$Project->{'host'}->{$host}->{'source'}->{$source}->{'view'}->{$view}->{'column'}->{$_}={};
+									}
+									if (ref($Project->{'host'}->{$host}->{'source'}->{$source}->{'view'}->{$view}->{'column'}->{$_}->{'gui-presentation'})=~/^ARRAY/) {
+										$Project->{'host'}->{$host}->{'source'}->{$source}->{'view'}->{$view}->{'column'}->{$_}->{'gui-presentation'}={};
+									}
+								}
+							}   		
+						}
+					}
+				} 
+			}
+			#FILES
+			if (ref ($Project->{'host'}->{$host}->{'file'})=~/^ARRAY/){
+				$Project->{'host'}->{$host}->{'file'}={};
+			}
+			else{
+				foreach ( keys %{$Project->{'host'}->{$host}->{'file'}}){
+					if (ref($Project->{'host'}->{$host}->{'file'}->{$_}->{'gui-presentation'})=~/^ARRAY/){
+						$Project->{'host'}->{$host}->{'file'}->{$_}->{'gui-presentation'}={};
+					}
+				}
+			}
+			#TRANSFORMATIONS
+			if (ref ($Project->{'host'}->{$host}->{'transformation'})=~/^ARRAY/){
+				$Project->{'host'}->{$host}->{'transformation'}={};
+			}
+			else{
+				foreach ( keys %{$Project->{'host'}->{$host}->{'transformation'}}){
+					if (ref($Project->{'host'}->{$host}->{'transformation'}->{$_}->{'gui-presentation'})=~/^ARRAY/){
+						$Project->{'host'}->{$host}->{'transformation'}->{$_}->{'gui-presentation'}={};
+					}
+					if (ref($Project->{'host'}->{$host}->{'transformation'}->{$_}->{input})=~/^ARRAY/){
+						$Project->{'host'}->{$host}->{'transformation'}->{$_}->{input}={};
+					}
+					if (ref($Project->{'host'}->{$host}->{'transformation'}->{$_}->{output})=~/^ARRAY/){
+						$Project->{'host'}->{$host}->{'transformation'}->{$_}->{output}={};
+					}
+				}
+			}
+		}
+	}
+}
+#-----------------------------------------------------
+
+sub SaveQ {
+	return(1) if (!$ProjectFile);
+	my $ans='No';
+	if (1)	{	# has project been modified?
+		$ans = $top->messageBox(-icon    => 'question',
+                    -type => 'YesNoCancel', 
+					-default => 'Yes',
+				    -font => $QuestionFont,
+                    -message => "Save current Project?");
+	}
+	if ($ans eq 'Yes') {
+		&SaveProject($ProjectFile);
+	} elsif ($ans eq 'Cancel') {
+		return
+	}
+	return 1
+}    
+
+sub CloseProj {
+	&SaveQ||return;
+	&DestroyProj;
+	return 1;
+}    
+
+sub DestroyProj {
+	WriteLog('',"Close Project $ProjectFile",0);
+	 
+	$TreeList->delete('all');
+	&ClearPropPage;
+	Debug::Clear();
+
+	$Layer=();
+	$ProjectFile='';
+	undef($Project);
+	return 1;
+}    
+
+sub NewProj {
+	&CloseProj if ($Project);
+	
+	# include default layer
+	$Project->{'gui-layer'}=$Default->{'gui-layer'};
+	
+	# include sources populated by dads
+	if ($AuthConnHost->{res} eq 'C') {
+		my $n;
+		foreach (source::dads()) {
+			($n=$_->{name})=~s/:\d*$//;
+			$Project->{host}->{$n}->{name}=$n;
+		}
+	}
+	&AddProjObjects2List($Project,\$Layer);
+}
+    
+sub SaveProject {
+	# Save project data
+	my $fn=shift;
+	my $PData = new XML::Simple(keyattr=>'id', rootname=>'project');
+	my ($layer,$length);
+	my ($host,$tran);
+	&GetHistory;
+	$Project->{language}=$lang;
+	my $out=$PData->XMLout($Project, noattr=>0, outputfile=>$fn, xmldecl=>1);
+}
+
+sub SaveProj {
+	if ($ProjectFile && -w $ProjectFile) {
+		&SaveProject($ProjectFile);
+	} 
+	else {
+		&SaveProjAs
+	}
+}
+
+sub SaveProjAs {
+	my $pn='Project.xml';
+	my $pwd=$PWD;
+	if ($ProjectFile) {
+		($pwd,$pn)=($ProjectFile=~/(.*)\/(.*)$/);
+	};
+	my($LoadDialog) = $top->FileDialog(-Title =>'Save Project',
+                                                   -Create => 1,
+						   -Path => $pwd ? $pwd : $lastPath,
+						   -File => $pn,
+						   -FPat => '*.xml',
+						   -ShowAll => 'NO');
+	my $fn = $LoadDialog->Show();
+
+	return 0 if (!$fn);
+	if ($fn!~/\.\w\w\w$/) {$fn.='.xml'};
+	my $ans='Yes';
+	if (-e $fn) {
+		if (-w $fn) {
+			$ans = $top->messageBox(-icon    => 'question',
+                            -type => 'YesNo', -default => 'No',
+			    			-font => $QuestionFont,
+                            -message => "File $fn Exists. Owerwrite?");
+		} else {
+			$top->messageBox(-icon    => 'error',
+                            -type => 'OK', -default => 'OK',
+						    -font => $QuestionFont,
+                            -message => "ERROR: File $fn is not writable");
+			return 0;
+		}
+	} else {
+		open (F,">$fn"); close (F);	#test if posible to create $fn
+	}	
+	if ($ans eq 'Yes') {
+		if (-w $fn) {	# Save
+			&SaveProject($fn);
+		} else {
+			$top->messageBox(-icon    => 'error',
+                            -type => 'OK', -default => 'OK',
+						    -font => $QuestionFont,
+                            -message => "ERROR Creating File $fn");
+			return 0;
+		}
+	}
+	$ProjectFile=$fn;
+	($pwd,$pn)=($ProjectFile=~/(.*)\/(.*)\..{2,3}$/);
+	$lastPath = $pwd;
+	$top->title("BeeTL: $pn");
+	return 1;
+}
+
+
+sub Print {
+	my $t1 = $top->Toplevel(-title=>"Print Layer $Project->{'gui-layer'}->{$VisibleLayer}->{name}");
+#	$t1->Icon('-image' => $Img{BEE});	#has to be fixed: Icon shrinks $t window 
+	my $t = $t1->Frame->pack(-padx=>10,-pady=>5);
+	
+	my $Print; # method: 'prn'|'file'
+	my ($e1,$r1,$l1,$e2,$r2,$l2,$b2);
+	my $FileName=$PWD.'/Project.ps';
+	my $PrintComm='lpr';
+	my $orientation;
+	my $colorMode;
+	if ($ProjectFile) { ($FileName=$ProjectFile)=~s/\..{2,3}$/.ps/ }
+
+	$e1 = $t->Entry(-relief=>'sunken', -width=>40, -textvariable=>\$PrintComm);
+	$l1 = $t->Label(-text => 'Print Command', -anchor => 'e', -justify => 'right');
+	$r1 = $t->Radiobutton(
+            -variable => \$Print,
+            -relief   => 'flat',
+            -value    => 'prn',
+            -command => sub { 
+	    		$e2->configure(-state=>'disabled', -foreground=>'gray');
+	    		$b2->configure(-state=>'disabled');
+	    		$l2->configure(-foreground=>'gray');
+	    		$e1->configure(-state=>'normal', -foreground=>'black');
+	    		$l1->configure(-foreground=>'black');
+	    	}
+        );
+	$r1->select;
+        Tk::grid( $r1, -row => 0, -column => 0, -sticky => 'e');
+        Tk::grid( $l1, -row => 0, -column => 1, -sticky => 'e');
+        Tk::grid( $e1, -row => 0, -column => 2,-sticky => 'ew');
+	$e2 = $t->Entry(-relief=>'sunken', -width=>40, -state=>'disabled', -foreground=>'gray', -textvariable=>\$FileName);
+	$l2 = $t->Label(-text => 'File Name', -anchor => 'e', -foreground=>'gray', -justify => 'right');
+	$b2 = $t->Button(
+            -text    => 'Browse',
+	    -state=>'disabled',
+       	    -font => $ButtonFont,
+            -command => sub { 
+				my ($pwd,$pn)=($FileName=~/(.*)\/(.*)$/);
+	    			my $fDialog=$t->FileDialog(-Title =>'File Name',
+                                                   -Create => 1,
+						   -Path => $pwd,
+						   -File => $pn,
+						   -FPat => '*.ps',
+						   -ShowAll => 'NO');
+				my $fn = $fDialog->Show();
+				if ($fn) {$FileName=$fn};
+			},
+        );
+	$r2 = $t->Radiobutton(
+            -variable => \$Print,
+            -relief   => 'flat',
+            -value    => 'file',
+            -command => sub { 
+	    		$e2->configure(-state=>'normal', -foreground=>'black');
+	    		$b2->configure(-state=>'normal');
+	    		$l2->configure(-foreground=>'black');
+	    		$e1->configure(-state=>'disabled', -foreground=>'gray');
+	    		$l1->configure(-foreground=>'gray');
+	    	}
+        );
+        Tk::grid( $r2, -row => 1, -column => 0, -sticky => 'e');
+        Tk::grid( $l2, -row => 1, -column => 1, -sticky => 'e');
+        Tk::grid( $e2, -row => 1, -column => 2,-sticky => 'ew');
+        Tk::grid( $b2, -row => 1, -column => 3,-sticky => 'ew');
+
+	my $tt = $t1->Frame(-relief => 'raised', -borderwidth=>1)->pack(-anchor=>'e',-padx=>10,-pady=>5);
+	$tt->Radiobutton(
+            -variable => \$orientation,
+	    -text => 'Landscape',
+            -relief   => 'flat',
+            -value    => 1,
+        )->grid(-row => 0, -column => 0, -sticky => 'w')->select;
+	$tt->Radiobutton(
+            -variable => \$orientation,
+	    -text => 'Portrait',
+            -relief   => 'flat',
+            -value    => 0,
+        )->grid(-row => 1, -column => 0, -sticky => 'w');
+	$tt->Radiobutton(
+            -variable => \$colorMode,
+	    -text => 'Color',
+            -relief   => 'flat',
+            -value    => 'color',
+        )->grid(-row => 0, -column => 1, -sticky => 'w')->select;
+	$tt->Radiobutton(
+            -variable => \$colorMode,
+	    -text => 'Gray',
+            -relief   => 'flat',
+            -value    => 'gray',
+        )->grid(-row => 1, -column => 1, -sticky => 'w');
+	$tt->Radiobutton(
+            -variable => \$colorMode,
+	    -text => 'Mono',
+            -relief   => 'flat',
+            -value    => 'mono',
+        )->grid(-row => 2, -column => 1, -sticky => 'w');
+	
+	my $ttt = $t1->Frame->pack(-anchor=>'w',-padx=>10,-pady=>5);
+	$ttt->Button(
+            -text    => 'Print',
+       	    -font => $ButtonFont,
+            -command => sub { 
+	    			my $pagewidth;
+	    			if ($orientation) { $pagewidth='265m' } else { $pagewidth='200m' }
+				my $ps = $tSchemaC->postscript( 
+						  '-x' => 0,
+                                		  '-y' => 0,
+                               		  	  -height => '200m',
+						  -width=>'265m',
+						  -pagewidth=>$pagewidth,
+						  -colormode => $colorMode,
+						  -rotate => $orientation
+						  );
+	    			if ($Print eq 'prn') {
+					open (PS, "| $PrintComm"); # customize with -Pname e.g. 
+					print PS $ps;
+					close (PS);
+				} elsif ($Print eq 'file') {
+					open (PS, ">$FileName"); # to output to a file
+					print PS $ps;
+					close (PS);
+				}
+				$t1->destroy;
+			},
+        )->pack(-anchor=>'e',-side=>'left');
+	
+	$ttt->Button(
+            -text    => 'Cancel',
+       	    -font => $ButtonFont,
+            -command => [$t1 => 'destroy'],
+        )->pack(-anchor=>'e',-side=>'left');
+	
+}
+
+
+#-----------------------------------------------------
+
+$TreeList=&CreateTreeList($top);
+
+#-----------------------------------------------------
+# Toolbar
+
+$toolbar = $top->Frame()->pack(
+	   -fill => "y",
+	   -padx => 1, -pady => 25,
+	   -side => "left");;
+
+#-----------------------------------------------------
+# Notebook
+
+$mainTabs = $top->NoteBook(-ipadx => 6, -ipady => 6, -font=>$TabsFont);
+$mainTabs->pack(-expand => "yes",
+	   -fill => "both",
+	   -padx => 5, -pady => 5,
+	   -side => "left");
+
+#-----------------------------------------------------
+# Schema
+
+my $schPage = $mainTabs->add("schema", -label => "Schema", -underline => 0, -raisecmd => \&SetToolbar);
+&CreateSchPage($schPage);
+$mainTabs->raise('schema');
+
+#-----------------------------------------------------
+# Properties
+
+my $propPage = $mainTabs->add("prop", -label => "Properties", -underline => 0, -raisecmd => \&SetToolbar);
+&CreatePropPage($propPage);
+
+#-----------------------------------------------------
+# Log
+
+my $logPage = $mainTabs->add("log", -label => "Log", -underline => 0, -raisecmd => \&SetToolbar);
+&CreateLogPage($logPage);
+
+#-----------------------------------------------------
+# Debug
+
+my $dbgPage = $mainTabs->add("debug", -label => "Debug", -underline => 0, -raisecmd => sub{&SetToolbar; Debug::Update()} );
+Debug::CreatePage($dbgPage, \$Project, \$TreeList);
+
+#-----------------------------------------------------
+# Task output
+
+my $taskPage = $mainTabs->add("task", -label => "Task Output", -underline => 0, -raisecmd => \&SetToolbar);
+&CreateTaskPage($taskPage);
+
+#-----------------------------------------------------
+# General
+
+my $generalPage = $mainTabs->add("proj", -label => "General", -underline => 0, -raisecmd => \&SetToolbar);
+&CreateGenPage($generalPage);
+
+#-----------------------------------------------------
+# main
+
+WriteLog('',"Starting BeeTL from account $USER on host $HOSTNAME",0);
+&AuthConnect($Default->{auth});	# set default Authority Host
+
+if ($ARGV[0]) {
+	&LoadProj($ARGV[0])	# 1. command line arg. contains project filename
+} else {
+	&NewProj;
+}
+
+$top->protocol('WM_DELETE_WINDOW'=>\&ConfirmExit);
+#$SIG{INT}=\&ConfirmExit;
+
+$top->title('BeeTL');
+$top->Icon('-image' => $Img{BEE});
+
+$mainTabs->raise('schema');
+&SetToolbar;
+
+$splash->Destroy;
+
+my $dnd_token;
+
+$dnd_token = $TreeList->DragDrop
+  (-event     => '<B1-Motion>',
+   -sitetypes => ['Local'],
+   -startcommand => sub { call_start($dnd_token) },
+  );
+  
+# Define the target for drops.
+$tSchemaC->DropSite
+  (-droptypes     => ['Local'],
+   -dropcommand   => [ \&DropOnCanvas, $tSchemaC, $dnd_token ],
+   -motioncommand   => [ \&MotionOnCanvas, $TreeList, $dnd_token ],
+  );
+# Define the target for drops.
+$TreeList->DropSite
+  (-droptypes     => ['Local'],
+   -dropcommand   => [ \&DropOnTree, $TreeList, $dnd_token ],
+   -motioncommand   => [ \&MotionOnTree, $TreeList, $dnd_token ],
+  );    
+
+&MainLoop;
+
+#-----------------------------------------------------
+
+sub ConfirmExit {
+ $top->toplevel->destroy if &ConfirmDiscard;
+}
+
+#*-*-*-*-*-*-*-
+sub call_start{
+
+my ($dnd_tok)=@@_;
+=pod	
+	print "start \n\n\n";
+    foreach (keys %{$Project->{attr}}) {
+       print Dumper($_)
+    }
+  print "end \n\n\n";
+=cut  
+  StartDrag($dnd_tok);
+}
+sub ConfirmDiscard {
+ if (1)	# has project been modified?
+  {
+   my $ans = $top->messageBox(-icon    => 'question',
+                            -type => 'YesNoCancel', -default => 'Yes',
+						    -font => $QuestionFont,
+                            -message => "Save Project before Exit?");
+   return 0 if $ans eq 'Cancel';
+   return 0 if ($ans eq 'Yes' && !&SaveProj);
+  }
+ return 1;
+}
+
+sub updateName{
+	my ($layKey,$name) = @@_;
+	foreach my $lay(keys %{$Layer}){
+		if(exists($Layer->{$lay}->{$layKey})){
+			$Layer->{$lay}->{$layKey}->name($name);
+		}
+	}
+	#A specific object could be absent from every layer,
+	#from there is that $layKey could be undefined, and
+	#it could just not be on the Visible Layer, from there
+	#that we must check if it is on this layer or not.
+	if ($layKey && exists $Layer->{$VisibleLayer}->{$layKey}){
+		$Layer->{$VisibleLayer}->{$layKey}->clear();
+		$Layer->{$VisibleLayer}->{$layKey}->draw($tSchemaC);
+	}
+}
+
+sub updateValue{
+	my ($layKey,$val) = @@_;
+	foreach my $lay(keys %{$Layer}){
+		if(exists($Layer->{$lay}->{$layKey})){
+			$Layer->{$lay}->{$layKey}->value($val);
+		}
+	}
+	#A specific object could be absent from every layer,
+	#from there is that $layKey could be undefined, and
+	#it could just not be on the Visible Layer, from there
+	#that we must check if it is on this layer or not.
+	if ($layKey && exists $Layer->{$VisibleLayer}->{$layKey}){
+		$Layer->{$VisibleLayer}->{$layKey}->clear();
+		$Layer->{$VisibleLayer}->{$layKey}->draw($tSchemaC);
+	}
+}
+
+#-----------------------------------------------------
+
+@
+
+
+1.31
+log
+@XML:Simple (hack) added group
+@
+text
+@d5 1
+a5 1
+# $Id: beetl.pl,v 1.30 2004/01/06 14:12:26 tuco80 Exp $
+d40 1
+a40 1
+	$copyright $DBTypes $Default $VisibleLayer
+d194 1
+@
+
+
+1.30
+log
+@+ expressions for lookup tables
+@
+text
+@d5 1
+a5 1
+# $Id: beetl.pl,v 1.29 2003/11/20 16:48:03 tuco80 Exp $
+d186 1
+a186 1
+					'fk','pk','expr','tran',
+d273 7
+@
+
+
+1.29
+log
+@Position is language dependant
+@
+text
+@d5 1
+a5 1
+# $Id: beetl.pl,v 1.28 2003/11/06 12:28:24 tuco80 Exp $
+d38 2
+a39 2
+use vars qw($top $baloon $toolbar %Img 
+	$USER $HOSTNAME $PWD $version $lang
+a55 1
+
+d190 4
+a193 6
+	if (exists($Project->{language})){
+		$lang = $Project->{language}
+	}    
+	else{
+		$Project->{language}=$lang;
+	}
+d823 1
+a823 2
+	my ($id,$name) = @@_;
+	my $layKey = undef;
+d825 2
+a826 7
+		foreach (keys %{$Layer->{$lay}}){
+			if($Layer->{$lay}->{$_}->id eq $id){
+				$Layer->{$lay}->{$_}->name($name);
+				$layKey = $_;
+				last;
+			}
+			
+d833 1
+a833 1
+	if ($layKey && $Layer->{$VisibleLayer}->{$layKey}){
+d840 1
+a840 2
+	my ($id,$val) = @@_;
+	my $layKey = undef;
+d842 2
+a843 7
+		foreach (keys %{$Layer->{$lay}}){
+			if($Layer->{$lay}->{$_}->id eq $id){
+				$Layer->{$lay}->{$_}->value($val);
+				$layKey = $_;
+				last;
+			}
+			
+d850 1
+a850 1
+	if ($layKey && $Layer->{$VisibleLayer}->{$layKey}){
+@
+
+
+1.28
+log
+@+Color changing for Groups, +Property edition for groups/roles
+@
+text
+@d5 1
+a5 1
+# $Id: beetl.pl,v 1.27 2003/11/04 12:23:31 tuco80 Exp $
+d39 1
+a39 1
+	$USER $HOSTNAME $PWD $version 
+d58 1
+a58 1
+$HOSTNAME=$ENV{HOSTNAME};
+d75 1
+d191 6
+a202 1
+        
+d488 1
+a488 13
+	#print "\n$ptr->{$tempid}->{input}->{$inpid}->{length}";
+	#This shouldn't quite be here, but it's the easiest way
+	#to fix the bug related to the length of the transformations
+	#inputs and outputs :P
+	#foreach $layer(keys %{$Layer}){
+	#	foreach (keys %{$Layer->{$layer}}){
+	#		if ($_ =~m/^_TRAN/){
+	#			$length = $Layer->{$layer}->{$_}->in_len(
+				
+		
+	#foreach $host (keys %{$Project->{host}}){
+	#	foreach $tran (keys %{$Project->{host}->{$host}->{transformation}}){
+	#		foreach $input (keys %{$Project->{host}->{$host}->{transformation}->{$tran}->{
+d715 1
+d740 6
+@
+
+
+1.27
+log
+@Added DBFile.pm
+@
+text
+@d5 1
+a5 1
+# $Id: beetl.pl,v 1.26 2003/10/30 12:29:46 tuco80 Exp $
+d8 1
+d186 1
+a186 1
+					'fk','pk','expr',
+d387 11
+@
+
+
+1.26
+log
+@Fixed small mistake in arr2hash subroutine
+@
+text
+@d5 1
+a5 1
+# $Id: beetl.pl,v 1.25 2003/10/24 12:41:03 tuco80 Exp $
+d81 1
+d182 1
+a182 1
+					'signal','const','trigger','gui-layer',
+d819 2
+d822 1
+a822 1
+			$layKey = $_;
+d825 31
+a855 2
+	$Layer->{$VisibleLayer}->{$layKey}->clear();
+	$Layer->{$VisibleLayer}->{$layKey}->draw($tSchemaC);
+@
+
+
+1.25
+log
+@Scripts can be run, but GUI is locked while processing
+@
+text
+@d5 1
+a5 1
+# $Id: beetl.pl,v 1.24 2003/10/22 09:04:40 tuco80 Exp $
+d305 2
+a306 2
+	if (ref($Project->{'constant'})=~/^ARRAY/) {
+	  	$Project->{'constant'}={};	
+d309 3
+a311 3
+		foreach (keys %{$Project->{'constant'}}) {
+    		if (ref($Project->{'constant'}->{$_}->{'gui-presentation'})=~/^ARRAY/) {
+        	 	$Project->{'constant'}->{$_}->{'gui-presentation'}={};	 
+d486 1
+a486 1
+	if (-w $ProjectFile) {
+d488 2
+a489 1
+	} else {
+d813 1
+a817 3
+				$Layer->{$lay}->{$_}->clear();
+				$Layer->{$lay}->{$_}->draw($tSchemaC);
+				last;
+d819 1
+d822 2
+@
+
+
+1.24
+log
+@Fixed bug and added a couple of things missing in export
+@
+text
+@d5 1
+a5 1
+# $Id: beetl.pl,v 1.23 2003/10/20 09:41:09 tuco80 Exp $
+d53 1
+d73 2
+a75 1
+
+d152 1
+a152 1
+						   -Path => $PWD,
+d162 1
+a162 1
+						   -Path => $PWD,
+d174 1
+a174 1
+	if ($ProjectFile!~/\//) { $ProjectFile=$PWD."/$ProjectFile" }
+d176 1
+d501 1
+a501 1
+						   -Path => $pwd,
+d539 1
+a543 369
+#-----------------------------------------------------
+=pod
+	This part is to convert the project hash
+	that is used in the program, to a hash such
+	that it has the form we can later save into
+	an xml file readable by the libbee (martin sarfy)
+	and execute the scripts, creating the dads and the bees
+	necessary for the process to take place.
+	
+	The out put of this process will be a *.scheme file 
+	(being the name chose by the user) which will be the 
+	main task (or one single synchronized block which as of
+	this stage is a whole but it will only be a part in 
+	the future) script file, and also n amount of *.bee
+	script files (the names come from the ID of each 
+	transformation in the current $Project variable) which
+	will be pointed to by the main taks script and loaded
+	or read to produce the bee.
+=cut
+
+sub SaveScheme {
+	# Save project data
+	my $fn=shift;
+	my $PData = new XML::Simple(rootname=>'task', keeproot=>0, KeyAttr=>'bee',forcearray=>[qw/otec src dest dad input output link bee arg/]);
+	my $SMaker = new XML::Simple(rootname => 'script', keeproot=>0, forcearray=>[qw/input code output/]);
+	my $conversion = {};
+	my $reference = {};
+	my $script;
+	my @@indexes;
+	my ($h,$t,$i,$l)=0;
+	
+	#my $in = $PData->XMLin("apache.scheme");
+	#print Dumper($in);
+	#First, go through all the hosts, creating a dad in each one
+	foreach my $host (keys %{$Project->{host}}){
+		$conversion->{dad}[$h]->{host}= $host;
+		$conversion->{dad}[$h]->{port}='2333';
+		
+=pod  
+	  #*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+	  #Esto (todo el pod) es para transformar todo el proyecto, 
+	  #pero por lo pronto, para poder representar cada
+	  #bloque, solo vamos a convertir la capa actual (ActiveLayer)
+	  #*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+		foreach my $transf (keys %{$Project->{host}->{$host}->{transformation}}){
+			$conversion->{dad}[$h]->{bee}[$t]->{name}=$transf;
+			$conversion->{dad}[$h]->{bee}[$t]->{script}="$transf.bee";
+			foreach my $input (keys %{$Project->{host}->{$host}->{transformation}->{$transf}->{input}}){
+				my $length = $Project->{$host}->{transformation}->{$transf}->{input}->{$input}->{length};
+				my $inString;
+				foreach my $conn (sort byInField keys %{$Project->{connection}}){
+					my $to = $Project->{connection}->{$conn}->{to};
+					if ($to=~m/_TRAN/){
+						my ($tid,$attr,$fpos)=($to=~m|^.*/([^/]+)/([^/-]+)-(\d+)$|);
+						unless($fpos){$fpos=1;}
+						#print "\n esto es lo que agarro $tid  $attr  $fpos";
+						if(($tid eq $transf) && ($attr eq $input)){
+							#now we know that $input's field number $fpos (in $transf)
+							#comes from $conn's "from" value
+							my $from = $Project->{connection}->{$conn}->{from};
+							if ($from =~m/_TRAN/){
+								#when it comes from a transformation
+								#the arity does not matter!!!
+								#That's for v 1.0 only though, so
+								#this has to be changed when in v. 2.0 it does
+								my ($fh,$ft,$fo) = ($from=~m|^([\w.]+)/_TRAN/(\w+)/(\w+)[-\d]+$|);
+								#print "\n host:$fh  tran:$ft  output:$fo";
+								$conversion->{link}[$l]->{src}->{bee}=$ft;
+								$conversion->{link}[$l]->{src}->{output}=$ft;
+								$conversion->{link}[$l]->{dest}->{bee}=$ft;
+								$conversion->{link}[$l]->{dest}->{input}=$i++;
+							}
+						}
+					}
+				}
+			}
+			$t++;
+		}
+=cut
+		#we will later want to know which place
+		#does a specific host have in dad[]
+		$reference->{$host}=$h;
+		$indexes[$h]=0;
+		$h++;
+		#$t=0;
+			
+	}#foreach host
+	foreach my $object (keys %{$Layer->{$VisibleLayer}}){
+		print "\nestamos en: $object\n";
+		if ($object=~m/_TRAN/){
+			my $tranID = $Layer->{$VisibleLayer}->{$object}->id();
+			my @@rels =  @@{$Layer->{$VisibleLayer}->{$object}->relation()};
+			#print @@rels;
+			if (@@rels){
+				#&bubble(\@@rels);
+				my $inputs = {};
+				my $outputs = {};
+				$script = {};
+				my ($ho,$tr)=($tranID=~m|^([\w.]+)/_TRAN/(\w+)$|);
+				foreach my $rel(sort {$a->fieldTo <=> $b->fieldTo} @@rels){
+					#print ("\n field numer:" ,$rel->fieldTo);
+					my $toObj = $rel->to_obj();
+					if($tranID eq $toObj){
+						#Here we know that this connection goes to one of the inputs
+						#of this transformation (bee)
+						print "\nEsta es en input: $toObj";
+						my $in_ord = $Layer->{$VisibleLayer}->{$object}->getAttrOrd($rel->to_id);
+						print ("\n Looking for order of attribute", $rel->to_id);
+						unless ($in_ord){print "\n in_ord esta indefinido! wata foc???";}
+						unless(exists $inputs->{$toObj}->{$in_ord}->{source}){
+							unless ($rel->from_obj =~m/_CONST/){
+								$inputs->{$toObj}->{$in_ord}->{source} = $rel->from_obj;
+							}#unless const
+						}#unless exists source
+						$inputs->{$toObj}->{$in_ord}->{$rel->fieldTo}= $rel->from_id;
+						#$inputs->{$rel->to_id}[$rel->fieldTo]= $toObj;
+						#Put the info in the script hash
+						$script->{input}[$in_ord-1]->{name}=$rel->to_id();
+						$script->{input}[$in_ord-1]->{type}=$Project->{host}->{$ho}->{transformation}->{$tr}->{input}->{$rel->to_id}->{type}||'';
+						$script->{input}[$in_ord-1]->{arity}=$Project->{host}->{$ho}->{transformation}->{$tr}->{input}->{$rel->to_id}->{length}||1;
+
+					}#if tranid eq obj
+					else{
+						#if that relation is not an input on this object
+						#for sure it's an output!
+						print "\nEsta es en output: $toObj";
+						my $out_ord = $Layer->{$VisibleLayer}->{$object}->getAttrOrd($rel->from_id);
+						unless(exists $outputs->{$toObj}->{$out_ord}->{dest}){
+							$outputs->{$toObj}->{$out_ord}->{dest} = $rel->to_obj;
+						}#unless dest
+						$outputs->{$toObj}->{$out_ord}->{$rel->fieldFrom}= $rel->to_id;
+						
+						#Put the info in the script hash
+						$script->{output}[$out_ord-1]->{name}=$rel->from_id();
+						$script->{output}[$out_ord-1]->{type}=$Project->{host}->{$ho}->{transformation}->{$tr}->{output}->{$rel->from_id}->{type}||'';
+						$script->{output}[$out_ord-1]->{arity}=$Project->{host}->{$ho}->{transformation}->{$tr}->{output}->{$rel->from_id}->{length}||1;
+					}#else (tran id eq obj)
+				}#foreach rel
+				foreach my $bee (keys %{$inputs}){
+					print "\nBee is: $bee";
+					my ($temphost,$beename)=($bee=~m|^([\w.]+)/_TRAN/(\w+)$|);
+					print "\nSacamos: bee $beename en $temphost";
+					my $ptr = $reference->{$temphost};
+					$t=$indexes[$reference->{$temphost}];
+					$conversion->{dad}[$ptr]->{bee}->{$beename}->{name}=$beename;
+					$conversion->{dad}[$ptr]->{bee}->{$beename}->{script}="$beename.bee";
+					foreach my $in (keys %{$inputs->{$bee}}){
+						$i = 0;
+						my $inStr = undef;
+						foreach my $field (sort keys %{$inputs->{$bee}->{$in}}){
+							print "\nEstamos en field # $field";
+							my $at = $inputs->{$bee}->{$in}->{$field};
+							unless($i){
+								print "\n Luego de push t vale: $t";
+								print ("\n Viene de:",$inputs->{$bee}->{$in}->{source});
+								if ($inputs->{$bee}->{$in}->{source} =~m/_TRAN/){
+									#We need not to prepare the string here
+									#just create a link.
+									my $sr = $inputs->{$bee}->{$in}->{source};
+									my ($ho,$tr)=($sr=~m|^([\w.]+)/_TRAN/(\w+)$|);
+									$conversion->{link}[$l]->{src}[0]->{bee}=$tr;
+									$conversion->{link}[$l]->{src}[0]->{output}=$Layer->{$VisibleLayer}->{$sr}->getAttrOrd($at);
+									$conversion->{link}[$l]->{dest}[0]->{bee}=$beename;
+									$conversion->{link}[$l]->{dest}[0]->{input}=$in;	
+									$l++;
+									last;
+								}#if source eq tran
+								elsif($inputs->{$bee}->{$in}->{source} =~m/_CONST/){
+									#This shouldn't actually occur, but I'll
+									#leave it for the development phase, it
+									#might catch a bug.
+									print "\nSource es una constante!! Que pasa?";									
+								}#elsif source eq const
+								else{
+									#There's no other posible source!
+									#It HAS to be a table at this point.
+									my ($ho,$src,$tbl)=($inputs->{$bee}->{$in}->{source}=~m|^([\w.]+)/(\w+)/(\w+)$|);
+									$inStr = "$Project->{host}->{$ho}->{source}->{$src}->{'src-conn'}->{driver}://";
+									$inStr = $inStr."$Project->{host}->{$ho}->{source}->{$src}->{'src-conn'}->{user}->{content}:";
+									$inStr = $inStr."$Project->{host}->{$ho}->{source}->{$src}->{'src-conn'}->{password}->{content}@@";
+									$inStr = $inStr.$ho.":";
+									$inStr = $inStr."$Project->{host}->{$ho}->{source}->{$src}->{'src-conn'}->{port}->{content}/";
+									$inStr = $inStr."$src/$tbl:";
+								}#else (source eq const)
+								$i++;
+							}#unless i
+							if ($field eq 'source'){last;}
+							if($i == $field){
+								print "\n OK, ponemos esto: $at";
+								$inStr = $inStr."$at:";
+							}#if i eq field
+							else{
+								print "\nHay que rellenar de $i hasta $field";
+								#$i = $field;
+								for(;$i<=$field;$i++){$inStr = $inStr.":";print "\n llenamos hasta $i";}#for i->field
+							}#else (i eq field)
+							$i++;
+						}
+						#Now we put this input in $conversion
+						if ($inStr){
+							$conversion->{dad}[$ptr]->{bee}->{$beename}->{input}[$in-1]->{input}=$in;
+							$conversion->{dad}[$ptr]->{bee}->{$beename}->{input}[$in-1]->{url}=$inStr;
+						}#if inStr
+						$indexes[$reference->{$temphost}]=++$t;	
+						
+						#And now we put the input in the script hash
+						#$script->{input}[$in-1]->{name}=$Project->{host}->{$temphost}->{transformation}->{$beename}->{
+					}#foreach in
+					#now we create the script for this bee
+					$script->{code}[0]= "\n<![CDATA[\n";
+					$script->{code}[0]= $script->{code}[0].$Project->{host}->{$temphost}->{transformation}->{$beename}->{proc}->{content}."\n]]>\n";
+					$script->{lang}= $Project->{host}->{$temphost}->{transformation}->{$beename}->{proc}->{language};
+					$script->{name}= $beename;
+					$SMaker->XMLout($script, xmldecl=>1, noattr=>0, outputfile=>"$beename.bee", noescape=>1);
+				}#foreach bee
+				
+				
+			}#if @@rels
+			else{
+				#This means the bee has nothing connected to it
+				#so we might as well ignore it, as it has no effect
+				#print "\n me cago!";}
+				#my $rel;
+			
+			}#else (@@rels)
+		}#if obj eq tran
+	}#foreach obj	
+	my $out=$PData->XMLout($conversion, noattr=>0, outputfile=>$fn, xmldecl=>1);
+	return $fn;
+}#end sub savescheme
+
+	
+
+=pod This one is to be used when exporting the whole project
+sub byInField{
+	my $toA = $Project->{connection}->{$a}->{to};
+	my $toB = $Project->{connection}->{$b}->{to};
+	
+	my ($lineA) = ($toA =~/.+-(\d)/);
+	my ($lineB) = ($toB =~/.+-(\d)/);
+	#print "\nestos son lineaA y lineaB: $toA $toB";
+	unless($lineA){$lineA = 1;}
+	unless($lineB){$lineB = 1};
+	return  $lineA <=> $lineB;
+}
+
+=cut	
+	
+
+sub SaveProjAsScheme {
+	my $pn='Project.scheme';
+	my $pwd=$PWD;
+	if ($ProjectFile) {
+		($pwd,$pn)=($ProjectFile=~/(.*)\/(.*)$/);
+		$pn=~s/\.xml/\.scheme/;
+	};
+	my($LoadDialog) = $top->FileDialog(-Title =>'Export Project',
+                                                   -Create => 1,
+						   -Path => $pwd,
+						   -File => $pn,
+						   -FPat => '*.scheme',
+						   -ShowAll => 'NO');
+	my $fn = $LoadDialog->Show();
+
+	return 0 if (!$fn);
+	if ($fn!~/.+\.scheme/) {$fn.='.scheme'};
+	my $ans='Yes';
+	if (-e $fn) {
+		if (-w $fn) {
+			$ans = $top->messageBox(-icon    => 'question',
+                            -type => 'YesNo', -default => 'No',
+			    			-font => $QuestionFont,
+                            -message => "File $fn Exists. Owerwrite?");
+		} 
+		else {
+			$top->messageBox(-icon    => 'error',
+                            -type => 'OK', -default => 'OK',
+						    -font => $QuestionFont,
+                            -message => "ERROR: File $fn is not writable");
+			return 0;
+		}
+	} else {
+		open (F,">$fn"); close (F);	#test if posible to create $fn
+	}	
+	if ($ans eq 'Yes') {
+		if (-w $fn) {	# Save
+			&SaveScheme($fn);
+		} else {
+			$top->messageBox(-icon    => 'error',
+                            -type => 'OK', -default => 'OK',
+						    -font => $QuestionFont,
+                            -message => "ERROR Creating File $fn");
+			return 0;
+		}
+	}
+	return 1;
+}
+
+=pod
+	*-------------------------------
+	*Run sychronized block!!!
+	*-------------------------------
+	
+	There are three possibilities: 
+	
+	1- Choose "Run Project" in the menu
+	   which will automatically export
+	   the current layer, and then run that script.
+	   
+	2- Choose "Run Project" in the menu which
+	   will open a file choose dialog, and then
+	   the user can choose which script to run
+	   even scripts not belonging to the project
+	   being currently run.
+	   
+	3- Have both options available, one called
+	   "Run Block" which will automatically export
+	   and  run $ActiveLayer.  And have also
+	   "Run Script" wich will open the file dialog.
+	   I chose this option on 20.10.03!!
+	   
+	   
+	I think that in the future, there can be
+	three options, run block, execute project
+	and run script, depending on how difficult
+	it is to select only one block in the project
+	and run it in the new version.
+
+=cut
+
+
+sub RunScript{
+	my $pn='Project.scheme';
+	my $pwd=$PWD;
+	if ($ProjectFile) {
+		($pwd,$pn)=($ProjectFile=~/(.*)\/(.*)$/);
+		$pn=~s/\.xml/\.scheme/;
+	};
+	my($LoadDialog) = $top->FileDialog(-Title =>'Export Project',
+                                                   -Create => 1,
+						   -Path => $pwd,
+						   -File => $pn,
+						   -FPat => '*.scheme',
+						   -ShowAll => 'NO');
+	my $fn = $LoadDialog->Show();
+
+	return 0 if (!$fn);
+	if ($fn!~/.+\.scheme/) {$fn.='.scheme'};
+	my $ans='Yes';
+	if (-e $fn) {
+		my @@comm = ("../client/task.pl", $fn);
+		system (@@comm) == 0 #`../client/task.pl $fn`;
+			or print "\nNo funca esta picha!"; 
+	}
+	else {
+		$top->messageBox(-icon    => 'error',
+                        -type => 'OK', -default => 'OK',
+						-font => $QuestionFont,
+                        -message => "ERROR: File $fn does not exist");
+		return 0;
+	}
+}
+
+
+sub RunBlock{
+
+}
+
+#-----------------------------------------------------
+d725 6
+@
+
+
+1.23
+log
+@Project exported to .scheme and .bee xml scripts
+@
+text
+@d5 1
+a5 1
+# $Id: beetl.pl,v 1.22 2003/10/16 08:54:40 spanhel Exp $
+d103 3
+a105 2
+	 [Button => '~Export Project',  -command => [\&SaveProjAsScheme]],
+	 [Button => 'R~un Project',  -command => [\&RunProj]],
+d842 25
+d868 1
+d871 32
+d904 3
+a906 1
+=cut
+@
+
+
+1.22
+log
+@LM - change position of TO and FROM point
+@
+text
+@d5 1
+a5 1
+# $Id: beetl.pl,v 1.21 2003/09/25 09:50:12 tuco80 Exp $
+d54 1
+d103 3
+d186 1
+a186 1
+        &ClearSchema(\$tSchemaC);
+d200 9
+a208 3
+   $TreeList->delete('all');			
+   ClearLayer(\$Layer,$tSchemaC);
+   &AddProjObjects2List($Project,\$Layer);
+d462 2
+d465 13
+d540 308
+d1106 14
+@
+
+
+1.21
+log
+@Arity of Transformation I/O complete
+@
+text
+@d5 1
+a5 1
+# $Id: beetl.pl,v 1.20 2003/09/10 15:13:36 tuco80 Exp $
+d176 1
+a176 1
+					'fk', 'pk',
+@
+
+
+1.20
+log
+@Couple of parenthesis and braces missing :p
+@
+text
+@d5 1
+a5 1
+# $Id: beetl.pl,v 1.19 2003/09/10 12:57:04 tuco80 Exp $
+d41 1
+a41 1
+	$TabsFont $ButtonFont);
+@
+
+
+1.19
+log
+@Fixed small bug in arr2hash subroutine
+@
+text
+@d5 1
+a5 1
+# $Id: beetl.pl,v 1.18 2003/08/22 09:34:49 spanhel Exp $
+d376 4
+a379 4
+			else
+				foreach $tran( keys %{$Project->{'host'}->{$host}->{'transformation'}}){
+					if (ref($Project->{'host'}->{$host}->{'transformation'}->{$tran}->{'gui-presentation'})=~/^ARRAY/){
+						$Project->{'host'}->{$host}->{'transformation'}->{$tran}->{'gui-presentation'}={};
+d381 2
+a382 2
+					if (ref($Project->{'host'}->{$host}->{'transformation'}->{$tran}->{input})=~/^ARRAY/){
+						$Project->{'host'}->{$host}->{'transformation'}->{$tran}->{input}={};
+d384 2
+a385 2
+					if (ref($Project->{'host'}->{$host}->{'transformation'}->{$tran}->{output})=~/^ARRAY/){
+						$Project->{'host'}->{$host}->{'transformation'}->{$tran}->{output}={};
+@
+
+
+1.18
+log
+@fix bug - drag and drop
+@
+text
+@d5 1
+a5 1
+# $Id: beetl.pl,v 1.17 2003/08/19 08:27:14 spanhel Exp $
+d206 182
+a387 81
+  # RELATIONS
+  if (ref($Project->{'relation'})=~/^ARRAY/) {
+     $Project->{'relation'}={};
+  }
+  
+  foreach (keys %{$Project->{'relation'}}) {
+    if (ref($Project->{'relation'}->{$_}->{'gui-presentation'})=~/^ARRAY/) {
+         $Project->{'relation'}->{$_}->{'gui-presentation'}={};	 
+       }
+  }
+  
+  # HRELATIONS
+  if (ref($Project->{'hrelation'})=~/^ARRAY/) {
+     $Project->{'hrelation'}={};
+  }
+  
+  foreach (keys %{$Project->{'hrelation'}}) {
+    if (ref($Project->{'hrelation'}->{$_}->{'gui-presentation'})=~/^ARRAY/) {
+         $Project->{'hrelation'}->{$_}->{'gui-presentation'}={};	 
+       }
+  }
+
+  # ATTRIBUTES 
+  if (ref($Project->{'attr'})=~/^ARRAY/) {
+      $Project->{'attr'}={};	
+  }
+  
+  if (ref($Project->{'tree-history'})=~/^ARRAY/) {
+      $Project->{'tree-history'}={};	
+  }
+  
+  foreach (keys %{$Project->{'attr'}}) {
+    if (ref($Project->{'attr'}->{$_}->{'gui-presentation'})=~/^ARRAY/) {
+         $Project->{'attr'}->{$_}->{'gui-presentation'}={};	 
+       }
+  }
+
+  # FACTS 
+  if (ref($Project->{'fact'})=~/^ARRAY/) {
+      $Project->{'fact'}={};	
+  }
+  foreach (keys %{$Project->{'fact'}}) {
+    if (ref($Project->{'fact'}->{$_}->{'gui-presentation'})=~/^ARRAY/) {
+         $Project->{'fact'}->{$_}->{'gui-presentation'}={};	 
+       }
+  }
+  
+  if (ref($Project->{'host'})=~/^ARRAY/) {
+     $Project->{'host'}={};     
+  }  
+  else {
+    foreach (keys %{$Project->{'host'}}) {
+       # HOSTS
+       my $host = $_;
+       if (ref($Project->{'host'}->{$host}->{'source'})=~/^ARRAY/) {
+         $Project->{'host'}->{$host}->{'source'}={};	 
+       }
+       else {
+          foreach (keys %{$Project->{'host'}->{$host}->{'source'}}) {
+              # SOURCE	  
+	      my $source = $_;
+	      if (ref($Project->{'host'}->{$host}->{'source'}->{$source}->{'table'})=~/^ARRAY/) {
+                  $Project->{'host'}->{$host}->{'source'}->{$source}->{'table'}={};	 
+              }
+	      else {
+	           foreach (keys %{$Project->{'host'}->{$host}->{'source'}->{$source}->{'table'}}) {
+		     my $table = $_;
+		     if (ref($Project->{'host'}->{$host}->{'source'}->{$source}->{'table'}->{$table}->{'gui-presentation'})=~/^ARRAY/) {
+                	$Project->{'host'}->{$host}->{'source'}->{$source}->{'table'}->{$table}->{'gui-presentation'}={};
+		     }
+		     if (ref($Project->{'host'}->{$host}->{'source'}->{$source}->{'table'}->{$table}->{'column'})=~/^ARRAY/) {
+                	$Project->{'host'}->{$host}->{'source'}->{$source}->{'table'}->{$table}->{'column'}={};
+		     } 
+		     else {
+			foreach (keys %{$Project->{'host'}->{$host}->{'source'}->{$source}->{'table'}->{$table}->{'column'}}) {
+		           if (ref($Project->{'host'}->{$host}->{'source'}->{$source}->{'table'}->{$table}->{'column'}->{$_})=~/^ARRAY/) {
+                             	  $Project->{'host'}->{$host}->{'source'}->{$source}->{'table'}->{$table}->{'column'}->{$_}={};
+  		           }
+			   if (ref($Project->{'host'}->{$host}->{'source'}->{$source}->{'table'}->{$table}->{'column'}->{$_}->{'gui-presentation'})=~/^ARRAY/) {
+                             	  $Project->{'host'}->{$host}->{'source'}->{$source}->{'table'}->{$table}->{'column'}->{$_}->{'gui-presentation'}={};
+  		           }
+d389 2
+a390 8
+		     }   		
+ 		   }
+	      }
+	      
+	  } 
+        }
+     }
+  }
+@
+
+
+1.17
+log
+@changes in loading fyz. and log. model
+@
+text
+@d5 1
+a5 1
+# $Id: beetl.pl,v 1.16 2003/08/18 07:11:30 spanhel Exp $
+d630 1
+a630 1
+   -startcommand => sub { StartDrag($dnd_token) },
+d654 13
+@
+
+
+1.16
+log
+@fixed the selection of hrelation
+@
+text
+@d5 1
+a5 1
+# $Id: beetl.pl,v 1.15 2003/08/01 09:18:59 spanhel Exp $
+d211 6
+d220 6
+@
+
+
+1.15
+log
+@added Edit.pm package
+@
+text
+@d5 1
+a5 1
+# $Id: beetl.pl,v 1.14 2003/07/31 07:31:10 spanhel Exp $
+d193 7
+@
+
+
+1.14
+log
+@FM,LM
+@
+text
+@d5 1
+a5 1
+# $Id: beetl.pl,v 1.13 2003/07/30 11:10:59 spanhel Exp $
+d60 1
+@
+
+
+1.13
+log
+@LM, FM
+@
+text
+@d5 1
+a5 1
+# $Id: beetl.pl,v 1.12 2003/06/26 14:11:46 spanhel Exp $
+a76 1
+#use DBLConn;
+d79 1
+@
+
+
+1.12
+log
+@logical and fys. model
+@
+text
+@d5 1
+a5 1
+# $Id: beetl.pl,v 1.11 2003/05/30 16:22:17 spanhel Exp $
+d179 4
+a182 2
+	WriteLog('',"Open Project from $ProjectFile",0);
+        &arr2hash;# hack for XML::Simple: convert '[{}]' to '{}'
+d190 1
+a190 2
+	}
+	
+@
+
+
+1.11
+log
+@logical model
+@
+text
+@d5 1
+a5 1
+# $Id: beetl.pl,v 1.10 2003/05/20 16:25:53 spanhel Exp $
+d9 2
+a10 2
+#require Tk::Splash;
+#my $splash = Tk::Splash->Show('img/splash.gif', 300, 300, 'bee', 1);
+d28 3
+d63 1
+d126 1
+a126 1
+    
+d175 2
+a176 1
+					'fk', 'pk']);
+d196 2
+d201 5
+d211 5
+d602 23
+a624 1
+#$splash->Destroy;
+@
+
+
+1.10
+log
+@tree history, colors of attributs
+@
+text
+@d5 1
+a5 1
+# $Id: beetl.pl,v 1.9 2003/05/16 07:02:43 spanhel Exp $
+d73 1
+d170 1
+a170 1
+					'input','output','attr','fact','table','column','relation',
+d194 20
+d217 1
+a217 2
+  }
+  
+@
+
+
+1.9
+log
+@adding and removing object from Layers
+@
+text
+@d5 1
+a5 1
+# $Id: beetl.pl,v 1.8 2003/05/07 14:28:51 spanhel Exp $
+d113 1
+a113 2
+     [Separator => ''],
+     [Button => '~Layer',    -command => [\&NewLayer]],
+d167 1
+a167 1
+					'signal','const','triger','gui-layer',
+d169 2
+a170 1
+					'input','output','attr','fact']);
+d174 1
+a174 1
+
+d186 53
+d299 1
+@
+
+
+1.8
+log
+@schema model
+@
+text
+@d5 1
+a5 1
+# $Id: beetl.pl,v 1.7 2003/05/06 20:56:17 michald Exp $
+a78 1
+#print Dumper($Default);
+a80 5
+#print Dumper($Project);
+#foreach (keys(%ENV)) {
+#	print "$_=$ENV{$_}\n";
+#}
+
+d167 2
+a168 2
+					forcearray=>['host','source','table','column',
+					'view','connection','relation','signal','const','triger','gui-layer',
+d171 1
+d214 1
+a214 1
+	&ClearLayer(\$Layer,$tSchemaC);
+@
+
+
+1.7
+log
+@some minor fixes
+@
+text
+@d5 1
+a5 1
+# $Id: beetl.pl,v 1.6 2003/05/05 15:36:46 spanhel Exp $
+d9 2
+a10 2
+require Tk::Splash;
+my $splash = Tk::Splash->Show('img/splash.gif', 300, 300, 'bee', 1);
+d516 1
+a516 1
+$splash->Destroy;
+@
+
+
+1.6
+log
+@schema - tables, columns, relations
+@
+text
+@d5 1
+a5 1
+# $Id: beetl.pl,v 1.5 2003/04/30 09:57:45 spanhel Exp $
+d9 2
+a10 2
+#require Tk::Splash;
+#my $splash = Tk::Splash->Show('img/splash.gif', 300, 300, 'bee', 1);
+d516 1
+a516 1
+#$splash->Destroy;
+@
+
+
+1.5
+log
+@connect to mysql
+@
+text
+@d5 1
+a5 1
+# $Id: beetl.pl,v 1.4 2003/04/28 07:36:32 michald Exp $
+d118 3
+a120 1
+     [Button => '~Column',    -command => {}],
+@
+
+
+1.4
+log
+@introduction of Debug package
+@
+text
+@d5 1
+a5 1
+# $Id: beetl.pl,v 1.3 2003/04/24 20:01:39 michald Exp $
+d8 3
+a10 3
+
+require Tk::Splash;
+my $splash = Tk::Splash->Show('img/splash.gif', 300, 300, 'bee', 1);
+d36 4
+a39 1
+	$copyright $DBTypes $Default $VisibleLayer);
+a55 11
+
+#our $FontSize=10;
+my $FontFamily = '-*-verdana';
+our $ButtonFont = $FontFamily.'-bold-r-normal-*-12-*-iso8859-2';
+our $AboutFont = $FontFamily.'-bold-r-normal-*-12-*-iso8859-2';
+our $QuestionFont = $FontFamily.'-bold-r-normal-*-14-*-iso8859-2';
+our $TreeFont = $FontFamily.'-bold-r-normal-*-10-*-iso8859-2';
+our $TabsFont = $FontFamily.'-bold-r-normal-*-12-*-iso8859-2';
+our $MenuFont = $FontFamily.'-bold-r-normal-*-11-*-iso8859-2';
+our $BalloonFont = $FontFamily.'-normal-r-normal-*-10-*-iso8859-2';
+
+d115 1
+a115 1
+     [Button => '~Host',    -command => {}],
+d180 1
+a180 1
+
+d447 1
+d514 1
+a514 1
+$splash->Destroy;
+@
+
+
+1.3
+log
+@prototype for reverse engineering
+@
+text
+@d5 1
+a5 1
+# $Id: beetl.pl,v 1.2 2003/03/12 23:36:17 numberone Exp $
+d31 1
+a31 1
+use lib '../lib';
+d42 2
+a43 2
+our %Layer;	# Hash of object (e.g. Transformation, Table, View) definitions for each Layer
+		# $Layer->{layer_id}->{object_id}
+d46 1
+d74 1
+d186 2
+a187 2
+	&AddProjObjects2List($Project,\%Layer);
+	&ShowLayer(\%Layer,$tSchemaC);
+d189 6
+d225 1
+a225 1
+	&ClearLayer(\%Layer,$tSchemaC);
+d228 1
+d230 1
+a230 1
+	%Layer=();
+d250 1
+a250 1
+	&AddProjObjects2List($Project,\%Layer);
+d470 1
+a470 1
+our $mainTabs = $top->NoteBook(-ipadx => 6, -ipady => 6, -font=>$TabsFont);
+d493 6
+@
+
+
+1.2
+log
+@bee is exec()uted, not eval()ed
+@
+text
+@d5 1
+a5 1
+# $Id: beetl.pl,v 1.1.1.1 2002/09/24 01:34:16 michald Exp $
+d9 2
+a10 2
+#require Tk::Splash;
+#my $splash = Tk::Splash->Show('img/splash.gif', 300, 300, 'bee', 1);
+d32 1
+a32 1
+use source;
+d80 1
+d119 8
+d506 1
+a506 1
+#$splash->Destroy;
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d5 1
+a5 1
+# $Id: beetl.pl,v 1.4 2002/08/30 00:37:25 michal Exp $
+d9 2
+a10 2
+require Tk::Splash;
+my $splash = Tk::Splash->Show('img/splash.gif', 300, 300, 'bee', 1);
+d497 1
+a497 1
+$splash->Destroy;
+@
+
+
+1.1.1.1
+log
+@Initial public release of BEE Project.
+@
+text
+@@

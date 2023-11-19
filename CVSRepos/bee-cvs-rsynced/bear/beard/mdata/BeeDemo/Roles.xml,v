@@ -1,0 +1,63 @@
+head	1.3;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.3
+date	2004.03.05.11.37.09;	author jiri_schmid;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2004.02.25.16.05.07;	author jiri_schmid;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2003.09.29.07.37.41;	author michald;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.3
+log
+@recursive non-attr objects tree creation implemented, order attr added into folder def.
+@
+text
+@<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<project>
+  <folder id="BD_ROLES_" type="role" order="12">
+    <name cz="Uživatelske role" en="User Roles" />
+    <description cz="role v projektu test" en="roles in test project " />
+  </folder>
+</project>
+@
+
+
+1.2
+log
+@fixed rights logic and folder XML definition files are specific for each project now
+@
+text
+@d3 1
+a3 1
+  <folder id="BD_ROLES_" type="role">
+@
+
+
+1.1
+log
+@adding of the new BeeDemo metadata
+@
+text
+@d3 1
+a3 1
+  <folder id="_ROLES_">
+@
+

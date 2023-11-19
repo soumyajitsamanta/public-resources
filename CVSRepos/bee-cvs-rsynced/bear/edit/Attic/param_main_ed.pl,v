@@ -1,0 +1,110 @@
+head	1.2;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2003.10.13.14.43.23;	author jiri_schmid;	state dead;
+branches;
+next	1.1;
+
+1.1
+date	2003.10.02.14.48.46;	author jiri_schmid;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@description tab defined under two files, bug fixies
+@
+text
+@#-----------------------------------------------------
+#  Filter Editation
+#-----------------------------------------------------
+# $Id: param_main_ed.pl,v 1.1 2003/10/02 14:48:46 jiri_schmid Exp $
+
+use strict;
+use CGI qw( :standard );
+use CGI::Pretty;
+
+require "const.def";
+require "local_lib.pl";
+
+use vars qw($ID $Obj $ObjT $descr_w $descr_r $lang $name_w $use_lang $saved @@Languages $Languages $DefaultLanguage $all_params $skin $skinPath $imgType $localTab);
+
+#-----------------------------------------------------
+# print_form is called from edit.cgi
+
+sub generateContent {
+print <<END;
+<br />
+<table class="page_skeleton">
+<tr class="page_skeleton">
+<td class="page_skeleton">
+	<table class="neutral">
+	<tr><td class="neutral_bold">$lang->{'Name'}</td></tr>
+	<tr><td align="center">
+		<span class='nowrap'>
+		<input value="" onchange="object_changed()" type="text" name="name" id="NAME" size="$name_w" maxlength="100"/>
+		<select name="langSpec" id="langSpec" onchange="tmpChangeLocal()">
+END
+foreach (@@Languages) {
+	my $lcL = lc($_);
+	my $name = LocalizedObj($Obj->{name}, "Object #$ID", $lcL, $DefaultLanguage);
+	print "<option value='$name'>$_</option>";
+}
+print <<END;
+		</select>
+		</span>
+	</td></tr>
+	<tr><td><hr></td></tr>
+	<tr><td class="neutral_bold">$lang->{'Description'}</td></tr>
+	<tr><td align="center"><textarea onchange="object_changed()" cols="$descr_w" rows="$descr_r" name="desc" id="DESC"></textarea></td></tr>
+	<tr><td><hr></td></tr>
+	<tr><td align="center">
+	<table class="buttons" cellpading="0" cellspacing="0">
+	<tr>	<td class="buttons"><input type="submit" name="Action" value="$lang->{'Save'}"/></td>
+		<td class="buttons">	<input type="submit" name="Action" value="$lang->{'Save As'}" onclick="return readName();"/>
+					<input type="hidden" name="saveAsName" id="saveAsName" value="" /></td>
+		<td class="buttons"><input type="button" name="reset" value="$lang->{'Reset'}" onclick="subst_item_id()"/></td>
+	</td></tr>
+	</table>
+	</td></tr>
+	</table>
+</td></tr></table>
+<script type="text/javascript">
+	var msg="$lang->{'New Save Part1'}$lang->{'New Filter Save'}$lang->{'New Save Part2'}";
+	subst_item_id();
+	var saveAsMsg = "$lang->{SaveAsMsg}$lang->{'New Param'}";
+	reloadTree($saved);
+
+</script>
+END
+}
+
+#---------------------------------------------------
+
+sub set_next_param {
+}
+
+1
+@
+
+
+1.1
+log
+@param edit files added
+@
+text
+@d4 1
+a4 1
+# $Id: filter_main_ed.pl,v 1.1 2003/09/18 14:10:50 jiri_schmid Exp $
+@
+

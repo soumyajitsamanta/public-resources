@@ -1,0 +1,277 @@
+head	1.3;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.3
+date	2002.09.28.10.31.56;	author michald;	state dead;
+branches;
+next	1.2;
+
+1.2
+date	2002.09.26.17.34.11;	author spanhel;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2002.09.25.17.45.57;	author spanhel;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.3
+log
+@removing of test html pages
+@
+text
+@<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html
+	PUBLIC "-//W3C//DTD XHTML Basic 1.0//EN"
+	"http://www.w3.org/TR/xhtml-basic/xhtml-basic10.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US">
+<head>
+   <title>Report Definition</title>
+   <link rel="stylesheet" type="text/css" href="base.css" />
+   <script language="JAVASCRIPT" src="tree2.js" type="text/javascript"></script>
+   <script language="JAVASCRIPT" src="attr.js" type="text/javascript"></script>
+</head>
+
+<body>
+
+
+<form action="" metod="" name="report">
+<table class = "main">
+<tr> <!-- row 3 -->
+    <td class = "tree" rowspan="3">
+       <div class= "valign_top"> 
+       <script type="text/javascript">
+       <!--
+       var URL = new Array;
+       URL[0]  = "http://kangaroo.instrat.cz/bear/index.cgi?TabAct=E";	
+       URL[1]  = "http://kangaroo.instrat.cz/bear/index.cgi?TabAct=R";	
+       var Tree = new Array;
+       Tree[0]  = "1|0|Grids|D|";
+       Tree[1]  = "5|1|G1|G|";
+       Tree[2]  = "6|1|G2|G|";
+       Tree[3]  = "2|0|Metrics|D|";
+       Tree[4]  = "3|0|Filters|D|";
+       Tree[5]  = "4|0|Reports|D|";
+       Tree[6]  = "7|2|M1|M|";
+       Tree[7]  = "8|2|M2|M|";
+       Tree[8]  = "9|3|F1|F|";
+       Tree[9]  = "10|3|F2|F|";
+       Tree[10] = "11|4|R1|R|";
+       Tree[11] = "111|11|F2|F|";
+       Tree[12] = "112|11|G2|G|";
+       //-->
+       </script>
+       <div id="tree">
+       <script type="text/javascript">
+	 <!--        
+	   createTree(Tree,"<B>Demo</B>",0,0,URL);
+	 //-->
+       </script>
+       </div>
+      </div>
+    </td>
+    <td>
+    <table class="t1">
+       <tr>
+          <td><img class = "typ" src="img/filter.gif"></td>
+          <td class = "t1" rowspan="2">    	     
+            <div class = "text"> Filter name:<br> </div>
+	    <input class ="text" type="text" name="filter_name" size="20" maxlength="100" readonly>
+	    <input class ="text" type="hidden" name="filter_name_h">
+	  </td>
+       </tr>
+       <tr>
+          <td>	  	 
+	    <img class = "arr" src="img/rightArr.gif" onclick='click_report(document.report,1);return true;'>
+	  </td>
+      </tr>
+      <tr>
+	  <td></td>
+          <td class = "t1"> 
+	    <div class="rubbish">
+   	       <img class = "rubbish" src="img/bomb.gif"onclick='clear_name(document.report.filter_name);clear_name(document.report.filter_name_h);return true;'>
+	    <div></td>
+	       
+      </tr>
+    </table>
+
+	</td>
+    <td class = "description" rowspan="3">
+	<table class = "description">
+		<tr>
+		    <td colspan="3">
+		      <div class = "text">Report name:<br></div>
+                      <input class = "text" type="text" name="report_name" size="29" maxlength="100">
+		    </td>
+		</tr>
+		<tr>
+		    <td colspan="3">
+                      <div class = "text">Report description:<br></div>
+		      <textarea class =" text " cols="23" rows="5" name="report_des"></textarea>		      
+                    </td>
+		</tr>
+		<tr>
+		    <td><input class = "text" type="submit" name="save" value="Save" width="15" height="210"> 
+		    <input class = "text" type="reset" name="reset"
+		    value="Reset" width="15" height="10">
+  		    <input class = "text" type="button" name="reload" value="Reload" width="15" height="10" onclick='reload_btn();return true;'>
+		    </td>
+		    <td></td>
+		    <td></td>
+		</tr>
+		<tr>
+		    <td></td>
+		    <td></td>
+		    <td></td>
+		</tr>
+  	   </table>
+	</td>
+</tr>
+
+<tr> <!-- row 2 -->
+    <td>
+    <table class="t1">
+       <tr>
+          <td><img class = "typ" src="img/grid.gif"></td>
+          <td class = "t1" rowspan="2">
+	    <div class = "text"> Grid name:<br> </div>
+            <input class ="text" type="text" name="grid_name" size="20" maxlength="100" readonly>
+            <input class ="text" type="hidden" name="grid_name_h">	    
+	  </td>
+       </tr>
+       <tr>
+          <td>
+	    <img class = "arr" src="img/rightArr.gif" onclick='click_report(document.report,2);return true;'>
+	  </td>
+      </tr>
+      <tr>
+          <td></td>
+          <td class = "t1"> 
+	    <div class="rubbish">
+	      <a name="pokus"> <img class = "rubbish" src="img/bomb.gif"onclick='clear_name(document.report.grid_name);clear_name(document.report.grid_name_h);return true;'> </a>	       
+	    <div></td>
+      </tr>
+    </table></td>
+</tr>
+
+<tr> <!-- row 3 -->
+    <td>
+      <table class="t1">
+       <tr>
+          <td><img class = "typ" src="img/format.png"></td>
+          <td class = "t1" rowspan="2">
+   	       <div class = "text"> Format name:<br> </div>
+	       <input class ="text" type="text" name="format_name" size="20" maxlength="100" readonly>
+      	       <input class ="text" type="hidden" name="format_name_h">
+	  </td>
+       </tr>
+       <tr>
+          <td>
+	    <img class = "arr" src="img/rightArr.gif" onclick='click_report(document.report,3);return true;'>
+	  </td>
+      </tr>
+      <tr>
+          <td></td>
+          <td class = "t1"> 
+	     <div class="rubbish">
+	      <a name="pokus"> <img class = "rubbish" src="img/bomb.gif"onclick='clear_name(document.report.format_name);clear_name(document.report.format_name_h);return true;'> </a>	       
+	     <div></td>
+      </tr>
+    </table>
+	</td>
+</tr>
+</table>
+</form>
+
+
+</body>
+</html>
+@
+
+
+1.2
+log
+@html edit pages
+@
+text
+@@
+
+
+1.1
+log
+@report.html + fixed tree errors
+@
+text
+@d16 1
+a16 1
+
+d20 1
+a20 1
+      <div class= "valign_top"> 
+d55 4
+a58 6
+          <td class = "t1" rowspan="2">
+    	     <form action="" metod="" name="ffa">
+  	       <div class = "text"> Nameee:<br> </div>
+	       <input class ="text" type="text" name="filter_name" size="20" maxlength="100">
+	     </form>  
+
+d63 2
+a64 1
+	  <a name="pokus"> <img class = "arr" src="img/rightArr.gif" onclick='echo();return true;'> </a></td>
+d70 1
+a70 1
+   	       <a name="pokus"> <img class = "rubbish" src="img/bomb.gif" onclick='clear_filter_name();return true;'> </a>	       
+d81 3
+a83 3
+			<div class = "text">Name:<br></div>
+			<input class = "text" type="text" name="name" size="29" maxlength="100">
+			</td>
+d87 3
+a89 3
+			<div class = "text">Description:<br></div>
+			<textarea class =" text " cols="23" rows="5" name="description"></textarea>
+			</td>
+d93 3
+a95 2
+		    <input class = "text" type="reset" name="reset" value="Reset" width="15" height="10">
+  		    <input class = "text" type="button" name="reload" value="Reload" width="15" height="10">
+d115 3
+a117 4
+	   <form action="" metod="" name="ffb"> 
+	    <div class = "text"> Name:<br> </div>
+            <input class ="text" type="text" name="grid_name" size="20" maxlength="100">
+	   </form> 
+d121 3
+a123 1
+          <td><img class = "arr" src="img/rightArr.gif"></td>
+d129 1
+a129 1
+	      <a name="pokus"> <img class = "rubbish" src="img/bomb.gif" onclick='clear_grid_name();return true;'> </a>	       
+d141 3
+a143 4
+             <form action="" metod="" name="ffc">
+   	       <div class = "text"> Name:<br> </div>
+	       <input class ="text" type="text" name="format_name" size="20" maxlength="100">
+	      </format> 
+d147 3
+a149 1
+          <td><img class = "arr" src="img/rightArr.gif"></td>
+d155 1
+a155 1
+     	      <a name="pokus"> <img class = "rubbish" src="img/bomb.gif" onclick='clear_format_name();return true;'> </a>	       
+d162 1
+a162 1
+
+@
+

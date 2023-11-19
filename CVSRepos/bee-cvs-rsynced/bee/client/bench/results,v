@@ -1,0 +1,52 @@
+head	1.1;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.1
+date	2004.06.08.15.11.59;	author numberone;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@
+Prepare API
+
+every bee must call ->prepare() before ->put()/->fetch()
+
+or they can call ->prepare_sql("SELECT/INSERT ...")
+
+->put() is identical to new ->execute()
+@
+text
+@
+
+put($i,'a'x($i&63)):
+
+               rows      secs     rps
+bench           1M        13      77k
+path            1M        65      15k
+tri             1M       107     9.3k
+serial         100k       19     5.3k
+para           100k       35     2.9k
+
+
+put(1):
+
+               rows      secs     rps
+bench          10M        69     144k
+path            1M        27      37k
+tri             1M        51      20k
+serial         100k       15     6.7k
+para           100k       28     3.6k
+
+
+@

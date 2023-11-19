@@ -1,0 +1,289 @@
+head	1.1;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.1
+date	2004.03.01.16.16.48;	author numberone;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@
+Added beard2 -- new bear daemon source tree.
+
+mdata subsystem works, some docs, some tests, etc.
+
+cached in progress
+@
+text
+@
+Algoritmus obsluhy klienta
+
+Moznost 1 -- thready pro SELECT, bez id-reportu, (identifikace definici)
+------------------------------------------------------------------------
+
+cached se pre-forkne, kazdy child ceka v accept(), pote:
+
+	vyhledej klientem pozadovany report
+
+	jestli nenaleznes {
+		vygeneruj SELECTy
+
+		pokud nejsou vsechny v S-CACHE {
+			nastartuj v threadech (zbyvajici) SELECTy
+			vrat informaci ze se vytvari (est. size...,  ne id)
+			close(CLIENT);
+		}
+
+		vygeneruj SQL-JOIN, napln R-CACHE
+
+		pokud jsme zavreli klienta {
+			exit;
+		}
+	}
+
+	vrat obsah reportu
+
+problem:
+po vytvoreni threadu musime sqlite_open databazi - pomale pokud pouzijeme
+pool tabulek
+chyba:
+SQL-JOIN muze trvat dlouho -- musime se vratit
+
+
+---
+  * napr. existuje SELECT ktery neni v cache
+
+
+
+Moznost 2 -- bez threadu, co proces to SELECT(/JOIN)
+----------------------------------------------------
+
+preforkuji se dynamicky, vzdy +5 nez je potreba
+stara se o to cached, ktery jinak nic nedela.
+
+kazdy child ceka v accept(), pote:
+
+	[a) posli msg rodici, ze obsluhujes ]
+
+	jestli najdes klientem pozadovany report {
+
+		vrat obsah reportu
+
+	} jinak {
+
+		vygeneruj SELECTy
+
+		foreach(SELECT co zbyva) {
+			nastartuj SELECT
+		}
+
+		vrat informaci ze se vytvari (est. size...,  ne id)
+		close(CLIENT);
+
+		[b) posli msg rodici, ze obsluhujes ]
+
+		cekej na dokonceni vsech SELECTu
+
+		vygeneruj SQL-JOIN, napln R-CACHE
+
+	}
+
+problem:
+rodici posilat signal nebo msg? signalem hezci, ale nespolehlive,
+sice cached si to co sekundu po signalu i tak prekontroluje (probehne
+vsechny childy a otevre/zavre socket), ale tu sekundu hrozi vypadek 
+(presneji zpozdeni reakce, kernel socket nezavre). to asi tolik nevadi,
+stane se tak malokdy.
+
+SIGUSR1 inkrementuje, SIGUSR2 nebo SIGCHLD dekrementuje
+killovani prebytecnych -- signalem, bacha na race po accept()u
+
+chyba:
+race: SQL-JOIN muze klient pospoustet vickrat
+
+
+Moznost 3 -- bez table-poolu
+----------------------------
+
+Note that if two or more threads have the same database open and one thread 
+creates a new table or index, the other threads might not be able to see 
+the new table right away. You might have to get the other threads to close 
+and reopen their connection to the database before they will be able to see 
+the new table.
+
+takze nemusime mit table-pool, naplnovat muzeme thready i procesy, je to jedno
+
+problem: ostatni REPORT procesy sice nove vytvarene tabulky nevidi, ale maji
+o nich info v #id tabulce, takze nove #id generuji spravne, ovsem potrebuji-li
+data z nejakeho selektu, musi reopen databazi. 
+tim ze je v db malo tabulek to mozna nevadi.
+reseni: mit maly pool, pridelovat tabulky z nej, cached hlida, aby se moc
+nezaplnil, pripadne dogeneruje dalsi a posle signal ze maji rereadnout
+
+
+Moznost 4 -- race vyresen
+-------------------------
+
+process REPORT: 
+	otevri sqlite .db
+
+	while(accept()) {
+
+		pokud jsme byli preruseni signalem {
+			sqlite_reopen();
+			next;
+		}
+
+		vytvor definici REPORTu
+
+		# $def je PK, uspech pokud neni kolize
+		alloc-table($def,$columns); 
+
+		jestli report najdes {
+			jestli je hotovy vrat report()
+			           jinak vrat progress()
+			ukonci obsluhu klienta
+		}
+
+		vygeneruj SELECTy
+
+		foreach(SELECT) {
+			# pokud neni nastartovany
+			if($s = alloc-table($SELECT,$columns))
+				nastartuj $SELECT do $s
+		}
+
+		print CLIENT "vytvari se REPORT, bude trvat ..."
+
+		cekej na dokonceni SELECTu
+		vygeneruj a spust SQL-JOIN  # stmt jde vytvorit i driv
+
+		vrat report();  # unless SIGPIPE?
+	}
+
+
+funkce alloc-table($report-id, $def, $cols):
+ * alokuj z poolu vhodnou tabulku
+
+	BEGIN
+	najdi $def v #cache
+	vrat $found-id jestli najdes
+
+	najdi free tabulku vhodne velikosti
+	smaz z #free, pridej (id,def) do #cache
+	COMMIT
+
+	pokud je v #free malo tabulek
+		upozorni rodice (pokud si ho jeste neupozornil)
+	vrat $new-id
+
+
+[COPY FROM] process SELECT:
+ * COPY je nejrychlejsi, ale blokuje pristup ostatnim - kopirujeme po blocich
+ * z MySQL cteme pomoci fetchrow(), chtelo by to ctenim dumpu
+
+	otevri sqlite
+	connect do mysql
+	priprav pomocny soubor $fd, namapuj ho do $mem
+
+	while(accept(CLIENT)) {
+		pokud jsme byli preruseni signalem {
+			sqlite_reopen();
+			next;
+		}
+
+		nacti z <CLIENT> ($id,$SELECT)
+		mysql->$SELECT
+
+		do {
+			$done = mysql->fetchrow(\$mem);
+
+			pokud je $mem plna nebo $done {
+				sqlite->COPY from $fd TO $id
+				vyprazdni soubor/mem
+			}
+		} until $done;
+
+		close(CLIENT);
+	}
+
+
+[INSERT] process SELECT:
+	podobne, v principu vsak velka rezie na lockovani tabulky
+
+
+servlet Bear.pm: (resici pozadavek na report)
+
+	zadej REPORT procesu pozadavek
+	nacti povinny radek se statusem;
+
+	if(progress) {
+		vypis progres a zajisti refresh $id po par sekundach; konec
+	}
+	if(vytvari-se) {
+		select(REPORT, par-sekund);  # pockej par sekund
+		pokud porad nic
+			vypis progres a zajisti refresh $id po par sekundach; konec
+	}
+	# if(done) nebo se stihnul vytvorit:
+	cti report
+
+
+process cached:
+
+	vytvor sockety, listen() na nich
+	
+	vytvor pool procesu @@rcache a @@scache
+	
+	while(1) {
+		sleep
+
+		pokud prisel signal tables-low {
+			nageneruj dalsi hromadu tabulek, vloz jejich nazvy do #free-?
+			posli signal tables-reopen foreach(@@rcache,@@scache);
+		}
+
+		pro kazde zemrele dite {   # while(waitpid(-1,WNOHANG))
+			vyskrtni z @@rcache nebo @@scache;
+			spust novy rcache nebo scache proces;
+		}
+
+		# tables-pool balancing
+		pokud je cache.db prilis velka {
+			vymaz tabulky s malymi #cache.init casy a velkymi #cache.rps pocty
+			# fix: nesmime smaznout jeste nezobrazeny report (#cache.done?)
+			# todo: ber do uvahy i cas, kdy byl report naposled pozadovan
+		}
+
+		# todo: kids-pool balancing
+	}
+
+
+databaze cache.db:
+	tabulky #free-3, #free-10, #free-30 s poolem volnych tabulek prislusne velikosti
+		id - nazev tabulky
+
+	#cache
+		id   - id reportu/selectu
+		def  - definice reportu/SELECTu
+		init - cas ktery MySQL/SQLite potrebovala k inicializaci SELECTu/JOINu
+		rps  - rows-per-second, rychlost plneni
+		# nasledujici mozna nepotrebujeme
+		done - 'init'/'progress'/'done'/'reported'
+		cols - pocet pouzitych sloupcu
+		?    - mozna nejake dalsi statistiky (kdo zahajil, kdy, ..)
+
+
+
+
+@

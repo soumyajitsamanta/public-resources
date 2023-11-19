@@ -1,0 +1,99 @@
+head	1.2;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2003.10.31.12.47.57;	author jiri_schmid;	state dead;
+branches;
+next	1.1;
+
+1.1
+date	2003.10.16.14.08.53;	author jiri_schmid;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@mod perl rocks!
+@
+text
+@#-----------------------------------------------------
+#  Format Editation
+#-----------------------------------------------------
+# $Id: graph3d_lib.pl,v 1.1 2003/10/16 14:08:53 jiri_schmid Exp $
+
+use strict;
+#-----------------------------------------------------
+
+sub existsDefinition {
+my ($obj, $localTab) = (shift, shift);
+if (exists $$obj->{$localTab}) {
+	if (exists $$obj->{$localTab}->{items} && exists $$obj->{$localTab}->{quantity}) { return 1 }
+}
+return undef
+}
+
+#-----------------------------------------------------
+sub saveDTSC { #saving procedure for Diameter, Transparency, Shape and Color
+my ($obj, $localTab) = (shift, shift);
+my @@pole;
+my $name;
+my $add;
+delete($obj->{$localTab}{rules}) if (exists $obj->{$localTab}{rules});
+if (param('metric')) {
+	foreach (0..$#{$obj->{$localTab}{items}}) {
+		undef @@pole;
+		my $id = @@{$obj->{$localTab}{items}}[$_];
+		my $end = sprintf("%.0f",8/@@{$obj->{$localTab}{items}});
+		for my $cnt (0..$end) {
+			$name = "view${_}$cnt";
+			push(@@pole,param($name),param("change".${_}.$cnt)) if param($name);
+			}
+		@@{$obj->{$localTab}{rules}}[$_] = [@@pole];
+	}
+} else {
+	for my $cnt (0..5) {
+		$add = 0;
+		undef @@pole;
+		foreach (0..$#{$obj->{$localTab}{items}}) {
+			$name = "view${cnt}_$_";
+			$add++ if param($name);
+			push(@@pole,param($name));
+		}
+		$name = "change${cnt}";
+		push(@@pole,param($name));
+		@@{$obj->{$localTab}{rules}}[$cnt] = [@@pole] if $add > 0;
+	}
+}
+if ($obj->{$localTab}{quantity} eq "on") {
+	$obj->{$localTab}{interpolation} = param('interpolation');
+	$obj->{$localTab}{max} = param('max');
+	$obj->{$localTab}{min} = param('min');
+} else {
+$obj->{$localTab}{interpolation} = 'constant';
+}
+$obj->{$localTab}{default} = param('default');
+}
+
+1
+@
+
+
+1.1
+log
+@mod-perl implementation stage 1, rebuilding global vars in .pl to global pointers
+@
+text
+@d4 1
+a4 1
+# $Id: graph3d_ed.pl,v 1.15 2003/09/17 14:51:14 jiri_schmid Exp $
+@
+

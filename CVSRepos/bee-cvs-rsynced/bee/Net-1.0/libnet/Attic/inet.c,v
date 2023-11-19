@@ -1,0 +1,274 @@
+head	1.2;
+access;
+symbols;
+locks; strict;
+comment	@ * @;
+
+
+1.2
+date	2003.08.11.06.34.19;	author numberone;	state dead;
+branches;
+next	1.1;
+
+1.1
+date	2003.02.05.15.46.36;	author numberone;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@removing old dir Net-1.0
+@
+text
+@#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+
+#ifdef WIN32
+#include<winsock.h>
+#else
+#include <netdb.h>
+#include <unistd.h>
+#include <sys/wait.h>
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
+#include <signal.h>
+#include <unistd.h>
+#include <fcntl.h>
+#include <errno.h>
+#endif
+
+#include "net.h"
+#include "sys.h"
+
+// microsoft
+#ifdef WIN32
+#define snprintf _snprintf
+#endif
+
+static void NETERROR(char *fx) {
+#ifdef WIN32
+	fprintf(stderr,"%s: %d\n",fx,WSAGetLastError());
+	exit(1);
+#else
+	perror(fx);
+	exit(1);
+#endif
+}
+
+//#define DEBUG(format,args...)
+#define QUIET 
+#define DEBUG 
+#define PRINT printf
+
+
+/*	inet_read, inet_write, inet_close and inet_block 	*
+ *	are shared with NET::UNIX - unix.c!					*/
+
+
+// read as many data as you can
+// returns -1 on EOF (connection closed), 0 on idle, 1+ as datalength
+// -2+ on serious error
+int inet_read(Net net,void *buffer,int len) {
+	len = recv(net->sock,buffer,len,0);
+/*	len = read(net->sock,buffer,len);*/
+	if(len == -1) {
+#ifdef WIN32
+		if(WSAGetLastError() == WSAEWOULDBLOCK) return 0;
+#else
+		if(errno == EAGAIN) return 0;
+#endif;
+		NETERROR("recv()");
+		return -2;
+	}
+	if(!len) return -1;
+	return len;
+}
+
+
+// SHOULD return 0 on error!
+int inet_write(Net net,void *chunk,int len) {
+	int err = send(net->sock,chunk,len,0);
+	if(err == -1) NETERROR("write()");
+	return err; // length
+}
+
+
+// set non-blocking IO
+void inet_block(Net net,Bool block) {
+#ifdef WIN32
+	u_long arg = !block;
+	if(ioctlsocket(net->sock,FIONBIO,&arg)) NETERROR("ioctlsocket()");
+#else
+	int  flags;
+	flags = fcntl(net->sock,F_GETFL);
+	if(flags == -1) NETERROR("fcntl()");
+	flags = block ? (flags & (~O_NONBLOCK)) : (flags | O_NONBLOCK);
+	flags = fcntl(net->sock,F_SETFL,flags);
+	if(flags == -1) NETERROR("fcntl()");
+#endif
+}
+
+
+void inet_close(Net net) {
+	DEBUG("(inet|unix)_close: closing sock=%d\n",net->sock);
+#ifdef WIN32
+	closesocket(net->sock);
+#else
+	close(net->sock);
+#endif
+}
+
+
+// returns NULL on error
+Net inet_accept(Net net) {
+	int sock;
+	char peer[256];
+
+#ifdef WIN32
+	SOCKADDR_IN *sin;
+	int sin_len = sizeof(SOCKADDR_IN);
+	sin = (SOCKADDR_IN *)net->data;
+#else
+	struct sockaddr_in *sin;
+	int sin_len = sizeof(struct sockaddr_in);
+	sin = (struct sockaddr_in *)net->data;
+#endif
+
+	if(!sin) exit(5); // doing accept on non-server socket
+
+	DEBUG("listening on port %d\n",ntohs(sin->sin_port));
+
+	sock = accept(net->sock,(void*)sin,&sin_len);
+
+	if(sock == -1) {
+#ifdef WIN32
+		if(WSAGetLastError() == WSAEWOULDBLOCK) 
+#else
+		if(errno == EAGAIN)
+#endif;
+				return NULL;
+		   else NETERROR("accept()");
+	}
+
+	snprintf(peer,256,"%s:%d",inet_ntoa(sin->sin_addr),ntohs(sin->sin_port));
+	DEBUG("connection from %s\n",peer);
+	return create_net(NET_SYS_INET,sock,peer,NULL);
+}
+
+
+/* public constructors */
+
+/* todo: WSAGetLastError insead of perror() ! */
+
+// constructor
+Net net_server_inet(int port) {
+#ifdef WIN32
+	SOCKADDR_IN *sin;
+#else
+	struct sockaddr_in *sin;
+#endif
+	int  sock, yes=1;
+	char peer[10];
+	Net net;
+
+	sock = socket(AF_INET,SOCK_STREAM,0);
+	if(sock == -1) NETERROR("socket()");
+
+	sin = malloc(sizeof(*sin));
+	sin->sin_family = AF_INET;
+	sin->sin_addr.s_addr = INADDR_ANY;
+	sin->sin_port = htons((short)port);
+
+	if(bind(sock,(struct sockaddr*)sin,sizeof(*sin))) NETERROR("bind()");
+
+	// SOMAXCONN = 5 on m$
+	if(listen(sock,SOMAXCONN)) NETERROR("listen()");
+
+#ifndef WIN32
+	if(setsockopt(sock, SOL_SOCKET, SO_REUSEADDR, &yes, sizeof(int)))
+			NETERROR("setsockopt()");
+#endif
+
+	snprintf(peer,10,":%d",port);
+
+	net = create_net(NET_SYS_INET,sock,peer,(char*)NULL);
+
+	net->data = (void*)sin;
+	return net;
+}
+
+// constructor
+Net net_connect_inet(const char *host,int port) {
+#ifdef WIN32
+	LPHOSTENT hp;
+	SOCKADDR_IN sin;
+#else
+	struct	hostent *hp;
+	struct sockaddr_in sin;
+#endif
+	char peer[256];
+	int sock;
+
+	sock = socket(AF_INET,SOCK_STREAM,0);
+	if(sock == -1) NETERROR("socket()");
+
+	if(!(hp = gethostbyname(host))) {
+#ifdef WIN32
+		fprintf(stderr,"gethostbyname(): %d\n",WSAGetLastError());
+#else
+		herror("gethostbyname");
+#endif
+		exit(1);
+	}
+
+	sin.sin_family = AF_INET;
+	sin.sin_addr = **((struct in_addr **)hp->h_addr_list);
+	sin.sin_port = htons((short)port);
+
+	if(connect(sock,(struct sockaddr*)&sin,sizeof(sin))) 
+		NETERROR("connect()");
+
+	DEBUG("connected to %s:%d\n",host,port);
+
+	snprintf(peer,256,"%s:%d",host,port);
+
+	return create_net(NET_SYS_INET,sock,peer,NULL);
+}
+
+
+Bool inet_init() {
+#ifdef WIN32
+	WORD wVersionRequested = MAKEWORD(1,1);
+	WSADATA wsaData;
+	int nRet;
+
+	// Initialize WinSock and check the version
+	nRet = WSAStartup(wVersionRequested, &wsaData);
+	if(wsaData.wVersion != wVersionRequested) {	
+		fprintf(stderr,"winsock: wrong version\n");
+		return false;
+	}
+#endif
+	return true;
+}
+
+/* todo: WSACleanup() */
+
+@
+
+
+1.1
+log
+@libnet-1.0, README
+@
+text
+@@
+

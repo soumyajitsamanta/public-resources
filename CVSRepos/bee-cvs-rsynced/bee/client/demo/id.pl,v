@@ -1,0 +1,28 @@
+head	1.1;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.1
+date	2003.02.05.15.40.43;	author numberone;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@identity transformation
+@
+text
+@my($in,$out) = @@_;
+
+$out->put(@@_) while(@@_ = $in->fetch);
+
+
+@

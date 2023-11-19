@@ -1,0 +1,129 @@
+head	1.1;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.1
+date	2004.04.18.02.54.54;	author michald;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@publication of the Czech Help
+@
+text
+@<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html>
+<head>
+  <meta http-equiv="CONTENT-TYPE" content="text/html; charset=utf-8">
+  <meta http-equiv="language" content="CZ">
+  <title>Uvod</title>
+  <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+[ <a href="index.html">Zpět</a> ]<br>
+<h1>1 Úvod</h1>
+<p>Základní význam informačních technologií z oblasti business
+intelligence spočívá v podpoře všech úrovní řízení organizace při
+strategickém i operativním rozhodování. Firma, která používá informační
+systém pro potřeby zajištění svého provozu shromažďuje poměrně velké
+objemy dat, která mohou mít vysokou informační hodnotu a při správném
+použití v rámci firemních rozhodovacích procesů mohou představovat
+významný faktor ovlivňující jak efektivitu hospodaření, tak obchodní
+úspěch firmy. Problémem je, jak informaci, skrytou v podnikových datech
+vhodnou a efektivní formou zpřístupnit osobám zodpovědným za
+rozhodování. Vytváření přehledů dosažených výsledků (tzv. reportů)
+přímo z provozních systémů je obtížné, časově náročné a mnohdy i
+prakticky nemožné, protože tyto informační systémy jsou projektovány
+pro zajištění operativního chodu organizace a nikoliv se zaměřením na
+analýzu dat v širším kontextu a v průběhu delších časových intervalů.<br>
+</p>
+<p>Projekt BEE je komplexní řešení umožňující budovat robustní
+manažerské systémy pro podporu rozhodování ve středně velkých firmách.
+Architektura systému vychází z konceptu ROLAP (Relational On-Line
+Analytical Processing). Základními částmi Projektu BEE jsou nástroje
+pro provoz procesů ETL (Extraction, Transformation and Loading, tzv.
+pumpy dat) pro vlastní naplnění datového skladu, vlastní úložiště dat a
+část zajišťující analytické zpracování a prezentaci (viz. <span
+ style="font-style: italic;">Obr. 1</span>).</p>
+<br>
+<p align="center">
+<img src="img/1_uvod_html_42720043.jpg" name="Obrázek1" border="0"><br>
+</p>
+<p style="font-style: italic;" align="center">Obr. 1: Základní
+části Projektu BEE.</p>
+<br>
+<p>Mezi klíčové
+uživatelské vlastnosti v Projektu BEE patří:</p>
+<ul>
+  <li>
+    <p><span style="font-weight: bold;"> Snadný a rychlý přístup k datům</span>
+prostřednictvím rozhraní tenkého klienta pro prohlížení WEB stránek
+(tj. WWW prohlížeče), tedy nezávislost na platformě klientské stanice a
+možnost efektivní práce i při připojení přes pomalé komunikační kanály
+(prostřednictvím internetu, vytáčenou telefonní linkou, GPRS).</p>
+  </li>
+  <li>
+    <p> Možnost využití předdefinovaných reportů i <span
+ style="font-weight: bold;">ad hoc</span> (náhodných) dotazů.</p>
+  </li>
+  <li>
+    <p><span style="font-weight: bold;"> Snadné vytváření reportů</span>
+metodou <i>drag and drop </i> <a name="sdfootnote1anc"
+ href="#sdfootnote1sym"><sup>1</sup></a>.</p>
+  </li>
+</ul>
+<ul>
+  <li>
+    <p><span style="font-weight: bold;"> Snadná manipulace s výsledným
+reportem</span>: tzv. <i>drill down <a name="sdfootnote2anc"
+ href="#sdfootnote2sym"><sup>2</sup></a></i>, pivotování tabulek, změna
+formátů vzhledu reportů, export dat do kancelářských aplikací a formátu
+PDF.</p>
+  </li>
+  <li>
+    <p><span style="font-weight: bold;"> Kvalitní prezentace dat</span>
+pomocí tabulek a grafů.</p>
+  </li>
+</ul>
+<ul>
+  <li> Důsledná <span style="font-weight: bold;">internacionalizace</span>
+systému
+a tedy možnost práce ve vícejazyčném
+prostředí.</li>
+</ul>
+<br>
+<br>
+<br>
+<br>
+<hr>
+<div>
+<p><a name="sdfootnote1sym" href="#sdfootnote1anc">1</a>) Metodou <i>drag
+and drop</i> se rozumí kliknutí levým tlačítkem myši nad určitým
+grafickým prvkem (např. nad názvem faktu), který se takto dočasně spojí
+s kurzorem myši. Přemístěním kurzoru na požadované cílové místo a
+kliknutím opět levým tlačítkem myši se pak uchopený prvek vloží na
+požadované místo.</p>
+</div>
+<div>
+<p><a name="sdfootnote2sym" href="#sdfootnote2anc">2</a>) Funkcí <i>drill
+down</i> se rozumí postup přechodu na větší úroveň detailu v zobrazení
+dat. </p>
+</div>
+<br>
+[ <a href="1_1_pouzivane_pojmy.html">1.1 Používané pojmy</a> ]<br>
+[ <a href="1_2_popis_uzivatelskeho_rozhrani.html">1.2 Popis
+uživatelského rozhraní</a> ]<br>
+<br>
+<br>
+</body>
+</html>
+@

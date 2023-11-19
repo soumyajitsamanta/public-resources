@@ -1,0 +1,49 @@
+head	1.2;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2004.03.02.13.01.03;	author jiri_schmid;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2003.08.21.12.02.14;	author jiri_schmid;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@changed id handling 4 access tree
+@
+text
+@<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<project>
+  <folder id="bd_USERS_" type="users">
+    <name cz="Uživatele" en="Users" />
+    <description cz="uzivaci" en="useraci" />
+  </folder>
+</project>
+@
+
+
+1.1
+log
+@description for access tree changes
+@
+text
+@d3 1
+a3 1
+  <folder id="_USERS_">
+d7 1
+a7 1
+</project>@
+

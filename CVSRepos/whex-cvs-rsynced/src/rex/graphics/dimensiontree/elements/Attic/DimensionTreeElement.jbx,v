@@ -1,0 +1,54 @@
+head	1.2;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2006.01.13.12.21.14;	author igorludi;	state dead;
+branches;
+next	1.1;
+
+1.1
+date	2005.10.18.14.04.40;	author igorludi;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@*** empty log message ***
+@
+text
+@[PropertyInfo]
+caption,String,false,false, , ,true,<default>
+childrenCount,int,false,false, , ,true,<default>
+dimensionUniqueName,String,false,false, , ,true,<default>
+enabled,boolean,false,false, , ,true,<default>
+icon,ImageIcon,false,false, , ,true,<default>
+popUpActionList,String[],false,false, , ,true,<default>
+properties,ClsXMLAProxDiscoverProperties,false,false, , ,true,<default>
+restrictions,ClsXMLAProxDiscoverRestrictions,false,false, , ,true,<default>
+serverMetadata,ServerMetadata,false,false, , ,true,<default>
+toolTip,String,false,false, , ,true,<default>
+uniqueName,String,false,false, , ,true,<default>
+[IconNames]
+
+
+
+
+@
+
+
+1.1
+log
+@*** empty log message ***
+@
+text
+@@
+

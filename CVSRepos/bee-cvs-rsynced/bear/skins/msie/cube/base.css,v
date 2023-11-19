@@ -1,0 +1,107 @@
+head	1.3;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.3
+date	2003.11.20.09.42.51;	author michald;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2003.11.12.12.44.28;	author jiri_schmid;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2003.10.03.21.17.27;	author vasekd;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.3
+log
+@fix of LDM, cleanup of some obsolete files
+@
+text
+@BODY {font-family:sans-serif; line-height:1em; background-color:#f7f7f7; color:#000;} 
+A {color: #0000ee; text-decoration: none; }
+A:hover {color: #ee0000; text-decoration: none}
+A.neg {color: #ffffff}
+A:hover.neg {color: #ffff00; text-decoration: underline}
+TD {font-size: small; color:black;}
+TH {font-size: small; font-weight:bold; background-color:#aaaaaa; color:black;}
+IMG {border:0;}
+SPAN {font-size: 14px; white-space:nowrap;}
+
+IMG.arr {border:0;cursor:pointer;}
+
+SPAN.error {font-size: large; text-align:center; color:red; font-weight:bold;}
+
+TABLE.folders {border:0; empty-cells:show; vertical-align:top}
+TD.folders {border:0; vertical-align:top; padding-left:5px; padding-right:5px; padding-top:3px; padding-bottom:3px}
+TD.folders#sep {width:20px;border-style:none; empty-cells:show; vertical-align:text-top}
+
+TABLE.main {border:0; empty-cells:show; padding:0; border-spacing:0; vertical-align:top; background-color:#f0f4d0}
+TD.main {background-color:#b6dcef; vertical-align:top;}
+
+TABLE.neutral {background-color: #5190e2; color: #000000; border: thin solid #424242; margin: 0; padding: 0; text-align:left;}
+TD.neutral_bold {background-color: inherit; color: inherit; border: none; margin: 0; padding: 0; font-size: 16px;}
+
+TABLE.tabs_icon_bar {border:0; empty-cells:show; width:100%; padding:0; border-spacing:0}
+TABLE.tabs {color:inherit; background-color: inherit; white-space:nowrap;}
+TR.tabs {height:21px;}
+TR.tabs#top {height:3px;}
+TR.tabs#bottom {height:3px;}
+TD.instrat {color: #EEEEEE; font-size: 10px; text-align:right}
+TD.tabs_tab {text-align:center; padding: 0px 0px 0px 0px; white-space:nowrap;border-top: 1px solid #282828}
+TD.tabs_tab_corner {padding: 0px 0px 0px 0px; white-space:nowrap; vertical-align:top;}
+TD.tabs_sep {background-color:#EEE; white-space:nowrap;}
+TD.tabs_tab A {color: #FFF; font-size: 10px;font-weight:bold; text-decoration: none; white-space:nowrap;}
+TD.tabs_tab A:hover {color: #FFF; font-size: 10px; font-weight:bold; text-decoration: underline; white-space:nowrap;}
+
+DIV.tabs {color:inherit; background-color: inherit; overflow:auto; width:100%;}
+DIV.invisible {visibility:hidden;}
+DIV#maindiv {font-size: 12px;}
+DIV.loading {color:#005; background-color: #95d8f9 ;font-size: 15px; font-weight:bold; font-style:italic; border: 1px solid #000; padding: 15px 15px 15px 15px; position: absolute; top: 10%; left:15%; z-index:10; display:block;}
+
+.nowrap {white-space:nowrap}
+.cursor {cursor:pointer; cursor: hand} /*cursor Hand - IE 5.5-- specific*/
+
+TABLE.iconTab {white-space:nowrap; border-spacing:0px; text-align:center; cursor: default;font-size:11px;}
+TABLE.iconTab TD.iconItem {width:26px; background-color:inherit; padding:1px 1px 2px 1px;}
+TABLE.iconTab TD.iconItem:hover {width:26px; background-color:#d8f2ff; padding:0px 0px 1px 0px; border: 1px solid #000;}
+
+TABLE.iconTab TD {background-color:inherit; color:#000; font-size:11px; white-space:nowrap}
+TABLE.iconTab TD.textItem {width:26px; background-color:inherit; padding:1px 5px 1px 5px; color:#fff; font-size:11px;}
+TABLE.iconTab TD.textItem A {width:26px; background-color:inherit; padding:1px 5px 1px 5px; color:#fff; font-size:11px; text-decoration: none; cursor: pointer}
+TABLE.iconTab TD.textItem A:hover {width:26px; background-color:inherit; padding:1px 5px 1px 5px; color:#fff; font-size:11px; text-decoration: underline; cursor: pointer}
+@
+
+
+1.2
+log
+@ldm multiimages implemented
+@
+text
+@d4 2
+@
+
+
+1.1
+log
+@added new style cube for IE
+@
+text
+@d43 1
+a43 1
+TABLE.iconTab {white-space:nowrap; border-spacing:0px; text-align:center; cursor: default}
+d46 5
+@
+

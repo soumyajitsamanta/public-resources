@@ -1,0 +1,56 @@
+head	1.2;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2003.11.06.12.06.33;	author numberone;	state dead;
+branches;
+next	1.1;
+
+1.1
+date	2003.06.03.13.16.13;	author numberone;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@renaming .xml to .scheme and .bee
+@
+text
+@<?xml version="1.0" encoding="ISO-8859-2"?>
+<script lang="perl" name='eat'>
+
+<input name="in" type='stream' arity='1' />
+
+<code>
+<![CDATA[
+
+my $i = 0;
+while($in->fetch) {
+	$i++;
+    print "eat: $i\n" if(($i % 100) == 0);
+}
+
+]]>
+</code>
+
+</script>
+
+@
+
+
+1.1
+log
+@0.9.1 -- version merge
+@
+text
+@@
+

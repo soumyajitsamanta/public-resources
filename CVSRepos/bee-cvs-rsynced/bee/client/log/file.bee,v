@@ -1,0 +1,67 @@
+head	1.1;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.1
+date	2003.08.11.06.53.58;	author numberone;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@merging old version to cvs
+@
+text
+@<?xml version="1.0" encoding="ISO-8859-2"?>
+<script lang="perl" name='file'>
+<description>
+---
+</description>
+
+<input name="url" type='stream' />
+
+<output name="clf" type='stream'/>
+
+<code>
+<![CDATA[
+#	Module for parsing filename
+#	Input: CLF stream with parsed URL
+#	Output: CLF stream with parsed URL and file
+#	Last revision:
+#		2003-05-08	xpav	new
+
+use strict;
+use Data::Dumper;
+
+while (my @@row = $url->fetch) {
+
+	#	input stream
+	my ($host,$date,$time,$path,$file,$status,$bytes) = @@row;
+
+	# extension
+	my $extension = "";
+
+	#	file name without extension
+	my $file_name = $file;
+
+	#	just split it as filename.extension
+	($file_name,$extension) = ($file =~ /^(.*)\.(.*)$/) 
+		if ($file =~ /^(.*)\.(.*)$/);
+
+	#	sending the output 
+	$clf->put($host,$date,$time,$path,$file_name,$extension,$status,$bytes);
+}
+]]>
+</code>
+
+</script>
+
+@

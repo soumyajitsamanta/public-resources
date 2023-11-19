@@ -1,0 +1,190 @@
+head	1.3;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.3
+date	2003.08.11.13.50.25;	author jiri_schmid;	state dead;
+branches;
+next	1.2;
+
+1.2
+date	2003.08.11.12.30.56;	author jiri_schmid;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2003.08.06.15.22.29;	author jiri_schmid;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.3
+log
+@admin page drag-drop implemented
+@
+text
+@#!/usr/bin/perl
+#-----------------------------------------------------
+#  Folder Display
+#-----------------------------------------------------
+# $Id: access.cgi,v 1.2 2003/08/11 12:30:56 jiri_schmid Exp $
+
+use strict;
+use CGI qw( :standard );
+use CGI::Pretty;
+our $q = new CGI;
+use vars qw($lang $Languages $name_w $descr_w $itemWide);
+binmode STDOUT,":utf8";
+
+require "const.def";
+require "local_lib.pl";
+require "tree.pl";
+
+our $User=$q->remote_user();
+
+my $use_lang = param('Lang');
+my $use_enc = 'UTF-8';
+my $type = param('Type');
+require $Languages->{$use_lang}->{'src'};
+
+print $q->header(-charset=>$use_enc);
+
+print $q->start_html(
+	-title=>"iframe",
+	-class=>"$type",
+	-lang=>$Languages->{$use_lang}->{lang},	#return language specification in format: language-country (it differs from param Lang)
+	-encoding=>$use_enc,
+	-head=>meta({	-http_equiv => 'Content-Type', 
+			-content => "text/html; charset=$use_enc" }),
+	-script=>[{-language=>'JAVASCRIPT', -src=>'js/access.js'}],
+	-style=>{-src=>'css.css'}
+);
+if (! $use_lang) {print "<span style=\"color:#f00; font-weight:bold; font-size:20px\">Break! - no user prefernces specified.</span><br/><br/><span><a href=\"index.cgi?TabAct=P\" target=\"_top\">Set and save user preferences first.</a></span></body></html>"; die;};
+my $title = "Access $type";
+print <<END;
+<table><tr><td class='neutral_bold'>$lang->{$title}</td></tr></table>
+<table class="page_skeleton">
+<tr class="page_skeleton">
+<td class="page_skeleton">
+END
+if ($type eq 'list') { &generateList }
+elsif ($type eq 'user') { &generateUser }
+elsif ($type eq 'group') { &generateGroupRule }
+elsif ($type eq 'rule') { &generateGroupRule }
+else {print "tuuuuudle"}
+
+
+print "</td></tr></table>";
+
+print $q->end_html;
+
+
+#---------------------------------------------------
+
+sub generateList {
+	&createTree;
+}
+
+#---------------------------------------------------
+
+sub generateUser {
+print <<END;
+
+	<table class="neutral">
+	<tr><td class="neutral_bold">$lang->{'Name'}</td></tr>
+	<tr><td><input value="" type="text" name="name" id="NAME" size="$name_w" maxlength="100"/></td></tr>
+	<tr><td class="neutral_bold">$lang->{'Access login'}</td></tr>
+	<tr><td><input value="" type="text" name="name" id="NAME" size="$name_w" maxlength="100"/></td></tr>
+	<tr><td class="neutral_bold">$lang->{'Access passwd'}</td></tr>
+	<tr><td><input value="" type="PASSWORD" name="name" id="NAME" size="$name_w" maxlength="100"/></td></tr>
+	<tr><td class="neutral_bold">$lang->{'Description'}</td></tr>
+	<tr><td><textarea cols="$itemWide" rows="3" name="desc" id="DESC"></textarea></td></tr>
+	<tr><td><hr/></td></tr>
+	<tr><td>$lang->{'Access memberOFgroup'}</td></tr>
+	<tr><td>
+		<select multiple='multiple'>
+			<option>Admin</option>
+			<option>Root</option>
+			<option>SuperRoot</option>
+			<option>SuperAdmin</option>
+		</select>
+	</td></tr>
+	</table>
+	
+
+END
+
+}
+
+#---------------------------------------------------
+
+sub generateGroupRule {
+print <<END
+	<table class="neutral">
+	<tr><td class="neutral_bold">$lang->{'Name'}</td></tr>
+	<tr><td><input value="" type="text" name="name" id="NAME" size="$name_w" maxlength="100"/></td></tr>
+	<tr><td class="neutral_bold">$lang->{'Description'}</td></tr>
+	<tr><td><textarea cols="$itemWide" rows="3" name="desc" id="DESC"></textarea></td></tr>
+	<tr><td><hr/></td></tr>
+	<tr><td>$lang->{'Access groupContain'}</td></tr>
+	<tr><td>
+		<select multiple='multiple'>
+			<option>Ja</option>
+			<option>Mne</option>
+			<option>Id</option>
+		</select>
+	</td></tr>
+	</table>
+
+END
+}
+
+#---------------------------------------------------
+
+sub do_out {
+my $rtrn = "\n";
+foreach (keys(%ENV)) { 
+	if ($_ eq "SERVER_SIGNATURE")  
+		{my $x = $ENV{$_};
+		 $x =~ s/<[^A-Z]*//g; 
+		 $rtrn .= "$_: ".$x."\n";}
+	else {$rtrn .= "$_: ".$ENV{$_}."\n";}
+	}
+return $rtrn;
+}
+@
+
+
+1.2
+log
+@admin page implementation started
+@
+text
+@d5 1
+a5 1
+# $Id: access.cgi,v 1.1 2003/08/06 15:22:29 jiri_schmid Exp $
+@
+
+
+1.1
+log
+@user ACL implementation started
+@
+text
+@d5 1
+a5 1
+# $Id: admin.cgi,v 1.10 2003/07/08 08:24:43 jiri_schmid Exp $
+d16 1
+d34 1
+d60 1
+a60 1
+print '<pre>'.&do_out().'<pre>';
+@
+

@@ -1,0 +1,430 @@
+head	1.4;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.4
+date	2006.01.13.12.21.14;	author igorludi;	state dead;
+branches;
+next	1.3;
+
+1.3
+date	2005.10.18.14.04.40;	author igorludi;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2005.10.18.13.40.38;	author igorludi;	state dead;
+branches;
+next	1.1;
+
+1.1
+date	2005.06.28.14.10.51;	author igorludi;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.4
+log
+@*** empty log message ***
+@
+text
+@package rex.graphics.dimensiontree;
+
+
+import javax.swing.event.*;
+import javax.swing.tree.*;
+import java.util.Vector;
+
+
+import rex.metadata.ServerMetadata;
+
+import rex.utils.S;
+import javax.swing.JOptionPane;
+import rex.graphics.dimensiontree.elements.DimensionRootElement;
+import org.tempuri.type.ClsXMLAProxDiscoverRestrictions;
+import org.tempuri.type.ClsXMLAProxDiscoverProperties;
+import rex.metadata.QueryElement;
+import rex.graphics.dimensiontree.elements.DimensionTreeElement;
+import rex.graphics.dimensiontree.elements.DimensionElement;
+import rex.graphics.dimensiontree.elements.MeasureElement;
+import rex.graphics.*;
+/**
+ * <p>Title: WHEX</p>
+ * <p>Description: </p>
+ * <p>Copyright: Copyright (c) 2003</p>
+ * <p>Company: </p>
+ * @@author igor
+ * @@version 1.0
+ */
+
+
+
+public class DimensionTreeModel implements TreeModel {
+
+    private Vector treeModelListeners;
+    private TreeElement root;
+    private ServerMetadata smd;
+    private ClsXMLAProxDiscoverRestrictions restrictions;
+    private ClsXMLAProxDiscoverProperties   properties;
+    private boolean flattenDimensions;
+    private boolean withMembersLevel;
+//  Members with more than MAX_CHILDREN_COUNT_DONT_ASK children don't get
+//  their children populated initialy, but if later user expands this node
+//  children will be:
+//  A) added automatically if their estimated count is less than MAX_CHILDREN_COUNT_ASK
+//  B) user will be asked weather he wants to expand this branch node since estimated children
+//     count is bigger than MAX_CHILDREN_COUNT_ASK
+// *Remeber: OLAP server estimates these counts, so sometimes they are off.
+    protected static int MAX_CHILDREN_COUNT_ASK = 1001;
+    protected static int MAX_CHILDREN_COUNT_DONT_ASK = 1;
+
+
+    public DimensionTreeModel(ClsXMLAProxDiscoverRestrictions _restrictions
+                           ,  ClsXMLAProxDiscoverProperties   _properties
+                           ,  ServerMetadata _smd
+                           ,  boolean _withMembersLevel) {
+
+       flattenDimensions = true; // defualt value, should move it to some config file
+       withMembersLevel = _withMembersLevel;
+
+       root = new TreeElement(new DimensionRootElement(), null);
+       ((DimensionRootElement)root.getUserObject()).setFlattenDimensions(flattenDimensions);
+       restrictions = _restrictions;
+       properties = _properties;
+       smd = _smd;
+       treeModelListeners = new Vector();
+
+       buildTree();
+    }
+
+    public void buildTree(){
+       int i;
+       restrictions.getRestrictionList().setDimensionUniqueName(null);
+       restrictions.getRestrictionList().setHierarchyUniqueName(null);
+       DimensionTreeElement dims[] = smd.getDimensionList(restrictions, properties);
+       if (dims != null){
+          for (i = 0; dims != null && i < dims.length; i++) {
+             ((DimensionElement) dims[i]).setFlattenDimensions(flattenDimensions); // setting the default state at creation
+             TreeElement dimension = new TreeElement(dims[i], root);
+             root.addChild(dimension);
+             buildTreeRecursively(dimension);
+          }
+          fireTreeStructureChanged(root);
+       }else{
+          JOptionPane.showMessageDialog(null
+                                        , "Sorry, there are no dimensions available!\n"
+                                        , "Get dimensions for a browsable tree"
+                                        , JOptionPane.ERROR_MESSAGE);
+       }
+
+    }
+    private void buildTreeRecursively(TreeElement parent){
+       int i;
+       DimensionTreeElement[] dte;
+       dte = ((DimensionTreeElement) parent.getUserObject()).getChildren(false);
+/*  Gave up on this:
+       if (   parent.getUserObject() instanceof DimensionElement
+           && ((DimensionElement)parent.getUserObject()).isMeasureDimension()){
+       // I'll handle Measures dimension separetly, because I wont to lose
+       // that ugly "MesauresLevel" i.e.
+       // Measures
+       //   -MeasuresLevel
+       //      -Count
+       //      -Quantity
+       // -->use this instead:
+       // Measures
+       //   -Count
+       //   -Quantity
+         dte = dte[0].getChildren(false);
+      }
+ */
+      for (i = 0; dte != null && i < dte.length; i++) {
+         TreeElement node = new TreeElement(dte[i], parent);
+         parent.addChild(node);
+         buildTreeRecursively(node);
+      }
+
+    }
+
+
+    protected void addChildrenOneLevel(TreeElement parent){
+       int i;
+//       S.out("DimensionTree -> adding children one level");
+       DimensionTreeElement[] dte = ((DimensionTreeElement) parent.getUserObject()).getChildren(true);
+       for (i = 0; dte != null && i < dte.length; i++) {
+          TreeElement node = new TreeElement(dte[i], parent);
+          parent.addChild(node);
+       }
+    }
+
+    public boolean getFlattenDimensions(){
+       return flattenDimensions;
+    }
+    public void setFlattenDimensions(boolean b){
+       flattenDimensions = b;
+       ((DimensionRootElement)root.getUserObject()).setFlattenDimensions(b);
+       root.dropChildren();
+       buildTree();
+       fireTreeStructureChanged(root);
+       /*
+       // gotta notify:
+       //  - root (to toggle popup menu list)
+       //  - dimensions (to skip hierarchies and change name(toString()) )
+       ((DimensionRootElement)root.getUserObject()).setFlattenDimensions(b);
+       for(int i = 0; i < root.getChildCount(); i++){
+          ((DimensionElement)root.getChildAt(i).getUserObject()).setFlattenDimensions(b);
+       }
+       fireTreeStructureChanged(root);
+       // with this design I'm able to mix those modes
+       // if I later choose to do so, i.e.
+       // I'll be able to flatten only some dimensions
+       */
+    }
+    private void enableAllTreeElementsRec(TreeElement parent){
+       for(int i=0; i < parent.getChildCount(); i++){
+          if ( parent.getChildAt(i).getUserObject() instanceof QueryElement ){
+             ((DimensionTreeElement)parent.getChildAt(i).getUserObject()).setEnabled(true);
+          }
+          if (parent.getChildAt(i).getChildCount() > 0){
+             enableAllTreeElementsRec(parent.getChildAt(i));
+          }
+       }
+    }
+    public void enableAllTreeElements(){
+       enableAllTreeElementsRec(root);
+    }
+    public void disableTreeElements(QueryElement qe){
+       if (qe instanceof MeasureElement)
+          toggleMeasureEnabled(root, ((MeasureElement)qe).getUniqueName(), false);
+       else
+          toggleTreeElementsEnabled(root, qe.getHierarchyUniqueName(), false);
+    }
+    public void enableTreeElements(QueryElement qe){
+       if (qe instanceof MeasureElement)
+          toggleMeasureEnabled(root, ((MeasureElement)qe).getUniqueName(), true);
+       else
+          toggleTreeElementsEnabled(root, qe.getHierarchyUniqueName(), true);
+
+    }
+    private void toggleTreeElementsEnabled( TreeElement parent
+                                          , String hierarchyUniqueName
+                                          , boolean newEnabledValue ){
+       for(int i=0; i < parent.getChildCount(); i++){
+          // not all elements are QueryElements (root, dimension, hierarchy)
+//          S.out("Checking " + parent.getChildAt(i).getUserObject()
+//                + " for "
+//                + hierarchyUniqueName );
+          if ( parent.getChildAt(i).getUserObject() instanceof QueryElement ){
+             if (((QueryElement)parent.getChildAt(i).getUserObject()).getHierarchyUniqueName().equals(hierarchyUniqueName)){
+                ((DimensionTreeElement)parent.getChildAt(i).getUserObject()).setEnabled(newEnabledValue);
+             }
+          }
+          if (parent.getChildAt(i).getChildCount() > 0){
+             toggleTreeElementsEnabled(parent.getChildAt(i), hierarchyUniqueName, newEnabledValue);
+          }
+       }
+    }
+    private int toggleMeasureEnabled( TreeElement parent
+                                          , String uniqueName
+                                          , boolean newEnabledValue ){
+       int foundIt = 0;
+       for(int i=0; i < parent.getChildCount(); i++){
+          if ( parent.getChildAt(i).getUserObject() instanceof MeasureElement ){
+             if (((MeasureElement)parent.getChildAt(i).getUserObject()).getUniqueName().equals(uniqueName)){
+                ((DimensionTreeElement)parent.getChildAt(i).getUserObject()).setEnabled(newEnabledValue);
+                return 1;
+             }
+          }
+          if (parent.getChildAt(i).getChildCount() > 0){
+             foundIt += toggleMeasureEnabled(parent.getChildAt(i), uniqueName, newEnabledValue);
+          }
+          if (foundIt > 0) return foundIt;
+       }
+       return foundIt;
+    }
+    public DimensionTreeElement getDimensionTreeElement(String uniqueName){
+       return getDimensionTreeElementRec(root, uniqueName);
+    }
+
+    private DimensionTreeElement getDimensionTreeElementRec(TreeElement parent, String uniqueName){
+//       S.out("searching for..." + uniqueName);
+//       S.out("getDimensionElementRec:parent=" + parent
+//             + " class=" + parent.getUserObject().getClass()
+//             + " parent.uname = " + ((DimensionTreeElement)parent.getUserObject()).getUniqueName());
+       if ((((DimensionTreeElement)parent.getUserObject()).getUniqueName()).startsWith(uniqueName)){
+          S.out("RETURNING:" + parent.getUserObject());
+          return (DimensionTreeElement)parent.getUserObject();
+       }else{
+          DimensionTreeElement retVal;
+          for(int i=0; i<parent.getChildCount(); i++){
+             retVal = getDimensionTreeElementRec(parent.getChildAt(i), uniqueName);
+             if (retVal != null) return retVal;
+          }
+       }
+       return null;
+    }
+
+//    private DimensionElement getDimensionElementRec(TreeElement parent, String uniqueName){
+//       S.out("getDimensionElementRec:parent=" + parent);
+//       if ( parent.getUserObject() instanceof DimensionElement){
+//          if (((DimensionElement)parent.getUserObject()).getUniqueName().equals(uniqueName)){
+//             return (DimensionElement) parent.getUserObject();
+//          }else{
+//             // there are no DimensionElements deeper than DimensionElement level
+
+//          }
+//       }else{
+//          DimensionElement retVal;
+//          for(int i=0; i<parent.getChildCount(); i++){
+//             retVal = getDimensionElementRec(parent.getChildAt(i), uniqueName);
+//             if (retVal != null) return retVal;
+//          }
+//       }
+//       return null;
+//    }
+
+
+
+//////////////// Fire events //////////////////////////////////////////////
+
+    /**
+     * The only event raised by this model is TreeStructureChanged with the
+     * root as path, i.e. the whole tree has changed.
+     */
+    protected void fireTreeStructureChanged(TreeElement oldRoot) {
+        int len = treeModelListeners.size();
+        TreeModelEvent e = new TreeModelEvent(this,
+                                              new Object[] {oldRoot});
+        for (int i = 0; i < len; i++) {
+            ((TreeModelListener)treeModelListeners.elementAt(i)).treeStructureChanged(e);
+        }
+    }
+
+
+//////////////// TreeModel interface implementation ///////////////////////
+
+
+    /**
+     * Adds a listener for the TreeModelEvent posted after the tree changes.
+     */
+    public void addTreeModelListener(TreeModelListener l) {
+        treeModelListeners.addElement(l);
+    }
+
+    /**
+     * Returns the child of parent at index index in the parent's child array.
+     */
+    public Object getChild(Object parent, int index) {
+        TreeElement p = (TreeElement)parent;
+        return p.getChildAt(index);
+    }
+
+    /**
+     * Returns the number of children of parent.
+     */
+    public int getChildCount(Object parent) {
+        TreeElement p = (TreeElement)parent;
+        return p.getChildCount();
+    }
+
+    /**
+     * Returns the index of child in parent.
+     */
+    public int getIndexOfChild(Object parent, Object child) {
+        TreeElement p = (TreeElement)parent;
+
+        return p.getIndexOfChild(((TreeElement)child));
+    }
+
+    /**
+     * Returns the root of the tree.
+     */
+    public Object getRoot() {
+        return root;
+    }
+
+    /**
+     * Returns true if node is a leaf.
+     */
+    public boolean isLeaf(Object node) {
+        if (withMembersLevel){
+//          Here, I'm actually asking the user object for the child count
+//          User object returns the child count that is parsed from the XML describing the level
+//          - it hasn't actually retrieved the children and counted them.
+            DimensionTreeElement dte = (DimensionTreeElement)((TreeElement)node).getUserObject();
+            return (dte.getChildrenCount() == 0);
+        }else{
+            TreeElement p = (TreeElement)node;
+//            S.out("DimensionTree isLeaf for " + p + " returning " + (p.getChildCount() == 0));
+            return p.getChildCount() == 0;
+        }
+
+    }
+
+    /**
+     * Removes a listener previously added with addTreeModelListener().
+     */
+    public void removeTreeModelListener(TreeModelListener l) {
+        treeModelListeners.removeElement(l);
+    }
+
+    /**
+     * Messaged when the user has altered the value for the item
+     * identified by path to newValue.  Not used by this model.
+     */
+    public void valueForPathChanged(TreePath path, Object newValue) {
+        System.out.println("*** valueForPathChanged : "
+                           + path + " --> " + newValue);
+    }
+}
+
+@
+
+
+1.3
+log
+@*** empty log message ***
+@
+text
+@@
+
+
+1.2
+log
+@*** empty log message ***
+@
+text
+@d40 11
+d54 2
+a55 1
+                           ,  ServerMetadata _smd) {
+d58 1
+d94 2
+a95 1
+       dte = ((DimensionTreeElement) parent.getUserObject()).getChildren();
+d108 1
+a108 1
+         dte = dte[0].getChildren();
+d110 1
+d120 10
+d320 12
+a331 2
+        TreeElement p = (TreeElement)node;
+        return p.getChildCount() == 0;
+@
+
+
+1.1
+log
+@*** empty log message ***
+@
+text
+@@
+

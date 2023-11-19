@@ -1,0 +1,138 @@
+head	1.4;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.4
+date	2004.06.07.15.03.15;	author tuco80;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2003.12.02.12.29.49;	author tuco80;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2003.11.10.14.40.42;	author numberone;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2003.11.07.10.12.52;	author numberone;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.4
+log
+@Added one step missing in package installation
+@
+text
+@
+Dependencies
+------------
+
+
+The BEE Project depends on a number of third-party modules and libraries:
+
+ o  OpenSSL library is used for network communication.
+    Precompiled binaries of OpenSSL library are included in BEE 
+    distribution tarball in $BEE/windows/openssl-0.9.7c.zip file.
+
+	Extract and save files libeay32.dll and ssleay32.dll to your
+    Windows system directory c:\win??\system32
+
+        ssleay32.dll
+        libeay32.dll
+
+ o  Perl 5.8.x interpreter
+
+    Starting from Perl 5.005, the Win32 support has been integrated to the
+    Perl standard source code distribution. If you want precompiled binaries,
+    you can for example download ActiveState Perl distribution from:
+
+    http://www.activestate.com/Products/Download/Download.plex?id=ActivePerl
+
+    From now on, we will assume that you have Perl installed in c:\perl,
+    you have perl.exe in your PATH enviromnent variable and .pl extension
+    is registered to perl interpreter binary correctly.
+
+ o  Lots of other Perl modules are required. The simplest way is to
+    use ActivePerl Package Manager tool named PPM. To install these
+    modules, execute 'ppm' in command-box:
+
+       c:\ ppm
+       ppm> install XML-Parser
+       ppm> install XML-Simple
+       ppm> install FreezeThaw
+       ppm> install Tk-FileDialog
+       ppm> install Tk-Splash
+       ppm> install DBI
+       ppm> install DBD-mysql
+	   ppm> install Tk-XMLViewer
+
+    You will need DBD driver for every type of database you want to use, 
+    see DBI homepage and ActivePerl PPM site for details:
+
+       http://dbi.perl.org
+       http://ppm.activestate.com
+       http://ppm.activestate.com/BuildStatus/5.8-D.html
+
+ o  libNet and libData.
+    libNet and libData are BEE modules written in C language for
+    network RPC communication and fast data transfers. 
+    Precompiled binaries for these modules are stored in 
+    $BEE/windows/bee-1.0-libs.zip file. Just extract content
+    to $BEE/lib directory
+
+       $BEE/lib/MSWin32-x86-multi-thread/*
+       $BEE/lib/Data.pm
+       $BEE/lib/Net.pm
+
+If you made all these steps, you have your system prepared for running BEE.
+
+@
+
+
+1.3
+log
+@Updated and revised
+@
+text
+@d42 1
+@
+
+
+1.2
+log
+@doc fix
+@
+text
+@d6 1
+a6 1
+The BEE Project depends on number third-party modules and libraries:
+d26 1
+a26 1
+    In next we will assume that you have Perl installed in c:\perl,
+d30 1
+a30 1
+ o  Lot of another Perl modules are required. The simplest way is to
+@
+
+
+1.1
+log
+@documentation 474 lines
+@
+text
+@a62 1
+
+@
+

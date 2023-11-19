@@ -1,0 +1,970 @@
+head	1.33;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.33
+date	2004.02.20.12.41.12;	author jiri_schmid;	state Exp;
+branches;
+next	1.32;
+
+1.32
+date	2004.02.13.17.09.40;	author jiri_schmid;	state Exp;
+branches;
+next	1.31;
+
+1.31
+date	2003.11.12.12.44.27;	author jiri_schmid;	state Exp;
+branches;
+next	1.30;
+
+1.30
+date	2003.11.07.16.51.05;	author jiri_schmid;	state Exp;
+branches;
+next	1.29;
+
+1.29
+date	2003.11.07.13.40.49;	author jiri_schmid;	state Exp;
+branches;
+next	1.28;
+
+1.28
+date	2003.10.13.14.43.23;	author jiri_schmid;	state Exp;
+branches;
+next	1.27;
+
+1.27
+date	2003.09.29.09.21.59;	author jiri_schmid;	state Exp;
+branches;
+next	1.26;
+
+1.26
+date	2003.08.26.15.35.45;	author jiri_schmid;	state Exp;
+branches;
+next	1.25;
+
+1.25
+date	2003.08.18.13.17.13;	author jiri_schmid;	state Exp;
+branches;
+next	1.24;
+
+1.24
+date	2003.07.03.12.17.57;	author jiri_schmid;	state Exp;
+branches;
+next	1.23;
+
+1.23
+date	2003.06.02.09.33.28;	author jiri_schmid;	state Exp;
+branches;
+next	1.22;
+
+1.22
+date	2003.05.30.09.13.31;	author jiri_schmid;	state Exp;
+branches;
+next	1.21;
+
+1.21
+date	2003.05.29.09.52.53;	author jiri_schmid;	state Exp;
+branches;
+next	1.20;
+
+1.20
+date	2003.05.28.15.44.21;	author jiri_schmid;	state Exp;
+branches;
+next	1.19;
+
+1.19
+date	2003.05.21.11.39.46;	author jiri_schmid;	state Exp;
+branches;
+next	1.18;
+
+1.18
+date	2003.05.15.13.47.43;	author jiri_schmid;	state Exp;
+branches;
+next	1.17;
+
+1.17
+date	2003.05.01.15.40.30;	author jiri_schmid;	state Exp;
+branches;
+next	1.16;
+
+1.16
+date	2003.05.01.09.15.31;	author jiri_schmid;	state Exp;
+branches;
+next	1.15;
+
+1.15
+date	2003.04.30.14.45.51;	author jiri_schmid;	state Exp;
+branches;
+next	1.14;
+
+1.14
+date	2003.04.22.15.29.25;	author jiri_schmid;	state Exp;
+branches;
+next	1.13;
+
+1.13
+date	2003.04.03.09.52.50;	author jiri_schmid;	state Exp;
+branches;
+next	1.12;
+
+1.12
+date	2003.03.10.16.14.19;	author jiri_schmid;	state Exp;
+branches;
+next	1.11;
+
+1.11
+date	2003.03.06.15.52.31;	author jiri_schmid;	state Exp;
+branches;
+next	1.10;
+
+1.10
+date	2003.03.06.14.49.05;	author jiri_schmid;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	2003.03.05.15.08.41;	author jiri_schmid;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	2003.02.26.13.21.51;	author jiri_schmid;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	2003.02.25.16.46.22;	author jiri_schmid;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	2003.02.25.09.18.11;	author jiri_schmid;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	2003.02.24.15.31.24;	author jiri_schmid;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2003.02.20.14.45.01;	author jiri_schmid;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2003.02.19.16.07.08;	author jiri_schmid;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2003.02.17.16.17.06;	author jiri_schmid;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2003.02.17.09.58.23;	author jiri_schmid;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.33
+log
+@rights for edit page finished
+@
+text
+@// $Id: tabs.js,v 1.32 2004/02/13 17:09:40 jiri_schmid Exp $
+var saveQ;
+var infQ;
+var delQ;
+
+function check_drop() {
+if (top.frames["body"].frames["tree_iframe"].document.getElementById("active_id")) {
+	var dropId = top.frames["body"].frames["tree_iframe"].document.getElementById("active_id").value;	//get ID of item
+	if (dropId) {
+		last_active = top.frames["body"].frames["tree_iframe"].document.getElementById("view"+dropId);	//get pointer to span with name
+		var pole = top.frames["body"].frames["tree_iframe"].findItemById(dropId);
+		if (String(pole[3]).match(/^Fa$|^A$|^Ro$/)) { return };
+		var question = msg_text("delQ")+last_active.innerHTML.replace(/&nbsp;/g," ");
+		if (confirm(question)) {
+		   	top.frames["body"].location.replace("edit.cgi?"+use_param+"&Action=Confirm&Item="+dropId); return true;
+		} else return false;
+	};
+};
+return false;
+}
+
+function prepare_duplicate(){	//set param to duplicate object
+if (top.frames["body"].frames["tree_iframe"].document.getElementById("active_id")) {
+	var doubleId = top.frames["body"].frames["tree_iframe"].document.getElementById("active_id").value;	//get ID of item
+	var pole = top.frames["body"].frames["tree_iframe"].findItemById(doubleId);
+	if (String(pole[3]).match(/^Fa$|^A$|^Ro$/)) { return };
+	if (doubleId) {
+		top.frames["body"].location.replace("edit.cgi?"+use_param+"&Action=Copy&Item="+doubleId);
+	} else return false
+};
+return true;
+}
+
+function doWork(Action){	//check if the viewed item was changed, if so, ask and save or ignore
+	function ask(what) {
+		var EID = top.frames["body"].document.getElementById("changed");
+		if (EID)
+			if (EID.value == 1) {
+				if (confirm(what)) {EID.value = 0; return true;}
+				else return false;
+		};
+	EID.value = 0;
+	return true;
+	}
+switch (Action){
+	case "Duplicate": {if (ask(msg_text("doubleInfQ"))) return prepare_duplicate()}
+	case "Remove": {return check_drop()}
+	default:if (Action.match(/New/)) {
+			if (ask(msg_text("newInfQ"))) { top.frames["body"].location.replace("edit.cgi?"+use_param+"&Action="+Action); };
+		} else {
+			 return false
+		}
+   }
+}
+
+function doLMWork(Action){	//check if the viewed item was changed, if so, ask and save or ignore
+top.frames["body"].location.replace("ldm.cgi?"+use_param+"&Image="+Action);
+}
+
+function checkAdminDrop() {
+if (top.frames["body"].frames["definition_iframe"].document.getElementById("ITEM_ID")) {
+	var dropId = top.frames["body"].frames["definition_iframe"].document.getElementById("ITEM_ID").value;	//get ID of item
+	if (dropId) {
+		last_active = top.frames["body"].frames["list_iframe"].document.getElementById("view"+dropId);	//get pointer to span with name
+		var question = msg_text("delQ")+last_active.innerHTML.replace(/&nbsp;/g," ");
+		return (confirm(question)) ? dropId : false;
+	};
+};
+return false;
+}
+
+function prepareAdminDuplicate(){	//set param to duplicate object
+if (top.frames["body"].frames["definition_iframe"].document.getElementById("ITEM_ID")) {
+	var duplicate = top.frames["body"].frames["definition_iframe"].document.getElementById("ITEM_ID").value;	//get ID of item
+	if (duplicate) {
+		last_active = top.frames["body"].frames["list_iframe"].document.getElementById("view"+duplicate);	//get pointer to span with name
+		var change = top.frames["body"].document.getElementById("changed");
+		if (change.value > 0) {
+			return (confirm(msg_text("doubleInfQ"))) ? duplicate : false
+		} else {
+			return duplicate
+		}
+	}
+}
+return false;
+}
+
+function doAdminWork(Action){	//check if the viewed item was changed, if so, ask and save or ignore
+switch (Action){
+	case "Duplicate":
+			var duplicate = prepareAdminDuplicate();
+			if (duplicate) {
+				top.frames["body"].location.replace("admin.cgi?"+use_param+"&Action=Copy&Item="+duplicate);
+				return true;
+			} else {
+				return false
+			}
+	case "Remove":	
+			var drop = checkAdminDrop();
+			if (drop) {
+				top.frames["body"].location.replace("admin.cgi?"+use_param+"&Action=Confirm&Item="+drop);
+				return true;
+			} else {
+				return false
+			}
+	default:if (Action.match(/New/)) {
+			top.frames["body"].location.replace("admin.cgi?"+use_param+"&Action="+Action)
+		} else {
+			 return false
+		}
+   }
+}
+
+function msg_text(msgId) {
+  // localized messages from JavaScript
+  return top.frames["body"].window.langJS[msgId]
+}
+
+function viewResult(id){
+if (checkObjectChange()) {
+	switch (openIn) {
+		case "_blank":{var EID = window.open('run.cgi?item_id='+id+'&'+use_param,id,"menubar=yes,toolbar=no,statusbar=no,scrollbars");
+ 			EID.focus();
+			break;}
+		case "_one":  {var EID = window.open('run.cgi?item_id='+id+'&'+use_param,'result',"menubar=yes,toolbar=no,statusbar=no,scrollbars");
+			EID.focus();
+			break;}
+		case "_self": {top.location.href="index.cgi?TabAct=R&item_id="+id; break;}
+	break;
+ 	}
+};
+return false;
+}
+
+function checkRemove(reportName,id,tabDef){
+if (confirm(remove+reportName,id)) {
+   if (tab == "R") top.frames['body'].location.href="run.cgi";
+	switch (openIn) {
+	 case "_blank":{var EID = window.open('',id,"menubar=yes,toolbar=no,statusbar=no");
+	 		EID.close();
+			break;}
+	 case "_one":  {var EID = window.open('','result',"menubar=yes,toolbar=no,statusbar=no");
+			EID.close();
+			break;}
+	 break;
+	};
+   top.location.href = "index.cgi?remove="+id+"&TabAct="+tabDef;
+   }
+else return false;
+}
+
+function checkObjectChange() {
+if (top.frames['body'].document.getElementById("changed"))
+	if (top.frames['body'].document.getElementById("changed").value == 1) {
+		return (confirm(msg)) ? true : false; 
+}
+return true
+}
+@
+
+
+1.32
+log
+@major tabs control implemented
+@
+text
+@d1 1
+a1 1
+// $Id: tabs.js,v 1.31 2003/11/12 12:44:27 jiri_schmid Exp $
+d114 3
+a116 7
+function msg_text(tt) {
+  // messages from JavaScript in hidden input lang_js
+  // form in hidden input value= "|id1|text_id1|id2|text_id2| ...|"
+  // tt variable is one of id in input lang_js
+  var reg_expr = new RegExp(tt + ".[^\|]*");
+  var aux = String(parent.frames["body"].document.getElementById("lang_js").value.match(reg_expr));  
+  return (aux.match(/[^\|]*$/));
+@
+
+
+1.31
+log
+@ldm multiimages implemented
+@
+text
+@d1 1
+a1 1
+// $Id: tabs.js,v 1.30 2003/11/07 16:51:05 jiri_schmid Exp $
+d126 1
+a126 1
+		case "_blank":{var EID = window.open('run.cgi?item_id='+id,id,"menubar=yes,toolbar=no,statusbar=no,scrollbars");
+d129 1
+a129 1
+		case "_one":  {var EID = window.open('run.cgi?item_id='+id,'result',"menubar=yes,toolbar=no,statusbar=no,scrollbars");
+@
+
+
+1.30
+log
+@tuning
+@
+text
+@d1 1
+a1 1
+// $Id: tabs.js,v 1.29 2003/11/07 13:40:49 jiri_schmid Exp $
+d54 4
+@
+
+
+1.29
+log
+@tested a fixed saving of all objects
+@
+text
+@d1 1
+a1 1
+// $Id: tabs.js,v 1.28 2003/10/13 14:43:23 jiri_schmid Exp $
+d25 2
+@
+
+
+1.28
+log
+@description tab defined under two files, bug fixies
+@
+text
+@d1 1
+a1 1
+// $Id: tabs.js,v 1.86 2003/10/09 13:53:24 jiri_schmid Exp $
+d11 2
+@
+
+
+1.27
+log
+@code improvments a fixies
+@
+text
+@d1 1
+a1 1
+// $Id
+@
+
+
+1.26
+log
+@rights improvment, create delete duplicate rule implemented
+@
+text
+@d1 1
+a1 1
+// $Id: tabs.js,v 1.25 2003/08/18 13:17:13 jiri_schmid Exp $
+d42 2
+a43 2
+	case "Duplicate": {if (ask(msg_text("doubleInfQ"))) return prepare_duplicate(); break}
+	case "Remove": {return check_drop();}
+d52 28
+d82 16
+a97 2
+	case "Duplicate": {return}
+	case "Remove": {return}
+@
+
+
+1.25
+log
+@admin page reading rutines implemented
+@
+text
+@d1 1
+a1 1
+// $Id: tabs.js,v 1.24 2003/07/03 12:17:57 jiri_schmid Exp $
+d46 12
+@
+
+
+1.24
+log
+@bug fixies
+@
+text
+@d1 1
+a1 1
+// $Id: tabs.js,v 1.23 2003/06/02 09:33:28 jiri_schmid Exp $
+d10 1
+a10 1
+		last_active = top.frames["body"].frames["tree_iframe"].document.getElementById(dropId);	//get pointer to span with name
+@
+
+
+1.23
+log
+@user interface dialogs improvment
+@
+text
+@d1 1
+a1 1
+// $Id: tabs.js,v 1.22 2003/05/30 09:13:31 jiri_schmid Exp $
+d64 1
+a64 1
+		case "_blank":{var EID = window.open('run.cgi?item_id='+id,id,"menubar=yes,toolbar=no,statusbar=no");
+d67 1
+a67 1
+		case "_one":  {var EID = window.open('run.cgi?item_id='+id,'result',"menubar=yes,toolbar=no,statusbar=no");
+@
+
+
+1.22
+log
+@minor fixies and code improvment
+@
+text
+@d1 1
+a1 1
+// $Id: tabs.js,v 1.21 2003/05/29 09:52:53 jiri_schmid Exp $
+d25 1
+a25 1
+	};
+a29 17
+function check_quit(Action){	//check if the viewed item was changed, if so, ask and save or ignore
+if (top.frames["body"].frames["drop_iframe"].document.getElementById("changed").value)
+ if (top.frames["body"].frames["drop_iframe"].document.getElementById("changed").value == 1)
+  if (confirm(msg_text("saveQ"))) 
+  	{top.frames["body"].frames["drop_iframe"].document.getElementsByName("Action")[0].click();
+   	 infQ=msg_text("infQ");
+   	 alert(infQ);
+	 }
+  else {return false;}
+switch (Action){
+	case "New": { return true;}
+	case "Copy": {return prepare_duplicate();}
+	case "Drop": {return check_drop();}
+	default: {return false;}
+   }
+}
+
+d31 10
+a40 8
+if (top.frames["body"].document.getElementById("changed").value)
+ if (top.frames["body"].document.getElementById("changed").value == 1)
+  if (confirm(msg_text("saveQ"))) 
+  	{top.frames["body"].frames["drop_iframe"].document.getElementsByName("Action")[0].click();
+   	 infQ=msg_text("infQ");
+   	 alert(infQ);
+	 }
+  else {return false;}
+d42 1
+a42 1
+	case "Duplicate": {return prepare_duplicate();}
+d45 1
+a45 1
+			top.frames["body"].location.replace("edit.cgi?"+use_param+"&Action="+Action);	
+@
+
+
+1.21
+log
+@some code improvment and bug fixies
+@
+text
+@d1 1
+a1 1
+// $Id: tabs.js,v 1.20 2003/05/28 15:44:21 jiri_schmid Exp $
+d8 10
+a17 7
+	var new_id = top.frames["body"].frames["tree_iframe"].document.getElementById("active_id").value;	//get ID of item
+} else return;
+last_active = top.frames["body"].frames["tree_iframe"].document.getElementById(new_id);	//get pointer to span with name
+   var question = msg_text("delQ")+last_active.innerHTML.replace(/&nbsp;/g," ");
+   if (confirm(question)) 
+	{ top.frames["body"].location.replace("edit.cgi?"+use_param+"&Action=Confirm&Item="+new_id); return true;}
+   else return false;
+d21 6
+a26 2
+var double_id = top.frames["body"].frames["tree_iframe"].document.getElementById("active_id").value;
+top.frames["body"].location.replace("edit.cgi?"+use_param+"&Action=Copy&Item="+double_id);
+@
+
+
+1.20
+log
+@control dialog when changing tabs implemnted
+@
+text
+@d1 1
+a1 1
+// $Id: tabs.js,v 1.19 2003/05/21 11:39:46 jiri_schmid Exp $
+d41 2
+a42 2
+if (top.frames["body"].frames["drop_iframe"].document.getElementById("changed").value)
+ if (top.frames["body"].frames["drop_iframe"].document.getElementById("changed").value == 1)
+d70 12
+a81 10
+switch (openIn) {
+ case "_blank":{var EID = window.open('run.cgi?item_id='+id,id,"menubar=yes,toolbar=no,statusbar=no");
+ 		EID.focus();
+		break;}
+ case "_one":  {var EID = window.open('run.cgi?item_id='+id,'result',"menubar=yes,toolbar=no,statusbar=no");
+		EID.focus();
+		break;}
+ case "_self": {top.location.href="index.cgi?TabAct=R&item_id="+id; break;}
+ break;
+ }
+@
+
+
+1.19
+log
+@visual and code improvment
+@
+text
+@d1 1
+a1 1
+// $Id: tabs.js,v 1.18 2003/05/15 13:47:43 jiri_schmid Exp $
+d98 8
+@
+
+
+1.18
+log
+@found a fixed bug, code improvment
+@
+text
+@d1 1
+a1 1
+// $Id: tabs.js,v 1.17 2003/05/01 15:40:30 jiri_schmid Exp $
+d83 1
+a83 1
+function checkRemove(reportName,id){
+d94 2
+a95 2
+	}
+   return true;
+@
+
+
+1.17
+log
+@code improvment
+@
+text
+@d1 1
+a1 1
+// $Id: tabs.js,v 1.16 2003/05/01 09:15:31 jiri_schmid Exp $
+d7 4
+a10 2
+var new_id = top.frames["body"].frames["tree_iframe"].document.getElementById("active_id");	//get ID of item
+last_active = top.frames["body"].frames["tree_iframe"].document.getElementById(new_id.value);	//get pointer to span with name
+d13 1
+a13 1
+	{ document.getElementById("Remove").href="edit.cgi?"+use_param+"&Action=Confirm&Item="+new_id.value; return true;}
+d19 1
+a19 1
+document.getElementById("Duplicate").href="edit.cgi?"+use_param+"&Action=Copy&Item="+double_id;
+d37 20
+@
+
+
+1.16
+log
+@closing window when removing resutl tab implemented
+@
+text
+@d1 1
+a1 1
+// $Id: tabs.js,v 1.15 2003/04/30 14:45:51 jiri_schmid Exp $
+d49 1
+a49 1
+ case "_blank":{var EID = window.open('run.cgi?build=no&item_id='+id,id,"menubar=yes,toolbar=no,statusbar=no");
+d52 1
+a52 1
+ case "_one":  {var EID = window.open('run.cgi?build=no&item_id='+id,'result',"menubar=yes,toolbar=no,statusbar=no");
+d55 1
+a55 1
+ case "_self": {top.location.href="index.cgi?build=no&TabAct=R&item_id="+id; break;}
+@
+
+
+1.15
+log
+@removing results implemented, minor code improvment
+@
+text
+@d1 1
+a1 1
+// $Id: tabs.js,v 1.14 2003/04/22 15:29:25 jiri_schmid Exp $
+d47 1
+a47 1
+function viewResult(id,openIn){
+d49 1
+a49 1
+ case "_blank": {var EID = window.open('run.cgi?build=no&item_id='+id,id,"menubar=yes,toolbar=no,statusbar=no");
+d52 3
+a54 3
+ case "_one": {var EID = window.open('run.cgi?build=no&item_id='+id,'result',"menubar=yes,toolbar=no,statusbar=no");
+ 		EID.focus(); 
+ 		break;}
+d61 14
+a74 4
+function checkRemove(report,tab){
+if (confirm(remove+report)) {
+	if (tab == "R") top.frames['body'].location.href="run.cgi";
+	return true;}
+@
+
+
+1.14
+log
+@fixed a modified saving a loadin joined items A~Af
+@
+text
+@d1 1
+a1 1
+// $Id: tabs.js,v 1.13 2003/04/03 09:52:50 jiri_schmid Exp $
+d45 21
+@
+
+
+1.13
+log
+@blocking sending action to server, when canceled confirm dialog from tabs.cgi
+@
+text
+@d1 1
+a1 1
+// $Id: tabs.js,v 1.12 2003/03/10 16:14:19 jiri_schmid Exp $
+d8 1
+a8 5
+var last_active = top.frames["body"].frames["tree_iframe"].document.act_it.act_it;		//get ID of previusly edited item
+if (new_id.value != last_active.value)								//just previusly created item has to be deleted
+ { document.getElementById("Remove").href="edit.cgi?"+use_param+"&Action=Confirm&Item="+new_id.value;}
+else												//the deleted item was previusly Saved, confirm its deleting
+ { last_active = top.frames["body"].frames["tree_iframe"].document.getElementById(new_id.value);
+a12 1
+ }
+@
+
+
+1.12
+log
+@charset fixed
+@
+text
+@d1 1
+a1 1
+// $Id: tabs.js,v 1.11 2003/03/06 15:52:31 jiri_schmid Exp $
+d15 2
+a16 2
+	{ document.getElementById("Remove").href="edit.cgi?"+use_param+"&Action=Confirm&Item="+new_id.value;}
+   else document.getElementById("Remove").href="edit.cgi?"+use_param; //necessary, this action does the browser when confirm dialog canceled
+d23 1
+d26 1
+a26 1
+function check_quit(){	//check if the viewed item was changed, if so, ask and save or ignore
+d30 11
+a40 3
+  {top.frames["body"].frames["drop_iframe"].document.getElementsByName("Action")[0].click();
+   infQ=msg_text("infQ");
+   alert(infQ);}
+@
+
+
+1.11
+log
+@language files and language options are from now specifed only in const.def
+@
+text
+@d1 4
+a4 4
+// $Id: tabs.js,v 1.10 2003/03/06 14:49:05 jiri_schmid Exp $
+var saveQ = "Data changed !!!\nDo you want to Save them before editing new item?";
+var infQ = "Data send to server.";
+var delQ = "Do you really want to permanently erase:";
+d10 1
+a10 1
+ { document.getElementById("Remove").href="edit.cgi?Action=Confirm&Item="+new_id.value;}
+d13 1
+a13 1
+   var question = delQ+last_active.innerHTML.replace(/&nbsp;/g," ");
+d15 2
+a16 2
+	{ document.getElementById("Remove").href="edit.cgi?Action=Confirm&Item="+new_id.value; }
+   else document.getElementById("Remove").href="edit.cgi"; //necessary, this action does the browser when confirm dialog canceled
+d22 1
+a22 1
+document.getElementById("Duplicate").href="edit.cgi?Action=Copy&Item="+double_id;
+d28 13
+a40 2
+  if (confirm(saveQ)) {top.frames["body"].frames["drop_iframe"].document.getElementsByName("Action")[0].click();
+  alert(infQ);}
+@
+
+
+1.10
+log
+@loading and saving user preferneces under its name functional, preferences affects edit.cgi, tabs.cgi and prefer.cgi for now
+@
+text
+@d1 1
+a1 1
+// $Id: tabs.js,v 1.9 2003/03/05 15:08:41 jiri_schmid Exp $
+d10 1
+a10 2
+ { zero_cookie();
+   document.getElementById("Remove").href="edit.cgi?Action=Confirm&Item="+new_id.value;}
+d15 1
+a15 2
+	{ zero_cookie(); 
+	  document.getElementById("Remove").href="edit.cgi?Action=Confirm&Item="+new_id.value; }
+a30 4
+
+function zero_cookie () {
+if (use_cookie == "off") return;
+  document.cookie = "id=0";}
+@
+
+
+1.9
+log
+@user preferences - cookie property succesfully implemented (not implemented into tabs.cgi)
+@
+text
+@d1 1
+a1 1
+// $Id: tabs.js,v 1.8 2003/02/26 13:21:51 jiri_schmid Exp $
+d35 1
+a35 1
+//if (use_cookie == "off") return;
+@
+
+
+1.8
+log
+@huge javascript optimalization, also files moved to directory js
+@
+text
+@d1 1
+a1 1
+// $Id: tabs.js,v 1.7 2003/02/25 16:46:22 jiri_schmid Exp $
+d35 1
+@
+
+
+1.7
+log
+@removed unused functions from attr.js, language fixies in tabs.cgi and linked files
+@
+text
+@d1 1
+a1 1
+// $Id: tabs.js,v 1.6 2003/02/25 09:18:11 jiri_schmid Exp $
+d10 2
+a11 1
+ { document.getElementById("Remove").href="edit.cgi?Action=Confirm&Item="+new_id.value;}
+d16 2
+a17 1
+	{ document.getElementById("Remove").href="edit.cgi?Action=Confirm&Item="+new_id.value; }
+d33 3
+@
+
+
+1.6
+log
+@added checking of unsaved-changed item, when traying to start editing another one
+@
+text
+@d1 1
+a1 1
+// $Id: tabs.js,v 1.5 2003/02/24 15:31:24 jiri_schmid Exp $
+d4 1
+d7 3
+a9 3
+var new_id = top.frames["body"].frames["tree_iframe"].document.getElementById("active_id");
+var last_active = top.frames["body"].frames["tree_iframe"].document.act_it.act_it;
+if (new_id.value != last_active.value)
+d11 3
+a13 2
+else
+ { var question = "Do you really want to permanently erase\n"+last_active.text.match(/^[^\|]*/)+" from "+last_active.text.match(/[^\|]*$/)+"?!";
+d15 2
+a16 2
+	{ document.getElementById("Remove").href="edit.cgi?Action=Confirm&Item="+last_active.value; }
+   else document.getElementById("Remove").href="edit.cgi";
+d20 1
+a20 1
+function prepare_duplicate(){
+d25 5
+a29 4
+function check_quit(){
+if ( top.frames["body"].frames["drop_iframe"].document.getElementById("changed").value == "1")
+ if (confirm(saveQ)) {top.frames["body"].frames["drop_iframe"].document.getElementsByName("Action")[0].click();
+ alert(ingQ);}
+@
+
+
+1.5
+log
+@new bugs just found fixed, some visual changes
+@
+text
+@d1 3
+a3 1
+// $Id: tabs.js,v 1.4 2003/02/20 14:45:01 jiri_schmid Exp $
+d21 6
+@
+
+
+1.4
+log
+@save item bug and delete item bug fixed
+@
+text
+@d1 1
+a1 1
+// $Id: tabs.js,v 1.3 2003/02/19 16:07:08 jiri_schmid Exp $
+d7 1
+a7 1
+ { document.getElementById("realise_drop").href="edit.cgi?Action=Confirm&Item="+new_id.value;}
+d11 2
+a12 2
+	{ document.getElementById("realise_drop").href="edit.cgi?Action=Confirm&Item="+last_active.value; }
+   else document.getElementById("realise_drop").href="edit.cgi";
+d14 5
+@
+
+
+1.3
+log
+@activating of new items fullfunctional, deleting also
+@
+text
+@d1 1
+a1 1
+// $Id: tabs.js,v 1.2 2003/02/17 16:17:06 jiri_schmid Exp $
+d4 4
+a7 4
+var hlp = top.frames["body"].frames["tree_iframe"].document.act_it.act_it;
+if (hlp.text == undefined)
+ { hlp = top.frames["body"].frames["tree_iframe"].document.getElementById("active_id");
+   document.getElementById("realise_drop").href="edit.cgi?Action=Confirm&Item="+hlp.value;}
+d9 1
+a9 1
+ { var question = "Do you really want to permanently erase\n"+hlp.text.match(/^[^\|]*/)+" from "+hlp.text.match(/[^\|]*$/)+"?!";
+d11 3
+a13 1
+	{ document.getElementById("realise_drop").href="edit.cgi?Action=Confirm&Item="+hlp.value; }}
+@
+
+
+1.2
+log
+@finally deleting of tree items is woking properly
+@
+text
+@d1 1
+a1 1
+// $Id: tabs.js,v 1.16 2003/02/17 09:58:18 jiri_schmid Exp $
+d5 7
+a11 5
+var question = "Do you really want to permanently erase\n"+hlp.text.match(/^[^\|]*/)+" from "+hlp.text.match(/[^\|]*$/)+"?!";
+if (confirm(question)) 
+	{ document.getElementById("realise_drop").href="edit.cgi?Action=Confirm&Item="+hlp.value; }
+	else
+	{ document.getElementById("realise_drop").href="edit.cgi?Action="; }
+@
+
+
+1.1
+log
+@added directory for javascript files, deleting items from tree controled by javascipt - tabs.js/check_drop()
+@
+text
+@d1 1
+a1 1
+$Id
+d4 2
+a5 2
+var hlp = top.frames["body"].frames["tree_iframe"].document.act_it.act_it.value;
+var question = "Do you really want to permanently erase\n"+hlp.match(/^[^\|]*/)+" from "+hlp.match(/[^\|]*$/)+"?!";
+d7 1
+a7 1
+	{ document.getElementById("realise_drop").href="index.cgi?Action=Confirm&;" }
+d9 1
+a9 1
+	{ document.getElementById("realise_drop").href="index.cgi?Action="; }
+@
+

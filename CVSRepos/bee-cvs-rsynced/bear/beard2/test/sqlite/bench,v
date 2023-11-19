@@ -1,0 +1,48 @@
+head	1.1;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.1
+date	2004.03.01.16.16.49;	author numberone;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@
+Added beard2 -- new bear daemon source tree.
+
+mdata subsystem works, some docs, some tests, etc.
+
+cached in progress
+@
+text
+@
+[grg]$ time ./lookup f 1000000 1000000
+user:   194.680
+system: 0.950
+
+lookup.db - 61MB
+:memory: - 4x vetsi naroky??
+
+[grg] time ./lookup i 250000 1000000
+user:   188.070
+system: 0.060
+
+:memory: cca 63MB
+
+[grg] time ./lookup f 250000 1000000
+user:   197.710
+system: 0.800
+
+lookup.db - 14.8MB
+
+@

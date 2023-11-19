@@ -1,0 +1,294 @@
+head	1.3;
+access;
+symbols
+	start:1.1.1.1 vendor:1.1.1;
+locks; strict;
+comment	@# @;
+
+
+1.3
+date	2002.09.24.15.42.37;	author michald;	state dead;
+branches;
+next	1.2;
+
+1.2
+date	2002.09.24.09.07.22;	author michald;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2002.09.24.01.56.48;	author michald;	state Exp;
+branches
+	1.1.1.1;
+next	;
+
+1.1.1.1
+date	2002.09.24.01.56.48;	author michald;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.3
+log
+@minor change of cvs tree structure
+@
+text
+@<?xml version='1.0' standalone='yes'?>
+<project description="Test Project 1" create-date="2002-04-10" id="test1" version="0.1">
+  <const></const>
+  <fact id="3" name="Product Sales [USD]">
+    <expr>bear.instrat.cz/demo/order/price</expr>
+    <expr>bear.instrat.cz/demo/order_m_c/price</expr>
+    <gui-presentation coord="46 400" id="2" />
+  </fact>
+  <relation id="1">
+    <from optional="false" cardinality="1">bear.instrat.cz/demo/l_product/id</from>
+    <to optional="true" cardinality="N">bear.instrat.cz/demo/order/product</to>
+    <gui-presentation id="1" />
+  </relation>
+  <relation id="2">
+    <from optional="false" cardinality="1">bear.instrat.cz/demo/l_day/id</from>
+    <to optional="true" cardinality="N">bear.instrat.cz/demo/order/date</to>
+    <gui-presentation id="1" />
+  </relation>
+  <relation id="3">
+    <from optional="false" cardinality="1">bear.instrat.cz/demo/l_month/id</from>
+    <to optional="true" cardinality="N">bear.instrat.cz/demo/l_day/month</to>
+    <gui-presentation id="1" />
+  </relation>
+  <relation id="4">
+    <from optional="false" cardinality="1">bear.instrat.cz/demo/l_cust/id</from>
+    <to optional="true" cardinality="N">bear.instrat.cz/demo/order/cust</to>
+    <gui-presentation id="1" />
+  </relation>
+  <relation id="5">
+    <from optional="false" cardinality="1">bear.instrat.cz/demo/l_city/id</from>
+    <to optional="true" cardinality="N">bear.instrat.cz/demo/l_cust/city</to>
+    <gui-presentation id="1" />
+  </relation>
+  <relation id="6">
+    <to optional="false" cardinality="1">_LOBJ/_ATTR/2</to>
+    <from optional="true" cardinality="N">_LOBJ/_ATTR/1</from>
+    <gui-presentation id="2" />
+  </relation>
+  <relation id="7">
+    <to optional="false" cardinality="1">_LOBJ/_ATTR/2</to>
+    <from optional="true" cardinality="N">_LOBJ/_ATTR/4</from>
+    <gui-presentation id="2" />
+  </relation>
+  <relation id="8">
+    <from optional="false" cardinality="1">bear.instrat.cz/demo/l_cust/id</from>
+    <to optional="true" cardinality="N">bear.instrat.cz/demo/order_m_c/cust</to>
+    <gui-presentation id="1" />
+  </relation>
+  <relation id="9">
+    <from optional="false" cardinality="1">bear.instrat.cz/demo/l_month/id</from>
+    <to optional="true" cardinality="N">bear.instrat.cz/demo/order_m_c/month</to>
+    <gui-presentation id="1" />
+  </relation>
+  <host description="My Laptop" id="bear.instrat.cz" name="bear">
+    <source id="demo" type="psql" name="Demo">
+      <view></view>
+      <table description="Product lookup table" access="RO" id="l_product" name="Product">
+        <column id="descr" type="char" name="Product Name">
+          <gui-presentation line="2" id="1" />
+        </column>
+        <column description="Product ID" id="id" type="int" lenght="4" name="ID">
+          <constraint type="PK" />
+          <gui-presentation line="1" id="1" />
+        </column>
+        <column id="weight" type="char" name="Product Weight">
+          <gui-presentation line="3" id="1" />
+        </column>
+        <column id="color" type="char" name="Product Color">
+          <gui-presentation line="4" id="1" />
+        </column>
+        <gui-presentation coord="355 402" id="1" />
+      </table>
+      <table description="Order table" access="RW" id="order" name="Order">
+        <column id="product" type="int" name="Product">
+          <constraint type="NOTNULL" />
+          <gui-presentation line="4" id="1" />
+        </column>
+        <column id="cust" type="int" name="Customer">
+          <constraint type="NOTNULL" />
+          <gui-presentation line="3" id="1" />
+        </column>
+        <column id="amt" type="int" name="Sale Amount">
+          <gui-presentation line="5" id="1" />
+        </column>
+        <column description="Order ID" id="id" type="int" lenght="4" name="ID">
+          <constraint type="PK" />
+          <gui-presentation line="1" id="1" />
+        </column>
+        <column id="date" type="date" name="Order Date">
+          <constraint type="NOTNULL" />
+          <gui-presentation line="2" id="1" />
+        </column>
+        <column id="price" type="num" name="Sale Price">
+          <gui-presentation line="6" id="1" />
+        </column>
+        <column id="revenue" type="num" name="Product Cost">
+          <gui-presentation line="7" id="1" />
+        </column>
+        <gui-presentation coord="568 192" id="1" />
+      </table>
+      <table description="Customer lookup table" access="RO" id="l_cust" name="Customer">
+        <column id="l_name" type="char" name="Last Name">
+          <gui-presentation line="3" id="1" />
+        </column>
+        <column id="zip" type="char" name="ZIP Code">
+          <gui-presentation line="7" id="1" />
+        </column>
+        <column id="id" type="int" name="Customer ID">
+          <constraint type="PK" />
+          <gui-presentation line="1" id="1" />
+        </column>
+        <column id="f_name" type="char" name="First Name">
+          <gui-presentation line="2" id="1" />
+        </column>
+        <column id="city" type="int" name="Customer City">
+          <gui-presentation line="8" id="1" />
+        </column>
+        <column id="addr" type="char" name="Address">
+          <gui-presentation line="6" id="1" />
+        </column>
+        <column id="email" type="char" name="e-mail">
+          <gui-presentation line="5" id="1" />
+        </column>
+        <column id="gender" type="bool" name="Gender">
+          <gui-presentation line="4" id="1" />
+        </column>
+        <gui-presentation coord="180 271" id="1" />
+      </table>
+      <table description="Month lookup table" access="RO" id="l_month" name="Month">
+        <column id="month_y" type="int" name="Month of Year">
+          <gui-presentation coord="22 11" line="2" id="1" />
+        </column>
+        <column id="id" type="int" name="Month ID">
+          <constraint type="PK" />
+          <gui-presentation coord="22 11" line="1" id="1" />
+        </column>
+        <column id="q" type="int" name="Quarter">
+          <gui-presentation line="3" id="1" />
+        </column>
+        <column id="year" type="int" name="Year">
+          <gui-presentation line="4" id="1" />
+        </column>
+        <gui-presentation coord="135 68" id="1" />
+      </table>
+      <table description="Order Agregate Table on level (month,customer)" access="RW" id="order_m_c" name="Order Ag. (m,c)">
+        <column id="month" type="int" name="Order Month">
+          <constraint type="NOTNULL" />
+          <gui-presentation line="1" id="1" />
+        </column>
+        <column id="cust" type="int" name="Customer">
+          <constraint type="NOTNULL" />
+          <gui-presentation line="2" id="1" />
+        </column>
+        <column id="amt" type="int" name="Sale Amount">
+          <gui-presentation line="3" id="1" />
+        </column>
+        <column id="price" type="num" name="Sale Price">
+          <gui-presentation line="4" id="1" />
+        </column>
+        <gui-presentation coord="343 167" id="1" />
+      </table>
+      <table description="Day lookup table" access="RO" id="l_day" name="Day">
+        <column id="month" type="int" name="Month">
+          <gui-presentation line="2" id="1" />
+        </column>
+        <column id="id" type="date" name="Day ID">
+          <constraint type="PK" />
+          <gui-presentation line="1" id="1" />
+        </column>
+        <column id="year" type="int" name="Year">
+          <gui-presentation line="4" id="1" />
+        </column>
+        <column id="week" type="int" name="Week">
+          <gui-presentation coord="184 44" line="3" id="1" />
+        </column>
+        <gui-presentation coord="392 58" id="1" />
+      </table>
+      <table description="City lookup table" access="RO" id="l_city" name="City">
+        <column id="reg" type="int" name="Region">
+          <gui-presentation line="3" id="1" />
+        </column>
+        <column id="categ" type="int" name="City Category">
+          <gui-presentation line="5" id="1" />
+        </column>
+        <column id="population" type="int" name="City Population">
+          <gui-presentation line="4" id="1" />
+        </column>
+        <column id="descr" type="char" name="City Name">
+          <gui-presentation line="2" id="1" />
+        </column>
+        <column id="id" type="int" name="City ID">
+          <constraint type="PK" />
+          <gui-presentation line="1" id="1" />
+        </column>
+        <gui-presentation coord="21 301" id="1" />
+      </table>
+      <src-conn driver="dbi:Pg">
+        <port gui-line="1">5432</port>
+        <src-name gui-line="2">vmall</src-name>
+        <password gui-line="4" />
+        <user gui-line="3">postgres</user>
+      </src-conn>
+    </source>
+  </host>
+  <signal></signal>
+  <gui-layer height="280" width="210" id="1" name="Physical Layer" />
+  <gui-layer height="280" width="210" id="2" visible="YES" name="Logical Layer" />
+  <attr id="1" name="Custommer">
+  	<display>
+	  <name>bear.instrat.cz/demo/l_cust/{f_name+' '+l_name}</name>
+  	  <e-mail>bear.instrat.cz/demo/l_cust/email</e-mail>
+  	  <addr>bear.instrat.cz/demo/l_cust/{zip+' '+&lookup(bear.instrat.cz/demo/l_city/,id=city)->desc+' '+addr</addr>
+	</display>
+    <fk>bear.instrat.cz/demo/order_m_c/cust</fk>
+    <fk>bear.instrat.cz/demo/order/cust</fk>
+	<pk>bear.instrat.cz/demo/l_cust/id</pk>
+    <gui-presentation coord="198 173" id="2" />
+  </attr>
+  <attr id="2" name="Custommer City">
+    <gui-presentation coord="199 100" id="2" />
+  </attr>
+  <attr id="4" name="Order Date">
+    <gui-presentation coord="217 235" id="2" />
+  </attr>
+  <triger></triger>
+  <connection></connection>
+</project>
+@
+
+
+1.2
+log
+@minor fixes
+@
+text
+@@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d212 1
+a212 1
+  	  <addr>bear.instrat.cz/demo/l_cust/{zip+' '+city->lookup(bear.instrat.cz/demo/l_city/id)->desc+' '+addr</addr>
+@
+
+
+1.1.1.1
+log
+@Initial release of Bear ROLAP Portal
+@
+text
+@@

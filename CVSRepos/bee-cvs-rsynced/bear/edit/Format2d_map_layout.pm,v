@@ -1,0 +1,174 @@
+head	1.1;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.1
+date	2004.04.16.16.21.49;	author vacula;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@new interface
+@
+text
+@#-----------------------------------------------------
+#  Format Editation
+#-----------------------------------------------------
+# $Id: Format2d_layout.pm,v 1.2 2003/11/18 14:38:40 jiri_schmid Exp $
+
+package Format2d_map_layout;
+
+use strict;
+#-----------------------------------------------------
+# print_form is called from edit.cgi
+
+sub generateContent {
+	my($variables, $lang, $obj) = (shift, shift, shift);
+	my $saved = $$variables->{saved} if exists $$variables->{saved};
+	my $imgType = \$$variables->{imgType};
+	my $skinPath = \$$variables->{skinPath};
+
+	my $split = "255,255,255";
+	my @@colors = split(/,/,$split);
+
+
+print <<END ;
+<br />
+<table class="page_skeleton_ex" style='width:100%'>
+<tr class="page_skeleton">
+<td class="page_skeleton_ex" style='padding: 12px 10px 10px 10px'>
+
+
+
+	<table style="text-align:center">
+		<tr><td colspan='6' class='neutral_bold' style="text-align:left" class='nowrap'>$$lang->{'Format2d Color'}:</td></tr>
+		<tr><td colspan='6'><hr /></td></tr>
+		<tr>	<td id='color' class='cursor' style='background-color:rgb($split); width:50px; border:thin solid #424242' title='$split' onclick='addColor(this)' rowspan='2'>
+				<img src='$${skinPath}img/color.$$imgType'>
+				<input type='hidden' value='' id='takeColor' />
+			</td>
+			<td>&nbsp</td>
+			<td style='text-align:right; color:#f00'>$$lang->{'Graph3d red'}</td>
+			<td><img class='cursor' onclick='minus("red")' src='$${skinPath}img/downArr.$$imgType' onmousedown="startDecrease('red')" onmouseup='stopTimer()'></td>
+			<td><input id='red' size='3' style='text-align:center' type='text' value='$colors[0]' onchange='changeColor()'/></td>
+			<td><img onclick='plus("red")' class='cursor' style='padding:2px' src='$${skinPath}img/upArr.$$imgType' onmousedown="startIncrease('red')" onmouseup='stopTimer()'></td>
+		</tr>
+		<tr>
+			<td>&nbsp</td>
+			<td style='text-align:right; color:#0f0'>$$lang->{'Graph3d green'}</td><td><img class='cursor' onclick='minus("green")' src='$${skinPath}img/downArr.$$imgType' onmousedown="startDecrease('green')" onmouseup='stopTimer()'></td>
+			<td><input id='green' type='text' style='text-align:center' size='3' value='$colors[1]' onchange='changeColor()'/></td>
+			<td><img onclick='plus("green")' class='cursor' style='padding:2px' src='$${skinPath}img/upArr.$$imgType' onmousedown="startIncrease('green')" onmouseup='stopTimer()'></td>
+		</tr><tr>
+			<td>&nbsp</td>
+			<td>&nbsp</td>
+			<td style='text-align:right; color:#00f'>$$lang->{'Graph3d blue'}</td><td><img class='cursor' onclick='minus("blue")' src='$${skinPath}img/downArr.$$imgType' onmousedown="startDecrease('blue')" onmouseup='stopTimer()'></td>
+			<td><input id='blue' type='text' style='text-align:center' size='3' value='$colors[2]' onchange='changeColor()'/></td>
+			<td><img onclick='plus("blue")' class='cursor' style='padding:2px' src='$${skinPath}img/upArr.$$imgType' onmousedown="startIncrease('blue')" onmouseup='stopTimer()'></td>
+		</tr>
+	</table>
+	<hr size='1' noshade='noshade' />
+	<table style="text-align:center">
+END
+for my $row (0..6) {
+	print "<tr>";
+	for my $col (0..9) {
+		print "<td title='${$Const::predefinedColors}[$row][$col]' onclick='setSelfColor(this)' style='background-color:rgb(${$Const::predefinedColors}[$row][$col]); width:12px; height:8px'></td>";
+	}
+	print "</tr>";
+}
+print <<END;
+	</table>	
+
+
+
+</td>
+<td class="page_skeleton_ex" style='width:100%;padding:10px' rowspan='2' >
+
+
+	<table	>
+		<tr><td class='neutral_bold' colspan='2'>$$lang->{'Format2d Grid'}:</td></tr>
+		<tr><td colspan='2'><hr /></td></tr>
+END
+foreach('bgclr','boxclr','title',){
+	my $name ="Format2d $_";
+	if ( $_ eq 'bgclr') {
+		my $check = ($$obj->{layout}{bg_transparent}) ? " checked='checked'" : "";
+		print "<tr><td style='nowrap;padding:0px 10px 0px 0px'>$$lang->{$name} :</td><td style='nowrap;padding:0px 10px 0px 0px'>$$lang->{'Format2d transparent'}</td><td style='nowrap;padding:0px 10px 0px 0px'><input type='checkbox' id='bg_transparent' name='bg_transparent' $check value='1' onchange='object_changed()' /></td></tr>";
+	}
+	elsif ( $_ eq 'boxclr' ) {
+		my $check = ($$obj->{layout}{show_boxclr}) ? " checked='checked'" : "";
+		print "<tr><td style='nowrap;padding:0px 10px 0px 0px'>$$lang->{$name} :</td><td style='nowrap;padding:0px 10px 0px 0px'>$$lang->{'Format2d show'}</td><td style='nowrap;padding:0px 10px 0px 0px'><input name='show_boxclr' id='show_boxclr' type='checkbox' $check value='1' onchange='object_changed()' /></td></tr>";
+	}
+	elsif ( $_ eq 'title' ) {
+		my $check = ($$obj->{layout}{show_title}) ? " checked='checked'" : "";
+		print "<tr><td style='nowrap;padding:0px 10px 0px 0px'>$$lang->{$name} :</td><td style='nowrap;padding:0px 10px 0px 0px'>$$lang->{'Format2d show'}</td><td style='nowrap;padding:0px 10px 0px 0px'><input name='show_title' id='show_title' type='checkbox' $check value='1' onchange='object_changed()' /></td></tr>";
+	}
+	print "<tr><td style='nowrap;padding:0px 10px 0px 0px'><input name='$_' id='$_' onclick='setSelf(this)' type='hidden' value='$$obj->{layout}{$_}'/></td><td style='nowrap;padding:0px 10px 0px 0px'>$$lang->{'Format2d color'}</td><td class='cursor' id='color$_' onclick='reloadColor(this)' style='background-color:rgb($$obj->{layout}{$_}); width:25px; border:1px solid #424242'><img src='$${skinPath}img/smallcolor.$$imgType' /></td></tr>";
+	print "<tr><td colspan='3'><hr size='1' noshade='noshade'/></td></tr>";
+}
+print <<END;	
+	</table>
+
+
+</td>
+</tr>
+END
+
+
+
+print <<END;
+<tr class="page_skeleton" >
+<td class="page_skeleton" colspan='2'>
+	<table class="neutral_100">
+		<tr><td align="center">
+		<table class="buttons" cellpading="0" cellspacing="0">
+		<tr>	<td class="buttons"><input id='SAVE' type="submit" name="Action" value="$$lang->{'Save'}"/></td>
+			<td class="buttons">	<input type="submit" name="Action" value="$$lang->{'Save As'}" onclick="return readName();"/>
+						<input type="hidden" name="saveAsName" id="saveAsName" value="" /></td>
+			<td class="buttons"><input type="button" name="reset" value="$$lang->{'Reset'}" onclick="self.frames['format'].location.reload(true)"/></td>
+		</tr>
+		</table>
+	</td></tr>
+	</table>
+</td></tr></table>
+END
+
+
+
+	print <<END;
+<script type="text/javascript" src="js/format_color.js"></script>
+<script type="text/javascript">
+	var saveAsMsg = "$$lang->{SaveAsMsg}$$lang->{'New Format2d'}";
+	reloadTree($saved);
+	setResol();
+	reSetIframe();
+</script>
+END
+
+}
+
+#---------------------------------------------------
+sub set_next_param {
+	my ($o,$q) = (shift, shift);
+# save colors
+	foreach ('bgclr','boxclr','title') {
+		$$o->{layout}{$_} = $$q->param($_) ;
+	}
+# save checkboxs	
+	foreach ('bg_transparent','show_boxclr','show_title') {
+		$$o->{layout}{$_} = ($$q->param("$_")) ? $$q->param("$_") : 0;
+	}
+}
+
+1
+
+@

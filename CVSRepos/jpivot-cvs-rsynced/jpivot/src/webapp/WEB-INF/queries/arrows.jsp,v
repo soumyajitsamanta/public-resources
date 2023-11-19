@@ -1,0 +1,85 @@
+head	1.2;
+access;
+symbols
+	jpivot_1_8_0:1.1
+	focus_1_6_0:1.1.0.6
+	jpivot_1_7_0:1.1
+	jpivot_1_6_0:1.1
+	jpivot_1_5_0:1.1.0.4
+	Root_jpivot_1_5_0:1.1
+	mondrian_xmla_2005_08_25:1.1.0.2
+	sourceforge_sync:1.1;
+locks; strict;
+comment	@# @;
+expand	@k@;
+
+
+1.2
+date	2010.03.09.23.36.39;	author serasoft;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2005.07.05.14.19.53;	author avix;	state Exp;
+branches
+	1.1.6.1;
+next	;
+
+1.1.6.1
+date	2008.04.17.10.45.09;	author hbaier;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@Migrated demo database to Derby db
+@
+text
+@<%@@ page session="true" contentType="text/html; charset=ISO-8859-1" %>
+<%@@ taglib uri="http://www.tonbeller.com/jpivot" prefix="jp" %>
+<%@@ taglib prefix="c" uri="http://java.sun.com/jstl/core" %>
+
+<%--
+  the values for "arrow=xxx" are the names of the images jpivot/jpivot/table/arrow-xxx.gif
+--%>
+
+
+<jp:mondrianQuery id="query01" jdbcDriver="org.apache.derby.jdbc.EmbeddedDriver" jdbcUrl="jdbc:derby:classpath:/foodmart" catalogUri="/WEB-INF/queries/FoodMart.xml"
+   jdbcUser="sa" jdbcPassword="sa" connectionPooling="false">
+with member [Measures].[ROI] as '(([Measures].[Store Sales] - [Measures].[Store Cost]) / [Measures].[Store Cost])', format_string = IIf((((([Measures].[Store Sales] - [Measures].[Store Cost]) / [Measures].[Store Cost]) * 100.0) > 150.0), "|#.00%|arrow='up'", IIf((((([Measures].[Store Sales] - [Measures].[Store Cost]) / [Measures].[Store Cost]) * 100.0) < 150.0), "|#.00%|arrow='down'", "|#.00%|arrow='none'"))
+select {[Measures].[ROI], [Measures].[Store Cost], [Measures].[Store Sales]} ON columns,
+  {[Product].[All Products]} ON rows
+from [Sales]
+where [Time].[1997]
+</jp:mondrianQuery>
+
+<c:set var="title01" scope="session">Arrows</c:set>
+@
+
+
+1.1
+log
+@initial version
+@
+text
+@d9 3
+a11 1
+<jp:mondrianQuery id="query01" jdbcDriver="sun.jdbc.odbc.JdbcOdbcDriver" jdbcUrl="jdbc:odbc:MondrianFoodMart" catalogUri="/WEB-INF/queries/FoodMart.xml">
+@
+
+
+1.1.6.1
+log
+@* merged focus changes of jpivot into focus_1_6_0
+@
+text
+@d9 1
+a9 1
+<jp:mondrianQuery id="query01" jdbcDriver="com.mysql.jdbc.Driver" jdbcUrl="jdbc:mysql://localhost/foodmart?user=foodmart&password=foodmart" catalogUri="/WEB-INF/queries/FoodMart.xml">
+@
+

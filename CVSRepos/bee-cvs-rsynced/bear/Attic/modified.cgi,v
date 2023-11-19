@@ -1,0 +1,352 @@
+head	1.10;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.10
+date	2004.02.05.08.53.47;	author jiri_schmid;	state dead;
+branches;
+next	1.9;
+
+1.9
+date	2004.01.06.08.17.34;	author jiri_schmid;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	2003.12.12.12.12.06;	author jiri_schmid;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	2003.12.11.16.23.00;	author jiri_schmid;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	2003.12.11.16.19.57;	author jiri_schmid;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	2003.12.10.16.15.02;	author jiri_schmid;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2003.12.10.15.54.26;	author jiri_schmid;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2003.12.10.12.23.06;	author jiri_schmid;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2003.12.08.14.58.30;	author jiri_schmid;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2003.12.04.15.28.03;	author jiri_schmid;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.10
+log
+@derivated reports redesigned
+@
+text
+@#!/usr/bin/perl
+# $Id: modified.cgi,v 1.9 2004/01/06 08:17:34 jiri_schmid Exp $
+
+use strict;
+my $run_mod_perl = defined(&Apache::RequestRec::BINMODE);	# are we running under mod_perl?
+if ($run_mod_perl) { Apache::RequestRec::BINMODE(':utf8') } else { binmode STDOUT,':utf8' }
+
+use utf8;
+
+use CGI qw( :standard );
+use CGI::Pretty;
+require "const/Const.pm";
+require "local/Local.pm";
+
+# ---- init SOAP ---------
+#-------------------------
+my $load = 0;
+if (!$load) {	# ensure require will be performed only once in case of mod_perl execution
+	eval "use SOAP::Lite +autodispatch => 
+		uri => 'Bear', 
+		proxy => ['http://$Const::bearHost:$Const::bearPort/',
+		options => {compress_threshold => $Const::compressThreshold}];
+		1"
+	or ( &Local::ErrorDie("ERROR in eval of \"use SOAP::Lite ...\".") );
+	$load++;
+}
+my $q = new CGI;
+
+# --- test SOAP connection ---
+#-----------------------------
+my $serverVerbName="SOAP Server http://$Const::bearHost:$Const::bearPort/";
+if (! eval "SOAP::Lite->self->fault") {
+	&Local::ErrorDie('ERROR: '.$serverVerbName.' not responding<br><form><input type="submit" name="Refresh" value="Refresh" /></form>');
+}
+
+# --- determine user and his preferences ---
+#-------------------------------------------
+my $user = $q->remote_user() ? $q->remote_user() : 'anonymous';
+my $use_lang = ($q->param('Lang')) ? $q->param('Lang') : $Const::defaultLanguage;
+my $project = ($q->param('Proj')) ? $q->param('Proj') : '';
+my $use_enc = $Const::languages->{$use_lang}->{enc};
+my $openIn = $q->param('Open') ? $q->param('Open') : '_self';
+my $skin = $q->param('Skin');
+my $params = "Lang=$use_lang&Skin=$skin&Proj=$project";
+my $id = $q->param('Item');
+
+# --- determine skin ---
+#-----------------------
+my $skinPath;
+my $wb = $q->user_agent()=~/MSIE/ ? 'msie' : 'mozilla';
+if ($q->param('Skin')) {	# takes it as param from index.cgi
+	$skinPath = "skins/".$q->param('Skin');
+} elsif ($q->param('skin')) {	# I've received parameter from myself after Save
+	$skinPath = "$Const::wb_const->{$wb}{skinDir}/".$q->param('skin');
+} else {
+	$skinPath = "$Const::wb_const->{$wb}{skinDir}/default";	#let use default
+}
+
+# --- load message dictionary ---
+#---------------------------------
+require "lang/$use_lang.utf";
+
+# --- print out html form ---
+#----------------------------
+print $q->header(-charset=>$use_enc);
+
+print $q->start_html(
+	-title=>"Derivations",
+  	-lang=>$Const::languages->{$use_lang}->{lang},	#return language specification in format: language-country (it differs from param Lang)
+	-encoding=>$use_enc,
+	-head=>meta({ -http_equiv => 'Content-Type', -content => "text/html; charset=$use_enc" }),
+	-style=>{-src=>"${skinPath}/css.css"},
+	-script=>{-language=>'JAVASCRIPT', -src=>'js/modified.js'},
+);
+
+print <<END;
+<input type="hidden" value="$openIn" id='open_in' />
+<script type="text/javascript">var params = "$params";</script>
+
+<table class='neutral'>
+	<tr>	<th colspan='5'>$Const::lang->{$use_lang}->{'Derivated'}:</th></tr>
+	<tr>	<td colspan='5'><hr size='1' /></td></tr>
+	<tr>
+		<td class='even' style='font-style:italic; font-weight:bold; font-size:90%'>$Const::lang->{$use_lang}{'Derivated Original'}</td>
+		<td class='even' style='font-style:italic; font-weight:bold; font-size:90%'>$Const::lang->{$use_lang}{'Derivated Name'}</td>
+		<td class='even' style='font-style:italic; font-weight:bold; font-size:90%'>$Const::lang->{$use_lang}{'Derivated Date'}</td>
+		<td class='even' style='font-style:italic; font-weight:bold; font-size:90%'>$Const::lang->{$use_lang}{'Derivated Modif'}</td>
+		<td class='even' style='font-style:italic; font-weight:bold; font-size:70%'>$Const::lang->{$use_lang}{'Delete'}</td>
+	</tr>
+END
+$id = &Drop($id,$project,$user) if $q->param('Action') eq 'drop';
+
+my $rprts = SOAP->GetDerivatedReports($user,$project,$use_lang);
+foreach (sort {$rprts->{$a}{name} cmp $rprts->{$b}{name}} keys %{$rprts}) {
+print <<END
+	<tr>	<td class='even'><a href='javascript:runModifiedResult(\"$rprts->{$_}{orig_id}\")'>$rprts->{$_}{orig_name}</a></td>
+		<td class='even'><a href='javascript:runModifiedResult(\"$rprts->{$_}{id}\")'>$rprts->{$_}{name}</a></td>
+		<td class='even'>$rprts->{$_}{date}</td>
+		<td class='even'>$rprts->{$_}{modification}</td>
+		<td class='even' style='text-align:center'><img alt="$rprts->{$_}{name}" src="$skinPath/img/delete.png" class='cursor' onclick="remove(this,'$rprts->{$_}{id}')" title="$Const::lang->{$use_lang}{'Delete'}"/></td>
+	</tr>
+END
+}
+print "</table>";
+
+my @@hlp;
+foreach my $key (keys %{$Const::local->{$use_lang}}) { push (@@hlp,"'$key':'$Const::local->{$use_lang}{$key}'") }
+my $hlp = join(",",@@hlp);
+print "<script type='text/javascript'>var local = {$hlp};</script>";
+
+print $q->end_html;
+
+#---------------------------------------------------
+
+sub Drop {
+	my ($itemId,$pr,$user) = (shift,shift,shift); #project name
+	my $succes = SOAP->DropMData($pr,$itemId);
+	if ($succes) {
+		return
+	} else {
+		SOAP->RemoveModifiedReport($pr,$itemId,$user);	# temporarily !!!
+	}
+}
+
+#---------------------------------------------------
+
+1
+@
+
+
+1.9
+log
+@dynamic params implemented into grid
+@
+text
+@d2 1
+a2 1
+# $Id: modified.cgi,v 1.8 2003/12/12 12:12:06 jiri_schmid Exp $
+@
+
+
+1.8
+log
+@found a fixed bug manipulating dynamic params in grid
+@
+text
+@d2 1
+a2 1
+# $Id: modified.cgi,v 1.7 2003/12/11 16:23:00 jiri_schmid Exp $
+d96 2
+a97 2
+	<tr>	<td class='even'><a onclick='runModifiedResult(\"$rprts->{$_}{orig_id}\")' href='javascript:{}'>$rprts->{$_}{orig_name}</a></td>
+		<td class='even'><a onclick='runModifiedResult(\"$rprts->{$_}{id}\")' href='javascript:{}'>$rprts->{$_}{name}</a></td>
+@
+
+
+1.7
+log
+@just visual improvment
+@
+text
+@d2 1
+a2 1
+# $Id: modified.cgi,v 1.6 2003/12/11 16:19:57 jiri_schmid Exp $
+d93 1
+a93 1
+my $rprts = SOAP->getDerivatedReports($user,$project,$use_lang);
+@
+
+
+1.6
+log
+@last pivot rule implenmeted, removing modified reports enhanced
+@
+text
+@d2 1
+a2 1
+# $Id: modified.cgi,v 1.5 2003/12/10 16:15:02 jiri_schmid Exp $
+d88 1
+a88 1
+		<td class='even'>&nbsp;</td>
+d100 1
+a100 1
+		<td class='even'><img alt="$rprts->{$_}{name}" src="$skinPath/img/delete.png" class='cursor' onclick="remove(this,'$rprts->{$_}{id}')" title="$Const::lang->{$use_lang}{'Delete'}"/></td>
+@
+
+
+1.5
+log
+@cosmetic change
+@
+text
+@d2 1
+a2 1
+# $Id: modified.cgi,v 1.4 2003/12/10 15:54:26 jiri_schmid Exp $
+d91 1
+a91 1
+$id = &Drop($id,$project) if $q->param('Action') eq 'drop';
+d116 7
+a122 2
+	my ($itemId,$pr) = (shift,shift); #project name
+	SOAP->DropMData($pr,$itemId);
+@
+
+
+1.4
+log
+@code and functionality improvments for pivoting and modified reports page
+@
+text
+@d2 1
+a2 1
+# $Id: modified.cgi,v 1.3 2003/12/10 12:23:06 jiri_schmid Exp $
+d100 1
+a100 1
+		<td class='even'><img src="$skinPath/img/delete.png" class='cursor' onclick="remove('$rprts->{$_}{id}')" title="$Const::lang->{$use_lang}{'Delete'}"/></td>
+@
+
+
+1.3
+log
+@code a visual improvments, removing of derivated reports implemented
+@
+text
+@d2 1
+a2 1
+# $Id: modified.cgi,v 1.2 2003/12/08 14:58:30 jiri_schmid Exp $
+d93 2
+a94 2
+my $rprts = SOAP->getDerivatedReports($user,$project);
+foreach (keys %{$rprts}) {
+d96 2
+a97 2
+	<tr>	<td class='even'><a href='javascript:{}'>original</a></td>
+		<td class='even'><a onclick='runModifiedResult(\"$_\")' href='javascript:{}'>$_</a></td>
+d99 2
+a100 2
+		<td class='even'></td>
+		<td class='even'><img src="$skinPath/img/delete.png" class='cursor' onclick="remove('$_')" title="$Const::lang->{$use_lang}{'Delete'}"/></td>
+@
+
+
+1.2
+log
+@reading of privatemd implemented, derivated reports are no longer in tree generated
+@
+text
+@d2 1
+a2 1
+# $Id: modified.cgi,v 1.1 2003/12/04 15:28:03 jiri_schmid Exp $
+d44 2
+a45 1
+my $params = "Lang=$use_lang&Skin=$skin";
+d81 2
+a82 2
+	<tr>	<th colspan='4'>$Const::lang->{$use_lang}->{'Derivated'}:</th></tr>
+	<tr>	<td colspan='4'><hr size='1' /></td></tr>
+d88 1
+d91 2
+d100 1
+d106 5
+d112 7
+@
+
+
+1.1
+log
+@starting implementation of history of derivated (modified) reports
+@
+text
+@d2 1
+a2 1
+# $Id: modified.cgi,v 1.4 2003/11/12 12:44:21 jiri_schmid Exp $
+d5 3
+d38 1
+a38 1
+my $User = $q->remote_user() ? $q->remote_user() : 'anonymous';
+d42 3
+d58 4
+d72 1
+d75 25
+a99 1
+print "Derivovane reporty, kdo vymysli neco jednoslovneho ? :-)";
+@
+

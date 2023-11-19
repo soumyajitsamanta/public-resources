@@ -1,0 +1,159 @@
+head     1.1;
+branch   1.1.1;
+access   ;
+symbols  start:1.1.1.1 vendor:1.1.1;
+locks    ; strict;
+comment  @# @;
+
+
+1.1
+date     2002.09.24.01.34.25;  author michald;  state Exp;
+branches 1.1.1.1;
+next     ;
+
+1.1.1.1
+date     2002.09.24.01.34.25;  author michald;  state Exp;
+branches ;
+next     ;
+
+
+desc
+@@
+
+
+
+1.1
+log
+@Initial revision
+@
+text
+@/* XPM */
+static char * new_16_xpm[] = {
+"16 16 102 2",
+"  	c None",
+". 	c #000000",
+"+ 	c #FEFEFE",
+"@@ 	c #FDFDFD",
+"# 	c #E0E0E0",
+"$ 	c #C1C1C1",
+"% 	c #F1F1F1",
+"& 	c #C3C3C3",
+"* 	c #FBFBFB",
+"= 	c #A8A8A8",
+"- 	c #ADADAD",
+"; 	c #767676",
+"> 	c #5D5D5D",
+", 	c #404040",
+"' 	c #D64C1D",
+") 	c #F0F0F0",
+"! 	c #E2E2E2",
+"~ 	c #858585",
+"{ 	c #4B4B49",
+"] 	c #161616",
+"^ 	c #D74D1E",
+"/ 	c #EFEFEF",
+"( 	c #E3A691",
+"_ 	c #EEEEEE",
+": 	c #C5C5C5",
+"< 	c #DB5B20",
+"[ 	c #DC611F",
+"} 	c #F2C7B3",
+"| 	c #DD784C",
+"1 	c #E9CBC0",
+"2 	c #DA5A1F",
+"3 	c #DC744C",
+"4 	c #ECECEC",
+"5 	c #C4C4C4",
+"6 	c #DC5D1F",
+"7 	c #E99123",
+"8 	c #EC9E24",
+"9 	c #EA9624",
+"0 	c #E08A64",
+"a 	c #E38438",
+"b 	c #E48022",
+"c 	c #E7BCA9",
+"d 	c #EBEBEB",
+"e 	c #D74F1E",
+"f 	c #E48222",
+"g 	c #F7D427",
+"h 	c #F7D327",
+"i 	c #F4C426",
+"j 	c #F5CD27",
+"k 	c #E49864",
+"l 	c #EAEAEA",
+"m 	c #D9551E",
+"n 	c #E58623",
+"o 	c #F1B725",
+"p 	c #F7D227",
+"q 	c #E48B37",
+"r 	c #DD8462",
+"s 	c #E0A28E",
+"t 	c #E8E8E8",
+"u 	c #C0C0C0",
+"v 	c #E78D23",
+"w 	c #F5C927",
+"x 	c #E06E21",
+"y 	c #E2B4A4",
+"z 	c #E7E7E7",
+"A 	c #BFBFBF",
+"B 	c #DE6620",
+"C 	c #F0B225",
+"D 	c #F6CF27",
+"E 	c #F0B025",
+"F 	c #E47F22",
+"G 	c #DB754A",
+"H 	c #E6E6E6",
+"I 	c #E5E5E5",
+"J 	c #BEBEBE",
+"K 	c #DD6120",
+"L 	c #E58523",
+"M 	c #F1B726",
+"N 	c #EFB025",
+"O 	c #EDA425",
+"P 	c #DC8260",
+"Q 	c #DC8361",
+"R 	c #D96E49",
+"S 	c #E3D4CF",
+"T 	c #E4E4E4",
+"U 	c #BDBDBD",
+"V 	c #481B0A",
+"W 	c #E2A178",
+"X 	c #DE6720",
+"Y 	c #DFB1A1",
+"Z 	c #E1D2CD",
+"` 	c #E3E3E3",
+" .	c #BBBBBB",
+"..	c #D07454",
+"+.	c #C2A499",
+"@@.	c #D55C2F",
+"#.	c #C1A298",
+"$.	c #BCBCBC",
+"%.	c #A0A0A0",
+"&.	c #2F1006",
+"*.	c #2F1106",
+"=.	c #8E3213",
+"      . . . . . . . . .         ",
+"    . + + + + + + @@ # $ .       ",
+"    . + % % % % % % & * = .     ",
+"    . + % % % % % % - ; > , .   ",
+"'   . + % % % % % ) ! ~ { ] .   ",
+"^   . + % / / / ( / / _ _ : .   ",
+"  < [ } | / 1 2 3 _ _ _ 4 5 .   ",
+"  6 7 8 9 0 a b c _ _ _ d & .   ",
+"  e f g h i j k d d l l l $ .   ",
+"m n o g g g p q r s t t t u .   ",
+"  v w g g g p x y t t z z A .   ",
+"  B C g g D E F G H H H I J .   ",
+"  K L M N O [ P Q R S T T U .   ",
+"    V x W X K I T Y Z ` `  ..   ",
+"    . ..U +.@@.#.$. . . . .%..   ",
+"      &.. . *.=.. . . . . .     "};
+@
+
+
+1.1.1.1
+log
+@Initial public release of BEE Project.
+@
+text
+@@

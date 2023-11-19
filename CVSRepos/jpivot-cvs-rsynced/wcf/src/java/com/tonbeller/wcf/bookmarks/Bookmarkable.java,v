@@ -1,0 +1,112 @@
+head	1.3;
+access;
+symbols
+	jpivot_1_8_0:1.2
+	focus_1_6_0:1.2.0.2
+	wcf_1_7_0:1.2
+	wcf_1_6_0:1.2
+	jpivot_1_5_0:1.1.0.4
+	Root_jpivot_1_5_0:1.1
+	mondrian_xmla_2005_08_25:1.1.0.2
+	sourceforge_sync:1.2;
+locks; strict;
+comment	@# @;
+
+
+1.3
+date	2009.12.18.19.45.33;	author willgorman;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2006.11.09.13.24.04;	author avix;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2005.07.05.14.08.04;	author avix;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.3
+log
+@renamed getBookmarkState to retrieveBookmarkState so that JPivot works with beanutils-1.8
+@
+text
+@/*
+ * ====================================================================
+ * This software is subject to the terms of the Common Public License
+ * Agreement, available at the following URL:
+ *   http://www.opensource.org/licenses/cpl.html .
+ * Copyright (C) 2003-2004 TONBELLER AG.
+ * All Rights Reserved.
+ * You must accept the terms of that agreement to use this software.
+ * ====================================================================
+ *
+ * 
+ */
+package com.tonbeller.wcf.bookmarks;
+
+/**
+ * State may be saved and restored later
+ * @@author av
+ */
+public interface Bookmarkable {
+  
+  /**
+   * The bookmark should contain as much detail as possible, even if it may not work
+   * after the schema has changed.
+   * See <a href="http://www.esgs.org/uk/inex.htm">http://www.esgs.org/uk/inex.htm</a>
+   */
+  public static final int EXTENSIONAL = 0;
+  
+  /**
+   * The bookmark should contain a generic description which may contain less details
+   * but works in all conditions.
+   * See <a href="http://www.esgs.org/uk/inex.htm">http://www.esgs.org/uk/inex.htm</a>
+   */
+  public static final int INTENSIONAL  = 1;
+
+  /**
+   * retrieves the state of this instance
+   * @@param levelOfDetail INTENSIONAL or EXTENSIONAL
+   */
+  Object retrieveBookmarkState(int levelOfDetail);
+
+  /**
+   * sets the state of this instance
+   * @@param state the state returned by retrieveBookmarkState
+   */
+  void setBookmarkState(Object state);
+}
+@
+
+
+1.2
+log
+@synchronized with tonbeller cvs
+@
+text
+@d39 1
+a39 1
+  Object getBookmarkState(int levelOfDetail);
+d43 1
+a43 1
+   * @@param state the state returned by getBookmarkState
+@
+
+
+1.1
+log
+@initial version
+@
+text
+@a36 1
+   * @@param levelOfDetail TODO
+@
+

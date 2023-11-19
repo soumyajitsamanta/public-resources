@@ -1,0 +1,257 @@
+head	1.2;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2008.05.17.15.40.41;	author fsaz;	state dead;
+branches;
+next	1.1;
+
+1.1
+date	2005.11.28.15.39.46;	author fsaz;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@borrando viejos
+@
+text
+@/*
+ * Created on 03-may-2005
+ *
+ * ReportMutableTreeNode.java
+ *
+ */
+package es.aeat.eett.infoRubik.reports;
+
+import java.util.Enumeration;
+import java.util.List;
+import java.util.NoSuchElementException;
+
+import javax.swing.tree.DefaultMutableTreeNode;
+
+import org.jdom.Attribute;
+import org.jdom.Element;
+
+import es.aeat.eett.infoRubik.layout.LeafReport;
+import es.aeat.eett.infoRubik.layout.LeafReportImp;
+
+/**
+ * @@author f00992
+ */
+public class ReportMutableTreeNode extends DefaultMutableTreeNode {
+    private static final String KEY_REPORT_NODO="reportNode";
+    private static final String KEY_REPORT_LEAF="reportLeaf";
+    private static final String KEY_CONTENT_LEAF="contentLeaf";
+    public static final String KEY_ID_LEAF="idLeaf";
+
+    //private Element userElement=null;
+    private LeafReport leafReport=null;
+
+
+    ReportMutableTreeNode(Object userObject) {
+        super(userObject);
+    }
+    public boolean isEditable(){
+    	if(isRoot()&& !(getUserObject() instanceof Report))
+    		return false;
+    	return this!=getJobsRootNode();
+    }
+    public ReportMutableTreeNode addLeaf(String nameLeaf){
+	    ReportMutableTreeNode nLeaf=new ReportMutableTreeNode(nameLeaf);
+	    add(nLeaf);
+
+	    Element eReportLeaf= new Element(KEY_REPORT_LEAF);
+	    //Element eContenLeaf= new Element(KEY_CONTENT_LEAF);
+	    Attribute a= new Attribute(KEY_ID_LEAF,getIDLeafReport());
+	    eReportLeaf.setAttribute(a);
+	    nLeaf.setLeafReport(new LeafReportImp(eReportLeaf));
+    	return nLeaf;
+    }
+    public void setUserObject(Object userObject) {
+    	if(this.userObject instanceof Report){
+    		((Report) this.userObject).setReportName((String) userObject);
+    	}else
+    		this.userObject = userObject;
+    }
+    public String getIDLeafReport(){
+    	String res;
+    	for(int counter=0; !isValidIDLeafReport(res="L_"+Integer.toString(counter++)););
+    	return res;
+    }
+    private boolean isValidIDLeafReport(String id){
+    	Enumeration e=getReportRootNode().depthFirstEnumeration();
+    	while(e.hasMoreElements()){
+    		ReportMutableTreeNode n=(ReportMutableTreeNode) e.nextElement();
+    		if(n.isReportLeaf()){
+    			if(id.equals(n.leafReport.getIDLeaf())){
+    				return false;
+    			}
+    		}
+    	}
+    	return true;
+    }
+    public boolean isReportRootNode(){
+        return (!isRoot())? getLevel()==1:true;
+    }
+    public boolean isEmpty(){
+        if(!isLeaf() && leafReport!=null)
+        	leafReport=null;
+        return leafReport==null;
+    }
+    public ReportMutableTreeNode getReportRootNode(){
+        ReportMutableTreeNode nParent=this;
+        while(nParent!=null){
+            if(nParent.getUserObject() instanceof Report)
+                return nParent;
+            nParent=(ReportMutableTreeNode) nParent.getParent();
+            //nParent=(ReportMutableTreeNode)parent.getParent();
+        }
+        throw new NoSuchElementException("node has no ReportRoot");
+    }
+    public ReportMutableTreeNode getJobsRootNode(){
+        return (ReportMutableTreeNode) getReportRootNode().getFirstChild();
+    }
+    /**/
+    public ReportMutableTreeNode getReportLeaftRootNode(){
+    	if(getReportRootNode().getChildCount()<2){
+    		return null;
+    	}else{
+    		return (ReportMutableTreeNode) getReportRootNode().getChildAt(1);
+    	}
+    }
+    /**/
+    public boolean isReportLeaf(){
+    	if(isLeaf()&& !isRoot()){
+    		if(isNodeAncestor(getReportRootNode())
+    				&& !isNodeAncestor(getJobsRootNode())
+					&& !isEmpty()){
+    			return true;
+    		}else
+    			return false;
+    	}else
+    		return false;
+    }
+    public boolean isFixecJob(){
+        return this==getJobsRootNode();
+    }
+    public Element getRootElement() {
+        Element eRoot=null;
+        Attribute a;
+        if(this==getReportRootNode()){
+            eRoot=new Element(Report.getKEY_REPORT());
+            a= new Attribute(Report.getKEY_NAME(), userObject.toString());
+            eRoot.setAttribute(a);
+        }else{
+            if(isReportLeaf()){
+                eRoot=(Element)leafReport.getRootElement().clone();
+            }else if(isEmpty() || isFixecJob()){
+                eRoot=new Element(KEY_REPORT_NODO);
+            }else{
+                //eRoot=new Element(KEY_REPORT_LEAF);
+                //if(userElement!=null)
+                //if(leafReport!=null)
+                    //eRoot=(Element)leafReport.getRootElement().clone();
+                    //eRoot.addContent((Element)leafReport.getRootElement().clone());
+                	//eRoot.addContent((Element)leafReport.getELayout().clone());
+            }
+            a= new Attribute(Report.getKEY_NAME(), userObject.toString());
+            eRoot.setAttribute(a);
+        }
+        int counter=getChildCount();
+        if(counter>0){
+            for(int i=0; i<counter; i++){
+                eRoot.addContent(((ReportMutableTreeNode) getChildAt(i)).getRootElement() );
+            }
+        }
+        return eRoot;
+    }
+    public boolean loadRootElement(Element rootElement) {
+        boolean load=true;
+        removeAllChildren();
+        Attribute a;
+        if(this==getReportRootNode()){
+            Report report=(Report) getUserObject();
+            a=rootElement.getAttribute(Report.getKEY_NAME());
+            report.setReportName(a.getValue());
+        }
+        List list=rootElement.getChildren();
+        int counter=list.size();
+        if(counter>0){
+            for(int i=0; i<counter; i++){
+                Element e=(Element) list.get(i);
+                a=e.getAttribute(Report.getKEY_NAME());
+                ReportMutableTreeNode node=new ReportMutableTreeNode(a.getValue());
+                add(node);
+                if(e.getName().equals(KEY_REPORT_NODO)){
+	                if( !node.loadRootElement(e))
+	                    load=false;
+                }else if(e.getName().equals(KEY_REPORT_LEAF)){
+                    //Element eChild=e.getChild(KEY_CONTENT_LEAF);
+                    //node.setUserElement(eChild);
+                    LeafReport lReport= new LeafReportImp(e);
+                    node.setLeafReport(lReport);
+                }//else Fallo
+            }
+        }
+        return load;
+    }
+
+	/**
+	 * @@return Returns the leafReport.
+	 */
+	public LeafReport getLeafReport() {
+		return leafReport;
+	}
+	/**
+	 * @@param leafReport The leafReport to set.
+	 */
+	public void setLeafReport(LeafReport leafReport) {
+		this.leafReport = leafReport;
+	}
+    /**
+     * @@return Returns the kEY_CONTENT_LEAF.
+     *
+    public static String getKEY_CONTENT_LEAF() {
+        return KEY_CONTENT_LEAF;
+    }
+    */
+    /**
+     * @@return Returns the kEY_REPORT_LEAF.
+     */
+    public static String getKEY_REPORT_LEAF() {
+        return KEY_REPORT_LEAF;
+    }
+    /**
+     * @@return Returns the kEY_REPORT_NODO.
+     */
+    public static String getKEY_REPORT_NODO() {
+        return KEY_REPORT_NODO;
+    }
+
+	/**
+	 * @@return Returns the kEY_ID_LEAF.
+	 */
+	public static String getKEY_ID_LEAF() {
+		return KEY_ID_LEAF;
+	}
+}//Fin class ReportMutableTreeNode
+@
+
+
+1.1
+log
+@*** empty log message ***
+@
+text
+@@
+

@@ -1,0 +1,65 @@
+head	1.2;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2008.05.17.15.40.42;	author fsaz;	state dead;
+branches;
+next	1.1;
+
+1.1
+date	2005.11.28.15.11.02;	author fsaz;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@borrando viejos
+@
+text
+@/*
+ * Created on 01-jul-2005
+ *
+ * TableJobFactory.java
+ */
+package es.aeat.eett.infoRubik.jobs.olap_jobs.chart_job;
+
+import java.io.File;
+
+import es.aeat.eett.infoRubik.jobs.job_core.Job;
+import es.aeat.eett.infoRubik.jobs.job_core.JobFactory;
+
+
+/**
+ * @@author f00992
+ */
+public class ChartJobFactory implements JobFactory {
+
+	public ChartJobFactory(){
+	}
+    public Job createJob() throws Exception {
+        return new ChartJob();
+    }
+    public Job createJob(File file) throws Exception {
+    	Job job= new ChartJob(file);
+        return job;
+    }
+}
+@
+
+
+1.1
+log
+@*** empty log message ***
+@
+text
+@@
+

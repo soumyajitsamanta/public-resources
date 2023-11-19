@@ -1,0 +1,408 @@
+head	1.2;
+access;
+symbols
+	test_tag:1.1
+	sfsync:1.2;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2004.06.30.13.45.51;	author avix;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2004.06.09.20.35.53;	author avix;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@Fixed bug with Join Element
+@
+text
+@/**
+ * <copyright>
+ * </copyright>
+ *
+ * $Id$
+ */
+package net.sourceforge.mondrian.schema.Mondrian;
+
+import org.eclipse.emf.common.util.EList;
+
+import org.eclipse.emf.ecore.EObject;
+
+import org.eclipse.emf.ecore.util.FeatureMap;
+
+/**
+ * <!-- begin-user-doc -->
+ * A representation of the model object '<em><b>Join Type</b></em>'.
+ * <!-- end-user-doc -->
+ *
+ * <p>
+ * The following features are supported:
+ * <ul>
+ *   <li>{@@link net.sourceforge.mondrian.schema.Mondrian.JoinType#getRelation <em>Relation</em>}</li>
+ *   <li>{@@link net.sourceforge.mondrian.schema.Mondrian.JoinType#getView <em>View</em>}</li>
+ *   <li>{@@link net.sourceforge.mondrian.schema.Mondrian.JoinType#getJoin <em>Join</em>}</li>
+ *   <li>{@@link net.sourceforge.mondrian.schema.Mondrian.JoinType#getTable <em>Table</em>}</li>
+ *   <li>{@@link net.sourceforge.mondrian.schema.Mondrian.JoinType#getLeftAlias <em>Left Alias</em>}</li>
+ *   <li>{@@link net.sourceforge.mondrian.schema.Mondrian.JoinType#getLeftKey <em>Left Key</em>}</li>
+ *   <li>{@@link net.sourceforge.mondrian.schema.Mondrian.JoinType#getRightAlias <em>Right Alias</em>}</li>
+ *   <li>{@@link net.sourceforge.mondrian.schema.Mondrian.JoinType#getRightKey <em>Right Key</em>}</li>
+ * </ul>
+ * </p>
+ *
+ * @@see net.sourceforge.mondrian.schema.Mondrian.MondrianPackage#getJoinType()
+ * @@model 
+ * @@generated
+ */
+public interface JoinType extends EObject{
+  /**
+   * Returns the value of the '<em><b>Relation</b></em>' attribute list.
+   * The list contents are of type {@@link org.eclipse.emf.ecore.util.FeatureMap.Entry}.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Relation</em>' attribute list isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @@return the value of the '<em>Relation</em>' attribute list.
+   * @@see net.sourceforge.mondrian.schema.Mondrian.MondrianPackage#getJoinType_Relation()
+   * @@model unique="false" dataType="org.eclipse.emf.ecore.EFeatureMapEntry" many="true"
+   * @@generated
+   */
+  FeatureMap getRelation();
+
+  /**
+   * Returns the value of the '<em><b>View</b></em>' containment reference list.
+   * The list contents are of type {@@link net.sourceforge.mondrian.schema.Mondrian.ViewType}.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>View</em>' containment reference list isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @@return the value of the '<em>View</em>' containment reference list.
+   * @@see net.sourceforge.mondrian.schema.Mondrian.MondrianPackage#getJoinType_View()
+   * @@model type="net.sourceforge.mondrian.schema.Mondrian.ViewType" containment="true" resolveProxies="false" upper="2" transient="true" volatile="true" derived="true"
+   * @@generated
+   */
+  EList getView();
+
+  /**
+   * Returns the value of the '<em><b>Join</b></em>' containment reference list.
+   * The list contents are of type {@@link net.sourceforge.mondrian.schema.Mondrian.JoinType}.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Join</em>' containment reference list isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @@return the value of the '<em>Join</em>' containment reference list.
+   * @@see net.sourceforge.mondrian.schema.Mondrian.MondrianPackage#getJoinType_Join()
+   * @@model type="net.sourceforge.mondrian.schema.Mondrian.JoinType" containment="true" resolveProxies="false" upper="2" transient="true" volatile="true" derived="true"
+   * @@generated
+   */
+  EList getJoin();
+
+  /**
+   * Returns the value of the '<em><b>Table</b></em>' containment reference list.
+   * The list contents are of type {@@link net.sourceforge.mondrian.schema.Mondrian.TableType}.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Table</em>' containment reference list isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @@return the value of the '<em>Table</em>' containment reference list.
+   * @@see net.sourceforge.mondrian.schema.Mondrian.MondrianPackage#getJoinType_Table()
+   * @@model type="net.sourceforge.mondrian.schema.Mondrian.TableType" containment="true" resolveProxies="false" upper="2" transient="true" volatile="true" derived="true"
+   * @@generated
+   */
+  EList getTable();
+
+  /**
+   * Returns the value of the '<em><b>Left Alias</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Left Alias</em>' attribute isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @@return the value of the '<em>Left Alias</em>' attribute.
+   * @@see #setLeftAlias(Object)
+   * @@see net.sourceforge.mondrian.schema.Mondrian.MondrianPackage#getJoinType_LeftAlias()
+   * @@model unique="false" dataType="org.eclipse.emf.ecore.xml.type.AnySimpleType"
+   * @@generated
+   */
+  Object getLeftAlias();
+
+  /**
+   * Sets the value of the '{@@link net.sourceforge.mondrian.schema.Mondrian.JoinType#getLeftAlias <em>Left Alias</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @@param value the new value of the '<em>Left Alias</em>' attribute.
+   * @@see #getLeftAlias()
+   * @@generated
+   */
+  void setLeftAlias(Object value);
+
+  /**
+   * Returns the value of the '<em><b>Left Key</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Left Key</em>' attribute isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @@return the value of the '<em>Left Key</em>' attribute.
+   * @@see #setLeftKey(Object)
+   * @@see net.sourceforge.mondrian.schema.Mondrian.MondrianPackage#getJoinType_LeftKey()
+   * @@model unique="false" dataType="org.eclipse.emf.ecore.xml.type.AnySimpleType" required="true"
+   * @@generated
+   */
+  Object getLeftKey();
+
+  /**
+   * Sets the value of the '{@@link net.sourceforge.mondrian.schema.Mondrian.JoinType#getLeftKey <em>Left Key</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @@param value the new value of the '<em>Left Key</em>' attribute.
+   * @@see #getLeftKey()
+   * @@generated
+   */
+  void setLeftKey(Object value);
+
+  /**
+   * Returns the value of the '<em><b>Right Alias</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Right Alias</em>' attribute isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @@return the value of the '<em>Right Alias</em>' attribute.
+   * @@see #setRightAlias(Object)
+   * @@see net.sourceforge.mondrian.schema.Mondrian.MondrianPackage#getJoinType_RightAlias()
+   * @@model unique="false" dataType="org.eclipse.emf.ecore.xml.type.AnySimpleType"
+   * @@generated
+   */
+  Object getRightAlias();
+
+  /**
+   * Sets the value of the '{@@link net.sourceforge.mondrian.schema.Mondrian.JoinType#getRightAlias <em>Right Alias</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @@param value the new value of the '<em>Right Alias</em>' attribute.
+   * @@see #getRightAlias()
+   * @@generated
+   */
+  void setRightAlias(Object value);
+
+  /**
+   * Returns the value of the '<em><b>Right Key</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Right Key</em>' attribute isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @@return the value of the '<em>Right Key</em>' attribute.
+   * @@see #setRightKey(Object)
+   * @@see net.sourceforge.mondrian.schema.Mondrian.MondrianPackage#getJoinType_RightKey()
+   * @@model unique="false" dataType="org.eclipse.emf.ecore.xml.type.AnySimpleType" required="true"
+   * @@generated
+   */
+  Object getRightKey();
+
+  /**
+   * Sets the value of the '{@@link net.sourceforge.mondrian.schema.Mondrian.JoinType#getRightKey <em>Right Key</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @@param value the new value of the '<em>Right Key</em>' attribute.
+   * @@see #getRightKey()
+   * @@generated
+   */
+  void setRightKey(Object value);
+
+} // JoinType
+@
+
+
+1.1
+log
+@initial checkin
+@
+text
+@d9 2
+d13 2
+d23 1
+a26 3
+ *   <li>{@@link net.sourceforge.mondrian.schema.Mondrian.JoinType#getView1 <em>View1</em>}</li>
+ *   <li>{@@link net.sourceforge.mondrian.schema.Mondrian.JoinType#getJoin1 <em>Join1</em>}</li>
+ *   <li>{@@link net.sourceforge.mondrian.schema.Mondrian.JoinType#getTable1 <em>Table1</em>}</li>
+d38 1
+a38 1
+public interface JoinType extends EObject {
+d40 2
+a41 1
+   * Returns the value of the '<em><b>View</b></em>' containment reference.
+d44 1
+a44 1
+   * If the meaning of the '<em>View</em>' containment reference isn't clear,
+d48 3
+a50 14
+   * @@return the value of the '<em>View</em>' containment reference.
+   * @@see #setView(ViewType)
+   * @@see net.sourceforge.mondrian.schema.Mondrian.MondrianPackage#getJoinType_View()
+   * @@model containment="true" resolveProxies="false"
+   * @@generated
+   */
+  ViewType getView();
+
+  /**
+   * Sets the value of the '{@@link net.sourceforge.mondrian.schema.Mondrian.JoinType#getView <em>View</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @@param value the new value of the '<em>View</em>' containment reference.
+   * @@see #getView()
+d53 1
+a53 1
+  void setView(ViewType value);
+d56 2
+a57 1
+   * Returns the value of the '<em><b>Join</b></em>' containment reference.
+d60 1
+a60 1
+   * If the meaning of the '<em>Join</em>' containment reference isn't clear,
+d64 3
+a66 4
+   * @@return the value of the '<em>Join</em>' containment reference.
+   * @@see #setJoin(JoinType)
+   * @@see net.sourceforge.mondrian.schema.Mondrian.MondrianPackage#getJoinType_Join()
+   * @@model containment="true" resolveProxies="false"
+d69 1
+a69 1
+  JoinType getJoin();
+d72 2
+a73 11
+   * Sets the value of the '{@@link net.sourceforge.mondrian.schema.Mondrian.JoinType#getJoin <em>Join</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @@param value the new value of the '<em>Join</em>' containment reference.
+   * @@see #getJoin()
+   * @@generated
+   */
+  void setJoin(JoinType value);
+
+  /**
+   * Returns the value of the '<em><b>Table</b></em>' containment reference.
+d76 1
+a76 1
+   * If the meaning of the '<em>Table</em>' containment reference isn't clear,
+d80 3
+a82 4
+   * @@return the value of the '<em>Table</em>' containment reference.
+   * @@see #setTable(TableType)
+   * @@see net.sourceforge.mondrian.schema.Mondrian.MondrianPackage#getJoinType_Table()
+   * @@model containment="true" resolveProxies="false"
+d85 1
+a85 1
+  TableType getTable();
+d88 2
+a89 11
+   * Sets the value of the '{@@link net.sourceforge.mondrian.schema.Mondrian.JoinType#getTable <em>Table</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @@param value the new value of the '<em>Table</em>' containment reference.
+   * @@see #getTable()
+   * @@generated
+   */
+  void setTable(TableType value);
+
+  /**
+   * Returns the value of the '<em><b>View1</b></em>' containment reference.
+d92 1
+a92 1
+   * If the meaning of the '<em>View1</em>' containment reference isn't clear,
+d96 3
+a98 66
+   * @@return the value of the '<em>View1</em>' containment reference.
+   * @@see #setView1(ViewType)
+   * @@see net.sourceforge.mondrian.schema.Mondrian.MondrianPackage#getJoinType_View1()
+   * @@model containment="true" resolveProxies="false"
+   * @@generated
+   */
+  ViewType getView1();
+
+  /**
+   * Sets the value of the '{@@link net.sourceforge.mondrian.schema.Mondrian.JoinType#getView1 <em>View1</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @@param value the new value of the '<em>View1</em>' containment reference.
+   * @@see #getView1()
+   * @@generated
+   */
+  void setView1(ViewType value);
+
+  /**
+   * Returns the value of the '<em><b>Join1</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Join1</em>' containment reference isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @@return the value of the '<em>Join1</em>' containment reference.
+   * @@see #setJoin1(JoinType)
+   * @@see net.sourceforge.mondrian.schema.Mondrian.MondrianPackage#getJoinType_Join1()
+   * @@model containment="true" resolveProxies="false"
+   * @@generated
+   */
+  JoinType getJoin1();
+
+  /**
+   * Sets the value of the '{@@link net.sourceforge.mondrian.schema.Mondrian.JoinType#getJoin1 <em>Join1</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @@param value the new value of the '<em>Join1</em>' containment reference.
+   * @@see #getJoin1()
+   * @@generated
+   */
+  void setJoin1(JoinType value);
+
+  /**
+   * Returns the value of the '<em><b>Table1</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Table1</em>' containment reference isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @@return the value of the '<em>Table1</em>' containment reference.
+   * @@see #setTable1(TableType)
+   * @@see net.sourceforge.mondrian.schema.Mondrian.MondrianPackage#getJoinType_Table1()
+   * @@model containment="true" resolveProxies="false"
+   * @@generated
+   */
+  TableType getTable1();
+
+  /**
+   * Sets the value of the '{@@link net.sourceforge.mondrian.schema.Mondrian.JoinType#getTable1 <em>Table1</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @@param value the new value of the '<em>Table1</em>' containment reference.
+   * @@see #getTable1()
+d101 1
+a101 1
+  void setTable1(TableType value);
+@
+

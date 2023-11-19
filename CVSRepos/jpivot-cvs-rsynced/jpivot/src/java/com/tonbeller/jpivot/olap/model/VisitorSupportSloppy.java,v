@@ -1,0 +1,140 @@
+head	1.2;
+access;
+symbols
+	jpivot_1_8_0:1.2
+	focus_1_6_0:1.2.0.4
+	jpivot_1_7_0:1.2
+	jpivot_1_6_0:1.2
+	jpivot_1_5_0:1.2.0.2
+	Root_jpivot_1_5_0:1.2
+	mondrian_xmla_2005_08_25:1.1.0.2
+	sourceforge_sync:1.2;
+locks; strict;
+comment	@# @;
+expand	@k@;
+
+
+1.2
+date	2005.12.13.11.56.41;	author avix;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2005.07.05.14.19.47;	author avix;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@Synchronized with Tonbeller CVS:
+  * Supports Mondrian 2.x API
+  * Added BEA / Websphere Support
+  * More tags in wcf tag library
+  * Bugfixes
+@
+text
+@/*
+ * ====================================================================
+ * This software is subject to the terms of the Common Public License
+ * Agreement, available at the following URL:
+ *   http://www.opensource.org/licenses/cpl.html .
+ * Copyright (C) 2003-2004 TONBELLER AG.
+ * All Rights Reserved.
+ * You must accept the terms of that agreement to use this software.
+ * ====================================================================
+ *
+ *
+ */
+package com.tonbeller.jpivot.olap.model;
+
+/**
+ * default implementation of Visitor. Does nothing
+ *
+ * @@author av
+ */
+public abstract class VisitorSupportSloppy implements Visitor {
+
+  public VisitorSupportSloppy() {
+    super();
+  }
+
+  public void visitAxis(Axis v) {
+  }
+
+  public void visitCell(Cell v) {
+  }
+
+  public void visitDimension(Dimension v) {
+  }
+
+  public void visitHierarchy(Hierarchy v) {
+  }
+
+  public void visitLevel(Level v) {
+  }
+
+  public void visitMember(Member v) {
+  }
+
+  public void visitPosition(Position v) {
+  }
+
+  public void visitProperty(Property v) {
+  }
+
+  public void visitResult(Result v) {
+  }
+
+  public void visitMemberPropertyMeta(MemberPropertyMeta v) {
+  }
+
+  public void visitBooleanExpr(BooleanExpr v) {
+  }
+
+  public void visitIntegerExpr(IntegerExpr v) {
+  }
+
+  public void visitDoubleExpr(DoubleExpr v) {
+  }
+
+  public void visitStringExpr(StringExpr v) {
+  }
+
+  public void visitFunCallExpr(FunCallExpr v) {
+  }
+
+  public void visitParameterExpr(ParameterExpr v) {
+  }
+
+  public void visitPropertyExpr(PropertyExpr v) {
+  }
+
+  public void visitEmptyMember(EmptyMember v) {
+  }
+
+}
+@
+
+
+1.1
+log
+@initial version
+@
+text
+@d11 1
+a11 1
+ * 
+d17 1
+a17 1
+ * 
+d73 1
+a73 1
+  
+d77 2
+@
+

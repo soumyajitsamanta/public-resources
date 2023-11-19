@@ -1,0 +1,476 @@
+head	1.10;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.10
+date	2004.04.16.16.19.18;	author vacula;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	2004.02.03.09.26.19;	author vacula;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	2003.11.26.12.10.51;	author vacula;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	2003.11.25.14.57.16;	author vacula;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	2003.11.24.12.33.30;	author vacula;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	2003.11.19.10.08.57;	author vacula;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2003.11.18.14.38.40;	author jiri_schmid;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2003.11.13.15.25.01;	author vacula;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2003.11.10.06.36.00;	author michald;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2003.11.09.20.33.59;	author vacula;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.10
+log
+@changes for new interface
+@
+text
+@#-----------------------------------------------------
+#  Format Editation
+#-----------------------------------------------------
+# $Id: Format2d.pm,v 1.3 2003/11/20 15:47:41 jiri_schmid Exp $
+
+package Format2d_map;
+
+use strict;
+
+#-----------------------------------------------------
+# print_form is called from edit.cgi
+
+sub generateContent {
+my($variables, $lang, $obj) = (shift, shift, shift);
+my $saved = $$variables->{saved} if exists $$variables->{saved};
+
+#set defaults parameters of base :
+	my ($row, $col, $width, $height);
+	if ($$obj->{base}{sets} eq 'cols') {
+		$row = '';
+		$col = ' checked="checked"';
+	} 
+	else {
+		$col = '';
+		$row = ' checked="checked"';
+	}
+	$width = $$obj->{base}{width};
+	$height = $$obj->{base}{height};
+
+print <<END ;
+<br />
+<table class="page_skeleton_ex" style='width:100%'>
+<tr class="page_skeleton">
+<td class="page_skeleton_ex" style='padding: 12px 10px 10px 10px'>
+
+
+	<table>
+	<tr><td class='neutral_bold'><span class='nowrap'>$$lang->{'Format2d Sets'}:</span></td></tr>
+	<tr><td><hr /></td></tr>
+	<tr><td><span class='cursor' onclick='setThisRadio(this)'><input type='radio' name='dataset' value='rows'$row />$$lang->{'Format2d Row'}</span></td></tr>
+	<tr><td><span class='cursor' onclick='setThisRadio(this)'><input type='radio' name='dataset'value='cols'$col />$$lang->{'Format2d Col'}</span></td></tr>
+	</table>
+
+
+</td>
+<td class="page_skeleton_ex" style='width:100%' rowspan='3'>
+
+
+	<IFRAME id="formatIframe" name='format' src="format.cgi?Lang=$$variables->{useLang}&Skin=$$variables->{skin}&Type=graph2d&Form=$$obj->{form}&SubType=map" width="100%" height="100%" scrolling="auto" frameborder="0"></IFRAME>
+
+
+</td>
+</tr>
+<tr class="page_skeleton">
+<td class="page_skeleton_ex" style='padding: 10px'>
+
+
+	<table>
+	<tr><td class='neutral_bold' colspan='2'><span class='nowrap'>$$lang->{'Format2d Size'}:</span></td></tr>
+	<tr><td colspan='2'><hr /></td></tr>
+	<tr><td>$$lang->{'Format2d Width'}:</td><td><span class='cursor'><input type='input' style='text-align:right' name='width' size='4' value='$width' onchange='object_changed()' /> px</span></td></tr>
+	<tr><td>$$lang->{'Format2d Height'}:</td><td><span class='cursor'><input type='input' style='text-align:right' name='height' size='4' value='$height'  onchange='object_changed()' /> px</span></td></tr>
+	<tr><td colspan='2'><hr size='1' noshade='noshade' /></td></tr>
+	<tr><td colspan='2'>
+		<table class='resolution'>
+		<tr><td colspan='2'><span class='nowrap'>$$lang->{'Format2d Res'}:</span></td></tr>
+		<tr><td>$$lang->{'Format2d Width'}:</td><td><span class='cursor' id='spanWIDTH'></span></td></tr>
+		<tr><td>$$lang->{'Format2d Height'}:</td><td><span class='cursor' id='spanHEIGHT'></span></td></tr>
+		</table>
+	</td></tr>
+	</table>
+
+
+</td>
+</tr>
+<tr class="page_skeleton">
+<td class="page_skeleton_ex" style='padding: 10px'>
+
+
+	<table>
+		<tr><td class='neutral_bold' colspan='3'>$$lang->{'Format2d Margin'} <br> $$lang->{'Format2d Margin Border'}:</td></tr>
+		<tr><td colspan='3'><hr /></td></tr>
+		<tr></tr>
+END
+foreach ('l_margin','r_margin','t_margin','b_margin') {
+	my $name = "Format2d $_";
+	print "<tr><td style='nowrap'>$$lang->{$name}:</td><td style='nowrap'><input type='input' class='right' size='4' name='$_' value='$$obj->{base}{$_}' onchange='object_changed()' /></td><td style='nowrap'>px</td></tr>";
+}
+print <<END;
+	</table>
+
+
+</td>
+</tr>
+END
+
+print <<END;
+<tr class="page_skeleton" >
+<td class="page_skeleton" colspan='2'>
+	<table class="neutral_100">
+		<tr><td align="center">
+		<table class="buttons" cellpading="0" cellspacing="0">
+		<tr>	<td class="buttons"><input id='SAVE' type="submit" name="Action" value="$$lang->{'Save'}"/></td>
+			<td class="buttons">	<input type="submit" name="Action" value="$$lang->{'Save As'}" onclick="return readName();"/>
+						<input type="hidden" name="saveAsName" id="saveAsName" value="" /></td>
+			<td class="buttons"><input type="button" name="reset" value="$$lang->{'Reset'}" onclick="self.frames['format'].location.reload(true)"/></td>
+		</tr>
+		</table>
+	</td></tr>
+	</table>
+</td></tr></table>
+<script type="text/javascript">
+	var saveAsMsg = "$$lang->{SaveAsMsg}$$lang->{'New Format2d'}";
+	reloadTree($saved);
+	setResol();
+	reSetIframe();
+</script>
+END
+}
+
+#---------------------------------------------------
+sub set_next_param {
+	my ($o,$q) = (shift, shift);
+	$$o->{type} = $$q->param('type');
+	$$o->{form} = $$q->param('form');
+	$$o->{base}{sets} = $$q->param('dataset');
+	$$o->{base}{width} = $$q->param('width');
+	$$o->{base}{height} = $$q->param('height');
+	$$o->{base}{l_margin} = $$q->param('l_margin');
+	$$o->{base}{r_margin} = $$q->param('r_margin');
+	$$o->{base}{t_margin} = $$q->param('t_margin');
+	$$o->{base}{b_margin} = $$q->param('b_margin');
+}
+
+1
+@
+
+
+1.9
+log
+@remove suffix xml
+@
+text
+@d4 1
+a4 1
+# $Id: Format2d_map.pm,v 1.8 2003/11/26 12:10:51 vacula Exp $
+d9 1
+a9 2
+require "const/Const.pm";
+use Data::Dumper;
+a12 3
+my $noi = 6;  # number of intervals which will be use for define colors 
+
+
+d17 12
+a28 6
+my $imgType = \$$variables->{imgType};
+my $skinPath = \$$variables->{skinPath};
+
+
+$$obj->{map}{default} = "120,40,80" if !$$obj->{map}{default};
+my @@colors = split(/,/,$$obj->{map}{default});
+d30 1
+a30 1
+print <<END;
+d34 3
+a36 1
+<td class="page_skeleton_ex" style='padding: 10px' colspan='2'>
+d38 4
+a41 16
+		<tr>
+			<td class='neutral_bold nowrap'>$$lang->{'Format2d map'}: </td>
+			<td>
+END
+	foreach (&Local::GetFiles("$Const::myPath$Const::graph2Ddefinitions",'xml')) {
+		print $_;
+		#print $_.".xml";
+		#my $src = (-e "$Const::myPath$Const::graph2Dicons/$_.gif") ? "$Const::graph2Dicons/$_.gif" : "$Const::graph2Dicons/2d.gif";
+		#my $src = "$Const::graph2Dicons/$_.gif";
+		#next if $_ eq "2d";
+		my $check = ($$obj->{map}{use} eq $_.".xml") ? " checked='checked'" : "";
+		print "<span class='preview' onclick='setVrml(this)'><input type='radio' name='use' value='$_.xml' id='$_' $check /></span> ";
+	}
+print <<END;			
+			</td>
+		</tr>
+d43 9
+a53 1
+
+d57 12
+a68 14
+	<table style='text-align:left;width:100%'>
+	<tr>	<th style='white-space:nowrap'>$$lang->{'Graph3d default'}</td>
+		<td><input type='text' ondblclick='setColor(this)' size='10' value='$$obj->{map}{default}' name='default' id='default0' onfocus='setSelf(this); setBin(this)' /></td>
+		<td rowspan='3'>
+			<table class='neutral_100' style="text-align:center"><tr>
+				<td colspan='5'>$$lang->{'Graph3d color'}:</td>
+			</tr><tr>
+				<td id='color' class='cursor' style='background-color:rgb($$obj->{map}{default}); width:100px' title='$$obj->{map}{default}' onclick='addColor(this)' rowspan='4'>&nbsp</td>
+				<td style='text-align:right; color:#f00'>$$lang->{'Graph3d red'}</td><td><img class='cursor' onclick='minus("red")' src='$${skinPath}img/downArr.$$imgType' onmousedown="startDecrease('red')" onmouseup='stopTimer()'></td><td><input id='red' size='4' style='text-align:center' type='text' value='$colors[0]' onchange='changeColor()'/></td><td><img onclick='plus("red")' class='cursor' style='padding:2px' src='$${skinPath}img/upArr.$$imgType' onmousedown="startIncrease('red')" onmouseup='stopTimer()'></td>
+			</tr><tr>
+				<td style='text-align:right; color:#0f0'>$$lang->{'Graph3d green'}</td><td><img class='cursor' onclick='minus("green")' src='$${skinPath}img/downArr.$$imgType' onmousedown="startDecrease('green')" onmouseup='stopTimer()'></td><td><input id='green' type='text' style='text-align:center' size='4' value='$colors[1]' onchange='changeColor()'/></td><td><img onclick='plus("green")' class='cursor' style='padding:2px' src='$${skinPath}img/upArr.$$imgType' onmousedown="startIncrease('green')" onmouseup='stopTimer()'></td>
+			</tr><tr>
+				<td style='text-align:right; color:#00f'>$$lang->{'Graph3d blue'}</td><td><img class='cursor' onclick='minus("blue")' src='$${skinPath}img/downArr.$$imgType' onmousedown="startDecrease('blue')" onmouseup='stopTimer()'></td><td><input id='blue' type='text' style='text-align:center' size='4' value='$colors[2]' onchange='changeColor()'/></td><td><img onclick='plus("blue")' class='cursor' style='padding:2px' src='$${skinPath}img/upArr.$$imgType' onmousedown="startIncrease('blue')" onmouseup='stopTimer()'></td>
+			</tr>
+d71 1
+a72 10
+END
+
+	print "<table style='text-align:left; width:80%'><tr><td colspan='4'></td></tr>";
+	print "<tr><td style='text-align:left'>$$lang->{'Format2d color'}</td><td></td><td style='text-align:center'>$$lang->{'Format2d addition'}</td><td style='text-align:left'>$$lang->{'Format2d interval'}</td></tr>";
+	for my $cnt (0..$noi) {
+#		my $index1 = $cnt * 2;
+#		my $index2 = $cnt * 2 + 1;
+		print "<tr><td><input type='text' style='align:center width:20%' ondblclick='setColor(this)' value='$$obj->{map}{colors}[$cnt][1]' name='clr$cnt' id='change$cnt' onfocus='setSelf(this); setBin(this)' /></td><td class='cursor' id='color$cnt' onclick='reloadColor(this)' style='background-color:rgb($$obj->{map}{colors}[$cnt][1]); width:25px'></td><td></td><td><input type='text' style='align:center width:20%' name='int$cnt' value='$$obj->{map}{colors}[$cnt][0]' onfocus='setBin(this)'/></td></tr>";
+	}
+	print "</table>";
+d74 4
+d80 11
+a91 1
+print <<END;
+a92 1
+	</table>
+d95 1
+d97 2
+a98 1
+<tr class="page_skeleton">
+a111 1
+<script type="text/javascript" src="js/format_color.js"></script>
+d115 2
+a116 4
+function setVrml(EID) {
+	var Input = EID.firstChild;
+	Input.checked = true;
+}
+a118 1
+
+d124 9
+a132 12
+	$$o->{map}{use} = $$q->param('use');
+#	$$o->{map}{int} = ();
+#	$$o->{map}{clr} = ();
+	$$o->{map}{colors} = ();
+	$$o->{map}{default} = $$q->param('default');
+	for my $cnt (0..$noi) {
+		my $nameint = "int$cnt";
+		my $nameclr = "clr$cnt";
+		if ( $$q->param("$nameint") ne "" ) {
+			push(@@{$$o->{map}{colors}[$cnt]},$$q->param("$nameint"),$$q->param("$nameclr"));
+		}
+	}
+@
+
+
+1.8
+log
+@minor changes in layout
+@
+text
+@d4 1
+a4 1
+# $Id: Format2d_map.pm,v 1.7 2003/11/25 14:57:16 vacula Exp $
+d39 2
+a40 1
+		print $_.".xml";
+@
+
+
+1.7
+log
+@modified layout
+@
+text
+@d4 1
+a4 1
+# $Id: Format2d_map.pm,v 1.6 2003/11/24 12:33:30 vacula Exp $
+a20 1
+my $localTab = $$variables->{localTab};
+d25 2
+a26 2
+$$obj->{$localTab}{default} = "120,40,80" if !$$obj->{$localTab}{default};
+my @@colors = split(/,/,$$obj->{$localTab}{default});
+d58 1
+a58 1
+		<td><input onfocus='setSelf(this)' ondblclick='setColor(this)' type='text' name='default' id='default0' size='10' value='$$obj->{$localTab}{default}'/></td>
+d63 1
+a63 1
+				<td id='color' class='cursor' style='background-color:rgb($$obj->{$localTab}{default}); width:100px' title='$$obj->{$localTab}{default}' onclick='addColor(this)' rowspan='4'>&nbsp</td>
+d75 2
+a76 2
+	print "<table style='text-align:left; width:60%'><tr><td colspan='4'></td></tr>";
+	print "<tr><td style='text-align:left'>$$lang->{'Format2d interval'}</td><td style='text-align:left'>$$lang->{'Format2d color'}</td><td></td></tr>";
+d80 1
+a80 1
+		print "<tr><td> <input type='text' style='align:center width:20%' name='int$cnt' value='$$obj->{map}{colors}[$cnt][0]' onfocus='setBin(this)'/></td><td><input type='text' style='align:center width:20%' ondblclick='setColor(this)' value='$$obj->{map}{colors}[$cnt][1]' name='clr$cnt' id='change${_}$cnt' onfocus='setSelf(this); setBin(this)' /></td><td class='cursor' id='color${_}$cnt' onclick='reloadColor(this)' style='background-color:rgb($$obj->{map}{colors}[$cnt][1]); width:25px'></td></tr>";
+@
+
+
+1.6
+log
+@fix javascript color
+@
+text
+@d4 1
+a4 1
+# $Id: Format2d_map.pm,v 1.5 2003/11/19 10:08:57 vacula Exp $
+d76 6
+a81 6
+	print "<table style='text-align:left; width:100%'><tr><td colspan='4'></td></tr>";
+	print "<tr><td style='text-align:center'>$$lang->{'Format2d interval'}</td><td style='text-align:center'>$$lang->{'Format2d color'}</td><td></td></tr>";
+	for my $cnt (1..$noi) {
+		my $index1 = $cnt * 2;
+		my $index2 = $cnt * 2 + 1;
+		print "<tr><td><input type='text' style='width:100%' name='int$cnt' value='$$obj->{map}{int}[$cnt-1]' onfocus='setBin(this)'/></td><td><input type='text' style='width:100%' ondblclick='setColor(this)' value='$$obj->{map}{clr}[$cnt-1]' name='clr$cnt' id='change${_}$cnt' onfocus='setSelf(this); setBin(this)' /></td><td class='cursor' id='color${_}$cnt' onclick='reloadColor(this)' style='background-color:rgb($$obj->{map}{clr}[$cnt-1]); width:25px'></td></tr>";
+d125 3
+a127 2
+	$$o->{map}{int} = ();
+	$$o->{map}{clr} = ();
+d133 1
+a133 4
+			push(@@{$$o->{map}{int}},$$q->param("$nameint"));
+		}
+		if ( $$q->param("$nameclr") ne "" ) {
+			push(@@{$$o->{map}{clr}},$$q->param("$nameclr"));
+@
+
+
+1.5
+log
+@fix save to mdata
+@
+text
+@d4 1
+a4 1
+# $Id: Format2d_map.pm,v 1.4 2003/11/18 14:38:40 jiri_schmid Exp $
+d108 1
+a108 1
+<script type="text/javascript" src="js/format.js"></script>
+@
+
+
+1.4
+log
+@auto save when changing tabs implemented
+@
+text
+@d4 1
+a4 1
+# $Id: Format2d_map.pm,v 1.3 2003/11/13 15:25:01 vacula Exp $
+a25 2
+my ($fill, $shape, $itemsType, );
+
+d78 1
+a78 1
+	for my $cnt (0..$noi) {
+d81 1
+a81 1
+		print "<tr><td><input type='text' style='width:100%' name='int$cnt' value='' onfocus='setBin(this)'/></td><td><input type='text' style='width:100%' ondblclick='setColor(this)' value='' name='clr$cnt' id='change${_}$cnt' onfocus='setSelf(this); setBin(this)' /></td><td class='cursor' id='color${_}$cnt' onclick='reloadColor(this)' style='background-color:rgb($$obj->{$localTab}{rules}[$_][$index2]); width:25px'></td></tr>";
+@
+
+
+1.3
+log
+@fix save parameters to mdata
+@
+text
+@d4 1
+a4 1
+# $Id: Format2d_map.pm,v 1.2 2003/11/10 06:36:00 michald Exp $
+d101 2
+a102 2
+		<tr>	<td class="buttons"><input type="submit" name="Action" value="$$lang->{'Save'}"/></td>
+				<td class="buttons">	<input type="submit" name="Action" value="$$lang->{'Save As'}" onclick="return readName();"/>
+d110 1
+a110 1
+<script type="text/javascript" src="js/graph3d.js"></script>
+@
+
+
+1.2
+log
+@map graph prototype
+@
+text
+@d4 1
+a4 1
+# $Id: Format2d_map.pm,v 1.1 2003/11/09 20:33:59 vacula Exp $
+d41 1
+a41 1
+	foreach (&Local::GetFiles("$Const::myPath$Const::graph2Dtypes",'xml')) {
+@
+
+
+1.1
+log
+@format 2d map
+@
+text
+@d4 1
+a4 1
+# $Id: Format2d_logo.pm,v 1.1 2003/10/31 12:47:57 jiri_schmid Exp $
+d41 1
+a41 1
+	foreach (&Local::GetFiles("$Const::myPath$Const::graph2Ddefinitions",'xml')) {
+d47 1
+a47 1
+		print "<span class='preview' onclick='setVrml(this)'><input type='radio' name='use' value='$_.xml' id='$_'$check /></span> ";
+@
+

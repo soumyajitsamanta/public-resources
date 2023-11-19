@@ -1,0 +1,164 @@
+head	1.4;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.4
+date	2003.12.02.12.29.49;	author tuco80;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2003.11.10.15.15.55;	author tuco80;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2003.11.07.10.12.52;	author numberone;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2003.11.06.14.31.46;	author numberone;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.4
+log
+@Updated and revised
+@
+text
+@
+The BEE Project 
+---------------
+
+The BEE Project is a suite of tools supporting Business Intelligence project 
+implementation including ETL tool and ROLAP server and a client. Suite design 
+is based on ROLAP methodology with aim to cover projects on Linux/Intel 
+platform with data volume up to 50 GB effectively.
+
+The BEE Product Suite is licensed under the GPL license. Stable versions 
+of products will be available under commercial non-GPL license in parallel 
+as well (i.e. similar approach as MySQL database itself).
+
+The ETL Tool is based on service of simple daemons located on specific hosts, 
+driven by a centralized supervising application. The suite is designed for 
+distributed processing and strong encryption. GUI for ETL administration 
+and modeling is still under development, but it does already offer enough 
+functionality and stability for the designing of the processes, as well as 
+other environment models, like a view of the DB design and the logical model, 
+all sorted in different "Layers".
+
+The ROLAP server, not included in this distribution, but available from 
+project homepage, provides its functionality through the SOAP API 
+for a potentially rich set of client tools. The WEB based client is designed 
+as a primary interface for report design, presentation and manipulation. 
+Connection to the R Project for Statistical Processing is currently 
+evaluated as well.
+
+Major part of the project is written in Perl with utilization of DBD/DBI, 
+SOAP::Lite and Perl::Tk libraries. The Data Warehouse repository relies 
+on MySQL database. Optimization of query plans is based on extended 
+benchmarking on the models with cardinality of fact tables up to 160M 
+(approx. volume 10GB) and cardinality of lookup tables up to 2.5M.
+@
+
+
+1.3
+log
+@Updated docs
+@
+text
+@a21 19
+The whole environment of the GUI is represented by a XML file, which describes
+not only the objects themselves, but also their appearance in the cases where
+such is applicable. Most of the things described in this XML file can be
+already edited or created in the GUI; there are, however, a few things that
+you will have to edit directly in the XML if you want them changed, but these
+are the least and we tried to make them be the least necessary ones, so that 
+you can probaly live without those changes.  You can refer to beetl.dtd under 
+the $BEEDIR/gui directory or a demo to see the sintax of such things, should 
+you really need them changed.
+
+Take in count that we are assuming that the user of this project is an
+advanced one, and in most cases we are not making any consistency checks,
+for example, you can create a DB source, with tables and columns, but
+it is assumed that they actually exist, and if they don't then an ERROR
+will occur (in the future, they will be created if possible, but such
+functionality is not developed yet).
+
+
+
+a33 2
+
+
+@
+
+
+1.2
+log
+@documentation 474 lines
+@
+text
+@d17 23
+a39 1
+and modeling is under development.
+d43 1
+a43 1
+for potentially rich set of client tools. The WEB based client is designed 
+@
+
+
+1.1
+log
+@demo updates (display:// problem)
+@
+text
+@d5 26
+a30 37
+The BEE Project is a suite of tools supporting Business Intelligence project implementation including ETL tool and ROLAP server and a client. Suite design is based on ROLAP methodology with aim to cover projects on Linux/Intel platform with data volume up to 50 GB effectively.
+
+The BEE Product Suite is licensed under the GPL license. Stable versions of products will be available under commercial non-GPL license in parallel as well (i.e. similar approach as MySQL database itself).
+
+The ETL Tool is based on service of simple daemons located on specific hosts, driven by a centralized supervising application. The suite is designed for distributed processing and strong encryption. GUI for ETL administration and modeling is under development.
+
+The ROLAP server, available from project homepage, provides its functionality through the SOAP API for potentially rich set of client tools. The WEB based client is designed as a primary interface for report design, presentation and manipulation. Connection to the R Project for Statistical Processing is currently evaluated as well.
+
+Major part of the project is written in Perl with utilization of DBD/DBI, SOAP::Lite and Perl::Tk libraries. The Data Warehouse repository relies on MySQL database. Optimization of query plans is based on extended benchmarking on the models with cardinality of fact tables up to 160M (approx. volume 10GB) and cardinality of lookup tables up to 2.5M.
+
+
+
+Obtaining BEE package
+---------------------
+
+Distribution tarballs are freely available for download from project
+homepage:
+
+    http://bee.sourceforge.net
+
+Alternatively you can use CVS repository hosted on sourceforge.net
+to obtain actual sources. Run the following command in a directory
+that you have write access to (such as your home directory):
+
+    bash$ cvs -z3 -d:pserver:anonymous@@cvs.sf.net:/cvsroot/bee \
+          checkout -P bee
+
+You should see it listing all the source files.
+
+When there are changes to BEE's code, you'll want to update your
+local copy. You don't have to remove the entire directory that you
+checked out and redo the whole thing; instead, from inside
+the directory, run:
+
+    bash$ cvs update -d
+
+
+@
+

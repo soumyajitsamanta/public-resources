@@ -1,0 +1,66 @@
+head	1.2;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2007.07.11.09.09.52;	author pyadav;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2006.01.13.13.01.51;	author igorludi;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@Modified file's for Rex 0.7.
+@
+text
+@package rex.graphics.mdxeditor;
+
+import javax.swing.JPanel;
+import javax.swing.JLabel;
+import rex.utils.I18n;
+/**
+ * Represents an empty result table. Displays a JLabel in JPanel.
+ * @@author Igor Mekterovic
+ * @@version 0.3
+ */
+public class EmptyMdxResultTable extends JPanel{
+   public EmptyMdxResultTable() {
+/**
+  * Copyright (C) 2006 CINCOM SYSTEMS, INC.
+  * All Rights Reserved
+  * Copyright (C) 2006 Igor Mekterovic
+  * All Rights Reserved
+  */ 
+       this.add(new JLabel(I18n.getString("label.mdxEmptyResult")));
+     /* end of modification for I18n */
+
+   }
+}
+@
+
+
+1.1
+log
+@*** empty log message ***
+@
+text
+@d5 1
+a5 1
+
+d13 9
+a21 1
+      this.add(new JLabel("this is an empty result table..."));
+@
+

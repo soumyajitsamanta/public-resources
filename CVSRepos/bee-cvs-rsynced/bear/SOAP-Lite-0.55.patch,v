@@ -1,0 +1,102 @@
+head	1.3;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.3
+date	2004.01.23.09.13.08;	author jiri_schmid;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2003.07.08.10.39.01;	author jiri_schmid;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2003.07.04.06.19.13;	author michald;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.3
+log
+@filter,metric syntax checker fix
+@
+text
+@### !!! this patch is NOT ASCII and EBCDIC chars compatible
+
+
+--- lib/SOAP/Lite.pm	2002-04-16 06:42:48.000000000 +0200
++++ /usr/lib/perl5/site_perl/5.8.1/SOAP/Lite.pm	2003-07-04 05:03:49.000000000 +0200
+@@@@ -23,7 +23,14 @@@@
+ sub anyTypeValue { 'ur-type' }
+ 
+ sub as_boolean { shift; my $value = shift; $value eq '1' || $value eq 'true' ? 1 : $value eq '0' || $value eq 'false' ? 0 : die "Wrong boolean value '$value'\n" }
+-sub as_base64 { shift; require MIME::Base64; MIME::Base64::decode_base64(shift) }
++sub as_base64 {
++  shift; 
++  require MIME::Base64; 
++  my $s = MIME::Base64::decode_base64(shift);
++  use Encode;
++  Encode::_utf8_on($s);	# workaround for wrong processing of UTF-8 by MIME::Base64
++  return $s
++}
+ sub as_ur_type { $_[1] }
+ 
+ BEGIN {
+@@@@ -44,7 +51,7 @@@@
+ sub anyTypeValue { 'anyType' }
+ 
+ sub as_boolean; *as_boolean = \&SOAP::XMLSchemaSOAP1_1::Deserializer::as_boolean;
+-sub as_base64 { shift; require MIME::Base64; MIME::Base64::decode_base64(shift) }
++sub as_base64; *as_base64 = \&SOAP::XMLSchemaSOAP1_1::Deserializer::as_base64;
+ sub as_anyType { $_[1] }
+ 
+ BEGIN {
+@@@@ -125,6 +132,8 @@@@
+ sub as_base64 {
+   my $self = shift;
+   my($value, $name, $type, $attr) = @@_;
++  use Encode;
++  Encode::_utf8_off($value);	# workaround for wrong processing of UTF-8 by MIME::Base64
+   require MIME::Base64;
+   return [$name, {'xsi:type' => SOAP::Utils::qualify($self->encprefix => 'base64'), %$attr}, MIME::Base64::encode_base64($value,'')];
+ }
+@@@@ -209,6 +218,8 @@@@
+ sub as_base64Binary {
+   my $self = shift;
+   my($value, $name, $type, $attr) = @@_;
++  use Encode;
++  Encode::_utf8_off($value);	# workaround for wrong processing of UTF-8 by MIME::Base64
+   require MIME::Base64;
+   return [$name, {'xsi:type' => 'xsd:base64Binary', %$attr}, MIME::Base64::encode_base64($value,'')];
+ }
+@
+
+
+1.2
+log
+@minor utf8 final changes
+@
+text
+@d5 1
+a5 1
++++ /usr/lib/perl5/site_perl/5.8.0/SOAP/Lite.pm	2003-07-04 05:03:49.000000000 +0200
+@
+
+
+1.1
+log
+@some fixes for proper utf8 encoding, see README for details
+@
+text
+@d1 3
+@
+

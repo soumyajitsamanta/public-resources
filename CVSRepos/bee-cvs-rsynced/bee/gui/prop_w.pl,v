@@ -1,0 +1,623 @@
+head	1.10;
+access;
+symbols
+	start:1.1.1.1 vendor:1.1.1;
+locks; strict;
+comment	@# @;
+
+
+1.10
+date	2003.11.06.12.28.24;	author tuco80;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	2003.05.30.16.22.17;	author spanhel;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	2003.05.20.16.25.53;	author spanhel;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	2003.05.16.07.02.43;	author spanhel;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	2003.05.07.14.28.51;	author spanhel;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	2003.05.05.15.36.46;	author spanhel;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2003.05.01.13.42.45;	author spanhel;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2003.04.30.09.57.46;	author spanhel;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2003.03.12.23.36.19;	author numberone;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2002.09.24.01.34.20;	author michald;	state Exp;
+branches
+	1.1.1.1;
+next	;
+
+1.1.1.1
+date	2002.09.24.01.34.20;	author michald;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.10
+log
+@+Color changing for Groups, +Property edition for groups/roles
+@
+text
+@	#-----------------------------------------------------
+# Project Properties Definition Window
+#-----------------------------------------------------
+# $Id: prop_w.pl,v 1.9 2003/05/30 16:22:17 spanhel Exp $
+
+use strict;
+use warnings;
+use DSI;
+use vars qw($Project $TreeList $Layer $tSchemaC $TabsFont);
+
+#-----------------------------------------------------
+
+sub DelHost {
+	my ($list,@@sel)=@@_;
+	foreach (reverse(@@sel)) {
+		$list->delete($_);
+	}
+}
+
+#------------------------
+
+sub AddHost {
+	my $list=shift;
+	my $host=shift;
+	my @@sel=shift;
+	return if (!$host);
+	my $l = '^'.join('$|^',$list->get(0,'end')).'$';
+	my $i = defined($sel[0]) ? $sel[0] : 'end';
+	if ($host!~/$l/) {
+		$list->insert($i,$host);
+		$list->selectionClear(0,'end');
+		$list->selectionSet($i);
+	}
+}
+
+#------------------------
+
+sub UpHost {
+	my ($list,@@sel)=@@_;
+	foreach (@@sel) {
+		my $itm=$list->get($_);
+		$list->delete($_);
+		$list->insert($_-1,$itm);
+		$list->selectionSet($_-1);
+	}
+}
+
+#------------------------
+
+sub DownHost {
+	my ($list,@@sel)=@@_;
+	foreach (reverse(@@sel)) {
+		my $itm=$list->get($_);
+		$list->delete($_);
+		$list->insert($_+1,$itm);
+		$list->selectionSet($_+1);
+	}
+}
+
+#------------------------
+
+sub AddDads {
+	my ($list,@@sel)=@@_;
+	my $l = '^'.join('$|^',$list->get(0,'end')).'$';
+	my $i = defined($sel[0]) ? $sel[0] : 'end';
+	$list->selectionClear(0,'end');
+	my $n;
+	foreach (source::dads()) {
+		($n=$_->{name})=~s/:\d*$//;
+		if (!/$l/) {
+			$list->insert($i, $n);
+			$list->selectionSet($i);
+		}
+	}	
+
+}
+
+#------------------------
+
+sub PropertiesHost {
+	my $t=shift;
+	my $HostName;
+	my $list;
+	my $entryW=40;
+
+	$t->Entry(-relief=>'sunken', -width=>$entryW, -textvariable=>\$HostName)->grid( -row => 0, -column => 0, -sticky => 'w');
+
+	my $aB=$t->Button(
+        	-image    => $Img{D_ARR},
+        	-command => sub{&AddHost($list,$HostName,$list->curselection())},
+        )->grid( -row => 1, -column => 0, -sticky => 'n');;
+	$baloon->attach($aB, -balloonmsg => "Add New Host");
+
+	$list = $t->Scrolled(qw/Listbox -selectmode extended -setgrid 1 -height 6 -scrollbars oe/, -width=>$entryW-3 );
+	$list->grid( -row => 2, -column => 0, -sticky => 'w');
+	
+	foreach (keys %{$Project->{host}}) {
+		$list->insert('end', $_);
+	}
+
+	my $t1 = $t->Frame->grid( -row => 2, -column => 1, -sticky => 'w');
+
+	my $delB=$t1->Button(
+        	-image    => $Img{DELETE},
+        	-command => sub{&DelHost($list,$list->curselection())},
+        )->pack(qw/-side bottom -anchor n /);
+	$baloon->attach($delB, -balloonmsg => "Remove Host");
+	my $uB=$t1->Button(
+        	-image    => $Img{U_ARR},
+        	-command => sub{&UpHost($list,$list->curselection())},
+        )->pack(qw/-side bottom -anchor n /);
+	$baloon->attach($uB, -balloonmsg => "Move Up");
+	my $dB=$t1->Button(
+        	-image    => $Img{D_ARR},
+        	-command => sub{&DownHost($list,$list->curselection())},
+        )->pack(qw/-side bottom -anchor n /);
+	$baloon->attach($dB, -balloonmsg => "Move Down");
+	my $lB=$t1->Button(
+        	-image    => $Img{L_ARR},
+        	-command => sub{&AddDads($list,$list->curselection())},
+        )->pack(qw/-side bottom -anchor n /);
+	$baloon->attach($lB, -balloonmsg => "Add all Hosts populated by Daemons");
+}
+
+#-----------------------------------------------------
+
+my ($AuthConnB, $AuthConnL, $AuthConnE);	# Authority Connection Button, Label and Entry
+
+sub AuthConnect {
+	$AuthConnHost->{name}=shift;
+	if (eval{source::init($AuthConnHost->{name})}) {
+		$AuthConnHost->{res}='C';
+		WriteLog('',"Connection to Authority Host \"$AuthConnHost->{name}\" is established",0);
+		&PropertiesAuthSet;
+	} else {
+		$AuthConnHost->{res}='F';
+		WriteLog('',"Connection to Authority Host \"$AuthConnHost->{name}\" failed",1);
+		$AuthConnL->configure(-text => "Connection to Authority Host $AuthConnHost->{name} failed") if ($AuthConnL);
+	};
+}
+
+sub AuthDisConnect {
+	# here should be something as source::destroy($AuthConnHost->{name})
+	WriteLog('',"Disconnecting from Authority Host \"$AuthConnHost->{name}\" ",0);
+	$AuthConnHost->{res}='D';
+	&PropertiesAuthSet;
+}
+
+sub PropertiesAuth {
+	my $tt=shift;
+	my $entryW=40;
+
+	my $t=$tt->Frame->pack(-anchor=>"w");
+	my $fe = $t->LabFrame(-label => "Authority Host", -labelside=>"acrosstop")->pack(-anchor=>"w",-side=>'top',-padx => 5);
+	$AuthConnE = $fe->Entry(-relief=>'sunken', -width=>$entryW, -textvariable=>\$AuthConnHost->{name})->pack(-padx => 5);
+	$AuthConnB=$t->Button()->pack(-anchor=>'center',-side=>'top',-padx => 5);
+	my $fl = $t->LabFrame(-label => "Status", -labelside=>"acrosstop")->pack(-anchor=>"w",-side=>'top',-padx => 5);
+	$AuthConnL=$fl->Label(-width=>$entryW, -anchor => 'w', -justify => 'left')->pack(-padx => 5);
+	
+	&PropertiesAuthSet;
+	
+}
+
+sub PropertiesAuthSet {
+
+	if ($AuthConnHost->{res} eq 'C') {
+		if ($AuthConnB) {
+			$AuthConnB->configure(-text => 'Disconnect', -command => \&AuthDisConnect);
+			$baloon->detach($AuthConnB);
+			$baloon->attach($AuthConnB, -balloonmsg => 'Push Button for Authority Host Disconnection');
+		}
+		$AuthConnL->configure(-text => "Authority Host \"$AuthConnHost->{name}\" is Connected") if ($AuthConnL);
+		$AuthConnE->configure(-state=>'disabled') if ($AuthConnE);
+	} else {
+		if ($AuthConnB) {
+			$AuthConnB->configure(-text => 'Connect', -command => sub{&AuthConnect($AuthConnHost->{name})});
+			$baloon->detach($AuthConnB);
+			$baloon->attach($AuthConnB, -balloonmsg => 'Push Button for Authority Host Connection');
+		}
+		$AuthConnL->configure(-text => 'Authority Host is not Connected') if ($AuthConnL);
+		$AuthConnE->configure(-state=>'normal') if ($AuthConnE);
+	}
+}
+
+#-----------------------------------------------------
+
+sub PropertiesGlob {
+	my $t=shift;
+	my $ProjectName;
+	my $Author;
+	my $SelDescrText;
+
+	$t->Label(-text => 'Project Name:', -anchor => 'e', -justify => 'right')->grid( -row => 0, -column => 0, -sticky => 'e');
+	$t->Entry(-relief=>'sunken', -width=>40, -textvariable=>\$ProjectName)->grid( -row => 0, -column => 1, -sticky => 'w');
+	$t->Label(-text => 'Author:', -anchor => 'e', -justify => 'right')->grid( -row => 1, -column => 0, -sticky => 'e');
+	$t->Entry(-relief=>'sunken', -width=>40, -textvariable=>\$Author)->grid( -row => 1, -column => 1, -sticky => 'w');
+	$t->Label(-text => 'Description:', -anchor => 'e', -justify => 'right')->grid( -row => 2, -column => 0, -sticky => 'en');
+	$SelDescrText = $t->Scrolled(qw/Text -setgrid true -height 5 -width 40 -wrap word -scrollbars oe/)->grid( -row => 2, -column => 1, -sticky => 'w');
+	$SelDescrText->insert('0.0', '');
+	$t->Label(-text => 'Create Date:', -anchor => 'e', -justify => 'right')->grid( -row => 3, -column => 0, -sticky => 'e');
+	$t->Label(-text => '01.01.2002', -anchor => 'e', -justify => 'right')->grid( -row => 3, -column => 1, -sticky => 'w');
+	$t->Label(-text => 'Last Update Date:', -anchor => 'e', -justify => 'right')->grid( -row => 4, -column => 0, -sticky => 'e');
+	$t->Label(-text => '02.02.2002', -anchor => 'e', -justify => 'right')->grid( -row => 4, -column => 1, -sticky => 'w');
+}
+
+#-----------------------------------------------------
+
+sub Properties {
+	my $t = $top->Toplevel(-title=>'Project Properties');
+#	$t->Icon('-image' => $Img{BEE});	#has to be fixed: Icon shrinks $t window
+	my $t1 = $t->Frame->pack(-padx => 5, -pady => 5);
+
+	my $tabs = $t1->NoteBook(-ipadx => 6, -ipady => 6, -font=>$TabsFont)->pack(-expand => "yes", -fill => "both", -padx => 5, -pady => 5, -side => "left");
+	&PropertiesGlob($tabs->add("Global", -label => "Global", -underline => 0));
+	&PropertiesHost($tabs->add("Hosts", -label => "Hosts", -underline => 0));
+	&PropertiesAuth($tabs->add("Authority", -label => "Authority", -underline => 0));
+
+	my $t2 = $t->Frame->pack(-padx=>10,-pady=>5,-side => "left");
+	$t2->Button(
+            -text => 'Save',
+       	    -font => $ButtonFont,
+            -command => sub { 
+				$t1->destroy;
+			}
+        )->pack(-anchor=>'e',-side=>'left');
+	
+	$t2->Button(
+            -text => 'Cancel',
+       	    -font => $ButtonFont,
+            -command => [$t => 'destroy']
+        )->pack(-anchor=>'e',-side=>'left');
+}
+
+#-----------------------------------------------------
+sub NewLayer {
+  	#my $t = $top->Toplevel(-title=>'New Layer');
+	my $t = shift;
+	my $t1 = $t->Frame->pack(-anchor=>"nw",-side=>'left',-padx => 5);
+	my ($name, $w, $h, $v);
+	$t1->Label(-text => 'Name:', -anchor => 'e', -justify => 'right')->grid( -row => 0, -column => 0, -sticky => 'e');
+	$name = $t1->Entry(-relief=>'sunken', -width=>30)->grid( -row => 0, -column => 1, -sticky => 'w');
+	$name->insert(0,'Fill in the name, please!');
+	$t1->Label(-text => 'Visible :', -anchor => 'e', -justify => 'right')->grid( -row => 1, -column => 0, -sticky => 'en');
+	$v = $t1->Entry(-relief=>'sunken', -width=>30)->grid( -row => 1, -column =>1, -sticky => 'w');
+	$v->insert(0,'NO');	
+	$t1->Label(-text => 'Width:', -anchor => 'e', -justify => 'right')->grid( -row => 2, -column => 0, -sticky => 'en');
+	$w = $t1->Entry(-relief=>'sunken', -width=>10)->grid( -row => 2, -column => 1, -sticky => 'w');
+	$w->insert(0,'210');		
+	$t1->Label(-text => 'Height :', -anchor => 'e', -justify => 'right')->grid( -row => 3, -column => 0, -sticky => 'en');
+	$h = $t1->Entry(-relief=>'sunken', -width=>10)->grid( -row => 3, -column =>1, -sticky => 'w');
+	$h->insert(0,'280');			
+	my $t2 = $t->Frame->pack(-anchor=>"n",-side=>'left',-padx => 5);
+	$t2->Button(
+            -text => 'Save',
+       	    -font => $ButtonFont,
+            -command => sub {
+	                    my ($md,$new_id);
+			    
+                            while (exists($Project->{'gui-layer'}->{$new_id=&DSI::rnd(50)})) {};
+			    $md->{'N'}=$name->get;$md->{'W'}=$w->get;
+			    $md->{'H'}=$h->get;$md->{'V'}=$v->get; $md->{'ID'}=$new_id;			    
+			    &ClearLayer(\$Layer,$tSchemaC);
+			    &SaveLayer(\$md);
+			    &GetHistory;
+                     	    $TreeList->delete('all');
+			    &AddProjObjects2List($Project,\$Layer);}
+        )->pack(-anchor=>'n',-side=>'left');
+	
+	$t2->Button(
+            -text => 'Clear',
+       	    -font => $ButtonFont,
+            -command => [$t => 'destroy']
+        )->pack(-anchor=>'e',-side=>'left');
+}
+
+
+
+#------------------------------------------------------
+sub NewHost {
+	my $t = $top->Toplevel(-title=>'New Host');
+	my $t1 = $t->Frame->pack(-padx => 5, -pady => 5);
+	my $host='localhost';						
+	my $port='3306';						
+	my $msg='Host connection not tested yet !!!';								
+	$t1->Label(-text => 'Host:', -anchor => 'e', -justify => 'right')->grid( -row => 0, -column => 0, -sticky => 'e');
+	$t1->Entry(-relief=>'sunken', -width=>30, -textvariable=>\$host)->grid( -row => 0, -column => 1, -sticky => 'w');
+	$t1->Label(-text => 'Port:', -anchor => 'e', -justify => 'right')->grid( -row => 2, -column => 0, -sticky => 'en');
+	$t1->Entry(-relief=>'sunken', -width=>30, -textvariable=>\$port)->grid( -row => 2, -column => 1, -sticky => 'w');
+	$t1->Label(-text => 'Test of DB connection :', -anchor => 'e', -justify => 'right')->grid( -row => 3, -column => 0, -sticky => 'en');
+	$t1->Entry(-relief=>'sunken', -width=>30, -textvariable=>\$msg)->grid( -row => 3, -column =>1, -sticky => 'w');
+	my $ConnB = $t1->Button(
+            -image    => $Img{SELECT},	    
+            -command => sub { my $m = &DSI::TestConnection($host,$port);
+	                      $msg=$m;
+			    }
+        )->grid( -row => 3, -column =>2, -sticky => 'w');
+	$baloon->attach($ConnB, -balloonmsg => "Test to DB Connection");
+	#->pack(-anchor=>'e',-side=>'top');			
+	
+	my $t2 = $t->Frame->pack(-padx=>10,-pady=>5,-side => "left");
+	my $con;
+	
+
+	$t2->Button(
+            -text => 'Save',
+       	    -font => $ButtonFont,
+            -command => sub {&SaveHost($host,$port,$t)}
+        )->pack(-anchor=>'e',-side=>'left');
+	
+	$t2->Button(
+            -text => 'Cancel',
+       	    -font => $ButtonFont,
+            -command => [$t => 'destroy']
+        )->pack(-anchor=>'e',-side=>'left');
+}
+
+sub SaveHost {
+   my $host = shift;
+   my $port = shift;
+   my $win = shift;
+   if (!exists $Project->{'host'}->{$host}){      
+     $Project->{'host'}->{$host}->{'id'} = $host;
+     $Project->{'host'}->{$host}->{'name'} = $host;
+     $Project->{'host'}->{$host}->{'port'} = $port;
+     $Project->{'host'}->{$host}->{'description'} = '';
+	 $TreeList->add("$host",  -text => $Project->{host}->{$host}->{name}, -image => $Img{HOST}, -data => 'HOST', -at=>0);
+	 $TreeList->setmode("$host",'close');
+	 
+	 $TreeList->add("$host/_TRAN", -text => "Transformations", -image => $Img{DIR}, -data => 'DIR/_TRAN');
+	 $TreeList->setmode("$host/_TRAN",'close');
+	 $TreeList->close("$host/_TRAN");
+	 
+	 $TreeList->add("$host/_FILE", -text => "Files", -image => $Img{DIR}, -data => 'DIR/_FILE');
+	 $TreeList->setmode("$host/_FILE",'close');
+	 $TreeList->close("$host/_FILE");
+	 
+	 $TreeList->close("$host");
+	 $win->destroy;
+   
+   }
+   
+}
+
+sub SaveLayer {
+   my $md = shift;   
+   $Project->{'gui-layer'}->{$$md->{'ID'}}->{'name'} = $$md->{'N'};
+   $Project->{'gui-layer'}->{$$md->{'ID'}}->{'width'} = $$md->{'W'};
+   $Project->{'gui-layer'}->{$$md->{'ID'}}->{'height'} = $$md->{'H'};
+   $Project->{'gui-layer'}->{$$md->{'ID'}}->{'visible'} = $$md->{'V'};         
+}
+
+1
+@
+
+
+1.9
+log
+@logical model
+@
+text
+@d4 1
+a4 1
+# $Id: prop_w.pl,v 1.8 2003/05/20 16:25:53 spanhel Exp $
+d7 1
+d282 1
+a282 1
+	my $host='root';						
+d307 1
+a307 1
+            -command => sub {&SaveHost($host,$port)}
+d320 1
+d325 14
+a338 1
+     $Project->{'host'}->{$host}->{'description'} = '';	
+d341 1
+@
+
+
+1.8
+log
+@tree history, colors of attributs
+@
+text
+@d1 1
+a1 1
+#-----------------------------------------------------
+d4 1
+a4 1
+# $Id: prop_w.pl,v 1.7 2003/05/16 07:02:43 spanhel Exp $
+@
+
+
+1.7
+log
+@adding and removing object from Layers
+@
+text
+@d4 1
+a4 1
+# $Id: prop_w.pl,v 1.6 2003/05/07 14:28:51 spanhel Exp $
+d235 3
+a237 2
+  	my $t = $top->Toplevel(-title=>'New Layer');
+	my $t1 = $t->Frame->pack(-padx => 5, -pady => 5);
+d251 1
+a251 1
+	my $t2 = $t->Frame->pack(-padx=>10,-pady=>5,-side => "left");
+d263 1
+d266 1
+a266 1
+        )->pack(-anchor=>'e',-side=>'left');
+d269 1
+a269 1
+            -text => 'Cancel',
+d274 3
+@
+
+
+1.6
+log
+@schema model
+@
+text
+@d4 1
+a4 1
+# $Id: prop_w.pl,v 1.5 2003/05/05 15:36:46 spanhel Exp $
+d260 1
+@
+
+
+1.5
+log
+@schema - tables, columns, relations
+@
+text
+@d4 1
+a4 1
+# $Id: prop_w.pl,v 1.4 2003/05/01 13:42:45 spanhel Exp $
+a237 4
+        $name = 'Fill in the name, please!';
+        $w = '210';       
+	$h = '280';
+        $v = 'YES';
+d243 1
+a243 1
+	$v->insert(0,'YES');	
+a250 1
+	print Dumper($name);
+a269 1
+
+a327 4
+}
+
+sub auxs {
+  print "aaaaaa";
+@
+
+
+1.4
+log
+@update tree -  tables and columns
+@
+text
+@d4 1
+a4 1
+# $Id: prop_w.pl,v 1.3 2003/04/30 09:57:46 spanhel Exp $
+d234 41
+d276 1
+a313 1
+
+d327 13
+a340 1
+
+@
+
+
+1.3
+log
+@connect to mysql
+@
+text
+@d4 1
+a4 1
+# $Id: prop_w.pl,v 1.2 2003/03/12 23:36:19 numberone Exp $
+d7 2
+a8 1
+
+d239 3
+a241 3
+
+	#my $tabs = $t1->NoteBook(-ipadx => 6, -ipady => 6, -font=>$TabsFont)->pack(-expand => "yes", -fill => "both", -padx => 5, -pady => 5, -side => "left");
+							
+d243 13
+a255 7
+	$t1->Entry(-relief=>'sunken', -width=>40, -textvariable=>'localhost')->grid( -row => 0, -column => 1, -sticky => 'w');
+	$t1->Label(-text => 'User:', -anchor => 'e', -justify => 'right')->grid( -row => 1, -column => 0, -sticky => 'e');
+	$t1->Entry(-relief=>'sunken', -width=>40, -textvariable=>'root')->grid( -row => 1, -column => 1, -sticky => 'w');
+	$t1->Label(-text => 'Password:', -anchor => 'e', -justify => 'right')->grid( -row => 2, -column => 0, -sticky => 'en');
+	$t1->Entry(-relief=>'sunken', -width=>40, -textvariable=>'')->grid( -row => 2, -column => 1, -sticky => 'w');	
+	$t1->Label(-text => 'Port:', -anchor => 'e', -justify => 'right')->grid( -row => 3, -column => 0, -sticky => 'en');
+	$t1->Entry(-relief=>'sunken', -width=>40, -textvariable=>'3306')->grid( -row => 3, -column => 1, -sticky => 'w');
+d257 2
+a258 1
+			
+d260 1
+a260 1
+	my $t2 = $t->Frame->pack(-padx=>10,-pady=>5,-side => "left");
+d264 1
+a264 3
+            -command => sub { 
+				$t1->destroy;
+			}
+d275 11
+d287 1
+@
+
+
+1.2
+log
+@bee is exec()uted, not eval()ed
+@
+text
+@d4 1
+a4 1
+# $Id: prop_w.pl,v 1.1.1.1 2002/09/24 01:34:20 michald Exp $
+d233 35
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d4 1
+a4 1
+# $Id: prop_w.pl,v 1.3 2002/09/01 23:04:24 michal Exp $
+d129 1
+a129 1
+	if (eval{source::init([$AuthConnHost->{name}])}) {
+@
+
+
+1.1.1.1
+log
+@Initial public release of BEE Project.
+@
+text
+@@

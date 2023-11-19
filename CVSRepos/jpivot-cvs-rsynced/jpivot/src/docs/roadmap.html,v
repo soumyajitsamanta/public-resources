@@ -1,0 +1,291 @@
+head	1.2;
+access;
+symbols
+	jpivot_1_8_0:1.2
+	focus_1_6_0:1.2.0.4
+	jpivot_1_7_0:1.2
+	jpivot_1_6_0:1.2
+	jpivot_1_5_0:1.2.0.2
+	Root_jpivot_1_5_0:1.2
+	sourceforge_sync:1.2
+	mondrian_xmla_2005_08_25:1.1.0.2;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2005.09.15.06.49.24;	author avix;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2005.08.08.18.57.20;	author avix;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@added suggestions from loyaltymatrix
+@
+text
+@<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>JPivot Roadmap</title>
+<style type="text/css">
+body, table {
+  background-color : #ffffff;
+  color : Black;
+  font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+  font-size: 10pt;
+}
+h1,h2,h3,h4,th {
+  padding: 2pt;
+  background-color: #DEE3EF
+}
+.cost, .prio {
+  font-style: italic;
+}
+.menu {
+  text-align: right;
+}
+
+</style>
+</head>
+<body>
+
+<div class="menu">
+[ <a href="http://jpivot.sourceforge.net">jpivot home</a>
+| <a href="http://cvs.sourceforge.net/viewcvs.py/*checkout*/jpivot/jpivot/src/docs/roadmap.html">this document</a>
+| <a href="http://sourceforge.net/projects/jpivot">project page</a> ]
+</div>
+
+<h2>JPivot Roadmap</h2>
+
+This document shall help to coordinate the future development of JPivot.
+It will list features and enhancements that would be desireable to
+make JPivot more useful. These may include new functionality, integrating
+with other software, it may list bugs that have to be fixed, missing
+documentation and everything else should be done in the JPivot project.
+<p>
+For each task we should try to estimate the effort, prioritize it, and
+list developers who want to implement it.
+<p>
+Community feedback about this document is welcome, those with CVS access
+can modify it directly as it is viewed directly from the CVS repository.
+
+<!--  ******************************************************************* -->
+
+<h3>Split JPivot into <code>model</code> and <code>view</code> Projects</h3>
+
+<div class="cost">Effort: medium</div>
+<div class="prio">Priority: medium</div>
+<p>
+
+The navigation part of JPivot could be used in other OLAP frontends too, e.g.
+in a swing based (like <a href="http://sourceforge.net/projects/rubik/">Rubic</a>).
+There are two tasks
+<ul>
+  <li>Split the sourcecode and create the build.xml for both subprojects</li>
+  <li>Remove dependencies</li>
+</ul>
+There are known dependencies from the drill-through implementations to the wcf
+table model interface currently. Here the drill through model extension should
+define its own table model which will be implemented by the mondrian package
+and adapted to the wcf table model in the gui.
+
+<!--  ******************************************************************* -->
+
+<h3>JBoss Portal implementation of JPivot</h3>
+
+<div class="cost">Effort: medium</div>
+<div class="prio">Priority: medium</div>
+<p>
+Provide documentation (and possibly code) for how to run JPivot inside
+an JSR 168 compatible portal.
+
+<!--  ******************************************************************* -->
+
+<h3>Enhanced drill-through reporting</h3>
+
+<div class="cost">Effort: high</div>
+<div class="prio">Priority: medium</div>
+<p>
+An enhanced drill-thru report which will do
+multi-column sorting and grouping an makes a more focused report
+by eliminating (hiding) redundant columns (ie all the row /
+column hierarchies and filters for which all rows of the report will be
+the same).
+<p>
+Care should be taken regarding to performance and memory usage. The current drill-through
+implementation can handle thousands of rows with no problem (e.g. drill through
+in a top-level foodmart cell). Maybe make the new version optional.
+
+<!--  ******************************************************************* -->
+
+<h3>Enhanced Navigation</h3>
+
+<div class="cost">Effort: high</div>
+<div class="prio">Priority: medium</div>
+<p>
+Access to some navigation functions and addition of some new
+functions (eg ?expand / collapse all members of a level?,
+?simultaneous drill down on both row & column?, ..)
+via ?mouse right-click? in dimension / member headers and cells.
+
+<!--  ******************************************************************* -->
+
+<h3>Drag &amp; Drop</h3>
+
+<div class="cost">Effort: high</div>
+<div class="prio">Priority: medium</div>
+<p>
+Drag &amp; drop functionality in the pivot chart for adding / removing dimensions to rows / columns
+
+<!--  ******************************************************************* -->
+
+<h3>User interface for Bookmarks</h3>
+
+<div class="cost">Effort: medium</div>
+<div class="prio">Priority: medium</div>
+<p>
+Some other bits, a bookmark interface, enhancements to bookmark functionality,?
+
+<p>
+Where will the bookmarks be stored (Database, Filesystem)?
+
+<!--  ******************************************************************* -->
+
+<h3>Improved Documentation</h3>
+
+<div class="cost">Effort: medium</div>
+<div class="prio">Priority: medium</div>
+<p>
+Its too difficult for new users to get JPivot up with their own data.
+A step-by-step tutorial would be great.
+
+<!--  ******************************************************************* -->
+
+<h3>Port to BEA Weblogic and IBM Websphere</h3>
+
+<div class="cost">Effort: medium</div>
+<div class="prio">Priority: medium</div>
+<p>
+Its not known if JPivot runs on these popular webservers.
+
+<!--  ******************************************************************* -->
+
+<h3>Other Suggestions</h3>
+
+
+<ul>
+  <li>Improve standalone build, separate from Tonbeller-specific constructs, make sure all tasks run when downloaded </li>
+  <li>Improve documentation, howto, FAQ </li>
+  <li>jfreechart - there are several features available in jfreechart, not currently exposed via jpivot. Most notable features:
+    <ul>
+      <li>multiple y axis support </li>
+      <li>pareto plot (variant on mult y axis, where one side is percentage) </li>
+      <li>callouts </li>
+      <li>difference chart </li>
+      <li>candlestick </li>
+      <li>For some of these, exposing via jpivot is trivial. See this page. </li>
+      <li>improve color palette support </li>
+      <li>chart to chart type mapping: </li>
+      <li>see com.tonbeller.jpivot.chart.ChartComponent.render(...) method </li>
+      <li>Build in samples saving chart state </li>
+    </ul>
+  </li>
+  <li>Bug fixes
+    <ul>
+      <li>xmla excel export (XMLA_Cell not fully implemented - getFormat method) </li>
+      <li>exception handling - some exceptions require some log parsing, not hard to find, but harder than it should be. I know that some users have been confused by some messages that may not be helpful - notable - when datasource is incorrectly configured. </li>
+    </ul>
+  </li>
+  <li>add support for multiple visualization formats, or even extract a visualization engine
+    <ul>
+      <li>image format - make configurable, not just png </li>
+      <li>Support flash-based charts as an output format
+        <ul>
+          <li>Reduces chart-rendering effort on the server-side, and also reduces the amount of network traffic </li>
+          <li>Much better look aesthetically compared to static gif or jpg's </li>
+          <li>Enabling a drill-down interface via flash will be interesting </li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>cube browser (similar to dimension browser) </li>
+  <li>Create sample chart admin/creation pages </li>
+  <li>Exposure to MDX constructs without having to write MDX
+    <ul>
+      <li>A subset of this already available (sort, etc.) </li>
+      <li>Make the entire MDX functions available (kind-of like the interface MSAS provides when you are defining a calculated member) </li>
+    </ul>
+  </li>
+  <li>Security integration
+    <ul>
+      <li>Map hierarchial access. send the user login context all the way to the XMLA server so that visibility into the OLAP data is restricted by OLAP server security rules at the user-level </li>
+      <li>Integrate a standard (JAAS-based?) security layer so that (a) login can be validaed against existing user databases, either LDAP, Unix logins, or some rdbms-based user database, and (b) access to charts, etc. is restricted by role definition (role concept exists in wcf framework) </li>
+    </ul>
+  </li>
+</ul>
+
+<!--  ******************************************************************* -->
+
+<hr noshade="noshade">
+<div class="menu">
+<img src="http://sourceforge.net/sflogo.php?group_id=58645&amp;type=4" width="125" height="37" border="0" alt="SourceForge.net Logo"/>
+</div>
+
+</body>
+</html>@
+
+
+1.1
+log
+@added roadmap
+@
+text
+@d36 2
+a37 2
+This document shall help to coordinate the future development of JPivot. 
+It will list features and enhancements that would be desireable to 
+d39 2
+a40 2
+with other software, it may list bugs that have to be fixed, missing 
+documentation and everything else should be done in the JPivot project. 
+d76 1
+a76 1
+an JSR 168 compatible portal. 
+d85 4
+a88 4
+An enhanced drill-thru report which will do 
+multi-column sorting and grouping an makes a more focused report 
+by eliminating (hiding) redundant columns (ie all the row / 
+column hierarchies and filters for which all rows of the report will be 
+d91 1
+a91 1
+Care should be taken regarding to performance and memory usage. The current drill-through 
+d102 4
+a105 4
+Access to some navigation functions and addition of some new 
+functions (eg ?expand / collapse all members of a level?, 
+?simultaneous drill down on both row & column?, ..) 
+via ?mouse right-click? in dimension / member headers and cells. 
+d114 1
+a114 1
+Drag &amp; drop functionality in the pivot chart for adding / removing dimensions to rows / columns 
+d117 1
+a117 1
+ 
+d123 1
+a123 1
+Some other bits, a bookmark interface, enhancements to bookmark functionality,? 
+d149 56
+@
+

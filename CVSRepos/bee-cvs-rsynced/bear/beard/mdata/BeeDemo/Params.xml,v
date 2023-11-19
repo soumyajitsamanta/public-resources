@@ -1,0 +1,95 @@
+head	1.5;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.5
+date	2004.03.05.11.37.09;	author jiri_schmid;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2004.02.25.16.05.07;	author jiri_schmid;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2003.12.03.16.01.24;	author jiri_schmid;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2003.10.02.14.44.54;	author jiri_schmid;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2003.10.01.15.29.38;	author jiri_schmid;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.5
+log
+@recursive non-attr objects tree creation implemented, order attr added into folder def.
+@
+text
+@<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<project>
+  <folder id="BD_DPARAMS_" type="param" order="3">
+    <name cz="Dynamické parametry" en="Dynamic parameters" />
+    <description cz="Objekty jejichz obsah se definuje pred spustenim reportu" en="something4more dynamic" />
+  </folder>
+</project>
+@
+
+
+1.4
+log
+@fixed rights logic and folder XML definition files are specific for each project now
+@
+text
+@d3 1
+a3 1
+  <folder id="BD_DPARAMS_" type="param">
+@
+
+
+1.3
+log
+@implemented sorting in tree
+@
+text
+@d3 1
+a3 1
+  <folder id="_DPARAMS_">
+@
+
+
+1.2
+log
+@parameters - elements implemented
+@
+text
+@d4 1
+a4 1
+    <name cz="Dynamicke parametry" en="Dynamic parameters" />
+@
+
+
+1.1
+log
+@prompt implemented
+@
+text
+@d3 1
+a3 1
+  <folder id="_PARAMS_">
+@
+

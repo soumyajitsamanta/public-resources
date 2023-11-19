@@ -1,0 +1,123 @@
+head	1.2;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2005.06.28.13.38.27;	author igorludi;	state dead;
+branches;
+next	1.1;
+
+1.1
+date	2005.06.28.11.35.03;	author igorludi;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@*** empty log message ***
+@
+text
+@package rex.graphics.dimensiontree.elements;
+
+import javax.swing.ImageIcon;
+import rex.metadata.ServerMetadata;
+import org.tempuri.type.ClsXMLAProxDiscoverRestrictions;
+import org.tempuri.type.ClsXMLAProxDiscoverProperties;
+import rex.utils.S;
+/**
+ * <p>Title: WHEX</p>
+ * <p>Description: </p>
+ * <p>Copyright: Copyright (c) 2003</p>
+ * <p>Company: </p>
+ * @@author igor
+ * @@version 1.0
+ */
+
+public class DimensionRootElement implements DimensionTreeElement{
+   private boolean flattenDimensions;
+
+   public DimensionRootElement() {
+   }
+
+   static ImageIcon icon;
+   static {
+      icon = S.getAppIcon("DimensionRoot.gif");
+   }
+
+   public DimensionTreeElement[] getChildren() {
+      return null;
+   }
+
+   public String toString() {
+      return "<HTML><B>Dimensions</B></HTML>";
+   }
+
+   public ImageIcon getIcon() {
+      return icon;
+   }
+
+   public String getToolTip() {
+      return "Dimensions available for browsing)";
+   }
+
+   public void setFlattenDimensions(boolean _flattenDimensions){
+      flattenDimensions =_flattenDimensions;
+   }
+
+
+   public String[] getPopUpActionList() {
+      //return null;
+      if (flattenDimensions)
+         return new String[] {PopUpActions.GROUP_HIERARCHIES_BY_DIMENSION};
+      else
+         return new String[] {PopUpActions.FLATTEN_DIMENSIONS};
+   }
+   public String getUniqueName(){
+      return "[dimension tree root]";
+   }
+   public String getCaption(){
+      return null;
+   }
+   public String getQueryMembersExpression(){
+      return null;
+   }
+   public boolean isEnabled(){
+      return false;
+   }
+   public void setEnabled(boolean newValue){
+      // no way Hose!
+   }
+   public int getChildrenCount(){
+      return 1;
+   }
+   public ServerMetadata getServerMetadata(){
+      return null;
+   }
+   public ClsXMLAProxDiscoverRestrictions getRestrictions(){
+      return null;
+   }
+   public ClsXMLAProxDiscoverProperties   getProperties(){
+      return null;
+   }
+   public String getDimensionUniqueName(){
+      return null;
+   }
+
+}@
+
+
+1.1
+log
+@first time commit
+@
+text
+@@
+

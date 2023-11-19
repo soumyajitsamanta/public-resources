@@ -1,0 +1,224 @@
+head	1.6;
+access;
+symbols
+	start:1.1.1.1 vendor:1.1.1;
+locks; strict;
+comment	@# @;
+
+
+1.6
+date	2003.03.12.23.36.18;	author numberone;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	2002.09.29.14.47.16;	author numberone;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2002.09.28.20.23.22;	author numberone;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2002.09.27.13.54.51;	author numberone;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2002.09.26.07.52.42;	author numberone;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2002.09.24.01.34.16;	author michald;	state Exp;
+branches
+	1.1.1.1;
+next	;
+
+1.1.1.1
+date	2002.09.24.01.34.16;	author michald;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.6
+log
+@bee is exec()uted, not eval()ed
+@
+text
+@#!/usr/bin/perl -w
+# $Id: browse.pl,v 1.5 2002/09/29 14:47:16 numberone Exp $
+
+use lib '../lib';
+use auth;
+use url;
+
+use Data::Dumper;
+use strict;
+
+my $auth = new auth("localhost") or die;
+
+my @@dads = $auth->dads();
+
+print "\ndads list:\n";
+map { print " ",$_->{host},":",$_->{port}," (",$_->{key},")\n" } @@dads;
+print "\n";
+
+my @@source = $auth->sources();
+print "sources list:\n ",join("\n ",@@source),"\n\n";
+
+print "sources on 'localhost':\n";
+foreach(@@source) {
+	print " $_\n" if(url::host($_) eq 'localhost');
+}
+print "\n";
+
+exit(0);
+
+# muzeme my (=undef) z bee spustene na otci localhost cist dane source?
+
+#my $dbsource = "dbi-mysql://user\@@localhost/shop";
+#my $dbsource = "dir://localhost:2333/etc/cron.daily/";
+my $dbsource = "dir://localhost:2333/tmp/";
+
+print "read access to \`$dbsource\'\: ";
+my $credit = source::read(undef,"localhost",$dbsource);
+print $credit ? "ALLOW ($credit)\n" : "DENY\n";
+
+$dbsource = "dbi://localhost/bee";
+print "read access to \`$dbsource\'\: ";
+$credit = source::read(undef,"localhost",$dbsource);
+print $credit ? "ALLOW (`$credit')\n" : "DENY\n";
+
+# zjisti seznam tabulek v dat. zdroji - zatim se musi uvest otec
+# na kterem ma bezet bee ktera to zjisti..
+# DULEZITE: pokud nazev tabulky konci '/', pak jde o 'poddatabazi'
+# (o adresar - to umoznuje postupne prochazeni adresaroveho stromu)
+#
+# mozna by to poddatabaze nemelo vracet a mela by na to existovat 
+# spec. fce (nebo to byt zaclenene do source::sources)
+$dbsource = "dir://localhost:2333/tmp/";
+my @@table = source::tables("localhost:2333",$dbsource);
+print "\ntables in \`$dbsource\':\n";
+foreach(@@table) {
+	print " $_\n" unless(/\/$/); # vypis pokud to je normalni tabulka
+}
+print "\n";
+
+# source::tablequery vrati SELECT prikaz pro fetchnuti
+# systemoveho katalogu pro danou db. lze ho upravit
+# a dat source::tables jako 3 parametr
+$dbsource = "dbi-mysql://bee\@@localhost/bee";
+my $query = source::tablequery($dbsource);
+print "`$dbsource' query: `$query'\n\n";
+
+@@table = source::tables("localhost:2333",$dbsource,$query);
+print "tables in \`$dbsource\':\n ",join("\n ",@@table),"\n\n";
+
+
+@
+
+
+1.5
+log
+@table query seems to work
+@
+text
+@d2 1
+a2 1
+# $Id: browse.pl,v 1.4 2002/09/28 20:23:22 numberone Exp $
+d5 1
+a5 1
+use source;
+d11 1
+a11 1
+my $auth = source::init(["localhost"]) or die;
+d13 1
+a13 1
+my @@dads = source::dads();
+d16 1
+a16 1
+map { print " ",$_->{name},"\n" } @@dads;
+d19 1
+a19 1
+my @@source = source::sources();
+d27 2
+@
+
+
+1.4
+log
+@auth::read returns false on DENY access and credit (login:password) on ALLOW
+@
+text
+@d2 1
+a2 1
+# $Id: browse.pl,v 1.3 2002/09/27 13:54:51 numberone Exp $
+d38 5
+d50 1
+d63 1
+a63 1
+print "`$dbsource' query: $query\n\n";
+@
+
+
+1.3
+log
+@tablequery, bee->dad msg
+@
+text
+@d2 1
+a2 1
+# $Id: browse.pl,v 1.2 2002/09/26 07:52:42 numberone Exp $
+d35 2
+a36 2
+my $deny = source::read(undef,"localhost",$dbsource);
+print $deny ? "DENY $deny\n" : "ALLOW\n";
+d56 1
+a56 1
+my $query = source::tablequery("localhost:2333",$dbsource);
+@
+
+
+1.2
+log
+@version merging with my cvs
+@
+text
+@d2 1
+a2 1
+# $Id: browse.pl,v 1.1.1.1 2002/09/24 01:34:16 michald Exp $
+d11 1
+a11 1
+source::init(["localhost"]) or die;
+a37 1
+
+d42 3
+d52 9
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d2 1
+a2 1
+# $Id: browse.pl,v 1.8 2002/08/28 21:31:14 martin Exp $
+d49 1
+@
+
+
+1.1.1.1
+log
+@Initial public release of BEE Project.
+@
+text
+@@

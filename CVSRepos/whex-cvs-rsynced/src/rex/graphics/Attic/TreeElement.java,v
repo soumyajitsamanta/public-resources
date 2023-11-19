@@ -1,0 +1,159 @@
+head	1.4;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.4
+date	2006.01.13.12.21.13;	author igorludi;	state dead;
+branches;
+next	1.3;
+
+1.3
+date	2005.10.18.14.04.40;	author igorludi;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2005.10.18.13.40.37;	author igorludi;	state dead;
+branches;
+next	1.1;
+
+1.1
+date	2005.06.28.14.10.46;	author igorludi;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.4
+log
+@*** empty log message ***
+@
+text
+@package rex.graphics;
+
+//import rex.metadata.datasourcetree.elements.DataSourceTreeElement;
+import java.util.Vector;
+import java.io.Serializable;
+import rex.utils.S;
+
+/**
+ * <p>Title: WHEX</p>
+ * <p>Description: Tree element is an objects that contains user object and refrences to parent and children.  </p>
+ * <p>Copyright: Copyright (c) 2003</p>
+ * <p>Company: </p>
+ * @@author igor
+ * @@version 1.0
+ */
+
+public class TreeElement implements Serializable{
+   private Object userObject;
+   private TreeElement parent;
+   private Vector children;
+
+   public TreeElement(Object obj, TreeElement objParent) {
+      userObject = obj;
+      parent = objParent;
+      children = new Vector();
+   }
+   public Object getUserObject(){
+      return userObject;
+   }
+   public void addChild(TreeElement child){
+//      S.out("adding child: " +  child);
+      children.add(child);
+   }
+/// getter methods ///////////////////////////////////
+
+   public String toString() {
+      return userObject.toString();
+   }
+
+   public TreeElement getParent() {
+      return parent;
+   }
+
+   public int getChildCount() {
+//       S.out("calling tree element " + this + " getchildcount = " + children.size());
+      return children.size();
+   }
+
+   public TreeElement getChildAt(int i) {
+      return (TreeElement) children.elementAt(i);
+   }
+
+   public int getIndexOfChild(TreeElement child) {
+      return children.indexOf(child);
+   }
+
+   public void dropChildren() {
+      children.removeAllElements();
+      // garbage collect?
+   }
+
+//   public String toString(){
+//       return "TreeElement for class: " + getUserObject().getClass().getName()
+//               + "\n VALUE: " + getUserObject();
+//   }
+
+}
+
+@
+
+
+1.3
+log
+@*** empty log message ***
+@
+text
+@@
+
+
+1.2
+log
+@*** empty log message ***
+@
+text
+@d6 1
+d10 1
+a10 1
+ * <p>Description: Tree element is an objects that contains user object and refrences to parents and children.  </p>
+d20 1
+a20 1
+   Vector children;
+d31 1
+d45 1
+d62 4
+d67 1
+a68 16
+}
+/*
+public static void linkFamily(Person pa,
+                                  Person ma,
+                                  Person[] kids) {
+        int len = kids.length;
+        Person kid = null;
+        for (int i = 0; i < len; i++) {
+            kid = kids[i];
+            pa.children.addElement(kid);
+            ma.children.addElement(kid);
+            kid.father = pa;
+            kid.mother = ma;
+        }
+    }
+*/
+@
+
+
+1.1
+log
+@*** empty log message ***
+@
+text
+@@
+

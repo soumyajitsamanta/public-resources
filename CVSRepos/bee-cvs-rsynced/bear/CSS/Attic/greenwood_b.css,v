@@ -1,0 +1,48 @@
+head	1.2;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2003.03.17.16.07.32;	author jiri_schmid;	state dead;
+branches;
+next	1.1;
+
+1.1
+date	2002.11.01.13.20.46;	author spanhel;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@unusef css files removed
+@
+text
+@BODY {font-family:sans-serif; line-height:1em; background-color:#eeeeee} 
+TABLE.mains {border-style:solid; border-width:2; border-color: black; empty-cells:show; width:50%; padding:0; border-spacing:0; vertical-align:middle}
+
+
+TH.ro {border-style:none; padding:0; vertical-align:middle; font-size: 15pt; background-color:#cccccc}
+TH.re {border-style:none; padding:0; vertical-align:middle; font-size: 15pt; background-color:#a8a8a8}
+TH.co {border-style:none; padding:0; vertical-align:middle; font-size: 15pt; background-color:#cccccc}
+TH.ce {border-style:none; padding:0; vertical-align:middle; font-size: 15pt; background-color:#a8a8a8}
+
+TD.o {border-style:none; padding:0; vertical-align:middle; font-size: 15pt; background-color:#65d882; text-align:center}
+TD.e {border-style:none; padding:0; vertical-align:middle; font-size: 15pt; background-color:#4ba060; text-align:center}
+@
+
+
+1.1
+log
+@change folder metadata
+@
+text
+@@
+

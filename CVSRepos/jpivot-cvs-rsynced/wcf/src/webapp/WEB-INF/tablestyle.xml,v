@@ -1,0 +1,41 @@
+head	1.1;
+access;
+symbols
+	jpivot_1_8_0:1.1
+	focus_1_6_0:1.1.0.2
+	wcf_1_7_0:1.1
+	wcf_1_6_0:1.1
+	sourceforge_sync:1.1;
+locks; strict;
+comment	@# @;
+
+
+1.1
+date	2006.11.09.13.24.06;	author avix;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@synchronized with tonbeller cvs
+@
+text
+@<?xml version="1.0" encoding="UTF-8"?>
+
+<xtable-component>
+  <xtr>
+    <xth class="class-1">class-1</xth>
+    <xth>xtable-heading</xth>
+  </xtr>
+  <xtr>
+    <xtd class="class-2">class-2</xtd>
+    <xtd>xtable-data</xtd>
+  </xtr>
+</xtable-component>
+
+@

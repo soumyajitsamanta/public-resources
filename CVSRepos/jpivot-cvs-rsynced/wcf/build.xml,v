@@ -1,0 +1,756 @@
+head	1.7;
+access;
+symbols
+	jpivot_1_8_0:1.7
+	focus_1_6_0:1.6.0.2
+	wcf_1_7_0:1.6
+	wcf_1_6_0:1.6
+	jpivot_1_5_0:1.4.0.2
+	Root_jpivot_1_5_0:1.4
+	mondrian_xmla_2005_08_25:1.1.0.2
+	sourceforge_sync:1.6;
+locks; strict;
+comment	@# @;
+
+
+1.7
+date	2008.03.17.15.05.20;	author avix;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	2006.10.23.10.22.42;	author avix;	state Exp;
+branches
+	1.6.2.1;
+next	1.5;
+
+1.5
+date	2006.09.29.14.12.06;	author avix;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2005.12.13.12.51.57;	author avix;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2005.12.13.11.54.17;	author avix;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2005.09.03.21.43.00;	author sgwood;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2005.07.05.14.08.04;	author avix;	state Exp;
+branches;
+next	;
+
+1.6.2.1
+date	2008.04.17.04.10.49;	author hbaier;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.7
+log
+@enable build.properties
+@
+text
+@<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<project name="WCF - WebComponent Framework" default="build" basedir=".">
+
+<!-- ===================== Property Definitions =========================== -->
+
+  <property file="build.properties"/>
+  <property file="${user.home}/build.properties"/>
+
+  <property name="build.home"    value="${basedir}/build"/>
+  <property name="dist.home"     value="${basedir}/dist"/>
+  <property name="src.home"      value="${basedir}/src"/>
+  <property name="viewcvs"       value="http://cvs.sourceforge.net/viewcvs.py/jpivot"/>
+
+  <property name="repository.home"      value="${basedir}/../jpivot_repository"/>
+
+  <property name="jdepend.home"  value="${repository.home}/jdepend-2.9.1"/>
+  <property name="httpunit.home" value="${repository.home}/httpunit-1.5.2"/>
+  <property name="catalina.home" value="${repository.home}/jakarta-tomcat-4.1.31"/>
+  <property name="xalan.home"    value="${repository.home}/xalan-j_2_7_0"/>
+  <property name="junit.home"    value="${repository.home}/junit-3.8.1"/>
+
+<!-- ==================== File and Directory Names ======================== -->
+
+  <property name="app.name"        value="wcf"/>
+  <property name="app.version"     value="dev"/>
+  <property name="release.kennung" value="${app.version}"/>
+
+  <property name="app.path"      value="/${app.name}"/>
+  <property name="test.server"   value="localhost:8080"/>
+  <property name="httpunit.recordmode" value="false"/>
+  <property name="httpunit.url"  value="http://${test.server}/${app.name}"/>
+
+
+  <property name="manager.url"        value="http://${test.server}/manager"/>
+  <property name="manager.username"   value="manager"/>
+  <property name="manager.password"   value="manager"/>
+
+<!--  ==================== Compilation Control Options ==================== -->
+
+  <property name="compile.debug"       value="true"/>
+  <property name="compile.deprecation" value="false"/>
+  <property name="compile.source"      value="1.4"/>
+  <property name="compile.target"      value="1.4"/>
+
+
+<!-- ==================== Classpath Settings =========================== -->
+
+  <path id="compile.classpath">
+    <!-- Include all JAR files that will be included in /WEB-INF/lib -->
+    <fileset dir="${build.home}/web/WEB-INF/lib">
+      <include name="*.jar"/>
+    </fileset>
+
+    <!-- Include all elements that Tomcat exposes to applications -->
+    <pathelement location="${catalina.home}/common/classes"/>
+    <fileset dir="${catalina.home}/common/endorsed">
+      <include name="*.jar"/>
+    </fileset>
+    <fileset dir="${catalina.home}/common/lib">
+      <include name="*.jar"/>
+    </fileset>
+  </path>
+
+  <!-- classpath for junit tests -->
+  <path id="test.classpath">
+    <path refid="compile.classpath"/>
+    <pathelement location="${build.home}/web/WEB-INF/classes"/>
+    <pathelement location="${build.home}/junit/classes"/>
+    <fileset dir="${junit.home}">
+      <include name="*.jar"/>
+    </fileset>
+    <fileset dir="${jdepend.home}/lib">
+      <include name="*.jar"/>
+    </fileset>
+    <pathelement location="${httpunit.home}/lib/httpunit.jar"/>
+    <pathelement location="${httpunit.home}/jars/js.jar"/>
+    <pathelement location="${httpunit.home}/jars/Tidy.jar"/>
+  </path>
+
+<!-- ==================== Prepare Target ================================== -->
+
+  <target name="prepare">
+
+    <!-- Create build directories as needed -->
+    <mkdir dir="${build.home}/web/WEB-INF/classes"/>
+    <mkdir dir="${build.home}/web/WEB-INF/lib"/>
+    <mkdir dir="${build.home}/web/WEB-INF/src"/>
+
+    <!-- copy binaries -->
+    <copy todir="${build.home}/web">
+      <fileset dir="${basedir}/src/webapp">
+        <exclude name="**/*.jsp"/>
+        <exclude name="**/*.xml"/>
+        <exclude name="**/*.properties"/>
+        <exclude name="**/*.mf"/>
+        <exclude name="**/*.txt"/>
+      </fileset>
+    </copy>
+
+    <!-- copy text files -->
+    <copy todir="${build.home}/web">
+      <fileset dir="${basedir}/src/webapp">
+        <include name="**/*.jsp"/>
+        <include name="**/*.xml"/>
+        <exclude name="**/*-tags.xml"/>
+        <include name="**/*.properties"/>
+        <include name="**/*.mf"/>
+        <include name="**/*.txt"/>
+      </fileset>
+      <filterset>
+        <filter token="VERSION" value="${release.kennung}"/>
+      </filterset>
+    </copy>
+
+    <!-- Copy external dependencies as required  -->
+    <mkdir  dir="${build.home}/web/WEB-INF/lib"/>
+    <copy  todir="${build.home}/web/WEB-INF/lib" flatten="true">
+      <fileset dir="${repository.home}">
+        <include name="jakarta-taglibs-standard-1.0.6/lib/jstl.jar"/>
+        <include name="jakarta-taglibs-standard-1.0.6/lib/standard.jar"/>
+        <include name="jakarta-taglibs-standard-1.0.6/lib/jaxen-full.jar"/>
+        <include name="jakarta-taglibs-standard-1.0.6/lib/saxpath.jar"/>
+        <include name="jakarta-regexp-1.2/*.jar"/>
+
+        <include name="commons-digester-1.5/*.jar"/>
+        <include name="commons-collections-3.1/*.jar"/>
+        <include name="commons-beanutils-1.7.0/*.jar"/>
+        <include name="commons-logging-1.0.4/*.jar"/>
+        <include name="commons-fileupload-1.1.1/*.jar"/>
+        <include name="commons-io-1.2/*.jar"/>
+
+        <include name="jakarta-log4j-1.2.8/dist/lib/log4j-1.2.8.jar"/>
+        <include name="jsf-1_1/lib/jsf-api.jar"/>
+        <include name="pdfbox-0.7.2/lib/PDFBox-0.7.2.jar"/>
+      </fileset>
+    </copy>
+
+    <!-- httpunit -->
+    <copy todir="${build.home}">
+      <fileset dir="${src.home}">
+        <include name="httpunit/ref/**"/>
+      </fileset>
+    </copy>
+
+    <!-- taglibs -->
+    <antcall target="taglibs"/>
+
+  </target>
+
+
+<!-- ==================== Clean Target ==================================== -->
+
+  <target name="clean"
+   description="Delete old build and dist directories">
+    <delete dir="${build.home}"/>
+    <delete dir="${basedir}/.deployables"/>
+    <delete dir="${dist.home}"/>
+    <delete dir="${basedir}/src/webapp/WEB-INF/classes"/>
+  </target>
+
+<!-- ==================== Compile Target ================================== -->
+
+  <target name="compile" depends="prepare" description="Compile Java sources">
+
+    <!-- Compile Java classes as necessary
+    depends="prepare" -->
+    <mkdir dir="${build.home}/web/WEB-INF/classes"/>
+    <mkdir dir="${build.home}/web/WEB-INF/lib"/>
+    <javac destdir="${build.home}/web/WEB-INF/classes"
+             debug="${compile.debug}"
+       deprecation="${compile.deprecation}"
+          optimize="${compile.optimize}"
+            source="${compile.source}"
+            target="${compile.target}">
+
+       <src path="${src.home}/java"/>
+       <classpath refid="compile.classpath"/>
+    </javac>
+
+    <!-- Copy application resources -->
+    <copy  todir="${build.home}/web/WEB-INF/classes">
+      <fileset dir="${src.home}/java">
+        <exclude name="**/*.java"/>
+        <exclude name="**/package.html"/>
+        <exclude name="**/doc-files/**"/>
+      </fileset>
+    </copy>
+  </target>
+
+<!-- ==================== Archives Target ===================================== -->
+
+  <target name="archives" description="create archives">
+
+    <!-- Create application WAR file -->
+    <mkdir dir="${dist.home}"/>
+    <jar jarfile="${dist.home}/${app.name}.war" basedir="${build.home}/web"/>
+
+    <!-- create source archive including CVS metadata directories -->
+    <zip destfile="${dist.home}/${app.name}-src.zip" update="false" duplicate="fail">
+      <zipfileset dir="${src.home}" defaultexcludes="false" prefix="src"/>
+      <fileset dir="${basedir}" defaultexcludes="false" includes="build.xml"/>
+    </zip>
+
+    <mkdir dir="${dist.home}/web/WEB-INF/lib"/>
+    <copy todir="${dist.home}/web">
+      <fileset dir="${build.home}/web">
+        <include name="wcf/**"/>
+        <include name="WEB-INF/wcf/**"/>
+      </fileset>
+    </copy>
+
+    <jar jarfile="${dist.home}/web/WEB-INF/lib/wcf.jar" basedir="${build.home}/web/WEB-INF/classes">
+      <include name="com/tonbeller/wcf/**"/>
+      <metainf file="${build.home}/web/WEB-INF/wcf/wcf-tags.tld" />
+    </jar>
+    <jar jarfile="${dist.home}/web/WEB-INF/lib/tbutils-wcf.jar" basedir="${build.home}/web/WEB-INF/classes">
+      <include name="com/tonbeller/tbutils/**"/>
+    </jar>
+
+  </target>
+
+<!-- ==================== Dist Target =====================================
+ Did have tests,jdepend,changelog as dependencies, but they are Tonbeller specific
+ and not distributed.
+ -->
+
+  <target name="build" depends="compile,archives" description="build w/o tests"/>
+  <target name="dist" depends="clean,compile,tests,jdepend,javadoc,userdoc,archives" description="build everything"/>
+
+<!-- ==================== Delta Target ===================================== -->
+
+  <target name="delta" depends="clean,compile,archives"/>
+
+<!-- ==================== Userdoc Target ================================== -->
+
+  <target name="userdoc" description="Create user documentation">
+    <mkdir dir="${dist.home}/docs"/>
+
+    <copy todir="${dist.home}/docs">
+      <fileset dir="${src.home}/docs">
+        <include name="*.xml"/>
+        <include name="*.xsl"/>
+      </fileset>
+      <filterset>
+        <filter token="VERSION" value="${release.kennung}" />
+      </filterset>
+    </copy>
+
+    <copy todir="${dist.home}/docs">
+      <fileset dir="${src.home}/docs">
+        <exclude name="*.xml"/>
+        <exclude name="*.xsl"/>
+      </fileset>
+    </copy>
+
+    <java jar="${xalan.home}/bin/xalan.jar" fork="true">
+      <jvmarg value="-Duser.language=en"/>
+      <jvmarg value="-Duser.region=US"/>
+      <arg value="-in"/>
+      <arg value="${dist.home}/docs/content.xml"/>
+      <arg value="-xsl"/>
+      <arg value="${dist.home}/docs/layout.xsl"/>
+      <arg value="-out"/>
+      <arg value="${dist.home}/docs/dummy.html"/>
+    </java>
+
+  </target>
+
+  <target name="changelog" description="creates CVS Changelog">
+    <mkdir dir="${build.home}/docs"/>
+    <cvschangelog dir="${src.home}" destfile="${build.home}/docs/changelog.xml" daysinpast="300" />
+    <style in="${build.home}/docs/changelog.xml"
+           out="${build.home}/docs/changelog.html"
+           style="${ant.home}/etc/changelog.xsl">
+      <param name="title" expression="WCF ChangeLog"/>
+      <param name="module" expression="/wcf/src"/>
+      <param name="cvsweb" expression="${viewcvs}"/>
+    </style>
+  </target>
+
+<!-- ==================== Javadoc Target ================================== -->
+
+  <target name="javadoc" depends="compile" description="Create Javadoc API documentation">
+
+    <mkdir dir="${dist.home}/docs/api"/>
+    <javadoc destdir="${dist.home}/docs/api" packagenames="com.tonbeller.*">
+      <classpath refid="compile.classpath"/>
+      <sourcepath path="${src.home}/java"/>
+    </javadoc>
+
+  </target>
+
+
+<!-- ==================== Catalina Targets =================================== -->
+
+  <target name="list"
+   description="List installed applications on servlet container">
+    <taskdef name="list" classname="org.apache.catalina.ant.ListTask">
+      <classpath>
+        <pathelement location="${catalina.home}/server/lib/catalina-ant.jar"/>
+      </classpath>
+    </taskdef>
+    <list    url="${manager.url}"
+        username="${manager.username}"
+        password="${manager.password}"/>
+  </target>
+
+  <target name="install" depends="compile"
+   description="Install application to servlet container">
+    <taskdef name="install" classname="org.apache.catalina.ant.InstallTask">
+      <classpath>
+        <pathelement location="${catalina.home}/server/lib/catalina-ant.jar"/>
+      </classpath>
+    </taskdef>
+    <install url="${manager.url}"
+        username="${manager.username}"
+        password="${manager.password}"
+            path="${app.path}"
+             war="file://${build.home}/web"/>
+  </target>
+
+  <target name="reload" depends="compile"
+   description="Reload application on servlet container">
+    <taskdef name="reload"  classname="org.apache.catalina.ant.ReloadTask">
+      <classpath>
+        <pathelement location="${catalina.home}/server/lib/catalina-ant.jar"/>
+      </classpath>
+    </taskdef>
+    <reload url="${manager.url}"
+       username="${manager.username}"
+       password="${manager.password}"
+           path="${app.path}"/>
+  </target>
+
+
+  <target name="remove"
+   description="Remove application on servlet container">
+    <taskdef name="remove"  classname="org.apache.catalina.ant.RemoveTask">
+      <classpath>
+        <pathelement location="${catalina.home}/server/lib/catalina-ant.jar"/>
+      </classpath>
+    </taskdef>
+    <remove url="${manager.url}"
+       username="${manager.username}"
+       password="${manager.password}"
+           path="${app.path}"/>
+  </target>
+
+
+<!-- ==================== JUnit Tests =================================== -->
+
+  <!--
+       ======================================================================
+       requires in $ANT_HOME/lib
+         junit.jar
+         bcel-5.1 from jakarta.apache.org
+         http://ant-contrib.sourceforge.net/
+       ======================================================================
+  -->
+
+
+  <target name="tests" description="JUnit Tests" depends="compile,runtests,checktests"/>
+
+  <target name="runtests" description="JUnit Tests" depends="tests.compile,install,tests.junit,remove"/>
+
+  <target name="tests.compile">
+    <mkdir dir="${dist.home}/docs/junit"/>
+    <mkdir dir="${build.home}/junit/logs"/>
+    <mkdir dir="${build.home}/junit/classes"/>
+    <javac destdir="${build.home}/junit/classes"
+             debug="${compile.debug}"
+       deprecation="${compile.deprecation}"
+          optimize="${compile.optimize}"
+            source="${compile.source}"
+            target="${compile.target}">
+      <src path="${src.home}/test"/>
+      <classpath refid="test.classpath"/>
+    </javac>
+    <copy  todir="${build.home}/junit/classes">
+      <fileset dir="${src.home}/test">
+        <exclude name="**/*.java"/>
+        <exclude name="**/package.html"/>
+        <exclude name="**/doc-files/**"/>
+      </fileset>
+    </copy>
+  </target>
+
+  <target name="tests.junit">
+    <junit printsummary="yes" fork="yes" failureProperty="junit.failed">
+      <jvmarg value="-Dhttpunit.url=${httpunit.url}"/>
+      <jvmarg value="-Dhttpunit.dir=${build.home}/httpunit"/>
+      <jvmarg value="-Dhttpunit.recordmode=${httpunit.recordmode}"/>
+      <!-- must be set in TOMCAT too -->
+      <jvmarg value="-Dcom.tonbeller.environment=test"/>
+      <classpath refid="test.classpath"/>
+      <formatter type="xml"/>
+      <batchtest todir="${build.home}/junit/logs">
+        <fileset dir="${src.home}/test">
+          <include name="**/*Test.java" />
+        </fileset>
+      </batchtest>
+    </junit>
+    <!-- create reports -->
+    <junitreport todir="${dist.home}/docs/junit">
+      <fileset dir="${build.home}/junit/logs">
+        <include name="TEST-*.xml"/>
+      </fileset>
+      <report format="frames" todir="${dist.home}/docs/junit"/>
+    </junitreport>
+  </target>
+
+  <target name="checktests" description="Abort build if JUnit Test failed" if="junit.failed">
+    <fail message="JUnit Test(s) failed"/>
+  </target>
+
+
+  <!-- ==================== JDepend Metrics =================================== -->
+
+  <target name="jdepend" description="Design Quality Metrics" depends="compile">
+    <mkdir dir="${build.home}/jdepend"/>
+    <java classname="jdepend.xmlui.JDepend" fork="true">
+      <classpath refid="test.classpath"/>
+      <jvmarg value="-Duser.language=en"/>
+      <jvmarg value="-Duser.region=US"/>
+      <arg value="-file"/>
+      <arg value="${build.home}/jdepend/jdepend.xml"/>
+      <arg value="${build.home}/web/WEB-INF/classes"/>
+    </java>
+
+    <mkdir dir="${dist.home}/docs/jdepend"/>
+    <style  in="${build.home}/jdepend/jdepend.xml"
+           out="${dist.home}/docs/jdepend/index.html"
+         style="${ant.home}/etc/jdepend.xsl"/>
+
+  </target>
+
+
+  <!-- ==================== Taglibs =================================== -->
+
+  <target name="taglibs" description="Taglibs">
+    <mkdir dir="${build.home}/web"/>
+    <mkdir dir="${dist.home}/docs/tags"/>
+    <!-- create tld files -->
+    <style basedir="${src.home}/webapp"
+           destdir="${build.home}/web"
+           style="${src.home}/tags/tags2tld.xsl"
+           extension=".tld">
+             <include name="**/*-tags.xml" />
+    </style>
+
+    <antcall target="taglibdoc">
+      <param name="taglib.dir" value="wcf"/>
+    </antcall>
+
+  </target>
+
+  <target name="taglibdoc">
+    <style basedir="${src.home}/webapp/WEB-INF/${taglib.dir}"
+           destdir="${dist.home}/docs/tags"
+           style="${src.home}/tags/tags2html.xsl"
+           extension="-en.html">
+             <include name="**/*-tags.xml" />
+             <param name="lang" expression="en"/>
+    </style>
+    <style basedir="${src.home}/webapp/WEB-INF/${taglib.dir}"
+           destdir="${dist.home}/docs/tags"
+           style="${src.home}/tags/tags2html.xsl"
+           extension="-de.html">
+             <include name="**/*-tags.xml" />
+             <param name="lang" expression="de"/>
+    </style>
+  </target>
+
+</project>
+
+
+@
+
+
+1.6
+log
+@compiles with jdk 1.5
+@
+text
+@d7 1
+@
+
+
+1.6.2.1
+log
+@* merged focus changes into focus_1_6_0
+@
+text
+@d14 1
+a14 1
+  <property name="repository.home"      value="${basedir}/../jpivot-repository-1.6.0-modified"/>
+@
+
+
+1.5
+log
+@Update Eclipse settings
+@
+text
+@a6 1
+  <property file="build.properties"/>
+d42 2
+a43 1
+  <property name="compile.optimize"    value="true"/>
+d129 2
+a130 1
+        <include name="commons-fileupload-1.0/*.jar"/>
+d172 3
+a174 1
+          optimize="${compile.optimize}">
+d214 1
+d352 8
+a359 8
+	<!--
+	     ======================================================================
+	     requires in $ANT_HOME/lib
+	       junit.jar
+	       bcel-5.1 from jakarta.apache.org
+	       http://ant-contrib.sourceforge.net/
+	     ======================================================================
+	-->
+d373 3
+a375 1
+          optimize="${compile.optimize}">
+@
+
+
+1.4
+log
+@Synchronized with Tonbeller CVS:
+  * Added BEA / Websphere Support
+  * More tags in wcf tag library
+  * Bugfixes
+@
+text
+@d7 1
+@
+
+
+1.3
+log
+@Synchronized with Tonbeller CVS:
+  * Added BEA / Websphere Support
+  * More tags in wcf tag library
+  * Bugfixes
+@
+text
+@d251 1
+a251 1
+    <java jar="${xalan.home}/xalan.jar" fork="true">
+d265 4
+a268 5
+    <mkdir dir="${build.home}"/>
+    <mkdir dir="${dist.home}/docs"/>
+    <cvschangelog dir="${src.home}" destfile="${build.home}/changelog.xml" daysinpast="300" />
+    <style in="${build.home}/changelog.xml"
+           out="${dist.home}/docs/changelog.html"
+@
+
+
+1.2
+log
+@Revise build system to include use of jpivot_repository in CVS. Test cases work.
+@
+text
+@d3 1
+a3 1
+<project name="WCF - WebComponent Framework" default="dist" basedir=".">
+d12 1
+d64 1
+a64 1
+  <path id="junit.classpath">
+d67 1
+d71 3
+a78 18
+  <!-- classpath for jdepend -->
+  <path id="jdepend.classpath">
+    <path refid="compile.classpath"/>
+    <!-- pathelement location="${build.home}/web/WEB-INF/classes"/ -->
+    <fileset dir="${jdepend.home}/lib">
+      <include name="*.jar"/>
+    </fileset>
+  </path>
+
+  <!-- classpath for xdoclet: not used
+  <path id="xdoclet.classpath">
+    <path refid="compile.classpath"/>  -->
+    <!-- pathelement location="${build.home}/web/WEB-INF/classes"/ -->
+  <!--  <pathelement location="${xdoclet.home}/lib/xdoclet.jar"/>
+    <pathelement location="${xdoclet.home}/samples/lib/log4j.jar"/>
+  </path>  -->
+	
+
+d132 1
+d154 1
+d163 1
+a163 1
+    <!-- Compile Java classes as necessary 
+d195 1
+a195 1
+    <zip destfile="${dist.home}/${app.name}-${app.version}-src.zip" update="false" duplicate="fail">
+a214 2
+    <jar jarfile="${basedir}/${app.name}-${app.version}.zip" basedir="${dist.home}"/>
+
+d217 1
+a217 1
+<!-- ==================== Dist Target ===================================== 
+d222 2
+a223 1
+  <target name="dist" depends="clean,compile,javadoc,userdoc,archives" description="Create binary distribution"/>
+d265 1
+d267 1
+a267 1
+    <cvschangelog dir="${src.home}" destfile="${build.home}/changelog.xml" daysinpast="90" />
+d272 2
+a273 2
+      <param name="module" expression="wcf/src"/>
+      <param name="cvsweb" expression="http://linux.tonbeller.com/viewcvs/"/>
+d358 1
+a358 1
+  <target name="tests" description="JUnit Tests" depends="runtests,checktests"/>
+d371 1
+a371 1
+      <classpath refid="junit.classpath"/>
+d389 1
+a389 1
+      <classpath refid="junit.classpath"/>
+d416 1
+a416 1
+      <classpath refid="jdepend.classpath"/>
+@
+
+
+1.1
+log
+@initial version
+@
+text
+@d13 3
+a15 1
+  <property name="jdepend.home"  value="${repository.home}/jdepend-2.7-tb"/>
+d18 2
+a19 1
+  <property name="xalan.home"    value="${repository.home}/xalan-j_2_6_0"/>
+d66 3
+a68 1
+    <pathelement location="${build.home}/junit/classes"/>
+d78 3
+a80 1
+    <pathelement location="${jdepend.home}/lib/jdepend.jar"/>
+d83 1
+a83 1
+  <!-- classpath for xdoclet -->
+d85 1
+a85 1
+    <path refid="compile.classpath"/>
+d87 1
+a87 1
+    <pathelement location="${xdoclet.home}/lib/xdoclet.jar"/>
+d89 2
+a90 1
+  </path>
+d127 1
+a127 1
+    <!-- Copy external dependencies as required -->
+d137 2
+a138 2
+        <include name="commons-digester-1.5/commons-digester.jar"/>
+        <include name="commons-collections-3.1/commons-collections-3.1.jar"/>
+d174 2
+a175 1
+    <!-- Compile Java classes as necessary -->
+d230 4
+a233 1
+<!-- ==================== Dist Target ===================================== -->
+d235 1
+a235 1
+  <target name="dist" depends="clean,compile,tests,jdepend,javadoc,userdoc,changelog,archives" description="Create binary distribution"/>
+d263 1
+a263 1
+    <java jar="${xalan.home}/bin/xalan.jar" fork="true">
+d359 9
+@
+

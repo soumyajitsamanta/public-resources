@@ -1,0 +1,26 @@
+head	1.1;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.1
+date	2003.10.29.11.50.27;	author numberone;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@'dad/bee dir -- not empty so cvs co -P don\'t delete it
+@
+text
+@
+this directory is temporary for bee scripts. 
+
+@

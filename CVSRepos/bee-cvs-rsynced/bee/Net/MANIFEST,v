@@ -1,0 +1,93 @@
+head	1.3;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.3
+date	2003.10.27.15.27.48;	author numberone;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2003.10.27.14.55.50;	author numberone;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2003.06.03.13.15.39;	author numberone;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.3
+log
+@still broken Net package..
+@
+text
+@MANIFEST
+Makefile.PL
+Net.pm
+Net.xs
+test.pl
+libnet/Makefile.PL
+libnet/net.h
+libnet/net.c
+libnet/sys.h
+libnet/tcp.c
+libnet/inet.c
+libnet/unix.c
+libnet/ssl.c
+root.pem
+client.pem
+server.pem
+typemap
+@
+
+
+1.2
+log
+@Ok, Data under windows compiles
+@
+text
+@d3 2
+a4 2
+Data.pm
+Data.xs
+d6 11
+a16 3
+libdata/Makefile.PL
+libdata/data.h
+libdata/data.c
+@
+
+
+1.1
+log
+@bee-0.9.1 -- version merge
+@
+text
+@d3 2
+a4 2
+Net.pm
+Net.xs
+d6 3
+a8 11
+libnet/Makefile.PL
+libnet/net.h
+libnet/net.c
+libnet/sys.h
+libnet/tcp.c
+libnet/inet.c
+libnet/unix.c
+libnet/ssl.c
+root.pem
+client.pem
+server.pem
+@
+

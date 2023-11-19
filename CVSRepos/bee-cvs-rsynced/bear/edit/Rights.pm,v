@@ -1,0 +1,272 @@
+head	1.6;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.6
+date	2004.02.20.12.41.11;	author jiri_schmid;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	2004.02.18.16.19.16;	author jiri_schmid;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2003.11.18.14.38.40;	author jiri_schmid;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2003.11.07.09.35.11;	author jiri_schmid;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2003.11.05.15.47.57;	author jiri_schmid;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2003.10.31.12.47.57;	author jiri_schmid;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.6
+log
+@rights for edit page finished
+@
+text
+@#-----------------------------------------------------
+# Access rigths definition
+#-----------------------------------------------------
+# $Id: Rights.pm,v 1.5 2004/02/18 16:19:16 jiri_schmid Exp $
+
+package Rights;
+
+use strict;
+
+#-----------------------------------------------------
+sub generateContent {
+my($variables, $lang, $obj) = (shift, shift, shift);
+print <<END;
+<br/><script type='text/javascript' src='js/rights.js'></script>
+<table class="page_skeleton">
+<tr class="page_skeleton">
+<td class="page_skeleton">
+	<table class='neutral_rights'>
+END
+foreach my $char ('A','D') {	
+	my $cnt = 1;
+	my $type = ($char eq 'A') ? "allow" : "deny";
+	my $name = ($char eq 'A') ? "Rights Allow" : "Rights Deny";
+print <<END;
+		<tr><td colspan="2" class="neutral_bold">$$lang->{$name}:</td></tr>
+		<tr><td colspan="2">
+		<table id="${type}Rights" class='visual_grid_rights' style='border-collapse:collapse; width:100%' onclick="dropRights(this,'$char')">
+		<tr><td></td><td></td><td style='text-align:center; width:80px'>&nbsp;$$lang->{'Read'}&nbsp;</td><td style='text-align:center; width:80px'>$$lang->{'Write'}<td style='text-align:center; width:80px'>&nbsp;$$lang->{'Execute'}&nbsp;</td></td><td style='text-align:center; width:80px'>$$lang->{'Duplicate'}</td></tr>
+END
+	my @@ids = ($$obj->{acl} =~ /_all$/) ? $$obj->{acl} : keys %{$$obj->{acl}{$type}};
+	my $rights = SOAP->GetLocalizedRights($$variables->{useLang},undef,$$variables->{id},@@ids); #get rights with local translations
+	foreach my $role (sort (keys %{$rights})) {
+		next if ($role =~ /root$/);
+
+		$rights->{$role}{rights}{$type} = $$obj->{acl}{$type}{$role} if ((ref $$obj->{acl} eq 'HASH' && exists $$obj->{acl}{$type}{$role}));#use in object stored rights
+
+		my $style = ($cnt%2 == 1) ? 'class="even"' : '';
+		my $checked;
+print <<END;
+		<tr $style>
+			<td class='cursor' onclick='selfRemove(this)'>
+				<img src="$$variables->{skinPath}img/drop.$$variables->{imgType}"/>
+			</td>
+			<td title='$rights->{$role}{description}'>
+				$rights->{$role}{name}
+				<input type='hidden' name="$char$role" value="$rights->{$role}{rights}{$type}"/>
+			</td>
+END
+			foreach ('R','W','E','D','C') {
+				my $name = "$char$role$_";
+				$checked = ($rights->{$role}{rights}{$type} =~ /$_/) ? "checked='checked'" : "";
+				if ($_ eq 'C') {
+					print "<input type='checkbox' style='display:none' name='$name' $checked />\n";
+				} else {
+					print "<td style='text-align:center'><input type='checkbox' onclick='checkCouple(this)' name='$name' $checked/></td>\n";
+				}
+			}
+			print "</tr>";
+			$cnt++;
+		}
+	print "</table></td></tr>";
+}
+if ($$obj->{acl} eq $$variables->{proj}."_all") { print "<tr><td style='font-style:italic'>$$lang->{'Rights Global'}</tr></td>" } else { print "<tr><td style='font-style:italic'>$$lang->{'Rights Local'}</tr></td>" }
+print <<END;
+		<tr><td align="right">
+			<table class="buttons">
+			<tr>
+				<td class="buttons"><input type="submit" id='RECOVER' name="Recover" value="$$lang->{'Rights Recover'}" id='recover' onclick='object_cleared()' /></td>
+				<td class="buttons"><input type="submit" id='SAVE' name="Action" value="$$lang->{'Save'}" id='save' onclick='object_cleared()' /></td>
+			</tr>
+			</table>
+		</td></tr>
+	</table>
+</td></tr></table>
+END
+}
+
+#---------------------------------------------------
+sub set_next_param {
+my ($o,$q,$variables) = (shift, shift, shift);
+my $ACLhlp;
+if ($$q->param('Recover')) {
+	$ACLhlp = $$q->param('Proj')."_all";
+} else {
+	$ACLhlp->{allow} = {};
+	$ACLhlp->{deny} = {};
+	foreach my $role (sort(SOAP->GetRolesList(undef,$$variables->{id}))) {
+		next if $role =~ /root$/;
+		foreach my $typ ('A','D') {
+			if ($$q->param("$typ$role")) {
+				my $rwe = '';
+				foreach ('R','W','E','D','C') {
+					$rwe .= ($$q->param("$typ$role$_")) ? $_ : '-';
+				}
+				if ($typ eq 'A') {
+					$ACLhlp->{allow}{$role} = $rwe;
+				} else {
+					$ACLhlp->{deny}{$role} = $rwe;
+				}
+			}
+		}
+	}
+}
+delete $$o->{acl} if exists $$o->{acl};
+$$o->{acl} = $ACLhlp if $ACLhlp;
+}
+
+#---------------------------------------------------
+1
+@
+
+
+1.5
+log
+@rights implemented
+@
+text
+@d4 1
+a4 1
+# $Id: Rights.pm,v 1.4 2003/11/18 14:38:40 jiri_schmid Exp $
+d13 1
+a13 1
+print <<END ;
+d49 1
+a49 1
+			foreach ('R','W','E','D') {
+d52 5
+a56 1
+				print "<td style='text-align:center'><input type='checkbox' onclick='checkCouple(this)' name='$name' $checked/></td>";
+d63 1
+d65 1
+a65 1
+		<tr><td colspan="2" align="right">
+d92 1
+a92 1
+				foreach ('R','W','E','D') {
+@
+
+
+1.4
+log
+@auto save when changing tabs implemented
+@
+text
+@d4 1
+a4 1
+# $Id: Rights.pm,v 1.3 2003/11/07 09:35:11 jiri_schmid Exp $
+d28 1
+a28 1
+		<tr><td></td><td></td><td style='text-align:center'>&nbsp;$$lang->{'Read'}&nbsp;</td><td style='text-align:center'>$$lang->{'Execute'}</td><td style='text-align:center'>&nbsp;$$lang->{'Write'}&nbsp;</td><td style='text-align:center'>$$lang->{'Duplicate'}</td></tr>
+d30 2
+a31 3
+	my @@ids = ($$obj->{acl} =~ /_all$/) ? delete $$obj->{acl} : keys %{$$obj->{acl}{$type}};
+	my $rights = SOAP->GetLocalizedRights($$variables->{useLang},undef,$$variables->{id},@@ids);
+
+d34 3
+a36 1
+		$rights->{$role}{rights} = $$obj->{acl}{$type}{$role} if  exists $$obj->{acl}{$type}{$role};
+d46 1
+a46 1
+				<input type='hidden' name="$char$role" value='$rights->{$role}{rights}'/>
+d51 1
+a51 1
+				$checked = ($rights->{$role}{rights} =~ /$_/) ? "checked='checked'" : "";
+d63 1
+a75 1
+
+d77 18
+a94 14
+$ACLhlp->{allow} = {};
+$ACLhlp->{deny} = {};
+foreach my $role (sort(SOAP->GetRolesList(undef,$$variables->{id}))) {
+	next if $role =~ /root$/;
+	foreach my $typ ('A','D') {
+		if ($$q->param("$typ$role")) {
+			my $rwe = '';
+			foreach ('R','W','E','D') {
+				$rwe .= ($$q->param("$typ$role$_")) ? $_ : '-';
+			}
+			if ($typ eq 'A') {
+				$ACLhlp->{allow}{$role} = $rwe;
+			} else {
+				$ACLhlp->{deny}{$role} = $rwe;
+@
+
+
+1.3
+log
+@saving rights of attr and fact fixed
+@
+text
+@d4 1
+a4 1
+# $Id: Rights.pm,v 1.2 2003/11/05 15:47:57 jiri_schmid Exp $
+d62 1
+a62 1
+				<td class="buttons"><input type="submit" name="Action" value="$$lang->{'Save'}" id='save' onclick='object_cleared()' /></td>
+@
+
+
+1.2
+log
+@minor javascript improvments and fixies
+@
+text
+@d4 1
+a4 1
+# $Id: Rights.pm,v 1.1 2003/10/31 12:47:57 jiri_schmid Exp $
+d74 1
+@
+
+
+1.1
+log
+@mod perl rocks!
+@
+text
+@d4 1
+a4 1
+# $Id: Rights.pm,v 1.6 2003/10/16 14:08:53 jiri_schmid Exp $
+d27 1
+a27 1
+		<table class='visual_grid_rights' style='border-collapse:collapse; width:100%' onclick="dropRights(this,'$char')">
+@
+

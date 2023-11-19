@@ -1,0 +1,99 @@
+head	1.2;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2008.05.17.15.40.41;	author fsaz;	state dead;
+branches;
+next	1.1;
+
+1.1
+date	2005.11.28.15.39.46;	author fsaz;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@borrando viejos
+@
+text
+@/*
+ * Created on 17-may-2005
+ *
+ * ActionRemove.java
+ */
+package es.aeat.eett.infoRubik.reports;
+
+import java.awt.Component;
+import java.awt.event.ActionEvent;
+import java.util.Enumeration;
+import java.util.ResourceBundle;
+
+import javax.swing.AbstractAction;
+import javax.swing.Action;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JPopupMenu;
+import javax.swing.JTree;
+import javax.swing.tree.DefaultTreeModel;
+
+/**
+ * @@author f00992
+ *
+ * TODO To change the template for this generated type comment go to
+ * Window - Preferences - Java - Code Style - Code Templates
+ */
+public class ActionRemove  extends AbstractAction {
+    private static final ResourceBundle localizationResources =
+        ResourceBundle.getBundle("es.aeat.eett.infoRubik.reports.locale.LocalizationBundle");
+	private static final String REMOVE=localizationResources.getString("Remove");
+
+	ActionRemove(){
+		super(REMOVE);
+        Icon icon=new ImageIcon(getClass().getResource("icons/delete_edit.gif"));
+        putValue(Action.SMALL_ICON, icon);
+	}
+	/* (non-Javadoc)
+	 * @@see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+	 */
+	public void actionPerformed(ActionEvent e) {
+        javax.swing.JPopupMenu jp=(JPopupMenu)( (Component)e.getSource()).getParent();
+        JTree tree=(JTree) jp.getInvoker();
+        Object  lastPath =tree.getLastSelectedPathComponent();
+		if (lastPath != null) {
+		    ReportMutableTreeNode node=(ReportMutableTreeNode) lastPath;
+		    if(!node.isRoot()){
+			    ReportMutableTreeNode nParent=(ReportMutableTreeNode) node.getParent();
+		        DefaultTreeModel tm=(DefaultTreeModel) tree.getModel();
+		        ReportMutableTreeNode nReport=node.getReportRootNode();
+		        Report report=(Report) nReport.getUserObject();
+		        for(Enumeration enu=node.depthFirstEnumeration(); enu.hasMoreElements(); ){
+		            ReportMutableTreeNode nR=(ReportMutableTreeNode) enu.nextElement();
+		            if(nR.isReportLeaf()){
+		                nR.getLeafReport().removeAll(report);
+		            }
+		        }
+		        tm.removeNodeFromParent(node);
+		    }
+		}
+	}
+
+}
+@
+
+
+1.1
+log
+@*** empty log message ***
+@
+text
+@@
+

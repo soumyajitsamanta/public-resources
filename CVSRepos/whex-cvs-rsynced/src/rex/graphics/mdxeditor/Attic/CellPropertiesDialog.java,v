@@ -1,0 +1,164 @@
+head	1.2;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2006.01.13.12.21.15;	author igorludi;	state dead;
+branches;
+next	1.1;
+
+1.1
+date	2005.10.18.14.04.40;	author igorludi;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@*** empty log message ***
+@
+text
+@package rex.graphics.mdxeditor;
+
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+import javax.swing.JTextField;
+
+/**
+ * Displays a dialog:
+ * <br>- to enter cell properties for calculated member
+ * @@author Igor Mekterovic
+ * @@version 0.3
+ */
+public class CellPropertiesDialog extends JDialog{
+   private JComboBox cbFormats;
+   private JTextField foreColor;
+   private JTextField backColor;
+   private JTextField solveOrder;
+
+
+   public CellPropertiesDialog(JDialog owner) {
+      super((JFrame)null, "Please enter calulated member formating", true);
+//      S.out("starting dialog...");
+
+
+
+
+      JPanel jp = new JPanel(new GridLayout (4, 2));
+
+      jp.add (new JLabel("SOLVE_ORDER:"));
+      solveOrder = new JTextField();
+      jp.add (solveOrder);
+
+
+      jp.add (new JLabel("BACK_COLOR:"));
+      backColor = new JTextField();
+      jp.add (backColor);
+
+      jp.add (new JLabel("FORE_COLOR:"));
+      foreColor = new JTextField();
+      jp.add (foreColor);
+
+
+      String formats[] = new String[]{
+           ""
+         , "#,#"
+         , "#,#.00"
+         , "#,#.00"
+         , "Standard"
+         , "Currency"
+         , "Short Date"
+         , "Short Time"
+         , "Percent"
+      };
+
+      cbFormats = new JComboBox( formats );
+      cbFormats.setMaximumSize(cbFormats.getPreferredSize());
+      cbFormats.setEditable( true );
+
+      cbFormats.setRequestFocusEnabled( false );
+      cbFormats.setBackground(Color.white);
+//      cbFormats.addActionListener( new cbTabSizeListener());
+
+
+      jp.add (new JLabel("FORMAT_STRING:"));
+      jp.add (cbFormats);
+
+
+
+      getContentPane().setLayout (new BorderLayout());
+      getContentPane().add (jp, BorderLayout.CENTER);
+      JButton jb = new JButton ("OK");
+      jb.addActionListener (new ActionListener() {
+         public void actionPerformed (ActionEvent e) {
+            dispose();
+         }
+      });
+      getContentPane().add (jb, BorderLayout.SOUTH);
+      Dimension sd = Toolkit.getDefaultToolkit().getScreenSize();
+      setLocation(sd.width / 2 - 250 / 2, sd.height / 2 - 120 / 2);
+      setResizable(false);
+      setSize(350, 160);
+//      pack();
+      setVisible(true);
+   }
+
+
+   /**
+    * Returns calculated member or named set name that user typed in.
+    * @@return String
+    */
+   public String getFormat(){
+      StringBuffer format = new StringBuffer("");
+
+      if (!solveOrder.getText().trim().equals("")){
+         format.append("SOLVE_ORDER='" + solveOrder.getText().trim() + "'");
+      }
+
+      if (!backColor.getText().trim().equals("")){
+          if (format.length()>0) format.append(", ");
+         format.append("BACK_COLOR='" + backColor.getText().trim() + "'");
+      }
+      if (!foreColor.getText().trim().equals("")){
+         if (format.length()>0) format.append(", ");
+         format.append("FORE_COLOR='" + foreColor.getText().trim() + "'");
+      }
+      if (!cbFormats.getSelectedItem().toString().trim().equals("")){
+         if (format.length()>0) format.append(", ");
+         format.append("FORMAT_STRING='" + cbFormats.getSelectedItem() + "'");
+      }
+
+      return format.toString();
+   }
+
+
+
+   /**
+    * Main function used for testing the class.
+    * @@param args String[]
+    */
+   public static void main(String[] args){
+      CellPropertiesDialog testDialog = new CellPropertiesDialog(null);
+      System.out.println(testDialog.getFormat());
+      testDialog.dispose();
+   }
+
+}
+@
+
+
+1.1
+log
+@*** empty log message ***
+@
+text
+@@
+

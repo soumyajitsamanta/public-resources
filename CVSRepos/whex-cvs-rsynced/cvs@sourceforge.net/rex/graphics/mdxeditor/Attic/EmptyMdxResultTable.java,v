@@ -1,0 +1,47 @@
+head	1.2;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2005.06.28.13.38.28;	author igorludi;	state dead;
+branches;
+next	1.1;
+
+1.1
+date	2005.06.28.11.35.03;	author igorludi;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@*** empty log message ***
+@
+text
+@package rex.graphics.mdxeditor;
+
+import javax.swing.JPanel;
+import javax.swing.JLabel;
+
+public class EmptyMdxResultTable extends JPanel{
+   public EmptyMdxResultTable() {
+      this.add(new JLabel("this is an empty result table..."));
+   }
+}
+@
+
+
+1.1
+log
+@first time commit
+@
+text
+@@
+

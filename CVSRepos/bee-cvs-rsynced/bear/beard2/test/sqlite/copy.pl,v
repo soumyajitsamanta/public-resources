@@ -1,0 +1,43 @@
+head	1.1;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.1
+date	2004.03.01.16.16.49;	author numberone;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@
+Added beard2 -- new bear daemon source tree.
+
+mdata subsystem works, some docs, some tests, etc.
+
+cached in progress
+@
+text
+@#!/usr/bin/perl
+
+use DBI;
+
+my $dbname = shift;
+my $table = shift;
+my $file = shift;
+print "$file -> $dbname.$table\n";
+
+my $dbh = DBI->connect("dbi:SQLite:dbname=$dbname","","") or die $!;
+#$dbh->do("begin");
+$dbh->do("copy $table from \"$file\"");
+#$dbh->do("commit");
+
+
+@

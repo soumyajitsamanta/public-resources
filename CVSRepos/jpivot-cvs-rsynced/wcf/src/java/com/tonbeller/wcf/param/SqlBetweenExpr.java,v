@@ -1,0 +1,58 @@
+head	1.1;
+access;
+symbols
+	jpivot_1_8_0:1.1
+	focus_1_6_0:1.1.0.6
+	wcf_1_7_0:1.1
+	wcf_1_6_0:1.1
+	jpivot_1_5_0:1.1.0.4
+	Root_jpivot_1_5_0:1.1
+	mondrian_xmla_2005_08_25:1.1.0.2
+	sourceforge_sync:1.1;
+locks; strict;
+comment	@# @;
+
+
+1.1
+date	2005.07.05.14.04.35;	author avix;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@initial version
+@
+text
+@package com.tonbeller.wcf.param;
+
+/**
+ * @@author av
+ * @@since 31.01.2005
+ */
+public class SqlBetweenExpr extends SqlColumnConstraint  {
+  Object first, last;
+  public Object getFirst() {
+    return first;
+  }
+  public void setFirst(Object first) {
+    this.first = first;
+  }
+  public Object getLast() {
+    return last;
+  }
+  public void setLast(Object last) {
+    this.last = last;
+  }
+  public void accept(SqlExprVisitor visitor) {
+    visitor.visitSqlBetweenExpr(this);
+  }
+  public Object clone() throws CloneNotSupportedException {
+    return super.clone();
+  }
+}
+@

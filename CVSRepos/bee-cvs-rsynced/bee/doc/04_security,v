@@ -1,0 +1,149 @@
+head	1.3;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.3
+date	2003.12.02.12.29.49;	author tuco80;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2003.11.10.15.15.55;	author tuco80;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2003.11.07.12.29.03;	author numberone;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.3
+log
+@Updated and revised
+@
+text
+@
+Security
+--------
+
+OpenSSL communication encryption
+--------------------------------
+
+Network communication between client and dads is encrypted using 
+Secure Socket Layers protocol, using PKI infrastructure. 
+
+Every communication node (dad or client) must have its own unique OpenSSL
+key. This key must have the CommonName section set to 'role[@@host[:port]]' 
+string (e.g. 'martin' or 'dad@@localhost:2333' are valid keys). 
+This keys are physicaly stored in key.pem files.
+
+In addition, these key.pem files MUST be signed by the same
+certification authority key. Public part of this key is stored in
+root.pem key file, and every node certificates incomming connection's 
+SSL key across this authority key and validates address and port number
+from the CommonName section.
+
+The BEE Project is supplied with Demo BEE Root Certification Authority key 
+and set of few working _demo_ keys signed by this authority. Private key
+of this DEMO certification authority key is not included, so you are NOT able
+to generate any other demo keys. 
+
+If you want to use BEE in production environment, you HAVE TO generate 
+YOUR OWN Root CA and appropriate set of keys.
+
+Information about how to do this is located in certs/README file.
+In summary, you have to generate certification authority root.pem key and
+then generate lots of key.pem files, one for each node connected to
+ETL process.
+
+
+Central Authority Server - EXPERIMENTAL
+---------------------------------------
+
+The Central Authority Server can be used as central metadata repository.
+This metadata can contain a logical and physical model of your databases,
+placement of tables across physical database engines and access information
+to these databases such as usernames and passwords. 
+
+For every user of BEE you can define Access Control Lists (ACLs) 
+to every database table. 
+
+If you enable access to some database for a particular user, he 
+doesn't need to know the login information for accessing this database. 
+Instead, when the user connects to a dad and executes bee with input 
+pointing to this database, bee will ask the Central Authority Server for 
+a password to this database. Central Authority Server then considers 
+confidentality of bee and checks whether user has permission to access 
+this database. If so, it sends login information to bee.
+
+User will never find out the password used to access database.
+
+
+@
+
+
+1.2
+log
+@Updated docs
+@
+text
+@d11 2
+a12 2
+Every communication node (dad or client) must have own unique OpenSSL
+key. This key must have CommonName section set to 'role[@@host[:port]]' 
+d20 1
+a20 1
+from CommonName section.
+d25 1
+a25 1
+to generate another demo keys. 
+d32 1
+a32 1
+then generate lot of key.pem files, one for each node connected to
+d39 2
+a40 2
+Central Authority Server can be used as central metadata repository.
+This metadata can contain logical and physical model of your databases,
+d49 4
+a52 4
+Instead, when user connects dad and executes bee with input pointing 
+to this database, bee will ask Central Authority Server for password 
+to this database. Central Authority Server then considers 
+confidentality of bee and check whether user has permission to access 
+d55 1
+a55 1
+User will never find out password used to access database.
+@
+
+
+1.1
+log
+@documentation -- final. no spell checks, no typos check, no grammar check
+@
+text
+@d30 2
+a31 2
+Information about how to do this are located in certs/README file.
+In short, you have to generate certification authority root.pem key and
+d40 1
+a40 1
+These metadata can contain logical and physical model of your databases,
+d47 7
+a53 7
+If you enable access to some database for particular user, he don't need
+to know login information for accessing this database. Instead, when
+user connects dad and executes bee with input pointing to this database, 
+bee will ask Central Authority Server for password to this database. 
+Central Authority Server then considers confidentality of bee and
+check whether user has permission to this database. If so, it send
+login information to bee.
+@
+

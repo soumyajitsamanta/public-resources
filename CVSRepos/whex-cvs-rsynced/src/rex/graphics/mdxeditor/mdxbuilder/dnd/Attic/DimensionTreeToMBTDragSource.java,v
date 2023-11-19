@@ -1,0 +1,147 @@
+head	1.2;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2006.01.13.12.21.15;	author igorludi;	state dead;
+branches;
+next	1.1;
+
+1.1
+date	2005.10.18.14.04.41;	author igorludi;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@*** empty log message ***
+@
+text
+@package rex.graphics.mdxeditor.mdxbuilder.dnd;
+
+import java.awt.*;
+import java.awt.dnd.*;
+import javax.swing.*;
+import javax.swing.tree.*;
+import rex.graphics.*;
+import rex.graphics.dimensiontree.elements.*;
+import rex.metadata.*;
+
+/**
+ * Class that recognizes drag gesture (in DimensionTree) and wraps DimensionTree elements into
+*  TransferableMdxBuilderTreeNode.
+* @@see rex.graphics.mdxeditor.mdxbuilder.dnd.TransferableMdxBuilderTreeNode
+ * @@author Igor Mekterovic
+ * @@version 0.3
+ */
+public class DimensionTreeToMBTDragSource implements DragSourceListener, DragGestureListener {
+
+  DragSource source;
+  DragGestureRecognizer recognizer;
+  TransferableMdxBuilderTreeNode transferable;
+  TreeElement oldNode;
+  JTree sourceTree;
+
+  public DimensionTreeToMBTDragSource(JTree tree, int actions) {
+    sourceTree = tree;
+    source = new DragSource();
+    recognizer = source.createDefaultDragGestureRecognizer(
+                                                            sourceTree
+                                                          , actions
+                                                          , this
+                                                           );
+  }
+
+  /**
+   * Drag gesture handler. Wraps dragged data in the TransferableMdxBuilderTreeNode.
+   * @@see rex.graphics.mdxeditor.mdxbuilder.dnd.TransferableMdxBuilderTreeNode
+   * @@param dge DragGestureEvent
+   */
+  public void dragGestureRecognized(DragGestureEvent dge) {
+     TreePath path = sourceTree.getSelectionPath();
+     if ((path != null)
+        && (path.getPathCount() > 1) // We can't move the root node
+        && (   ((((TreeElement) path.getLastPathComponent()).getUserObject()) instanceof DimensionElement)
+             ||
+               ((((TreeElement) path.getLastPathComponent()).getUserObject()) instanceof QueryElement)
+            )
+        ) {
+        oldNode = (TreeElement) path.getLastPathComponent();
+        DimensionTreeElement userObject = (DimensionTreeElement) oldNode.getUserObject();
+
+        transferable = new TransferableMdxBuilderTreeNode(userObject);
+//        S.out("classname = " + userObject.getClass().getName());
+
+        source.startDrag(   dge
+                          , DragSource.DefaultCopyDrop
+                          , (userObject.getIcon() == null) ? null : userObject.getIcon().getImage()
+                          , new Point(10, 10)
+                          , transferable
+                          , this);
+//        S.out("dragGestureRecognized-> path = " + path);
+     }
+  }
+
+
+
+
+
+  /**
+   * Drag Event Handler. Does nothing.
+   * @@param dsde DragSourceDragEvent
+   */
+  public void dragEnter(DragSourceDragEvent dsde) {}
+
+  /**
+   * Drag Event Handler. Does nothing.
+   * @@param dse DragSourceEvent
+   */
+  public void dragExit(DragSourceEvent dse) {}
+
+  /**
+   * Drag Event Handler. Does nothing.
+   * @@param dsde DragSourceDragEvent
+   */
+  public void dragOver(DragSourceDragEvent dsde) {}
+
+  /**
+   * Drag Event Handler. Does nothing.
+   * @@param dsde DragSourceDragEvent
+   */
+  public void dropActionChanged(DragSourceDragEvent dsde) {
+//     System.out.println("Action: " + dsde.getDropAction());
+//     System.out.println("Target Action: " + dsde.getTargetActions());
+//     System.out.println("User Action: " + dsde.getUserAction());
+
+  }
+
+
+  /**
+   * Drag Event Handler. Does nothing.
+   * @@param dsde DragSourceDropEvent
+   */
+  public void dragDropEnd(DragSourceDropEvent dsde) {
+//    S.out("Drop Action: " + dsde.getDropAction()
+//    + "    dsde.getDropSuccess()=" +     dsde.getDropSuccess());
+
+  }
+}
+
+@
+
+
+1.1
+log
+@*** empty log message ***
+@
+text
+@@
+

@@ -1,0 +1,202 @@
+head	1.2;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2008.05.17.15.37.41;	author fsaz;	state dead;
+branches;
+next	1.1;
+
+1.1
+date	2005.11.28.14.44.05;	author fsaz;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@Borrando
+@
+text
+@/*
+ * Created on 29-may-2005
+ *
+ * DeployPanel.java
+ *
+ */
+package es.aeat.eett.infoRubik.deploy;
+
+import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.ResourceBundle;
+
+import javax.swing.ImageIcon;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTree;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.TreePath;
+import javax.swing.tree.TreeSelectionModel;
+
+import org.jdom.Element;
+
+import swingUtil.Tamemasa.tree.CheckNode;
+import swingUtil.Tamemasa.tree.CheckRenderer;
+
+import es.aeat.eett.rubik.core.cell.RubikCell;
+
+/**
+ * @@author f00992
+ */
+public class DeployPanel extends JPanel {
+    private static final ResourceBundle localizationResources =
+        ResourceBundle.getBundle("es.aeat.eett.infoRubik.deploy.locale.LocalizationBundle");
+    private static final String DESPLIEGUE=localizationResources.getString("PluginCaption");
+
+    private  DeployMutableTreeNode node= null;
+
+    public DeployPanel(Element eDeploy) throws Exception{
+        super(new BorderLayout());
+        initComponents(eDeploy);
+    }
+    private void initComponents(Element eDeploy) throws Exception {
+        node= new DeployMutableTreeNode(DESPLIEGUE);
+        node.loadRootElement(eDeploy);
+        JTree tree=new JTree(node);
+        tree.setCellRenderer( new DeployCheckRenderer());
+        tree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
+        //tree.putClientProperty("JTree.lineStyle", "Angled");
+        expandAll(tree, node);
+        tree.addMouseListener(new NodeSelectionListener());
+        JScrollPane scroll = new JScrollPane(tree);
+        add(scroll);
+        setSizePane();
+    }
+    private void expandAll(JTree tree, DefaultMutableTreeNode n){
+        if(tree!=null && tree.isVisible() && !n.isLeaf()){
+            tree.expandPath(new TreePath(n.getPath()));
+            for (int i=0; i<n.getChildCount(); i++){
+                tree.expandPath( new TreePath( ( (DefaultMutableTreeNode) n.getChildAt(i) ).getPath() ) ) ;
+                expandAll(tree,(DefaultMutableTreeNode) n.getChildAt(i));
+            }
+        }
+    }
+
+    /**
+     * Fija tamanio y posicion inicial  de la ventana
+     */
+    private void setSizePane() {
+        java.awt.Dimension screenSize = getToolkit().getScreenSize();
+        java.awt.Dimension paneSize = screenSize;
+        paneSize.setSize(screenSize.getWidth()*3/5, screenSize.getHeight()*3/4);
+        setPreferredSize(paneSize);
+    }
+    ////////////////////////// Clase internas ///////////////////////////////////////////////
+    class NodeSelectionListener extends MouseAdapter {
+
+        NodeSelectionListener() {
+        }
+
+        public void mouseClicked(MouseEvent e) {
+            JTree tree =(JTree) e.getSource();
+            int x = e.getX();
+            int y = e.getY();
+            int row = tree.getRowForLocation(x, y);
+            if(row==0) return;
+            TreePath  path = tree.getPathForRow(row);
+            if (path != null) {
+                CheckNode node = (CheckNode)path.getLastPathComponent();
+                boolean isSelected = ! (node.isSelected());
+                node.setSelected(isSelected);
+                if (node.getSelectionMode() == CheckNode.DIG_IN_SELECTION) {
+                    if ( isSelected ) {
+                        tree.expandPath(path);
+                    } else {
+                        tree.collapsePath(path);
+                    }
+                }
+                ((DefaultTreeModel)tree.getModel()).nodeChanged(node);
+                // I need revalidate if node is root.  but why?
+                if (row == 0) {
+                    tree.revalidate();
+                    tree.repaint();
+                }
+            }
+        }
+    }// Fin class NodeSelectionListener
+
+    class DeployCheckRenderer extends CheckRenderer{
+        private ImageIcon iconRoot= null;
+        private ImageIcon iconLevel= null;
+        private ImageIcon iconMember= null;
+
+
+        /**
+         *
+         */
+        DeployCheckRenderer() {
+            super();
+            iconRoot= new ImageIcon(this.getClass().getResource("icons/th_showqualified.gif"));
+            iconLevel= new ImageIcon(this.getClass().getResource("icons/lrun_obj.gif"));
+            iconMember= new ImageIcon(this.getClass().getResource("icons/public_co.gif"));
+        }
+        public Component getTreeCellRendererComponent(JTree tree, Object value,
+                boolean isSelected, boolean expanded,
+                boolean leaf, int row, boolean hasFocus) {
+            String  stringValue = tree.convertValueToText(value, isSelected,
+                    expanded, leaf, row, hasFocus);
+            setEnabled(tree.isEnabled());
+
+            check.setSelected(((CheckNode)value).isSelected());
+            if(((CheckNode)value).getLevel()>0){
+                check.setVisible(true);
+                RubikCell rubikCell=(RubikCell) ((CheckNode)value).getUserObject();
+                if(rubikCell.getCellType()==RubikCell.FALSECELL)
+                    label.setIcon(iconMember);
+                else if(rubikCell.getCellType()==RubikCell.MEMBER)
+                    label.setIcon(iconMember);
+                else
+                    label.setIcon(iconLevel);
+            }else{
+                check.setVisible(false);
+                label.setIcon(iconRoot);
+            }
+            label.setFont(tree.getFont());
+            label.setText(stringValue);
+            label.setSelected(isSelected);
+            label.setFocus(hasFocus);
+
+            return this;
+        }
+    } // Fin class DeployCheckRenderer
+
+    /**
+     *
+     */
+    public Element getRootElement() {
+        return node.getRootElement();
+    }
+
+    ////////////////// Fin Clase internas ///////////////////////////////////////////////
+
+}// Fin class DeployPanel
+@
+
+
+1.1
+log
+@*** empty log message ***
+@
+text
+@@
+

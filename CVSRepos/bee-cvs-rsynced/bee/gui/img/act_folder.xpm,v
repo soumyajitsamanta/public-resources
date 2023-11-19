@@ -1,0 +1,60 @@
+head     1.1;
+branch   1.1.1;
+access   ;
+symbols  start:1.1.1.1 vendor:1.1.1;
+locks    ; strict;
+comment  @# @;
+
+
+1.1
+date     2002.09.24.01.34.22;  author michald;  state Exp;
+branches 1.1.1.1;
+next     ;
+
+1.1.1.1
+date     2002.09.24.01.34.22;  author michald;  state Exp;
+branches ;
+next     ;
+
+
+desc
+@@
+
+
+
+1.1
+log
+@Initial revision
+@
+text
+@/* XPM */
+static char * act_folder_xpm[] = {
+/* width height num_colors chars_per_pixel */
+"16 12 4 1",
+/* colors */
+" 	s None	c None",
+".	c black",
+"X	c yellow",
+"o	c #5B5B57574646",
+/* pixels */
+"   ....         ",
+"  .XXXX.        ",
+" .XXXXXX.       ",
+".............   ",
+".oXoXoXoXoXo.   ",
+".XoX............",
+".oX.XXXXXXXXXXX.",
+".Xo.XXXXXXXXXX. ",
+".o.XXXXXXXXXXX. ",
+".X.XXXXXXXXXXX. ",
+"..XXXXXXXXXX..  ",
+".............   "};
+@
+
+
+1.1.1.1
+log
+@Initial public release of BEE Project.
+@
+text
+@@

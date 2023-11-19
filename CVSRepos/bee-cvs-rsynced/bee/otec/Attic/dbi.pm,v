@@ -1,0 +1,76 @@
+head	1.2;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2002.09.29.14.47.16;	author numberone;	state dead;
+branches;
+next	1.1;
+
+1.1
+date	2002.09.29.13.46.47;	author numberone;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@table query seems to work
+@
+text
+@# $Id: dbi.pm,v 1.1 2002/09/29 13:46:47 numberone Exp $
+
+# common shared lib for otec and bee process
+package dbi;
+
+use lib '../lib';
+use url;
+
+use Data::Dumper;
+use strict;
+
+use DBI;
+
+
+# connect to database, todo: password thru auth
+sub database {
+	my($url,$auth) = @@_;
+	die unless($url->{db});
+
+	# FIX: from auth!!!
+	my($dsn,$driver,$user,$password) = ('dbi','mysql','bee','honey');
+	$driver = $url->{subproto} if($url->{subproto});
+	$user   = $url->{user} if($url->{user});
+
+	my $db = DBI->connect("$dsn\:$driver\:".$url->{db},$user,$password);
+
+	die $DBI::errstr unless $db;
+	return $db;
+}
+
+
+
+
+1;
+
+
+@
+
+
+1.1
+log
+@common::database lib
+@
+text
+@d1 1
+a1 1
+# $Id: inout.pm,v 1.4 2002/09/29 12:58:33 numberone Exp $
+@
+

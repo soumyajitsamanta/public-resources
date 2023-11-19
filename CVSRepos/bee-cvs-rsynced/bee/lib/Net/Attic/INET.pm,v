@@ -1,0 +1,140 @@
+head	1.3;
+access;
+symbols
+	start:1.1.1.1 vendor:1.1.1;
+locks; strict;
+comment	@# @;
+
+
+1.3
+date	2003.06.03.13.16.16;	author numberone;	state dead;
+branches;
+next	1.2;
+
+1.2
+date	2002.09.26.07.52.42;	author numberone;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2002.09.24.01.40.58;	author michald;	state Exp;
+branches
+	1.1.1.1;
+next	;
+
+1.1.1.1
+date	2002.09.24.01.40.58;	author michald;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.3
+log
+@0.9.1 -- version merge
+@
+text
+@# $Id: INET.pm,v 1.2 2002/09/26 07:52:42 numberone Exp $
+
+package Net::INET;
+use strict;
+
+use IO::Socket;
+use POSIX;
+
+use base "Net";
+
+sub server {
+	my($pkg,$port) = @@_; # fix: SUPER
+	$port = getservbyname($port,'tcp') if($port =~ /\D/);
+	my $sock = new IO::Socket::INET(LocalPort=>$port,
+									Proto=>'tcp',
+									Listen=>5,
+									Reuse=>1) or die;
+	return $pkg->Net::_create($sock,"_server_",$port);
+}
+
+sub accept {
+	my($net,$block) = @@_;
+
+	my $client_sock = undef;
+	if($block) {
+		$client_sock = $net->{sock}->accept() or die;
+	} else {
+		$net->{sock}->blocking(0);
+		$client_sock = $net->{sock}->accept() or return undef;
+		$net->{sock}->blocking(1);
+	}
+
+	$client_sock->blocking(0);
+	$client_sock->autoflush(1);
+
+	return Net::INET->Net::_create( $client_sock,
+			$client_sock->peerhost(),$client_sock->peerport() );
+}
+
+sub connect {
+	my($pkg,$peer,$port) = @@_;
+	$port = getservbyname($port,'tcp') if($port =~ /\D/);
+	my $sock = new IO::Socket::INET(PeerAddr=>$peer,
+									PeerPort=>$port,
+									Proto=>'tcp') or die;
+
+	$sock->blocking(0);
+	$sock->autoflush(1);
+
+	return $pkg->Net::_create($sock,$sock->peerhost(),$sock->peerport());
+}
+
+sub syswrite {
+	my($net,$p_buff,$offset) = @@_;
+	my $length = length($$p_buff) - $offset;
+	return syswrite($net->{sock},$$p_buff,$length,$offset);
+}
+
+sub sysread {
+	my($net,$p_buff) = @@_;
+	my $bytes = sysread($net->{sock},$$p_buff,32768,length($$p_buff));	
+	return $bytes ? $bytes : undef if(defined $bytes);
+	return 0; # fixme: die unless(EAGAIN|EWOULDBLOCK)
+}
+
+sub close { shift->{sock}->close() }
+
+1;
+
+@
+
+
+1.2
+log
+@version merging with my cvs
+@
+text
+@d1 1
+a1 1
+# $Id: INET.pm,v 1.1.1.1 2002/09/24 01:40:58 michald Exp $
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d1 1
+a1 1
+# $Id: INET.pm,v 1.2 2002/08/23 22:43:09 martin Exp $
+d69 1
+@
+
+
+1.1.1.1
+log
+@Initial public release of BEE Project.
+@
+text
+@@

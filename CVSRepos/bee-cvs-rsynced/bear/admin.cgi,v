@@ -1,0 +1,1083 @@
+head	1.31;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.31
+date	2004.03.04.14.43.08;	author jiri_schmid;	state Exp;
+branches;
+next	1.30;
+
+1.30
+date	2004.02.20.12.41.02;	author jiri_schmid;	state Exp;
+branches;
+next	1.29;
+
+1.29
+date	2004.02.16.14.55.19;	author jiri_schmid;	state Exp;
+branches;
+next	1.28;
+
+1.28
+date	2004.02.13.17.09.33;	author jiri_schmid;	state Exp;
+branches;
+next	1.27;
+
+1.27
+date	2003.12.04.14.30.09;	author jiri_schmid;	state Exp;
+branches;
+next	1.26;
+
+1.26
+date	2003.11.27.16.40.57;	author jiri_schmid;	state Exp;
+branches;
+next	1.25;
+
+1.25
+date	2003.11.05.10.44.47;	author jiri_schmid;	state Exp;
+branches;
+next	1.24;
+
+1.24
+date	2003.10.31.12.47.54;	author jiri_schmid;	state Exp;
+branches;
+next	1.23;
+
+1.23
+date	2003.10.16.14.08.51;	author jiri_schmid;	state Exp;
+branches;
+next	1.22;
+
+1.22
+date	2003.09.29.09.21.54;	author jiri_schmid;	state Exp;
+branches;
+next	1.21;
+
+1.21
+date	2003.09.15.13.04.03;	author jiri_schmid;	state Exp;
+branches;
+next	1.20;
+
+1.20
+date	2003.09.01.12.40.02;	author jiri_schmid;	state Exp;
+branches;
+next	1.19;
+
+1.19
+date	2003.08.26.15.35.41;	author jiri_schmid;	state Exp;
+branches;
+next	1.18;
+
+1.18
+date	2003.08.21.14.23.28;	author jiri_schmid;	state Exp;
+branches;
+next	1.17;
+
+1.17
+date	2003.08.21.12.02.01;	author jiri_schmid;	state Exp;
+branches;
+next	1.16;
+
+1.16
+date	2003.08.19.13.05.55;	author jiri_schmid;	state Exp;
+branches;
+next	1.15;
+
+1.15
+date	2003.08.12.11.09.26;	author jiri_schmid;	state Exp;
+branches;
+next	1.14;
+
+1.14
+date	2003.08.11.13.50.25;	author jiri_schmid;	state Exp;
+branches;
+next	1.13;
+
+1.13
+date	2003.08.11.12.30.57;	author jiri_schmid;	state Exp;
+branches;
+next	1.12;
+
+1.12
+date	2003.08.07.08.02.10;	author jiri_schmid;	state Exp;
+branches;
+next	1.11;
+
+1.11
+date	2003.08.06.15.22.29;	author jiri_schmid;	state Exp;
+branches;
+next	1.10;
+
+1.10
+date	2003.07.08.08.24.43;	author jiri_schmid;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	2003.03.25.15.37.34;	author jiri_schmid;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	2003.03.12.16.32.43;	author jiri_schmid;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	2003.03.11.16.17.04;	author jiri_schmid;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	2003.03.07.16.18.28;	author jiri_schmid;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	2003.03.06.14.48.56;	author jiri_schmid;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2003.03.04.08.24.40;	author jiri_schmid;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2003.03.03.16.43.55;	author jiri_schmid;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2003.02.28.13.43.10;	author jiri_schmid;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2003.02.28.10.43.30;	author jiri_schmid;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.31
+log
+@fixing bugs and improving useability and performance
+@
+text
+@#!/usr/bin/perl
+#-----------------------------------------------------
+#  Admin page Display
+#-----------------------------------------------------
+# $Id: admin.cgi,v 1.30 2004/02/20 12:41:02 jiri_schmid Exp $
+
+use strict;
+my $run_mod_perl = defined(&Apache::RequestRec::BINMODE);	# are we running under mod_perl?
+if ($run_mod_perl) { Apache::RequestRec::BINMODE(':utf8') } else { binmode STDOUT,':utf8' }
+
+use CGI qw( :standard );
+use CGI::Pretty;
+require "const/Const.pm";
+require "local/Local.pm";
+
+# ---- init SOAP ---------
+#-------------------------
+our $load = 1;
+if ($load) {	# ensure require will be performed only once in case of mod_perl execution
+	eval "use SOAP::Lite +autodispatch => 
+		uri => 'Bear', 
+		proxy => ['http://$Const::bearHost:$Const::bearPort/', 
+		options => {compress_threshold => $Const::compressThreshold}]; 
+		1"
+	or ( &Local::ErrorDie("ERROR in eval of \"use SOAP::Lite ...\".") );
+	undef $load;
+}
+my $q = new CGI;
+
+# --- test SOAP connection ---
+#-----------------------------
+my $serverVerbName="SOAP Server http://$Const::bearHost:$Const::bearPort/";
+if (! eval "SOAP::Lite->self->fault") {
+	&Local::ErrorDie('ERROR: '.$serverVerbName.' not responding<br><form><input type="submit" name="Refresh" value="Refresh" /></form>');
+}
+#*SOAP::Serializer::as_string = \&SOAP::Serializer::as_base64;	#reducing number of XML::Parser char() callbaks  for every single portion of processed stream (e.g. \n)
+
+# --- determine user and his preferences ---
+#-------------------------------------------
+my $ID;
+my $user = $q->remote_user();
+my $useLang = $q->param('Lang');
+my $useEnc = 'UTF-8';
+my $project = $q->param('Proj');
+my $cook = $q->param('Cook');
+my $skin = $q->param('Skin');
+my ($path,$style);
+if ($skin) {
+ $path = "skins/$skin/";
+ $style = "skins/$skin/css.css";
+} else {
+ $path = "";
+ $style = "css.css";
+}
+
+my $width = $q->param('Width');
+$width = 25 if ($width<10 || $width>50);
+my $dropWidth = 100-$width;
+
+# --- load message dictionary ---
+#---------------------------------
+require "lang/$useLang.utf";
+
+print $q->header(-charset=>$useEnc);
+print $q->start_html(
+	-title=>"Admin page",
+	-class=>"access",
+	-lang=>$Const::languages->{$useLang}{lang},	#return language specification in format: language-country (it differs from param Lang)
+	-encoding=>$useEnc,
+	-head=>meta({	-http_equiv => 'Content-Type', 
+			-content => "text/html; charset=$useEnc" }),
+	-style=>{-src=>$style},
+	-script=>[{-language=>'JAVASCRIPT', -src=>'js/access.js'}],
+	-onload=>'hideLoad()'
+);
+
+$ID = &do_work(\$q,$user,$useLang,$project) if $q->param('Action');
+
+print <<END;
+	<script type="text/javascript">var loading=1; var dragObject = {name:"",id:"",icon:"",mg:"",typ:""};var savedAs;</script>
+	<input type="hidden" value="0" id="changed">
+	<div id="maindiv" class='dragObject' style='visibility:hidden;'><img id="mainimg" src="img/transparentpixel.png" alt="T"></div>
+	<div class="loading" id="loading"><img src="img/bear_tiny.png">$Const::lang->{$useLang}->{'Loading'}</div>
+		<IFRAME frameborder="0" style="position: absolute; top:0px; left:0px; width:$width%; height: 100%" name="list_iframe" id="list_iframe" src="access_tree.cgi?Lang=$useLang&Skin=$skin&Cook=$cook&Item=$ID&Proj=$project" ></IFRAME>
+		<IFRAME frameborder="0" style="position: absolute; top:0px; left:$width%; width:$dropWidth%; height: 100%" name="definition_iframe" id="definition_iframe" src="access_obj.cgi?Lang=$useLang&Skin=$skin&Proj=$project" ></IFRAME>
+END
+
+print $q->end_html;
+
+#-----------------------------------------------------
+
+sub do_work {
+	my ($cgi,$user,$useLang,$project) = (shift,shift,shift,shift);
+	my $id;
+	my $Action=$$cgi->param('Action');
+	if ($Action eq 'NewRole') {$id = NewObject($project,"/Roles/",$Const::lang->{$useLang}{'New Role'},'urole',$user) }
+#	elsif ($Action eq 'NewGroup') { NewObject($project,"",$Const::lang->{$useLang}{'New Group'},'group',$user) }
+#	elsif ($Action eq 'NewUser') { NewObject($project,"",$Const::lang->{$useLang}{'New User'},'user',$user) }
+	elsif ($Action eq 'Copy') { Copy($$cgi->param('Item'),$user,$useLang,$Action) }
+	elsif ($Action eq 'Confirm') { Drop($$cgi->param('Item'),$user) }
+	return $id
+}
+
+#---------------------------------------------------
+
+sub Drop {
+	my ($itemId,$user)= (shift,shift);	#object id
+	my $pr=	SOAP->GetProjectName($itemId); #project name
+	return 0 if $itemId =~ /^${pr}_all$|^${pr}_root$/;	# !!! anybody can delete any other role
+	unlink(&Local::TreeFileName($Const::myPath,$pr,$user));
+	SOAP->DropMData($pr,$itemId);
+}
+
+#---------------------------------------------------
+
+sub Copy {
+	my ($fid,$user,$useLang,$Action) = (shift,shift,shift,shift);
+	return if (!$fid);
+	my $pr=	SOAP->GetProjectName($fid); #project name
+	my $obj = SOAP->GetMetadata($fid);
+	my $objT=(keys %{$obj})[0];	#object type
+
+	my $new_id;
+
+	if ($objT eq 'urole') {$new_id = NewObject($pr,"/Roles/",$Const::lang->{$useLang}{'New Role'},'urole',$user) }
+	else { return } #non-duplicateable object
+
+	if ($new_id) { 	#copy the old objet $obj into new one $obj_n and save
+		unlink(&Local::TreeFileName($Const::myPath,$pr, $user));
+ 		my $obj_n = SOAP->GetMetadata($new_id);
+		my $newName = $obj_n->{$objT}->{$new_id}->{name};
+		$obj_n->{$objT}{$new_id} = $obj->{$objT}->{$fid};
+		$obj_n->{$objT}{$new_id}->{name} = $newName;
+		$obj_n->{$objT}{$new_id}{meta}{creator} = $user;
+		$obj_n->{$objT}{$new_id}{meta}{created} = &Local::getTime;
+		delete $obj_n->{$objT}{$new_id}{modifier} if exists $obj_n->{$objT}{$new_id}{modifier};
+		delete $obj_n->{$objT}{$new_id}{modified} if exists $obj_n->{$objT}{$new_id}{modified};
+		my $r=SOAP->SaveMData($obj_n,1);		
+	};
+}
+#---------------------------------------------------
+
+sub NewObject {
+my ($pr,$fp,$fn,$ft,$user) = (shift,shift,shift,shift,shift);	# new object type
+if ($pr) {	
+unlink(&Local::TreeFileName($Const::myPath,$pr, $user));
+	my $fnn=$fn;
+	my $fni=0;
+	my $mc=100;		# max attempts to find unique name
+	my $id=SOAP->NewID();
+	my $nob;		# new object
+	while ($mc) {
+		$nob->{$ft}{$id}{name} = &Local::setLocalizedObj(undef,$fnn." #".$id,'');	#object name
+		$nob->{$ft}{$id}{meta}{creator} = $user;
+		$nob->{$ft}{$id}{meta}{created} = &Local::getTime;
+		$nob->{$ft}{$id}{acl} = $pr."_all";	#store default rights
+		my $r=SOAP->SaveMData($nob,0,$pr.$fp);	#don't rewrite
+		if ($r==-1) {	# filename exists, increment suffix and try again
+			$fni++;
+			$fnn=$fn.'_'.$fni;
+		} elsif (!$r) {	# fail
+                     print <<END ;
+		     <span class="error">ERROR: Saving Object [$fn] into metadata failed.</span>
+		     <form action="">
+		     <p><input type="submit" value="Continue"></p>
+		     </form></body></html>
+END
+              	     return undef
+		} else {	#success
+			$ID=$id;	# set global ID
+			last
+		}
+		$mc--;
+	};
+	
+	if (!$mc) {	# fail
+          print <<END ;
+	  <span class="error">ERROR: Max count of attempts to find unique Object Name was reached.</span>
+	  <form action="">
+	  <p><input type="submit" value="Continue"></p>
+	  </form></body></html>
+END
+	  return undef
+	}
+	return $id;	
+}
+return undef
+}
+
+#--------------------------------------------------------------
+
+1
+@
+
+
+1.30
+log
+@rights for edit page finished
+@
+text
+@d5 1
+a5 1
+# $Id: admin.cgi,v 1.29 2004/02/16 14:55:19 jiri_schmid Exp $
+d156 1
+@
+
+
+1.29
+log
+@security improvment for tabs
+@
+text
+@d5 1
+a5 1
+# $Id: admin.cgi,v 1.28 2004/02/13 17:09:33 jiri_schmid Exp $
+d78 1
+a78 3
+my @@hlp; my $hlp;
+foreach my $it_id (keys %{$Const::js->{$useLang}}) { push (@@hlp,"$it_id|$Const::js->{$useLang}{$it_id}") }
+$hlp = join("|",@@hlp);
+a79 1
+	<input type='hidden' value="$hlp" id='lang_js' />
+@
+
+
+1.28
+log
+@major tabs control implemented
+@
+text
+@d5 1
+a5 1
+# $Id: admin.cgi,v 1.27 2003/12/04 14:30:09 jiri_schmid Exp $
+a64 1
+if (SOAP->CheckAccess('A',$user,$q->param('Proj'))) {
+a89 4
+} else {
+	print $q->start_html(-style=>{-src=>$style});
+	&Local::accessForbidden('Admin',$user);
+}
+@
+
+
+1.27
+log
+@finishing replacing of gif files
+@
+text
+@d5 1
+a5 1
+# $Id: admin.cgi,v 1.26 2003/11/27 16:40:57 jiri_schmid Exp $
+d44 1
+a44 1
+my $projectName = $q->param('Proj');
+d65 1
+a65 1
+
+d78 1
+a78 2
+$ID = &do_work(\$q,$user,$useLang,$projectName) if $q->param('Action');
+
+a81 1
+
+d83 7
+a89 7
+<input type='hidden' value="$hlp" id='lang_js' />
+<script type="text/javascript">var loading=1; var dragObject = {name:"",id:"",icon:"",mg:"",typ:""};var savedAs;</script>
+<input type="hidden" value="0" id="changed">
+<div id="maindiv" class='dragObject' style='visibility:hidden;'><img id="mainimg" src="img/transparentpixel.png" alt="T"></div>
+<div class="loading" id="loading"><img src="img/bear_tiny.png">$Const::lang->{$useLang}->{'Loading'}</div>
+  <IFRAME frameborder="0" style="position: absolute; top:0px; left:0px; width:$width%; height: 100%" name="list_iframe" id="list_iframe" src="access_tree.cgi?Lang=$useLang&Skin=$skin&Cook=$cook&Item=$ID" ></IFRAME>
+  <IFRAME frameborder="0" style="position: absolute; top:0px; left:$width%; width:$dropWidth%; height: 100%" name="definition_iframe" id="definition_iframe" src="access_obj.cgi?Lang=$useLang&Skin=$skin" ></IFRAME>
+d91 4
+d101 1
+a101 1
+	my ($cgi,$user,$useLang,$projectName) = (shift,shift,shift,shift);
+d104 3
+a106 3
+	if ($Action eq 'NewRole') {$id = NewObject($projectName,"/Roles/",$Const::lang->{$useLang}{'New Role'},'urole',$user) }
+#	elsif ($Action eq 'NewGroup') { NewObject($projectName,"",$Const::lang->{$useLang}{'New Group'},'group',$user) }
+#	elsif ($Action eq 'NewUser') { NewObject($projectName,"",$Const::lang->{$useLang}{'New User'},'user',$user) }
+@
+
+
+1.26
+log
+@something like drill implemeted
+@
+text
+@d5 1
+a5 1
+# $Id: admin.cgi,v 1.25 2003/11/05 10:44:47 jiri_schmid Exp $
+d88 2
+a89 2
+<div id="maindiv" class='dragObject' style='visibility:hidden;'><img id="mainimg" src="img/transparentpixel.gif" alt="T"></div>
+<div class="loading" id="loading"><img src="img/bear_tiny.gif">$Const::lang->{$useLang}->{'Loading'}</div>
+@
+
+
+1.25
+log
+@pointers everywhere, reapply of removed fix
+@
+text
+@d5 1
+a5 1
+# $Id: admin.cgi,v 1.24 2003/10/31 12:47:54 jiri_schmid Exp $
+d140 1
+a140 1
+		$obj_n->{$objT}{$new_id}{meta}{owner} = $user;
+d160 1
+a160 1
+		$nob->{$ft}{$id}{meta}{owner} = $user;
+@
+
+
+1.24
+log
+@mod perl rocks!
+@
+text
+@d5 1
+a5 1
+# $Id: admin.cgi,v 1.23 2003/10/16 14:08:51 jiri_schmid Exp $
+d56 1
+a56 1
+my $width = param('Width');
+d78 1
+a78 1
+$ID = &do_work(\$q,$user,$useLang) if $q->param('Action');
+d99 1
+a99 1
+	my ($cgi,$user,$useLang) = (shift,shift,shift);
+d101 1
+a101 1
+	my $Action=$cgi->param('Action');
+d105 2
+a106 2
+	elsif ($Action eq 'Copy') { Copy(param('Item'),$user,$useLang,$Action) }
+	elsif ($Action eq 'Confirm') { Drop(param('Item'),$user) }
+d128 1
+a128 1
+	my $name=&Local::LocalizedObj($obj->{$objT}->{$fid}->{name}, "Object #$ID", $useLang, $Const::defaultLanguage);
+d130 2
+a131 4
+	
+	if ($Action eq 'NewRole') {$new_id = NewObject($pr,"/Roles/",$Const::lang->{$useLang}{'New Role'},'urole',$user) }
+#	elsif ($Action eq 'NewGroup') { $new_id = NewObject($pr,"",$Const::lang->{$useLang}{'New Group'},'group',$user) }
+#	elsif ($Action eq 'NewUser') { $new_id = NewObject($pr,"",$Const::lang->{$useLang}{'New User'},'user',$user) }
+d133 1
+a133 1
+	
+d151 1
+a151 1
+	
+d159 1
+a159 1
+		$nob->{$ft}{$id}{name} = &setLocalizedObj(undef,$fnn." #".$id,'');	#object name
+d161 1
+a161 1
+		$nob->{$ft}{$id}{meta}{created} = &getTime;
+d173 1
+a173 1
+              	     die
+d188 1
+a188 1
+	  die
+d191 2
+@
+
+
+1.23
+log
+@mod-perl implementation stage 1, rebuilding global vars in .pl to global pointers
+@
+text
+@d5 1
+a5 1
+# $Id: admin.cgi,v 1.22 2003/09/29 09:21:54 jiri_schmid Exp $
+d8 3
+d13 34
+a46 17
+our $q = new CGI;
+use vars qw($lang $Languages $bearHost $bearPort $compress_threshold $DefaultLanguage %js);
+binmode STDOUT,":utf8";
+
+require "const.def";
+require "local/local_lib.pl";
+
+our $ID;
+our $User=$q->remote_user();
+
+my $use_lang = param('Lang');
+my $use_enc = 'UTF-8';
+require $Languages->{$use_lang}->{'src'};
+#my $all_params = "Lang=".param('Lang')."&Cook=".param('Cook')."&Proj=".param('Proj')."&Skin=".param('Skin');
+my $projectName = param('Proj');
+my $cook=param('Cook');
+my $skin = param('Skin');
+d55 1
+d60 5
+a64 1
+print $q->header(-charset=>$use_enc);
+d69 2
+a70 2
+	-lang=>$Languages->{$use_lang}->{lang},	#return language specification in format: language-country (it differs from param Lang)
+	-encoding=>$use_enc,
+d72 1
+a72 1
+			-content => "text/html; charset=$use_enc" }),
+d78 1
+a78 8
+# --- make SOAP connection ---
+eval "use SOAP::Lite +autodispatch => 
+	uri => 'Bear', 
+	proxy => ['http://$bearHost:$bearPort/', 
+	options => {compress_threshold => $compress_threshold}],
+	encoding => 'UTF-8';
+	1"
+or ( &ErrorDie("ERROR in eval of \"use SOAP::Lite ...\".") );
+d80 3
+a82 7
+my $serverVerbName="SOAP Server http://$bearHost:$bearPort/";
+if (! eval "SOAP::Lite->self->fault") {
+	ErrorDie('ERROR: '.$serverVerbName.' not responding<br><form><input type="submit" name="Refresh" value="Refresh" /></form>');
+}
+#*SOAP::Serializer::as_string = \&SOAP::Serializer::as_base64;	#reducing number of XML::Parser char() callbaks  for every single portion of processed stream (e.g. \n)
+
+&do_work($q) if $q->param('Action');
+a83 7
+my $it_id;
+print "<input type='hidden' value='|";
+foreach $it_id (keys %js)
+        {
+	   print "$it_id"."|"."$js{$it_id}"."|";
+        }
+print "' id='lang_js'>\n";
+d85 1
+d89 3
+a91 4
+<div class="loading" id="loading"><img src="img/bear_tiny.gif">$lang->{'Loading'}</div>
+  <IFRAME frameborder="0" style="position: absolute; top:0px; left:0px; width:$width%; height: 100%" name="list_iframe" id="list_iframe" src="access_tree.cgi?Lang=$use_lang&Skin=$skin&Cook=$cook&Item=$ID" ></IFRAME>
+  <IFRAME frameborder="0" style="position: absolute; top:0px; left:$width%; width:$dropWidth%; height: 100%" name="definition_iframe" id="definition_iframe" src="access_obj.cgi?Lang=$use_lang&Skin=$skin" ></IFRAME>
+<script type="text/javascript">
+d99 2
+a100 1
+	my($cgi) = @@_;
+d102 6
+a107 5
+	if ($Action eq 'NewRole') { NewObject($projectName,"/Roles/",$lang->{'New Role'},'urole') }
+#	elsif ($Action eq 'NewGroup') { NewObject($projectName,"",$lang->{'New Group'},'group') }
+#	elsif ($Action eq 'NewUser') { NewObject($projectName,"",$lang->{'New User'},'user') }
+	elsif ($Action eq 'Copy') { Copy(param('Item')) }
+	elsif ($Action eq 'Confirm') { Drop(param('Item')) }
+d113 1
+a113 2
+	my $itemId=shift;	#object id
+	return if $itemId =~ /root$/;
+d115 2
+a116 1
+unlink(main::TreeFileName($pr, $User));
+d123 1
+a123 1
+	my $fid=shift;	#object id
+d128 1
+a128 2
+	my $lcLang = lc($use_lang);
+	my $name=LocalizedObj($obj->{$objT}->{$fid}->{name}, "Object #$ID", $lcLang, $DefaultLanguage);
+d131 3
+a133 3
+	if ($objT eq 'urole') {$new_id = NewObject($pr,"/Roles/",$name.$lang->{'New Duplicate'},'urole')}
+#	elsif ($objT eq 'group') {$new_id = NewObject($pr,"",$name.$lang->{'New Duplicate'},'group')}
+#	elsif ($objT eq 'user') {$new_id = NewObject($pr,"",$name.$lang->{'New Duplicate'},'user')}
+d137 1
+a137 1
+		unlink(main::TreeFileName($pr, $User));
+d142 2
+a143 2
+		$obj_n->{$objT}{$new_id}{meta}{owner} = $User;
+		$obj_n->{$objT}{$new_id}{meta}{created} = &getTime;
+d152 1
+a152 7
+	my $pr=shift;	# project name
+	my $fp=shift;	# path to save, relative to $pr
+	my $fn=shift;	# new object name
+	my $ft=shift;	# new object type
+	
+	
+unlink(main::TreeFileName($pr, $User));
+d154 1
+d162 1
+a162 1
+		$nob->{$ft}{$id}{meta}{owner} = $User;
+a197 1
+
+@
+
+
+1.22
+log
+@code improvments a fixies
+@
+text
+@d5 1
+a5 1
+# $Id: admin.cgi,v 1.21 2003/09/15 13:04:03 jiri_schmid Exp $
+d15 1
+a15 1
+require "local_lib.pl";
+@
+
+
+1.21
+log
+@code changes and improvments
+@
+text
+@d5 1
+a5 1
+# $Id: admin.cgi,v 1.20 2003/09/01 12:40:02 jiri_schmid Exp $
+d11 1
+a11 1
+use vars qw($lang $Languages $bearHost $bearPort $compress_threshold $DefaultLanguage);
+d70 7
+a76 1
+
+d82 1
+a82 1
+  <IFRAME frameborder="0" style="position: absolute; top:0px; left:0px; width:$width%; height: 100%" name="list_iframe" id="list_iframe" src="access_tree.cgi?Lang=$use_lang&Skin=$skin&Cook=$cook" ></IFRAME>
+d105 1
+a105 1
+	return if $itemId eq 'root';
+@
+
+
+1.20
+log
+@skins implemented. mozilla skin - temporarily copy msie content
+@
+text
+@d5 1
+a5 1
+# $Id: admin.cgi,v 1.19 2003/08/26 15:35:41 jiri_schmid Exp $
+d25 1
+d76 1
+a76 1
+  <IFRAME frameborder="0" style="position: absolute; top:0px; left:0px; width:$width%; height: 100%" name="list_iframe" id="list_iframe" src="access_tree.cgi?Lang=$use_lang&Skin=$skin" ></IFRAME>
+@
+
+
+1.19
+log
+@rights improvment, create delete duplicate rule implemented
+@
+text
+@d5 1
+a5 1
+# $Id: admin.cgi,v 1.18 2003/08/21 14:23:28 jiri_schmid Exp $
+d23 1
+a23 1
+my $all_params = "Lang=".param('Lang')."&Cook=".param('Cook')."&Proj=".param('Proj');
+d25 9
+a33 1
+
+d47 1
+a47 1
+	-style=>{-src=>'css.css'},
+d75 2
+a76 2
+  <IFRAME frameborder="0" style="position: absolute; top:0px; left:0px; width:$width%; height: 100%" name="list_iframe" id="list_iframe" src="access_tree.cgi?Lang=$use_lang" ></IFRAME>
+  <IFRAME frameborder="0" style="position: absolute; top:0px; left:$width%; width:$dropWidth%; height: 100%" name="definition_iframe" id="definition_iframe" src="access_obj.cgi?Lang=$use_lang&Type=none" ></IFRAME>
+@
+
+
+1.18
+log
+@role implementation next step
+@
+text
+@d5 1
+a5 1
+# $Id: admin.cgi,v 1.17 2003/08/21 12:02:01 jiri_schmid Exp $
+d11 1
+a11 1
+use vars qw($lang $Languages);
+d17 1
+d24 1
+d43 19
+d74 21
+d96 1
+d98 28
+d127 53
+@
+
+
+1.17
+log
+@description for access tree changes
+@
+text
+@d5 1
+a5 1
+# $Id: admin.cgi,v 1.16 2003/08/19 13:05:55 jiri_schmid Exp $
+d22 1
+a22 1
+my $all_params = "Lang=".param('Lang')."&Cook=".param('Cook')."&Proj=".param('Proj').;
+@
+
+
+1.16
+log
+@formats2d implemented
+@
+text
+@d5 1
+a5 1
+# $Id: admin.cgi,v 1.15 2003/08/12 11:09:26 jiri_schmid Exp $
+d22 1
+@
+
+
+1.15
+log
+@minor changes
+@
+text
+@d5 1
+a5 1
+# $Id: admin.cgi,v 1.14 2003/08/11 13:50:25 jiri_schmid Exp $
+d46 1
+a46 1
+  <IFRAME frameborder="0" style="position: absolute; top:0px; left:$width%; width:$dropWidth%; height: 100%" name="definition_iframe" id="definition_iframe" src="access_obj.cgi?Lang=$use_lang&Type=user" ></IFRAME>
+@
+
+
+1.14
+log
+@admin page drag-drop implemented
+@
+text
+@d5 1
+a5 1
+# $Id: admin.cgi,v 1.13 2003/08/11 12:30:57 jiri_schmid Exp $
+d23 4
+d45 2
+a46 2
+  <IFRAME frameborder="0" style="position: absolute; top:0px; left:0px; width:30%; height: 100%" name="list_iframe" id="list_iframe" src="access_tree.cgi?Lang=$use_lang" ></IFRAME>
+  <IFRAME frameborder="0" style="position: absolute; top:0px; left:30%; width:70%; height: 100%" name="definition_iframe" id="definition_iframe" src="access_obj.cgi?Lang=$use_lang&Type=user" ></IFRAME>
+@
+
+
+1.13
+log
+@admin page implementation started
+@
+text
+@d5 1
+a5 1
+# $Id: admin.cgi,v 1.12 2003/08/07 08:02:10 jiri_schmid Exp $
+d39 1
+a39 1
+<div id="maindiv" style="display:block; visibility:hidden; position:absolute; z-index: 5;" ><img id="mainimg" src="img/transparentpixel.gif" alt="T"></div>
+d41 2
+a42 2
+  <IFRAME frameborder="0" style="position: absolute; top:0px; left:0px; width:45%; height: 100%" name="list_iframe" id="tlist_iframe" src="access.cgi?Lang=$use_lang&Type=list" ></IFRAME>
+  <IFRAME frameborder="0" style="position: absolute; top:0px; left:45%; width:55%; height: 100%" name="definition_iframe" id="definition_iframe" src="access.cgi?Lang=$use_lang&Type=user" ></IFRAME>
+@
+
+
+1.12
+log
+@elements negation implemented
+@
+text
+@d5 1
+a5 1
+# $Id: admin.cgi,v 1.11 2003/08/06 15:22:29 jiri_schmid Exp $
+d41 2
+a42 2
+  <IFRAME frameborder="0" style="position: absolute; top:0px; left:0px; width:25%; height: 100%" name="list_iframe" id="tlist_iframe" src="access.cgi?Lang=$use_lang&Type=list" ></IFRAME>
+  <IFRAME frameborder="0" style="position: absolute; top:0px; left:25%; width:75%; height: 100%" name="definition_iframe" id="definition_iframe" src="access.cgi?Lang=$use_lang&Type=user" ></IFRAME>
+@
+
+
+1.11
+log
+@user ACL implementation started
+@
+text
+@d3 1
+a3 1
+#  Folder Display
+d5 1
+a5 1
+# $Id: admin.cgi,v 1.10 2003/07/08 08:24:43 jiri_schmid Exp $
+d42 1
+a42 1
+  <IFRAME frameborder="0" style="position: absolute; top:0px; left:25%; width:75%; height: 100%" name="definition_iframe" id="definition_iframe" src="access.cgi?Lang=$use_lang&Type=rule" ></IFRAME>
+@
+
+
+1.10
+log
+@binmode for STDIN changes
+@
+text
+@d5 1
+a5 1
+# $Id: admin.cgi,v 1.9 2003/03/25 15:37:34 jiri_schmid Exp $
+a18 2
+local($") = ' '; # white-space
+
+d21 1
+a21 1
+eval("require $Languages->{$use_lang}->{'src'}");
+d27 1
+d32 3
+a34 7
+	-style=>{-src=>'css.css'}
+);
+if (! $use_lang) {print "<span style=\"color:#f00; font-weight:bold; font-size:20px\">Break! - no user prefernces specified.</span><br/><br/><span><a href=\"index.cgi?TabAct=P\" target=\"_top\">Set and save user preferences first.</a></span></body></html>"; die;};
+print table(
+	Tr(
+		td({-class=>'neutral_bold'},$lang->{'Admin Title'})
+	)
+d36 9
+a44 1
+print '<pre>'.&do_out().'<pre>';
+a45 1
+&do_work();
+a48 13
+#---------------------------------------------------
+
+sub do_out {
+my $rtrn = "\n";
+foreach (keys(%ENV)) { 
+	if ($_ eq "SERVER_SIGNATURE")  
+		{my $x = $ENV{$_};
+		 $x =~ s/<[^A-Z]*//g; 
+		 $rtrn .= "$_: ".$x."\n";}
+	else {$rtrn .= "$_: ".$ENV{$_}."\n";}
+	}
+return $rtrn;
+}
+@
+
+
+1.9
+log
+@syntax checker for metrics imrpoved, loading user pref file when file missing fixed/imrpoved
+@
+text
+@d5 1
+a5 1
+# $Id: admin.cgi,v 1.8 2003/03/12 16:32:43 jiri_schmid Exp $
+d12 1
+@
+
+
+1.8
+log
+@user prefernce - open result in: implemented
+@
+text
+@d5 1
+a5 1
+# $Id: admin.cgi,v 1.7 2003/03/11 16:17:04 jiri_schmid Exp $
+d22 1
+a22 1
+require $Languages->{$use_lang}->{'src'};
+d34 1
+@
+
+
+1.7
+log
+@fixed wrong calling of index.cgi, some unused variables removed
+@
+text
+@d5 1
+a5 1
+# $Id: admin.cgi,v 1.6 2003/03/07 16:18:28 jiri_schmid Exp $
+d21 1
+a21 1
+my $use_enc = $Languages->{$use_lang}->{enc};
+@
+
+
+1.6
+log
+@weekend commit, language not fixed :(
+@
+text
+@d5 1
+a5 1
+# $Id: admin.cgi,v 1.5 2003/03/06 14:48:56 jiri_schmid Exp $
+d11 1
+a11 1
+use vars qw($StyleSheet $bearHost $bearPort $compress_threshold $MyName $lang);
+a15 1
+our $ID=&SetParam('ID','id');
+a18 1
+my $selSize=4;
+d20 5
+a24 1
+print $q->header;
+d27 11
+a37 2
+   -title=>"Admin page",
+   -style=>{-src=>'css.css'}
+d39 1
+a39 18
+
+# --- make SOAP connection ---
+eval "use SOAP::Lite +autodispatch => 
+	uri => 'Bear', 
+	proxy => ['http://$bearHost:$bearPort/', 
+	options => {compress_threshold => $compress_threshold}]; 
+	1"
+or ( &ErrorDie("ERROR in eval of \"use SOAP::Lite ...\".") );
+
+my $serverVerbName="SOAP Server http://$bearHost:$bearPort/";
+if (! eval "SOAP::Lite->self->fault") {
+	ErrorDie('ERROR: '.$serverVerbName.' not responding<br><form><input type="submit" name="Refresh" value="Refresh" /></form>');
+}
+#*SOAP::Serializer::as_string = \&SOAP::Serializer::as_base64;	#reducing number of XML::Parser char() callbaks  for every single portion of processed stream (e.g. \n)
+
+print <<END;
+<table><tr><td class="neutral_bold">$lang->{'Admin Title'}</td><td><input type="hidden" value="$ID"/>$ID (irrelevant ID)<td/></tr></table>
+END
+d47 10
+a56 2
+sub do_work {
+   print "<pre>Not implemeted yet.</pre>"
+@
+
+
+1.5
+log
+@loading and saving user preferneces under its name functional, preferences affects edit.cgi, tabs.cgi and prefer.cgi for now
+@
+text
+@d5 1
+a5 1
+# $Id: admin.cgi,v 1.4 2003/03/04 08:24:40 jiri_schmid Exp $
+a13 2
+if ($al eq 'cz') {require 'lang/cz.def'}
+if ($al eq 'us') {require 'lang/us.def'}
+@
+
+
+1.4
+log
+@internal technical-development commit
+@
+text
+@d5 1
+a5 1
+# $Id: admin.cgi,v 1.3 2003/03/03 16:43:55 jiri_schmid Exp $
+d11 1
+a11 1
+use vars qw($StyleSheet $bearHost $bearPort $compress_threshold $MyName $al $lang);
+@
+
+
+1.3
+log
+@cookie managing improvment for better cooperation with user preferences
+@
+text
+@d5 1
+a5 1
+# $Id: admin.cgi,v 1.2 2003/02/28 13:43:10 jiri_schmid Exp $
+d11 1
+a11 1
+use vars qw($StyleSheet $bearHost $bearPort $compress_threshold $MyName);
+d14 2
+d46 1
+a46 1
+<table><tr><td class="neutral_bold">Admin Title</td><td><input type="hidden" value="$ID"/>$ID (irrelevant ID)<td/></tr></table>
+@
+
+
+1.2
+log
+@weekend-leaving commit, (last?) code cleaning
+@
+text
+@d5 1
+a5 1
+# $Id: admin.cgi,v 1.1 2003/02/28 10:43:30 jiri_schmid Exp $
+d11 1
+a11 1
+use vars qw($StyleSheet $bearHost $bearPort $compress_threshold $MyName $al);
+d44 1
+a44 1
+<table><tr><td class="neutral_bold">$al->{'Admin Title'}</td><td><input type="hidden" value="$ID"/>$ID (irrelevant ID)<td/></tr></table>
+@
+
+
+1.1
+log
+@added files admin,prefer.cgi, unused content of *.css removed with minor visual changes
+@
+text
+@d5 1
+a5 1
+# $Id: run.cgi,v 1.4 2003/01/30 06:36:20 michald Exp $
+d43 3
+@
+

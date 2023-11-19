@@ -1,0 +1,240 @@
+head	1.2;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2004.05.12.14.33.29;	author numberone;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2004.04.30.14.12.10;	author numberone;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@
+-unbuffered.{xs,c,h}
+  -- uses 1 syscall per row for sending, 2 syscalls p.r. for receiving
+
+-buffered.{xs,c,h}
+  -- sends data in 4096b chunks, low number of send()/recv() calls
+  -- generaly doesn't work because of buffer-locking in some scenarios
+
+benchmarks (put($i,'a' x ($i % 64))):
+
+         unbuff     buffered
+path     1M @@ 43s   -failed-
+bench    1M @@ 17s   1M @@ 9s
+@
+text
+@#define PERL_NO_GET_CONTEXT
+#include "EXTERN.h"
+#include "perl.h"
+#include "XSUB.h"
+
+#include<stdio.h>
+#include "libdata/data.h"
+
+
+MODULE = Data	PACKAGE = Data
+
+void
+init(pkg,arg)
+	char* pkg
+	char* arg
+CODE:
+	data_init(arg);
+
+Data
+listen(pkg,unix_prefix,port)
+	char*	pkg
+	char*	unix_prefix
+	int		port
+PREINIT:
+	int		hack;
+CODE:
+	hack = (unix_prefix && *unix_prefix); // undef is "" ??
+	RETVAL = data_listen(hack ? unix_prefix : NULL,port);
+OUTPUT:
+	RETVAL
+
+int
+accept(server)
+	Data	server
+CODE:
+	RETVAL = data_accept(server);
+OUTPUT:
+	RETVAL
+
+Data
+connect(pkg,host_unix,port)
+	char*	pkg
+	char*	host_unix
+	int		port
+CODE:
+	RETVAL = data_connect(host_unix,port);
+OUTPUT:
+	RETVAL
+
+void
+send(data,...)
+	Data	data
+PREINIT:
+	int  i;
+	STRLEN len;
+	void *ptr;
+CODE:
+	data_send_init(data,items - 1);
+	for(i=1;i<items;i++) {
+		if(SvOK(ST(i))) {
+			ptr = SvPV(ST(i),len);
+			data_send_append(data,ptr,len);
+		} else {
+			data_send_append(data,NULL,0);
+		}
+	}
+	data_send_flush(data);
+
+SV*
+recv(data)
+	Data	data
+PREINIT:
+	int	i,columns,len,string_len;
+	void *string;
+	byte *ptr;
+PPCODE:
+	// wait for row
+	columns = data_recv(data,&ptr,&len);
+
+	if(columns <  0) XSRETURN_UNDEF;
+	if(columns == 0) XSRETURN_EMPTY;
+
+	// extract row to STACK @@array
+	EXTEND(SP,columns);
+	for(i=0;i<columns;i++) {
+		ptr = data_extract(data,ptr,&string,&string_len);
+
+		if(!string) {
+			if(string_len == -1) PUSHs(&PL_sv_undef);
+					        else PUSHs(sv_2mortal(newSViv(string_len)));
+		} else {
+			PUSHs(sv_2mortal(newSVpvn(string,string_len)));
+		}
+	}
+
+	data_move(data,ptr);
+
+	// ok, row are extracted to STACK now
+	XSRETURN(columns);
+
+
+void
+DESTROY(data)
+	Data	data
+CODE:
+	data_close(data);
+	XSRETURN_EMPTY;
+
+int
+port(data)
+	Data	data
+CODE: 
+	RETVAL = data_port(data);
+OUTPUT:
+	RETVAL
+
+char*
+unix(data)
+	Data	data
+CODE: 
+	RETVAL = data_unix(data);
+OUTPUT:
+	RETVAL
+
+
+@
+
+
+1.1
+log
+@
+new libData solving cycles in bee communication graph (i hope).
+@
+text
+@d12 7
+d20 1
+a20 1
+listen(pkg,port)
+d22 1
+d24 2
+d27 2
+a28 1
+	RETVAL = data_listen(port);
+d41 1
+a41 1
+connect(pkg,host,port)
+d43 1
+a43 1
+	char*	host
+d46 1
+a46 1
+	RETVAL = data_connect(host,port);
+d73 3
+a75 2
+	int	i,columns,len,ret;
+	void *buff;
+d77 2
+a78 2
+	// are here any data in buffer
+	columns = data_is_row(data);
+d80 2
+a81 23
+	if(columns == -1) {
+
+		if(data->offset) {
+			data->len -= data->offset;
+			memmove((char*)data->buffer,
+					(char*)data->buffer + data->offset,data->len);
+			data->offset = 0;
+		}
+
+		// cycle until some row is entirely readed
+		do {
+			ret = data_recv(data);
+			// try again
+			columns = data_is_row(data);
+			if(columns == -1 && !ret) {
+				if(data->len) { 
+					printf("EOF: o=%d, l=%d\n",data->offset,data->len);
+					exit(23);
+				}
+				XSRETURN_EMPTY;
+			}
+		} while(columns == -1);
+	}
+d86 5
+a90 4
+		data->offset += data_extract(data,&buff,&len);
+		if(!buff) {
+			if(len == -1) PUSHs(&PL_sv_undef);
+					 else PUSHs(sv_2mortal(newSViv(len)));
+d92 1
+a92 1
+			PUSHs(sv_2mortal(newSVpvn(buff,len)));
+d95 2
+a96 2
+	if(((unsigned char*)data->buffer)[data->offset++] 
+			!= LEN_ENDOFROW) exit(22);
+d117 9
+@
+

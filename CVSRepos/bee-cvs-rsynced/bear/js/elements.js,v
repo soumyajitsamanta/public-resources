@@ -1,0 +1,558 @@
+head	1.17;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.17
+date	2004.02.24.14.25.41;	author jiri_schmid;	state Exp;
+branches;
+next	1.16;
+
+1.16
+date	2003.12.15.15.16.03;	author jiri_schmid;	state Exp;
+branches;
+next	1.15;
+
+1.15
+date	2003.12.04.12.52.52;	author jiri_schmid;	state Exp;
+branches;
+next	1.14;
+
+1.14
+date	2003.10.02.14.44.54;	author jiri_schmid;	state Exp;
+branches;
+next	1.13;
+
+1.13
+date	2003.09.30.15.46.41;	author jiri_schmid;	state Exp;
+branches;
+next	1.12;
+
+1.12
+date	2003.09.01.13.35.24;	author jiri_schmid;	state Exp;
+branches;
+next	1.11;
+
+1.11
+date	2003.09.01.12.40.09;	author jiri_schmid;	state Exp;
+branches;
+next	1.10;
+
+1.10
+date	2003.08.14.12.43.51;	author jiri_schmid;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	2003.08.12.14.09.49;	author jiri_schmid;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	2003.08.07.08.02.21;	author jiri_schmid;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	2003.08.05.12.49.47;	author jiri_schmid;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	2003.08.05.08.02.11;	author jiri_schmid;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	2003.08.01.15.18.44;	author jiri_schmid;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2003.08.01.13.07.14;	author jiri_schmid;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2003.07.31.14.34.42;	author jiri_schmid;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2003.07.31.12.18.22;	author jiri_schmid;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2003.07.31.06.47.24;	author michald;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.17
+log
+@elements.cgi fixies
+@
+text
+@// $Id: elements.js,v 1.16 2003/12/15 15:16:03 jiri_schmid Exp $
+//divID.style.visibility == "visible"
+
+var OC = true;
+var Click = true;
+var allowLoad = true;
+
+function setReduce(EID) { if (dragLocator.typ == "Af" || dragLocator.typ == 'A') document.getElementById('reduce').value = 1 }
+
+function setExcept(EID) { if (dragLocator.typ == "Af" || dragLocator.typ == 'A') document.getElementById('except').value = 1 }
+
+function dropFact(EID) {
+if (dragLocator.typ == "Fa") {
+	EID.value = String(dragLocator.name).match(/^[^\|]*/);
+	document.getElementById('fact').value = dragLocator.id;
+	hideMe();
+	allowLoad = false;
+}}
+
+function getElements(multiple,ids) {
+var EID = document.getElementById('elementsId').options;
+var pole = new Array;
+if (multiple) {
+	for (var i=0; i<EID.length; i++) {
+		if (EID.item(i).selected) {
+			var pushItem = (ids) ? EID.item(i).text : "{"+EID.item(i).text+"}";
+			pole.push(pushItem)
+		}
+	}
+} else {
+	var pushItem = (ids) ? EID.item(EID.selectedIndex).text : "{"+EID.item(EID.selectedIndex).text+"}";
+	pole.push(pushItem);
+}
+return pole
+}
+
+function setElement(EID,multiple) {
+var pict = (multiple) ? document.getElementById('multi').src : document.getElementById('single').src ;
+var ids = (String(document.getElementById('itemId').value).match(/~/)) ? false : true;
+var pole = getElements(multiple,ids);
+if (pole.length == 0) return
+var view = (multiple) ? pole[0]+",...("+pole.length+")" : pole[0];
+dragLocator.id = (multiple) ? 'elements' : 'element';
+dragLocator.name = (multiple) ? pole.join("\t")+"|E" : pole[0]+"|E";
+dragLocator.icon = pict;
+dragLocator.typ = 'E';
+
+allowHide = false;
+lastIndex = EID.selectedIndex;
+window.status = view;
+
+var hlp = divID.innerHTML.replace(/src="[^"]*/,"src='"+pict+"'");//replace the src of icon, which has to be viewed
+divID.innerHTML = hlp.replace(/[^>]*$/,view);	//replace the name to be viewed
+if (divID.style.visibility == "hidden")	{ divID.style.visibility = "visible"; moveimg();}
+}
+
+function showElement2(EID) {
+if (String(dragLocator.typ).match(/A/)) return
+if (EID.selectedIndex < 0 || ctrl) { hideMe(); return }
+if (Click) { setElement(EID) }
+else { Click=true }
+}
+
+function showElement(EID,multiple) {
+if (String(dragLocator.typ).match(/A/)) return
+if (EID.selectedIndex < 0 || ctrl) { hideMe(); return }
+if (divID.style.visibility == 'hidden' || (String(dragLocator.id).match(/element/))) {
+	useStyle(EID,'high');
+	setElement(EID,multiple);
+	Click=(multiple) ? true : false;
+}}
+
+function useStyle(EID,newName,visibleAttr) {
+visibleAttr = (visibleAttr) ?  (divID.style.visibility == "visible" && String(dragLocator.typ).match(/A/)) ? true : false : (divID.style.visibility == "visible") ? false : true;
+if (divID && visibleAttr) EID.className = newName;
+}
+
+//shows / hides the right panel with attributes elements
+function ocElements(side) {
+var EID = document.getElementById('openClose');
+var task = (side) ? side : (String(EID.src).match(/left/)) ? 'open' : 'close';
+var iframe = parent.document.getElementById('elements_iframe');
+var shrt = (iframe.offsetLeft > 801) ? 2 : 3;
+var first = Number(String(parent.document.getElementById('tree_iframe').style.width).replace(/.$/,""));
+var wdth = parent.document.getElementById('width').value;
+var path = (document.getElementById('skin').value) ? "skins/"+document.getElementById('skin').value+"/" : "";
+if (task == 'open') {
+//	EID.src = path+'img/rightArr.'+document.getElementById('imgType').value;
+	EID.src = path+'img/rightArr.png';
+	if (iframe.style) {
+		parent.document.getElementById('drop_iframe').style.width = (100-wdth-first) + "%";;
+		iframe.style.left = (100-wdth) + "%";
+		iframe.style.width = wdth + "%";
+		document.getElementById('content').style.display = 'block';
+		document.getElementById('contentTitle').style.display = 'inline';
+		document.getElementById('single').style.display = 'inline';
+		initOffset(2);
+		OC = true;
+	}
+} else if (task == 'close') {
+//	EID.src = path+'img/leftArr.'+document.getElementById('imgType').value;
+	EID.src = path+'img/leftArr.png';
+	if (iframe.style) {
+		iframe.style.left = (100-shrt)+'%';
+		iframe.style.width = shrt+'%';
+		parent.document.getElementById('drop_iframe').style.width = (100-first-shrt)+'%';
+		document.getElementById('content').style.display = 'none';
+		document.getElementById('contentTitle').style.display = 'none';
+		document.getElementById('single').style.display = 'none';
+		initOffset(2);
+		OC = false;
+	}
+}
+}
+
+function changeTitle() {
+var ID = document.getElementById('itemId').value;
+if (String(ID).match(/~/)) {
+	var nodeParent = findItemById(String(ID).match(/^[^~]*/));
+	var nodeChild = findItemById(ID,true);
+	if (nodeParent[3] && nodeChild[3]) set('contentTitle','innerHTML',"&nbsp;"+nodeParent[2]+", "+nodeChild[2]);
+} else if (ID) {
+	var node = findItemById(ID);
+	if (node[3]) set('contentTitle','innerHTML',"&nbsp;"+node[2]+"&nbsp;");
+}
+return true
+}
+
+function load_me() {
+if (divID.style.visibility == "visible" && allowLoad ) {
+	if (!OC) ocElements('open');
+	var ID = dragLocator.id;
+	var node = findItemById(ID);
+	if (node[3] == 'M' || node[3] == '' || dragLocator.typ == 'E') { //metric has no elements or node wasn't found
+			return true
+		} else {
+			hideMe();
+			document.getElementById('itemId').value=ID;
+			document.getElementById('submit').click();
+		}
+} else {
+	allowLoad = true;
+}
+return true
+}
+@
+
+
+1.16
+log
+@interface for setting of dynamic params implemented
+@
+text
+@d1 1
+a1 1
+// $Id: elements.js,v 1.15 2003/12/04 12:52:52 jiri_schmid Exp $
+d5 1
+a5 1
+var click = true;
+d60 2
+a61 2
+if (click) { setElement(EID) }
+else { click=true }
+d68 1
+d70 1
+a70 1
+	click=(multiple) ? true : false;
+@
+
+
+1.15
+log
+@img type changes implemented into javascript
+@
+text
+@d1 1
+a1 1
+// $Id: elements.js,v 1.14 2003/10/02 14:44:54 jiri_schmid Exp $
+d44 1
+a44 1
+dragLocator.name = (multiple) ? pole.join(",")+"|E" : pole[0]+"|E";
+@
+
+
+1.14
+log
+@parameters - elements implemented
+@
+text
+@d1 1
+a1 1
+// $Id: elements.js,v 1.13 2003/09/30 15:46:41 jiri_schmid Exp $
+d87 2
+a88 1
+	EID.src = path+'img/rightArr.'+document.getElementById('imgType').value;
+d100 2
+a101 1
+	EID.src = path+'img/leftArr.'+document.getElementById('imgType').value;
+@
+
+
+1.13
+log
+@elements handling changes, format2d colors changes
+@
+text
+@d1 1
+a1 1
+// $Id: elements.js,v 1.12 2003/09/01 13:35:24 jiri_schmid Exp $
+d20 1
+a20 1
+function getElements(multiple) {
+d24 6
+a29 1
+	for (var i=0; i<EID.length; i++) if (EID.item(i).selected) pole.push("{"+EID.item(i).text+"}")
+d31 2
+a32 1
+	pole.push(EID.item(EID.selectedIndex).text)
+d39 2
+a40 1
+var pole = getElements(multiple);
+d44 1
+a44 1
+dragLocator.name = (multiple) ? pole.join(",")+"|E" : "{"+pole[0]+"}"+"|E";
+@
+
+
+1.12
+log
+@finishing imlementation of skins
+@
+text
+@d1 1
+a1 1
+// $Id: elements.js,v 1.11 2003/09/01 12:40:09 jiri_schmid Exp $
+d8 3
+a10 1
+function setTrue(EID) { if (dragLocator.typ == "Af" || dragLocator.typ == 'A') document.getElementById('not').value = 1 }
+@
+
+
+1.11
+log
+@skins implemented. mozilla skin - temporarily copy msie content
+@
+text
+@d1 1
+a1 1
+// $Id: elements.js,v 1.10 2003/08/14 12:43:51 jiri_schmid Exp $
+d78 1
+a78 1
+	EID.src = path+'img/rightArr.gif';
+d90 1
+a90 1
+	EID.src = path+'img/leftArr.gif';
+@
+
+
+1.10
+log
+@huge code, minor functionality and design improvment on main tree
+@
+text
+@d1 1
+a1 1
+// $Id: elements.js,v 1.9 2003/08/12 14:09:49 jiri_schmid Exp $
+d76 1
+d78 1
+a78 1
+	EID.src = 'img/rightArr.gif';
+d90 1
+a90 1
+	EID.src = 'img/leftArr.gif';
+@
+
+
+1.9
+log
+@left pane is colapsible now
+@
+text
+@d1 1
+a1 1
+// $Id: elements.js,v 1.8 2003/08/07 08:02:21 jiri_schmid Exp $
+d14 1
+a14 1
+	hide_me();
+d50 1
+a50 1
+if (EID.selectedIndex < 0 || ctrl) { hide_me(); return }
+d57 1
+a57 1
+if (EID.selectedIndex < 0 || ctrl) { hide_me(); return }
+d124 1
+a124 1
+			hide_me();
+@
+
+
+1.8
+log
+@elements negation implemented
+@
+text
+@d1 1
+a1 1
+// $Id: elements.js,v 1.7 2003/08/05 12:49:47 jiri_schmid Exp $
+d74 2
+a75 1
+var wdth = Number(String(parent.document.getElementById('tree_iframe').style.width).replace(/.$/,""));
+d79 1
+a79 1
+		parent.document.getElementById('drop_iframe').style.width = (100-2*wdth) + "%";;
+d93 1
+a93 1
+		parent.document.getElementById('drop_iframe').style.width = (100-wdth-shrt)+'%';
+d111 1
+a111 1
+	if (node[3]) set('contentTitle','innerHTML',"&nbsp;"+node[2]);
+@
+
+
+1.7
+log
+@fact input field on right pane implemented
+@
+text
+@d1 1
+a1 1
+// $Id: elements.js,v 1.6 2003/08/05 08:02:11 jiri_schmid Exp $
+d7 2
+@
+
+
+1.6
+log
+@bug fixies
+@
+text
+@d1 1
+a1 1
+// $Id: elements.js,v 1.5 2003/08/01 15:18:44 jiri_schmid Exp $
+d6 9
+d20 1
+a20 1
+	for (var i=0; i<EID.length; i++) if (EID.item(i).selected) pole.push(EID.item(i).text)
+d33 1
+a33 1
+dragLocator.name = (multiple) ? pole.join(",")+"|E" : pole[0]+"|E";
+d71 1
+a71 1
+var shrt = (iframe.offsetLeft > 800) ? 2 : 3;
+d114 1
+a114 1
+if (divID.style.visibility == "visible") {
+d125 2
+@
+
+
+1.5
+log
+@minor improvment and code changes
+@
+text
+@d1 1
+a1 1
+// $Id: elements.js,v 1.4 2003/08/01 13:07:14 jiri_schmid Exp $
+d58 3
+a60 1
+function ocElements(EID) {
+d64 1
+a64 1
+if (String(EID.src).match(/left/)) {
+d76 1
+a76 1
+} else {
+d106 1
+a106 1
+	if (!OC) document.getElementById('openClose').onclick();
+@
+
+
+1.4
+log
+@graph3d relevant changes made to cooperate with right pane, multiple metric not alowed yet
+@
+text
+@d1 1
+a1 1
+// $Id: elements.js,v 1.3 2003/07/31 14:34:42 jiri_schmid Exp $
+d70 1
+d82 1
+@
+
+
+1.3
+log
+@right pane implementation aproaching final stage
+@
+text
+@d1 1
+a1 1
+// $Id: elements.js,v 1.2 2003/07/31 12:18:22 jiri_schmid Exp $
+d21 1
+@
+
+
+1.2
+log
+@right pane stage 3
+@
+text
+@d1 1
+a1 1
+// $Id: elements.js,v 1.18 2003/07/29 15:18:06 jiri_schmid Exp $
+d7 11
+d20 2
+a21 1
+var view = (multiple) ? EID.id : EID.item(EID.selectedIndex).text;
+d23 1
+a23 1
+dragLocator.name = view+"|E";
+@
+
+
+1.1
+log
+@search for optimal combination of physical tables for join
+@
+text
+@d5 1
+d7 15
+a21 7
+function showElement(EID,e) {
+if (divID.style.visibility == "visible") {
+	return
+} else {
+	//alert(EID.item(EID.selectedIndex).text);
+	//test(e,'key');
+	window.status=ctrl;
+d23 6
+a28 1
+return true
+d31 11
+a41 3
+function useStyle(EID,newName) { 
+if (divID)
+	if (divID.style.visibility == "visible") EID.className = newName;
+a88 1
+	hide_me();
+d92 1
+a92 1
+	if (node[3] == 'M' || node[3] == '') { //metric has no elements or node wasn't found
+d95 1
+@
+

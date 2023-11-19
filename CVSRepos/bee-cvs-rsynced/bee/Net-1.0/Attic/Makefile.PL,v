@@ -1,0 +1,95 @@
+head	1.2;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2003.08.11.06.34.18;	author numberone;	state dead;
+branches;
+next	1.1;
+
+1.1
+date	2003.02.05.15.46.36;	author numberone;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@removing old dir Net-1.0
+@
+text
+@use ExtUtils::MakeMaker;
+use Config;
+
+# The existence of the ./libnet/Makefile.PL file causes MakeMaker
+# to automatically include Makefile code for the targets
+#	config, all, clean, realclean and libnet/Makefile
+# which perform the corresponding actions in the subdirectory.
+
+$define = ($^O eq 'MSWin32') ? '-DMSDOS' : '';
+if ($^O eq 'MSWin32') { $myextlib = 'libnet\\libnet$(LIB_EXT)'; }
+else                  { $myextlib = 'libnet/libnet$(LIB_EXT)';  }
+
+WriteMakefile(
+          NAME	=> 'Net',
+          MYEXTLIB => $myextlib,
+          MAN3PODS 	=> {}, 	# Pods will be built by installman.
+          XSPROTOARG => '-noprototypes', 		# XXX remove later?
+          VERSION_FROM => 'Net.pm',
+          DEFINE => $define,
+	      PERL_MALLOC_OK => 1,
+             );
+
+sub MY::postamble {
+  if ($^O =~ /MSWin32/ && Win32::IsWin95()) {
+	if ($Config{'make'} =~ /dmake/i) {
+	    # dmake-specific
+	    return <<'EOT';
+$(MYEXTLIB): libnet/Makefile
+@@[
+	cd libnet
+	$(MAKE) all
+	cd ..
+]
+EOT
+	} elsif ($Config{'make'} =~ /nmake/i) {
+	    #
+	    return <<'EOT';
+$(MYEXTLIB): libnet/Makefile
+	cd libnet
+	$(MAKE) all
+	cd ..
+EOT
+	} 
+} elsif ($^O ne 'VMS') {
+    '
+$(MYEXTLIB): libnet/Makefile
+	cd libnet && $(MAKE) all
+';
+  }
+  else {
+    '   
+$(MYEXTLIB) : [.libnet]descrip.mms
+	set def [.libnet]
+    $(MMS) all
+    set def [-]
+';  
+  }
+}
+@
+
+
+1.1
+log
+@libnet-1.0, README
+@
+text
+@@
+

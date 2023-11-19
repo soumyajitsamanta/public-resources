@@ -1,0 +1,51 @@
+head	1.1;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.1
+date	2004.03.01.16.16.49;	author numberone;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@
+Added beard2 -- new bear daemon source tree.
+
+mdata subsystem works, some docs, some tests, etc.
+
+cached in progress
+@
+text
+@#!/usr/bin/perl -w
+
+use IPC::ShareLite;
+
+my $shm = new IPC::ShareLite(-key => 1971, -create => 1) or die $!;
+
+$SIG{ALRM} = sub { printf "sigalarm\n"; };
+
+fork;
+print "$$ going to lock()\n";
+$shm->lock(0);
+print "$$ locked\n";
+my $sec = shift;
+while($sec > 0) {
+	print "$$ sleeping\n";
+	$sec -= sleep($sec);
+}
+print "$$ unlocking\n";
+$shm->unlock();
+
+print "$$ ok\n";
+
+
+@

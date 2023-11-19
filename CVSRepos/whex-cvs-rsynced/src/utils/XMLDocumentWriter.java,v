@@ -1,0 +1,323 @@
+head	1.2;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2007.07.11.09.09.54;	author pyadav;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2006.01.13.12.38.15;	author igorludi;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@Modified file's for Rex 0.7.
+@
+text
+@package rex.utils;
+
+/**
+ *   Copyright (C) 2006 CINCOM SYSTEMS, INC.
+ *   All Rights Reserved
+ *   Copyright (C) 2006 Igor Mekterovic
+ *   All Rights Reserved
+ */
+
+
+import org.w3c.dom.CDATASection;
+import org.w3c.dom.Comment;
+import org.w3c.dom.Document;
+import org.w3c.dom.DocumentType;
+import org.w3c.dom.Element;
+import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.Node;
+import org.w3c.dom.ProcessingInstruction;
+import org.w3c.dom.Text;
+
+import org.apache.log4j.*;
+
+
+public class XMLDocumentWriter {
+  static Logger logger;
+
+  /** Initialize logger */
+  public XMLDocumentWriter() {
+    logger=Logger.getLogger(XMLDocumentWriter.class);
+  }
+
+  public void write(Node node) {
+       write(node, "");
+  }
+  
+  public void write(Node node, String align) {
+      // log output depends on the type of the node
+      short nodeType=node.getNodeType();
+      if (nodeType==Node.DOCUMENT_NODE) 
+      {
+          logger.info(align + "<?xml version='1.0'?>");
+          Node child = ((Document) node).getFirstChild(); // first node
+          while (child != null)// till not null 
+          { 
+              write(child, align); // log Output node
+              child = child.getNextSibling(); // next node
+          }
+      } 
+      else if(nodeType==Node.DOCUMENT_TYPE_NODE)// <!DOCTYPE> tag 
+      {          
+      logger.info("<!DOCTYPE " + ((DocumentType) node).getName() + ">");
+      }
+      else if(nodeType==Node.ELEMENT_NODE)// Most nodes are Elements 
+      { 
+          Element element = (Element) node;        
+          logger.info(align + "<" + element.getTagName()); // Begin start tag        		
+          NamedNodeMap attrs = element.getAttributes(); // Get attributes
+          for (int i = 0; i < attrs.getLength(); i++) 
+          {
+              logger.info(" " + attrs.item(i).getNodeName() + "='" + // Log attributes name
+              transform(attrs.item(i).getNodeValue()) + "'"); // Log attributes value
+          }        
+          logger.info(">");
+
+          String newalign = align + "    ";
+          Node child = element.getFirstChild(); 
+          while (child != null) 
+          {
+              write(child, newalign); // Log child
+              child = child.getNextSibling();
+          }
+          logger.info(align + "</" + element.getTagName() + ">");// Log tag   		
+      }
+      else if(nodeType==Node.TEXT_NODE) 
+      { 
+          String text = ((Text)node).getData().trim(); 
+          if ((text != null) && text.length() > 0)
+          {
+              logger.info(align + transform(text));
+          }
+      }
+      else if(nodeType==Node.PROCESSING_INSTRUCTION_NODE) 
+      { 
+          logger.info(align + "<?" + ((ProcessingInstruction) node).getTarget() + " " 
+                + ((ProcessingInstruction) node).getData() + "?>");
+      }
+      else if(nodeType==Node.ENTITY_REFERENCE_NODE) 
+      { 
+          logger.info(align + "&" + node.getNodeName() + ";");
+      }
+      else if(nodeType==Node.CDATA_SECTION_NODE) 
+      {      
+          logger.info(align + "<" + "![CDATA[" + ((CDATASection) node).getData() + "]]" + ">");
+      }
+      else if(nodeType==Node.COMMENT_NODE) 
+      {       
+          logger.info(align + "<!--" + ((Comment) node).getData() + "-->");
+      }
+      else 
+      { 
+      logger.error("Ignoring node: " + node.getClass().getName());
+      }
+    }
+  
+  String transform(String s) {
+    StringBuffer sb = new StringBuffer();
+    char[] c = s.toCharArray();
+    for (int i = 0; i < c.length; i++)
+    {
+      switch (c[i]) {
+      default:
+        sb.append(c[i]);
+        break;
+      case '<'  : sb.append("&lt;");
+      break;
+      case '>'  : sb.append("&gt;");
+      break;
+      case '&'  : sb.append("&amp;");
+      break;
+      case '\"' : sb.append("&quot;");
+      break;
+      case '\'' : sb.append("&apos;");
+      break;
+      }
+    }
+    return sb.toString();
+  }  
+}
+@
+
+
+1.1
+log
+@*** empty log message ***
+@
+text
+@d2 6
+a7 8
+/*
+ * Copyright (c) 2000 David Flanagan.  All rights reserved.
+ * This code is from the book Java Examples in a Nutshell, 2nd Edition.
+ * It is provided AS-IS, WITHOUT ANY WARRANTY either expressed or implied.
+ * You may study, use, and modify it for any non-commercial purpose.
+ * You may distribute it non-commercially as long as you retain this notice.
+ * For a commercial use license, or to purchase the book (recommended),
+ * visit http://www.davidflanagan.com/javaexamples2.
+a9 1
+import java.io.PrintWriter;
+d21 3
+a23 7
+/**
+ * Output a DOM Level 1 Document object to a java.io.PrintWriter as a simple XML
+ * document. This class does not handle every type of DOM node, and it doesn't
+ * deal with all the details of XML like DTDs, character encodings and preserved
+ * and ignored whitespace. However, it does output basic well-formed XML that
+ * can be parsed by a non-validating parser.
+ */
+d25 1
+a25 1
+  PrintWriter out; // the stream to send output to
+d27 3
+a29 3
+  /** Initialize the output stream */
+  public XMLDocumentWriter(PrintWriter out) {
+    this.out = out;
+a31 6
+  /** Close the output stream. */
+  public void close() {
+    out.close();
+  }
+
+  /** Output a DOM Node (such as a Document) to the output stream */
+d33 1
+a33 1
+    write(node, "");
+d35 63
+a97 15
+
+  /**
+   * Output the specified DOM Node object, printing it using the specified
+   * indentation string
+   */
+  public void write(Node node, String indent) {
+    // The output depends on the type of the node
+    switch (node.getNodeType()) {
+    case Node.DOCUMENT_NODE: { // If its a Document node
+      Document doc = (Document) node;
+      out.println(indent + "<?xml version='1.0'?>"); // Output header
+      Node child = doc.getFirstChild(); // Get the first node
+      while (child != null) { // Loop 'till no more nodes
+        write(child, indent); // Output node
+        child = child.getNextSibling(); // Get next node
+d99 3
+a101 26
+      break;
+    }
+    case Node.DOCUMENT_TYPE_NODE: { // It is a <!DOCTYPE> tag
+      DocumentType doctype = (DocumentType) node;
+      // Note that the DOM Level 1 does not give us information about
+      // the the public or system ids of the doctype, so we can't output
+      // a complete <!DOCTYPE> tag here. We can do better with Level 2.
+      out.println("<!DOCTYPE " + doctype.getName() + ">");
+      break;
+    }
+    case Node.ELEMENT_NODE: { // Most nodes are Elements
+      Element elt = (Element) node;
+      out.print(indent + "<" + elt.getTagName()); // Begin start tag
+      NamedNodeMap attrs = elt.getAttributes(); // Get attributes
+      for (int i = 0; i < attrs.getLength(); i++) { // Loop through them
+        Node a = attrs.item(i);
+        out.print(" " + a.getNodeName() + "='" + // Print attr. name
+            fixup(a.getNodeValue()) + "'"); // Print attr. value
+      }
+      out.println(">"); // Finish start tag
+
+      String newindent = indent + "    "; // Increase indent
+      Node child = elt.getFirstChild(); // Get child
+      while (child != null) { // Loop
+        write(child, newindent); // Output child
+        child = child.getNextSibling(); // Get next child
+a102 4
+
+      out.println(indent + "</" + // Output end tag
+          elt.getTagName() + ">");
+      break;
+d104 11
+a114 5
+    case Node.TEXT_NODE: { // Plain text node
+      Text textNode = (Text) node;
+      String text = textNode.getData().trim(); // Strip off space
+      if ((text != null) && text.length() > 0) // If non-empty
+        out.println(indent + fixup(text)); // print text
+d116 1
+a116 5
+    }
+    case Node.PROCESSING_INSTRUCTION_NODE: { // Handle PI nodes
+      ProcessingInstruction pi = (ProcessingInstruction) node;
+      out.println(indent + "<?" + pi.getTarget() + " " + pi.getData()
+          + "?>");
+d118 1
+a118 3
+    }
+    case Node.ENTITY_REFERENCE_NODE: { // Handle entities
+      out.println(indent + "&" + node.getNodeName() + ";");
+d120 1
+a120 6
+    }
+    case Node.CDATA_SECTION_NODE: { // Output CDATA sections
+      CDATASection cdata = (CDATASection) node;
+      // Careful! Don't put a CDATA section in the program itself!
+      out.println(indent + "<" + "![CDATA[" + cdata.getData() + "]]"
+          + ">");
+d122 1
+a122 8
+    }
+    case Node.COMMENT_NODE: { // Comments
+      Comment c = (Comment) node;
+      out.println(indent + "<!--" + c.getData() + "-->");
+      break;
+    }
+    default: // Hopefully, this won't happen too much!
+      System.err.println("Ignoring node: " + node.getClass().getName());
+a123 28
+    }
+  }
+
+  // This method replaces reserved characters with entities.
+  String fixup(String s) {
+    StringBuffer sb = new StringBuffer();
+    int len = s.length();
+    for (int i = 0; i < len; i++) {
+      char c = s.charAt(i);
+      switch (c) {
+      default:
+        sb.append(c);
+        break;
+      case '<':
+        sb.append("&lt;");
+        break;
+      case '>':
+        sb.append("&gt;");
+        break;
+      case '&':
+        sb.append("&amp;");
+        break;
+      case '"':
+        sb.append("&quot;");
+        break;
+      case '\'':
+        sb.append("&apos;");
+        break;
+d127 1
+a127 1
+  }
+@
+

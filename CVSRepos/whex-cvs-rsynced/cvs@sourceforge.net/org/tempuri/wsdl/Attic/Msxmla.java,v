@@ -1,0 +1,53 @@
+head	1.2;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2005.06.28.12.26.17;	author igorludi;	state dead;
+branches;
+next	1.1;
+
+1.1
+date	2005.06.28.11.35.03;	author igorludi;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@*** empty log message ***
+@
+text
+@/**
+ * Msxmla.java
+ *
+ * This file was auto-generated from WSDL
+ * by the Apache Axis WSDL2Java emitter.
+ */
+
+package org.tempuri.wsdl;
+
+public interface Msxmla extends javax.xml.rpc.Service {
+    public java.lang.String getclsXMLAProxSoapPortAddress();
+
+    public org.tempuri.wsdl.ClsXMLAProxSoapPort getclsXMLAProxSoapPort() throws javax.xml.rpc.ServiceException;
+
+    public org.tempuri.wsdl.ClsXMLAProxSoapPort getclsXMLAProxSoapPort(java.net.URL portAddress) throws javax.xml.rpc.ServiceException;
+}
+@
+
+
+1.1
+log
+@first time commit
+@
+text
+@@
+

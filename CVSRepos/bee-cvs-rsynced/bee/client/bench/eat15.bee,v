@@ -1,0 +1,203 @@
+head	1.3;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.3
+date	2004.06.15.10.11.40;	author numberone;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2004.06.08.15.11.59;	author numberone;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2004.05.11.10.50.39;	author tuco80;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.3
+log
+@
+new Prepare API
+
+This breaks compatibility with old .bee code, because every stream
+input/output must be initialized first, bee has to call ->prepare()
+method on stream objects in .bee code before calling ->put or ->get.
+
+Or, instead of ->prepare(), bee can call general ->prepare_sql($cmd),
+or, in the future, methods like ->prepare_select($table,$cols,$where,..),
+->prepare_update(...), ->prepare_delete(...)
+
+Next new method, execute(), is same as put() for UPDATE or DELETE.
+But note that in order to do SELECT, we need to call DBI's execute().
+Method prepare() with no arguments call's execute() for as.
+
+So, correct is:
+
+$input->prepare()
+$input->fetch, fetch, fetch, ..
+
+$input->prepare_sql("SELECT ...") or die "no SQL stream"
+$input->exeucte() # !
+$input->fetch, fetch, fetch, ..
+
+$input->prepare_sql("UPDATE ...") or die "no SQL stream"
+$input->execute(..), execute, excute (or put())
+
+All stream .bee input/output variables have following methods:
+
+prepare()         -- prepare and execute DBI statement
+prepare_sql($cmd) -- prepare DBI statement
+execute()         -- execute DBI statement
+put()             -- execute DBI statement or write to stream
+fetch()           -- fetch from DBI statement or read to stream
+table()           -- returns table name, from URL
+fields()          -- returns list of fields, from URL
+@
+text
+@<?xml version="1.0" encoding="ISO-8859-2"?>
+<script lang="perl" name='eat15'>
+
+<input name="in1" type='stream' arity='1' />
+<input name="in2" type='stream' arity='1' />
+<input name="in3" type='stream' arity='1' />
+<input name="in4" type='stream' arity='1' />
+<input name="in5" type='stream' arity='1' />
+<input name="in6" type='stream' arity='1' />
+<input name="in7" type='stream' arity='1' />
+<input name="in8" type='stream' arity='1' />
+<input name="in9" type='stream' arity='1' />
+<input name="in10" type='stream' arity='1' />
+<input name="in11" type='stream' arity='1' />
+<input name="in12" type='stream' arity='1' />
+<input name="in13" type='stream' arity='1' />
+<input name="in14" type='stream' arity='1' />
+<input name="in15" type='stream' arity='1' />
+
+<code>
+<![CDATA[
+
+in1->prepare();
+in2->prepare();
+in3->prepare();
+in4->prepare();
+in5->prepare();
+in6->prepare();
+in7->prepare();
+in8->prepare();
+in9->prepare();
+in10->prepare();
+in11->prepare();
+in12->prepare();
+in13->prepare();
+in14->prepare();
+in15->prepare();
+
+print "eat2: hello, im $$\n";
+
+my $i = 0;
+#my(@@x,@@y);
+
+while(1) {
+	last unless($in1->fetch);
+	$in2->fetch;
+	$in3->fetch;
+	$in4->fetch;
+	$in5->fetch;
+	$in6->fetch;
+	$in7->fetch;
+	$in8->fetch;
+	$in9->fetch;
+	$in10->fetch;
+	$in11->fetch;
+	$in12->fetch;
+	$in13->fetch;
+	$in14->fetch;
+	$in15->fetch;
+	next;
+
+	last unless((@@x) = $in1->fetch);
+	last unless((@@y) = $in2->fetch);
+	last unless((@@y) = $in3->fetch);
+	last unless((@@y) = $in4->fetch);
+	last unless((@@y) = $in5->fetch);
+	last unless((@@y) = $in6->fetch);
+	last unless((@@y) = $in7->fetch);
+	last unless((@@y) = $in8->fetch);
+	last unless((@@y) = $in9->fetch);
+	last unless((@@y) = $in10->fetch);
+	last unless((@@y) = $in11->fetch);
+	last unless((@@y) = $in12->fetch);
+	last unless((@@y) = $in13->fetch);
+	last unless((@@y) = $in14->fetch);
+	last unless((@@y) = $in15->fetch);
+
+	$i++;
+}
+
+]]>
+</code>
+
+</script>
+
+@
+
+
+1.2
+log
+@
+Prepare API
+
+every bee must call ->prepare() before ->put()/->fetch()
+
+or they can call ->prepare_sql("SELECT/INSERT ...")
+
+->put() is identical to new ->execute()
+@
+text
+@d23 16
+@
+
+
+1.1
+log
+@Examples for buffering debug
+@
+text
+@d26 2
+d29 16
+a44 16
+	my $y;
+	last unless(my($x) = $in1->fetch);
+	last unless(($y) = $in2->fetch);
+	last unless(($y) = $in3->fetch);
+	last unless(($y) = $in4->fetch);
+	last unless(($y) = $in5->fetch);
+	last unless(($y) = $in6->fetch);
+	last unless(($y) = $in7->fetch);
+	last unless(($y) = $in8->fetch);
+	last unless(($y) = $in9->fetch);
+	last unless(($y) = $in10->fetch);
+	last unless(($y) = $in11->fetch);
+	last unless(($y) = $in12->fetch);
+	last unless(($y) = $in13->fetch);
+	last unless(($y) = $in14->fetch);
+	last unless(($y) = $in15->fetch);
+d46 15
+a60 1
+#	die if($x ne $y);
+d62 1
+a62 1
+#	print "eat2: $i \"$x\"\n" if((++$i % 1000) == 0);
+@
+

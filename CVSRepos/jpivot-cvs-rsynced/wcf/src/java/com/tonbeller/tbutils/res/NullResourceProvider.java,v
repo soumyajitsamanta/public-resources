@@ -1,0 +1,74 @@
+head	1.2;
+access;
+symbols
+	jpivot_1_8_0:1.2
+	focus_1_6_0:1.2.0.6
+	wcf_1_7_0:1.2
+	wcf_1_6_0:1.2
+	jpivot_1_5_0:1.2.0.4
+	Root_jpivot_1_5_0:1.2
+	mondrian_xmla_2005_08_25:1.2.0.2
+	sourceforge_sync:1.2;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2005.07.25.12.53.55;	author avix;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2005.07.05.14.04.28;	author avix;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@sourceforge_sync
+@
+text
+@package com.tonbeller.tbutils.res;
+
+import java.util.Collection;
+import java.util.Collections;
+
+/**
+ * Dummy that does not know any key/values
+ */
+public class NullResourceProvider implements ResourceProvider {
+
+  public String getString(String key) {
+    return null;
+  }
+
+  public Collection keySet() {
+    return Collections.EMPTY_SET;
+  }
+
+  public void close() {
+  }
+
+  public void dump(Dumper d) {
+    d.dump(this);
+  }
+  public String getName() {
+    return "Empty Provider";
+  }
+}
+@
+
+
+1.1
+log
+@initial version
+@
+text
+@d22 6
+@
+

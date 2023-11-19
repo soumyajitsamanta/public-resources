@@ -1,0 +1,71 @@
+head	1.1;
+access;
+symbols;
+locks; strict;
+comment	@ * @;
+
+
+1.1
+date	2004.03.01.16.16.49;	author numberone;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@
+Added beard2 -- new bear daemon source tree.
+
+mdata subsystem works, some docs, some tests, etc.
+
+cached in progress
+@
+text
+@#include<sys/types.h>
+#include<sys/mman.h>
+#include<string.h>
+#include<fcntl.h>
+#include<stdio.h>
+
+// usage ./mmap [f|m] MB
+
+int main(int argc,char* argv[]) {
+	char buff[4096+1];
+	int i,n,fd,file;
+	char* ptr;
+	FILE *F;
+	int MB;
+
+	file = (argv[1][0] == 'f');
+	MB = atoi(argv[2]);
+	if(!MB) exit(3);
+
+	if(file) { // zapis pomoci write
+		if(!(F = fopen("test","r+"))) exit(3);
+		memset((void*)buff,(int)"a",4096);
+		buff[4096] = 0;
+		for(i=0;i<(MB*1048576);i+=4096) {
+			fprintf(F,buff);
+		}
+		fclose(F);
+
+	} else { // zapis pres mmap pamet
+		if((fd = open("test",O_RDWR)) < 0) exit(1);
+
+		ptr = (char*)mmap(NULL,MB*1048576,PROT_READ|PROT_WRITE,MAP_SHARED,fd,0);	
+		if(ptr == MAP_FAILED) { perror("mmap"); exit(2); }
+		for(i=0;i<(MB*1048576)-20;i+=12) {
+			memcpy(ptr+i,"hello world\n",12);
+		}
+
+		munmap(ptr,4096);
+	} 
+	
+//	while((n=read(fd,buff,4096))) { }
+	return 0;
+}
+@

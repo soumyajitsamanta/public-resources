@@ -1,0 +1,43 @@
+head	1.1;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.1
+date	2003.10.01.15.30.25;	author jiri_schmid;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@how to create new object in the object tree
+@
+text
+@How ro create new object in the object tree:
+
+01] create directory under the path to MetaDatas ..usualy beard/mdata/[project]/
+02] create well formed xml file - the folder definition file of the same name as directory created in step 1
+03] add appropriate icon into folder /img/ for each defined skin
+04] add appropriate object type to be handled on BearServer into bearlib.pl - JoinMetadata / first foreach line
+05] add object type from step 4 into bearlib - LoadOneMData / forcearray
+06] add icon source into localib.pl - DefHiearchy / hash $icons
+07] add object type and icon type localib.pl - DefHiearchy / hash $objTr\
+08] add handling definiton into edit.cgi - do_work / elsif ... as defined other objects
+09] add handling definiton into edit.cgi - Copy / elsif ... as defined other objects
+10] add handling definiton into edit_obj.cgi - require definition / elsif ... as defined other objects
+11] add definition into tabs.def - $TabsDef ... as defined other objects
+12] add definition into tabs.def - $TabsEdit to set order of icons
+13] add language specification into each language file in directory Lang, under new hashes 'New ...'=>'New ...'
+14] add language specification into each language file in directory Lang, under new hashes 'New ... Save'=>'New ...' as defined other objects
+15] create necessary edit files under directory /edit/ for required tabs, one of them have to be named "def"
+16] define rules for taking object in the web browser in dad_drag_only.js - check_show / case ... as defined other objects
+17] add object type into tree2.js - jump as defined other object types
+
+CONGRATULAION, NOW IT SHOULD WORK PROPERLY@

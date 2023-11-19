@@ -1,0 +1,46 @@
+head	1.2;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2008.05.17.15.43.55;	author fsaz;	state dead;
+branches;
+next	1.1;
+
+1.1
+date	2005.11.28.14.02.37;	author fsaz;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@borrando viejos
+@
+text
+@<?xml version="1.0" encoding="ISO-8859-1"?>
+<RubikMdx>
+  select Crossjoin({[Marital Status].[All Marital Status]}, Crossjoin({[Gender].[All Gender]}, {[Measures].[Store Cost], [Measures].[Unit Sales]})) ON columns,
+  Hierarchize(Union(Union({[Customers].[All Customers]}, [Customers].[All Customers].Children), [Customers].[All Customers].[USA].Children)) ON rows
+from [Sales]
+  <Alias>Default_viewer</Alias>
+  <RubikConnection driver="org.hsqldb.jdbcDriver" url="jdbc:hsqldb:file:./data/resources/hsql/smallFoodmart" userName="sa" password="" catalog="file:./data/resources/catalogs/smallFoodMart.xml" />
+</RubikMdx>
+
+@
+
+
+1.1
+log
+@*** empty log message ***
+@
+text
+@@
+

@@ -1,0 +1,53 @@
+head	1.1;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.1
+date	2003.07.10.07.45.13;	author numberone;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@demo example -- apache
+@
+text
+@<?xml version="1.0" encoding="ISO-8859-2"?>
+<script lang="perl" name='split'>
+
+<input name="access_log" type='stream' arity='1' />
+
+<output name="Time" type='stream'/>
+<output name="Domain" type='stream'/>
+<!--<output name="Filepath" type='stream'/>-->
+
+<code>
+<![CDATA[
+use strict;
+
+my $RE = '^(\S+) \S+ \S+ \[([^:]+):(\d+:\d+:\d+) '.
+		 '([^\]]+)\] "(\S+) (.+?) (\S+)" (\S+) (\S+)';
+
+while(my($line) = $access_log->fetch) {
+
+	my($domain,$date,$time,$zone,$method,$page,$protocol,$code,$size) = 
+	  ($line =~ $RE) or next;
+
+	$Time->put($date,$time,$zone);
+	$Domain->put($domain);
+#	$Page->put($page);
+}
+]]>
+</code>
+
+</script>
+
+@

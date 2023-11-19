@@ -1,0 +1,445 @@
+head	1.5;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.5
+date	2003.12.16.15.53.48;	author vacula;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2003.11.19.16.07.05;	author vacula;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2003.11.19.15.43.50;	author vacula;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2003.11.18.11.59.55;	author vacula;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2003.10.04.10.30.24;	author michald;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.5
+log
+@drills for graphs
+@
+text
+@--- Map.pm.orig	2003-12-16 16:17:25.000000000 +0100
++++ Map.pm	2003-12-16 15:51:43.000000000 +0100
+@@@@ -16,8 +16,11 @@@@
+ my %Defaults = ( #Default Href is JavaScript code, which do nothing
+                  href   => 'javascript:;',
+                  lhref  => 'javascript:;',
++                 context  => 'javascript:;',
+                  hrefs  => [],
+                  lhrefs => [],
++                 context  => [],
++		 drills	=>[],
+                  #Default information and legend
+                  info   => 'x=%x   y=%y',
+                  legend => '%l',
+@@@@ -55,10 +58,12 @@@@
+ { my $self = shift;
+   my $type = ref $self->{GDGraph};
+   if ($type eq 'GD::Graph::pie') { $self->piemap(@@_) }
++  elsif ($type eq 'GD::Graph::pie3d') { $self->pie3dmap(@@_) }
+   elsif ($type eq 'GD::Graph::bars') { $self->barsmap(@@_) }
+-  elsif ($type eq 'GD::Graph::lines') { $self->linesmap(@@_) }
++  elsif ($type eq 'GD::Graph::lines') { $self->pointsmap(@@_,1) }	## $self->linesmap(@@_) 
+   elsif ($type eq 'GD::Graph::points') { $self->pointsmap(@@_) }
+   elsif ($type eq 'GD::Graph::linespoints') { $self->pointsmap(@@_,1) }
++  elsif ($type eq 'GD::Graph::area') { $$self->pointsmap(@@_,1) }	## $self->linesmap(@@_) 
+   else {die "object $type is not supported"};
+ } #imagemap
+ 
+@@@@ -76,7 +81,7 @@@@
+   my $s = "<Map Name=$name>\n";
+   foreach (1 .. $gr->{_data}->num_sets) 
+   { my @@values = $gr->{_data}->y_values($_);
+-    $s .= "\t<Area Shape=polygon Coords=\"";
++    $s .= "\t<Area Shape=\"polygon\" Coords=\"";
+     my @@points;
+     for (my $i = 0; $i < @@values; $i++)
+     { my ($x, $y) = $gr->val_to_pixel($i + 1, $data->[$_][$i], $_);
+@@@@ -91,9 +96,15 @@@@
+     my $href = $self->{lhrefs}->[$_ - 1];
+     $href = $self->{lhref} unless defined($href);
+     $href =~ s/%l/$gr->{legend}->[$_ - 1]/g;
++    my $context = $self->{contexts}->[$_ - 1];
++    $context = $self->{context} unless defined($context);
++    $context =~ s/%l/$gr->{legend}->[$_ - 1]/g;
++    my $drill = $self->{drill}->[$_ - 1];
++    $drill = $self->{drill} unless defined($drill);
++    $drill =~ s/%l/$gr->{legend}->[$_ - 1]/g;
+     my $info = $self->{info};
+     $info =~ s/%l/$gr->{legend}->[$_ - 1]/g;
+-    $s .= "\" Href=\"$href\" Title=\"$info\" Alt=\"$info\" onMouseOver=\"window.status=\'$info\'; return true;\" onMouseOut=\"window.status=\'\'; return true;\"";
++    $s .= " id=\"$drill\" Href=\"$href\" Title=\"$info\" Alt=\"$info\" onMouseOver=\"window.status=\'$info\'; return true;\" onContextMenu=\"$context\" onMouseOut=\"window.status=\'\'; return true;\"";
+     if ($self->{newWindow} and not $href =~ /javascript:/i)
+     { my $s_;
+       map
+@@@@ -141,19 +152,31 @@@@
+         $s1 .= "$xp, @@{[$yp - $lw]}, ";
+       } #if
+       my ($l, $r, $b, $t) = $gr->marker_coordinates($xp, $yp);
+-      $s .= "\t<Area Shape=rect Coords=\"$l, $t, $r, $b\" ";
++      $s .= "\t<Area Shape=\"rect\" Coords=\"$l, $t, $r, $b\" ";
+       my $href = ${$self->{hrefs}}[$_ - 1][$i];
+       $href = $self->{href} unless defined($href);
+       $href =~ s/%x/$data->[0][$i]/g; $href =~ s/%y/$data->[$_][$i]/g;
+       $href = $1.(sprintf "%$2f", $data->[0][$i]).$3 if ($href =~ /(^.*)%(\.\d)x(.*&)/);
+       $href = $1.(sprintf "%$2f", $data->[$_][$i]).$3 if ($href =~ /(^.*)%(\.\d)y(.*$)/);
+       $href =~ s/%l/@@{$gr->{legend}}->[$_ - 1]/g;
++      my $context = ${$self->{contexts}}[$_ - 1][$i];
++      $context = $self->{context} unless defined($context);
++      $context =~ s/%x/$data->[0][$i]/g; $context =~ s/%y/$data->[$_][$i]/g;
++      $context = $1.(sprintf "%$2f", $data->[0][$i]).$3 if ($context =~ /(^.*)%(\.\d)x(.*$)/);
++      $context = $1.(sprintf "%$2f", $data->[$_][$i]).$3 if ($context =~ /(^.*)%(\.\d)y(.*$)/);
++      $context =~ s/%l/@@{$gr->{legend}}->[$_ - 1]/g;
++      my $drill = ${$self->{drills}}[$_ - 1][$i];
++      $drill = $self->{drill} unless defined($drill);
++      $drill =~ s/%x/$data->[0][$i]/g; $drill =~ s/%y/$data->[$_][$i]/g;
++      $drill = $1.(sprintf "%$2f", $data->[0][$i]).$3 if ($drill =~ /(^.*)%(\.\d)x(.*$)/);
++      $drill = $1.(sprintf "%$2f", $data->[$_][$i]).$3 if ($drill =~ /(^.*)%(\.\d)y(.*$)/);
++      $drill =~ s/%l/@@{$gr->{legend}}->[$_ - 1]/g;
+       my $info = $self->{info};
+       $info =~ s/%x/$data->[0][$i]/g; $info =~ s/%y/$data->[$_][$i]/g;
+       $info = $1.(sprintf "%$2f", $data->[0][$i]).$3 if ($info =~ /(^.*)%(\.\d)x(.*&)/);
+       $info = $1.(sprintf "%$2f", $data->[$_][$i]).$3 if ($info =~ /(^.*)%(\.\d)y(.*$)/);
+       $info =~ s/%l/@@{$gr->{legend}}->[$_ - 1]/g;
+-      $s .= "Href=\"$href\" Title=\"$info\" Alt=\"$info\" onMouseOver=\"window.status=\'$info\'; return true;\" onMouseOut=\"window.status=\'\'; return true;\"";
++      $s .= " id=\"$drill\" Href=\"$href\" Title=\"$info\" Alt=\"$info\" onMouseOver=\"window.status=\'$info\'; return true;\" onContextMenu=\"$context\" onMouseOut=\"window.status=\'\'; return true;\"";
+       if ($self->{newWindow} and not $href =~ /javascript:/i)
+       { my $s_;
+         map
+@@@@ -176,7 +199,7 @@@@
+       $lhref =~ s/%l/$gr->{legend}->[$_ - 1]/g;
+       my $legend = $self->{legend};
+       $legend =~ s/%l/$gr->{legend}->[$_ - 1]/g;
+-      $s .= "\t<Area Shape=polygon Coords=\"$s1\" Href=\"$lhref\" Title=\"$legend\" Alt=\"$legend\" onMouseOver=\"window.status=\'$legend\'; return true;\" onMouseOut=\"window.status=\'\'; return true;\"";
++      $s .= "\t<Area Shape=\"polygon\" Coords=\"$s1\" Href=\"$lhref\" Title=\"$legend\" Alt=\"$legend\" onMouseOver=\"window.status=\'$legend\'; return true;\"  onMouseOut=\"window.status=\'\'; return true;\"";
+       if ($self->{newWindow} and not $lhref =~ /javascript:/i)
+       { my $s_;
+         map
+@@@@ -240,7 +263,7 @@@@
+ 	$r = int($xp - $gr->{x_step}/2
+ 	     + $_ * $gr->{x_step}/$gr->{_data}->num_sets - $bar_s);
+       }
+-      $s .= "\t<Area Shape=rect Coords=\"";
++      $s .= "\t<Area Shape=\"rect\" Coords=\"";
+       $s .= $value >= 0 ? "$l, $t, $r, $bottom\" " : "$l, $bottom, $r, $t\" ";
+       my $href = ${$self->{hrefs}}[$_ - 1][$i];
+       $href = $self->{href} unless defined($href);
+@@@@ -248,12 +271,24 @@@@
+       $href = $1.(sprintf "%$2f", $data->[0][$i]).$3 if ($href =~ /(^.*)%(\.\d)x(.*$)/);
+       $href = $1.(sprintf "%$2f", $data->[$_][$i]).$3 if ($href =~ /(^.*)%(\.\d)y(.*$)/);
+       $href =~ s/%l/@@{$gr->{legend}}->[$_ - 1]/g;
++      my $context = ${$self->{contexts}}[$_ - 1][$i];
++      $context = $self->{context} unless defined($context);
++      $context =~ s/%x/$data->[0][$i]/g; $context =~ s/%y/$data->[$_][$i]/g;
++      $context = $1.(sprintf "%$2f", $data->[0][$i]).$3 if ($context =~ /(^.*)%(\.\d)x(.*$)/);
++      $context = $1.(sprintf "%$2f", $data->[$_][$i]).$3 if ($context =~ /(^.*)%(\.\d)y(.*$)/);
++      $context =~ s/%l/@@{$gr->{legend}}->[$_ - 1]/g;
++      my $drill = ${$self->{drills}}[$_ - 1][$i];
++      $drill = $self->{drill} unless defined($drill);
++      $drill =~ s/%x/$data->[0][$i]/g; $drill =~ s/%y/$data->[$_][$i]/g;
++      $drill = $1.(sprintf "%$2f", $data->[0][$i]).$3 if ($drill =~ /(^.*)%(\.\d)x(.*$)/);
++      $drill = $1.(sprintf "%$2f", $data->[$_][$i]).$3 if ($drill =~ /(^.*)%(\.\d)y(.*$)/);
++      $drill =~ s/%l/@@{$gr->{legend}}->[$_ - 1]/g;
+       my $info = $self->{info};
+       $info =~ s/%x/$data->[0][$i]/g; $info =~ s/%y/$data->[$_][$i]/g;
+       $info = $1.(sprintf "%$2f", $data->[0][$i]).$3 if ($info =~ /(^.*)%(\.\d)x(.*$)/);
+       $info = $1.(sprintf "%$2f", $data->[$_][$i]).$3 if ($info =~ /(^.*)%(\.\d)y(.*$)/);
+       $info =~ s/%l/@@{$gr->{legend}}->[$_ - 1]/g;
+-      $s .= "Href=\"$href\" Title=\"$info\" Alt=\"$info\" onMouseOver=\"window.status=\'$info\'; return true;\" onMouseOut=\"window.status=\'\'; return true;\"";
++      $s .= " id=\"$drill\" Href=\"$href\" Title=\"$info\" Alt=\"$info\" onMouseOver=\"window.status=\'$info\'; return true;\" onContextMenu=\"$context\" onMouseOut=\"window.status=\'\'; return true;\"";
+       if ($self->{newWindow} and not $href =~ /javascript:/i)
+       { my $s_;
+         map
+@@@@ -298,7 +333,7 @@@@
+   for (my $i = 0; $i < @@values; $i++) {
+     my $pa = $pb;
+     $pb += 360 * $values[$i]/$sum;
+-    $s .= "\t<Area Shape=polygon Coords=\"".join(', ', int($gr->{xc}), int($gr->{yc}));
++    $s .= "\t<Area Shape=\"polygon\" Coords=\"".join(', ', int($gr->{xc}), int($gr->{yc}));
+     my ($xe, $ye) = &GD::Graph::pie::cartesian($gr->{w}/2, $pa, $gr->{xc}, 
+                               $gr->{yc}, $gr->{h}/$gr->{w});
+     my $oldj = $pa;
+@@@@ -325,13 +360,115 @@@@
+     $href = $1.(sprintf "%$2f", $sum).$3 if ($href =~ /(^.*)%(\.\d)s(.*$)/);
+     $href =~ s/%x/$data->[0][$i]/g;
+     $href = $1.(sprintf "%$2f", $data->[1][$i]).$3 if ($href =~ /(^.*)%(\.\d)y(.*$)/);
++    my $context = ${$self->{contexts}}[$i];
++    $context = $self->{context} unless $context;
++    $context =~ s/%p/%.0p/g; $context =~ s/%s/$sum/g; $context =~ s/%y/$data->[1][$i]/g;
++    $context = $1.(sprintf "%$2f", $pa).$3 if ($context =~ /(^.*)%(\.\d)p(.*$)/);
++    $context = $1.(sprintf "%$2f", $sum).$3 if ($context =~ /(^.*)%(\.\d)s(.*$)/);
++    $context =~ s/%x/$data->[0][$i]/g;
++    $context = $1.(sprintf "%$2f", $data->[1][$i]).$3 if ($context =~ /(^.*)%(\.\d)y(.*$)/);
++    my $drill = ${$self->{drills}}[$_ - 1][$i];
++    $drill = $self->{drill} unless defined($drill);
++    $drill =~ s/%x/$data->[0][$i]/g; $drill =~ s/%y/$data->[$_][$i]/g;
++    $drill = $1.(sprintf "%$2f", $data->[0][$i]).$3 if ($drill =~ /(^.*)%(\.\d)x(.*$)/);
++    $drill = $1.(sprintf "%$2f", $data->[$_][$i]).$3 if ($drill =~ /(^.*)%(\.\d)y(.*$)/);
++    $drill =~ s/%l/@@{$gr->{legend}}->[$_ - 1]/g;
+     my $info = $self->{info};
+     $info =~ s/%p/%.0p/g; $info =~ s/%s/$sum/g; $info =~ s/%y/$data->[1][$i]/g;
+     $info = $1.(sprintf "%$2f", $pa).$3 if ($info =~ /(^.*)%(\.\d)p(.*$)/);
+     $info = $1.(sprintf "%$2f", $sum).$3 if ($info =~ /(^.*)%(\.\d)s(.*$)/);
+     $info =~ s/%x/$data->[0][$i]/g;
+     $info = $1.(sprintf "%$2f", $data->[1][$i]).$3 if ($info =~ /(^.*)%(\.\d)y(.*$)/);
+-    $s .= ", $xe, $ye\" Href=\"$href\" Title=\"$info\" Alt=\"$info\" onMouseOver=\"window.status=\'$info\'; return true;\" onMouseOut=\"window.status=\'\'; return true;\"";
++    $s .= ", $xe, $ye\" Href=\"$href\" Title=\"$info\" Alt=\"$info\" onMouseOver=\"window.status=\'$info\'; return true;\" onContextMenu=\"$context\" id=\"$drill\" onMouseOut=\"window.status=\'\'; return true;\"";
++    if ($self->{newWindow} and not $href =~ /javascript:/i)
++    { my $s_;
++      map
++      { $s_ .= "$1=".$self->{$_}."," if (($_ =~ /window_(\w*)/i) and ($self->{$_} != 0))
++      } keys %{$self};
++      chop $s_;
++      $s .= " Target=_$name";
++      $s .= " onClick=\"window.open(\'\', \'_$name\', \'$s_\')\"; return true;";
++    } #if
++    $s .= ">\n";
++  }
++  $s .= "</Map>\n";
++  unless ($self->{noImgMarkup})
++  { $s .= "<Img UseMap=#$name Src=\"$file\" border=0 Height=@@{[$gr->{height}]} Width=@@{[$gr->{width}]} ";
++    map
++    { $s .= "$1=".($self->{$_})." " if ($_ =~ /img_(\w*)/i) and defined($self->{$_})
++    } keys %{$self};
++    chop $s;
++    $s .= ">\n";
++  } #unless
++  return $s;
++} #piemap
++
++#--------------------------------------------- make map for Pie3d graph
++sub pie3dmap($$) #($file, \@@data)
++{ my $self = shift;
++  my ($file, $data) = @@_;
++  my $gr = $self->{GDGraph};
++  my $name = defined $self->{mapName} ? $self->{mapName} : time;
++  my $s = "<Map Name=$name>\n";
++  $gr->check_data($data);
++  $gr->setup_coords();
++  
++  $ANGLE_OFFSET += $gr->{start_angle};
++  my $sum = 0;
++  my @@values = $gr->{_data}->y_values(1);
++  foreach (@@values) {$sum += $_}
++  die "Pie data total is <= 0" unless $sum > 0;
++  my $pb = $self->{start_angle};
++  for (my $i = 0; $i < @@values; $i++) {
++    my $pa = $pb;
++    $pb += 360 * $values[$i]/$sum;
++    $s .= "\t<Area Shape=\"polygon\" Coords=\"".join(', ', int($gr->{xc}), int($gr->{yc}));
++    my ($xe, $ye) = &GD::Graph::pie::cartesian($gr->{w}/2, $pa, $gr->{xc}, 
++                              $gr->{yc}, $gr->{h}/$gr->{w});
++    my $oldj = $pa;
++    for (my $j = $pa; $j < $pb; $j += 10) {
++      $xe = int($gr->{xc} + $gr->{w} * cos(($ANGLE_OFFSET + $j) * PI / 180) / 2);
++      $ye = int($gr->{yc} + $gr->{h} * sin(($ANGLE_OFFSET + $j) * PI / 180) / 2);
++      if ($gr->{'3d'})
++      { $s .= ", $xe, $ye" if ($j == $pa and in_front($pa));
++        $s .= ", ".$gr->{left}.", ".($ye + $gr->{pie_height}).", ".$gr->{left}.", ".$ye if (($j > 90) and ($oldj < 90));
++        $s .= ", ".$gr->{right}.", ".($ye + $gr->{pie_height}).", ".$gr->{right}.", ".$ye if (($j > 270) and ($oldj < 270));
++        $s .= in_front($j) ? ", $xe, @@{[$ye + $gr->{pie_height}]}" : ", $xe, $ye";
++      } #if
++      else { $s .= ", $xe, $ye" }
++      $oldj = $j;
++    }
++    $xe = int($gr->{xc} + $gr->{w} * cos(($ANGLE_OFFSET + $pb) * PI / 180) / 2);
++    $ye = int($gr->{yc} + $gr->{h} * sin(($ANGLE_OFFSET + $pb) * PI / 180) / 2);
++    $s .= ", $xe, ".($ye + $gr->{pie_height}) if (in_front($pb) and ($gr->{'3d'}));
++    $pa = 100 * $data->[1][$i] / $sum;
++    my $href = ${$self->{hrefs}}[$i];
++    $href = $self->{href} unless $href;
++    $href =~ s/%p/%.0p/g; $href =~ s/%s/$sum/g; $href =~ s/%y/$data->[1][$i]/g;
++    $href = $1.(sprintf "%$2f", $pa).$3 if ($href =~ /(^.*)%(\.\d)p(.*$)/);
++    $href = $1.(sprintf "%$2f", $sum).$3 if ($href =~ /(^.*)%(\.\d)s(.*$)/);
++    $href =~ s/%x/$data->[0][$i]/g;
++    $href = $1.(sprintf "%$2f", $data->[1][$i]).$3 if ($href =~ /(^.*)%(\.\d)y(.*$)/);
++    my $context = ${$self->{contexts}}[$i];
++    $context = $self->{context} unless $context;
++    $context =~ s/%p/%.0p/g; $context =~ s/%s/$sum/g; $context =~ s/%y/$data->[1][$i]/g;
++    $context = $1.(sprintf "%$2f", $pa).$3 if ($context =~ /(^.*)%(\.\d)p(.*$)/);
++    $context = $1.(sprintf "%$2f", $sum).$3 if ($context =~ /(^.*)%(\.\d)s(.*$)/);
++    $context =~ s/%x/$data->[0][$i]/g;
++    $context = $1.(sprintf "%$2f", $data->[1][$i]).$3 if ($context =~ /(^.*)%(\.\d)y(.*$)/);
++    my $drill = ${$self->{drills}}[$_ - 1][$i];
++    $drill = $self->{drill} unless defined($drill);
++    $drill =~ s/%x/$data->[0][$i]/g; $drill =~ s/%y/$data->[$_][$i]/g;
++    $drill = $1.(sprintf "%$2f", $data->[0][$i]).$3 if ($drill =~ /(^.*)%(\.\d)x(.*$)/);
++    $drill = $1.(sprintf "%$2f", $data->[$_][$i]).$3 if ($drill =~ /(^.*)%(\.\d)y(.*$)/);
++    $drill =~ s/%l/@@{$gr->{legend}}->[$_ - 1]/g;
++    my $info = $self->{info};
++    $info =~ s/%p/%.0p/g; $info =~ s/%s/$sum/g; $info =~ s/%y/$data->[1][$i]/g;
++    $info = $1.(sprintf "%$2f", $pa).$3 if ($info =~ /(^.*)%(\.\d)p(.*$)/);
++    $info = $1.(sprintf "%$2f", $sum).$3 if ($info =~ /(^.*)%(\.\d)s(.*$)/);
++    $info =~ s/%x/$data->[0][$i]/g;
++    $info = $1.(sprintf "%$2f", $data->[1][$i]).$3 if ($info =~ /(^.*)%(\.\d)y(.*$)/);
++    $s .= ", $xe, $ye\" Href=\"$href\" Title=\"$info\" Alt=\"$info\" onMouseOver=\"window.status=\'$info\'; return true;\" onContextMenu=\"$context\" id=\"$drill\" onMouseOut=\"window.status=\'\'; return true;\"";
+     if ($self->{newWindow} and not $href =~ /javascript:/i)
+     { my $s_;
+       map
+@@@@ -391,7 +528,7 @@@@
+     $legend = $self->{legend};
+     $legend =~ s/%l/$_/g;
+     my $ye = $y + int($gr->{lg_el_height}/2 - $gr->{legend_marker_height}/2);
+-    $s .= "\t<Area Shape=rect Coords=\"$xe, $ye, ".($xe + $gr->{legend_marker_width}).", ".($ye + $gr->{legend_marker_height})."\" Href=\"$lhref\" Title=\"$legend\" Alt=\"$legend\" onMouseOver=\"window.status=\'$legend\'; return true;\" onMouseOut=\"window.status=\'\'; return true;\"";
++    $s .= "\t<Area Shape=\"rect\" Coords=\"$xe, $ye, ".($xe + $gr->{legend_marker_width}).", ".($ye + $gr->{legend_marker_height})."\" Href=\"$lhref\" Title=\"$legend\" Alt=\"$legend\" onMouseOver=\"window.status=\'$legend\'; return true;\" onMouseOut=\"window.status=\'\'; return true;\"";
+     if ($self->{newWindow} and $lhref ne $self->{href}) #$xe + $gr->{legend_marker_width}
+     { my $s_;
+       map
+@
+
+
+1.4
+log
+@added pie3d map and area map
+@
+text
+@d1 3
+a3 3
+--- blib/lib/GD/Graph/Map.pm	2003-11-18 11:14:08.000000000 +0100
++++ /usr/lib/perl5/site_perl/5.8.0/GD/Graph/Map.pm	2003-11-19 16:31:48.000000000 +0100
+@@@@ -16,8 +16,10 @@@@
+d11 1
+d15 1
+a15 1
+@@@@ -55,10 +57,12 @@@@
+d21 2
+a22 1
+   elsif ($type eq 'GD::Graph::lines') { $self->linesmap(@@_) }
+d25 1
+a25 1
++  elsif ($type eq 'GD::Graph::area') { $self->linesmap(@@_) }
+d29 10
+a38 1
+@@@@ -91,9 +95,12 @@@@
+d45 3
+d51 1
+a51 1
++    $s .= "\" Href=\"$href\" Title=\"$info\" Alt=\"$info\" onMouseOver=\"window.status=\'$info\'; return true;\" onContextMenu=\"$context\" onMouseOut=\"window.status=\'\'; return true;\"";
+d55 9
+a63 1
+@@@@ -148,12 +155,18 @@@@
+d73 6
+d85 1
+a85 1
++      $s .= "Href=\"$href\" Title=\"$info\" Alt=\"$info\" onMouseOver=\"window.status=\'$info\'; return true;\" onContextMenu=\"$context\" onMouseOut=\"window.status=\'\'; return true;\"";
+d89 1
+a89 1
+@@@@ -176,7 +189,7 @@@@
+d94 1
+a94 1
++      $s .= "\t<Area Shape=polygon Coords=\"$s1\" Href=\"$lhref\" Title=\"$legend\" Alt=\"$legend\" onMouseOver=\"window.status=\'$legend\'; return true;\"  onMouseOut=\"window.status=\'\'; return true;\"";
+d98 10
+a107 1
+@@@@ -248,12 +261,18 @@@@
+d117 6
+d129 1
+a129 1
++      $s .= "Href=\"$href\" Title=\"$info\" Alt=\"$info\" onMouseOver=\"window.status=\'$info\'; return true;\" onContextMenu=\"$context\" onMouseOut=\"window.status=\'\'; return true;\"";
+d133 10
+a142 1
+@@@@ -325,13 +344,103 @@@@
+d153 6
+d166 1
+a166 1
++    $s .= ", $xe, $ye\" Href=\"$href\" Title=\"$info\" Alt=\"$info\" onMouseOver=\"window.status=\'$info\'; return true;\" onContextMenu=\"$context\" onMouseOut=\"window.status=\'\'; return true;\"";
+d209 1
+a209 1
++    $s .= "\t<Area Shape=polygon Coords=\"".join(', ', int($gr->{xc}), int($gr->{yc}));
+d243 6
+d255 1
+a255 1
++    $s .= ", $xe, $ye\" Href=\"$href\" Title=\"$info\" Alt=\"$info\" onMouseOver=\"window.status=\'$info\'; return true;\" onContextMenu=\"$context\" onMouseOut=\"window.status=\'\'; return true;\"";
+d257 9
+@
+
+
+1.3
+log
+@added pie3d map
+@
+text
+@d14 1
+a14 1
+@@@@ -55,6 +57,7 @@@@
+d22 6
+a27 1
+@@@@ -91,9 +94,12 @@@@
+d41 1
+a41 1
+@@@@ -148,12 +154,18 @@@@
+d61 1
+a61 1
+@@@@ -176,7 +188,7 @@@@
+d70 1
+a70 1
+@@@@ -248,12 +260,18 @@@@
+d90 1
+a90 1
+@@@@ -325,13 +343,103 @@@@
+@
+
+
+1.2
+log
+@right click for Bar,Point,Line,Pie graphs
+@
+text
+@d2 1
+a2 1
++++ /usr/lib/perl5/site_perl/5.8.0/GD/Graph/Map.pm	2003-11-18 11:13:15.000000000 +0100
+d14 9
+a22 1
+@@@@ -91,9 +93,12 @@@@
+d36 1
+a36 1
+@@@@ -148,12 +153,18 @@@@
+d56 1
+a56 1
+@@@@ -176,7 +187,7 @@@@
+d65 1
+a65 1
+@@@@ -248,12 +259,18 @@@@
+d85 1
+a85 1
+@@@@ -325,13 +342,20 @@@@
+d103 83
+@
+
+
+1.1
+log
+@prototype of right click menu in graphs - need patch GDGraph-Map-1.05.patch
+@
+text
+@d1 2
+a2 2
+--- blib/lib/GD/Graph/Map.pm	2001-03-14 15:44:23.000000000 +0100
++++ /usr/lib/perl5/site_perl/5.8.0/GD/Graph/Map.pm	2003-10-04 11:26:50.000000000 +0200
+d14 44
+a57 1
+@@@@ -248,12 +250,18 @@@@
+d77 22
+@
+

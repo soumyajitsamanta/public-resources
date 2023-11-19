@@ -1,0 +1,181 @@
+head	1.6;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.6
+date	2003.11.06.14.31.45;	author numberone;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	2003.09.12.09.29.52;	author numberone;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2003.09.12.09.12.42;	author numberone;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2003.08.11.06.53.58;	author numberone;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2003.03.12.23.35.13;	author numberone;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2003.02.05.17.20.24;	author numberone;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.6
+log
+@demo updates (display:// problem)
+@
+text
+@# $Id: common.pm,v 1.5 2003/09/12 09:29:52 numberone Exp $
+
+# common shared lib for otec and bee process
+package common;
+
+use lib '../lib';
+use url;
+
+use Data::Dumper;
+use strict;
+
+use DBI;
+
+
+# connect to database, todo: password thru auth
+sub database {
+	my($url,$auth) = @@_;
+	die unless($url->{db});
+
+	my $driver = $url->{subproto} ? $url->{subproto} : 'mysql';
+	my $host   = $url->{host};
+	my $port   = $url->{port} ? ";port=".$url->{port} : "";
+
+	# FIX: from auth!!!
+	my $user = $url->{user}; # ? $url->{user} : 'sarfy';
+	# $auth    = $url->{pass}; #'heslo';# unless $auth;
+
+	my $dsn = "dbi\:$driver\:database=".$url->{db}.";host=".$host.$port;
+	my $db = DBI->connect($dsn,$user,$url->{pass});
+
+	die $DBI::errstr unless $db;
+	return $db;
+}
+
+
+
+
+1;
+
+
+@
+
+
+1.5
+log
+@user@@pass
+@
+text
+@d1 1
+a1 1
+# $Id: common.pm,v 1.4 2003/09/12 09:12:42 numberone Exp $
+a30 1
+	print "pass: ",$url->{pass},"\n";
+@
+
+
+1.4
+log
+@user@@pass url
+@
+text
+@d1 1
+a1 1
+# $Id: common.pm,v 1.3 2003/08/11 06:53:58 numberone Exp $
+d26 1
+a26 1
+	$auth    = $auth ? $auth : $url->{pass}; #'heslo';# unless $auth;
+d29 1
+a29 1
+	my $db = DBI->connect($dsn,$user,$auth);
+d31 1
+@
+
+
+1.3
+log
+@merging old version to cvs
+@
+text
+@d1 1
+a1 1
+# $Id: common.pm,v 1.2 2003/03/12 23:35:13 numberone Exp $
+d22 1
+a22 1
+	my $port   = $url->{port} ? $url->{port} : '3306';
+d25 2
+a26 2
+	my $user   = $url->{user} ? $url->{user} : 'sarfy';
+	$auth   = 'heslo';# unless $auth;
+d28 1
+a28 2
+	my $dsn = "dbi\:$driver\:database=".$url->{db}.";host=".$host.
+			  ";port=".$port;
+@
+
+
+1.2
+log
+@bee/ directory - where to store temporary script files
+dad now use processes (fork and exec) to run bee instead
+of forking and `eval`-uating.
+perl -e "use DBI; fork;" sigfaults on Microsoft Windows
+so this fixes this problem
+@
+text
+@d1 1
+a1 1
+# $Id: common.pm,v 1.1 2003/02/05 17:20:24 numberone Exp $
+d25 2
+a26 2
+	my $user   = $url->{user} ? $url->{user} : 'bee';
+	$auth   = 'honey';# unless $auth;
+@
+
+
+1.1
+log
+@otec deleted
+@
+text
+@d1 1
+a1 1
+# $Id: common.pm,v 1.1 2002/09/29 14:47:16 numberone Exp $
+d20 4
+d25 2
+a26 3
+	my($dsn,$driver,$user,$password) = ('dbi','mysql','bee','honey');
+	$driver = $url->{subproto} if($url->{subproto});
+	$user   = $url->{user} if($url->{user});
+d28 3
+a30 1
+	my $db = DBI->connect("$dsn\:$driver\:".$url->{db},$user,$password);
+@
+

@@ -1,0 +1,96 @@
+head	1.5;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.5
+date	2003.07.07.07.10.42;	author michald;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2003.05.23.16.23.27;	author michald;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2003.05.23.15.03.43;	author jiri_schmid;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2003.05.07.14.24.40;	author jiri_schmid;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2003.05.05.06.47.47;	author michald;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.5
+log
+@some minor code improvements
+@
+text
+@<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<project>
+  <folder id="_METRICS_">
+    <name><cz>Metriky</cz><en>Metrics</en></name>
+    <description>Metrics Folder</description>
+    <gui-presentation line="5" />
+  </folder>
+</project>
+@
+
+
+1.4
+log
+@minor fix in test metadata
+@
+text
+@d1 1
+a1 1
+<?xml version="1.0" encoding="ISO-8859-1" standalone="yes"?><!--file saved UTF-8, encoding ISO-8859-1 si forced for reading because of compatibility issue on Soap Server -->
+@
+
+
+1.3
+log
+@rules and groups for attributes implemented, metric & filter checker remaked
+@
+text
+@d6 1
+a6 1
+    <gui-presentation line="3" />
+@
+
+
+1.2
+log
+@tuning, code improvment
+@
+text
+@d3 1
+a3 1
+  <folder id="Metrics">
+@
+
+
+1.1
+log
+@new test metadata
+@
+text
+@d3 1
+a3 1
+  <folder id="900">
+@
+

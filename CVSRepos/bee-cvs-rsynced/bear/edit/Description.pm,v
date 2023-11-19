@@ -1,0 +1,236 @@
+head	1.6;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.6
+date	2004.03.04.14.43.16;	author jiri_schmid;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	2004.01.27.13.35.21;	author jiri_schmid;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2003.12.12.12.12.16;	author jiri_schmid;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2003.11.18.14.38.40;	author jiri_schmid;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2003.11.14.11.45.36;	author jiri_schmid;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2003.10.31.12.47.57;	author jiri_schmid;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.6
+log
+@fixing bugs and improving useability and performance
+@
+text
+@#-----------------------------------------------------
+#  Description Editation
+#-----------------------------------------------------
+# $Id: Description.pm,v 1.5 2004/01/27 13:35:21 jiri_schmid Exp $
+
+package Description;
+
+use strict;
+# require "const/Const.pm"; #allready pluged-in by edit_obj.cgi
+# require "local/Local.pm"; #allready pluged-in by edit_obj.cgi
+
+#-----------------------------------------------------
+# print_form is called from edit.cgi
+
+sub generateContent {
+my($variables, $lang, $obj, $ObjT) = (shift, shift, shift, shift);
+my $shortCut = $Const::wb_const->{$$variables->{wb}};
+
+my $saved = $$variables->{saved} if exists $$variables->{saved};
+
+$ObjT =~ /^(.)(.*)$/;
+my $new = "New ".uc($1).$2;
+my $save = $new." Save";
+my $localizations = {};
+my $name = &Local::LocalizedObj($$obj->{name}, "$$lang->{'Undef Local'}", $$variables->{useLang}, $$variables->{defaultLang});
+my $desc = &Local::DirectStringView(&Local::LocalizedObj($$obj->{description}, undef, $$variables->{useLang}, $$variables->{defaultLang}));
+print <<END;
+<br />
+<table class="page_skeleton">
+<tr class="page_skeleton">
+<td class="page_skeleton">
+	<table class="neutral">
+	<tr><td class="neutral_bold">$$lang->{'Name'}</td></tr>
+	<tr><td align="center">
+		<span class='nowrap'>
+		<input value="$name" onchange="object_changed()" type="text" name="name" id="NAME" size="$shortCut->{nameWidth}" maxlength="100"/>
+		<select name="langSpec" id="langSpec" onchange="tmpChangeLocal()">
+END
+foreach (keys %{$Const::languages}) {
+	$localizations->{$_}{name} = &Local::LocalizedObj($$obj->{name}, "$$lang->{'Undef Local'}", $_, $$variables->{defaultLang});
+	$localizations->{$_}{desc} = &Local::ScriptStringView(&Local::LocalizedObj($$obj->{description}, undef, $_, $$variables->{defaultLang}));
+	my $selected = ($$variables->{useLang} eq $_) ? " selected='selected'" : '';
+	print "<option value='$_'$selected>$_</option>";
+}
+print <<END;
+		</select>
+		</span>
+	</td></tr>
+	<tr><td><hr></td></tr>
+	<tr><td class="neutral_bold">$$lang->{'Description'}</td></tr>
+	<tr><td align="center"><textarea onchange="object_changed()" rows="$Const::descriptionRows" cols="$shortCut->{descriptionWidth}" name="desc" id="DESC">$desc</textarea></td></tr>
+	<tr><td><hr></td></tr>
+	<tr><td align="center">
+	<table class="buttons" cellpading="0" cellspacing="0">
+	<tr>	<td class="buttons"><input id='SAVE' type="submit" name="Action" value="$$lang->{'Save'}" onclick='return check_name()'/></td>
+		<td class="buttons">	<input type="submit" name="Action" value="$$lang->{'Save As'}" onclick="return readName();"/>
+					<input type="hidden" name="saveAsName" id="saveAsName" value="" /></td>
+		<td class="buttons"><input type="reset" name="reset" value="$$lang->{'Reset'}" /></td>
+	</td></tr>
+	</table>
+	</td></tr>
+	</table>
+</td></tr></table>
+<script type="text/javascript">
+	var msg="$$lang->{'New Save Part1'}$$lang->{$save}$$lang->{'New Save Part2'}";
+	var saveAsMsg = "$$lang->{SaveAsMsg}$$lang->{$new}";
+	reloadTree($saved);
+END
+	foreach my $langVar (keys %{$localizations}) {
+		my @@langVar = ();
+		foreach (keys %{$localizations->{$langVar}}) {
+			push (@@langVar,"$_:\"$localizations->{$langVar}{$_}\"");
+		}
+		print "	var $langVar = {".join(",",@@langVar)."};\n";
+	}
+
+print "</script>";
+}
+
+#---------------------------------------------------
+
+1
+@
+
+
+1.5
+log
+@dynamic param fix, description fix
+@
+text
+@d4 1
+a4 1
+# $Id: Description.pm,v 1.4 2003/12/12 12:12:16 jiri_schmid Exp $
+d26 1
+a26 1
+my $desc = &Local::LocalizedObj($$obj->{description}, undef, $$variables->{useLang}, $$variables->{defaultLang});
+d40 2
+a41 4
+	$name = &Local::LocalizedObj($$obj->{name}, "$$lang->{'Undef Local'}", $_, $$variables->{defaultLang});
+	$localizations->{$_}{name} = $name;
+	my $desc = &Local::LocalizedObj($$obj->{description}, undef, $_, $$variables->{defaultLang});
+	$localizations->{$_}{desc} = $desc;
+@
+
+
+1.4
+log
+@found a fixed bug manipulating dynamic params in grid
+@
+text
+@d4 1
+a4 1
+# $Id: Description.pm,v 1.3 2003/11/18 14:38:40 jiri_schmid Exp $
+d26 1
+a38 1
+my $desc;
+d42 1
+a42 1
+	$desc = &Local::LocalizedObj($$obj->{description}, undef, $_, $$variables->{defaultLang});
+@
+
+
+1.3
+log
+@auto save when changing tabs implemented
+@
+text
+@d4 1
+a4 1
+# $Id: Description.pm,v 1.2 2003/11/14 11:45:36 jiri_schmid Exp $
+d42 1
+a42 1
+	$desc = &Local::LocalizedObj($$obj->{description}, "--", $_, $$variables->{defaultLang});
+@
+
+
+1.2
+log
+@question for dynamic param implemented
+@
+text
+@d4 1
+a4 1
+# $Id: Description.pm,v 1.1 2003/10/31 12:47:57 jiri_schmid Exp $
+d25 1
+a25 1
+my $name = &Local::LocalizedObj($$obj->{name}, "undefined name", $$variables->{useLang}, $$variables->{defaultLang});
+d40 1
+a40 1
+	$name = &Local::LocalizedObj($$obj->{name}, "no $_ name", $_, $$variables->{defaultLang});
+d42 1
+a42 1
+	$desc = &Local::LocalizedObj($$obj->{description}, "no $_ description", $_, $$variables->{defaultLang});
+d57 1
+a57 1
+	<tr>	<td class="buttons"><input type="submit" name="Action" value="$$lang->{'Save'}" onclick='return check_name()'/></td>
+@
+
+
+1.1
+log
+@mod perl rocks!
+@
+text
+@d4 1
+a4 1
+# $Id: description_ed.pl,v 1.2 2003/10/16 14:08:53 jiri_schmid Exp $
+d24 2
+d35 1
+a35 1
+		<input value="" onchange="object_changed()" type="text" name="name" id="NAME" size="$shortCut->{nameWidth}" maxlength="100"/>
+d38 1
+d40 6
+a45 2
+	my $name = &Local::LocalizedObj($$obj->{name}, "undefined name", $_, $$variables->{defaultLang});
+	print "<option value='$name'>$_</option>";
+d53 1
+a53 1
+	<tr><td align="center"><textarea onchange="object_changed()" rows="$Const::descriptionRows" cols="$shortCut->{descriptionWidth}" name="desc" id="DESC"></textarea></td></tr>
+d60 1
+a60 1
+		<td class="buttons"><input type="button" name="reset" value="$$lang->{'Reset'}" onclick="subst_item_id()"/></td>
+a67 1
+	subst_item_id();
+a69 1
+</script>
+d71 9
+@
+

@@ -1,0 +1,718 @@
+head	1.4;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.4
+date	2004.04.05.05.43.53;	author michald;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2004.03.21.07.01.13;	author michald;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2004.03.11.07.59.00;	author michald;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2003.11.25.05.09.15;	author michald;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.4
+log
+@fix filter rearion bug
+@
+text
+@#-----------------------------------------------------
+#  Logical Expression Decomposition
+#-----------------------------------------------------
+# $Id: DecompLE.pm,v 1.3 2004/03/21 07:01:13 michald Exp $
+
+package DecompLE;
+
+use strict;
+use Parse::Yapp;
+use Data::Dumper;
+
+##################################################
+## the object constructor                       ##
+##################################################
+
+sub new {
+
+	my $self  = {};
+	my $proto = shift;
+	my $grammarF = shift;	# Yapp grammar file
+	$self->{CLASS} = shift;	# Class Name of Parser
+	$self->{MH} = shift;	# hash containing IDs of specific objects [e.g. metrics] to be decomposited
+	my $class = ref($proto) || $proto;
+
+	$self->{STR} = '';	# Logical Expression string to parse
+	$self->{LEVEL} = 0;	# variable to keep level for hierarchical print out
+	$self->{DCMP} = 0;	# flag meaning there is also something next to do
+	$self->{RES} = ();	# array of the parsed nodes of the LE
+	$self->{ERR} = {};	# hash of error info
+
+	return if !$self->{CLASS};
+	open DATA, $grammarF || return;
+	$self->{GRAMMAR} = join('',<DATA>);
+	close DATA;
+	$self->{PARSER} = new Parse::Yapp(input => $self->{GRAMMAR});
+
+
+	my $yapptxt = $self->{PARSER}->Output(classname => $self->{CLASS});
+	$yapptxt =~ s/Calc::/$self->{CLASS}::/g;	# transform original Class of Grammar file to new one
+	eval $yapptxt || return;
+
+	$self->{CALC} = new {$self->{CLASS}}();
+
+	bless ($self, $class);
+	return $self;
+
+}
+
+#----------------------------------
+
+# following arrays should be moved to $self maybee
+my @@path;	# temporary path for recursion
+my @@pathi;	# temporary path for recursion
+my @@paths;	# paths to Metrics in form of list of the node ids
+my @@pathsi;	# array of the indexes in node which hold link to the next node on the path
+
+##############################################
+## methods to access per-object data        ##
+##############################################
+
+sub metricHash {
+	my $self = shift;
+	if (@@_) { 
+    	$self->{MH} = shift;
+	}
+	return $self->{MH};
+}
+
+#----------------------------------
+
+sub resultArray {
+	my $self = shift;
+	if (@@_) { 
+		my $i = shift;
+		$i = $#{$self->{RES}} if $i > $#{$self->{RES}};
+    	return @@{${$self->{RES}}[$i]};
+	} else {
+		return $self->{RES};
+	}
+}
+
+#----------------------------------
+
+sub resultArrayLastIndex {
+	my $self = shift;
+	return $#{$self->{RES}}
+}
+
+#----------------------------------
+
+sub error {
+	my $self = shift;
+	if (@@_) {	# cleanup error strings
+    	foreach (keys %{$self->{ERR}}) {
+			$self->{ERR}->{$_} = '';
+		}
+	}
+	return $self->{ERR};
+}
+
+#----------------------------------
+
+sub decomposeLE {
+	my $self = shift;
+	$self->{STR} = shift;
+	$self->{STR} =~ s/\n//g;	# remove all \n
+	$self->{STR} =~ s/\s+/ /g;	# remove all multiple spaces
+	$self->{STR} .= "\n";	# LE has to be terminated by \n
+
+	$self->{CALC}->YYData->{INPUT} = $self->{STR};
+	error($self, 1);	# cleanup error strings
+	eval $self->{CLASS}.'::Clean()';	# cleanup parser internals
+	$self->{RES} = eval '$self->{CALC}->YYParse(yylex => \&'.$self->{CLASS}.'::Lexer, yyerror => \&'.$self->{CLASS}.'::Error)';
+
+	if (!$self->{RES}) {	# ERROR
+		$self->{ERR}->{POS} = length($self->{STR})-length($self->{CALC}->YYData->{ERRLINE});
+		$self->{ERR}->{STR} = $self->{CALC}->YYData->{ERRLINE};
+		$self->{ERR}->{STR} = $1.'...' if $self->{ERR}->{STR}=~/^(.{15})/;
+		$self->{ERR}->{LINE} = $self->{CALC}->YYData->{ERRLINE_NO};
+		return 0
+	}
+
+	# remove "parenthes" nodes
+	foreach my $p (0..$#{$self->{RES}}) {	# for each node
+		if (${$self->{RES}}[$p][0] eq '()') {	# if current node is ()
+			${$self->{RES}}[$p] = ${$self->{RES}}[${$self->{RES}}[$p][1]];	# replace () node with linked node
+		}
+	}
+
+	my %rp;
+	my $fin;
+	do {
+		$fin=0;
+		@@path = ();	# temporary path for recursion
+		@@pathi = ();	# temporary path for recursion
+		@@paths = ();	# paths to Metrics in form of list of the node ids
+		@@pathsi = ();	# array of the indexes in node which hold link to the next node on the path
+		$self->{DCMP}=0;
+		recurLE($self, $self->{RES}, $#{$self->{RES}});	# find all paths to metrics
+		foreach my $p (0..$#paths) {	# find first not yet decomposited path
+			my $ps = join('|', @@{$paths[$p]});
+			if ((!exists $rp{$ps}) || ($rp{$ps}>0)) {	# this path has not been decomposited or still contains something to do
+				decomp($self, $self->{RES}, $paths[$p], $pathsi[$p]);
+				$rp{$ps} = $self->{DCMP};	# is there something next to do?
+				$fin++;
+				last;	# we have to make new recurLE to be sure that we are dealing with consistent set of the path definitions
+			}
+		}
+	} while ($fin!=0);
+	
+	recurOpt($self->{RES}, $#{$self->{RES}});	# try to do some optimalizations
+
+	return 1;
+}
+
+#---------
+
+sub recurOpt {	# tries to do some post-decomposition optimalisations
+				# is used only locally
+	my $iarr = shift;	# array of the nodes
+	# each node in the array is presented as array: [0] element represents type of node, next elements are even links to next nodes or contents of the node (for OBJ type)
+	my $v = shift;	# index of the node to process
+	
+	my $DCMP;
+	if (${$iarr}[$v][0] =~ /(AND|OR)/) {
+		do {
+			$DCMP = 0;	# flag meaning there is also something next to do
+			D: for my $vv (1..$#{${$iarr}[$v]}) {	# for each link
+				if ((defined $1) && (${$iarr}[ ${${$iarr}[$v]}[$vv] ][0] eq $1)) {
+				# two subsequent AND or OR vertexes
+					$DCMP++;
+					my $cn = splice @@{${$iarr}[$v]}, $vv, 1;	# remove node
+					for my $vvv (1..$#{${$iarr}[$cn]}) {	# for each link in removed node
+						push @@{${$iarr}[$v]}, ${$iarr}[$cn][$vvv];
+					}
+					last D
+				}
+			}
+		} while ($DCMP!=0);
+		# !!! here should be optimization for "x AND x", "x AND false", "x OR x" and "x OR true"
+		# !!! and maybee for case as link refers to vertex with one link only
+	}
+	if (${$iarr}[$v][0] !~ /OBJ|LIST|NUM|STR/) {
+		for (1..$#{${$iarr}[$v]}) {
+			recurOpt($iarr, ${$iarr}[$v][$_]);
+		}
+	}
+}
+
+#---------
+
+sub recurLE {	# prepares @@path and @@pathi to the special object (such as metric) recognized by keys of the $self->{MH} hash
+				# is used only locally
+	my $self = shift;
+	my $iarr = shift;	# array of the nodes
+	# each node in the array is presented as array: [0] element represents type of node, next elements are even links to next nodes or contents of the node (for OBJ type)
+	my $v = shift;	# index of the node to process
+	
+	push @@path, $v;
+	if (${$iarr}[$v][0] =~ /AND|OR/) {
+		for (1..$#{${$iarr}[$v]}) {	# for each link
+			push @@pathi, $_;
+			recurLE($self, $iarr, ${$iarr}[$v][$_]);
+			pop @@pathi;
+		}
+	} elsif (${$iarr}[$v][0] =~ /NOT|LIKE|IN/) {
+		push @@pathi, 1;
+		recurLE($self, $iarr, ${$iarr}[$v][1]);
+		pop @@pathi;
+	} elsif (${$iarr}[$v][0] =~ /=|>=|>|<>|<=|</) {
+		push @@pathi, 1;
+		recurLE($self, $iarr, ${$iarr}[$v][1]);
+		pop @@pathi;
+		push @@pathi, 2;
+		recurLE($self, $iarr, ${$iarr}[$v][2]);
+		pop @@pathi;
+	} elsif (${$iarr}[$v][0] =~ /OBJ/) {
+		if (exists ${$self->{MH}}->{${$iarr}[$v][1]}) {	# object is the metric
+			push @@paths, [@@path];
+			push @@pathsi, [@@pathi];
+		}
+	}
+	pop @@path;
+}
+
+#---------
+
+sub decomp {	# is used only locally
+
+	my $self = shift;
+	my $iarr = shift;	# array of the LE nodes
+	my $path = shift;	# path to Metrics in form of list of the node ids
+	my $pathi = shift;	# array of the indexes in node which hold link to the next node on the path
+
+	foreach my $i (1..$#{$path}) {	# for all nodes on the path to metric
+		if (($$iarr[$$path[$i]][0] eq 'OR') && ($$iarr[$$path[$i-1]][0] eq 'AND')) {
+		# current node is OR and parent is AND
+			$self->{DCMP}++;
+			my $a = splice @@{$$iarr[$$path[$i]]}, $$pathi[$i], 1;	# cut link (member of the path to metric) from OR node
+			if ($#{$$iarr[$$path[$i]]}==1) {	# if only one link remains in OR node 
+				$$iarr[$$path[$i]] = $$iarr[$$iarr[$$path[$i]][1]];	# replace OR node with linked node
+			}
+			my $ln = $#{$iarr};	# number of nodes before copy
+			my $nn = copyNode($iarr, $$path[$i-1]);
+			splice @@{$$iarr[$nn]}, $$pathi[$i-1], 1, ($a);	# replace link in copy of AND node with link from the OR node
+			push @@{$iarr}, ['OR', $$path[$i-1], $nn];	# add new OR node
+
+			if ($$path[$i-1] != $ln) {	# is AND node not the latest one in the array?
+			# we have to move all references linked originaly to AND node to the new OR node 
+				for (my $r=$#{$iarr}-1; $r>0; $r--) {	# for all original nodes
+					next if $$iarr[$r][0] =~ /OBJ|LIST|NUM|STR/;	# object node has no links
+					for my $ri (1..$#{$$iarr[$r]}) {	# for all indexes in the node
+						if ($$iarr[$r][$ri] == $$path[$i-1]) {
+							$$iarr[$r][$ri] = $#{$iarr};
+						}
+					}
+				}
+				push @@{$iarr}, [@@{$$iarr[$ln]}];	# copy original root node to the end of array
+			}
+		}
+	}
+}
+
+#---------
+
+sub copyNode {	# copy specific node and all their links recursively
+				# is used only locally
+	my $iarr = shift;	# array of the nodes
+	# each node in the array is presented as array: [0] element represents type of node, next elements are even links to next nodes or contents of the node (for OBJ type)
+	my $v = shift;	# index of the node to copy
+	
+	push @@{$iarr}, [@@{${$iarr}[$v]}];	# copy node
+	my $i = $#{$iarr};
+	if (${$iarr}[$i][0] !~ /OBJ|LIST|NUM|STR/) {
+		for my $j (1..$#{${$iarr}[$i]}) {	# for each link
+			${$iarr}[$i][$j] = copyNode($iarr, ${$iarr}[$i][$j]);
+		}
+	}
+	return $i
+}
+
+#----------------------------------
+
+sub printLevelLE {	# formated text output (mostly for debugging purposes only)
+	my $self = shift;
+	my $sti = shift;	# index to start
+	my $iarr = $self->{RES};
+	$sti = $#{$iarr} if !$sti;
+	
+	$self->{LEVEL}=0;
+
+	my $str;
+	recurPLE($self, $iarr, $sti, \$str);
+	return $str
+}
+
+sub recurPLE {	# is used only locally
+	my $self = shift;
+	my $iarr = shift;
+	my $v = shift;
+	my $str = shift;
+	
+	$$str .= "\n".'.   'x$self->{LEVEL} if $self->{LEVEL};
+	$$str .= "${v}...${$iarr}[$v][0]";
+	
+	$self->{LEVEL}++;
+	if (${$iarr}[$v][0] =~ /AND|OR/) {
+		for (1..$#{${$iarr}[$v]}) {
+			recurPLE($self, $iarr, ${$iarr}[$v][$_], $str);
+		}
+	} elsif (${$iarr}[$v][0] =~ /NOT/) {
+		recurPLE($self, $iarr, ${$iarr}[$v][1], $str);
+	} elsif (${$iarr}[$v][0] =~ /=|>=|>|<>|<=|<|LIKE|IN/) {
+		recurPLE($self, $iarr, ${$iarr}[$v][1], $str);
+		recurPLE($self, $iarr, ${$iarr}[$v][2], $str);
+	} elsif (${$iarr}[$v][0] =~ /OBJ/) {
+		if (exists ${$self->{MH}}->{${$iarr}[$v][1]}) {
+			$$str .= " ->>> ${$iarr}[$v][1] <<<";
+		} else {
+			$$str .= " -> ${$iarr}[$v][1]";
+		}
+	} else {
+		$$str .= " -> ${$iarr}[$v][1]";
+	}
+	$self->{LEVEL}--;
+}
+
+#----------------------------------
+
+sub printLE {	# print out logical expression as string
+	my $self = shift;
+	my $sti = shift;	# index to start
+	return if ($sti) && ($sti!~/\d+/);
+	my $iarr = $self->{RES};
+	$sti = $#{$iarr} if !$sti;
+	
+	my $ret = recurP($iarr, $sti);
+	$ret=~s/^\((.*)\)$/$1/;
+	return $ret;
+
+}
+
+sub recurP {	# is used only locally
+	my $iarr = shift;
+	my $v = shift;
+	
+	if (${$iarr}[$v][0] =~ /AND|OR/) {
+		my $a = '(';
+		for (1..$#{${$iarr}[$v]}) {
+			$a .= recurP($iarr, ${$iarr}[$v][$_])." ${$iarr}[$v][0] ";
+		}
+		$a =~ s/ ${$iarr}[$v][0] $/)/;
+		return $a;
+	} elsif (${$iarr}[$v][0] eq 'NOT') {
+		return " ${$iarr}[$v][0] ".recurP($iarr, ${$iarr}[$v][1]);
+	} elsif (${$iarr}[$v][0] =~ /=|>=|>|<>|<=|<|LIKE|IN/) {
+		my $a = recurP($iarr, ${$iarr}[$v][1]);
+		my $b = recurP($iarr, ${$iarr}[$v][2]);
+		return "$a ${$iarr}[$v][0] $b";
+	} elsif (${$iarr}[$v][0] =~ /OBJ/) {
+		return "[${$iarr}[$v][1]]";
+	} elsif (${$iarr}[$v][0] =~ /NUM/) {
+		return ${$iarr}[$v][1];
+	} elsif (${$iarr}[$v][0] =~ /STR/) {
+		return "'${$iarr}[$v][1]'";
+	} elsif (${$iarr}[$v][0] =~ /LIST/) {
+		return "(${$iarr}[$v][1])";
+	} else {
+		return "---";
+	}
+}
+
+#----------------------------------
+
+sub resultHash {	# returns hash object representing logical expression
+	my $self = shift;
+	my $sti = shift;	# index to start, root will be used if $sti is undefined
+	return if ($sti) && ($sti!~/\d+/);
+	my $iarr = $self->{RES};
+	$sti = $#{$iarr} if !$sti;
+	
+	my $ret = {};
+	recurHP($iarr, $sti, \$ret);
+	return $ret;
+
+}
+
+sub recurHP {	# is used only locally
+	my $iarr = shift;
+	my $v = shift;
+	my $r = shift;
+	
+	if (${$iarr}[$v][0] =~ /AND|OR/) {
+		for (1..$#{${$iarr}[$v]}) {
+			my $a;
+			recurHP($iarr, ${$iarr}[$v][$_], \$a);
+			push @@{$$r->{link}}, $a;
+		}
+	} elsif (${$iarr}[$v][0] =~ /NOT/) {
+		my $a;
+		recurHP($iarr, ${$iarr}[$v][1], \$a);
+		push @@{$$r->{link}}, $a;
+	} elsif (${$iarr}[$v][0] =~ /=|>=|>|<>|<=|<|LIKE|IN/) {
+		for (1,2) {
+			my $a;
+			recurHP($iarr, ${$iarr}[$v][$_], \$a);
+			push @@{$$r->{link}}, $a;
+		}
+	} elsif (${$iarr}[$v][0] =~ /OBJ|NUM|STR|LIST/) {
+		$$r->{value} = ${$iarr}[$v][1];
+	} else {
+		$$r->{type} = 'UNKNOWN';
+		return
+	}
+	$$r->{type} = ${$iarr}[$v][0];
+}
+
+#----------------------------------
+
+1
+
+__END__
+
+=head1 NAME
+
+DecompLE - class for Logical Expression Decomposition
+
+=head1 SYNOPSIS
+
+use DecompLE;
+
+my $METR = { 'M1'=>1, 'z'=>1 };
+
+my $dcle = DecompLE->new('test3.grm', 'ClassName', \$METR);
+
+my $filt = "[a] IN (2,3) AND ([mestoA]<>[M1a] OR [kraj]='JM' AND [M1] LIKE 'K%' OR [z]>2)\n";
+
+if ($dcle->decomposeLE($filt)) {
+
+	print $dcle->printLevelLE()."\n\n";
+	print $dcle->printLE()."\n\n";
+	print join(', ', $dcle->resultArray(9999))."\n\n";
+	my $li = $dcle->resultArrayLastIndex();	# set index of the root element
+	my @@x = $dcle->resultArray($li);	# returns root element
+	print $dcle->printLE(@@x[1])."\n\n";	# print out first subtree of the root
+
+} else {
+	print "Error on line ".$dcle->error->{LINE}.", char ".$dcle->error->{POS}.", near \"".$dcle->error->{STR}."\"\n";
+}
+
+=head1 CLASS METHODS
+
+$dcle = DecompLE->new($grmFile, 'ClassName', \$METR);
+
+$mh = $dcle->metricHash;
+$dcle->metricHash(\$METR);
+
+$dcle->decomposeLE($LE)	# make $LE decomposition
+
+$dcle->printLE($i)	# print out logical expression as string. $i means index to node to start, if undef then return whole LE
+
+$dcle->printLevelLE($i)	# formated text output (mostly for debugging purposes only). $i means index to node to start, if undef then return whole LE
+
+$ale = $dcle->resultArrayLastIndex();	# returns index of the root element in the array representing LE tree
+$ale = $dcle->resultArray($i);	# returns array representing LE tree, starting at $i node (starting at root node if $i is undefined)
+
+$hle = $dcle->resultHash($i);	# returns array representing LE tree, starting at $i node (starting at root node if $i is undefined)
+
+=head1 DESCRIPTION
+
+=cut
+
+@
+
+
+1.3
+log
+@slight modification of the Metric Filter Intersection MD presentation
+@
+text
+@d4 1
+a4 1
+# $Id$
+d29 1
+a29 1
+	$self->{ERR} = {};	# hask to record parsing error info
+@
+
+
+1.2
+log
+@initial implementation of caches in the local DB
+@
+text
+@d18 1
+d20 3
+a22 2
+	my $grammarF = shift;
+	my $metricH = shift;
+a23 1
+	my $self  = {};
+a26 1
+	$self->{MH}  = $metricH;	# hash containing IDs of specific objects [e.g. metrics] to be decomposited
+d28 2
+a29 2
+	$self->{RES} = ();
+	$self->{ERR} = {};
+d31 2
+a32 1
+	open DATA, $grammarF;
+d37 3
+a39 1
+	my $yapptxt = $self->{PARSER}->Output(classname => 'Calc');
+d42 1
+a42 1
+	$self->{CALC} = new Calc();
+d109 1
+a110 1
+
+d112 2
+a113 1
+	$self->{RES} = $self->{CALC}->YYParse(yylex => \&Calc::Lexer, yyerror => \&Calc::Error);
+a129 1
+#print printLevelLE($self, $#{$self->{RES}})."\n";
+d337 1
+a337 1
+	my $ret = recurP($self, $iarr, $sti);
+a343 1
+	my $self = shift;
+d350 1
+a350 1
+			$a .= recurP($self, $iarr, ${$iarr}[$v][$_])." ${$iarr}[$v][0] ";
+d354 2
+a355 2
+	} elsif (${$iarr}[$v][0] =~ /NOT/) {
+		return " ${$iarr}[$v][0] ".recurP($self, $iarr, ${$iarr}[$v][1]);
+d357 2
+a358 2
+		my $a = recurP($self, $iarr, ${$iarr}[$v][1]);
+		my $b = recurP($self, $iarr, ${$iarr}[$v][2]);
+d361 1
+a361 5
+		if (exists ${$self->{MH}}->{${$iarr}[$v][1]}) {
+			return "[${$iarr}[$v][1]]";
+		} else {
+			return "[${$iarr}[$v][1]]";
+		}
+d375 45
+d434 1
+a434 1
+my $dcle = DecompLE->new('test3.grm', \$METR);
+d453 1
+a453 1
+$dcle = DecompLE->new($grmFile, \$METR);
+d464 2
+a465 1
+$li = $dcle->resultArrayLastIndex();	# returns index of the root element in the array representing LE tree
+d467 1
+a467 1
+$li = $dcle->resultArray();	# returns array representing LE tree
+@
+
+
+1.1
+log
+@Logical Expressions Decomposition Class
+@
+text
+@d19 2
+a20 1
+	my ($grammarF, $metricH) = @@_;
+d48 5
+a52 5
+# following arrays shoul be moved to $self maybee
+my @@path;
+my @@pathi;
+my @@paths;
+my @@pathsi;
+d103 3
+a107 2
+	$self->{LEVEL} = 0;	# variable to keep level for hierarchical print out
+	$self->{DCMP} = 0;	# flag meaning there is also something next to do
+d119 10
+d130 5
+a134 4
+		@@path = ();
+		@@pathi = ();
+		@@paths = ();
+		@@pathsi = ();
+d136 18
+a153 1
+		recurLE($self, $self->{RES}, $#{$self->{RES}});
+d155 5
+a159 4
+		foreach my $p (0..$#paths) {
+			decomp($self, $self->{RES}, $paths[$p], $pathsi[$p]);
+		}
+	} while ($self->{DCMP}!=0);
+d161 11
+a171 9
+	foreach my $p (1..$#{$self->{RES}}) {
+		if (${$self->{RES}}[$p][0] !~ /OBJ|STR|NUM|LIST/) {
+			for my $i (1..$#{@@{$self->{RES}}[$p]}) {
+				if (($#{${$self->{RES}}[${$self->{RES}}[$p][$i]]} == 1)&&(${$self->{RES}}[${$self->{RES}}[$p][$i]][0]=~/OR|AND/)) {	# link refers to vertex with one link only
+					${$self->{RES}}[$p][$i] = ${$self->{RES}}[${$self->{RES}}[$p][$i]][1];
+				}
+				if (${$self->{RES}}[$p][0]=~/(OR|AND)/) {
+					if (${$self->{RES}}[${$self->{RES}}[$p][$i]][0] eq $1) {	# two subsequent AND vertexes
+						splice @@{${$self->{RES}}[$p]}, $i, 1, @@{${$self->{RES}}[${$self->{RES}}[$p][$i]]}[1..$#{${$self->{RES}}[${$self->{RES}}[$p][$i]]}];
+d173 1
+d176 7
+a184 1
+	return 1;
+d190 1
+d192 3
+a194 2
+	my $iarr = shift;
+	my $v = shift;
+d198 1
+a198 1
+		for (1..$#{${$iarr}[$v]}) {
+d215 3
+a217 4
+		if (exists ${$self->{MH}}->{${$iarr}[$v][1]}) {
+			push @@paths, [@@path]; @@path=();
+			push @@pathsi, [@@pathi]; @@pathi=();
+		} else {
+a218 1
+	} else {
+d225 2
+a226 1
+sub decomp {
+d228 3
+a230 3
+	my $iarr = shift;
+	my $path = shift;
+	my $pathi = shift;
+d232 1
+a232 1
+	foreach my $i (1..$#{$path}) {
+d234 1
+d236 14
+a249 9
+			my $a = splice @@{$$iarr[$$path[$i]]}, $$pathi[$i], 1;
+			my @@aa = @@{$$iarr[$$path[$i-1]]};
+			splice @@aa, $$pathi[$i-1], 1, ($a);	# replace link
+			push @@{$iarr}, [@@aa];
+			push @@{$iarr}, ['OR', $$path[$i-1], $#{$iarr}];
+			if ($$path[$i-1]!=($#{$iarr}-2)) {
+				C: for (my $r=$#{$iarr}-2; $r>0; $r--) {	# fix original reference to $$path[$i-1]
+					next if $$iarr[$r][0] eq 'OBJ';
+					for my $ri (1..$#{$$iarr[$r]}) {
+a251 1
+							last C
+d255 1
+a255 1
+				push @@{$iarr}, [@@{$$iarr[$#{$iarr}-2]}];
+d257 3
+d261 13
+d276 1
+d281 1
+a281 1
+sub printLevelLE {
+d294 1
+a294 1
+sub recurPLE {
+d327 1
+a327 1
+sub printLE {
+d330 1
+d340 1
+a340 1
+sub recurP {
+d400 3
+a402 3
+	my $li = $dcle->resultArrayLastIndex();
+	my @@x = $dcle->resultArray($li);
+	print $dcle->printLE(@@x[1])."\n\n";
+d410 15
+@
+

@@ -1,0 +1,64 @@
+head	1.1;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.1
+date	2007.07.11.09.22.49;	author pyadav;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@Additional files for version 0.7.
+@
+text
+@ /**
+  * Copyright (C) 2006 CINCOM SYSTEMS, INC.
+  * All Rights Reserved
+  * Copyright (C) 2006 Igor Mekterovic
+  * All Rights Reserved
+  * @@author PYadav, SBalda
+  */
+package rex.utils;
+
+/**
+ *
+ * @@author  PYadav, SBalda
+ */
+public class LanguageChangedEvent {
+    
+    private java.util.Locale locale;
+    
+    /** Creates a new instance of LanguageChangedEvent */
+    public LanguageChangedEvent(java.util.Locale locale) {
+        
+        this.locale = locale;
+        
+    }
+    
+    /** Getter for property locale.
+     * @@return Value of property locale.
+     *
+     */
+    public java.util.Locale getLocale() {
+        return locale;
+    }
+    
+    /** Setter for property locale.
+     * @@param locale New value of property locale.
+     *
+     */
+    public void setLocale(java.util.Locale locale) {
+        this.locale = locale;
+    }
+    
+}
+@

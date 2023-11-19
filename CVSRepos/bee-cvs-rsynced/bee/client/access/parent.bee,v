@@ -1,0 +1,131 @@
+head	1.2;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2004.06.15.10.11.40;	author numberone;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2003.08.11.06.53.57;	author numberone;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@
+new Prepare API
+
+This breaks compatibility with old .bee code, because every stream
+input/output must be initialized first, bee has to call ->prepare()
+method on stream objects in .bee code before calling ->put or ->get.
+
+Or, instead of ->prepare(), bee can call general ->prepare_sql($cmd),
+or, in the future, methods like ->prepare_select($table,$cols,$where,..),
+->prepare_update(...), ->prepare_delete(...)
+
+Next new method, execute(), is same as put() for UPDATE or DELETE.
+But note that in order to do SELECT, we need to call DBI's execute().
+Method prepare() with no arguments call's execute() for as.
+
+So, correct is:
+
+$input->prepare()
+$input->fetch, fetch, fetch, ..
+
+$input->prepare_sql("SELECT ...") or die "no SQL stream"
+$input->exeucte() # !
+$input->fetch, fetch, fetch, ..
+
+$input->prepare_sql("UPDATE ...") or die "no SQL stream"
+$input->execute(..), execute, excute (or put())
+
+All stream .bee input/output variables have following methods:
+
+prepare()         -- prepare and execute DBI statement
+prepare_sql($cmd) -- prepare DBI statement
+execute()         -- execute DBI statement
+put()             -- execute DBI statement or write to stream
+fetch()           -- fetch from DBI statement or read to stream
+table()           -- returns table name, from URL
+fields()          -- returns list of fields, from URL
+@
+text
+@<?xml version="1.0" encoding="ISO-8859-2"?>
+<script lang="perl" name='parent'>
+<description>
+Lookup BEE
+
+Reads from Lookup table (id,value) pairs into %lookup hash.
+Re-sends Values to Output with first row changed from 'value' to 'id'.
+If 'id' does not exist, it creates one and sends it to NewLookup table.
+</description>
+
+<input name="Values"  type='stream' />
+<input name="Parent"  type='stream' arity="1" />
+<input name="Lookup"  type='stream' fields="id:parent:value" />
+
+<output name="Output"    type='stream' />
+<output name="NewLookup" type='stream' fields="id:parent:value" />
+
+<code>
+<![CDATA[
+
+# my($Values,$Parent,$Lookup,@@NEXT) = @@IN;
+
+my $max = 0;
+my %lookup;
+
+$Lookup->prepare();
+
+while(my($id,$parent,$value) = $Lookup->fetch) {
+	$lookup{$parent}->{$value} = $id;
+	$max = $id if($id > $max);
+}
+print "LOOKUP: ",(scalar keys %lookup)," lookups fetched\n";
+
+$Parent->prepare();
+$Values->prepare();
+$NewLookup->prepare();
+$Output->prepare();
+
+while(1) {
+	my($parent)       = $Parent->fetch;
+	my($value,@@copy)  = $Values->fetch;
+	last unless $parent and $value;
+
+	my $id = $lookup{$parent}->{$value};
+	unless($id) {
+		$id = ++$max;
+		$lookup{$parent}->{$value} = $id;
+		$NewLookup->put($id,$parent,$value);
+	}
+	$Output->put($id,@@copy);
+}
+
+]]>
+</code>
+
+</script>
+
+@
+
+
+1.1
+log
+@merging old version to cvs
+@
+text
+@d26 2
+d34 5
+@
+

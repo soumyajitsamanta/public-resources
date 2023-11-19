@@ -1,0 +1,110 @@
+head	1.2;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2004.02.05.08.54.01;	author jiri_schmid;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2004.01.29.13.33.37;	author jiri_schmid;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@derivated reports redesigned
+@
+text
+@//$Id: collect.js,v 1.1 2004/01/29 13:33:37 jiri_schmid Exp $
+
+var OC = true;
+
+function viewReport(ID){
+	parent['report_view'].location.href="run.cgi?&item_id="+ID+"&"+params;
+}
+
+function ocTree(side) {
+var EID = document.getElementById('openClose');
+var task = (side) ? side : (String(EID.src).match(/left/)) ? 'close' : 'open';
+iframe = parent.document.getElementById('report_view');
+var shrt = (iframe.offsetLeft > 155) ? 2 : 3;
+var wdth = parent.document.getElementById('width').value;
+var path = (document.getElementById('skin').value) ? document.getElementById('skin').value : "";
+if (task == 'open') {
+	EID.src = path+'/img/leftArr.png';
+	if (iframe.style) {
+		iframe.style.width = (100-wdth) + "%";
+		iframe.style.left = wdth + "%";
+		parent.document.getElementById('report_list').style.width = wdth + "%";
+		document.getElementById('content').style.display = 'block';
+		OC = true;
+	}
+} else if (task == 'close') {
+	EID.src = path+'/img/rightArr.png';
+	if (iframe.style) {
+		iframe.style.left = shrt + "%";
+		iframe.style.width = (100-shrt) + "%";
+		document.getElementById('content').style.display = 'none';
+		parent.document.getElementById('report_list').style.width = shrt + "%";
+		OC = false;
+	}
+}
+}
+
+function checkRemove(reportName,id,tabDef){
+if (confirm(remove+": "+reportName,id)) {
+   top.location.href = "index.cgi?remove="+id+"&TabAct="+tabDef;
+   }
+else return false;
+}
+
+function runModifiedResult(eID){
+/*var open_in = document.getElementById('open_in').value;
+switch (open_in) {
+ case "_blank": {var EID = window.open('run.cgi?item_id='+eID+"&"+params,eID,"menubar,toolbar=no,statusbar=no,scrollbars,resizable");
+ 		EID.focus();
+		break;}
+ case "_one": {	var EID = window.open('run.cgi?item_id='+eID+"&"+params,'result',"menubar,toolbar=no,statusbar=no,scrollbars,resizable");
+  		EID.focus();
+		break;}
+ case "_self": {parent['report_view'].location.href="run.cgi?&item_id="+eID+"&"+params;
+		return }
+ case "_collect":parent['report_view'].location.href="run.cgi?&item_id="+eID+"&"+params;
+ break;
+ }
+ */
+parent['report_view'].location.href="run.cgi?&item_id="+eID+"&"+params;
+}
+
+function Remove(EID,item){
+if (confirm(remove+": "+EID.alt)) {
+	self.location.href="derivated.cgi?Action=drop&Item="+item+"&"+params;
+}
+}
+@
+
+
+1.1
+log
+@added files
+@
+text
+@d1 1
+a1 1
+//$Id: collect.js,v 1.50 2003/12/11 14:37:53 jiri_schmid Exp $
+d38 1
+a38 1
+if (confirm(remove+reportName,id)) {
+d43 24
+@
+

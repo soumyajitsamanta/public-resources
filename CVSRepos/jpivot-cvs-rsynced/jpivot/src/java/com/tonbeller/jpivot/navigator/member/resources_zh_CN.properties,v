@@ -1,0 +1,38 @@
+head	1.1;
+access;
+symbols
+	jpivot_1_8_0:1.1
+	focus_1_6_0:1.1.0.2
+	jpivot_1_7_0:1.1
+	jpivot_1_6_0:1.1
+	sourceforge_sync:1.1;
+locks; strict;
+comment	@# @;
+
+
+1.1
+date	2006.07.02.05.40.22;	author qinhui99;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@Simplified Chinese Translation
+@
+text
+@MemberNavigator.ok.title=\u786e\u5b9a
+MemberNavigator.cancel.title=\u53d6\u6d88
+MemberNavigator.selectVisible.title=\u5168\u90e8
+MemberNavigator.selectNone.title=\u65e0
+MemberNavigator.enableGrouping.title=\u5206\u7ec4
+MemberNavigator.disableGrouping.title=\u4e0d\u5206\u7ec4
+MemberNavigator.overflowOccurred=\u592a\u591a\u6210\u5458
+
+MemberNavigator.groupingMemberCount=12
+
+@

@@ -1,0 +1,92 @@
+head	1.5;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.5
+date	2006.01.13.12.21.15;	author igorludi;	state dead;
+branches;
+next	1.4;
+
+1.4
+date	2005.10.18.14.04.40;	author igorludi;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2005.10.18.13.40.38;	author igorludi;	state dead;
+branches;
+next	1.2;
+
+1.2
+date	2005.10.18.13.31.11;	author igorludi;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2005.06.28.14.11.07;	author igorludi;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.5
+log
+@*** empty log message ***
+@
+text
+@package rex.graphics.mdxeditor;
+
+import javax.swing.JPanel;
+import javax.swing.JLabel;
+
+/**
+ * Represents an empty result table. Displays a JLabel in JPanel.
+ * @@author Igor Mekterovic
+ * @@version 0.3
+ */
+public class EmptyMdxResultTable extends JPanel{
+   public EmptyMdxResultTable() {
+      this.add(new JLabel("this is an empty result table..."));
+   }
+}
+@
+
+
+1.4
+log
+@*** empty log message ***
+@
+text
+@@
+
+
+1.3
+log
+@*** empty log message ***
+@
+text
+@@
+
+
+1.2
+log
+@*** empty log message ***
+@
+text
+@@
+
+
+1.1
+log
+@*** empty log message ***
+@
+text
+@d6 5
+@
+

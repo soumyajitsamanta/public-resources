@@ -1,0 +1,197 @@
+head	1.5;
+access;
+symbols;
+locks; strict;
+comment	@ * @;
+
+
+1.5
+date	2003.10.30.09.38.42;	author numberone;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2003.10.29.10.52.30;	author numberone;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2003.09.29.11.26.18;	author numberone;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2003.09.12.09.29.52;	author numberone;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2003.06.03.13.15.39;	author numberone;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.5
+log
+@net->port instead of net->listen
+@
+text
+@/*
+ * C<Net> is nonblocking, autoflushing communication endpoint. 
+ *
+ * C<Net::INET> is connection over TCP/IP network, C<Net::UNIX> is for
+ * unix socket based communication and C<Net::SSL> is TCP/IP using
+ * OpenSSL layer.
+ *
+ * Copyright (c) 2003 Martin Sarfy <xsarfy@@fi.muni.cz> */
+
+#ifndef HEADER_NET_H_INCLUDED
+#define HEADER_NET_H_INCLUDED
+
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
+#define NET_PEEK_ERROR -2
+#define NET_PEEK_CLOSED	-1
+#define NET_PEEK_IDLE	 0
+//#define NET_PEEK_READY	 1
+
+#ifndef null
+#define null 0L
+#endif
+
+#ifndef Bool
+typedef int Bool;
+#endif
+#ifndef false
+#define false 0
+#endif
+#ifndef true
+#define true  1
+#endif
+
+struct NetStruct {
+	int 	sock;
+	char*	peer;
+	char*	auth;
+	Bool	blocking;
+	int		port; // port number on server sockets
+
+	char	*buffer;
+	int		buff_len; // mallocated length
+	int		real_len; // really readed length
+
+	void	*data;	  // unix/inet/ssl private data
+
+	int  sys_type; // NET_INET, NET_SSL, NET_UNIX, NET_BFISH
+	void* (*sys_accept)(void *net); // returns new Net object
+	int  (*sys_read)(void *net,void *buffer,int len);
+	int  (*sys_write)(void *net,void *buffer,int len);
+	void (*sys_block)(void *net,Bool block);
+	void (*sys_close)(void *net);
+
+};
+
+#ifdef Net
+#undef Net
+#endif
+typedef struct NetStruct * Net;
+
+// constructors:
+
+Bool net_init();
+void net_free(void *buffer);
+
+// 		server:
+Net net_server_inet(int port);
+Net net_server_ssl(int port);
+Net net_server_unix(const char *file);
+
+// 		connect:
+Net net_connect_inet(const char *host,int port);
+Net net_connect_ssl(const char *host,int port);
+Net net_connect_unix(const char *file);
+// Net *connect_ssl(const char *host,int port,const char *certfile);
+
+//		socketpair:
+Bool net_socketpair_unix(Net net[2]);
+Net  net_tie_fd(int fd);
+
+Net   net_accept(Net net,Bool wait);
+int   net_peek(Net net);
+int	  net_port(Net net);
+void* net_read(Net net,int *len);
+int   net_write(Net net,void *chunk,int len);
+char* net_peer(Net net);
+char* net_auth(Net net);
+void  net_close(Net net);
+
+// select() mechanism
+int net_watch(int fd);
+int net_release(int fd);
+int net_select(Net net[],int micro);
+
+#define NET_SYS_INET 1
+#define NET_SYS_UNIX 2
+#define NET_SYS_SSL  4
+
+
+#ifdef __cplusplus
+}
+#endif
+
+
+#endif
+
+@
+
+
+1.4
+log
+@automatic port allocation, net->listen returns port number
+@
+text
+@d43 1
+a43 1
+	int		listen; // port number on server sockets
+@
+
+
+1.3
+log
+@net_watch, net_release types mismatch
+@
+text
+@d43 1
+d87 1
+@
+
+
+1.2
+log
+@user@@pass
+@
+text
+@d93 3
+a95 3
+void  net_watch(int fd);
+void  net_release(int fd);
+int   net_select(Net net[],int micro);
+@
+
+
+1.1
+log
+@bee-0.9.1 -- version merge
+@
+text
+@d92 3
+@
+

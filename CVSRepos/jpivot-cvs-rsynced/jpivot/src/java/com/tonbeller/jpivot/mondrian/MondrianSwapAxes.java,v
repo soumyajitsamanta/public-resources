@@ -1,0 +1,88 @@
+head	1.1;
+access;
+symbols
+	jpivot_1_8_0:1.1
+	focus_1_6_0:1.1.0.6
+	jpivot_1_7_0:1.1
+	jpivot_1_6_0:1.1
+	jpivot_1_5_0:1.1.0.4
+	Root_jpivot_1_5_0:1.1
+	mondrian_xmla_2005_08_25:1.1.0.2
+	sourceforge_sync:1.1;
+locks; strict;
+comment	@# @;
+expand	@k@;
+
+
+1.1
+date	2005.07.05.14.19.51;	author avix;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@initial version
+@
+text
+@/*
+ * ====================================================================
+ * This software is subject to the terms of the Common Public License
+ * Agreement, available at the following URL:
+ *   http://www.opensource.org/licenses/cpl.html .
+ * Copyright (C) 2003-2004 TONBELLER AG.
+ * All Rights Reserved.
+ * You must accept the terms of that agreement to use this software.
+ * ====================================================================
+ *
+ * 
+ */
+package com.tonbeller.jpivot.mondrian;
+
+import com.tonbeller.jpivot.core.ExtensionSupport;
+import com.tonbeller.jpivot.olap.navi.SwapAxes;
+
+/**
+ * @@author hh
+ *
+ * Implementation of the Swap Axes Extension for Mondrian Data Source.
+ */
+public class MondrianSwapAxes extends ExtensionSupport implements SwapAxes {
+
+  /**
+   * Constructor sets ID
+   */
+  public MondrianSwapAxes() {
+    super.setId(SwapAxes.ID);
+  }
+
+  /**
+   * @@see com.tonbeller.jpivot.olap.navi.SwapAxes#canSwapAxes()
+   * @@return true, if the Mondrian Query exists and has two axes
+   */
+  public boolean canSwapAxes() {
+    MondrianModel model = (MondrianModel) getModel();
+    mondrian.olap.Query monQuery = ((MondrianQueryAdapter)model.getQueryAdapter()).getMonQuery();
+    if ( monQuery != null )
+      return ( monQuery.getAxes().length == 2 );
+    else
+      return false;
+  }
+
+
+  public void setSwapAxes(boolean swap) {
+    MondrianModel model = (MondrianModel) getModel();
+    ((MondrianQueryAdapter)model.getQueryAdapter()).setSwapAxes(swap);
+  }
+
+  public boolean isSwapAxes() {
+    MondrianModel model = (MondrianModel) getModel();
+    return ((MondrianQueryAdapter)model.getQueryAdapter()).isSwapAxes();
+  }
+
+}
+@

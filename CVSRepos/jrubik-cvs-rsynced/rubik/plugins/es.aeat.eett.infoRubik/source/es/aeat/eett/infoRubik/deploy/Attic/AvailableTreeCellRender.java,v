@@ -1,0 +1,124 @@
+head	1.2;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2008.05.17.15.37.41;	author fsaz;	state dead;
+branches;
+next	1.1;
+
+1.1
+date	2005.11.28.14.44.05;	author fsaz;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@Borrando
+@
+text
+@/*
+ * Created on 03-feb-2005
+ *
+ * AvailableTreeCellRender.java
+ *
+ */
+package es.aeat.eett.infoRubik.deploy;
+
+import java.awt.Component;
+
+import javax.swing.ImageIcon;
+import javax.swing.JTree;
+import javax.swing.UIManager;
+
+import swingUtil.Tamemasa.tree.CheckNode;
+import swingUtil.Tamemasa.tree.CheckRenderer;
+
+
+
+/**
+ * @@author f00992
+ */
+public class AvailableTreeCellRender extends CheckRenderer{
+    protected static ImageIcon iconRoot= null;
+    protected static ImageIcon iconHierarchy= null;
+    protected static ImageIcon iconLevel= null;
+    protected static ImageIcon iconMember= null;
+
+
+	/**
+	 *
+	 */
+    AvailableTreeCellRender() {
+		super();
+		if(iconRoot==null){
+		    iconRoot= new ImageIcon(this.getClass().getResource("icons/th_showqualified.gif"));
+			iconHierarchy= new ImageIcon(this.getClass().getResource("icons/class_hi.gif"));
+			iconLevel= new ImageIcon(this.getClass().getResource("icons/lrun_obj.gif"));
+			iconMember= new ImageIcon(this.getClass().getResource("icons/public_co.gif"));
+		}
+	}
+    public Component getTreeCellRendererComponent(JTree tree, Object value,
+            boolean isSelected, boolean expanded,
+            boolean leaf, int row, boolean hasFocus) {
+        String  stringValue = tree.convertValueToText(value, isSelected,
+                expanded, leaf, row, hasFocus);
+        setEnabled(tree.isEnabled());
+        if( !(value instanceof CheckNode )){
+            System.out.println("-----------Error Se esperaba: CheckNode. ----------------------------");
+        }
+        check.setSelected(((CheckNode)value).isSelected());
+        if(((CheckNode)value).getLevel()>1){
+        	check.setVisible(true);
+        }else{
+            check.setVisible(false);
+    	}
+        switch(((CheckNode)value).getLevel()){
+    		case 0:
+    		    label.setIcon(iconRoot);
+    	    	break;
+        	case 1:
+        	    label.setIcon(iconHierarchy);
+    	    	break;
+        	case 2:
+        	    label.setIcon(iconLevel);
+        	    break;
+        	case 3:
+        	    label.setIcon(iconMember);
+        	    break;
+        	default:
+        	    if (leaf) {
+                    label.setIcon(UIManager.getIcon("Tree.leafIcon"));
+                } else if (expanded) {
+                    label.setIcon(UIManager.getIcon("Tree.openIcon"));
+                } else {
+                    label.setIcon(UIManager.getIcon("Tree.closedIcon"));
+                }
+        }
+
+        label.setFont(tree.getFont());
+        label.setText(stringValue);
+        label.setSelected(isSelected);
+        label.setFocus(hasFocus);
+
+        return this;
+    }
+}
+@
+
+
+1.1
+log
+@*** empty log message ***
+@
+text
+@@
+

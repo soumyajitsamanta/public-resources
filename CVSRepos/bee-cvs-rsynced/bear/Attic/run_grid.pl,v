@@ -1,0 +1,1364 @@
+head	1.30;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.30
+date	2003.10.16.14.08.51;	author jiri_schmid;	state dead;
+branches;
+next	1.29;
+
+1.29
+date	2003.10.13.14.43.16;	author jiri_schmid;	state Exp;
+branches;
+next	1.28;
+
+1.28
+date	2003.10.04.10.30.24;	author michald;	state Exp;
+branches;
+next	1.27;
+
+1.27
+date	2003.10.04.08.14.34;	author michald;	state Exp;
+branches;
+next	1.26;
+
+1.26
+date	2003.09.30.07.10.53;	author michald;	state Exp;
+branches;
+next	1.25;
+
+1.25
+date	2003.09.29.15.37.41;	author jiri_schmid;	state Exp;
+branches;
+next	1.24;
+
+1.24
+date	2003.09.29.05.43.13;	author michald;	state Exp;
+branches;
+next	1.23;
+
+1.23
+date	2003.09.23.15.42.50;	author jiri_schmid;	state Exp;
+branches;
+next	1.22;
+
+1.22
+date	2003.09.22.14.42.36;	author jiri_schmid;	state Exp;
+branches;
+next	1.21;
+
+1.21
+date	2003.09.22.14.15.01;	author jiri_schmid;	state Exp;
+branches;
+next	1.20;
+
+1.20
+date	2003.09.22.11.52.27;	author jiri_schmid;	state Exp;
+branches;
+next	1.19;
+
+1.19
+date	2003.09.22.09.16.07;	author jiri_schmid;	state Exp;
+branches;
+next	1.18;
+
+1.18
+date	2003.09.22.08.42.25;	author jiri_schmid;	state Exp;
+branches;
+next	1.17;
+
+1.17
+date	2003.09.22.08.08.35;	author jiri_schmid;	state Exp;
+branches;
+next	1.16;
+
+1.16
+date	2003.09.19.12.48.27;	author jiri_schmid;	state Exp;
+branches;
+next	1.15;
+
+1.15
+date	2003.09.17.11.41.21;	author jiri_schmid;	state Exp;
+branches;
+next	1.14;
+
+1.14
+date	2003.09.10.09.08.54;	author jiri_schmid;	state Exp;
+branches;
+next	1.13;
+
+1.13
+date	2003.09.04.15.09.36;	author jiri_schmid;	state Exp;
+branches;
+next	1.12;
+
+1.12
+date	2003.09.03.15.10.42;	author jiri_schmid;	state Exp;
+branches;
+next	1.11;
+
+1.11
+date	2003.08.18.05.50.52;	author michald;	state Exp;
+branches;
+next	1.10;
+
+1.10
+date	2003.08.04.09.51.25;	author jiri_schmid;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	2003.07.18.10.50.59;	author jiri_schmid;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	2003.07.07.14.17.10;	author jiri_schmid;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	2003.07.07.07.10.39;	author michald;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	2003.07.04.14.29.27;	author jiri_schmid;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	2003.07.04.06.19.13;	author michald;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2003.07.03.09.40.30;	author jiri_schmid;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2003.07.02.13.44.29;	author jiri_schmid;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2003.06.26.09.31.40;	author jiri_schmid;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2003.06.18.10.53.05;	author jiri_schmid;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.30
+log
+@mod-perl implementation stage 1, rebuilding global vars in .pl to global pointers
+@
+text
+@#-----------------------------------------------------
+#  Rendering of the Report in Grid format
+#-----------------------------------------------------
+# $Id: run_grid.pl,v 1.29 2003/10/13 14:43:16 jiri_schmid Exp $
+
+use strict;
+use vars qw($file $use_enc $use_lang $skinPath @@export @@sort $RLang);
+use Data::Dumper;
+
+#---------------------------------------------------
+sub exportToHTML() {
+my $hlp;
+
+	my $ID = shift;
+	my $css = shift;
+	my $header = shift;
+	my $data = shift;	# ptr to data hash
+	$header = $header ? $header : 'none';
+
+
+	print header(-charset=>$use_enc);
+
+	open(RT,">$cacheReport/$file") || &ErrorDie(" ERROR: can't write into report-disk-cache.");
+	binmode(RT,":utf8");
+	
+	print RT <<END;
+<?xml version="1.0" encoding="$use_enc"?>
+<!DOCTYPE html
+	PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="$Languages->{$use_lang}->{lang}" xml:lang="$Languages->{$use_lang}->{lang}">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=$use_enc" />
+<title>Report Result</title>
+<style>\@@import url("./CSS/$css.css");</style>
+<style>\@@import url("${skinPath}menu.css");</style>
+<script type="text/javascript" src="js/right_menu.js"></script>
+</head>
+<body onload="init_menu()">
+<input type='hidden' value='$ID' id='ID' name='id' />
+<input type='hidden' value='$use_lang' id='LANG' name='lang' />
+<div class="Menu" id="userMenu" style="display:block; position:absolute; top:0px; left:0px; visibility:hidden; z-index:5;"  onmouseover='hideSubmenus()'></div>
+<div class="Menu" id="userSubMenu" style="display:block; position:absolute; top:0px; left:0px; visibility:hidden; z-index:6;"></div>
+END
+	print RT &descriptionTable('out', $data) if $header eq 'outerTable';
+	print RT "<table>";
+	my($row,$col);
+	my(@@colBorder,@@rowBorder);
+	@@colBorder = initBorder('col', $data);
+	@@rowBorder = initBorder('row', $data);
+	my $groupCols = (exists $$data->{row}[0]) ? ($#{$$data->{row}[0]} > 0) ? @@{$$data->{row}[0]} : 1 : 1;
+	my $groupRows = (exists $$data->{col}[0]) ? ($#{$$data->{col}[0]} > 0) ? @@{$$data->{col}[0]} : 1 : 1;
+	my $headerCell = (exists $$data->{row}[0] && exists $$data->{col}[0]) ? 1 : 0; #run printing col header
+	$headerCell++ if $header =~ /innerCol|innerTable|innerRow/; #run printing col header when description of some header is needed
+	$headerCell++ if $header =~ /outerTable|none/ && exists $$data->{col}[0]; #run printing col header when col data are presented and no header desc is needed
+	if ($headerCell) {
+	for ($row = 0;$row < $groupRows; $row++) {
+		print RT "<tr>";
+		if ($header eq 'none' && $row == 0 && exists $$data->{row}[0]) {
+			print RT printHeaderCell('&nbsp',"ch r",$groupCols,$groupRows);	
+		} elsif ($header eq 'innerCol') {
+			print RT printHeaderCell($$data->{colHeader}->{$row}{name},"ch r",$groupCols,undef,"style='text-align:right !important;'");	
+		} elsif ($row == 0) {
+			if  ($header eq 'innerTable') {
+				print RT printHeaderCell(&descriptionTable('in', $data),"ch r",$groupCols,$groupRows);
+			} elsif ($header eq 'innerRow') {
+				my $cssH = "d";
+				for (0..$#{$$data->{row}[0]}) {
+					$cssH = "r" if $_ == $#{$$data->{row}[0]};
+					print RT printHeaderCell($$data->{rowHeader}->{$_}{name},"ch $cssH",undef,$groupRows,"style='vertical-align:bottom'");
+				}
+			} elsif ($header eq 'outerTable' && exists $$data->{row}[0]) {
+				print RT printHeaderCell('&nbsp',"ch r",$groupCols,$groupRows);
+			};
+		};
+		my $cssR;
+		$col = 0;
+		while ($col < @@{$$data->{col}}) {
+			my $count = 1;
+			my $colIndex = $col;
+			my $colspan = 0;
+			while ($count) {
+				if ($colBorder[$col]) {
+					$count = 0;
+				} else {
+					if ($col < @@{$$data->{col}}-1) {
+						if ($$data->{col}[$col][$row] ne $$data->{col}[$col+1][$row]) { $colBorder[$col] = 2; $count = 0;}
+					};
+				}
+				$colspan++;
+				$col++;
+			}
+			$cssR = ($colBorder[$col-1] == 1) ? 'r' : 'd';	#border style fo col header
+			print RT printHeaderCell("$$data->{col}[$colIndex][$row]|$$data->{colHeader}->{$row}{id}","ch $cssR",$colspan,undef,"id='c.$colIndex.$row'");
+		}
+		print RT "</tr>";
+	}
+	};
+	my $cssHlp = 'e';
+	my $cnt = 0;						#row area color
+	my $lastCol = (exists $$data->{row}[0]) ? $#{$$data->{row}[0]} : -1; 
+	for ($row = 0; $row < @@{$$data->{row}}; $row++) {
+		print RT "<TR>";
+		my $cssB = '';					#border style
+		$cnt++;
+		my $cssC;
+		if ($rowBorder[$row] == 1){
+			$cssB = 't';
+			$cssHlp = ($cssHlp eq 'e') ? 'o' : 'e';		#set row area color
+		};
+		for ($col = 0; $col < @@{$$data->{row}[0]}; $col++) {
+			$cssC = (($cnt%2) == 1 && $lastCol == $col) ? $cssHlp."o" : $cssHlp."e";	#each row color depending on row area color
+			if (!$rowBorder[$row]) {
+				if ($$data->{row}[$row-1][$col] ne $$data->{row}[$row][$col]) { $rowBorder[$row] = $col+1; }
+			};
+			my $cssR = ($col == @@{$$data->{row}[0]}-1) ? 'tr' : 't';	#border style for last col in row header
+			if ($rowBorder[$row] && $col+1 >= $rowBorder[$row]) {
+				my $count = 1;
+				my $rowspan = 1;
+				my $rowIndex = $row+1;
+				while ($count) {
+					if ($rowBorder[$rowIndex] || $rowIndex >= @@{$$data->{row}}) {
+						$count = 0;
+					} else {
+						if (!$rowBorder[$rowIndex] && $$data->{row}[$rowIndex][$col] ne $$data->{row}[$rowIndex-1][$col]) { $rowBorder[$rowIndex] = $col+1; last;}
+						$rowspan++;
+						$rowIndex++;
+					}
+				}
+				$hlp = printHeaderCell("$$data->{row}[$row][$col]|$$data->{rowHeader}->{$col}{id}","$cssC $cssB$cssR",undef,$rowspan,"id='r.$col.$row'") if ($col == 1 && $row == 0);
+				print RT printHeaderCell("$$data->{row}[$row][$col]|$$data->{rowHeader}->{$col}{id}","$cssC $cssB$cssR",undef,$rowspan,"id='r.$col.$row'"); 
+				};
+		};
+		for ($col = 0; $col < @@{$$data->{col}}; $col++) {
+			my $cssR = ($colBorder[$col] == 1) ? 'tr' : 'td';		#border style for cells
+			print RT printCell($$data->{c}{$row}{$col},"$cssC $cssB$cssR");
+		}
+		print RT "</TR>"
+	}
+
+	print RT "</table>";
+
+	my @@objectLinks;
+	my @@links;
+	my $links;
+	foreach my $ID (keys %{$$data->{links}}) {
+		undef @@links;
+		foreach (keys %{$$data->{links}{$ID}{current}}) {
+			push(@@links,$_,$$data->{links}{$ID}{current}{$_});
+		}
+		$links = join("|",@@links);
+		push (@@objectLinks,"'current$ID':'$links'");
+		undef @@links;
+		foreach (keys %{$$data->{links}{$ID}{down}}) {
+			push(@@links,$_,$$data->{links}{$ID}{down}{$_});
+		}
+		$links = join("|",@@links);
+		push (@@objectLinks,"'down$ID':'$links'");
+		undef @@links;
+		foreach (keys %{$$data->{links}{$ID}{up}}) {
+			push(@@links,$_,$$data->{links}{$ID}{up}{$_});
+		}
+		$links = join("|",@@links);
+		push (@@objectLinks,"'up$ID':'$links'");
+	}
+
+	$links = join("|",@@export);
+	push (@@objectLinks,"'export':'$links'");
+	$links = join("|",@@sort);
+	push (@@objectLinks,"'sort':'$links'");
+	foreach my $type ('rowHeader','colHeader') {
+		my $ok = 0;
+		undef @@links;
+		do {
+			if (exists $$data->{$type}{$ok}) {
+				push (@@links, "$ok|$$data->{$type}{$ok}{name}");
+				my $hlp = $ok;
+				$hlp += 0.5;
+				$ok++;
+				push (@@links, "$hlp|MID");
+			} else {
+				undef $ok;
+			}
+		} while ($ok);
+		$links = join("|",@@links);
+		if ($type eq 'rowHeader') {
+			push (@@objectLinks,"'pivotY':'$links'")
+		} else {
+			push (@@objectLinks,"'pivotX':'$links'")
+		}
+	}
+	undef @@links;
+	foreach (keys %{$RLang}) {
+		push (@@links,"'$_':'$RLang->{$_}'");
+	}
+	$links = join(",",@@links);
+	my $objectLinks = join(",",@@objectLinks);
+	print RT "<script type='text/javascript'>var objectLinks = {$objectLinks}; var lang = {$links};</script>";
+
+# === PrepareSQL Dump ===
+#my $sql = Dumper(SOAP->PrepareSQL($ID));
+#$sql =~ s/([{}])/<b>$1<\/b>/g;
+#print RT '<hr><h2>PrepareSQL:</h2><pre>'.$sql.'</pre>';
+#print RT '<hr><h2>Data:</h2><pre>'.Dumper($$data).'</pre>';
+# === PrepareSQL Dump ===
+
+	print RT "</body></html>";
+	close(RT);
+}
+
+#---------------------------------------------------
+sub initBorder {
+	my $what = shift;
+	my $data = shift;
+	my @@rtrn;
+
+	if ($what eq 'col') {
+		my $cnt = (ref($$data->{col})) ? @@{$$data->{col}} : 1;
+		for (my $i = 0; $i < $cnt-1; $i++) {
+			if ($$data->{col}[$i][0] eq $$data->{col}[$i+1][0]) { push(@@rtrn,undef) }
+			else { push(@@rtrn,1) }; 	# return something like nnn1nnn1nn..../ indicates the right solid border is necessary
+		}
+		push(@@rtrn,1);
+	} elsif ($what eq 'row') {
+		push(@@rtrn,1);
+		my $cnt = (ref($$data->{row})) ? @@{$$data->{row}} : 0;
+		for (my $i = 1; $i < $cnt; $i++) {
+			if ($$data->{row}[$i][0] eq $$data->{row}[$i-1][0]) { push(@@rtrn,undef) }
+			else { push(@@rtrn,1) };		# returns something like 1nnn1nnn1nn..../ indicates the top sollid border is necessary
+		}
+	}
+	return @@rtrn
+}
+
+#---------------------------------------------------
+sub printHeaderCell (){
+	my($content,$css,$cols,$rows,$add) = @@_;
+	my @@content = split(/\|/,$content);
+	my $menu = " oncontextmenu=\"return showMenu(this,'$content[1]')\"" if defined $content[1];
+	$menu .= " onclick='MA(this)'";
+	$css = " class='$css'" if $css;
+	my $printCols = ($cols > 1) ? " colspan='$cols'" : "";
+	my $printRows = ($rows > 1) ? " rowspan='$rows'" : "";
+	return "<th $add$css$printCols$printRows$menu>$content[0]</th>"
+}
+#---------------------------------------------------
+sub printGroupedCell() {
+	my($content,$css,$cols,$rows,$add) = @@_;
+	$css = " class='$css'" if $css;
+	my $printCols = ($cols > 1) ? " colspan='$cols'" : "";
+	my $printRows = ($rows > 1) ? " rowspan='$rows'" : "";
+	return "<td $add$css$printCols$printRows>$content</td>"
+}
+#---------------------------------------------------
+sub printCell() {
+	my($content,$css,$add) = @@_;
+	$css = " class='$css'" if $css;
+	return "<td $add$css>$content</td>"
+}
+
+#---------------------------------------------------
+sub descriptionTable {
+	my $type = shift;
+	my $data = shift;
+	my $table = "<table style='border:0; width:100%;'>" if $type eq 'in';
+	$table = "<table>" if $type eq 'out';
+	my $lastY = (exists $$data->{row}[0]) ? ($#{$$data->{row}[0]} > 0) ? $#{$$data->{row}[0]} : 0 : 0;
+	my $lastX = (exists $$data->{col}[0]) ? ($#{$$data->{col}[0]} > 0) ? $#{$$data->{col}[0]} : 0 : 0;
+	for my $x (0..$lastX) {
+		$table .= "<tr>";
+		for my $y (0..$lastY) {
+			if ($y == $lastY && $x == $lastX) {
+				$table .= &printHeaderCell($$data->{colHeader}->{$x}{name}."<br>".$$data->{rowHeader}->{$y}{name},"ee",undef,undef,"style='border-style:dotted; border-width:1px;'")
+			}
+			elsif ($y == $lastY) {
+				$table .= &printHeaderCell($$data->{colHeader}->{$x}{name},"ee",undef,undef,"style='border-style:dotted; border-width:1px; vertical-align:bottom;'")
+			} elsif ($x == $lastX) {
+				$table .= &printHeaderCell($$data->{rowHeader}->{$y}{name},"ee",undef,undef,"style='border-style:dotted; border-width:1px; vertical-align:bottom'")
+			} else {
+				$table .= &printHeaderCell('&nbsp',"ee")
+			}
+		}
+		$table .= "</tr>";
+	}
+	$table .= "</table>";
+	return $table
+}
+
+#---------------------------------------------------
+1
+@
+
+
+1.29
+log
+@description tab defined under two files, bug fixies
+@
+text
+@d4 1
+a4 1
+# $Id: run_grid.pl,v 1.28 2003/10/04 10:30:24 michald Exp $
+@
+
+
+1.28
+log
+@prototype of right click menu in graphs - need patch GDGraph-Map-1.05.patch
+@
+text
+@d4 1
+a4 1
+# $Id: run_grid.pl,v 1.27 2003/10/04 08:14:34 michald Exp $
+d12 2
+d20 1
+a20 1
+	binmode(RT,":utf8");
+d23 3
+a25 1
+	open(RT,">$cacheReport/$file") || &ErrorDie(" ERROR: can't write into report cache.");
+d130 2
+a131 1
+				print RT printHeaderCell("$$data->{row}[$row][$col]|$$data->{rowHeader}->{$col}{id}","$cssC $cssB$cssR",undef,$rowspan,"id='r.$col.$row'");
+d201 4
+a204 5
+use Data::Dumper;
+my $sql = Dumper(SOAP->PrepareSQL($ID));
+$sql =~ s/([{}])/<b>$1<\/b>/g;
+print RT '<hr><h2>PrepareSQL:</h2><pre>'.$sql.'</pre>';
+print RT '<hr><h2>Data:</h2><pre>'.Dumper($$data).'</pre>';
+d240 1
+@
+
+
+1.27
+log
+@writing 2D graphs html into cache
+@
+text
+@d4 1
+a4 1
+# $Id: run_grid.pl,v 1.26 2003/09/30 07:10:53 michald Exp $
+d7 1
+a7 1
+use vars qw($file $use_enc $Languages $use_lang $skinPath @@export @@sort $RLang);
+@
+
+
+1.26
+log
+@handling data by reference in exportToHTML
+@
+text
+@d4 1
+a4 1
+# $Id: run_grid.pl,v 1.25 2003/09/29 15:37:41 jiri_schmid Exp $
+a17 1
+	open(RT,">html/$file") || return eval "print '<pre>something wrrrrrong!</pre>'";
+d20 2
+@
+
+
+1.25
+log
+@report result parameters handling changed, minor code improvments
+@
+text
+@d4 1
+a4 1
+# $Id: run_grid.pl,v 1.24 2003/09/29 05:43:13 michald Exp $
+d15 1
+a15 1
+	my $data = shift;
+d46 3
+a48 3
+	my $groupCols = (exists $data->{row}[0]) ? ($#{$data->{row}[0]} > 0) ? @@{$data->{row}[0]} : 1 : 1;
+	my $groupRows = (exists $data->{col}[0]) ? ($#{$data->{col}[0]} > 0) ? @@{$data->{col}[0]} : 1 : 1;
+	my $headerCell = (exists $data->{row}[0] && exists $data->{col}[0]) ? 1 : 0; #run printing col header
+d50 1
+a50 1
+	$headerCell++ if $header =~ /outerTable|none/ && exists $data->{col}[0]; #run printing col header when col data are presented and no header desc is needed
+d54 1
+a54 1
+		if ($header eq 'none' && $row == 0 && exists $data->{row}[0]) {
+d57 1
+a57 1
+			print RT printHeaderCell($data->{colHeader}->{$row}{name},"ch r",$groupCols,undef,"style='text-align:right !important;'");	
+d63 3
+a65 3
+				for (0..$#{$data->{row}[0]}) {
+					$cssH = "r" if $_ == $#{$data->{row}[0]};
+					print RT printHeaderCell($data->{rowHeader}->{$_}{name},"ch $cssH",undef,$groupRows,"style='vertical-align:bottom'");
+d67 1
+a67 1
+			} elsif ($header eq 'outerTable' && exists $data->{row}[0]) {
+d73 1
+a73 1
+		while ($col < @@{$data->{col}}) {
+d81 2
+a82 2
+					if ($col < @@{$data->{col}}-1) {
+						if ($data->{col}[$col][$row] ne $data->{col}[$col+1][$row]) { $colBorder[$col] = 2; $count = 0;}
+d89 1
+a89 1
+			print RT printHeaderCell("$data->{col}[$colIndex][$row]|$data->{colHeader}->{$row}{id}","ch $cssR",$colspan,undef,"id='c.$colIndex.$row'");
+d96 2
+a97 2
+	my $lastCol = (exists $data->{row}[0]) ? $#{$data->{row}[0]} : -1; 
+	for ($row = 0; $row < @@{$data->{row}}; $row++) {
+d106 1
+a106 1
+		for ($col = 0; $col < @@{$data->{row}[0]}; $col++) {
+d109 1
+a109 1
+				if ($data->{row}[$row-1][$col] ne $data->{row}[$row][$col]) { $rowBorder[$row] = $col+1; }
+d111 1
+a111 1
+			my $cssR = ($col == @@{$data->{row}[0]}-1) ? 'tr' : 't';	#border style for last col in row header
+d117 1
+a117 1
+					if ($rowBorder[$rowIndex] || $rowIndex >= @@{$data->{row}}) {
+d120 1
+a120 1
+						if (!$rowBorder[$rowIndex] && $data->{row}[$rowIndex][$col] ne $data->{row}[$rowIndex-1][$col]) { $rowBorder[$rowIndex] = $col+1; last;}
+d125 1
+a125 1
+				print RT printHeaderCell("$data->{row}[$row][$col]|$data->{rowHeader}->{$col}{id}","$cssC $cssB$cssR",undef,$rowspan,"id='r.$col.$row'");
+d128 1
+a128 1
+		for ($col = 0; $col < @@{$data->{col}}; $col++) {
+d130 1
+a130 1
+			print RT printCell($data->{c}{$row}{$col},"$cssC $cssB$cssR");
+d140 1
+a140 1
+	foreach my $ID (keys %{$data->{links}}) {
+d142 2
+a143 2
+		foreach (keys %{$data->{links}{$ID}{current}}) {
+			push(@@links,$_,$data->{links}{$ID}{current}{$_});
+d148 2
+a149 2
+		foreach (keys %{$data->{links}{$ID}{down}}) {
+			push(@@links,$_,$data->{links}{$ID}{down}{$_});
+d154 2
+a155 2
+		foreach (keys %{$data->{links}{$ID}{up}}) {
+			push(@@links,$_,$data->{links}{$ID}{up}{$_});
+d169 2
+a170 2
+			if (exists $data->{$type}{$ok}) {
+				push (@@links, "$ok|$data->{$type}{$ok}{name}");
+d199 1
+a199 1
+print RT '<hr><h2>Data:</h2><pre>'.Dumper($data).'</pre>';
+d213 1
+a213 1
+		my $cnt = (ref($data->{col})) ? @@{$data->{col}} : 1;
+d215 1
+a215 1
+			if ($data->{col}[$i][0] eq $data->{col}[$i+1][0]) { push(@@rtrn,undef) }
+d221 1
+a221 1
+		my $cnt = (ref($data->{row})) ? @@{$data->{row}} : 0;
+d223 1
+a223 1
+			if ($data->{row}[$i][0] eq $data->{row}[$i-1][0]) { push(@@rtrn,undef) }
+d261 2
+a262 2
+	my $lastY = (exists $data->{row}[0]) ? ($#{$data->{row}[0]} > 0) ? $#{$data->{row}[0]} : 0 : 0;
+	my $lastX = (exists $data->{col}[0]) ? ($#{$data->{col}[0]} > 0) ? $#{$data->{col}[0]} : 0 : 0;
+d267 1
+a267 1
+				$table .= &printHeaderCell($data->{colHeader}->{$x}{name}."<br>".$data->{rowHeader}->{$y}{name},"ee",undef,undef,"style='border-style:dotted; border-width:1px;'")
+d270 1
+a270 1
+				$table .= &printHeaderCell($data->{colHeader}->{$x}{name},"ee",undef,undef,"style='border-style:dotted; border-width:1px; vertical-align:bottom;'")
+d272 1
+a272 1
+				$table .= &printHeaderCell($data->{rowHeader}->{$y}{name},"ee",undef,undef,"style='border-style:dotted; border-width:1px; vertical-align:bottom'")
+@
+
+
+1.24
+log
+@new version of the metadata - multiple attribute PK implementation; improvement of the PrepareSQL
+@
+text
+@d4 1
+a4 1
+# $Id: run_grid.pl,v 1.23 2003/09/23 15:42:50 jiri_schmid Exp $
+d36 1
+d171 2
+d174 1
+@
+
+
+1.23
+log
+@bug fixies, web browser oriented skins implemented
+@
+text
+@d1 4
+a4 1
+# $Id: run_grid.pl,v 1.22 2003/09/22 14:42:36 jiri_schmid Exp $
+d7 1
+a7 1
+use vars qw($ID $data $file $use_enc $Languages $use_lang $skinPath @@export @@sort $RLang);
+d12 10
+a21 7
+my $css = shift;
+my $header = shift;
+$header = $header ? $header : 'none';
+open(RT,">html/$file") || return eval "print '<pre>something wrrrrrong!</pre>'";
+binmode(RT,":utf8");
+print header(-charset=>$use_enc);
+print RT <<END;
+d39 30
+a68 70
+print RT &descriptionTable('out') if $header eq 'outerTable';
+print RT "<table>";
+my($row,$col);
+my(@@colBorder,@@rowBorder);
+@@colBorder = initBorder('col');
+@@rowBorder = initBorder('row');
+my $groupCols = (exists $data->{row}[0]) ? ($#{$data->{row}[0]} > 0) ? @@{$data->{row}[0]} : 1 : 1;
+my $groupRows = (exists $data->{col}[0]) ? ($#{$data->{col}[0]} > 0) ? @@{$data->{col}[0]} : 1 : 1;
+my $headerCell = (exists $data->{row}[0] && exists $data->{col}[0]) ? 1 : 0; #run printing col header
+$headerCell++ if $header =~ /innerCol|innerTable|innerRow/; #run printing col header when description of some header is needed
+$headerCell++ if $header =~ /outerTable|none/ && exists $data->{col}[0]; #run printing col header when col data are presented and no header desc is needed
+if ($headerCell) {
+for ($row = 0;$row < $groupRows; $row++) {
+	print RT "<tr>";
+	if ($header eq 'none' && $row == 0 && exists $data->{row}[0]) {
+		print RT printHeaderCell('&nbsp',"ch r",$groupCols,$groupRows);	
+	} elsif ($header eq 'innerCol') {
+		print RT printHeaderCell($data->{colHeader}->{$row}{name},"ch r",$groupCols,undef,"style='text-align:right !important;'");	
+	} elsif ($row == 0) {
+		if  ($header eq 'innerTable') {
+			print RT printHeaderCell(&descriptionTable('in'),"ch r",$groupCols,$groupRows);
+		} elsif ($header eq 'innerRow') {
+			my $cssH = "d";
+			for (0..$#{$data->{row}[0]}) {
+				$cssH = "r" if $_ == $#{$data->{row}[0]};
+				print RT printHeaderCell($data->{rowHeader}->{$_}{name},"ch $cssH",undef,$groupRows,"style='vertical-align:bottom'");
+			}
+		} elsif ($header eq 'outerTable' && exists $data->{row}[0]) {
+			print RT printHeaderCell('&nbsp',"ch r",$groupCols,$groupRows);
+		};
+	};
+	my $cssR;
+	$col = 0;
+	while ($col < @@{$data->{col}}) {
+		my $count = 1;
+		my $colIndex = $col;
+		my $colspan = 0;
+		while ($count) {
+			if ($colBorder[$col]) {
+				$count = 0;
+			} else {
+				if ($col < @@{$data->{col}}-1) {
+					if ($data->{col}[$col][$row] ne $data->{col}[$col+1][$row]) { $colBorder[$col] = 2; $count = 0;}
+				};
+			}
+			$colspan++;
+			$col++;
+		}
+		$cssR = ($colBorder[$col-1] == 1) ? 'r' : 'd';	#border style fo col header
+		print RT printHeaderCell("$data->{col}[$colIndex][$row]|$data->{colHeader}->{$row}{id}","ch $cssR",$colspan,undef,"id='c.$colIndex.$row'");
+	}
+	print RT "</tr>";
+}
+};
+my $cssHlp = 'e';
+my $cnt = 0;						#row area color
+my $lastCol = (exists $data->{row}[0]) ? $#{$data->{row}[0]} : -1; 
+for ($row = 0; $row < @@{$data->{row}}; $row++) {
+	print RT "<TR>";
+	my $cssB = '';					#border style
+	$cnt++;
+	my $cssC;
+	if ($rowBorder[$row] == 1){
+		$cssB = 't';
+		$cssHlp = ($cssHlp eq 'e') ? 'o' : 'e';		#set row area color
+	};
+	for ($col = 0; $col < @@{$data->{row}[0]}; $col++) {
+		$cssC = (($cnt%2) == 1 && $lastCol == $col) ? $cssHlp."o" : $cssHlp."e";	#each row color depending on row area color
+		if (!$rowBorder[$row]) {
+			if ($data->{row}[$row-1][$col] ne $data->{row}[$row][$col]) { $rowBorder[$row] = $col+1; }
+d70 3
+a72 2
+		my $cssR = ($col == @@{$data->{row}[0]}-1) ? 'tr' : 't';	#border style for last col in row header
+		if ($rowBorder[$row] && $col+1 >= $rowBorder[$row]) {
+d74 2
+a75 2
+			my $rowspan = 1;
+			my $rowIndex = $row+1;
+d77 1
+a77 1
+				if ($rowBorder[$rowIndex] || $rowIndex >= @@{$data->{row}}) {
+d80 3
+a82 3
+					if (!$rowBorder[$rowIndex] && $data->{row}[$rowIndex][$col] ne $data->{row}[$rowIndex-1][$col]) { $rowBorder[$rowIndex] = $col+1; last;}
+					$rowspan++;
+					$rowIndex++;
+d84 2
+d87 22
+a108 1
+			print RT printHeaderCell("$data->{row}[$row][$col]|$data->{rowHeader}->{$col}{id}","$cssC $cssB$cssR",undef,$rowspan,"id='r.$col.$row'");
+d110 22
+a131 4
+	};
+	for ($col = 0; $col < @@{$data->{col}}; $col++) {
+		my $cssR = ($colBorder[$col] == 1) ? 'tr' : 'td';		#border style for cells
+		print RT printCell($data->{c}{$row}{$col},"$cssC $cssB$cssR");
+a132 2
+	print RT "</TR>"
+}
+d134 1
+a134 1
+print RT "</table>";
+d136 22
+a157 7
+my @@objectLinks;
+my @@links;
+my $links;
+foreach my $ID (keys %{$data->{links}}) {
+	undef @@links;
+	foreach (keys %{$data->{links}{$ID}{current}}) {
+		push(@@links,$_,$data->{links}{$ID}{current}{$_});
+a158 15
+	$links = join("|",@@links);
+	push (@@objectLinks,"'current$ID':'$links'");
+	undef @@links;
+	foreach (keys %{$data->{links}{$ID}{down}}) {
+		push(@@links,$_,$data->{links}{$ID}{down}{$_});
+	}
+	$links = join("|",@@links);
+	push (@@objectLinks,"'down$ID':'$links'");
+	undef @@links;
+	foreach (keys %{$data->{links}{$ID}{up}}) {
+		push(@@links,$_,$data->{links}{$ID}{up}{$_});
+	}
+	$links = join("|",@@links);
+	push (@@objectLinks,"'up$ID':'$links'");
+}
+d160 18
+a177 11
+$links = join("|",@@export);
+push (@@objectLinks,"'export':'$links'");
+$links = join("|",@@sort);
+push (@@objectLinks,"'sort':'$links'");
+foreach my $type ('rowHeader','colHeader') {
+	my $ok = 0;
+	undef @@links;
+	do {
+		if (exists $data->{$type}{$ok}) {
+			push (@@links, "$ok|$data->{$type}{$ok}{name}");
+			$ok++;
+d179 1
+a179 1
+			undef $ok;
+a180 6
+	} while ($ok);
+	$links = join("|",@@links);
+	if ($type eq 'rowHeader') {
+		push (@@objectLinks,"'pivotY':'$links'")
+	} else {
+		push (@@objectLinks,"'pivotX':'$links'")
+d182 7
+a188 9
+}
+undef @@links;
+foreach (keys %{$RLang}) {
+	push (@@links,"'$_':'$RLang->{$_}'");
+}
+$links = join(",",@@links);
+my $objectLinks = join(",",@@objectLinks);
+print RT "<script type='text/javascript'>var objectLinks = {$objectLinks}; var lang = {$links};</script>";
+
+d190 1
+a191 1
+print RT "<pre>".Dumper($data)."</pre>";
+d194 3
+a196 3
+print RT '<h2>PrepareSQL:</h2><pre>'.$sql.'</pre>';
+
+print RT "</body></html>";
+d198 2
+a199 1
+close(RT);
+d203 19
+a221 17
+sub initBorder() {
+my $what = shift;
+my @@rtrn;
+
+if ($what eq 'col') {
+	my $cnt = (ref($data->{col})) ? @@{$data->{col}} : 1;
+	for (my $i = 0; $i < $cnt-1; $i++) {
+		if ($data->{col}[$i][0] eq $data->{col}[$i+1][0]) { push(@@rtrn,undef) }
+		else { push(@@rtrn,1) }; 	# return something like nnn1nnn1nn..../ indicates the right solid border is necessary
+	}
+	push(@@rtrn,1);
+} elsif ($what eq 'row') {
+	push(@@rtrn,1);
+	my $cnt = (ref($data->{row})) ? @@{$data->{row}} : 0;
+	for (my $i = 1; $i < $cnt; $i++) {
+		if ($data->{row}[$i][0] eq $data->{row}[$i-1][0]) { push(@@rtrn,undef) }
+		else { push(@@rtrn,1) };		# returns something like 1nnn1nnn1nn..../ indicates the top sollid border is necessary
+d223 1
+a223 2
+}
+return @@rtrn
+d254 1
+d276 1
+a276 1
+return $table
+d279 1
+@
+
+
+1.22
+log
+@report menu localized
+@
+text
+@d1 1
+a1 1
+# $Id: run_grid.pl,v 1.21 2003/09/22 14:15:01 jiri_schmid Exp $
+a97 2
+		$cnt = 0;
+		
+@
+
+
+1.21
+log
+@report menu improvments
+@
+text
+@d1 1
+a1 1
+# $Id: run_grid.pl,v 1.20 2003/09/22 11:52:27 jiri_schmid Exp $
+d4 1
+a4 1
+use vars qw($ID $data $file $use_enc $Languages $use_lang $skinPath @@export @@sort);
+d178 7
+a185 2
+my $objectLinks = join(",",@@objectLinks);
+print RT "<script type='text/javascript'>var objectLinks = {$objectLinks}</script>";
+@
+
+
+1.20
+log
+@format page - visual improvment
+@
+text
+@d1 1
+a1 1
+# $Id: run_grid.pl,v 1.19 2003/09/22 09:16:07 jiri_schmid Exp $
+d183 1
+a183 1
+#print RT "<pre>".Dumper($data)."</pre>";
+@
+
+
+1.19
+log
+@operational commit for vladis
+@
+text
+@d1 1
+a1 1
+# $Id: run_grid.pl,v 1.18 2003/09/22 08:42:25 jiri_schmid Exp $
+d183 1
+a183 1
+print RT "<pre>".Dumper($data)."</pre>";
+@
+
+
+1.18
+log
+@pivotting menu implemented
+@
+text
+@d1 1
+a1 1
+# $Id: run_grid.pl,v 1.17 2003/09/22 08:08:35 jiri_schmid Exp $
+d183 1
+d220 1
+a220 1
+	my $menu = " oncontextmenu=\"return showMenu(this,'$content[2]')\"" if defined $content[1];
+a223 4
+	if (defined $content[1]) {
+		$add =~ s/.$//;
+		$add = "$add|$content[1]'";
+		}
+@
+
+
+1.17
+log
+@operational commit
+@
+text
+@d1 1
+a1 1
+# $Id: run_grid.pl,v 1.16 2003/09/19 12:48:27 jiri_schmid Exp $
+d133 2
+d136 1
+a136 2
+	my @@links;
+#	foreach (sort { keys %{$data->{links}{$ID}{current}{$a}} <=> keys %{$data->{links}{$ID}{current}{$b}} } keys %{$data->{links}{$ID}{current}}) {
+d140 1
+a140 1
+	my $links = join("|",@@links);
+d156 1
+a156 1
+my $links = join("|",@@export);
+d160 18
+a177 1
+
+a182 1
+print RT "<pre>".Dumper($data)."</pre>";
+d219 1
+a219 1
+	my $menu = " oncontextmenu=\"return showMenu(this,'$content[2]')\"" if defined $content[2];
+@
+
+
+1.16
+log
+@sort and export menu impleneted
+@
+text
+@d1 1
+a1 1
+# $Id: run_grid.pl,v 1.15 2003/09/17 11:41:21 jiri_schmid Exp $
+d50 1
+a50 1
+		print RT printHeaderCell($data->{colHeader}->{$row},"ch r",$groupCols,undef,"style='text-align:right !important;'");	
+d58 1
+a58 1
+				print RT printHeaderCell($data->{rowHeader}->{$_},"ch $cssH",undef,$groupRows,"style='vertical-align:bottom'");
+d82 1
+a82 1
+		print RT printHeaderCell($data->{col}[$colIndex][$row],"ch $cssR",$colspan,undef,"c.$colIndex.$row");
+d120 1
+a120 5
+			#my $hlp = printHeaderCell($data->{row}[$row][$col],"$cssC $cssB$cssR",undef,$rowspan); 
+			#print "$data->{row}[$row][$col] : $hlp :".Dumper($data->{row}[$row][$col])." :".Dumper($hlp)." |";
+			#print RT $hlp;
+			#print RT printHeaderCell($data->{row}[$row][$col],"$cssC $cssB$cssR",undef,$rowspan);
+			print RT printHeaderCell($data->{row}[$row][$col],"$cssC $cssB$cssR",undef,$rowspan,"r.$col.$row");
+d165 1
+a199 1
+#oncontextmenu="show_menu('Kangaroo@@http://kangaroo.instrat.cz|Tiger@@http://tiger.instrat.cz|Robin@@http://robin.instrat.cz'); return false;"
+d202 1
+a202 1
+	my $menu = " oncontextmenu=\"return showMenu(this,'$content[1]')\"" if defined $content[1];
+d206 4
+a209 1
+	$add = ($content =~ /\|/) ? "id='$add|$content[2]'" : "";
+d238 1
+a238 1
+				$table .= &printHeaderCell($data->{colHeader}->{$x}."<br>".$data->{rowHeader}->{$y},"ee",undef,undef,"style='border-style:dotted; border-width:1px;'")
+d241 1
+a241 1
+				$table .= &printHeaderCell($data->{colHeader}->{$x},"ee",undef,undef,"style='border-style:dotted; border-width:1px; vertical-align:bottom;'")
+d243 1
+a243 1
+				$table .= &printHeaderCell($data->{rowHeader}->{$y},"ee",undef,undef,"style='border-style:dotted; border-width:1px; vertical-align:bottom'")
+@
+
+
+1.15
+log
+@bug fixies
+@
+text
+@d1 1
+a1 1
+# $Id: run_grid.pl,v 1.14 2003/09/10 09:08:54 jiri_schmid Exp $
+d4 1
+a4 1
+use vars qw($ID $data $file $use_enc $Languages $use_lang $skinPath);
+d30 1
+a30 1
+<div class="Menu" id="userMenu" style="display:block; position:absolute; top:0px; left:0px; visibility:hidden; z-index:5;"  onmouseover='hide_menu("userSubMenu")'></div>
+d158 7
+@
+
+
+1.14
+log
+@ACl changes, report outup visual improvments
+@
+text
+@d1 1
+a1 1
+# $Id: run_grid.pl,v 1.13 2003/09/04 15:09:36 jiri_schmid Exp $
+d48 1
+a48 1
+		print RT printHeaderCell('&nbsp',"ee r",$groupCols,$groupRows);	
+d50 1
+a50 1
+		print RT printHeaderCell($data->{colHeader}->{$row},"ee r",$groupCols,undef,"style='text-align:right !important;'");	
+d53 1
+a53 1
+			print RT printHeaderCell(&descriptionTable('in'),"ee r",$groupCols,$groupRows);
+d58 1
+a58 1
+				print RT printHeaderCell($data->{rowHeader}->{$_},"ee $cssH",undef,$groupRows,"style='vertical-align:bottom'");
+d61 1
+a61 1
+			print RT printHeaderCell('&nbsp',"ee r",$groupCols,$groupRows);
+d82 1
+a82 1
+		print RT printHeaderCell($data->{col}[$colIndex][$row],"ee $cssR",$colspan,undef,"c.$colIndex.$row");
+d203 1
+a203 1
+	$add = "id='$add|$content[2]'" if defined $content[2];
+@
+
+
+1.13
+log
+@two level menu imlemented
+@
+text
+@d1 1
+a1 1
+# $Id: run_grid.pl,v 1.12 2003/09/03 15:10:42 jiri_schmid Exp $
+d82 1
+a82 1
+		print RT printHeaderCell($data->{col}[$colIndex][$row],"ee $cssR",$colspan);
+d124 1
+a124 1
+			print RT printHeaderCell($data->{row}[$row][$col],"$cssC $cssB$cssR",undef,$rowspan);
+d139 3
+a141 2
+	while ( my ($id, $view) = each %{$data->{links}{$ID}} )  {
+			push(@@links,$id,$view);
+d144 13
+a156 1
+	push (@@objectLinks,"'$ID':'$links'");
+d199 1
+a199 1
+	my $menu = " oncontextmenu=\"return showMenu('$content[1]')\"" if defined $content[1];
+d203 1
+@
+
+
+1.12
+log
+@implementation of right clik menu
+@
+text
+@d1 1
+a1 1
+# $Id: run_grid.pl,v 1.11 2003/08/18 05:50:52 michald Exp $
+d30 2
+a31 1
+<div class="Menu" id="user_menu" style="display:block; position:absolute; top:0px; left:0px; visibility:hidden; z-index:5;"></div>
+@
+
+
+1.11
+log
+@some ACL improvement
+@
+text
+@d1 1
+a1 1
+# $Id: run_grid.pl,v 1.10 2003/08/04 09:51:25 jiri_schmid Exp $
+d4 1
+a4 1
+use vars qw($ID $data $file $use_enc $Languages $use_lang);
+d25 2
+d28 1
+a28 1
+<body>
+d30 1
+d135 12
+d182 1
+d184 2
+d189 1
+a189 1
+	return "<th $add$css$printCols$printRows>$content</th>"
+@
+
+
+1.10
+log
+@code improvment, bug fixies
+@
+text
+@d1 1
+a1 1
+# $Id: run_grid.pl,v 1.9 2003/07/18 10:50:59 jiri_schmid Exp $
+d133 3
+a135 1
+print RT '<h2>PrepareSQL:</h2><pre>'.Dumper(SOAP->PrepareSQL($ID)).'</pre>';
+@
+
+
+1.9
+log
+@format3d implemented, format changed all dependencies fixed
+@
+text
+@d1 1
+a1 1
+# $Id: run_grid.pl,v 1.8 2003/07/07 14:17:10 jiri_schmid Exp $
+d14 1
+@
+
+
+1.8
+log
+@utf8 may work properly
+@
+text
+@d1 1
+a1 1
+# $Id: run_grid.pl,v 1.7 2003/07/07 07:10:39 michald Exp $
+a131 1
+#print "<pre>".Dumper($data)."</pre>";
+@
+
+
+1.7
+log
+@some minor code improvements
+@
+text
+@d1 1
+a1 1
+# $Id: run_grid.pl,v 1.6 2003/07/04 14:29:27 jiri_schmid Exp $
+d13 1
+a13 1
+
+@
+
+
+1.6
+log
+@utf8 handling fixed
+@
+text
+@d1 1
+a1 1
+# $Id: run_grid.pl,v 1.5 2003/07/04 06:19:13 michald Exp $
+d11 1
+@
+
+
+1.5
+log
+@some fixes for proper utf8 encoding, see README for details
+@
+text
+@d1 1
+a1 1
+# $Id$
+d5 1
+d83 1
+d88 1
+d91 1
+a91 1
+		$cssHlp = ($cssHlp eq 'e') ? 'o' : 'e';		#change row area color
+d93 1
+a94 1
+	my $cssC = (($cnt%2) == 0) ? $cssHlp."e" : $cssHlp."o";	#each row color depending on row area color
+d96 1
+d114 4
+@
+
+
+1.4
+log
+@minor code change
+@
+text
+@d1 2
+d119 8
+a126 1
+print RT "</table></body></html>";
+@
+
+
+1.3
+log
+@header descriptions finally implemented
+@
+text
+@d32 3
+a34 3
+my $headerCell = (exists $data->{row}[0] && exists $data->{col}[0]) ? 1 : 0;
+$headerCell++ if $header =~ /innerCol|innerTable|innerRow/;
+$headerCell++ if $header =~ /outerTable|none/ && exists $data->{col}[0];
+d41 1
+a41 1
+		print RT printHeaderCell($data->{colHeader}->{$row},"ee r",$groupCols,undef,"text-align:right !important;");	
+d49 1
+a49 1
+				print RT printHeaderCell($data->{rowHeader}->{$_},"ee $cssH",undef,$groupRows,"vertical-align:bottom");
+d147 2
+a148 2
+	my($content,$css,$cols,$rows,$style) = @@_;
+	$style = " style='$style'" if $style;
+d151 1
+a151 1
+	return "<th class='$css'$printCols$printRows$style>$content</th>"
+d155 2
+a156 2
+	my($content,$css,$cols,$rows,$style) = @@_;
+	$style = " style='$style'" if $style;
+d159 1
+a159 1
+	return "<td class='$css'$printCols$printRows$style>$content</td>"
+d163 3
+a165 3
+	my($content,$css,$style) = @@_;
+	$style = " style='$style'" if $style;
+	return "<td class='$css'$style>$content</td>"
+d179 1
+a179 1
+				$table .= &printHeaderCell($data->{colHeader}->{$x}."<br>".$data->{rowHeader}->{$y},"ee",undef,undef,"border-style:dotted; border-width:1px;")
+d182 1
+a182 1
+				$table .= &printHeaderCell($data->{colHeader}->{$x},"ee",undef,undef,"border-style:dotted; border-width:1px; vertical-align:bottom;")
+d184 1
+a184 1
+				$table .= &printHeaderCell($data->{rowHeader}->{$y},"ee",undef,undef,"border-style:dotted; border-width:1px; vertical-align:bottom")
+@
+
+
+1.2
+log
+@css report visual changes, code improvment
+@
+text
+@d7 1
+d24 1
+a24 1
+
+d30 6
+a35 2
+my $groupCols = ($data->{row}[0]) ? @@{$data->{row}[0]} : 0;
+my $groupRows = ($data->{col}[0]) ? @@{$data->{col}[0]} : 0;
+d38 17
+a54 1
+	print RT printHeaderCell('&nbsp;','ee r',$groupCols,$groupRows) if ($row == 0 && $groupCols > 0);
+d77 1
+d147 2
+a148 1
+	my($content,$css,$cols,$rows,$html32) = @@_;
+d151 1
+a151 5
+	if ($html32) {
+		return "<th $html32$printCols$printRows>$content</th>"
+	} else {
+		return "<th class='$css'$printCols$printRows>$content</th>"
+	}
+d155 2
+a156 1
+	my($content,$css,$cols,$rows,$html32) = @@_;
+d159 1
+a159 5
+	if ($html32) {
+		return "<td $html32$printCols$printRows>$content</td>"
+	} else {
+		return "<td class='$css'$printCols$printRows>$content</td>"
+	}
+d163 27
+a189 5
+	my($content,$css,$html32) = @@_;
+	if ($html32) {
+		return "<td $html32>$content</td>"
+	} else {
+		return "<td class='$css'>$content</td>"
+d191 2
+@
+
+
+1.1
+log
+@creating of result-grid extracted into separate file
+@
+text
+@d33 1
+a33 1
+	print RT printGroupedCell('&nbsp;','ee r',$groupCols,$groupRows) if ($row == 0 && $groupCols > 0);
+@
+

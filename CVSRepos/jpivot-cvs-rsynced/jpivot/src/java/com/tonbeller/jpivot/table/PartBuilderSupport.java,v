@@ -1,0 +1,115 @@
+head	1.2;
+access;
+symbols
+	jpivot_1_8_0:1.1
+	focus_1_6_0:1.1.0.6
+	jpivot_1_7_0:1.1
+	jpivot_1_6_0:1.1
+	jpivot_1_5_0:1.1.0.4
+	Root_jpivot_1_5_0:1.1
+	mondrian_xmla_2005_08_25:1.1.0.2
+	sourceforge_sync:1.1;
+locks; strict;
+comment	@# @;
+expand	@k@;
+
+
+1.2
+date	2009.12.18.19.44.25;	author willgorman;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2005.07.05.14.19.46;	author avix;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@renamed getBookmarkState to retrieveBookmarkState so that JPivot works with beanutils-1.8
+@
+text
+@/*
+ * ====================================================================
+ * This software is subject to the terms of the Common Public License
+ * Agreement, available at the following URL:
+ *   http://www.opensource.org/licenses/cpl.html .
+ * Copyright (C) 2003-2004 TONBELLER AG.
+ * All Rights Reserved.
+ * You must accept the terms of that agreement to use this software.
+ * ====================================================================
+ *
+ * 
+ */
+package com.tonbeller.jpivot.table;
+
+import javax.servlet.http.HttpSession;
+
+import com.tonbeller.wcf.controller.RequestContext;
+
+
+
+/**
+ * Created on 18.10.2002
+ * 
+ * @@author av
+ */
+public abstract class PartBuilderSupport implements PartBuilder {
+  protected TableComponent table;
+
+
+  public void startBuild(RequestContext context) {
+  }
+  
+  public void stopBuild() {
+  }
+
+  public boolean isAvailable() {
+    return true;
+  }
+
+  public void initialize(RequestContext context, TableComponent table) throws Exception {
+    this.table = table;
+  }
+ 
+  public void destroy(HttpSession session) throws Exception {
+  }
+  
+  protected void setDirty(boolean dirty) {
+    // initialized?
+    if (table != null)
+      table.setDirty(dirty);
+  }
+  
+  /**
+   * returns null
+   */
+  public Object retrieveBookmarkState(int levelOfDetail) {
+    return null;
+  }
+
+  /**
+   * does nothing
+   */
+  public void setBookmarkState(Object state) {
+  }
+
+}
+@
+
+
+1.1
+log
+@initial version
+@
+text
+@d56 1
+a56 1
+  public Object getBookmarkState(int levelOfDetail) {
+@
+

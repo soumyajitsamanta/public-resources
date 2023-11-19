@@ -1,0 +1,4704 @@
+head	1.89;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.89
+date	2004.05.06.00.25.02;	author michald;	state Exp;
+branches;
+next	1.88;
+
+1.88
+date	2004.05.03.09.06.44;	author michald;	state Exp;
+branches;
+next	1.87;
+
+1.87
+date	2004.04.13.12.42.37;	author michald;	state Exp;
+branches;
+next	1.86;
+
+1.86
+date	2004.04.02.04.46.05;	author michald;	state Exp;
+branches;
+next	1.85;
+
+1.85
+date	2004.03.29.06.04.55;	author michald;	state Exp;
+branches;
+next	1.84;
+
+1.84
+date	2004.03.21.07.01.13;	author michald;	state Exp;
+branches;
+next	1.83;
+
+1.83
+date	2004.03.16.15.29.05;	author jiri_schmid;	state Exp;
+branches;
+next	1.82;
+
+1.82
+date	2004.03.12.16.11.27;	author michald;	state Exp;
+branches;
+next	1.81;
+
+1.81
+date	2004.03.11.07.59.00;	author michald;	state Exp;
+branches;
+next	1.80;
+
+1.80
+date	2004.02.18.13.40.37;	author vacula;	state Exp;
+branches;
+next	1.79;
+
+1.79
+date	2004.02.18.12.27.05;	author vacula;	state Exp;
+branches;
+next	1.78;
+
+1.78
+date	2004.02.18.12.14.13;	author vacula;	state Exp;
+branches;
+next	1.77;
+
+1.77
+date	2004.02.16.09.41.36;	author vacula;	state Exp;
+branches;
+next	1.76;
+
+1.76
+date	2004.01.12.13.42.03;	author michald;	state Exp;
+branches;
+next	1.75;
+
+1.75
+date	2003.12.15.14.11.03;	author jiri_schmid;	state Exp;
+branches;
+next	1.74;
+
+1.74
+date	2003.12.10.10.24.48;	author jiri_schmid;	state Exp;
+branches;
+next	1.73;
+
+1.73
+date	2003.12.03.06.46.45;	author michald;	state Exp;
+branches;
+next	1.72;
+
+1.72
+date	2003.12.02.16.22.52;	author jiri_schmid;	state Exp;
+branches;
+next	1.71;
+
+1.71
+date	2003.12.01.12.20.43;	author jiri_schmid;	state Exp;
+branches;
+next	1.70;
+
+1.70
+date	2003.11.28.13.03.22;	author jiri_schmid;	state Exp;
+branches;
+next	1.69;
+
+1.69
+date	2003.11.28.07.06.08;	author michald;	state Exp;
+branches;
+next	1.68;
+
+1.68
+date	2003.11.27.16.41.09;	author jiri_schmid;	state Exp;
+branches;
+next	1.67;
+
+1.67
+date	2003.11.27.08.52.44;	author jiri_schmid;	state Exp;
+branches;
+next	1.66;
+
+1.66
+date	2003.11.22.18.38.26;	author michald;	state Exp;
+branches;
+next	1.65;
+
+1.65
+date	2003.11.13.16.27.50;	author jiri_schmid;	state Exp;
+branches;
+next	1.64;
+
+1.64
+date	2003.11.13.07.29.49;	author michald;	state Exp;
+branches;
+next	1.63;
+
+1.63
+date	2003.11.12.10.20.21;	author jiri_schmid;	state Exp;
+branches;
+next	1.62;
+
+1.62
+date	2003.11.12.09.58.53;	author jiri_schmid;	state Exp;
+branches;
+next	1.61;
+
+1.61
+date	2003.11.11.15.06.15;	author jiri_schmid;	state Exp;
+branches;
+next	1.60;
+
+1.60
+date	2003.11.11.14.03.19;	author jiri_schmid;	state Exp;
+branches;
+next	1.59;
+
+1.59
+date	2003.11.10.06.35.57;	author michald;	state Exp;
+branches;
+next	1.58;
+
+1.58
+date	2003.11.09.15.29.41;	author michald;	state Exp;
+branches;
+next	1.57;
+
+1.57
+date	2003.11.07.09.35.11;	author jiri_schmid;	state Exp;
+branches;
+next	1.56;
+
+1.56
+date	2003.11.07.07.36.42;	author michald;	state Exp;
+branches;
+next	1.55;
+
+1.55
+date	2003.11.06.09.19.46;	author spanhel;	state Exp;
+branches;
+next	1.54;
+
+1.54
+date	2003.11.06.08.43.26;	author michald;	state Exp;
+branches;
+next	1.53;
+
+1.53
+date	2003.10.13.14.43.23;	author jiri_schmid;	state Exp;
+branches;
+next	1.52;
+
+1.52
+date	2003.10.09.13.53.24;	author jiri_schmid;	state Exp;
+branches;
+next	1.51;
+
+1.51
+date	2003.10.07.05.48.01;	author michald;	state Exp;
+branches;
+next	1.50;
+
+1.50
+date	2003.09.30.07.11.11;	author michald;	state Exp;
+branches;
+next	1.49;
+
+1.49
+date	2003.09.29.15.37.51;	author jiri_schmid;	state Exp;
+branches;
+next	1.48;
+
+1.48
+date	2003.09.29.10.52.23;	author jiri_schmid;	state Exp;
+branches;
+next	1.47;
+
+1.47
+date	2003.09.29.05.43.19;	author michald;	state Exp;
+branches;
+next	1.46;
+
+1.46
+date	2003.09.25.15.44.03;	author vacula;	state Exp;
+branches;
+next	1.45;
+
+1.45
+date	2003.09.25.13.20.58;	author spanhel;	state Exp;
+branches;
+next	1.44;
+
+1.44
+date	2003.09.23.18.53.01;	author vacula;	state Exp;
+branches;
+next	1.43;
+
+1.43
+date	2003.09.23.18.45.34;	author vacula;	state Exp;
+branches;
+next	1.42;
+
+1.42
+date	2003.09.22.14.15.28;	author jiri_schmid;	state Exp;
+branches;
+next	1.41;
+
+1.41
+date	2003.09.22.10.57.41;	author vacula;	state Exp;
+branches;
+next	1.40;
+
+1.40
+date	2003.09.22.09.16.25;	author jiri_schmid;	state Exp;
+branches;
+next	1.39;
+
+1.39
+date	2003.09.22.08.08.59;	author jiri_schmid;	state Exp;
+branches;
+next	1.38;
+
+1.38
+date	2003.09.10.09.08.58;	author jiri_schmid;	state Exp;
+branches;
+next	1.37;
+
+1.37
+date	2003.09.09.09.41.30;	author jiri_schmid;	state Exp;
+branches;
+next	1.36;
+
+1.36
+date	2003.09.03.15.10.46;	author jiri_schmid;	state Exp;
+branches;
+next	1.35;
+
+1.35
+date	2003.08.18.13.17.13;	author jiri_schmid;	state Exp;
+branches;
+next	1.34;
+
+1.34
+date	2003.08.15.10.59.39;	author michald;	state Exp;
+branches;
+next	1.33;
+
+1.33
+date	2003.08.13.08.49.01;	author jiri_schmid;	state Exp;
+branches;
+next	1.32;
+
+1.32
+date	2003.08.13.08.22.26;	author jiri_schmid;	state Exp;
+branches;
+next	1.31;
+
+1.31
+date	2003.08.12.09.19.19;	author jiri_schmid;	state Exp;
+branches;
+next	1.30;
+
+1.30
+date	2003.08.07.12.39.26;	author jiri_schmid;	state Exp;
+branches;
+next	1.29;
+
+1.29
+date	2003.08.06.09.36.32;	author michald;	state Exp;
+branches;
+next	1.28;
+
+1.28
+date	2003.08.06.07.50.33;	author jiri_schmid;	state Exp;
+branches;
+next	1.27;
+
+1.27
+date	2003.08.04.05.12.22;	author michald;	state Exp;
+branches;
+next	1.26;
+
+1.26
+date	2003.07.29.14.36.42;	author jiri_schmid;	state Exp;
+branches;
+next	1.25;
+
+1.25
+date	2003.07.29.06.52.46;	author michald;	state Exp;
+branches;
+next	1.24;
+
+1.24
+date	2003.07.25.09.28.51;	author jiri_schmid;	state Exp;
+branches;
+next	1.23;
+
+1.23
+date	2003.07.21.10.51.42;	author jiri_schmid;	state Exp;
+branches;
+next	1.22;
+
+1.22
+date	2003.07.18.10.51.01;	author jiri_schmid;	state Exp;
+branches;
+next	1.21;
+
+1.21
+date	2003.07.11.05.40.58;	author michald;	state Exp;
+branches;
+next	1.20;
+
+1.20
+date	2003.07.10.13.00.04;	author jiri_schmid;	state Exp;
+branches;
+next	1.19;
+
+1.19
+date	2003.07.09.15.30.18;	author jiri_schmid;	state Exp;
+branches;
+next	1.18;
+
+1.18
+date	2003.07.07.07.10.42;	author michald;	state Exp;
+branches;
+next	1.17;
+
+1.17
+date	2003.07.04.14.29.33;	author jiri_schmid;	state Exp;
+branches;
+next	1.16;
+
+1.16
+date	2003.07.04.06.19.18;	author michald;	state Exp;
+branches;
+next	1.15;
+
+1.15
+date	2003.07.03.12.17.52;	author jiri_schmid;	state Exp;
+branches;
+next	1.14;
+
+1.14
+date	2003.07.02.13.44.34;	author jiri_schmid;	state Exp;
+branches;
+next	1.13;
+
+1.13
+date	2003.06.30.11.22.15;	author jiri_schmid;	state Exp;
+branches;
+next	1.12;
+
+1.12
+date	2003.06.30.11.00.44;	author jiri_schmid;	state Exp;
+branches;
+next	1.11;
+
+1.11
+date	2003.06.30.09.14.33;	author jiri_schmid;	state Exp;
+branches;
+next	1.10;
+
+1.10
+date	2003.06.26.09.31.43;	author jiri_schmid;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	2003.06.26.07.53.59;	author jiri_schmid;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	2003.06.25.15.43.42;	author jiri_schmid;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	2003.06.25.15.40.29;	author jiri_schmid;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	2003.06.20.08.42.32;	author michald;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	2003.06.18.08.06.51;	author jiri_schmid;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2003.06.18.07.04.35;	author jiri_schmid;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2003.06.13.11.33.00;	author jiri_schmid;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2003.06.12.08.44.34;	author jiri_schmid;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2003.05.28.15.33.34;	author michald;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.89
+log
+@fix creation of the report without explicit format definition
+@
+text
+@
+#-----------------------------------------------------
+#  Beard Caches
+#-----------------------------------------------------
+# $Id: Cache.pm,v 1.88 2004/05/03 09:06:44 michald Exp $
+
+package Cache;
+
+use strict;
+
+use Graph::Directed;
+use Encode;
+use Data::Dumper;
+use Time::HiRes;
+use CacheMD;
+
+use utf8;
+binmode(STDOUT, ':utf8');
+binmode(STDIN, ':utf8');
+
+#----------------------------------------------------------
+
+# Cache structure:
+
+our $Lookup;
+# $Lookup->{$AttrID}->{form_idx}->{$form}->{$lang} = $ColIndex	# index of DB column containing specific form
+#        ->{table_name} = $table_name	# lookup cache Db table name
+#        ->{load_time} = $ltime	# loading time of the lookup cache in [ms]
+#        ->{records} = $rec	# number of records
+#        ->{def} = [def1, def2, ...]	# array of the display form definitions
+#        ->{type} = [coltype1, coltype2, ...]	# array of the column data types
+
+our $SCache;
+our $RCache;
+# $[RS]Cache->{$ReportID}->{metric}->{$metric}->{pos}=$mid	#position of specific metric in ->{data} array
+#                        ->{attr}->{$attr}->{pos}=$aid		#position of specific attribute in ->{data} array
+#                        ->{select} =>	$select_def			#definition of the select
+#                        ->{tabID}='table_id'				#DB table name
+
+#-----------------------------------------------------
+
+sub LoadProjLookupCache {
+	# load lookup data into cache for all attributes for specific project
+	my $projN=shift;	# project name
+	CacheMD::CheckDBConnection();
+	foreach (keys %{$main::MD->{$projN}->{attr}}) {	# foreach attribute object ID
+		LoadLookupCache($_, $projN);		# load lookup cache for attr $_
+	}				
+	Bearlib::WriteLog('Loading of all caches completed', '', 1) if ($Const::LogLevel>0);
+}
+
+#-----------------------------------------------------
+
+sub LoadLookupCache {
+
+	# load lookup data into cache
+	my $ID=shift;	#attribute ID
+	my $projN=shift;	# project name
+	
+	my $IDx = $ID;
+	$IDx =~ s/\..*$//;	# cut form part of the ID
+	return if exists $Lookup->{$IDx};	# different attr form has already been loaded
+	$Lookup->{$IDx}->{table_name} = $projN.'__'.$IDx;
+	
+	# temporary solution for @@{${$main::MDi->{$ID}->{ptr}}->{pk}}[0]
+	# it's necessary make a cycle for all pk and check it according the display
+	my $pk = @@{${$main::MDi->{$ID}->{ptr}}->{pk}}[0];
+	if (!$pk) {
+		Bearlib::WriteLog('Load Lookup Cache Failed',"Attribute ID: $ID has no PK defined",1) if ($Const::LogLevel>3);
+		return
+	}
+	my ($h,$s,$t,$c)=SplitKey($pk);	# get primary key
+	my $src = "$h/$s";
+
+	if (!DBlib::IsDBConnected($src)) {
+		Bearlib::WriteLog('Load Lookup Cache Failed',"DB connection is not open for $src (Attribute ID:$ID)",1) if ($Const::LogLevel>0);
+		return 0
+	}
+	DBlib::ColectInfo($src);	# ensure that DB Info is collected; maybee better will be to open new connection for lookup
+
+	push (@@{$Lookup->{$IDx}->{def}}, $c);	# push PK
+	push (@@{$Lookup->{$IDx}->{type}}, DBlib::ColumnType($src, $t, $c));	# push data type of PK
+	my @@plHold;	# placeholders
+	push (@@plHold, '?');	# push one '?' for PK
+	my $cols="id ${$Lookup->{$IDx}->{type}}[0] NOT NULL PRIMARY KEY";	# DDL for columns
+
+	# !!! physical presentation of multiple forms has to be located in one lookup table (e.g. host/source/table) in present version 
+	my %fdi;	# display form definition index
+	if (exists ${$main::MDi->{$ID}->{ptr}}->{display}) {
+		my $i=0;	# latest index
+		foreach my $d (keys %{${$main::MDi->{$ID}->{ptr}}->{display}}) {	# foreach display form
+			foreach my $l (keys %{${$main::MDi->{$ID}->{ptr}}->{display}->{$d}->{def}}) {	# foreach lang
+				my $fd=${$main::MDi->{$ID}->{ptr}}->{display}->{$d}->{def}->{$l};	# form $d definition for specific language $l
+				my ($hh,$ss,$tt,$c)=SplitKey($fd);	# get form def
+				if (($h eq $hh) && ($s eq $ss) && ($t eq $tt)) {	# same host/source/table as for PK
+					if (exists $fdi{$fd} ) {	# same definition for diferent form is already exists
+						$Lookup->{$IDx}->{form_idx}->{$d}->{$l} = $fdi{$fd};					
+					} else {
+						push (@@{$Lookup->{$IDx}->{def}}, $c);
+						push (@@plHold, '?');
+						$i++;
+						$fdi{$fd} = $i;
+						my $ct;
+						if (!$Const::CacheDB->{lookup_varchar}) {	# we want to use original DW formats
+							$ct = DBlib::ColumnType($src, $t, $c);
+							$ct =~ s/ character set \w+\b// if $ct;
+						}
+						$ct = 'VARCHAR(255)' if (!$ct);	# display form definition is the simple column refference
+						push (@@{$Lookup->{$IDx}->{type}}, $ct);	# push data type of PK
+						$cols .= ", c$i $ct NOT NULL";	# !!! data type shoul be set in consodance with original column, but only in case there is no function used in display form definition
+						$Lookup->{$IDx}->{form_idx}->{$d}->{$l} = $i;
+					}
+				}
+			}
+		}
+	}
+	# here we have got $Lookup->{$IDx} prepared
+		
+	if ((scalar @@{$Lookup->{$IDx}->{def}}) <= 0) {	# there are no display form definitions prepared
+		Bearlib::WriteLog('Load Lookup Cache Failed', "Preparation of SQL failed for Attribute ID:$IDx (".Bearlib::LocalizedObj(${$main::MDi->{$IDx}->{ptr}}->{name},$IDx,$Const::DefaultLanguage).")",1) if ($Const::LogLevel>0);
+		delete $Lookup->{$IDx};	# clear cache instance
+		return
+	}
+
+	my $lh = CacheMD::LoadLMD($projN, $IDx);	# temp lookup definition hash
+	my $records = 0;	# number of the rows
+
+	if ((CacheMD::CompareLMD($Lookup->{$IDx}, $lh))	# curent disp. form definition is the same as stored one
+		&& (DBlib::TableInfo('CacheDB', $Lookup->{$IDx}->{table_name}))) {	# and lookup table exists
+			($records) = DBlib::SQLFetchOneLineQuery('CacheDB', "SELECT COUNT(*) FROM $Lookup->{$IDx}->{table_name}");
+	}
+
+	if (($records) && ($records == $lh->{records})) {	
+		# Lookup cache is already populated and has the definition in consodance with attr MD definition
+		$Lookup->{$IDx} = $lh;	# let use stored lookup definition
+		Bearlib::WriteLog('Use existing Lookup Cache', "Attribute ID: $src/$ID : $records records",4) if ($Const::LogLevel>3);
+	} else {	# load data into lookup cache
+		CacheMD::DeleteLMD($projN, $IDx);
+		DBlib::SQLQuery('CacheDB', "DROP TABLE IF EXISTS $Lookup->{$IDx}->{table_name}");
+		DBlib::SQLQuery('CacheDB', "CREATE TABLE $Lookup->{$IDx}->{table_name} ($cols) TYPE=$Const::CacheDB->{table_type}");
+		DBlib::SQLQuery('CacheDB', "LOCK TABLES $Lookup->{$IDx}->{table_name} WRITE");
+		my $stime = Time::HiRes::time();
+		my $rec = 0;
+		DBlib::SQLPrepareQuery('CacheDB', 'C', "INSERT INTO $Lookup->{$IDx}->{table_name} VALUES (".join(',',@@plHold).')');
+		DBlib::SQLPrepareFetch($src, 'l', 'SELECT '.join(',', @@{$Lookup->{$IDx}->{def}})." FROM $t");
+		if (@@main::SQLErrors) {
+			DBlib::SQLQuery('CacheDB', "UNLOCK TABLES");
+			Bearlib::WriteLog('Load Lookup Cache Failed',"ID:$ID:".join(',',@@main::SQLErrors),1) if ($Const::LogLevel>0);
+			undef @@main::SQLErrors;
+			return 0
+		} else {
+			Bearlib::WriteLog('Load Lookup Cache',"Attribute ID: $src/$ID",4) if ($Const::LogLevel>3);
+		}
+		while ( my (@@r)=DBlib::SQLFetch($src,'l') ) {	# foreach record in DW lookup table
+			DBlib::SQLExecuteQuery('CacheDB', 'C', (map({decode(DBlib::DBEncoding($src), $_) if $_} @@r)));
+			last if (@@DBlib::SQLErrors);
+			$rec++;
+		}
+		DBlib::SQLQuery('CacheDB', "UNLOCK TABLES");
+		DBlib::SQLFetchClose($src, 'l');
+		DBlib::SQLFetchClose('CacheDB', 'C');
+
+		# save MD into Cache DB metadata table
+		$Lookup->{$IDx}->{load_time} = sprintf("%d", (Time::HiRes::time()-$stime)*1000);
+		$Lookup->{$IDx}->{records} = $rec;
+		CacheMD::SaveLMD($projN, $IDx, $Lookup->{$IDx});
+	}
+}
+
+#-------------------
+
+sub SplitKey {
+	# returns (host, source, table, sel_expression)
+	my $k=shift;	#key definition
+	return ($k=~m|^(.+?)/(.+?)/(.+?)/(.*)$|);
+}
+
+#-----------------------------------------------------
+
+sub CheckCache {
+# check if cache for specified conditions exists, if no, lets load it
+# returns Cache ID or 0 if fails
+
+	my $ID=shift;	#report ID
+
+#	return if exists $RCache->{$ID};
+delete $RCache->{$ID};	# !!! only temporary solution till handling of the report IDs will be fixed
+
+
+	my $m = SQLGen::PrepareSQL($ID);
+
+#print "Prepate SQL \n";
+#use Data::Dumper;
+#print Dumper($m);	
+
+	# only single pass SQL is implemented in present
+	my $src = @@{$m}[0]->{SRC};
+	my $sql = @@{$m}[0]->{SQL};
+	if (!DBlib::IsDBConnected($src)) {
+		Bearlib::WriteLog('Report Query Failed',"DB connection is not open for: $src; (Report ID:$ID)",1) if ($Const::LogLevel>0);
+		return 0
+	}
+
+	my $stime = Time::HiRes::time();
+	DBlib::SQLPrepareFetch($src, 'l', $sql);
+	my $nat = scalar @@{@@{$m}[0]->{ATTR}};	# number of attributes
+	my $nmt = scalar @@{@@{$m}[0]->{METR}};	# number of metrics
+	if (!@@main::SQLErrors) {
+		# put data into RCache
+		while ( my (@@r)=DBlib::SQLFetch($src,'l') ) {
+			my $a = join('|', @@r[0..$nat-1]);
+			$RCache->{$ID}->{data}->{$a} = [@@r[$nat..$nat+$nmt-1]];
+		}
+		DBlib::SQLFetchClose($src,'l');
+	}
+	if (@@main::SQLErrors) {
+		Bearlib::WriteLog('Report Query Failed',"SRC/ID: $src/$ID:".join(',',@@main::SQLErrors),1) if ($Const::LogLevel>0);
+		undef @@main::SQLErrors;
+		return 0
+	} else {
+		Bearlib::WriteLog('Report Query', sprintf("SRC/ID: %s/%s in %.3fs", $src, $ID, Time::HiRes::time()-$stime),4) if ($Const::LogLevel>3);
+	}
+	
+	foreach my $i (0..$nat-1) {
+#print "ATTR @@{@@{$m}[0]->{METR}}[$i] = ".($nat-1-$i)."\n";
+		$RCache->{$ID}->{attr}->{ @@{@@{$m}[0]->{ATTR}}[$i] }->{pos} = $i;
+	}
+	foreach my $i (0..$nmt-1) {
+#print "METR @@{@@{$m}[0]->{METR}}[$i] = ".($nmt-1-$i)."\n";
+		$RCache->{$ID}->{metric}->{ @@{@@{$m}[0]->{METR}}[$i] }->{pos} = $i;
+	}
+
+	return $ID;
+
+}
+
+#---------------------------------------
+
+sub RCache2XTabId {
+	my $reportId = shift;
+	
+	CheckCache($reportId);
+
+#print Dumper($RCache->{$reportId});
+#my $stime = Time::HiRes::time();
+
+	my $rtrn = undef;
+	my $grid = (ref(${$main::MDi->{$reportId}->{ptr}}->{var_def}) =~ /HASH/) ? ${$main::MDi->{$reportId}->{ptr}}->{var_def} : ${ $main::MDi->{ ${$main::MDi->{$reportId}->{ptr}}->{var_def} }->{ptr} };
+	my $index;
+	my $metricLocator;
+	my $metricIndex;
+	foreach my $item ('col','row') {
+		my $i = 0;
+		if (exists($grid->{$item})) {
+			my $headerName = $item."Header";
+			foreach (@@{$grid->{$item}}) {
+				(my $gridItemId,my $form) = ($_ =~ /~/) ? split(/~/,$_) : ($_,undef);	#/ for proper syntax highlighting in some editors
+				if (exists($RCache->{$reportId}{attr}{$gridItemId})) {
+					push(@@{$index->{$item}},$RCache->{$reportId}{attr}{$gridItemId}{pos});
+					$rtrn->{$headerName}->{$i}{id} = $gridItemId;
+				} elsif ($_ eq $Const::MetricsIdent) {
+					$metricLocator = $item;	#determine if metrics group is in row or col header
+					$metricIndex = $i;
+				};
+				$i++;
+			}
+		}
+	}
+
+#printf("\tRCache2XTabId [1]: %.3f s\n", Time::HiRes::time()-$stime);
+#$stime = Time::HiRes::time();
+	my $last = 0;
+	foreach (keys(%{$RCache->{$reportId}{attr}})) {	# for each attribute involved
+		if ($RCache->{$reportId}{attr}{$_}{pos} < $last) {
+			next;
+		} else {
+			$last = $RCache->{$reportId}{attr}{$_}{pos};
+		}
+
+	}
+	$last++;
+	splice(@@{$index->{$metricLocator}}, $metricIndex, 0, $last) if ($metricLocator);
+	my @@add;
+	my $formats;
+	foreach (@@{$grid->{metric}}) {
+		push(@@add,$_);
+		$formats->{$_} = (exists ${$main::MDi->{$_}->{ptr}}->{output}) ? ${$main::MDi->{$_}->{ptr}}->{output} : '%.2f';
+	}
+
+#printf("\tRCache2XTabId [2]: %.3f s\n", Time::HiRes::time()-$stime);
+#$stime = Time::HiRes::time();
+	my $cnt = 0;
+	my $hlp;
+	foreach (keys(%{$RCache->{$reportId}{data}})) {
+		my @@splitField = split(/\|/, $_);
+		foreach my $item ('col','row') {
+			my $ptr;
+			if ($item eq $metricLocator) {
+				foreach my $metric (@@add) {
+					push(@@splitField,$metric);
+					$ptr = \$hlp->{$item};
+					foreach (@@{$index->{$item}}) {
+						$ptr = \$$ptr->{$splitField[$_]};
+					}
+					pop(@@splitField);
+				}
+			} else {
+				$ptr = \$hlp->{$item};
+				foreach (@@{$index->{$item}}) {
+					$ptr = \$$ptr->{$splitField[$_]};
+				}
+			}
+		}
+		$cnt++;
+	}
+	our $field;
+	our $item;
+	our $i;
+	our @@output;
+	#------- 
+		sub convertHash2FullArray () {
+			my $input = shift;
+			our @@output = @@_;
+			my @@previus = @@output;
+			foreach (sort(keys(%{$$input}))) {
+				push(@@output,$_);
+				if (ref($$input->{$_}) =~ /HASH/) {
+					&convertHash2FullArray(\$$input->{$_},@@output);
+				} else {
+					our $item;
+					our $i;
+					$field->{$item}[$i] = [@@output];
+					$i++;
+				}
+				@@output = @@previus;
+			}
+		}
+	#-------
+#printf("\tRCache2XTabId [3]: %.3f s\n", Time::HiRes::time()-$stime);
+#$stime = Time::HiRes::time();
+	foreach ('col','row') {
+		$i = 0;
+		$item = $_;
+		&convertHash2FullArray(\$hlp->{$_});
+		$rtrn->{$_} = $field->{$_};		#page and metric not implemented yet
+	}
+	$field = $item = $i = undef;
+	@@output = undef;
+	my $metricId = $grid->{metric}[0] if $#{$grid->{metric}} == 0;
+	my $rtrnRow = ($#{$rtrn->{row}} > 0) ? $#{$rtrn->{row}} : 0;
+	my $rtrnCol = ($#{$rtrn->{col}} > 0) ? $#{$rtrn->{col}} : 0;
+
+#printf("\tRCache2XTabId [4]: %.3f s\n", Time::HiRes::time()-$stime);
+#$stime = Time::HiRes::time();
+	foreach my $row (0..$rtrnRow) {
+		my @@key;
+		for (0..$#{$index->{row}}) {
+			if ($index->{row}[$_] < $last) {
+				$key[ $index->{row}[$_] ] = $rtrn->{row}[$row][$_]
+			} else {
+				$metricId = $rtrn->{row}[$row][$_]
+			}
+		}
+		foreach my $col (0..$rtrnCol) {
+			for (0..$#{$index->{col}}) {
+				if ( $index->{col}[$_] < $last ) {
+					$key[ $index->{col}[$_] ] = $rtrn->{col}[$col][$_]
+				} else {
+					$metricId = $rtrn->{col}[$col][$_]
+				}
+			}
+			my $masterKey = join("|",@@key);
+			$rtrn->{c}{$row}{$col} = sprintf( $formats->{$metricId}, @@{$RCache->{$reportId}{data}{$masterKey}}[$RCache->{$reportId}{metric}{$metricId}{pos}]) if exists $RCache->{$reportId}{data}{$masterKey};
+		}
+	}
+
+	if ($#{$grid->{metric}} == 0) {
+		if ($#{$grid->{row}} < 0) {
+			$rtrn->{rowHeader}{0}{id} = $metricId
+		} elsif ($#{$grid->{col}} < 0) {
+			$rtrn->{colHeader}{0}{id} = $metricId
+		} else {
+			$rtrn->{metric} = $metricId
+		}
+	}
+	
+#printf("\tRCache2XTabId [5]: %.3f s\n", Time::HiRes::time()-$stime);
+#print Dumper($rtrn);
+
+	return $rtrn
+}
+
+#-----------------------------------------------------
+
+sub LookupID2Name {		# returns specific Display Form of attribute element
+	my $attr = shift;	# attribute object ID
+	my $ID = shift;		# attribute element ID
+	my $form = shift;
+	my $lang = lc(shift);
+
+	my $attrx = $attr;
+	$attrx =~ s/\..*$//;	# cut form part of the ID
+
+	my $index = $Lookup->{$attrx}{form_idx}{$form}{$lang} if $form;
+	if (defined $index) {
+		my $idq = (${$Lookup->{$attrx}->{type}}[0]!~/CHAR|DATE|TIME/i) ? $ID : "'$ID'";
+		my @@r = DBlib::SQLFetchOneLineQuery('CacheDB', "SELECT c$index FROM $Lookup->{$attrx}->{table_name} WHERE id=$idq");
+		return $r[0] if @@r;
+	} else {
+		return $ID;
+	}
+}
+
+#-----------------------------------------------------
+
+sub LookupID2Link {		# returns hash of links for specific attribute element
+	my $attr = shift;	# attribute object ID
+	my $ID = shift;		# attribute element ID
+	my $form = shift;
+	my $lang = lc(shift);
+
+	my $index = $Lookup->{$attr}{form_idx}{$form}{$lang} if $form;
+#	return (defined $index) ? (exists $Lookup->{$attr}{data}{$ID}[$index]) ? $Lookup->{$attr}{data}{$ID}[$index] : $ID : $ID;
+	return "Link lookup is not implemented yet";	# will we use the same cache as for display forms?
+}
+
+#-----------------------------------------------------
+
+sub RCache2XTabName {
+	my $reportId = shift;
+	my $lang = lc(shift);
+	my $rtrn;
+	our $RCache;
+
+	$rtrn = &Cache::RCache2XTabId($reportId);
+
+#my $stime = Time::HiRes::time();
+	my $grid = (ref(${$main::MDi->{$reportId}->{ptr}}->{var_def}) =~ /HASH/) ? ${$main::MDi->{$reportId}->{ptr}}->{var_def} : ${ $main::MDi->{ ${$main::MDi->{$reportId}->{ptr}}->{var_def} }->{ptr} };
+
+	foreach my $item ('col','row') {
+		my $i = 0;
+		if (exists($grid->{$item})) {
+			my $headerName = $item."Header";
+			foreach (@@{$grid->{$item}}) {
+				(my $gridItemId,my $form) = ($_ =~ /~/) ? split(/~/,$_) : ($_,undef);	#/ for proper syntax highlighting in some editors
+				if (exists($RCache->{$reportId}{attr}{$gridItemId})) {
+					$rtrn->{$headerName}{$i}{name} = Bearlib::LocalizedObj(${$main::MDi->{$gridItemId}->{ptr}}->{name},$gridItemId,$lang,$Const::DefaultLanguage);
+					for (0..$#{$rtrn->{$item}}) {
+						my $substId = $rtrn->{$item}[$_][$i];
+						$rtrn->{$item}[$_][$i] = LookupID2Name($gridItemId, $substId, $form, $lang);
+					}
+				$i++;
+				} elsif ($_ eq $Const::MetricsIdent) {
+					for (0..$#{$rtrn->{$item}}) {
+						$rtrn->{$item}[$_][$i] = Bearlib::LocalizedObj(${$main::MDi->{$rtrn->{$item}[$_][$i]}->{ptr}}->{name},$rtrn->{$item}[$_][$i],$lang,$Const::DefaultLanguage);
+						$rtrn->{$headerName}->{$i}{name} =  Bearlib::LocalizedObj($Const::MetricsLocalization,$Const::MetricsIdent,$lang,$Const::DefaultLanguage);
+						$rtrn->{$headerName}->{$i}{id} = $Const::MetricsIdent;
+					}
+				$i++;
+				}
+			}
+		}
+	}
+	
+	if ($#{$grid->{metric}} == 0) {
+		if ($#{$grid->{row}} < 0) {
+			$rtrn->{rowHeader}{0}{name} = Bearlib::LocalizedObj(${$main::MDi->{$rtrn->{rowHeader}{0}{id}}->{ptr}}->{name},$Const::MetricsIdent,$lang,$Const::DefaultLanguage);
+		} elsif ($#{$grid->{col}} < 0) {
+			$rtrn->{colHeader}{0}{name} = Bearlib::LocalizedObj(${$main::MDi->{$rtrn->{colHeader}{0}{id}}->{ptr}}->{name},$Const::MetricsIdent,$lang,$Const::DefaultLanguage);
+		} else {
+			$rtrn->{metric} = Bearlib::LocalizedObj(${$main::MDi->{$rtrn->{metric}}->{ptr}}->{name},$Const::MetricsIdent,$lang,$Const::DefaultLanguage);
+		}
+	}
+	
+#print Dumper($rtrn);
+#my $t=Time::HiRes::time()-$stime;
+#printf("\tRCache2XTabName: %.3f s\n", $t);
+
+	return $rtrn
+}
+
+#-----------------------------------------------------
+
+sub RCache2XTabWeb {
+	my $reportId = shift;
+	my $lang = lc(shift);
+	my $rtrn;
+	our $RCache;
+
+	$rtrn = &Cache::RCache2XTabId($reportId);
+
+#print Dumper($rtrn);
+#my $stime = Time::HiRes::time();
+	my $grid = (ref(${$main::MDi->{$reportId}->{ptr}}->{var_def}) =~ /HASH/) ? ${$main::MDi->{$reportId}->{ptr}}->{var_def} : ${ $main::MDi->{ ${$main::MDi->{$reportId}->{ptr}}->{var_def} }->{ptr} };
+
+	foreach my $item ('col','row') {
+		my $i = 0;
+		my $lCache = {};
+		if (exists($grid->{$item})) {
+			my $headerName = $item."Header";
+			foreach (@@{$grid->{$item}}) {
+				(my $gridItemId,my $form) = ($_ =~ /~/) ? split(/~/,$_) : ($_,undef);	#/ for proper syntax highlighting in some editors
+				if (exists($RCache->{$reportId}{attr}{$gridItemId})) {
+					$rtrn->{$headerName}{$i}{name} = Bearlib::LocalizedObj(${$main::MDi->{$gridItemId}->{ptr}}->{name},$gridItemId,$lang,$Const::DefaultLanguage);
+					$rtrn->{links}{$gridItemId}{current} = Bearlib::GetLocalizedAttrLinks($gridItemId,$form,$lang);
+					$rtrn->{links}{$gridItemId}{down} = Bearlib::GetLocalizedAttrDrill($gridItemId,'DOWN',$lang);
+					$rtrn->{links}{$gridItemId}{up} = Bearlib::GetLocalizedAttrDrill($gridItemId,'UP',$lang);
+					for (0..$#{$rtrn->{$item}}) {	# we will have to avoid this cycle to prevent lot of LookupID2Name calls - maybee we will able to inner join Lookup table with RCache to constrain Lookup select
+						my $substId = $rtrn->{$item}[$_][$i];
+						if (!exists $lCache->{$gridItemId}->{$substId}->{$form}) {	# prevents from duplicate lookup DB query
+							$lCache->{$gridItemId}->{$substId}->{$form} = LookupID2Name($gridItemId, $substId, $form, $lang);
+						}
+						$rtrn->{$item}[$_][$i] = "$lCache->{$gridItemId}->{$substId}->{$form}|$substId";
+					}
+					$i++;
+				} elsif ($_ eq $Const::MetricsIdent) {
+					for (0..$#{$rtrn->{$item}}) {
+						$rtrn->{$item}[$_][$i] = Bearlib::LocalizedObj(${$main::MDi->{$rtrn->{$item}[$_][$i]}->{ptr}}->{name},$rtrn->{$item}[$_][$i],$lang,$Const::DefaultLanguage)."|$rtrn->{$item}[$_][$i]";
+						$rtrn->{$headerName}->{$i}{name} = Bearlib::LocalizedObj($Const::MetricsLocalization,$Const::MetricsIdent,$lang,$Const::DefaultLanguage);
+						$rtrn->{$headerName}->{$i}{id} = $Const::MetricsIdent;
+					}
+					$i++;
+				}
+			}
+		}
+	}
+	
+	if ($#{$grid->{metric}} == 0) {
+		if ($#{$grid->{row}} < 0) {
+			$rtrn->{rowHeader}{0}{name} = Bearlib::LocalizedObj(${$main::MDi->{$rtrn->{rowHeader}{0}{id}}->{ptr}}->{name},$Const::MetricsIdent,$lang,$Const::DefaultLanguage);
+		} elsif ($#{$grid->{col}} < 0) {
+			$rtrn->{colHeader}{0}{name} = Bearlib::LocalizedObj(${$main::MDi->{$rtrn->{colHeader}{0}{id}}->{ptr}}->{name},$Const::MetricsIdent,$lang,$Const::DefaultLanguage);
+		} else {
+			$rtrn->{metric} = Bearlib::LocalizedObj(${$main::MDi->{$rtrn->{metric}}->{ptr}}->{name},$Const::MetricsIdent,$lang,$Const::DefaultLanguage);
+		}
+	}
+	
+#print Dumper($rtrn);
+#my $t=Time::HiRes::time()-$stime;
+#printf("\tRCache2XTabWeb: %.3f s\n", $t);
+
+	return $rtrn
+}
+
+#-----------------------------------------------------
+
+sub GetAttrElements {
+	my ($Lang, $Filter, $Sort, $SortOrd, $attr, $fact, $limit) = @@_;	# language, filter expression, sort index, sort order, attribute (in form attr.role~display), fact for join, max number of elements returned
+	                                                 	# sort index = 0 ... sort by ID
+	                                                 	# sort index = 1 ... sort by description
+	                                                 	# sort index = [^01] ... don't sort
+	                                                 	# sort order = 'A' ... ascending
+	                                                 	# sort order = 'D' ... ascending
+	                                                 	# sort order = [^AD] ... don't sort
+
+	my @@id;	# array for results to return
+	my ($attrx, $form) = split('~', $attr);	# set Attribute name and display form
+	my ($at, $df, $f) = ($Filter=~/^\s*([\w.]+)(~[\w\-]+)?(\s+.*)$/);
+	return if ($Filter)&&($at ne $attrx);	# !!! filtration on different attribure require join in DW and is not implemented yet !!!
+
+	$attrx =~ s/\..*$//;	# $attrx will hold attribute name only (without role part)
+
+	$limit = 99999 if !$limit;
+
+	# sort results
+	my $sqlS = "SELECT id, ";
+	if ($form) {
+		$sqlS .= 'c'.$Lookup->{$attrx}{form_idx}{$form}{$Lang};
+	} else {
+		$sqlS .= 'id';
+	}
+	$sqlS .= " FROM $Lookup->{$attrx}->{table_name}";
+
+	if ($f) {	# filter is presented
+		if (${$Lookup->{$attrx}->{id_type}}[0]=~/CHAR|DATE|TIME/) {	# we have to quote elements
+			my ($fd, $fel) = ($f=~/^(.*)\((.*)\)\s*$/);
+			$fel =~ s/,/','/g;
+			$f = "$fd('$fel')";
+		}
+		$sqlS .= " WHERE id $f";
+	}
+
+	if ($Sort==0) {
+		$sqlS .= ' ORDER BY 1';
+	} elsif ($Sort==1) {
+		$sqlS .= ' ORDER BY 2';
+	}
+	if ($SortOrd eq 'A') {
+		$sqlS .= ' ASC';
+	} elsif ($SortOrd eq 'D') {
+		$sqlS .= ' DESC';
+	}
+	$sqlS .= " LIMIT $limit";
+
+	DBlib::SQLPrepareFetch('CacheDB', 'gl', $sqlS);
+	if (@@main::SQLErrors) {
+		Bearlib::WriteLog('Load AttrElements from Lookup Cache Failed', $attr, 1) if ($Const::LogLevel>0);
+		undef @@main::SQLErrors;
+		return 0
+	} else {
+		Bearlib::WriteLog('Load AttrElements from Lookup Cache', $attr, 4) if ($Const::LogLevel>3);
+	}
+	while ( my (@@r)=DBlib::SQLFetch('CacheDB','gl') ) {
+		push @@id, [@@r]; 
+	}
+	DBlib::SQLFetchClose('CacheDB', 'gl');
+	
+	return @@id;
+}
+
+
+#-----------------------------------------------------
+
+sub Report3d() {
+	my ($reportId) = shift;
+	CheckCache($reportId);
+	#my $rtrn = (ref(${$main::MDi->{$reportId}->{ptr}}->{var_def}) =~ /HASH/) ? ${$main::MDi->{$reportId}->{ptr}}->{var_def} : ${ $main::MDi->{ ${$main::MDi->{$reportId}->{ptr}}->{var_def} }->{ptr} };
+	my $rtrn = ${$main::MDi->{$reportId}->{ptr}};
+
+	return $rtrn;
+}
+
+#-----------------------------------------------------
+
+sub RCache2data3d() {
+	my $reportID = shift;
+
+	my $mdata = mdata($reportID);
+	my @@data = data($reportID,$mdata);
+
+	#------------------------------------------------------
+	sub mdata {
+		my $reportID = shift;
+		my ($mdata);
+		my $col = 0;
+		my $map = (ref(${$main::MDi->{${$main::MDi->{$reportID}->{ptr}}->{var_def}}->{ptr}}) =~ /HASH/) ? ${$main::MDi->{${$main::MDi->{$reportID}->{ptr}}->{var_def}}->{ptr}} : ${ $main::MDi->{ ${$main::MDi->{${$main::MDi->{$reportID}->{ptr}}->{var_def}}->{ptr}} }->{ptr} };
+
+
+		foreach ( keys(%{$map}) ) {
+			if ( $_ eq 'x' or $_ eq 'y' or $_ eq 'z' or $_ eq 'transparency' or $_ eq 'diameter' or $_ eq 'color' or $_ eq 'shape' ) {
+	    			if ( scalar @@{$map->{$_}{items}} != 0 ) {
+	        	 		$mdata->{$_}{column} = $col;
+	        	 		$col++;
+					$mdata->{$_}{interpolation} = $map->{$_}{interpolation};
+					$mdata->{$_}{min} = $map->{$_}{min};
+					$mdata->{$_}{max} = $map->{$_}{max};
+					$mdata->{$_}{default} = $map->{$_}{default};
+					$mdata->{$_}{rules} = $map->{$_}{rules};
+					$mdata->{$_}{type} = ( $map->{$_}{quantity} eq 'off' ) ? 'qualit' : 'quantit';
+
+					for (my $i=0;$i < scalar @@{$map->{$_}{items}};$i++ ) {
+						if ( Bear::GetObjectType(undef,$map->{$_}{items}[$i]) eq 'metric' ) {
+							push ( @@{$mdata->{$_}{cols}},$RCache->{$reportID}{metric}{$map->{$_}{items}[$i]}{pos});
+		     					$mdata->{$_}{id} .= ($i == (scalar @@{$map->{$_}{items}}-1)) ? $map->{$_}{items}[$i] : $map->{$_}{items}[$i].'\t';
+							$mdata->{$_}{name} .= ($i == (scalar @@{$map->{$_}{items}}-1)) ? $map->{$_}{items}[$i] : $map->{$_}{items}[$i].'**';
+							$mdata->{$_}{obj} = 'metric';
+						}
+						#elsif ( Bear::GetObjectType(undef,$map->{$_}{items}[$i]) eq 'attr' ) {	# ??? has each object defined object type(attr,metric) ?
+						else {
+							my $a;
+							($a = $map->{$_}{items}[$i]) =~ s/~.*$//;	# cut attribute display (rest of string next to ~)
+							push ( @@{$mdata->{$_}{cols}},$RCache->{$reportID}{attr}{$a}{pos} );
+							$mdata->{$_}{id} .= ($i == (scalar @@{$map->{$_}{items}}-1)) ? $a : $a.'\t';
+							$mdata->{$_}{name} .= ($i == (scalar @@{$map->{$_}{items}}-1)) ? $map->{$_}{items}[$i] : $map->{$_}{items}[$i].'**';
+							$mdata->{$_}{obj} = 'attr';
+						}	
+					}
+	    	  		}
+	    	  		else { 
+					delete($mdata->{$_}); 
+				}  
+		  	}
+		}       
+
+		return $mdata;
+	}
+	#------------------------------------------------------
+	sub data {
+		my $reportID = shift;
+		my $mdata = shift;
+
+		my @@data = ();
+		my @@rcache = keys(%{$RCache->{$reportID}{data}});
+		my $cols = my @@split = (split(/\|/,$rcache[0]));
+		unshift(@@rcache,undef);
+		my $rows = scalar @@rcache;
+		
+
+		for ( my $i=0; $i < $rows; $i++ ) {
+	 	   	my @@join = ();
+	    		my @@splitField = split(/\|/,$rcache[$i]);
+
+	    		foreach ( keys(%{$mdata}) ) {
+					if ( $_=~/^x$|^y$|^z$|^transparency$|^diameter$|^shape$|^color$/ ) {
+	        				if ( $i == 0 ) {	# first row of table contains id of attr or metric
+		    					$join[$mdata->{$_}{column}] = $mdata->{$_}{id};
+		    					$mdata->{$_}{values}[0] = $mdata->{$_}{id};
+						}
+						else {
+							if ( $mdata->{$_}{obj} eq 'attr' ) {
+								for (my $j=0;$j < scalar @@{$mdata->{$_}{cols}};$j++ ) {
+									$join[$mdata->{$_}{column}] .= ( $j == (scalar @@{$mdata->{$_}{cols}} - 1) ) ? $splitField[$mdata->{$_}{cols}[$j]] : $splitField[$mdata->{$_}{cols}[$j]].'|';
+								}
+							}
+							elsif ( $mdata->{$_}{obj} eq 'metric' ) {
+								for (my $j=0;$j < scalar @@{$mdata->{$_}{cols}};$j++ ) {
+									$join[$mdata->{$_}{column}] .= ( $j == (scalar @@{$mdata->{$_}{cols}} - 1) ) ? $RCache->{$reportID}{data}{$rcache[$i]}[$j] : $RCache->{$reportID}{data}{$rcache[$i]}[$j].'|';								
+								}
+							}
+							else {
+								for (my $j=0;$j < scalar @@{$mdata->{$_}{cols}};$j++ ) {
+									
+								}
+							}
+						} 
+					}
+					my $occur = "";
+					for ( my $k=0;$k < scalar @@{$mdata->{$_}{values}}; $k++ ) {
+		    				if ( $mdata->{$_}{values}[$k] eq $join[$mdata->{$_}{column}] ) {
+		    					$occur = $k;
+		    				}
+					}    
+					if ($occur eq "") {
+						push(@@{$mdata->{$_}{values}},$join[$mdata->{$_}{column}]);
+					}
+	    		}
+	    		push(@@{$data[$i]},@@join);
+		}
+
+		my @@p_data=(); # pointers to mdata->{values};
+		foreach ( keys(%{$mdata}) ) {
+			if ( $_=~/^x$|^y$|^z$|^transparency$|^diameter$|^shape$|^color$/ ) {
+				for (my $i=0; $i < scalar @@data; $i++) {
+					for ( my $j=0; $j < scalar @@{$mdata->{$_}{values}}; $j++  ) {
+		    				if ( $data[$i][$mdata->{$_}{column}] eq $mdata->{$_}{values}[$j]  ) {
+		        		 		$p_data[$i][$mdata->{$_}{column}] = $j;
+		    				}
+					}
+				}
+			}
+		}
+
+		return @@p_data;
+	}
+	#------------------------------------------------------
+
+	return ($mdata,\@@data);
+}
+
+#-----------------------------------------------------
+
+sub Mdata2map3d() {
+	my $mdata = shift;
+	my $lang = shift;
+	my ($map);
+
+	foreach ( keys(%{$mdata}) ) {
+		if ( $_=~/^x$|^y$|^z$|^transparency$|^diameter$|^shape$|^color$/ ) {
+    			for ( my $i=0;$i < scalar @@{$mdata->{$_}{values}};$i++  ) { 
+				$mdata->{$_}{values}[$i] = ($i == 0) ? &attr($mdata->{$_}{values}[$i],$lang) : &itemsOFattr($mdata->{$_}{name},$mdata->{$_}{values}[$i],$lang); 
+    	  		}
+		}
+	}
+
+	#-------------------------------------------------------------
+	sub attr {
+		my $item = shift;
+		my $lang = shift;
+		my @@split = split(/\|/,$item);
+		my (@@temp,@@attr,@@display,$loc_item);
+
+
+		 for (my $i=0; $i < scalar @@split; $i++ ) {
+	    	 	($attr[$i],$display[$i]) = ($split[$i] =~ /~/) ? split(/~/,$split[$i]) : ($split[$i],undef);   #/
+	    	 	$temp[$i] = Bearlib::LocalizedObj(${$main::MDi->{$attr[$i]}->{ptr}}->{name},"NA",$lang);    
+		 }
+		 for (my $j=0; $j < scalar @@temp; $j++) {
+	    	 	$loc_item .= ($j == (@@temp - 1)) ? $temp[$j] : $temp[$j].'|';
+		 }
+
+		return $loc_item;  
+	}
+
+	#-------------------------------------------------------------
+	sub itemsOFattr {
+		my $itemId = shift;
+		my $substId = shift;
+		my $lang = shift;
+		my @@splitItemId = split(/\|/,$itemId);
+		my @@splitSubstId = split(/\|/,$substId);
+
+		my (@@temp,@@attr,@@display,$loc_item);
+
+		 for (my $i=0; $i < scalar @@splitItemId; $i++ ) {
+	    	 	($attr[$i],$display[$i]) = ($splitItemId[$i] =~ /~/) ? split(/~/,$splitItemId[$i]) : ($splitItemId[$i],undef);  #/
+	    	 	$temp[$i] = LookupID2Name($attr[$i],$splitSubstId[$i],$display[$i],$lang);
+		 }
+		 for (my $j=0; $j < scalar @@temp; $j++) {
+	    	 	$loc_item .= ($j == (@@temp - 1)) ? $temp[$j] : $temp[$j].'|';
+		 }
+
+
+		return $loc_item;  
+	}
+	
+	#-------------------------------------------------------------
+
+	return $mdata;
+}
+
+#-----------------------------------------------------
+
+1
+
+__END__
+
+
+@
+
+
+1.88
+log
+@N:M implementation, foundation for slowly changing dimensions
+@
+text
+@d5 1
+a5 1
+# $Id: Cache.pm,v 1.87 2004/04/13 12:42:37 michald Exp $
+a244 1
+
+@
+
+
+1.87
+log
+@foundation for N:M relations
+@
+text
+@d5 1
+a5 1
+# $Id: Cache.pm,v 1.86 2004/04/02 04:46:05 michald Exp $
+d119 2
+a120 2
+	if (!$#{$Lookup->{$IDx}->{def}}) {	# there are no display form definitions prepared
+		Bearlib::WriteLog('Load Lookup Cache Failed', "Preparation of SQL failed for Attribute ID:$ID",1) if ($Const::LogLevel>0);
+@
+
+
+1.86
+log
+@fix wrng table nameing in Cache.pm:GetAttrElements
+@
+text
+@d5 1
+a5 1
+# $Id: Cache.pm,v 1.85 2004/03/29 06:04:55 michald Exp $
+d407 1
+a407 1
+		my $idq = (${$Lookup->{$attrx}->{type}}[0]!~/CHAR|DATE|TIME/) ? $ID : "'$ID'";
+@
+
+
+1.85
+log
+@new lookup cache management
+@
+text
+@d5 1
+a5 1
+# $Id: Cache.pm,v 1.84 2004/03/21 07:01:13 michald Exp $
+d558 1
+a558 2
+	my $Display;	# array of display forms
+	my ($attrx, $form) = split('~', $attr);	# set display form, cut display form from Attribute
+d560 1
+a560 1
+	return if ($Filter)&&($at ne $attrx);	# filtration on different attribure require join in DW and is not implemented yet !!!
+d562 1
+a562 1
+	$attrx =~ s/\..*$//;	# $attrx will hold attribute name only (without form part)
+d564 1
+a564 1
+	$limit = 999999 if !$limit;
+d569 1
+a569 1
+		$sqlS .= $Lookup->{$attrx}{form_idx}{$form}{$Lang};
+d573 1
+a573 1
+	$sqlS .= " FROM $attrx";
+d576 1
+a576 1
+		if ($Lookup->{$attrx}->{id_type}=~/CHAR|DATE|TIME/) {	# we have to quote elements
+@
+
+
+1.84
+log
+@slight modification of the Metric Filter Intersection MD presentation
+@
+text
+@d5 1
+a5 1
+# $Id: Cache.pm,v 1.82 2004/03/12 16:11:27 michald Exp $
+d15 1
+d26 6
+a31 2
+# $Lookup->{$AttrID}->{form_idx}->{$form}->{$lang}=$ColIndex	# index of DB column containing specific form
+#                   ->{count}->{$form}=$form1index		# number of records in the BD
+d45 1
+a45 9
+	if (!DBlib::IsDBConnected($Const::CacheDB->{db})) {
+		DBlib::DBConnect('CacheDB', $Const::CacheDB->{db}, $Const::CacheDB->{user}, $Const::CacheDB->{password}, $Const::CacheDB->{passwd}, $Const::CacheDB->{port}, $Const::CacheDB->{enc});
+		if (@@DBlib::SQLErrors) {
+			Bearlib::WriteLog('Cache DB Connection Falied', 'Proably there is no database accesible in consodance with $Const::CacheDB parameters. Let create one or fix $Const::CacheDB parameters.', 1) if ($Const::LogLevel>0);
+			die;
+		} else {
+			Bearlib::WriteLog('Open Cache DB Connection', '', 3) if ($Const::LogLevel>2);
+		}
+	}
+d47 1
+a47 1
+		LoadLookupCache($_);		# load lookup cache for attr $_
+d58 1
+d62 2
+a64 2
+	return if exists $Lookup->{$IDx};	# different attr form has already been loaded
+
+d79 1
+a79 1
+	DBlib::ColectInfo($src);	# ensure that DB Info will be collected; maybee better will be to open new connection for lookup
+d81 8
+a88 10
+	my @@SelCl;	#SQL Selection Clause
+	push (@@SelCl,$c);	# push PK
+	my @@plHold;	#placeholders
+	push (@@plHold,'?');	# push one '?' for PK
+	$Lookup->{$IDx}->{id_type} = DBlib::ColumnType($src, $t, $c);
+	my $cols="id $Lookup->{$IDx}->{id_type} PRIMARY KEY";	# DDL fo columns
+
+	# physical presentation of multiple forms has to be located in one lookup table (e.g. host/source/table) in present version 
+	# for support of lookup tables there will be necessary to create separate $SelCl for each such specific lookup table and to make separate SQL for each of them
+	my %fdi;	# form definition index
+d93 1
+a93 1
+				my $fd=${$main::MDi->{$ID}->{ptr}}->{display}->{$d}->{def}->{$l};
+d97 1
+a97 1
+						$Lookup->{$IDx}->{form_idx}->{$d}->{$l}=$fdi{$fd};					
+d99 2
+a100 2
+						push (@@SelCl,$c);
+						push (@@plHold,'?');
+d102 10
+a111 3
+						$fdi{$fd} = "c$i";
+						$cols .= ",$fdi{$fd} VARCHAR(255)";	# !!! data type shoul be set in consodance with original column, but only in case there is no function used in display form definition
+						$Lookup->{$IDx}->{form_idx}->{$d}->{$l} = $fdi{$fd};
+d117 1
+d119 5
+a123 1
+	if (@@SelCl) {
+d125 26
+a150 4
+		DBlib::SQLQuery('CacheDB', "CREATE TABLE IF NOT EXISTS $IDx ($cols)");
+		my @@r = DBlib::SQLFetchOneLineQuery('CacheDB', "SELECT COUNT(*) FROM $IDx");
+		if ($r[0]>0) {	# Lookup cache is already populated
+			Bearlib::WriteLog('Use existing Lookup Cache', "Attribute ID: $src/$ID : $r[0]",4) if ($Const::LogLevel>3);
+d152 1
+a152 19
+#			DBlib::SQLQuery('CacheDB', "DROP TABLE IF EXISTS $IDx");
+#			DBlib::SQLQuery('CacheDB', "CREATE TABLE $IDx ($cols)");
+#			DBlib::SQLQuery('CacheDB', "CREATE INDEX t1a ON $IDx (id)");
+			DBlib::SQLPrepareQuery('CacheDB', 'C', "INSERT INTO $IDx VALUES (".join(',',@@plHold).')');
+			DBlib::SQLPrepareFetch($src, 'l', 'SELECT '.join(',',@@SelCl)." FROM $t");
+			if (@@main::SQLErrors) {
+				Bearlib::WriteLog('Load Lookup Cache Failed',"ID:$ID:".join(',',@@main::SQLErrors),1) if ($Const::LogLevel>0);
+				undef @@main::SQLErrors;
+				return 0
+			} else {
+				Bearlib::WriteLog('Load Lookup Cache',"Attribute ID: $src/$ID",4) if ($Const::LogLevel>3);
+			}
+			while ( my (@@r)=DBlib::SQLFetch($src,'l') ) {
+				DBlib::SQLExecuteQuery('CacheDB', 'C', (map({decode(DBlib::DBEncoding($src), $_) if $_} @@r)));	# has to be decoded later: map({decode(DBlib::DBEncoding($src), $_) if $_} splice(@@r,1))
+				last if (@@DBlib::SQLErrors);
+				$Lookup->{$IDx}->{count}++;
+			}
+			DBlib::SQLFetchClose($src, 'l');
+			DBlib::SQLFetchClose('CacheDB', 'C');
+d154 13
+a166 3
+	} else {
+		Bearlib::WriteLog('Load Lookup Cache Failed',"Preparation of SQL failed for Attribute ID:$ID",1) if ($Const::LogLevel>0);
+		delete $Lookup->{$IDx};	# clear cache instance
+d407 2
+a408 2
+		my $idq = ($Lookup->{$attrx}->{id_type}!~/CHAR|DATE|TIME/) ? $ID : "'$ID'";
+		my @@r = DBlib::SQLFetchOneLineQuery('CacheDB', "SELECT $index FROM $attrx WHERE id=$idq");
+@
+
+
+1.83
+log
+@filter and aggregation level handling rules on metric page changed
+@
+text
+@d14 1
+a14 1
+#use Time::HiRes;
+a28 9
+# $SCache->{$SQL}->{data}=[[A1, A2, ..., M1, M2, ...], [....], ...]
+#                     ->{metric}->{$metric}->{pos}=$mid	#position of specific metric in ->{data} array
+#                     ->{attr}->{$attr}->{pos}=$aid		#position of specific attribute in ->{data} array
+#                                      ->{in}=[...]		#array of element list constraintr data set
+#                     ->{row_elem}=$n					#number of currently alocated elements of row
+#                     ->{filter}='filter condition'		#general constraint
+#                     ->{nref}=0;						#number of references from $Cache
+
+our $SCache;
+d30 4
+a33 4
+# $RCache->{$ReportID}->{metric}->{$metric}->{pos}=$mid	#position of specific metric in ->{data} array
+#                     ->{attr}->{$attr}->{pos}=$aid		#position of specific attribute in ->{data} array
+#                     ->{select} =>	$select_def			#definition of the select
+#                     ->{tabID}='table_id'				#DB table name
+d86 3
+a88 3
+	push (@@plHold,'?');	# push '?' for PK
+	$Lookup->{$IDx}->{id_type}=DBlib::ColumnType($src, $t, $c);
+	my $cols="id $Lookup->{$IDx}->{id_type} PRIMARY KEY";	#placeholders
+d99 1
+a99 1
+				if (($h eq $hh) && ($s eq $ss) && ($t eq $tt)) {	#same host/source/table as for PK
+d107 1
+a107 1
+						$cols .= ",$fdi{$fd} VARCHAR(255)";	# !!! this shoul be set in consodance with oricinal column
+d182 1
+d184 10
+d199 1
+a199 1
+		Bearlib::WriteLog('Report Query',"SRC/ID: $src/$ID",4) if ($Const::LogLevel>3);
+a201 11
+	my $nat = scalar @@{@@{$m}[0]->{ATTR}};	# number of attributes
+	my $nmt = scalar @@{@@{$m}[0]->{METR}};	# number of metrics
+	# put data into RCache
+	while ( my (@@r)=DBlib::SQLFetch($src,'l') ) {
+		my $a = join('|', @@r[0..$nat-1]);
+#		my $b = join('|', @@r[$nat..$nat+$nmt-1]);
+#print "$nat:$a = $nmt:$b\n";
+		$RCache->{$ID}->{data}->{$a} = [@@r[$nat..$nat+$nmt-1]];
+	}
+	DBlib::SQLFetchClose($src,'l');
+
+@
+
+
+1.82
+log
+@minor fixes and some comments
+@
+text
+@d5 1
+a5 1
+# $Id: Cache.pm,v 1.81 2004/03/11 07:59:00 michald Exp $
+d14 1
+a14 1
+use Time::HiRes;
+@
+
+
+1.81
+log
+@initial implementation of caches in the local DB
+@
+text
+@d5 1
+a5 1
+# $Id: Cache.pm,v 1.80 2004/02/18 13:40:37 vacula Exp $
+a35 7
+#$SCache->{lastid}=0;									#last SCacheID used
+
+#our $SCache;
+# $SCache->{$SQL}->{data}->{A1|A2|...|An}=ptr_to_SCache_row
+#                     ->{attr}->{$attr}->{pos}=aid		#position of specific attribute in ->{data} array
+#                     ->{scache}=SCacheID
+#                     ->{sql}=SQL
+d37 1
+d39 1
+a39 2
+# $RCache->{$ReportID}->{data}->{A1|A2|...|An}=[M1, M2, ...]
+#                     ->{metric}->{$metric}->{pos}=$mid	#position of specific metric in ->{data} array
+d41 2
+a42 1
+#                     ->{filter}='filter condition'		#general constraint
+d90 1
+a90 1
+	DBlib::ColectInfo($src);	# ensure that DB Info will be collected; maybee better will be to oben new connection for lookup
+@
+
+
+1.80
+log
+@fix changes in data structure of vrml graph
+@
+text
+@d1 1
+d5 1
+a5 1
+# $Id: Cache.pm,v 1.79 2004/02/18 12:27:05 vacula Exp $
+d14 1
+d25 2
+a26 2
+# $Lookup->{$AttrID}->{data}->{$ID}=[form1,form2, ...]
+#                   ->{form_idx}->{$form}=$form1index		#index into ->{data} for each specific form
+d55 9
+d67 1
+d76 5
+d84 6
+a89 1
+	my ($h,$s,$t,$c)=SplitKey(@@{${$main::MDi->{$ID}->{ptr}}->{pk}}[0]);	# get primary key
+d96 1
+d99 5
+a103 1
+	push (@@SelCl,$c);
+a107 1
+	my $i=0;	# latest index
+d109 1
+d116 1
+a116 1
+						$Lookup->{$ID}->{form_idx}->{$d}->{$l}=$fdi{$fd};					
+d119 5
+a123 2
+						$Lookup->{$ID}->{form_idx}->{$d}->{$l}=$i;
+						$fdi{$fd}=$i++;
+d131 5
+a135 5
+		DBlib::SQLPrepareFetch($src, 'l', 'SELECT '.join(',',@@SelCl)." FROM $t");
+		if (@@main::SQLErrors) {
+			Bearlib::WriteLog('Load Lookup Cache Failed',"ID:$ID:".join(',',@@main::SQLErrors),1) if ($Const::LogLevel>0);
+			undef @@main::SQLErrors;
+			return 0
+d137 19
+a155 5
+			Bearlib::WriteLog('Load Lookup Cache',"Attribute ID: $src/$ID",4) if ($Const::LogLevel>3);
+		}
+		while ( my (@@r)=DBlib::SQLFetch($src,'l') ) {
+			$Lookup->{$ID}->{data}->{$r[0]}=[map {decode(DBlib::DBEncoding($src), $_) if $_} splice(@@r,1)];
+			$Lookup->{$ID}->{count}++;
+a156 1
+		DBlib::SQLFetchClose($src,'l');
+d159 1
+a159 1
+		delete $Lookup->{$ID};	# clear cache instance
+d239 2
+d264 2
+d284 2
+a287 1
+#print Dumper($RCache->{$reportId}{data});
+a296 1
+	#					$$ptr->{$splitField[$_]};
+a303 1
+	#				$$ptr->{$splitField[$_]};
+a313 1
+#print Dumper($hlp);
+d320 10
+a329 10
+			push(@@output,$_);
+			if (ref($$input->{$_}) =~ /HASH/) {
+				&convertHash2FullArray(\$$input->{$_},@@output);
+			} else {
+				our $item;
+				our $i;
+				$field->{$item}[$i] = [@@output];
+				$i++;
+			}
+			@@output = @@previus;
+d333 2
+a342 1
+#print Dumper($rtrn);
+d347 2
+d381 3
+d395 2
+a396 2
+	my $index = $Lookup->{$attr}{form_idx}{$form}{$lang} if $form;
+	return (defined $index) ? (exists $Lookup->{$attr}{data}{$ID}[$index]) ? $Lookup->{$attr}{data}{$ID}[$index] : $ID : $ID;
+d398 8
+d417 2
+a418 2
+	return (defined $index) ? (exists $Lookup->{$attr}{data}{$ID}[$index]) ? $Lookup->{$attr}{data}{$ID}[$index] : $ID : $ID;
+
+d431 1
+a433 1
+#	my @@ids;
+d470 2
+d486 2
+a489 1
+#	my @@ids;
+d492 1
+d502 1
+a502 1
+					for (0..$#{$rtrn->{$item}}) {
+d504 4
+a507 1
+						$rtrn->{$item}[$_][$i] = LookupID2Name($gridItemId, $substId, $form, $lang)."|$substId";
+d509 1
+a509 1
+				$i++;
+d516 1
+a516 1
+				$i++;
+d533 2
+a549 1
+#print "$Lang, $Filter, $Sort, $SortOrd, $attr, $fact\n";
+d552 6
+a557 2
+	($attr, $Display) = split('~', $attr);	# set display form, cut display form from Attribute
+	my ($at, $df, $not, $el) = ($Filter=~/^\s*([\w.]+)(~[\w\-]+)?(\s+NOT)?\s+IN\s+\(([\w\-,]+)\)\s*$/);
+d560 8
+a567 28
+	if ((!$Filter)||( ($at eq $attr)&&($not)&&(!$el) )) {	# elements can be obtained from Lookup Cache in simple situation
+		Bearlib::WriteLog('Load all AttrElements from Lookup Cache', $attr, 4) if ($Const::LogLevel>3);
+		my $i=0;
+		foreach (keys %{$Lookup->{$attr}->{data}}) {
+			push @@id, [$_, LookupID2Name($attr, $_, $Display, $Lang)]; 
+			$i++;
+			last if $i>$limit;
+		}
+	} elsif ($at eq $attr) {
+		Bearlib::WriteLog('Load Filtered AttrElements from Lookup Cache', "$attr / $Filter / $fact", 4) if ($Const::LogLevel>3);
+		if ((!$not)&&(!$el)) {	# empty set
+			return
+		} elsif ((!$not)&&($el)) {	# IN (list)
+			$el =~ s/\s//g;
+			foreach (split (',', $el)) {
+				push @@id, [$_, LookupID2Name($attr, $_, $Display, $Lang)];
+			}
+		} else {	# NOT IN (list)
+			$el =~ s/\s*,\s*/\$|^/g;
+#print $el."\n";
+			my $i=0;
+			foreach (keys %{$Lookup->{$attr}->{data}}) {
+				push @@id, [$_, LookupID2Name($attr, $_, $Display, $Lang)] if $_!~/^$el$/;
+				$i++;
+				last if $i>$limit;
+			}
+		}
+	} else {	# we have to perform SQL in case there are more than one attribute involved or Filter refer to different attributeses
+d569 5
+a573 6
+return;	# this part is not fully implemented yet !!!
+			my $src='';
+
+		if (!DBlib::IsDBConnected($src)) {
+			Bearlib::WriteLog('Load of AttrElements Failed',"DB connection is not open for $src",1) if ($Const::LogLevel>0);
+			return 0
+d575 2
+d578 11
+a588 12
+		DBlib::SQLPrepareFetch($src, 'l', 'SELECT ...');
+		if (@@main::SQLErrors) {
+			Bearlib::WriteLog('Load of AttrElements Failed', join(',',@@main::SQLErrors), 1) if ($Const::LogLevel>0);
+			undef @@main::SQLErrors;
+			return 0
+		} else {
+			Bearlib::WriteLog('Load of AttrElements from DB', "$src: $attr", 4) if ($Const::LogLevel>3);
+		}
+		while ( DBlib::SQLFetch($src,'l') )  {
+			push @@id, $_;
+		}
+		DBlib::SQLFetchClose($src,'l');
+d590 10
+d601 1
+d603 1
+a603 16
+	# sort results
+	if (($Sort==0) && ($SortOrd=~/[AD]/)) {
+		if ($SortOrd eq 'A') {
+			return sort {@@{$a}[$Sort] <=> @@{$b}[$Sort]} @@id;
+		} elsif ($SortOrd eq 'D') {
+			return sort {@@{$b}[$Sort] <=> @@{$a}[$Sort]} @@id;
+		}
+	} elsif (($Sort==1) && ($SortOrd=~/[AD]/)) {
+		if ($SortOrd eq 'A') {
+			return sort {@@{$a}[$Sort] cmp @@{$b}[$Sort]} @@id;
+		} elsif ($SortOrd eq 'D') {
+			return sort {@@{$b}[$Sort] cmp @@{$a}[$Sort]} @@id;
+		}
+	} else {
+		return @@id;
+	}	
+a812 148
+#-----------------------------------------------------
+
+#sub GetResult {
+#	# returns result hash of cells
+#	my $class = shift;
+#	my $ID=shift;	#report ID
+
+#	if ($main::MDi->{$ID}->{type} ne 'report') {
+#		Bearlib::WriteLog('GetResult Failed',"Attempt to access non report object ID:$ID",1) if ($Const::LogLevel>0);
+#		return -1
+#	}
+#	Bearlib::WriteLog('GetResult',"ID:$ID",4) if ($Const::LogLevel>3);
+#	my $grid=${ $main::MDi->{ ${$main::MDi->{$ID}->{ptr}}->{grid} }->{ptr} };	#returns Grid Object of selected report
+#	my %a;
+#	foreach (@@{$grid->{row}}) {$a{$_}=1 if ($_ ne $main::MetricsIdent)};
+#	foreach (@@{$grid->{col}}) {$a{$_}=1 if ($_ ne $main::MetricsIdent)};
+#	foreach (@@{$grid->{page}}) {$a{$_}=1 if ($_ ne $main::MetricsIdent)};
+#	my @@attr=sort (keys %a);
+#	my $sql=PrepareSQL(\@@attr, \@@{$grid->{metric}});
+#	return $sql;
+#}
+
+
+
+#-----------------------------------------------------
+
+sub GetResultDataSet {
+
+	# returns result data set in table form
+	my $ID=shift;	#report ID
+
+	if ($main::MDi->{$ID}->{type} ne 'report') {
+		Bearlib::WriteLog('GetResultDataSet Failed',"Attempt to access non report object ID:$ID",1) if ($Const::LogLevel>0);
+		return 0
+	}
+
+	my $id=CheckCache($ID);
+	if ($id) {
+		Bearlib::WriteLog('GetResultDataSet',"ID:$ID",4) if ($Const::LogLevel>3);
+#		return $RCache->{$id}->{data}
+#print Dumper($SCache);
+#print Dumper($RCache);
+#print Dumper($Lookup->{1201});
+		return $id
+	} else {
+		Bearlib::WriteLog('GetResultDataSet Failed',"Cache Failure for report object ID:$ID",1) if ($Const::LogLevel>0);
+		return 0
+	}
+}
+
+
+#-----------------------------------------------------
+
+sub CheckCache {
+# check if cache for specified conditions exists, if no, lets load it
+# returns Cache ID or 0 if fails
+
+	my $ID=shift;	#report ID
+	return if exists $RCache->{$ID};
+
+	my $m = SQLGen::PrepareSQL($ID);
+
+#print Dumper($m);	
+	# only single pass SQL is implemented in present
+	my $src = @@{$m}[0]->{SRC};
+	my $sql = @@{$m}[0]->{SQL};
+#print ">>>>>>>>>>>>>>>$ID|$src\n";
+	if (!DBlib::IsDBConnected($src)) {
+		Bearlib::WriteLog('Report Query Failed',"DB connection is not open for $src (Report ID:$ID)",1) if ($Const::LogLevel>0);
+		return 0
+	}
+
+	DBlib::SQLPrepareFetch($src, 'l', $sql);
+	if (@@main::SQLErrors) {
+		Bearlib::WriteLog('Report Query Failed',"SRC/ID: $src/$ID:".join(',',@@main::SQLErrors),1) if ($Const::LogLevel>0);
+		undef @@main::SQLErrors;
+		return 0
+	} else {
+		Bearlib::WriteLog('Report Query',"SRC/ID: $src/$ID",4) if ($Const::LogLevel>3);
+	}
+	while ( my (@@r)=DBlib::SQLFetch($src,'l') ) {
+		$RCache->{$ID}{data}{$r[0]} = [$r[1]];
+print join(',',@@r)."\n";
+	}
+	DBlib::SQLFetchClose($src,'l');
+
+	return $ID;
+
+	my $grid=${ $main::MDi->{ ${$main::MDi->{$ID}->{ptr}}->{var_def} }->{ptr} };	#returns Grid Object of selected report
+	my %a;
+	foreach (@@{$grid->{row}}) {s/\.\w+$//; $a{$_}=1 if ($_ ne $main::MetricsIdent)};
+	foreach (@@{$grid->{col}}) {s/\.\w+$//; $a{$_}=1 if ($_ ne $main::MetricsIdent)};
+	foreach (@@{$grid->{page}}) {s/\.\w+$//; $a{$_}=1 if ($_ ne $main::MetricsIdent)};
+	my @@attr=sort (keys %a);				#array of attributes involved in report
+	my @@metric=sort (@@{$grid->{metric}});	#array of metrics involved in report
+
+# return here if Cache already exists
+
+	$SCache->{lastid}++;
+
+	my $src;	# expect host/source
+	($src, $RCache->{$ID}->{sql}) = DBlib::PrepareSQL(@@attr, @@metric);
+	DBlib::SQLPrepareFetch($src, 'rds', $RCache->{$ID}->{sql});
+	if (@@main::SQLErrors) {
+		Bearlib::WriteLog('Get Cache Failed',"ID:$ID:".join(',',@@main::SQLErrors),1) if ($Const::LogLevel>0);
+		undef @@main::SQLErrors;
+		return 0
+	}
+
+	my $nmetr=$#metric+1;	# number of metrics involved
+	my $nattr=$#attr+1;		# number of attributes involved
+#	my $loo;				# temporary hash
+	my $i=0;
+
+	my $te='$RCache->{$ID}->{data}';	# prepare string for evaluation; we have to asign ptr into RCache this way as depth of hash is not known in compile time
+	for (0..$#attr) {
+		$te.='->{$r['.$_.']}';
+	}
+	$te.='=$x';				# $te has to be in form: $RCache->{$ID}->{data}->{$r[0]}->{$r[1]}...=$x;
+
+	while ( my (@@r)=DBlib::SQLFetch($src,'rds') ) {
+#		my $j=0;
+#		foreach (@@attr) {
+#			$loo->{$_}->{$r[$j++]}=1;
+#		}
+		push( @@{$SCache->{$SCache->{lastid}}->{data}}, [@@r] );
+#		$RCache->{$ID}->{data}->{join('|', splice(@@r, 0, $nattr))} = \@@{@@{$SCache->{$SCache->{lastid}}->{data}}[$i++]};	#  ptr to SCache row
+		my $x = \@@{@@{$SCache->{$SCache->{lastid}}->{data}}[$i++]};	#  ptr to SCache row
+		eval ($te);
+	}
+	DBlib::SQLFetchClose($src,'rds');
+
+#	foreach my $a (@@attr) {
+#		foreach (keys %{$loo->{$a}}) {
+#			push (@@{$RCache->{$ID}->{lookup}->{$a}}, $_);
+#		}
+#	}
+	$SCache->{$SCache->{lastid}}->{nref}=1;			# number of references to this instance
+	@@{$SCache->{$SCache->{lastid}}->{attr}}=@@attr;	# sorted array of attribute IDs
+	@@{$SCache->{$SCache->{lastid}}->{metric}}=@@metric;	# sorted array of metric IDs
+	$RCache->{$ID}->{scache}=$SCache->{lastid};		# link to SCache
+	@@{$RCache->{$ID}->{attr}}=(keys %a);			# unsorted array of attribute IDs
+	$RCache->{$ID}->{metric}=$grid->{metric};		# unsorted array of metric IDs
+
+#$SCache->{1}->{data}[1][3]=1;	#test if link from RCache is real
+	return $ID
+
+}
+@
+
+
+1.79
+log
+@minor changes in data structure of vrml graph
+@
+text
+@d4 1
+a4 1
+# $Id: Cache.pm,v 1.78 2004/02/18 12:14:13 vacula Exp $
+d678 1
+d684 1
+a684 1
+		        		 		$data[$i][$mdata->{$_}{column}] = $j;
+d691 1
+a691 1
+		return @@data;
+@
+
+
+1.78
+log
+@minor changes in data structure of vrml graph
+@
+text
+@d4 1
+a4 1
+# $Id: Cache.pm,v 1.77 2004/02/16 09:41:36 vacula Exp $
+a677 5
+open TEST,">/var/www/html/bear/html/data.tst";
+print TEST Dumper(@@data);
+close TEST;
+
+
+@
+
+
+1.77
+log
+@changes in loading data for graph3d
+@
+text
+@d4 1
+a4 1
+# $Id: Cache.pm,v 1.76 2004/01/12 13:42:03 michald Exp $
+d576 2
+a577 2
+	my $mdata = &mdata($reportID);
+	my @@data = &data($reportID,$mdata);
+d586 1
+d592 7
+a598 6
+					if ( $map->{$_}{quantity} eq 'off' ) { 
+	            				$mdata->{$_}{type} = 'qualit'; 
+	        	 		}
+	        	 		elsif ( $map->{$_}{quantity} eq 'on' ) {  
+	            				$mdata->{$_}{type} = 'quantit';
+	        	 		}  
+d617 3
+a619 3
+	    	  		#else { 
+				#	delete($mdata->{$_}); 
+				#}  
+d630 1
+a630 1
+		my (@@data);
+d633 3
+a635 1
+		my $rows = @@rcache;
+d637 1
+a637 1
+		for ( my $i=0;$i<$rows;$i++ ) {
+d658 5
+d666 1
+a666 1
+					for ( my $k=0;$k<@@{$mdata->{$_}{values}};$k++ ) {
+d678 5
+d684 3
+a686 3
+			if ( $_ eq 'x' or $_ eq 'y' or $_ eq 'z' or $_ eq 'transparency' or $_ eq 'diameter' or $_ eq 'color' or $_ eq 'shape' ) {
+				for (my $i=0;$i<@@data;$i++) {
+					for ( my $j=0;$j < @@{$mdata->{$_}{values}};$j++  ) {
+@
+
+
+1.76
+log
+@add limit to list of the elements
+@
+text
+@d4 1
+a4 1
+# $Id: Cache.pm,v 1.75 2003/12/15 14:11:03 jiri_schmid Exp $
+d135 1
+d139 1
+d587 32
+a618 18
+		   if ( $_ eq 'x' or $_ eq 'y' or $_ eq 'z' or $_ eq 'transparency' or $_ eq 'diameter' or $_ eq 'color' or $_ eq 'shape' ) {
+	    	  if (defined $map->{$_}{items}) {
+	        	 $mdata->{$_}{column} = $col;
+	        	 $col++;
+	        	 if ( $map->{$_}{quantity} eq 'off' ) { 
+	            	$mdata->{$_}{type} = 'qualit'; 
+	        	 }
+	        	 if ( $map->{$_}{quantity} eq 'on' ) {  
+	            	$mdata->{$_}{type} = 'quantit';
+	        	 }  
+				for (my $i=0;$i < @@{$map->{$_}{items}};$i++ ) {
+	            	push ( @@{$mdata->{$_}{cols}}, $RCache->{$reportID}{attr}{$map->{$_}{items}[$i]}{pos});
+	#				push ( @@{$mdata->{$_}{cols}},(exists $SCache->{ptr}{metric}{$map->{$_}{items}[$i]}) ? $SCache->{ptr}{metric}{$map->{$_}{items}[$i]}{pos} : $RCache->{$reportID}{attr}{$map->{$_}{items}[$i]}{pos});
+		     		$mdata->{$_}{id} .= ($i == (@@{$map->{$_}{items}}-1)) ? $map->{$_}{items}[$i] : $map->{$_}{items}[$i].'|';
+				}
+	    	  }
+	    	  else { delete($mdata->{$_}) };  
+		   }
+d634 8
+a641 10
+	    	my @@join = ();
+	    	my @@splitField = split(/\|/,$rcache[$i]);
+	    	foreach ( keys(%{$mdata}) ) {
+				if ( $_ eq 'x' or $_ eq 'y' or $_ eq 'z' or $_ eq 'transparency' or $_ eq 'diameter' or $_ eq 'color' or $_ eq 'shape' ) {
+	        		if ( $i == 0 ) {
+		    			$join[$mdata->{$_}{column}] = $mdata->{$_}{id};
+		    			$mdata->{$_}{values}[0] = $mdata->{$_}{id};
+					} elsif ( $mdata->{$_}{type} eq 'qualit' ) { 
+						for (my $j=0;$j < @@{$mdata->{$_}{cols}};$j++ ) {
+							$join[$mdata->{$_}{column}] .= ($j == (@@{$mdata->{$_}{cols}}-1)) ? $splitField[$mdata->{$_}{cols}[$j]] : $splitField[$mdata->{$_}{cols}[$j]].'|';
+d643 21
+a663 2
+					} elsif ( $mdata->{$_}{type} eq 'quantit' ) { 
+					## !!! Not implemented yet
+d665 2
+a666 12
+				}
+				my $occur = "";
+				for ( my $k=0;$k<@@{$mdata->{$_}{values}};$k++ ) {
+		    		if ( $mdata->{$_}{values}[$k] eq $join[$mdata->{$_}{column}] ) {
+		    		   $occur = $k;
+		    		}
+				}    
+				if ($occur eq "") {
+				   push(@@{$mdata->{$_}{values}},$join[$mdata->{$_}{column}]);
+				}
+	    	}
+	    	push(@@{$data[$i]},@@join);
+d673 3
+a675 3
+		    			if ( $data[$i][$mdata->{$_}{column}] eq $mdata->{$_}{values}[$j]  ) {
+		        		   $data[$i][$mdata->{$_}{column}] = $j;
+		    			}
+d685 1
+a685 2
+
+	return ($mdata,@@data);
+d696 6
+a701 6
+	   if ( $_ eq 'x' or $_ eq 'y' or $_ eq 'z' or $_ eq 'transparency' or $_ eq 'diameter' or $_ eq 'color' or $_ eq 'shape' ) {
+    	  for ( my $i=0;$i < @@{$mdata->{$_}{values}};$i++  ) { 
+		  $mdata->{$_}{values}[$i] = ($i == 0) ? &attr($mdata->{$_}{values}[$i],$lang) : &itemsOFattr($mdata->{$_}{id},$mdata->{$_}{values}[$i],$lang); 
+    	  }
+	   }
+	}   
+d711 3
+a713 3
+		 for (my $i=0;$i<@@split;$i++ ) {
+	    	 ($attr[$i],$display[$i]) = ($split[$i] =~ /~/) ? split(/~/,$split[$i]) : ($split[$i],undef);   #/
+	    	 $temp[$i] = Bearlib::LocalizedObj(${$main::MDi->{$attr[$i]}->{ptr}}->{name},"NA",$lang);    
+d715 2
+a716 2
+		 for (my $j=0;$j<@@temp;$j++) {
+	    	 $loc_item .= ($j == (@@temp - 1)) ? $temp[$j] : $temp[$j].'|';
+d721 1
+a721 1
+	
+d732 3
+a734 3
+		 for (my $i=0;$i<@@splitItemId;$i++ ) {
+	    	 ($attr[$i],$display[$i]) = ($splitItemId[$i] =~ /~/) ? split(/~/,$splitItemId[$i]) : ($splitItemId[$i],undef);  #/
+	    	 $temp[$i] = LookupID2Name($attr[$i],$splitSubstId[$i],$display[$i],$lang);
+d736 2
+a737 2
+		 for (my $j=0;$j<@@temp;$j++) {
+	    	 $loc_item .= ($j == (@@temp - 1)) ? $temp[$j] : $temp[$j].'|';
+@
+
+
+1.75
+log
+@standalone metric naming
+@
+text
+@d4 1
+a4 1
+# $Id: Cache.pm,v 1.74 2003/12/10 10:24:48 jiri_schmid Exp $
+d472 1
+a472 1
+	my ($Lang, $Filter, $Sort, $SortOrd, $attr, $fact) = @@_;	# language, filter expression, sort index, sort order, attribute (in form attr.role~display), fact for join
+d485 1
+d489 1
+d491 3
+a493 1
+			push @@id, [$_, LookupID2Name($attr, $_, $Display, $Lang)];
+d507 1
+d510 2
+@
+
+
+1.74
+log
+@drill fix
+@
+text
+@d4 1
+a4 1
+# $Id: Cache.pm,v 1.73 2003/12/03 06:46:45 michald Exp $
+d326 2
+d400 1
+a400 1
+			$rtrn->{rowHeader}{0}{name} = Bearlib::LocalizedObj(${$main::MDi->{$rtrn->{rowHeader}{0}{id}}->{ptr}}->{name},'Metrics',$lang,$Const::DefaultLanguage);
+d402 3
+a404 1
+			$rtrn->{colHeader}{0}{name} = Bearlib::LocalizedObj(${$main::MDi->{$rtrn->{colHeader}{0}{id}}->{ptr}}->{name},'Metrics',$lang,$Const::DefaultLanguage);
+d456 1
+a456 1
+			$rtrn->{rowHeader}{0}{name} = Bearlib::LocalizedObj(${$main::MDi->{$rtrn->{rowHeader}{0}{id}}->{ptr}}->{name},'Metrics',$lang,$Const::DefaultLanguage);
+d458 3
+a460 1
+			$rtrn->{colHeader}{0}{name} = Bearlib::LocalizedObj(${$main::MDi->{$rtrn->{colHeader}{0}{id}}->{ptr}}->{name},'Metrics',$lang,$Const::DefaultLanguage);
+a813 51
+
+# $RCache->{$ReportID}->{data}->{A1|A2|...|An}=ptr_to_SCache_row
+#                     ->{attr}->{$attr}->{pos}=aid		#position of specific attribute in ->{data} array
+#                     ->{mcache}=SCacheID
+#                     ->{sql}=SQL
+$RCache->{$ID}{data}{'2001|200102|1|18|2001-05-01'} = [rand()*10000, sprintf('%d',rand()*100), sprintf('%d',rand()*40)];
+$RCache->{$ID}{data}{'2001|200101|1|32|2001-06-06'} = [rand()*10000, sprintf('%d',rand()*100), sprintf('%d',rand()*40)];
+$RCache->{$ID}{data}{'2001|200102|1|32|2001-12-28'} = [rand()*10000, sprintf('%d',rand()*100), sprintf('%d',rand()*40)];
+$RCache->{$ID}{data}{'2001|200103|1|32|2001-10-15'} = [rand()*10000, sprintf('%d',rand()*100), sprintf('%d',rand()*40)];
+$RCache->{$ID}{data}{'2000|200003|1|18|2000-01-01'} = [rand()*10000, sprintf('%d',rand()*100), sprintf('%d',rand()*40)];
+$RCache->{$ID}{data}{'2001|200103|1|18|2001-04-29'} = [rand()*10000, sprintf('%d',rand()*100), sprintf('%d',rand()*40)];
+$RCache->{$ID}{data}{'2001|200104|1|18|2001-03-08'} = [rand()*10000, sprintf('%d',rand()*100), sprintf('%d',rand()*40)];
+$RCache->{$ID}{data}{'2001|200104|1|32|2001-11-14'} = [rand()*10000, sprintf('%d',rand()*100), sprintf('%d',rand()*40)];
+$RCache->{$ID}{data}{'2002|200203|1|32|2002-09-18'} = [rand()*10000, sprintf('%d',rand()*100), sprintf('%d',rand()*40)];
+$RCache->{$ID}{data}{'2000|200002|1|18|2000-07-22'} = [rand()*10000, sprintf('%d',rand()*100), sprintf('%d',rand()*40)];
+$RCache->{$ID}{data}{'2000|200004|2|44|2000-05-21'} = [rand()*10000, sprintf('%d',rand()*100), sprintf('%d',rand()*40)];
+$RCache->{$ID}{data}{'2002|200201|2|55|2002-06-11'} = [rand()*10000, sprintf('%d',rand()*100), sprintf('%d',rand()*40)];
+$RCache->{$ID}{data}{'2001|200101|2|44|2001-11-09'} = [rand()*10000, sprintf('%d',rand()*100), sprintf('%d',rand()*40)];
+$RCache->{$ID}{data}{'2002|200202|2|55|2002-10-04'} = [rand()*10000, sprintf('%d',rand()*100), sprintf('%d',rand()*40)];
+$RCache->{$ID}{data}{'2002|200204|2|55|2002-12-17'} = [rand()*10000, sprintf('%d',rand()*100), sprintf('%d',rand()*40)];
+$RCache->{$ID}{data}{'2001|200102|2|44|2001-06-07'} = [rand()*10000, sprintf('%d',rand()*100), sprintf('%d',rand()*40)];
+$RCache->{$ID}{data}{'2001|200101|2|55|2001-02-02'} = [rand()*10000, sprintf('%d',rand()*100), sprintf('%d',rand()*40)];
+$RCache->{$ID}{data}{'2001|200102|2|55|2001-04-05'} = [rand()*10000, sprintf('%d',rand()*100), sprintf('%d',rand()*40)];
+$RCache->{$ID}{data}{'2001|200103|2|55|2001-03-16'} = [rand()*10000, sprintf('%d',rand()*100), sprintf('%d',rand()*40)];
+$RCache->{$ID}{data}{'2001|200103|1|18|2001-03-16'} = [rand()*10000, sprintf('%d',rand()*100), sprintf('%d',rand()*40)];
+$RCache->{$ID}{data}{'2001|200103|2|44|2001-03-16'} = [rand()*10000, sprintf('%d',rand()*100), sprintf('%d',rand()*40)];
+$RCache->{$ID}{data}{'2001|200103|1|32|2001-03-16'} = [rand()*10000, sprintf('%d',rand()*100), sprintf('%d',rand()*40)];
+#------------BeeDemo.xml
+$RCache->{$ID}{attr}{'rok.fakturace'}{pos} = 0;
+$RCache->{$ID}{attr}{'mesic.fakturace'}{pos} = 1;
+$RCache->{$ID}{attr}{'skupina'}{pos} = 2;
+$RCache->{$ID}{attr}{'vyrobek'}{pos} = 3;
+$RCache->{$ID}{attr}{'datum.fakturace'}{pos} = 4;
+$RCache->{$ID}{metric}{'aafdAeGdRx'}{pos}=0;	# Prodej [Kc]
+$RCache->{$ID}{metric}{'aaedAeGdRx'}{pos}=1;    # Prodej [ks]
+$RCache->{$ID}{metric}{'ee22136243'}{pos}=2;    # Prodej [ks] za rok 2000
+$RCache->{$ID}{metric}{'aacdWOufGv'}{pos}=0;	# Prodej [Kc]
+$RCache->{$ID}{metric}{'aabdWOufGv'}{pos}=1;    # Prodej [ks]
+$RCache->{$ID}{metric}{'aabdIVaeCR'}{pos}=2;    # Prodej [ks] za rok 2000
+#------------test.xml
+$RCache->{$ID}{attr}{'9214.fakturace'}{pos} = 0;
+$RCache->{$ID}{attr}{'9210.fakturace'}{pos} = 1;
+$RCache->{$ID}{attr}{'9203'}{pos} = 2;
+$RCache->{$ID}{attr}{'9201'}{pos} = 3;
+$RCache->{$ID}{attr}{'9202.fakturace'}{pos} = 4;#datum
+$RCache->{$ID}{metric}{'aafdAeGdRR'}{pos}=0;	# Prodej [Kc]
+$RCache->{$ID}{metric}{'aaedAeGdRR'}{pos}=1;    # Prodej [ks]
+$RCache->{$ID}{metric}{'7e22136243'}{pos}=2;    # Prodej [ks] za rok 2000
+
+$RCache->{$ID}{sql} = "some select";
+return;
+@
+
+
+1.73
+log
+@fix for selects from only the fact table
+@
+text
+@d4 1
+a4 1
+# $Id: Cache.pm,v 1.72 2003/12/02 16:22:52 jiri_schmid Exp $
+d237 1
+@
+
+
+1.72
+log
+@fixed some generating bugs when creating HTML output
+@
+text
+@d4 1
+a4 1
+# $Id: Cache.pm,v 1.71 2003/12/01 12:20:43 jiri_schmid Exp $
+a81 1
+#print Dumper(${$main::MDi->{$ID}->{ptr}}->{display});
+a83 1
+#print Dumper($d);
+@
+
+
+1.71
+log
+@pivoting implemented
+@
+text
+@d4 1
+a4 1
+# $Id: Cache.pm,v 1.70 2003/11/28 13:03:22 jiri_schmid Exp $
+d191 1
+@
+
+
+1.70
+log
+@MD5 hashing implemented, sorting menus implemented etc...
+@
+text
+@d4 1
+a4 1
+# $Id: Cache.pm,v 1.69 2003/11/28 07:06:08 michald Exp $
+d387 2
+a388 2
+						$rtrn->{$headerName}->{$i}{name} = "Metrics";
+						$rtrn->{$headerName}->{$i}{id} = "Metrics";
+d441 2
+a442 2
+						$rtrn->{$headerName}->{$i}{name} = "Metrics";
+						$rtrn->{$headerName}->{$i}{id} = "Metrics";
+@
+
+
+1.69
+log
+@report/metric filter join
+@
+text
+@d4 1
+a4 1
+# $Id: Cache.pm,v 1.68 2003/11/27 16:41:09 jiri_schmid Exp $
+d379 51
+a462 1
+
+d761 3
+a763 3
+print Dumper($SCache);
+print Dumper($RCache);
+print Dumper($Lookup->{1201});
+@
+
+
+1.68
+log
+@something like drill implemeted
+@
+text
+@d4 1
+a4 1
+# $Id: Cache.pm,v 1.67 2003/11/27 08:52:44 jiri_schmid Exp $
+d63 1
+a63 1
+	my $ID=shift;	#report ID
+a64 2
+	return if (!exists ${$main::MDi->{$ID}->{ptr}}->{display});	#return if attr has not display defined
+	
+d83 2
+a84 1
+	foreach my $d (keys %{${$main::MDi->{$ID}->{ptr}}->{display}}) {	# foreach display form
+d86 11
+a96 10
+		foreach my $l (keys %{${$main::MDi->{$ID}->{ptr}}->{display}->{$d}->{def}}) {	# foreach lang
+			my $fd=${$main::MDi->{$ID}->{ptr}}->{display}->{$d}->{def}->{$l};
+			my ($hh,$ss,$tt,$c)=SplitKey($fd);	# get form def
+			if (($h eq $hh) && ($s eq $ss) && ($t eq $tt)) {	#same host/source/table as for PK
+				if (exists $fdi{$fd} ) {	# same definition for diferent form is already exists
+					$Lookup->{$ID}->{form_idx}->{$d}->{$l}=$fdi{$fd};					
+				} else {
+					push (@@SelCl,$c);
+					$Lookup->{$ID}->{form_idx}->{$d}->{$l}=$i;
+					$fdi{$fd}=$i++;
+d101 1
+a101 1
+	
+@
+
+
+1.67
+log
+@1.step for drilling implemented
+@
+text
+@d4 1
+a4 1
+# $Id: Cache.pm,v 1.66 2003/11/22 18:38:26 michald Exp $
+d380 2
+a381 2
+					$rtrn->{links}{$gridItemId}{down} = Bearlib::GetLocalizedAttrDrillDown($gridItemId,$lang);
+					$rtrn->{links}{$gridItemId}{up} = Bearlib::GetLocalizedAttrDrillUp($gridItemId,$lang);
+@
+
+
+1.66
+log
+@fix undefined call to decode in case attr descr is NULL
+@
+text
+@d4 1
+a4 1
+# $Id: Cache.pm,v 1.65 2003/11/13 16:27:50 jiri_schmid Exp $
+d384 1
+a384 1
+						$rtrn->{$item}[$_][$i] = LookupID2Name($gridItemId, $substId, $form, $lang);
+d389 1
+a389 1
+						$rtrn->{$item}[$_][$i] = Bearlib::LocalizedObj(${$main::MDi->{$rtrn->{$item}[$_][$i]}->{ptr}}->{name},$rtrn->{$item}[$_][$i],$lang,$Const::DefaultLanguage);
+@
+
+
+1.65
+log
+@fixed bugs and dynamicparam finder implemeted
+@
+text
+@d4 1
+a4 1
+# $Id: Cache.pm,v 1.64 2003/11/13 07:29:49 michald Exp $
+d112 1
+a112 1
+			$Lookup->{$ID}->{data}->{$r[0]}=[map(decode(DBlib::DBEncoding($src), $_), splice(@@r,1))];
+@
+
+
+1.64
+log
+@fix of wrong attribute order in RCache
+@
+text
+@d4 1
+a4 1
+# $Id: Cache.pm,v 1.63 2003/11/12 10:20:21 jiri_schmid Exp $
+d210 1
+a210 1
+					$metricLocator = $item;
+a228 1
+
+d266 1
+a266 1
+
+a285 1
+	
+d294 1
+a294 1
+
+a328 2
+#print Dumper($rtrn);
+
+@
+
+
+1.63
+log
+@finally found and fixed problem of shifted column header in generated report
+@
+text
+@d4 1
+a4 1
+# $Id: Cache.pm,v 1.62 2003/11/12 09:58:53 jiri_schmid Exp $
+d168 1
+a168 1
+		my $b = join('|', @@r[$nat..$nat+$nmt-1]);
+d193 1
+a193 1
+print Dumper($RCache->{$reportId});
+d411 1
+a411 1
+print Dumper($rtrn);
+@
+
+
+1.62
+log
+@report generating - labeling changes
+@
+text
+@d4 1
+a4 1
+# $Id: Cache.pm,v 1.61 2003/11/11 15:06:15 jiri_schmid Exp $
+d193 1
+a193 1
+#print Dumper($RCache->{$reportId});
+d411 1
+a411 1
+#print Dumper($rtrn);
+@
+
+
+1.61
+log
+@closing Dumping tuning informations
+@
+text
+@d4 1
+a4 1
+# $Id: Cache.pm,v 1.60 2003/11/11 14:03:19 jiri_schmid Exp $
+d193 1
+a193 1
+# print Dumper($RCache->{$reportId});
+d323 10
+d403 9
+a411 1
+# print Dumper($rtrn);
+@
+
+
+1.60
+log
+@creating report - minor bugs fixed, seems to be working properly
+@
+text
+@d4 1
+a4 1
+# $Id: Cache.pm,v 1.59 2003/11/10 06:35:57 michald Exp $
+d193 1
+a193 1
+print Dumper($RCache->{$reportId});
+d393 1
+a393 1
+print Dumper($rtrn);
+@
+
+
+1.59
+log
+@map graph prototype
+@
+text
+@d4 1
+a4 1
+# $Id: Cache.pm,v 1.58 2003/11/09 15:29:41 michald Exp $
+d192 3
+a194 1
+#print Dumper($RCache->{$reportId});
+a217 2
+#print Dumper($RCache->{$reportId});
+
+d298 2
+d301 1
+a301 1
+	foreach my $row (0..$#{$rtrn->{row}}) {
+d310 1
+a310 1
+		foreach my $col (0..$#{$rtrn->{col}}) {
+d392 3
+@
+
+
+1.58
+log
+@some small fixes
+@
+text
+@d4 1
+a4 1
+# $Id: Cache.pm,v 1.57 2003/11/07 09:35:11 jiri_schmid Exp $
+a17 2
+use vars qw($DefaultLanguage);	# vars from const.def
+
+d73 1
+a73 1
+		main::WriteLog('Load Lookup Cache Failed',"DB connection is not open for $src (Attribute ID:$ID)",1) if ($main::LogLevel>0);
+d105 1
+a105 1
+			main::WriteLog('Load Lookup Cache Failed',"ID:$ID:".join(',',@@main::SQLErrors),1) if ($main::LogLevel>0);
+d109 1
+a109 1
+			main::WriteLog('Load Lookup Cache',"Attribute ID: $src/$ID",4) if ($main::LogLevel>3);
+d117 1
+a117 1
+		main::WriteLog('Load Lookup Cache Failed',"Preparation of SQL failed for Attribute ID:$ID",1) if ($main::LogLevel>0);
+d150 1
+a150 1
+		main::WriteLog('Report Query Failed',"DB connection is not open for: $src; (Report ID:$ID)",1) if ($main::LogLevel>0);
+d156 1
+a156 1
+		main::WriteLog('Report Query Failed',"SRC/ID: $src/$ID:".join(',',@@main::SQLErrors),1) if ($main::LogLevel>0);
+d160 1
+a160 1
+		main::WriteLog('Report Query',"SRC/ID: $src/$ID",4) if ($main::LogLevel>3);
+d176 1
+a176 1
+		$RCache->{$ID}->{attr}->{ @@{@@{$m}[0]->{ATTR}}[$i] }->{pos} = $nat-1-$i;
+d180 1
+a180 1
+		$RCache->{$ID}->{metric}->{ @@{@@{$m}[0]->{METR}}[$i] }->{pos} = $nmt-1-$i;
+d207 1
+a207 1
+				} elsif ($_ eq $main::MetricsIdent) {
+d370 4
+a373 4
+					$rtrn->{$headerName}{$i}{name} = &main::LocalizedObj(${$main::MDi->{$gridItemId}->{ptr}}->{name},$gridItemId,$lang,$main::DefaultLanguage);
+					$rtrn->{links}{$gridItemId}{current} = &main::GetLocalizedAttrLinks($gridItemId,$form,$lang);
+					$rtrn->{links}{$gridItemId}{down} = &main::GetLocalizedAttrDrillDown($gridItemId,$lang);
+					$rtrn->{links}{$gridItemId}{up} = &main::GetLocalizedAttrDrillUp($gridItemId,$lang);
+d379 1
+a379 1
+				} elsif ($_ eq $main::MetricsIdent) {
+d381 1
+a381 1
+						$rtrn->{$item}[$_][$i] = &main::LocalizedObj(${$main::MDi->{$rtrn->{$item}[$_][$i]}->{ptr}}->{name},$rtrn->{$item}[$_][$i],$lang,$main::DefaultLanguage);
+d412 1
+a412 1
+		main::WriteLog('Load all AttrElements from Lookup Cache', $attr, 4) if ($main::LogLevel>3);
+d417 1
+a417 1
+		main::WriteLog('Load Filtered AttrElements from Lookup Cache', "$attr / $Filter / $fact", 4) if ($main::LogLevel>3);
+d438 1
+a438 1
+			main::WriteLog('Load of AttrElements Failed',"DB connection is not open for $src",1) if ($main::LogLevel>0);
+d444 1
+a444 1
+			main::WriteLog('Load of AttrElements Failed', join(',',@@main::SQLErrors), 1) if ($main::LogLevel>0);
+d448 1
+a448 1
+			main::WriteLog('Load of AttrElements from DB', "$src: $attr", 4) if ($main::LogLevel>3);
+d609 1
+a609 1
+	    	 $temp[$i] = &main::LocalizedObj(${$main::MDi->{$attr[$i]}->{ptr}}->{name},"NA",$lang);    
+d660 1
+a660 1
+#		main::WriteLog('GetResult Failed',"Attempt to access non report object ID:$ID",1) if ($main::LogLevel>0);
+d663 1
+a663 1
+#	main::WriteLog('GetResult',"ID:$ID",4) if ($main::LogLevel>3);
+d684 1
+a684 1
+		main::WriteLog('GetResultDataSet Failed',"Attempt to access non report object ID:$ID",1) if ($main::LogLevel>0);
+d690 1
+a690 1
+		main::WriteLog('GetResultDataSet',"ID:$ID",4) if ($main::LogLevel>3);
+d697 1
+a697 1
+		main::WriteLog('GetResultDataSet Failed',"Cache Failure for report object ID:$ID",1) if ($main::LogLevel>0);
+d720 1
+a720 1
+		main::WriteLog('Report Query Failed',"DB connection is not open for $src (Report ID:$ID)",1) if ($main::LogLevel>0);
+d726 1
+a726 1
+		main::WriteLog('Report Query Failed',"SRC/ID: $src/$ID:".join(',',@@main::SQLErrors),1) if ($main::LogLevel>0);
+d730 1
+a730 1
+		main::WriteLog('Report Query',"SRC/ID: $src/$ID",4) if ($main::LogLevel>3);
+d807 1
+a807 1
+		main::WriteLog('Get Cache Failed',"ID:$ID:".join(',',@@main::SQLErrors),1) if ($main::LogLevel>0);
+@
+
+
+1.57
+log
+@saving rights of attr and fact fixed
+@
+text
+@d4 1
+a4 1
+# $Id: Cache.pm,v 1.56 2003/11/07 07:36:42 michald Exp $
+d24 1
+a24 1
+our $Lookup : shared;
+@
+
+
+1.56
+log
+@fix for not numeric fact ID
+@
+text
+@d4 1
+a4 1
+# $Id: Cache.pm,v 1.55 2003/11/06 09:19:46 spanhel Exp $
+d144 4
+a147 1
+#print "mmmmmmmmm",Dumper($m);	
+d152 1
+a152 1
+		main::WriteLog('Report Query Failed',"DB connection is not open for $src (Report ID:$ID)",1) if ($main::LogLevel>0);
+@
+
+
+1.55
+log
+@XML Simple - display
+@
+text
+@d4 1
+a4 1
+# $Id: Cache.pm,v 1.54 2003/11/06 08:43:26 michald Exp $
+d86 1
+a86 1
+	print Dumper(${$main::MDi->{$ID}->{ptr}}->{display});
+d88 1
+a88 1
+		print Dumper($d);
+d144 1
+a144 2
+#use Data::Dumper;
+#print Dumper($m);	
+a190 1
+#use Data::Dumper;
+a214 1
+#use Data::Dumper;
+a712 1
+#use Data::Dumper;
+@
+
+
+1.54
+log
+@small change to log output
+@
+text
+@d4 1
+a4 1
+# $Id: Cache.pm,v 1.53 2003/10/13 14:43:23 jiri_schmid Exp $
+d12 1
+d86 1
+d88 1
+@
+
+
+1.53
+log
+@description tab defined under two files, bug fixies
+@
+text
+@d4 1
+a4 1
+# $Id: Cache.pm,v 1.52 2003/10/09 13:53:24 jiri_schmid Exp $
+d23 1
+a23 1
+our $Lookup;
+d108 1
+a108 1
+			main::WriteLog('Load Lookup Cache',"Attribute ID:$ID",4) if ($main::LogLevel>3);
+a181 51
+# $RCache->{$ReportID}->{data}->{A1|A2|...|An}=ptr_to_SCache_row
+#                     ->{attr}->{$attr}->{pos}=aid		#position of specific attribute in ->{data} array
+#                     ->{mcache}=SCacheIDdatum
+#                     ->{sql}=SQL
+$RCache->{$ID}{data}{'2001|200102|1|18|2001-05-01'} = [rand()*10000, sprintf('%d',rand()*100), sprintf('%d',rand()*40)];
+$RCache->{$ID}{data}{'2001|200101|1|32|2001-06-06'} = [rand()*10000, sprintf('%d',rand()*100), sprintf('%d',rand()*40)];
+$RCache->{$ID}{data}{'2001|200102|1|32|2001-12-28'} = [rand()*10000, sprintf('%d',rand()*100), sprintf('%d',rand()*40)];
+$RCache->{$ID}{data}{'2001|200103|1|32|2001-10-15'} = [rand()*10000, sprintf('%d',rand()*100), sprintf('%d',rand()*40)];
+$RCache->{$ID}{data}{'2000|200003|1|18|2000-01-01'} = [rand()*10000, sprintf('%d',rand()*100), sprintf('%d',rand()*40)];
+$RCache->{$ID}{data}{'2001|200103|1|18|2001-04-29'} = [rand()*10000, sprintf('%d',rand()*100), sprintf('%d',rand()*40)];
+$RCache->{$ID}{data}{'2001|200104|1|18|2001-03-08'} = [rand()*10000, sprintf('%d',rand()*100), sprintf('%d',rand()*40)];
+$RCache->{$ID}{data}{'2001|200104|1|32|2001-11-14'} = [rand()*10000, sprintf('%d',rand()*100), sprintf('%d',rand()*40)];
+$RCache->{$ID}{data}{'2002|200203|1|32|2002-09-18'} = [rand()*10000, sprintf('%d',rand()*100), sprintf('%d',rand()*40)];
+$RCache->{$ID}{data}{'2000|200002|1|18|2000-07-22'} = [rand()*10000, sprintf('%d',rand()*100), sprintf('%d',rand()*40)];
+$RCache->{$ID}{data}{'2000|200004|2|44|2000-05-21'} = [rand()*10000, sprintf('%d',rand()*100), sprintf('%d',rand()*40)];
+$RCache->{$ID}{data}{'2002|200201|2|55|2002-06-11'} = [rand()*10000, sprintf('%d',rand()*100), sprintf('%d',rand()*40)];
+$RCache->{$ID}{data}{'2001|200101|2|44|2001-11-09'} = [rand()*10000, sprintf('%d',rand()*100), sprintf('%d',rand()*40)];
+$RCache->{$ID}{data}{'2002|200202|2|55|2002-10-04'} = [rand()*10000, sprintf('%d',rand()*100), sprintf('%d',rand()*40)];
+$RCache->{$ID}{data}{'2002|200204|2|55|2002-12-17'} = [rand()*10000, sprintf('%d',rand()*100), sprintf('%d',rand()*40)];
+$RCache->{$ID}{data}{'2001|200102|2|44|2001-06-07'} = [rand()*10000, sprintf('%d',rand()*100), sprintf('%d',rand()*40)];
+$RCache->{$ID}{data}{'2001|200101|2|55|2001-02-02'} = [rand()*10000, sprintf('%d',rand()*100), sprintf('%d',rand()*40)];
+$RCache->{$ID}{data}{'2001|200102|2|55|2001-04-05'} = [rand()*10000, sprintf('%d',rand()*100), sprintf('%d',rand()*40)];
+$RCache->{$ID}{data}{'2001|200103|2|55|2001-03-16'} = [rand()*10000, sprintf('%d',rand()*100), sprintf('%d',rand()*40)];
+$RCache->{$ID}{data}{'2001|200103|1|18|2001-03-16'} = [rand()*10000, sprintf('%d',rand()*100), sprintf('%d',rand()*40)];
+$RCache->{$ID}{data}{'2001|200103|2|44|2001-03-16'} = [rand()*10000, sprintf('%d',rand()*100), sprintf('%d',rand()*40)];
+$RCache->{$ID}{data}{'2001|200103|1|32|2001-03-16'} = [rand()*10000, sprintf('%d',rand()*100), sprintf('%d',rand()*40)];
+#------------BeeDemo.xml
+$RCache->{$ID}{attr}{'rok.fakturace'}{pos} = 0;
+$RCache->{$ID}{attr}{'mesic.fakturace'}{pos} = 1;
+$RCache->{$ID}{attr}{'skupina'}{pos} = 2;
+$RCache->{$ID}{attr}{'vyrobek'}{pos} = 3;
+$RCache->{$ID}{attr}{'datum.fakturace'}{pos} = 4;
+$RCache->{$ID}{metric}{'aafdAeGdRx'}{pos}=0;	# Prodej [Kc]
+$RCache->{$ID}{metric}{'aaedAeGdRx'}{pos}=1;    # Prodej [ks]
+$RCache->{$ID}{metric}{'ee22136243'}{pos}=2;    # Prodej [ks] za rok 2000
+$RCache->{$ID}{metric}{'aacdWOufGv'}{pos}=0;	# Prodej [Kc]
+$RCache->{$ID}{metric}{'aabdWOufGv'}{pos}=1;    # Prodej [ks]
+$RCache->{$ID}{metric}{'aabdIVaeCR'}{pos}=2;    # Prodej [ks] za rok 2000
+#------------test.xml
+$RCache->{$ID}{attr}{'9214.fakturace'}{pos} = 0;
+$RCache->{$ID}{attr}{'9210.fakturace'}{pos} = 1;
+$RCache->{$ID}{attr}{'9203'}{pos} = 2;
+$RCache->{$ID}{attr}{'9201'}{pos} = 3;
+$RCache->{$ID}{attr}{'9202.fakturace'}{pos} = 4;#datum
+$RCache->{$ID}{metric}{'aafdAeGdRR'}{pos}=0;	# Prodej [Kc]
+$RCache->{$ID}{metric}{'aaedAeGdRR'}{pos}=1;    # Prodej [ks]
+$RCache->{$ID}{metric}{'7e22136243'}{pos}=2;    # Prodej [ks] za rok 2000
+
+$RCache->{$ID}{sql} = "some select";
+return;
+
+a183 24
+#-----------------------------------------------------
+
+#sub GetResult {
+#	# returns result hash of cells
+#	my $class = shift;
+#	my $ID=shift;	#report ID
+
+#	if ($main::MDi->{$ID}->{type} ne 'report') {
+#		main::WriteLog('GetResult Failed',"Attempt to access non report object ID:$ID",1) if ($main::LogLevel>0);
+#		return -1
+#	}
+#	main::WriteLog('GetResult',"ID:$ID",4) if ($main::LogLevel>3);
+#	my $grid=${ $main::MDi->{ ${$main::MDi->{$ID}->{ptr}}->{grid} }->{ptr} };	#returns Grid Object of selected report
+#	my %a;
+#	foreach (@@{$grid->{row}}) {$a{$_}=1 if ($_ ne $main::MetricsIdent)};
+#	foreach (@@{$grid->{col}}) {$a{$_}=1 if ($_ ne $main::MetricsIdent)};
+#	foreach (@@{$grid->{page}}) {$a{$_}=1 if ($_ ne $main::MetricsIdent)};
+#	my @@attr=sort (keys %a);
+#	my $sql=PrepareSQL(\@@attr, \@@{$grid->{metric}});
+#	return $sql;
+#}
+
+
+
+a649 27
+#------- BEGIN OF ARTIFICIAL DATA -----------
+# $SCache->{$SCacheID}->{data}=[[A1, A2, ..., M1, M2, ...], [....], ...]
+#                     ->{metric}->{$metric}->{pos}=$mid	#position of specific metric in ->{data} array
+#                     ->{attr}->{$attr}->{pos}=$aid		#position of specific attribute in ->{data} array
+#                     ->{attr}->{$attr}->{in}=[...]		#array of element list constraintr data set
+#                     ->{row_elem}=$n					#number of currently alocated elements of row
+#                     ->{filter}='filter condition'		#general constraint
+#                     ->{nref}=0;	
+$SCache->{ptr}{data}=[[2001,200102,1,18,"2001-05-01",24.5,56,45],[2001,200101,1,32,"2001-06-06",54,787,78],[2001,200102,1,32,"2001-12-28",78,44,88],
+[2001,200103,1,32,"2001-10-15",32,879,12],[2000,200003,1,18,"2000-01-01",45,78,42],[2001,200103,1,18,"2001-04-29",84,54,32],[2001,200104,1,18,"2001-03-08",44,11,1],
+[2001,200104,1,32,"2001-11-14",45.11,45,44],[2002,200203,1,32,"2002-09-18",987,132,78],[2000,200002,1,18,"2000-07-22",14,45,55],[2000,200004,2,18,"2000-05-21",32,46,6],
+[2002,200201,2,32,"2002-06-11",68.11,98,12],[2001,200101,2,18,"2001-11-09",7845,55,98],[2002,200202,2,32,"2002-10-04",78,12,75],[2002,200204,2,32,"2002-12-17",98,12,76],
+[2001,200102,2,18,"2001-06-07",33.11,447,36],[2001,200101,2,32,"2001-02-02",441,0,28],[2001,200102,2,32,"2001-04-05",899,66,25],[2001,200103,2,32,"2001-03-16",16,3,19],
+[2001,200103,1,32,"2001-03-16",36,14,68],[2001,200103,2,18,"2001-03-16",16.11,34.8,69],[2001,200103,1,18,"2001-03-16",9.7,11.1,333]];
+$SCache->{ptr}{attr}{'9214.fakturace'}{pos} = 0;
+$SCache->{ptr}{attr}{'9221.fakturace'}{pos} = 1;
+$SCache->{ptr}{attr}{'9203'}{pos} = 2;
+$SCache->{ptr}{attr}{'9201'}{pos} = 3;
+$SCache->{ptr}{attr}{'9202.fakturace'}{pos} = 4;
+#bear Myson:
+$SCache->{ptr}{metric}{'df3a204501'}{pos}=5;	# Prodej [Kc]
+$SCache->{ptr}{metric}{'2b832a600a'}{pos}=6;    # Prodej [ks]
+$SCache->{ptr}{metric}{'7e22136243'}{pos}=7;    # Prodej [ks] za rok 2000
+#bear
+#$SCache->{ptr}{metric}{'df3a204501's}{pos}=5;	# Prodej [Kc]
+#$SCache->{ptr}{metric}{'2b832a600a'}{pos}=6;    # Prodej [ks]
+#$SCache->{ptr}{metric}{'7e22136243'}{pos}=7;    # Prodej [ks] za rok 2000
+d651 23
+a673 34
+# $RCache->{$ReportID}->{data}->{A1|A2|...|An}=ptr_to_SCache_row
+#                     ->{attr}->{$attr}->{pos}=aid		#position of specific attribute in ->{data} array
+#                     ->{mcache}=SCacheID
+#                     ->{sql}=SQL
+$RCache->{$reportId}{data}{'2001|200102|1|18|2001-05-01'} = \$SCache->{ptr}{data}[0];
+$RCache->{$reportId}{data}{'2001|200101|1|32|2001-06-06'} = \$SCache->{ptr}{data}[1];
+$RCache->{$reportId}{data}{'2001|200102|1|32|2001-12-28'} = \$SCache->{ptr}{data}[2];
+$RCache->{$reportId}{data}{'2001|200103|1|32|2001-10-15'} = \$SCache->{ptr}{data}[3];
+$RCache->{$reportId}{data}{'2000|200003|1|18|2000-01-01'} = \$SCache->{ptr}{data}[4];
+$RCache->{$reportId}{data}{'2001|200103|1|18|2001-04-29'} = \$SCache->{ptr}{data}[5];
+$RCache->{$reportId}{data}{'2001|200104|1|18|2001-03-08'} = \$SCache->{ptr}{data}[6];
+$RCache->{$reportId}{data}{'2001|200104|1|32|2001-11-14'} = \$SCache->{ptr}{data}[7];
+$RCache->{$reportId}{data}{'2002|200203|1|32|2002-09-18'} = \$SCache->{ptr}{data}[8];
+$RCache->{$reportId}{data}{'2000|200002|1|18|2000-07-22'} = \$SCache->{ptr}{data}[9];
+$RCache->{$reportId}{data}{'2000|200004|2|44|2000-05-21'} = \$SCache->{ptr}{data}[10];
+$RCache->{$reportId}{data}{'2002|200201|2|55|2002-06-11'} = \$SCache->{ptr}{data}[11];
+$RCache->{$reportId}{data}{'2001|200101|2|44|2001-11-09'} = \$SCache->{ptr}{data}[12];
+$RCache->{$reportId}{data}{'2002|200202|2|55|2002-10-04'} = \$SCache->{ptr}{data}[13];
+$RCache->{$reportId}{data}{'2002|200204|2|55|2002-12-17'} = \$SCache->{ptr}{data}[14];
+$RCache->{$reportId}{data}{'2001|200102|2|44|2001-06-07'} = \$SCache->{ptr}{data}[15];
+$RCache->{$reportId}{data}{'2001|200101|2|55|2001-02-02'} = \$SCache->{ptr}{data}[16];
+$RCache->{$reportId}{data}{'2001|200102|2|55|2001-04-05'} = \$SCache->{ptr}{data}[17];
+$RCache->{$reportId}{data}{'2001|200103|2|55|2001-03-16'} = \$SCache->{ptr}{data}[18];
+$RCache->{$reportId}{data}{'2001|200103|1|18|2001-03-16'} = \$SCache->{ptr}{data}[19];
+$RCache->{$reportId}{data}{'2001|200103|2|44|2001-03-16'} = \$SCache->{ptr}{data}[20];
+$RCache->{$reportId}{data}{'2001|200103|1|32|2001-03-16'} = \$SCache->{ptr}{data}[21];
+$RCache->{$reportId}{attr}{'9221.fakturace'}{pos} = 1;
+$RCache->{$reportId}{attr}{'9214.fakturace'}{pos} = 0;
+$RCache->{$reportId}{attr}{'9202.fakturace'}{pos} = 4;
+$RCache->{$reportId}{attr}{'9203'}{pos} = 2;
+$RCache->{$reportId}{attr}{'9201'}{pos} = 3;
+$RCache->{$reportId}{sql} = "some select";
+$RCache->{$reportId}{mcache} = "ptr";
+#------- END OF ARTIFICIAL DATA -------------
+@
+
+
+1.52
+log
+@many EN language fixies
+@
+text
+@d4 1
+a4 1
+# $Id: Cache.pm,v 1.51 2003/10/07 05:48:01 michald Exp $
+d264 2
+a265 2
+use Data::Dumper;
+print Dumper($RCache->{$reportId});
+@
+
+
+1.51
+log
+@loading RCache from DB
+@
+text
+@d4 1
+a4 1
+# $Id: Cache.pm,v 1.50 2003/09/30 07:11:11 michald Exp $
+d184 1
+a184 1
+#                     ->{mcache}=SCacheID
+d264 2
+a265 1
+
+@
+
+
+1.50
+log
+@handling data by reference in exportToHTML
+@
+text
+@d4 1
+a4 1
+# $Id: Cache.pm,v 1.49 2003/09/29 15:37:51 jiri_schmid Exp $
+d136 43
+a178 1
+	return if exists $RCache->{$ID};
+d180 1
+a180 1
+	#my $m = PrepareSQL($ID);
+a232 59
+	my $grid=${ $main::MDi->{ ${$main::MDi->{$ID}->{ptr}}->{var_def} }->{ptr} };	#returns Grid Object of selected report
+	my %a;
+	foreach (@@{$grid->{row}}) {s/\.\w+$//; $a{$_}=1 if ($_ ne $main::MetricsIdent)};
+	foreach (@@{$grid->{col}}) {s/\.\w+$//; $a{$_}=1 if ($_ ne $main::MetricsIdent)};
+	foreach (@@{$grid->{page}}) {s/\.\w+$//; $a{$_}=1 if ($_ ne $main::MetricsIdent)};
+	my @@attr=sort (keys %a);				#array of attributes involved in report
+	my @@metric=sort (@@{$grid->{metric}});	#array of metrics involved in report
+
+# return here if Cache already exists
+
+	$SCache->{lastid}++;
+
+	my $src;	# expect host/source
+	($src, $RCache->{$ID}->{sql}) = DBlib::PrepareSQL(@@attr, @@metric);
+	DBlib::SQLPrepareFetch($src, 'rds', $RCache->{$ID}->{sql});
+	if (@@main::SQLErrors) {
+		main::WriteLog('Get Cache Failed',"ID:$ID:".join(',',@@main::SQLErrors),1) if ($main::LogLevel>0);
+		undef @@main::SQLErrors;
+		return 0
+	}
+
+	my $nmetr=$#metric+1;	# number of metrics involved
+	my $nattr=$#attr+1;		# number of attributes involved
+#	my $loo;				# temporary hash
+	my $i=0;
+
+	my $te='$RCache->{$ID}->{data}';	# prepare string for evaluation; we have to asign ptr into RCache this way as depth of hash is not known in compile time
+	for (0..$#attr) {
+		$te.='->{$r['.$_.']}';
+	}
+	$te.='=$x';				# $te has to be in form: $RCache->{$ID}->{data}->{$r[0]}->{$r[1]}...=$x;
+
+	while ( my (@@r)=DBlib::SQLFetch($src,'rds') ) {
+#		my $j=0;
+#		foreach (@@attr) {
+#			$loo->{$_}->{$r[$j++]}=1;
+#		}
+		push( @@{$SCache->{$SCache->{lastid}}->{data}}, [@@r] );
+#		$RCache->{$ID}->{data}->{join('|', splice(@@r, 0, $nattr))} = \@@{@@{$SCache->{$SCache->{lastid}}->{data}}[$i++]};	#  ptr to SCache row
+		my $x = \@@{@@{$SCache->{$SCache->{lastid}}->{data}}[$i++]};	#  ptr to SCache row
+		eval ($te);
+	}
+	DBlib::SQLFetchClose($src,'rds');
+
+#	foreach my $a (@@attr) {
+#		foreach (keys %{$loo->{$a}}) {
+#			push (@@{$RCache->{$ID}->{lookup}->{$a}}, $_);
+#		}
+#	}
+	$SCache->{$SCache->{lastid}}->{nref}=1;			# number of references to this instance
+	@@{$SCache->{$SCache->{lastid}}->{attr}}=@@attr;	# sorted array of attribute IDs
+	@@{$SCache->{$SCache->{lastid}}->{metric}}=@@metric;	# sorted array of metric IDs
+	$RCache->{$ID}->{scache}=$SCache->{lastid};		# link to SCache
+	@@{$RCache->{$ID}->{attr}}=(keys %a);			# unsorted array of attribute IDs
+	$RCache->{$ID}->{metric}=$grid->{metric};		# unsorted array of metric IDs
+
+#$SCache->{1}->{data}[1][3]=1;	#test if link from RCache is real
+	return $ID
+
+d814 149
+@
+
+
+1.49
+log
+@report result parameters handling changed, minor code improvments
+@
+text
+@d4 1
+a4 1
+# $Id: Cache.pm,v 1.48 2003/09/29 10:52:23 jiri_schmid Exp $
+d175 3
+@
+
+
+1.48
+log
+@run version
+@
+text
+@d4 1
+a4 1
+# $Id: Cache.pm,v 1.47 2003/09/29 05:43:19 michald Exp $
+d174 1
+a174 1
+$RCache->{$ID}{metric}{'7e22136243'}{pos}=2;    # Prodej [ks] za rok 2000
+d180 1
+a180 1
+$RCache->{$ID}{attr}{'9202.fakturace'}{pos} = 4;
+@
+
+
+1.47
+log
+@new version of the metadata - multiple attribute PK implementation; improvement of the PrepareSQL
+@
+text
+@d4 1
+a4 1
+# $Id: Cache.pm,v 1.44 2003/09/23 18:53:01 vacula Exp $
+d138 1
+a138 5
+
+	my $m = PrepareSQL($ID);
+
+return;
+
+d166 1
+d175 10
+d186 1
+a186 1
+
+a276 1
+
+d301 3
+@
+
+
+1.46
+log
+@minor changes in sub Report3d
+@
+text
+@d4 1
+a4 1
+# $Id: Cache.pm,v 1.45 2003/09/25 13:20:58 spanhel Exp $
+a15 1
+use Data::Dumper;
+d27 2
+a28 2
+our $MCache;
+# $MCache->{$MCacheID}->{data}=[[A1, A2, ..., M1, M2, ...], [....], ...]
+d31 1
+a31 1
+#                     ->{attr}->{$attr}->{in}=[...]		#array of element list constraintr data set
+d35 1
+a35 1
+$MCache->{lastid}=0;									#last MCacheID used
+d37 2
+a38 2
+our $SCache;
+# $SCache->{$SQL}->{data}->{A1|A2|...|An}=ptr_to_MCache_row
+d40 1
+a40 1
+#                     ->{mcache}=MCacheID
+d44 4
+a47 4
+# $RCache->{$ReportID}->{data}->{A1|A2|...|An}=ptr_to_MCache_row
+#                     ->{attr}->{$attr}->{pos}=aid		#position of specific attribute in ->{data} array
+#                     ->{mcache}=MCacheID
+#                     ->{sql}=SQL
+d131 3
+a133 1
+sub GetResultDataSet {
+a134 1
+	# returns result data set in table form
+d136 1
+a137 4
+	if ($main::MDi->{$ID}->{type} ne 'report') {
+		main::WriteLog('GetResultDataSet Failed',"Attempt to access non report object ID:$ID",1) if ($main::LogLevel>0);
+		return 0
+	}
+d139 1
+a139 14
+	my $id=CheckCache($ID);
+	if ($id) {
+		main::WriteLog('GetResultDataSet',"ID:$ID",4) if ($main::LogLevel>3);
+#		return $RCache->{$id}->{data}
+print Dumper($MCache);
+print Dumper($RCache);
+print Dumper($Lookup->{1201});
+		return $id
+	} else {
+		main::WriteLog('GetResultDataSet Failed',"Cache Failure for report object ID:$ID",1) if ($main::LogLevel>0);
+		return 0
+	}
+#print Dumper($RCache);
+#print Dumper($MCache);
+d141 1
+a141 1
+}
+a142 1
+#-----------------------------------------------------
+d144 35
+a178 3
+sub CheckCache {
+# check if cache for specified conditions exists, if no, lets load it
+# returns Cache ID or 0 if fails
+a179 1
+	my $ID=shift;	#report ID
+d181 1
+a181 1
+	my $grid=${ $main::MDi->{ ${$main::MDi->{$ID}->{ptr}}->{grid} }->{ptr} };	#returns Grid Object of selected report
+d191 1
+a191 1
+	$MCache->{lastid}++;
+d218 3
+a220 3
+		push( @@{$MCache->{$MCache->{lastid}}->{data}}, [@@r] );
+#		$RCache->{$ID}->{data}->{join('|', splice(@@r, 0, $nattr))} = \@@{@@{$MCache->{$MCache->{lastid}}->{data}}[$i++]};	#  ptr to MCache row
+		my $x = \@@{@@{$MCache->{$MCache->{lastid}}->{data}}[$i++]};	#  ptr to MCache row
+d230 4
+a233 4
+	$MCache->{$MCache->{lastid}}->{nref}=1;			# number of references to this instance
+	@@{$MCache->{$MCache->{lastid}}->{attr}}=@@attr;	# sorted array of attribute IDs
+	@@{$MCache->{$MCache->{lastid}}->{metric}}=@@metric;	# sorted array of metric IDs
+	$RCache->{$ID}->{mcache}=$MCache->{lastid};		# link to MCache
+d237 1
+a237 1
+#$MCache->{1}->{data}[1][3]=1;	#test if link from RCache is real
+d268 2
+a269 2
+sub RCache2XTabId() {
+my $reportId = shift;
+d271 1
+a271 27
+#------- BEGIN OF ARTIFICIAL DATA -----------
+# $MCache->{$MCacheID}->{data}=[[A1, A2, ..., M1, M2, ...], [....], ...]
+#                     ->{metric}->{$metric}->{pos}=$mid	#position of specific metric in ->{data} array
+#                     ->{attr}->{$attr}->{pos}=$aid		#position of specific attribute in ->{data} array
+#                     ->{attr}->{$attr}->{in}=[...]		#array of element list constraintr data set
+#                     ->{row_elem}=$n					#number of currently alocated elements of row
+#                     ->{filter}='filter condition'		#general constraint
+#                     ->{nref}=0;	
+$MCache->{ptr}{data}=[[2001,200102,1,18,"2001-05-01",24.5,56,45],[2001,200101,1,32,"2001-06-06",54,787,78],[2001,200102,1,32,"2001-12-28",78,44,88],
+[2001,200103,1,32,"2001-10-15",32,879,12],[2000,200003,1,18,"2000-01-01",45,78,42],[2001,200103,1,18,"2001-04-29",84,54,32],[2001,200104,1,18,"2001-03-08",44,11,1],
+[2001,200104,1,32,"2001-11-14",45.11,45,44],[2002,200203,1,32,"2002-09-18",987,132,78],[2000,200002,1,18,"2000-07-22",14,45,55],[2000,200004,2,18,"2000-05-21",32,46,6],
+[2002,200201,2,32,"2002-06-11",68.11,98,12],[2001,200101,2,18,"2001-11-09",7845,55,98],[2002,200202,2,32,"2002-10-04",78,12,75],[2002,200204,2,32,"2002-12-17",98,12,76],
+[2001,200102,2,18,"2001-06-07",33.11,447,36],[2001,200101,2,32,"2001-02-02",441,0,28],[2001,200102,2,32,"2001-04-05",899,66,25],[2001,200103,2,32,"2001-03-16",16,3,19],
+[2001,200103,1,32,"2001-03-16",36,14,68],[2001,200103,2,18,"2001-03-16",16.11,34.8,69],[2001,200103,1,18,"2001-03-16",9.7,11.1,333]];
+$MCache->{ptr}{attr}{'9214.fakturace'}{pos} = 0;
+$MCache->{ptr}{attr}{'9221.fakturace'}{pos} = 1;
+$MCache->{ptr}{attr}{'9203'}{pos} = 2;
+$MCache->{ptr}{attr}{'9201'}{pos} = 3;
+$MCache->{ptr}{attr}{'9202.fakturace'}{pos} = 4;
+#bear Myson:
+$MCache->{ptr}{metric}{'df3a204501'}{pos}=5;	# Prodej [Kc]
+$MCache->{ptr}{metric}{'2b832a600a'}{pos}=6;    # Prodej [ks]
+$MCache->{ptr}{metric}{'7e22136243'}{pos}=7;    # Prodej [ks] za rok 2000
+#bear
+#$MCache->{ptr}{metric}{'df3a204501's}{pos}=5;	# Prodej [Kc]
+#$MCache->{ptr}{metric}{'2b832a600a'}{pos}=6;    # Prodej [ks]
+#$MCache->{ptr}{metric}{'7e22136243'}{pos}=7;    # Prodej [ks] za rok 2000
+d273 22
+a294 34
+# $RCache->{$ReportID}->{data}->{A1|A2|...|An}=ptr_to_MCache_row
+#                     ->{attr}->{$attr}->{pos}=aid		#position of specific attribute in ->{data} array
+#                     ->{mcache}=MCacheID
+#                     ->{sql}=SQL
+$RCache->{$reportId}{data}{'2001|200102|1|18|2001-05-01'} = \$MCache->{ptr}{data}[0];
+$RCache->{$reportId}{data}{'2001|200101|1|32|2001-06-06'} = \$MCache->{ptr}{data}[1];
+$RCache->{$reportId}{data}{'2001|200102|1|32|2001-12-28'} = \$MCache->{ptr}{data}[2];
+$RCache->{$reportId}{data}{'2001|200103|1|32|2001-10-15'} = \$MCache->{ptr}{data}[3];
+$RCache->{$reportId}{data}{'2000|200003|1|18|2000-01-01'} = \$MCache->{ptr}{data}[4];
+$RCache->{$reportId}{data}{'2001|200103|1|18|2001-04-29'} = \$MCache->{ptr}{data}[5];
+$RCache->{$reportId}{data}{'2001|200104|1|18|2001-03-08'} = \$MCache->{ptr}{data}[6];
+$RCache->{$reportId}{data}{'2001|200104|1|32|2001-11-14'} = \$MCache->{ptr}{data}[7];
+$RCache->{$reportId}{data}{'2002|200203|1|32|2002-09-18'} = \$MCache->{ptr}{data}[8];
+$RCache->{$reportId}{data}{'2000|200002|1|18|2000-07-22'} = \$MCache->{ptr}{data}[9];
+$RCache->{$reportId}{data}{'2000|200004|2|44|2000-05-21'} = \$MCache->{ptr}{data}[10];
+$RCache->{$reportId}{data}{'2002|200201|2|55|2002-06-11'} = \$MCache->{ptr}{data}[11];
+$RCache->{$reportId}{data}{'2001|200101|2|44|2001-11-09'} = \$MCache->{ptr}{data}[12];
+$RCache->{$reportId}{data}{'2002|200202|2|55|2002-10-04'} = \$MCache->{ptr}{data}[13];
+$RCache->{$reportId}{data}{'2002|200204|2|55|2002-12-17'} = \$MCache->{ptr}{data}[14];
+$RCache->{$reportId}{data}{'2001|200102|2|44|2001-06-07'} = \$MCache->{ptr}{data}[15];
+$RCache->{$reportId}{data}{'2001|200101|2|55|2001-02-02'} = \$MCache->{ptr}{data}[16];
+$RCache->{$reportId}{data}{'2001|200102|2|55|2001-04-05'} = \$MCache->{ptr}{data}[17];
+$RCache->{$reportId}{data}{'2001|200103|2|55|2001-03-16'} = \$MCache->{ptr}{data}[18];
+$RCache->{$reportId}{data}{'2001|200103|1|18|2001-03-16'} = \$MCache->{ptr}{data}[19];
+$RCache->{$reportId}{data}{'2001|200103|2|44|2001-03-16'} = \$MCache->{ptr}{data}[20];
+$RCache->{$reportId}{data}{'2001|200103|1|32|2001-03-16'} = \$MCache->{ptr}{data}[21];
+$RCache->{$reportId}{attr}{'9221.fakturace'}{pos} = 1;
+$RCache->{$reportId}{attr}{'9214.fakturace'}{pos} = 0;
+$RCache->{$reportId}{attr}{'9202.fakturace'}{pos} = 4;
+$RCache->{$reportId}{attr}{'9203'}{pos} = 2;
+$RCache->{$reportId}{attr}{'9201'}{pos} = 3;
+$RCache->{$reportId}{sql} = "some select";
+$RCache->{$reportId}{mcache} = "ptr";
+#------- END OF ARTIFICIAL DATA -------------
+d296 6
+a301 19
+my $rtrn = undef;
+my $grid = (ref(${$main::MDi->{$reportId}->{ptr}}->{var_def}) =~ /HASH/) ? ${$main::MDi->{$reportId}->{ptr}}->{var_def} : ${ $main::MDi->{ ${$main::MDi->{$reportId}->{ptr}}->{var_def} }->{ptr} };
+my $index;
+my $metricLocator;
+my $metricIndex;
+foreach my $item ('col','row') {
+	my $i = 0;
+	if (exists($grid->{$item})) {
+		my $headerName = $item."Header";
+		foreach (@@{$grid->{$item}}) {
+			(my $gridItemId,my $form) = ($_ =~ /~/) ? split(/~/,$_) : ($_,undef);	#/ for proper syntax highlighting in some editors
+			if (exists($RCache->{$reportId}{attr}{$gridItemId})) {
+				push(@@{$index->{$item}},$RCache->{$reportId}{attr}{$gridItemId}{pos});
+				$rtrn->{$headerName}->{$i}{id} = $gridItemId;
+			} elsif ($_ eq $main::MetricsIdent) {
+				$metricLocator = $item;
+				$metricIndex = $i;
+			};
+		$i++;
+a302 2
+	}
+}
+a303 6
+my $last = 0;
+foreach (keys(%{$RCache->{$reportId}{attr}})) {
+	if ($RCache->{$reportId}{attr}{$_}{pos} < $last) {
+		next;
+	} else {
+		$last = $RCache->{$reportId}{attr}{$_}{pos};
+d305 2
+a306 4
+	
+}
+$last++;
+splice(@@{$index->{$metricLocator}},$metricIndex,0,$last) if ($metricLocator);
+d308 24
+a331 16
+my @@add;
+my $formats;
+foreach (@@{$grid->{metric}}) {
+	push(@@add,$_);
+	$formats->{$_} = (exists ${$main::MDi->{$_}->{ptr}}->{output}) ? ${$main::MDi->{$_}->{ptr}}->{output} : '%.2f';
+}
+
+my $cnt = 0;
+my $hlp;
+foreach (keys(%{$RCache->{$reportId}{data}})) {
+	my @@splitField = split(/\|/,$_);
+	foreach my $item ('col','row') {
+		my $ptr;
+		if ($item eq $metricLocator) {
+			foreach my $metric (@@add) {
+				push(@@splitField,$metric);
+d334 1
+a334 1
+#					$$ptr->{$splitField[$_]};
+a336 7
+				pop(@@splitField);
+			}
+		} else {
+			$ptr = \$hlp->{$item};
+			foreach (@@{$index->{$item}}) {
+#				$$ptr->{$splitField[$_]};
+				$ptr = \$$ptr->{$splitField[$_]};
+d339 1
+d341 22
+a362 44
+	$cnt++;
+}
+our $field;
+our $item;
+our $i;
+our @@output;
+
+#------- 
+	sub convertHash2FullArray () {
+		my $input = shift;
+		our @@output = @@_;
+		my @@previus = @@output;
+		foreach (sort(keys(%{$$input}))) {
+		push(@@output,$_);
+		if (ref($$input->{$_}) =~ /HASH/) {
+			&convertHash2FullArray(\$$input->{$_},@@output);
+		} else {
+			our $item;
+			our $i;
+			$field->{$item}[$i] = [@@output];
+			$i++;
+		}
+		@@output = @@previus;
+		}
+	}
+#-------
+foreach ('col','row') {
+	$i = 0;
+	$item = $_;
+	&convertHash2FullArray(\$hlp->{$_});
+	$rtrn->{$_} = $field->{$_};		#page and metric not implemented yet
+}
+$field = $item = $i = undef;
+@@output = undef;
+
+my $metricId = $grid->{metric}[0] if $#{$grid->{metric}} == 0;
+
+foreach my $row (0..$#{$rtrn->{row}}) {
+	my @@key;
+	for (0..$#{$index->{row}}) {
+		if ($index->{row}[$_] < $last) {
+			$key[ $index->{row}[$_] ] = $rtrn->{row}[$row][$_]
+		} else {
+			$metricId = $rtrn->{row}[$row][$_]
+d364 18
+a381 5
+	}
+	foreach my $col (0..$#{$rtrn->{col}}) {
+		for (0..$#{$index->{col}}) {
+			if ( $index->{col}[$_] < $last ) {
+				$key[ $index->{col}[$_] ] = $rtrn->{col}[$col][$_]
+d383 1
+a383 1
+				$metricId = $rtrn->{col}[$col][$_]
+d386 11
+a396 2
+		my $masterKey = join("|",@@key);
+		$rtrn->{c}{$row}{$col} = sprintf( $formats->{$metricId} ,${$RCache->{$reportId}{data}{$masterKey}}->[ $MCache->{ptr}{metric}{$metricId}{pos} ]) if exists $RCache->{$reportId}{data}{$masterKey};
+a397 1
+}
+d399 1
+a399 1
+return $rtrn
+d436 1
+a436 1
+	$rtrn = &RCache2XTabId($reportId);
+d483 1
+a483 1
+print "$Lang, $Filter, $Sort, $SortOrd, $attr, $fact\n";
+d505 1
+a505 1
+print $el."\n";
+d557 4
+a560 4
+my ($reportId) = shift;
+#$reportId = CheckCache($reportId);
+#my $rtrn = (ref(${$main::MDi->{$reportId}->{ptr}}->{var_def}) =~ /HASH/) ? ${$main::MDi->{$reportId}->{ptr}}->{var_def} : ${ $main::MDi->{ ${$main::MDi->{$reportId}->{ptr}}->{var_def} }->{ptr} };
+my $rtrn = ${$main::MDi->{$reportId}->{ptr}};
+d562 1
+a562 1
+return $rtrn;
+d568 1
+a568 1
+my $reportID = shift;
+d570 2
+a571 2
+my $mdata = &mdata($reportID);
+my @@data = &data($reportID,$mdata);
+d575 25
+a599 24
+	my $reportID = shift;
+	my ($mdata);
+	my $col = 0;
+	my $map = (ref(${$main::MDi->{${$main::MDi->{$reportID}->{ptr}}->{var_def}}->{ptr}}) =~ /HASH/) ? ${$main::MDi->{${$main::MDi->{$reportID}->{ptr}}->{var_def}}->{ptr}} : ${ $main::MDi->{ ${$main::MDi->{${$main::MDi->{$reportID}->{ptr}}->{var_def}}->{ptr}} }->{ptr} };
+	
+	foreach ( keys(%{$map}) ) {
+	   if ( $_ eq 'x' or $_ eq 'y' or $_ eq 'z' or $_ eq 'transparency' or $_ eq 'diameter' or $_ eq 'color' or $_ eq 'shape' ) {
+	      if (defined $map->{$_}{items}) {
+	         $mdata->{$_}{column} = $col;
+	         $col++;
+	         if ( $map->{$_}{quantity} eq 'off' ) { 
+	            $mdata->{$_}{type} = 'qualit'; 
+	         }
+	         if ( $map->{$_}{quantity} eq 'on' ) {  
+	            $mdata->{$_}{type} = 'quantit';
+	         }  
+	         for (my $i=0;$i < @@{$map->{$_}{items}};$i++ ) {
+	             push ( @@{$mdata->{$_}{cols}},(exists $MCache->{ptr}{metric}{$map->{$_}{items}[$i]}) ? $MCache->{ptr}{metric}{$map->{$_}{items}[$i]}{pos} : $RCache->{$reportID}{attr}{$map->{$_}{items}[$i]}{pos});
+		     $mdata->{$_}{id} .= ($i == (@@{$map->{$_}{items}}-1)) ? $map->{$_}{items}[$i] : $map->{$_}{items}[$i].'|';
+		 }
+	      }
+	      else { delete($mdata->{$_}) };  
+	   }
+	}       
+d601 1
+a601 1
+	return $mdata;
+d605 47
+a651 25
+	my $reportID = shift;
+	my $mdata = shift;
+	
+	my (@@data);
+	my @@rcache = keys(%{$RCache->{$reportID}{data}});
+	my $cols = my @@split = (split(/\|/,$rcache[0]));
+	my $rows = @@rcache;
+	
+	for ( my $i=0;$i<$rows;$i++ ) {
+	    my @@join = ();
+	    my @@splitField = split(/\|/,$rcache[$i]);
+	    foreach ( keys(%{$mdata}) ) {
+	        if ( $_ eq 'x' or $_ eq 'y' or $_ eq 'z' or $_ eq 'transparency' or $_ eq 'diameter' or $_ eq 'color' or $_ eq 'shape' ) {
+	           if ( $i == 0 ) {
+		      $join[$mdata->{$_}{column}] = $mdata->{$_}{id};
+		      $mdata->{$_}{values}[0] = $mdata->{$_}{id};
+		   }
+		   elsif ( $mdata->{$_}{type} eq 'qualit' ) { 
+		      for (my $j=0;$j < @@{$mdata->{$_}{cols}};$j++ ) {
+		          $join[$mdata->{$_}{column}] .= ($j == (@@{$mdata->{$_}{cols}}-1)) ? $splitField[$mdata->{$_}{cols}[$j]] : $splitField[$mdata->{$_}{cols}[$j]].'|';
+		      }
+		   }
+		   elsif ( $mdata->{$_}{type} eq 'quantit' ) { 
+		   ## !!! Not implemented yet
+		   }
+a652 24
+		my $occur = "";
+		for ( my $k=0;$k<@@{$mdata->{$_}{values}};$k++ ) {
+		    if ( $mdata->{$_}{values}[$k] eq $join[$mdata->{$_}{column}] ) {
+		       $occur = $k;
+		    }
+		}    
+		if ($occur eq "") {
+		   push(@@{$mdata->{$_}{values}},$join[$mdata->{$_}{column}]);
+		}   
+	    }
+	    push(@@{$data[$i]},@@join);
+	}
+	
+        foreach ( keys(%{$mdata}) ) {
+	   if ( $_ eq 'x' or $_ eq 'y' or $_ eq 'z' or $_ eq 'transparency' or $_ eq 'diameter' or $_ eq 'color' or $_ eq 'shape' ) {
+	      for (my $i=0;$i<@@data;$i++) {
+		  for ( my $j=0;$j < @@{$mdata->{$_}{values}};$j++  ) {
+		      if ( $data[$i][$mdata->{$_}{column}] eq $mdata->{$_}{values}[$j]  ) {
+		         $data[$i][$mdata->{$_}{column}] = $j;
+		      }
+		  }
+	      }
+	   }
+	}   
+d654 1
+a654 1
+	return @@data;
+d659 1
+a659 1
+return ($mdata,@@data);
+d665 3
+a667 11
+my $mdata = shift;
+my $lang = shift;
+my ($map);
+
+foreach ( keys(%{$mdata}) ) {
+   if ( $_ eq 'x' or $_ eq 'y' or $_ eq 'z' or $_ eq 'transparency' or $_ eq 'diameter' or $_ eq 'color' or $_ eq 'shape' ) {
+      for ( my $i=0;$i < @@{$mdata->{$_}{values}};$i++  ) { 
+	  $mdata->{$_}{values}[$i] = ($i == 0) ? &attr($mdata->{$_}{values}[$i],$lang) : &itemsOFattr($mdata->{$_}{id},$mdata->{$_}{values}[$i],$lang); 
+      }
+   }
+}   
+d669 7
+d679 16
+a694 5
+	my $item = shift;
+	my $lang = shift;
+	my @@split = split(/\|/,$item);
+	my (@@temp,@@attr,@@display,$loc_item);
+	
+a695 10
+	 for (my $i=0;$i<@@split;$i++ ) {
+	     ($attr[$i],$display[$i]) = ($split[$i] =~ /~/) ? split(/~/,$split[$i]) : ($split[$i],undef);   #/
+	     $temp[$i] = &main::LocalizedObj(${$main::MDi->{$attr[$i]}->{ptr}}->{name},"NA",$lang);    
+	 }
+	 for (my $j=0;$j<@@temp;$j++) {
+	     $loc_item .= ($j == (@@temp - 1)) ? $temp[$j] : $temp[$j].'|';
+	 }
+	 
+	return $loc_item;  
+	}
+d698 16
+a713 16
+	my $itemId = shift;
+	my $substId = shift;
+	my $lang = shift;
+	my @@splitItemId = split(/\|/,$itemId);
+	my @@splitSubstId = split(/\|/,$substId);
+	
+	my (@@temp,@@attr,@@display,$loc_item);
+	
+	 for (my $i=0;$i<@@splitItemId;$i++ ) {
+	     ($attr[$i],$display[$i]) = ($splitItemId[$i] =~ /~/) ? split(/~/,$splitItemId[$i]) : ($splitItemId[$i],undef);  #/
+	     $temp[$i] = LookupID2Name($attr[$i],$splitSubstId[$i],$display[$i],$lang);
+	 }
+	 for (my $j=0;$j<@@temp;$j++) {
+	     $loc_item .= ($j == (@@temp - 1)) ? $temp[$j] : $temp[$j].'|';
+	 }
+	
+d715 1
+a715 1
+	return $loc_item;  
+d720 1
+a720 1
+return $mdata;
+d728 91
+@
+
+
+1.45
+log
+@loading attribute to cache - tmp solution
+@
+text
+@d4 1
+a4 1
+# $Id: Cache.pm,v 1.44 2003/09/23 18:53:01 vacula Exp $
+d604 1
+a604 1
+CheckCache($reportId);
+@
+
+
+1.44
+log
+@added calling of method CheckCache in sub Report3d
+@
+text
+@d4 1
+a4 1
+# $Id: Cache.pm,v 1.43 2003/09/23 18:45:34 vacula Exp $
+d16 1
+d69 3
+a71 1
+	my ($h,$s,$t,$c)=SplitKey(${$main::MDi->{$ID}->{ptr}}->{pk});	# get primary key
+@
+
+
+1.43
+log
+@added calling of method CheckCache in sub Report3d
+@
+text
+@d4 1
+a4 1
+# $Id: Cache.pm,v 1.42 2003/09/22 14:15:28 jiri_schmid Exp $
+d601 1
+a601 1
+CheckCache($ID);
+@
+
+
+1.42
+log
+@report menu improvments
+@
+text
+@d4 1
+a4 1
+# $Id: Cache.pm,v 1.41 2003/09/22 10:57:41 vacula Exp $
+d601 1
+a601 1
+
+@
+
+
+1.41
+log
+@added functions for 3d graphs
+@
+text
+@d4 1
+a4 1
+# $Id: Cache.pm,v 1.40 2003/09/22 09:16:25 jiri_schmid Exp $
+d503 2
+a504 2
+						$rtrn->{$headerName}->{$i}{name} = "-";
+						$rtrn->{$headerName}->{$i}{id} = "-";
+@
+
+
+1.40
+log
+@operational commit for vladis
+@
+text
+@d4 1
+a4 1
+# $Id: Cache.pm,v 1.39 2003/09/22 08:08:59 jiri_schmid Exp $
+d596 170
+@
+
+
+1.39
+log
+@operational commit
+@
+text
+@d4 1
+a4 1
+# $Id: Cache.pm,v 1.38 2003/09/10 09:08:58 jiri_schmid Exp $
+d497 1
+a497 1
+						$rtrn->{$item}[$_][$i] = LookupID2Name($gridItemId, $substId, $form, $lang)."|$substId";
+@
+
+
+1.38
+log
+@ACl changes, report outup visual improvments
+@
+text
+@d4 1
+a4 1
+# $Id: Cache.pm,v 1.37 2003/09/09 09:41:30 jiri_schmid Exp $
+d330 1
+a330 1
+				$rtrn->{$headerName}->{$i} = $gridItemId;
+a483 1
+use Data::Dumper;
+d491 1
+a491 1
+					$rtrn->{$headerName}->{$i} = &main::LocalizedObj(${$main::MDi->{$gridItemId}->{ptr}}->{name},$gridItemId,$lang,$main::DefaultLanguage);
+d497 1
+a497 1
+						$rtrn->{$item}[$_][$i] = LookupID2Name($gridItemId, $substId, $form, $lang)."|$gridItemId|$substId";
+d503 2
+a504 1
+						$rtrn->{$headerName}->{$i} = "-";
+a510 1
+	
+@
+
+
+1.37
+log
+@ACL for facts and attrs implemented
+@
+text
+@d4 1
+a4 1
+# $Id: Cache.pm,v 1.36 2003/09/03 15:10:46 jiri_schmid Exp $
+d483 1
+a483 1
+	my @@ids;
+d493 3
+a495 1
+					$rtrn->{links}{$gridItemId} = &main::GetLocalizedAttrLinks($gridItemId,$form,$lang);
+a511 2
+#use Data::Dumper;
+#print Dumper($rtrn);
+@
+
+
+1.36
+log
+@implementation of right clik menu
+@
+text
+@d4 1
+a4 1
+# $Id: Cache.pm,v 1.35 2003/08/18 13:17:13 jiri_schmid Exp $
+d441 1
+@
+
+
+1.35
+log
+@admin page reading rutines implemented
+@
+text
+@d4 1
+a4 1
+# $Id: Cache.pm,v 1.34 2003/08/15 10:59:39 michald Exp $
+d273 3
+a275 3
+#bear Myson :
+$MCache->{ptr}{metric}{'2b105fec01'}{pos}=5;	# Prodej [Kc]
+$MCache->{ptr}{metric}{'e20a1a4509'}{pos}=6;    # Prodej [ks]
+d277 4
+a280 4
+#bear ?
+#$MCache->{ptr}{metric}{'2b105fec01'}{pos}=5;	# Prodej [Kc]
+#$MCache->{ptr}{metric}{'e20a1a4509'}{pos}=6;	# Prodej [ks]
+#$MCache->{ptr}{metric}{'82ab255101'}{pos}=7;	# Prodej [ks] za rok 2000
+d483 1
+a483 1
+
+d492 1
+d495 1
+a495 1
+						$rtrn->{$item}[$_][$i] = LookupID2Name($gridItemId, $substId, $form, $lang);
+d508 3
+a510 4
+
+#	use Data::Dumper;
+#	print Dumper($rtrn);
+
+@
+
+
+1.34
+log
+@initial ACL implementation
+@
+text
+@d4 1
+a4 1
+# $Id: Cache.pm,v 1.33 2003/08/13 08:49:01 jiri_schmid Exp $
+a47 53
+
+our $ACache;	#Access cache
+# structure unknown !!!
+
+#-----------------------------------------------------
+
+sub GetAccessObjects {
+	my $lang = shift;
+#this defines data structure just before sending through SOAP server, already with localized content !!! 
+$ACache->{user}{'~name'} = 'Uzivatele';			# necessary! >> ~ defines existence of folder, when undef, the segment will not be processed
+$ACache->{user}{'~desc'} = 'Slozka s uzivatelama';	# description of folder
+$ACache->{user}{'~content'} = 'user';			# necessary! defines type of content, when undef, processing of segment will be aborted
+$ACache->{user}{1}{name} = "Karel";
+$ACache->{user}{1}{login} = "carl";
+$ACache->{user}{1}{passwd} = "ttttt";
+$ACache->{user}{2}{name} = "Pert";
+$ACache->{user}{2}{login} = "Pert";
+$ACache->{user}{2}{passwd} = "Pert";
+$ACache->{user}{3}{name} = "Pavel";
+$ACache->{user}{3}{login} = "Pavel";
+$ACache->{user}{3}{passwd} = "Pavel";
+$ACache->{user}{4}{name} = "Ivan";
+$ACache->{user}{4}{login} = "Ivan";
+$ACache->{user}{4}{passwd} = "Ivan";
+$ACache->{user}{5}{name} = "Katka";
+$ACache->{user}{5}{login} = "Katka";
+$ACache->{user}{5}{passwd} = "Katka";
+$ACache->{group}{'~name'} = 'Skupiny';
+$ACache->{group}{'~desc'} = 'GruppenSlozka';
+$ACache->{group}{'~content'} = 'group';
+$ACache->{group}{g1}{name} = 'Admin';
+$ACache->{group}{g2}{name} = 'Root';
+$ACache->{group}{g3}{name} = 'User';
+$ACache->{group}{g4}{name} = 'Superman';
+$ACache->{role}{'~name'} = 'Role';
+$ACache->{role}{'~desc'} = 'a rolicky';
+$ACache->{role}{'~content'} = 'role';
+$ACache->{role}{test}{'~name'} = "Test";
+$ACache->{role}{test}{'~desc'} = "projectos testos";
+$ACache->{role}{test}{'~content'} = 'role';
+$ACache->{role}{test}{t1}{name} = "Rootrs";
+$ACache->{role}{test}{t1}{desc} = "Rooteros";
+$ACache->{role}{test}{t2}{name} = "Userrr";
+$ACache->{role}{test}{t2}{desc} = "Usrros";
+$ACache->{role}{demo}{'~name'} = "demo";
+$ACache->{role}{demo}{'~desc'} = "projectos demos";
+$ACache->{role}{demo}{'~content'} = 'role';
+$ACache->{role}{demo}{d1}{name} = "DemoR";
+$ACache->{role}{demo}{d1}{desc} = "demoRooteros";
+$ACache->{role}{demo}{d2}{name} = "demoserrr";
+$ACache->{role}{demo}{d2}{desc} = "demoUsrros";
+	return $ACache
+}
+@
+
+
+1.33
+log
+@accessTree visual improvment
+@
+text
+@d1 1
+a1 1
+ #-----------------------------------------------------
+d4 1
+a4 1
+# $Id: Cache.pm,v 1.32 2003/08/13 08:22:26 jiri_schmid Exp $
+d579 1
+d583 1
+a583 1
+	if (!$Filter) {	# elements can be obtained from Lookup Cache in simple situation
+d585 2
+a586 1
+		main::WriteLog('Load of AttrElements from Lookup Cache', $attr, 4) if ($main::LogLevel>3);
+d590 16
+a605 1
+		
+a607 1
+		main::WriteLog('Load Filtered AttrElements from Lookup Cache', "$attr / $Filter / $fact", 4) if ($main::LogLevel>3);
+d609 2
+a610 2
+		my $src='';
+		
+d628 1
+@
+
+
+1.32
+log
+@tree generating improvment
+@
+text
+@d4 1
+a4 1
+# $Id: Cache.pm,v 1.31 2003/08/12 09:19:19 jiri_schmid Exp $
+d87 1
+a87 1
+$ACache->{role}{test}{'~content'} = 'test';
+d94 1
+a94 1
+$ACache->{role}{demo}{'~content'} = 'demo';
+@
+
+
+1.31
+log
+@ACL implementation, datas moved into beard"s caches
+@
+text
+@d4 1
+a4 1
+# $Id: Cache.pm,v 1.30 2003/08/07 12:39:26 jiri_schmid Exp $
+d57 1
+a57 1
+$ACache->{user}{'~name'} = 'Uzivatele';			# necessary! >> ~ defines folder
+d59 1
+a59 1
+$ACache->{user}{'~content'} = 1;			# necessary! defines that folder has content and it should be viewed
+d77 1
+a77 1
+$ACache->{group}{'~content'} = 1;
+d84 1
+a84 1
+$ACache->{role}{'~content'} = 1;
+d87 1
+a87 1
+$ACache->{role}{test}{'~content'} = 1;
+d94 1
+a94 1
+$ACache->{role}{demo}{'~content'} = 1;
+@
+
+
+1.30
+log
+@M,R cache implementation and relevant code corections
+@
+text
+@d4 1
+a4 1
+# $Id: Cache.pm,v 1.29 2003/08/06 09:36:32 michald Exp $
+d48 53
+@
+
+
+1.29
+log
+@filter call implementation to GetAttrElements
+@
+text
+@d4 1
+a4 1
+# $Id: Cache.pm,v 1.28 2003/08/06 07:50:33 jiri_schmid Exp $
+d268 5
+a272 5
+$MCache->{ptr}{attr}{'9214.fakturace'} = 0;
+$MCache->{ptr}{attr}{'9221.fakturace'} = 1;
+$MCache->{ptr}{attr}{'9203'} = 2;
+$MCache->{ptr}{attr}{'9201'} = 3;
+$MCache->{ptr}{attr}{'9202.fakturace'} = 4;
+d308 5
+a312 5
+$RCache->{$reportId}{attr}{'9221.fakturace'} = 1;
+$RCache->{$reportId}{attr}{'9214.fakturace'} = 0;
+$RCache->{$reportId}{attr}{'9202.fakturace'} = 4;
+$RCache->{$reportId}{attr}{'9203'} = 2;
+$RCache->{$reportId}{attr}{'9201'} = 3;
+d329 1
+a329 1
+				push(@@{$index->{$item}},$RCache->{$reportId}{attr}{$gridItemId});
+d342 1
+a342 1
+	if ($RCache->{$reportId}{attr}{$_} < $last) {
+d345 1
+a345 1
+		$last = $RCache->{$reportId}{attr}{$_};
+@
+
+
+1.28
+log
+@elements
+@
+text
+@d4 1
+a4 1
+# $Id: Cache.pm,v 1.27 2003/08/04 05:12:22 michald Exp $
+d518 1
+a518 1
+	my ($Lang, $Filter, $Sort, $SortOrd, $attr, $fact) = @@_;	# language, filter expression, sort index, sort order, list of attributes (in form attr.role~display)
+d527 7
+a533 9
+	my @@Display;	# array of display forms
+	for (my $i=0; $i<=$#attr; $i++) {
+		($attr[$i], $Display[$i]) = split('~', $attr[$i]);	# set display form, cut display form from Attribute
+	}
+	if (!$Filter && ($#attr==0)) {	# elements can be obtained from Lookup Cache in simple situation
+
+		main::WriteLog('Load of AttrElements from Lookup Cache', join(', ',@@attr),4) if ($main::LogLevel>3);
+		foreach (keys %{$Lookup->{$attr[0]}->{data}}) {
+			push @@id, [$_, LookupID2Name($attr[0], $_, $Display[0], $Lang)];
+d538 1
+d553 1
+a553 1
+			main::WriteLog('Load of AttrElements from DB', "$src: ".join(', ',@@attr),4) if ($main::LogLevel>3);
+@
+
+
+1.27
+log
+@Plug-Ins implementation
+@
+text
+@d4 1
+a4 1
+# $Id: Cache.pm,v 1.26 2003/07/29 14:36:42 jiri_schmid Exp $
+d518 1
+a518 1
+	my ($Lang, $Filter, $Sort, $SortOrd, @@attr) = @@_;	# language, filter expression, sort index, sort order, list of attributes (in form attr.role~display)
+@
+
+
+1.26
+log
+@code improvments
+@
+text
+@d4 1
+a4 1
+# $Id: Cache.pm,v 1.25 2003/07/29 06:52:46 michald Exp $
+d254 1
+a254 1
+#------- BEGIN OF ARTIFICIAL DATAS -----------
+d274 2
+a275 2
+$MCache->{ptr}{metric}{'df3a204501'}{pos}=5;	# Prodej [Kc]
+$MCache->{ptr}{metric}{'2b832a600a'}{pos}=6;    # Prodej [ks]
+d296 12
+a307 12
+$RCache->{$reportId}{data}{'2000|200004|2|18|2000-05-21'} = \$MCache->{ptr}{data}[10];
+$RCache->{$reportId}{data}{'2002|200201|2|32|2002-06-11'} = \$MCache->{ptr}{data}[11];
+$RCache->{$reportId}{data}{'2001|200101|2|18|2001-11-09'} = \$MCache->{ptr}{data}[12];
+$RCache->{$reportId}{data}{'2002|200202|2|32|2002-10-04'} = \$MCache->{ptr}{data}[13];
+$RCache->{$reportId}{data}{'2002|200204|2|32|2002-12-17'} = \$MCache->{ptr}{data}[14];
+$RCache->{$reportId}{data}{'2001|200102|2|18|2001-06-07'} = \$MCache->{ptr}{data}[15];
+$RCache->{$reportId}{data}{'2001|200101|2|32|2001-02-02'} = \$MCache->{ptr}{data}[16];
+$RCache->{$reportId}{data}{'2001|200102|2|32|2001-04-05'} = \$MCache->{ptr}{data}[17];
+$RCache->{$reportId}{data}{'2001|200103|2|32|2001-03-16'} = \$MCache->{ptr}{data}[18];
+$RCache->{$reportId}{data}{'2001|200103|1|32|2001-03-16'} = \$MCache->{ptr}{data}[19];
+$RCache->{$reportId}{data}{'2001|200103|2|18|2001-03-16'} = \$MCache->{ptr}{data}[20];
+$RCache->{$reportId}{data}{'2001|200103|1|18|2001-03-16'} = \$MCache->{ptr}{data}[21];
+d370 1
+a370 1
+					$$ptr->{$splitField[$_]};
+d378 1
+a378 1
+				$$ptr->{$splitField[$_]};
+@
+
+
+1.25
+log
+@Cache::GetAttrElements implementation
+@
+text
+@d4 1
+a4 1
+# $Id: Cache.pm,v 1.24 2003/07/25 09:28:51 jiri_schmid Exp $
+d450 1
+a450 1
+	my $lang = shift;
+d463 1
+a463 1
+	my $lang = shift;
+d474 1
+a474 1
+	my $lang = shift;
+@
+
+
+1.24
+log
+@minor bug fixies and code improvment
+@
+text
+@d4 1
+a4 1
+# $Id: Cache.pm,v 1.23 2003/07/21 10:51:42 jiri_schmid Exp $
+a99 1
+#		SQLPrepareFetch($src, 'l', 'SELECT '.join(',',@@SelCl)." FROM $t LIMIT 30");	#!!! for testing purposes only
+d110 1
+d473 4
+a476 4
+my $reportId = shift;
+my $lang = shift;
+my $rtrn;
+our $RCache;
+d478 1
+a478 1
+$rtrn = &RCache2XTabId($reportId);
+d480 1
+a480 1
+my $grid = (ref(${$main::MDi->{$reportId}->{ptr}}->{var_def}) =~ /HASH/) ? ${$main::MDi->{$reportId}->{ptr}}->{var_def} : ${ $main::MDi->{ ${$main::MDi->{$reportId}->{ptr}}->{var_def} }->{ptr} };
+d482 1
+a482 1
+my @@ids;
+d484 19
+a502 17
+foreach my $item ('col','row') {
+	my $i = 0;
+	if (exists($grid->{$item})) {
+		my $headerName = $item."Header";
+		foreach (@@{$grid->{$item}}) {
+			(my $gridItemId,my $form) = ($_ =~ /~/) ? split(/~/,$_) : ($_,undef);	#/ for proper syntax highlighting in some editors
+			if (exists($RCache->{$reportId}{attr}{$gridItemId})) {
+				$rtrn->{$headerName}->{$i} = &main::LocalizedObj(${$main::MDi->{$gridItemId}->{ptr}}->{name},$gridItemId,$lang,$main::DefaultLanguage);
+				for (0..$#{$rtrn->{$item}}) {
+					my $substId = $rtrn->{$item}[$_][$i];
+					$rtrn->{$item}[$_][$i] = LookupID2Name($gridItemId, $substId, $form, $lang);
+				}
+			$i++;
+			} elsif ($_ eq $main::MetricsIdent) {
+				for (0..$#{$rtrn->{$item}}) {
+					$rtrn->{$item}[$_][$i] = &main::LocalizedObj(${$main::MDi->{$rtrn->{$item}[$_][$i]}->{ptr}}->{name},$rtrn->{$item}[$_][$i],$lang,$main::DefaultLanguage);
+					$rtrn->{$headerName}->{$i} = "-";
+a503 1
+			$i++;
+a506 1
+}
+d511 67
+a577 1
+return $rtrn
+@
+
+
+1.23
+log
+@report and format scripts fixies, GUI improvment
+@
+text
+@d4 1
+a4 1
+# $Id: Cache.pm,v 1.22 2003/07/18 10:51:01 jiri_schmid Exp $
+a437 1
+		print "$masterKey : $metricId : $MCache->{ptr}{metric}{$metricId}{pos}\n";
+@
+
+
+1.22
+log
+@format3d implemented, format changed all dependencies fixed
+@
+text
+@d4 1
+a4 1
+# $Id: Cache.pm,v 1.21 2003/07/11 05:40:58 michald Exp $
+d273 8
+a280 3
+$MCache->{ptr}{metric}{'2b105fec01'}{pos}=5;	# Prodej [Kc]
+$MCache->{ptr}{metric}{'e20a1a4509'}{pos}=6;	# Prodej [ks]
+$MCache->{ptr}{metric}{'82ab255101'}{pos}=7;	# Prodej [ks] za rok 2000
+d438 1
+@
+
+
+1.21
+log
+@minor fixes
+@
+text
+@d4 1
+a4 1
+# $Id: Cache.pm,v 1.20 2003/07/10 13:00:04 jiri_schmid Exp $
+d313 1
+a313 1
+my $grid = (ref(${$main::MDi->{$reportId}->{ptr}}->{grid_def}) =~ /HASH/) ? ${$main::MDi->{$reportId}->{ptr}}->{grid_def} : ${ $main::MDi->{ ${$main::MDi->{$reportId}->{ptr}}->{grid_def} }->{ptr} };
+d475 1
+a475 1
+my $grid = (ref(${$main::MDi->{$reportId}->{ptr}}->{grid_def}) =~ /HASH/) ? ${$main::MDi->{$reportId}->{ptr}}->{grid_def} : ${ $main::MDi->{ ${$main::MDi->{$reportId}->{ptr}}->{grid_def} }->{ptr} };
+@
+
+
+1.20
+log
+@tabed graph3d implemnted, code improvment
+@
+text
+@d4 1
+a4 1
+# $Id: Cache.pm,v 1.19 2003/07/09 15:30:18 jiri_schmid Exp $
+d255 1
+a255 1
+# $MCache->{$MCacheID}->{data}->[[A1, A2, ..., M1, M2, ...], [....], ...] !!! {data} (= ? ->) [...]
+d264 5
+a268 4
+[2001,200104,1,32,"2001-11-14",45,45,44],[2002,200203,1,32,"2002-09-18",987,132,78],[2000,200002,1,18,"2000-07-22",14,45,55],[2000,200004,2,18,"2000-05-21",32,46,6],
+[2002,200201,2,32,"2002-06-11",68,98,12],[2001,200101,2,18,"2001-11-09",7845,55,98],[2002,200202,2,32,"2002-10-04",78,12,75],[2002,200204,2,32,"2002-12-17",98,12,76],
+[2001,200102,2,18,"2001-06-07",33,447,36],[2001,200101,2,32,"2001-02-02",441,0,28],[2001,200102,2,32,"2001-04-05",899,66,25],[2001,200103,2,32,"2001-03-16",16,3,19],
+[2001,200103,1,32,"2001-03-16",36,14,68],[2001,200103,2,18,"2001-03-16",16.5,34.8,69],[2001,200103,1,18,"2001-03-16",9.7,11.1,333]];
+a269 2
+$MCache->{ptr}{attr}{'9214.fakturace'} = 0;
+$MCache->{ptr}{attr}{'9202.fakturace'} = 4;
+d272 4
+a275 3
+$MCache->{ptr}{metric}{'7e22136243'}{pos}=5;
+$MCache->{ptr}{metric}{'2b832a600a'}{pos}=6;
+$MCache->{ptr}{metric}{'df3a204501'}{pos}=7;
+@
+
+
+1.19
+log
+@minor bug fixies, 3dgraph interface changes
+@
+text
+@d4 1
+a4 1
+# $Id: Cache.pm,v 1.18 2003/07/07 07:10:42 michald Exp $
+a267 1
+$MCache->{ptr}{attr}{'9221.fakturace~name'} = 1;
+d270 1
+a270 1
+$MCache->{ptr}{attr}{'9202.fakturace~name'} = 4;
+a271 2
+$MCache->{ptr}{attr}{'9203~nazev'} = 2;
+$MCache->{ptr}{attr}{'9201~name'} = 3;
+a302 1
+$RCache->{$reportId}{attr}{'9221.fakturace~name'} = 1;
+d305 1
+a305 1
+$RCache->{$reportId}{attr}{'9202.fakturace~name'} = 4;
+a306 2
+$RCache->{$reportId}{attr}{'9203~nazev'} = 2;
+$RCache->{$reportId}{attr}{'9201~name'} = 3;
+d322 4
+a325 3
+			if (exists($RCache->{$reportId}{attr}{$_})) {
+				push(@@{$index->{$item}},$RCache->{$reportId}{attr}{$_});
+				$rtrn->{$headerName}->{$i} = $_;
+a435 1
+
+d483 4
+a486 5
+		foreach my $gridItem (@@{$grid->{$item}}) {
+			if (exists($RCache->{$reportId}{attr}{$gridItem})) {
+				my $gridId = $gridItem;
+				($gridId,my $form) = split(/~/,$gridItem) if $gridItem=~/~/;	#/ for proper syntax highlighting in some editors
+				$rtrn->{$headerName}->{$i} = &main::LocalizedObj(${$main::MDi->{$gridId}->{ptr}}->{name},$gridId,$lang,$main::DefaultLanguage);
+d489 1
+a489 1
+					$rtrn->{$item}[$_][$i] = LookupID2Name($gridId, $substId, $form, $lang);
+d492 1
+a492 1
+			} elsif ($gridItem eq $main::MetricsIdent) {
+@
+
+
+1.18
+log
+@some minor code improvements
+@
+text
+@d4 1
+a4 1
+# $Id: Cache.pm,v 1.17 2003/07/04 14:29:33 jiri_schmid Exp $
+a493 1
+				$rtrn->{$headerName}->{$i} .= "~".&main::LocalizedObj(${$main::MDi->{$gridId}->{ptr}}->{display}{$form}{name},$gridId,$lang,$main::DefaultLanguage) if defined $form;
+@
+
+
+1.17
+log
+@utf8 handling fixed
+@
+text
+@d4 1
+a4 1
+# $Id: Cache.pm,v 1.16 2003/07/04 06:19:18 michald Exp $
+d444 27
+a492 1
+				my $index = $Lookup->{$gridId}{form_idx}{$form}{$lang} if $form;
+d497 1
+a497 1
+					$rtrn->{$item}[$_][$i] = (defined $index) ? (exists $Lookup->{$gridId}{data}{$substId}[$index]) ? $Lookup->{$gridId}{data}{$substId}[$index] : $substId : $substId;
+@
+
+
+1.16
+log
+@some fixes for proper utf8 encoding, see README for details
+@
+text
+@d4 1
+a4 1
+# $Id: Cache.pm,v 1.13 2003/06/30 11:22:15 jiri_schmid Exp $
+d453 1
+d485 4
+a488 1
+return $rtrn;
+@
+
+
+1.15
+log
+@bug fixies
+@
+text
+@d4 1
+a4 1
+# $Id: Cache.pm,v 1.14 2003/07/02 13:44:34 jiri_schmid Exp $
+d9 1
+d11 2
+d14 4
+a17 2
+binmode(STDOUT, ":utf8");
+binmode(STDIN, ":utf8");
+d66 3
+a68 1
+	my ($h,$s,$t,$c)=SplitKey(${$main::MDi->{$_}->{ptr}}->{pk});	# get primary key
+d83 3
+a85 3
+	foreach my $d (keys %{${$main::MDi->{$_}->{ptr}}->{display}}) {	# foreach display form
+		foreach my $l (keys %{${$main::MDi->{$_}->{ptr}}->{display}->{$d}->{def}}) {	# foreach lang
+			my $fd=${$main::MDi->{$_}->{ptr}}->{display}->{$d}->{def}->{$l};
+d88 1
+a88 1
+				if ( $fdi{$fd} ) {	# same definition for diferent form is already exists
+d110 1
+a110 1
+			$Lookup->{$ID}->{data}->{$r[0]}=[splice(@@r,1)];
+d464 1
+a464 1
+				($gridId,my $form) = split(/~/,$gridItem) if $gridItem =~ /~/;
+a488 16
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@
+
+
+1.14
+log
+@header descriptions finally implemented
+@
+text
+@d4 1
+a4 1
+# $Id: Cache.pm,v 1.13 2003/06/30 11:22:15 jiri_schmid Exp $
+d23 1
+a23 1
+# $MCache->{$MCacheID}->{data}->[[A1, A2, ..., M1, M2, ...], [....], ...]
+@
+
+
+1.13
+log
+@links through pointers from rcache to mcache implemented
+@
+text
+@d4 1
+a4 1
+# $Id: Cache.pm,v 1.12 2003/06/30 11:00:44 jiri_schmid Exp $
+d311 1
+a311 1
+my $rtrn;
+d319 1
+d323 1
+a401 1
+$rtrn = undef;
+d449 1
+a449 1
+use Data::Dumper;
+d453 1
+d458 3
+a460 1
+				my $index = $Lookup->{$gridId}{form_idx}{$form}{$lang} if ($form);
+d469 1
+d476 1
+@
+
+
+1.12
+log
+@light-format for metric output implemted
+@
+text
+@d4 1
+a4 1
+# $Id: Cache.pm,v 1.11 2003/06/30 09:14:33 jiri_schmid Exp $
+a247 37
+# $RCache->{$ReportID}->{data}->{A1|A2|...|An}=ptr_to_MCache_row
+#                     ->{attr}->{$attr}->{pos}=aid		#position of specific attribute in ->{data} array
+#                     ->{mcache}=MCacheID
+#                     ->{sql}=SQL
+$RCache->{$reportId}{data}{'2001|200102|1|18|2001-05-01'} = 0;
+$RCache->{$reportId}{data}{'2001|200101|1|32|2001-06-06'} = 1;
+$RCache->{$reportId}{data}{'2001|200102|1|32|2001-12-28'} = 2;
+$RCache->{$reportId}{data}{'2001|200103|1|32|2001-10-15'} = 3;
+$RCache->{$reportId}{data}{'2000|200003|1|18|2000-01-01'} = 4;
+$RCache->{$reportId}{data}{'2001|200103|1|18|2001-04-29'} = 5;
+$RCache->{$reportId}{data}{'2001|200104|1|18|2001-03-08'} = 6;
+$RCache->{$reportId}{data}{'2001|200104|1|32|2001-11-14'} = 7;
+$RCache->{$reportId}{data}{'2002|200203|1|32|2002-09-18'} = 8;
+$RCache->{$reportId}{data}{'2000|200002|1|18|2000-07-22'} = 9;
+$RCache->{$reportId}{data}{'2000|200004|2|18|2000-05-21'} = 10;
+$RCache->{$reportId}{data}{'2002|200201|2|32|2002-06-11'} = 11;
+$RCache->{$reportId}{data}{'2001|200101|2|18|2001-11-09'} = 12;
+$RCache->{$reportId}{data}{'2002|200202|2|32|2002-10-04'} = 13;
+$RCache->{$reportId}{data}{'2002|200204|2|32|2002-12-17'} = 14;
+$RCache->{$reportId}{data}{'2001|200102|2|18|2001-06-07'} = 15;
+$RCache->{$reportId}{data}{'2001|200101|2|32|2001-02-02'} = 16;
+$RCache->{$reportId}{data}{'2001|200102|2|32|2001-04-05'} = 17;
+$RCache->{$reportId}{data}{'2001|200103|2|32|2001-03-16'} = 18;
+$RCache->{$reportId}{data}{'2001|200103|1|32|2001-03-16'} = 19;
+$RCache->{$reportId}{data}{'2001|200103|2|18|2001-03-16'} = 20;
+$RCache->{$reportId}{data}{'2001|200103|1|18|2001-03-16'} = 21;
+$RCache->{$reportId}{attr}{'9221.fakturace~name'} = 1;
+$RCache->{$reportId}{attr}{'9221.fakturace'} = 1;
+$RCache->{$reportId}{attr}{'9214.fakturace'} = 0;
+$RCache->{$reportId}{attr}{'9202.fakturace~name'} = 4;
+$RCache->{$reportId}{attr}{'9203'} = 2;
+$RCache->{$reportId}{attr}{'9203~nazev'} = 2;
+$RCache->{$reportId}{attr}{'9201~name'} = 3;
+$RCache->{$reportId}{attr}{'9201'} = 3;
+$RCache->{$reportId}{sql} = "some select";
+$RCache->{$reportId}{mcache} = "ptr";
+
+d272 37
+d411 1
+d430 1
+a430 1
+		$rtrn->{c}{$row}{$col} = sprintf( $formats->{$metricId} ,$MCache->{ptr}{data}[ $RCache->{$reportId}{data}{$masterKey} ][ $MCache->{ptr}{metric}{$metricId}{pos} ]) if exists $RCache->{$reportId}{data}{$masterKey};
+@
+
+
+1.11
+log
+@mcache inherited into report
+@
+text
+@d4 1
+a4 1
+# $Id: Cache.pm,v 1.10 2003/06/26 09:31:43 jiri_schmid Exp $
+d292 6
+a297 6
+$MCache->{ptr}{data}=[[2001,200102,1,18,"2001-05-01",24.5,56],[2001,200101,1,32,"2001-06-06",54,787],[2001,200102,1,32,"2001-12-28",78,44],
+[2001,200103,1,32,"2001-10-15",32,879],[2000,200003,1,18,"2000-01-01",45,78],[2001,200103,1,18,"2001-04-29",84,54],[2001,200104,1,18,"2001-03-08",44,11],
+[2001,200104,1,32,"2001-11-14",45,45],[2002,200203,1,32,"2002-09-18",987,132],[2000,200002,1,18,"2000-07-22",14,45],[2000,200004,2,18,"2000-05-21",32,46],
+[2002,200201,2,32,"2002-06-11",68,98],[2001,200101,2,18,"2001-11-09",7845,55],[2002,200202,2,32,"2002-10-04",78,12],[2002,200204,2,32,"2002-12-17",98,12],
+[2001,200102,2,18,"2001-06-07",33,447],[2001,200101,2,32,"2001-02-02",441,0],[2001,200102,2,32,"2001-04-05",899,66],[2001,200103,2,32,"2001-03-16",16,3],
+[2001,200103,1,32,"2001-03-16",36,14],[2001,200103,2,18,"2001-03-16",16.5,34.8],[2001,200103,1,18,"2001-03-16",9.7,11.1]];
+d308 1
+a308 1
+$MCache->{ptr}{metric}{'df3a204501'}{pos}=5;
+d344 1
+d347 1
+d429 1
+a429 1
+		$rtrn->{c}{$row}{$col} = $MCache->{ptr}{data}[ $RCache->{$reportId}{data}{$masterKey} ][ $MCache->{ptr}{metric}{$metricId}{pos} ] if exists $RCache->{$reportId}{data}{$masterKey};
+@
+
+
+1.10
+log
+@css report visual changes, code improvment
+@
+text
+@d4 1
+a4 1
+# $Id: Cache.pm,v 1.9 2003/06/26 07:53:59 jiri_schmid Exp $
+d240 2
+a245 1
+my $rtrn;
+d248 34
+a281 34
+
+#$reportId = "944443a205";#report: report cz2, 9221.fakturace|9214.fakturace|9202.fakturace|9203|9201|7e22136243 <-> rok|kvartal|datum|typ vyrobku|vyrobek|metric
+
+our $RCache;
+#			rok|kvartal|typ vyrobku|vyrobek|datum
+$RCache->{$reportId}{data}{'2001|200102|1|18|2001-05-01'} = "ptr";
+$RCache->{$reportId}{data}{'2001|200101|1|32|2001-06-06'} = "ptr";
+$RCache->{$reportId}{data}{'2001|200102|1|32|2001-12-28'} = "ptr";
+$RCache->{$reportId}{data}{'2001|200103|1|32|2001-10-15'} = "ptr";
+$RCache->{$reportId}{data}{'2000|200003|1|18|2000-01-01'} = "ptr";
+$RCache->{$reportId}{data}{'2001|200103|1|18|2001-04-29'} = "ptr";
+$RCache->{$reportId}{data}{'2001|200104|1|18|2001-03-08'} = "ptr";
+$RCache->{$reportId}{data}{'2001|200104|1|32|2001-11-14'} = "ptr";
+$RCache->{$reportId}{data}{'2002|200203|1|32|2002-09-18'} = "ptr";
+$RCache->{$reportId}{data}{'2000|200002|1|18|2000-07-22'} = "ptr";
+$RCache->{$reportId}{data}{'2000|200004|2|18|2000-05-21'} = "ptr";
+$RCache->{$reportId}{data}{'2002|200201|2|32|2002-06-11'} = "ptr";
+$RCache->{$reportId}{data}{'2001|200101|2|18|2001-11-09'} = "ptr";
+$RCache->{$reportId}{data}{'2002|200202|2|32|2002-10-04'} = "ptr";
+$RCache->{$reportId}{data}{'2002|200204|2|32|2002-12-17'} = "ptr";
+$RCache->{$reportId}{data}{'2001|200102|2|18|2001-06-07'} = "ptr";
+$RCache->{$reportId}{data}{'2001|200101|2|32|2001-02-02'} = "ptr";
+$RCache->{$reportId}{data}{'2001|200102|2|32|2001-04-05'} = "ptr";
+$RCache->{$reportId}{data}{'2001|200103|2|32|2001-03-16'} = "ptr";
+
+$RCache->{$reportId}{attr}{'9221.fakturace~name'} = "1";
+$RCache->{$reportId}{attr}{'9221.fakturace'} = "1";
+$RCache->{$reportId}{attr}{'9214.fakturace'} = "0";
+$RCache->{$reportId}{attr}{'9202.fakturace~name'} = "4";
+$RCache->{$reportId}{attr}{'9203'} = "2";
+$RCache->{$reportId}{attr}{'9203~nazev'} = "2";
+$RCache->{$reportId}{attr}{'9201~name'} = "3";
+$RCache->{$reportId}{attr}{'9201'} = "3";
+
+a282 1
+
+d285 24
+d310 2
+d321 1
+a321 1
+				push(@@{$index->{$item}},$RCache->{$reportId}{attr}{$_})
+d341 1
+a341 1
+splice(@@{$index->{$metricLocator}},$metricIndex,0,"$last") if ($metricLocator);
+d408 23
+a432 1
+
+d445 1
+d456 1
+a456 1
+					$rtrn->{$item}[$_][$i] = ($index) ? ($Lookup->{$gridId}{data}{$substId}[$index]) ? $Lookup->{$gridId}{data}{$substId}[$index] : $substId : $substId;
+d472 1
+@
+
+
+1.9
+log
+@report ids substitution by lookup content seems to be full functional
+@
+text
+@d4 1
+a4 1
+# $Id: Cache.pm,v 1.8 2003/06/25 15:43:42 jiri_schmid Exp $
+d272 1
+d279 1
+@
+
+
+1.8
+log
+@super fast change in report
+@
+text
+@d4 1
+a4 1
+# $Id: Cache.pm,v 1.7 2003/06/25 15:40:29 jiri_schmid Exp $
+d252 19
+a270 19
+$RCache->{$reportId}{data}{'2001|200102|Mlecny_id|Mleko_id|2001-05-01'} = "ptr";
+$RCache->{$reportId}{data}{'2001|200101|Mlecny_id|Kakao_id|2001-06-06'} = "ptr";
+$RCache->{$reportId}{data}{'2001|200102|Mlecny_id|Kakao_id|2001-12-28'} = "ptr";
+$RCache->{$reportId}{data}{'2001|200103|Mlecny_id|Kakao_id|2001-10-15'} = "ptr";
+$RCache->{$reportId}{data}{'2000|200003|Mlecny_id|Mleko_id|2000-01-01'} = "ptr";
+$RCache->{$reportId}{data}{'2001|200103|Mlecny_id|Mleko_id|2001-04-29'} = "ptr";
+$RCache->{$reportId}{data}{'2001|200104|Mlecny_id|Mleko_id|2001-03-08'} = "ptr";
+$RCache->{$reportId}{data}{'2001|200104|Mlecny_id|Kakao_id|2001-11-14'} = "ptr";
+$RCache->{$reportId}{data}{'2002|200203|Mlecny_id|Kakao_id|2002-09-18'} = "ptr";
+$RCache->{$reportId}{data}{'2000|200002|Mlecny_id|Mleko_id|2000-07-22'} = "ptr";
+$RCache->{$reportId}{data}{'2000|200004|Mlecny_id|Mleko_id|2000-05-21'} = "ptr";
+$RCache->{$reportId}{data}{'2002|200201|Mlecny_id|Kakao_id|2002-06-11'} = "ptr";
+$RCache->{$reportId}{data}{'2001|200101|Mlecny_id|Mleko_id|2001-11-09'} = "ptr";
+$RCache->{$reportId}{data}{'2002|200202|Mlecny_id|Kakao_id|2002-10-04'} = "ptr";
+$RCache->{$reportId}{data}{'2002|200204|Mlecny_id|Kakao_id|2002-12-17'} = "ptr";
+$RCache->{$reportId}{data}{'2001|200102|Mlicny_id|Mleko_id|2001-06-07'} = "ptr";
+$RCache->{$reportId}{data}{'2001|200101|Mlicny_id|Kakao_id|2001-02-02'} = "ptr";
+$RCache->{$reportId}{data}{'2001|200102|Mlicny_id|Kakao_id|2001-04-05'} = "ptr";
+$RCache->{$reportId}{data}{'2001|200103|Mlicny_id|Kakao_id|2001-03-16'} = "ptr";
+d276 2
+a277 1
+$RCache->{$reportId}{attr}{'9201'} = "3";
+d400 3
+d405 1
+a405 5
+					my $gridId = $gridItem;
+					($gridId,my $form) = ($gridItem =~ /^(.*)~(.*)$/) if ($gridItem =~ /~/);
+					my $index = ($form) ?  $Lookup->{$gridId}{form_idx}{$form}{$lang} : 0;
+					print "F:$form I:$index L:$lang S:$substId G:$gridItem\n";
+					$rtrn->{$item}[$_][$i] = $Lookup->{$gridId}{data}{$substId}[$index] if $Lookup->{$gridId}{data}{$substId}[$index];
+a416 4
+#	@@add,&main::LocalizedObj(${$main::MDi->{$metricId}->{ptr}}->{name},$metricId,$lang,$main::DefaultLanguage)."_id";
+
+
+
+@
+
+
+1.7
+log
+@code changes a fixies
+@
+text
+@d4 1
+a4 1
+# $Id: Cache.pm,v 1.6 2003/06/20 08:42:32 michald Exp $
+d401 2
+a402 1
+					(my $gridId,my $form) = ($gridItem =~ /^(.*)~(.*)$/) if ($gridItem =~ /~/);
+d405 1
+a405 1
+					$rtrn->{$item}[$_][$i] = $Lookup->{$gridItem}{data}{$substId}[$index] if $Lookup->{$gridItem}{data}{$substId}[$index];
+@
+
+
+1.6
+log
+@introduction of new directed graph structures MDga and MDgo
+@
+text
+@d4 1
+a4 1
+# $Id: Cache.pm,v 1.5 2003/06/18 08:06:51 jiri_schmid Exp $
+d75 1
+a75 1
+	my $i=1;	# latest index
+a243 1
+my $lang = shift;
+d250 1
+a250 1
+my $RCache;
+d252 19
+a270 19
+$RCache->{$reportId}{data}{'2001_id|Q2_id|Mlecny_id|Mleko_id|01_id'} = "ptr";
+$RCache->{$reportId}{data}{'2001_id|Q1_id|Mlecny_id|Kakao_id|06_id'} = "ptr";
+$RCache->{$reportId}{data}{'2001_id|Q2_id|Mlecny_id|Kakao_id|28_id'} = "ptr";
+$RCache->{$reportId}{data}{'2001_id|Q3_id|Mlecny_id|Kakao_id|15_id'} = "ptr";
+$RCache->{$reportId}{data}{'2000_id|Q3_id|Mlecny_id|Mleko_id|01_id'} = "ptr";
+$RCache->{$reportId}{data}{'2001_id|Q3_id|Mlecny_id|Mleko_id|29_id'} = "ptr";
+$RCache->{$reportId}{data}{'2001_id|Q4_id|Mlecny_id|Mleko_id|08_id'} = "ptr";
+$RCache->{$reportId}{data}{'2001_id|Q4_id|Mlecny_id|Kakao_id|14_id'} = "ptr";
+$RCache->{$reportId}{data}{'2003_id|Q3_id|Mlecny_id|Kakao_id|18_id'} = "ptr";
+$RCache->{$reportId}{data}{'2000_id|Q2_id|Mlecny_id|Mleko_id|22_id'} = "ptr";
+$RCache->{$reportId}{data}{'2000_id|Q4_id|Mlecny_id|Mleko_id|21_id'} = "ptr";
+$RCache->{$reportId}{data}{'2003_id|Q1_id|Mlecny_id|Kakao_id|11_id'} = "ptr";
+$RCache->{$reportId}{data}{'2001_id|Q1_id|Mlecny_id|Mleko_id|09_id'} = "ptr";
+$RCache->{$reportId}{data}{'2003_id|Q2_id|Mlecny_id|Kakao_id|04_id'} = "ptr";
+$RCache->{$reportId}{data}{'2003_id|Q4_id|Mlecny_id|Kakao_id|17_id'} = "ptr";
+$RCache->{$reportId}{data}{'2001_id|Q2_id|Mlicny_id|Mleko_id|07_id'} = "ptr";
+$RCache->{$reportId}{data}{'2001_id|Q1_id|Mlicny_id|Kakao_id|02_id'} = "ptr";
+$RCache->{$reportId}{data}{'2001_id|Q2_id|Mlicny_id|Kakao_id|05_id'} = "ptr";
+$RCache->{$reportId}{data}{'2001_id|Q3_id|Mlicny_id|Kakao_id|16_id'} = "ptr";
+d274 1
+a274 1
+$RCache->{$reportId}{attr}{'9202.fakturace'} = "4";
+d315 2
+a316 2
+foreach my $metricId (sort(@@{$grid->{metric}})) {
+	push(@@add,&main::LocalizedObj(${$main::MDi->{$metricId}->{ptr}}->{name},$metricId,$lang,$main::DefaultLanguage)."_id");
+d382 1
+d384 5
+d390 2
+d393 29
+@
+
+
+1.5
+log
+@minor but important code change
+@
+text
+@d4 1
+a4 1
+# $Id: Cache.pm,v 1.4 2003/06/18 07:04:35 jiri_schmid Exp $
+d20 1
+a20 1
+#                   ->{form_idx}->{$form}=form1index		#index into ->{data} for each specific form
+d24 4
+a27 3
+#                     ->{metric}->{$metric}->{pos}=mid	#position of specific metric in ->{data} array
+#                     ->{attr}->{$attr}->{pos}=aid		#position of specific attribute in ->{data} array
+#                                      ->{in}=[...]		#array of element list constraintr data set
+d29 1
+a29 1
+#                     ->{nref}=N						#number of references from $Cache
+d32 6
+d41 2
+a42 2
+#                    ->{mcache}=MCacheID
+#                    ->{sql}=SQL
+a239 16
+#-----------------------------------------------------
+
+sub PrepareSQL {
+	# returns host/source and SQL Statement
+	my $attr = shift;
+	my $metric = shift;
+	
+	# this is for testing purpose only
+#	my $sql = "SELECT lu_date.year_id, lu_date.month_id, SUM(objem_prodeje_agr2.ks), SUM(objem_prodeje_agr2.cenaXks) FROM objem_prodeje_agr2 INNER JOIN lu_date ON objem_prodeje_agr2.date_id=lu_date.date_id GROUP BY lu_date.year_id, lu_date.month_id";
+	my $sql = "SELECT lu_date.year_id, lu_date.month_id, SUM(objem_prodeje_agr2.ks), SUM(objem_prodeje_agr2.cenaXks) FROM objem_prodeje_agr2 INNER JOIN lu_date ON objem_prodeje_agr2.date_id=lu_date.date_id WHERE month_id IN (200002, 200003, 200004, 200102, 200104) GROUP BY lu_date.year_id, lu_date.month_id";
+#	$sql .= "\n\n<p>".join('|',@@$attr).':'.join ('|',@@$metric)."\n";
+
+	return ("localhost/delta", $sql);
+
+}
+
+d283 1
+a283 1
+#------- END OF ARTIFICIAL DATAS -------------
+@
+
+
+1.4
+log
+@code improvment a bug fixies
+@
+text
+@d4 1
+a4 1
+# $Id: Cache.pm,v 1.3 2003/06/13 11:33:00 jiri_schmid Exp $
+d262 19
+a280 19
+$RCache->{$reportId}{data}{'2001|Q2|Mlecny|Mleko|01'} = "ptr";
+$RCache->{$reportId}{data}{'2001|Q1|Mlecny|Kakao|06'} = "ptr";
+$RCache->{$reportId}{data}{'2001|Q2|Mlecny|Kakao|28'} = "ptr";
+$RCache->{$reportId}{data}{'2001|Q3|Mlecny|Kakao|15'} = "ptr";
+$RCache->{$reportId}{data}{'2000|Q3|Mlecny|Mleko|01'} = "ptr";
+$RCache->{$reportId}{data}{'2001|Q3|Mlecny|Mleko|29'} = "ptr";
+$RCache->{$reportId}{data}{'2001|Q4|Mlecny|Mleko|08'} = "ptr";
+$RCache->{$reportId}{data}{'2001|Q4|Mlecny|Kakao|14'} = "ptr";
+$RCache->{$reportId}{data}{'2003|Q3|Mlecny|Kakao|18'} = "ptr";
+$RCache->{$reportId}{data}{'2000|Q2|Mlecny|Mleko|22'} = "ptr";
+$RCache->{$reportId}{data}{'2000|Q4|Mlecny|Mleko|21'} = "ptr";
+$RCache->{$reportId}{data}{'2003|Q1|Mlecny|Kakao|11'} = "ptr";
+$RCache->{$reportId}{data}{'2001|Q1|Mlecny|Mleko|09'} = "ptr";
+$RCache->{$reportId}{data}{'2003|Q2|Mlecny|Kakao|04'} = "ptr";
+$RCache->{$reportId}{data}{'2003|Q4|Mlecny|Kakao|17'} = "ptr";
+$RCache->{$reportId}{data}{'2001|Q2|Mlicny|Mleko|07'} = "ptr";
+$RCache->{$reportId}{data}{'2001|Q1|Mlicny|Kakao|02'} = "ptr";
+$RCache->{$reportId}{data}{'2001|Q2|Mlicny|Kakao|05'} = "ptr";
+$RCache->{$reportId}{data}{'2001|Q3|Mlicny|Kakao|16'} = "ptr";
+d326 1
+a326 1
+	push(@@add,&main::LocalizedObj(${$main::MDi->{$metricId}->{ptr}}->{name},$metricId,$lang,$main::DefaultLanguage));
+@
+
+
+1.3
+log
+@metric in report implemented, clearcache implemented, when part of report changed
+@
+text
+@d4 1
+a4 1
+# $Id: Cache.pm,v 1.1 2003/05/28 15:33:34 michald Exp $
+a293 1
+
+d299 10
+a308 8
+	foreach (@@{$grid->{$item}}) {
+		if (exists($RCache->{$reportId}{attr}{$_})) {
+			push(@@{$index->{$item}},$RCache->{$reportId}{attr}{$_})
+		} elsif ($_ eq $main::MetricsIdent) {
+			$metricLocator = $item;
+			$metricIndex = $i;
+		};
+	$i++;
+d322 1
+a322 1
+splice(@@{$index->{$metricLocator}},$metricIndex,0,"$last");
+a354 1
+
+a385 1
+
+@
+
+
+1.2
+log
+@create HTML report on artificial datas implemented
+@
+text
+@d253 1
+d296 2
+d299 1
+d301 7
+a307 1
+		if (exists($RCache->{$reportId}{attr}{$_})) {push(@@{$index->{$item}},$RCache->{$reportId}{attr}{$_}) };
+d311 17
+d334 16
+a349 4
+		$ptr = \$hlp->{$item};
+		foreach (@@{$index->{$item}}) {
+			$$ptr->{$splitField[$_]};
+			$ptr = \$$ptr->{$splitField[$_]};
+d354 1
+d360 17
+a376 16
+$field = $item = $i = $rtrn = undef;
+@@output = undef;
+ 
+sub convertHash2Field () {
+my $input = shift;
+our @@output = @@_;
+my @@previus = @@output;
+foreach (sort(keys(%{$$input}))) {
+	push(@@output,$_);
+	if (ref($$input->{$_}) =~ /HASH/) {
+		&convertHash2Field(\$$input->{$_},@@output);
+	} else {
+		our $item;
+		our $i;
+		$field->{$item}[$i] = [@@output];
+		$i++;
+d378 2
+a379 4
+	@@output = @@previus;
+};
+}
+
+d383 1
+a383 1
+	&convertHash2Field(\$hlp->{$_});
+d386 3
+@
+
+
+1.1
+log
+@move of some code into separate modules
+@
+text
+@d1 1
+a1 1
+#-----------------------------------------------------
+d4 1
+a4 1
+# $Id$
+d32 2
+a33 1
+# $RCache->{$ReportID}->{attr}->{A1|A2|...|An}=ptr_to_MCache_row
+d213 19
+a231 23
+sub GetResult {
+	# returns result hash of cells
+	my $ID=shift;	#report ID
+
+	if ($main::MDi->{$ID}->{type} ne 'report') {
+		main::WriteLog('GetResult Failed',"Attempt to access non report object ID:$ID",1) if ($main::LogLevel>0);
+		return -1
+	}
+	main::WriteLog('GetResult',"ID:$ID",4) if ($main::LogLevel>3);
+
+	my $grid=${ $main::MDi->{ ${$main::MDi->{$ID}->{ptr}}->{grid} }->{ptr} };	#returns Grid Object of selected report
+
+	my %a;
+	foreach (@@{$grid->{row}}) {$a{$_}=1 if ($_ ne $main::MetricsIdent)};
+	foreach (@@{$grid->{col}}) {$a{$_}=1 if ($_ ne $main::MetricsIdent)};
+	foreach (@@{$grid->{page}}) {$a{$_}=1 if ($_ ne $main::MetricsIdent)};
+	my @@attr=sort (keys %a);
+
+	my $sql=PrepareSQL(\@@attr, \@@{$grid->{metric}});
+	
+	return $sql;
+
+}
+d250 122
+@
+

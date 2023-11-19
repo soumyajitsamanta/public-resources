@@ -1,0 +1,231 @@
+head	1.2;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2008.05.17.15.37.41;	author fsaz;	state dead;
+branches;
+next	1.1;
+
+1.1
+date	2005.11.28.14.44.05;	author fsaz;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@Borrando
+@
+text
+@/*
+ * Created on 30-jun-2005
+ *
+ * LeafIndex.java
+ */
+package es.aeat.eett.infoRubik.deploy;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+import org.apache.log4j.Logger;
+import org.jdom.Attribute;
+import org.jdom.DocType;
+import org.jdom.Document;
+import org.jdom.Element;
+import org.jdom.EntityRef;
+import org.jdom.filter.ElementFilter;
+
+import es.aeat.eett.infoRubik.jobs.job_core.Job;
+import es.aeat.eett.infoRubik.reports.ReportMutableTreeNode;
+import es.aeat.eett.rubik.core.util.JDomUtil;
+
+/**
+ * @@author f00992
+ */
+public class LeafIndex {
+	private static final Logger logger = Logger.getLogger(LeafIndex.class);
+
+	private static final String ID_LEAF="idLeaf";
+	private static final String LEAF="leaf";
+	private static final String ID="id";
+	private static final String INDEX_="index_";
+	private static final String TMP_="tmp_";
+	private static final String XML=".xml";
+	private static final String CUADRO="cuadro";
+	private static final String FICHERO="fichero";
+
+	private Element eLeaf;
+	private File dirOut;
+	private List listIndex= new ArrayList();
+	//private Hashtable hash_Names= new Hashtable();
+
+	public LeafIndex(Element eLeaf, File dirOut) {
+		this.eLeaf=eLeaf;
+		this.dirOut=dirOut;
+	}
+
+	public void createLeafIndex() throws Exception{
+		listIndex=getListJobs();
+		Document document =new Document (generaIndex(),getDocType());
+		new JDomUtil().saveDocument(document, getFileOut());
+		clearIndexTmp();
+	}
+	private File getFileOut(){
+		Attribute aId=eLeaf.getAttribute(ID_LEAF);
+		return new File(dirOut, INDEX_+aId.getValue() +XML);
+	}
+	private File getFileTmp(String baseName){
+		return new File(dirOut, TMP_+baseName+XML);
+	}
+	private DocType getDocType() throws Exception{
+	    StringBuffer sb= new StringBuffer();
+	    Iterator it=listIndex.iterator();
+	    while(it.hasNext()){
+	    	String baseName=(String) it.next();
+	    	File tmpFile=getFileTmp(baseName);
+	    	Document doc=new JDomUtil().JDomChk(tmpFile.getAbsolutePath());
+	    	Iterator itCuadro=doc.getDescendants(new ElementFilter(CUADRO));
+	    	while(itCuadro.hasNext()){
+	    		Element eCuadro=(Element) itCuadro.next();
+	    		Attribute aFile=eCuadro.getAttribute(FICHERO);
+	    		String entity=aFile.getValue();
+	    		sb.append("<!ENTITY "+ entity + " SYSTEM \""+ entity +".xml\">\n");
+	    	}
+	    }
+        DocType type  = new DocType("AppEstudios");
+        String dtd = "<!ENTITY meta SYSTEM \"meta.xml\">\n"
+                 + "<!ENTITY metodologia SYSTEM \"metodologia/index.xml\">\n"
+                 + "<!ENTITY ayuda SYSTEM \"ayuda/index.xml\">\n";
+                dtd += sb.toString();
+        type.setInternalSubset(dtd);
+        return type;
+	}
+	private Element generaTemplate() throws Exception{
+		File fileTmp=getFileTmp((String) listIndex.get(0));
+		Document doc=new JDomUtil().JDomChk(fileTmp.getAbsolutePath());
+		Element eRoot=(Element) doc.getRootElement().clone();
+		Iterator it=eRoot.getDescendants(new ElementFilter(CUADRO));
+		List listCuadros= new ArrayList();
+		while (it.hasNext()){
+			listCuadros.add(it.next());
+		}
+		it=listCuadros.iterator();
+		while(it.hasNext() ){
+			Element eCuadro=(Element) it.next();
+			Element eParent=(Element) eCuadro.getParent();
+			eParent.removeChild(CUADRO);
+			eParent.addContent(getTemplateLeat());
+		}
+
+		return eRoot;
+	}
+	private Element generaIndex() throws Exception{
+		Element eTemplate=generaTemplate();
+	    Iterator it=listIndex.iterator();
+	    List listLeaf=new ArrayList();
+	    while(it.hasNext()){
+	    	String baseName=(String) it.next();
+	    	File f =getFileTmp(baseName);
+	    	Document doc=new JDomUtil().JDomChk(f.getAbsolutePath());
+	    	Iterator itCuadro=doc.getDescendants(new ElementFilter(CUADRO));
+	    	Iterator itLeaf=eTemplate.getDescendants(new ElementFilter(LEAF));
+	    	while(itLeaf.hasNext())
+	    		listLeaf.add(itLeaf.next());
+	    	itLeaf=listLeaf.iterator();
+	    	while(itCuadro.hasNext()&&itLeaf.hasNext() ){
+	    		Element eCuadro=(Element) itCuadro.next();
+	    		Element eleaf=(Element) itLeaf.next();
+	    		updateTelme(eleaf, eCuadro);
+	    	}
+	    	if(itCuadro.hasNext()|| itLeaf.hasNext()){
+	    		throw new Exception("Deploy inconsistent");
+	    	}
+	    	listLeaf.clear();
+	    	//new File(nameFile).delete();
+	    }
+		return eTemplate;
+	}
+	private void clearIndexTmp(){
+	    Iterator it=listIndex.iterator();
+	    while(it.hasNext()){
+	    	//String nameFile=getNameTmp((String) it.next());
+	    	File f=getFileTmp((String)it.next());
+	    	if(!(f.delete())){
+	    	    logger.warn("Failed delete: "+f.getAbsolutePath());
+	    	}
+	    }
+	}
+	private void updateTelme(Element eleaf, Element eCuadro){
+		Attribute aFile=eCuadro.getAttribute(FICHERO);
+		String nameBase=getNameBase(aFile.getValue() );
+		Iterator itJob=eleaf.getDescendants(new ElementFilter(Job.KEY_JOB));
+		while(itJob.hasNext()  ){
+			Element eJob=(Element) itJob.next();
+			Attribute a=eJob.getAttribute(Job.KEY_JOB_NAME);
+			if(nameBase.equals(a.getValue() )){
+				Element eLeafParent=(Element) eJob.getParent();
+				eLeafParent.setAttribute((Attribute) eCuadro.getAttribute(FICHERO).clone());
+				eLeafParent.setAttribute((Attribute) eCuadro.getAttribute(ID).clone());
+				EntityRef ref = new EntityRef(aFile.getValue());
+				eLeafParent.removeChild(Job.KEY_JOB);
+				eLeafParent.addContent(ref);
+				break;
+			}
+		}
+	}
+	private String getNameBase(String name){
+		String regex="_";
+		String[] split=name.split(regex);
+
+		return split[0]+regex+split[1];
+	}
+	private Element getTemplateLeat(){
+		Element eTemplate= (Element) eLeaf.clone();
+		eTemplate.setName(LEAF);
+		Iterator it=eTemplate.getDescendants(new ElementFilter(Job.KEY_JOB));
+		while(it.hasNext() ){
+			Element eJob=(Element) it.next();
+			Attribute aName=eJob.getAttribute(Job.KEY_JOB_NAME);
+			String nameJob=aName.getValue().replaceAll(XML,"");
+			aName.setValue(nameJob);
+		}
+		return eTemplate;
+	}
+
+	private List getListJobs(){
+		Iterator it=eLeaf.getDescendants(new ElementFilter(Job.KEY_JOB));
+		while(it.hasNext()){
+			Element eJob=(Element) it.next();
+			Attribute aName=eJob.getAttribute(Job.KEY_JOB_NAME);
+			String name=aName.getValue();
+			name = name.replaceAll(XML,"");
+			listIndex.add( name);
+		}
+		return listIndex;
+	}
+	private File getFileOut(File dirOut){
+		Attribute aIdLeaf=eLeaf.getAttribute(ReportMutableTreeNode.KEY_ID_LEAF );
+        String nameFile=INDEX_+aIdLeaf.getValue()+XML;
+        return new File(dirOut, nameFile);
+	}
+}
+@
+
+
+1.1
+log
+@*** empty log message ***
+@
+text
+@@
+

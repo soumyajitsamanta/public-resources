@@ -1,0 +1,330 @@
+head	1.11;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.11
+date	2003.10.16.14.08.53;	author jiri_schmid;	state dead;
+branches;
+next	1.10;
+
+1.10
+date	2003.09.26.12.21.32;	author jiri_schmid;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	2003.09.25.15.04.16;	author jiri_schmid;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	2003.09.22.08.08.59;	author jiri_schmid;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	2003.09.18.14.07.41;	author jiri_schmid;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	2003.09.01.12.40.08;	author jiri_schmid;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	2003.08.28.09.26.16;	author jiri_schmid;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2003.08.26.15.35.45;	author jiri_schmid;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2003.08.22.16.01.03;	author jiri_schmid;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2003.08.20.14.23.45;	author jiri_schmid;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2003.08.19.13.05.58;	author jiri_schmid;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.11
+log
+@mod-perl implementation stage 1, rebuilding global vars in .pl to global pointers
+@
+text
+@#-----------------------------------------------------
+#  Format Editation
+#-----------------------------------------------------
+# $Id: format2d_ed.pl,v 1.10 2003/09/26 12:21:32 jiri_schmid Exp $
+
+use strict;
+use CGI qw( :standard );
+use CGI::Pretty;
+
+require "const.def";
+
+use vars qw($ID $Obj $ObjT $use_lang $open $lang $all_params $localTab $skin $skinPath $imgType $DefaultLanguage);
+
+
+#-----------------------------------------------------
+# print_form is called from edit.cgi
+
+sub print_form {
+	print startform(-action=>'', -name=>'format2d', onsubmit=>'return reset_tree_name();');
+	print hidden('ObjT',$ObjT);
+	print hidden('skin',$skin);
+	print hidden('local_tab',$localTab);	
+	print hidden('all_params',$all_params);
+	print "<input type=\"hidden\" value=\"$use_lang\" id=\"activeLang\" name=\"active_lang\">\n";
+	my $name = LocalizedObj($Obj->{name}, "Object #$ID", lc($use_lang), $DefaultLanguage);
+print <<END ;
+<input type="hidden" value="$use_lang" id="activeLang" name="active_lang" />
+<input type="hidden" value="$skin" id="skin" name="skin" />
+<input type="hidden" value="$imgType" id="imgType" />
+<input type='hidden' name='item_id' id='ITEM_ID' value='$ID'/>
+<input type="hidden" value="$Obj->{form}" name="form" id="form"/>
+<input type="hidden" value="graph2d" name="type" id="type"/>
+<table><tr>
+	<td style='width:20px'><img src="${skinPath}img/format2d.$imgType"></td>
+	<td class="neutral_title">$lang->{'Format2d Edit'}</td>
+	<td >- $name</td>
+</tr></table>
+END
+&generateTabs($localTab,'Format2d','format2d','def','layout','color','logo','rights');
+print "<table class='local_tabline' cellspacing='0'><tr><td>\n";
+&generateContent();
+print "</td></tr><tr><td>&nbsp;</td></tr></table>";
+print "<script type='text/javascript'>var params = '$all_params';</script>";
+print &endform;
+}
+
+1
+@
+
+
+1.10
+log
+@format2d added logo page, minor visual improvments on layout, color page
+@
+text
+@d4 1
+a4 1
+# $Id: format2d_ed.pl,v 1.9 2003/09/25 15:04:16 jiri_schmid Exp $
+@
+
+
+1.9
+log
+@operational commit for martin
+@
+text
+@d4 1
+a4 1
+# $Id: format2d_ed.pl,v 1.8 2003/09/22 08:08:59 jiri_schmid Exp $
+d39 1
+a39 1
+&generateTabs($localTab,'Format2d','format2d','def','layout','color','rights');
+@
+
+
+1.8
+log
+@operational commit
+@
+text
+@d4 1
+a4 1
+# $Id: format2d_ed.pl,v 1.7 2003/09/18 14:07:41 jiri_schmid Exp $
+d39 1
+a39 1
+&generateTabs($localTab,'Format2d','format2d','def','rights');
+@
+
+
+1.7
+log
+@tabs imlemented almost everywhere
+@
+text
+@d4 1
+a4 1
+# $Id: format2d_ed.pl,v 1.6 2003/09/01 12:40:08 jiri_schmid Exp $
+d31 2
+@
+
+
+1.6
+log
+@skins implemented. mozilla skin - temporarily copy msie content
+@
+text
+@d4 1
+a4 1
+# $Id: format2d_ed.pl,v 1.5 2003/08/28 09:26:16 jiri_schmid Exp $
+d12 1
+a12 1
+use vars qw($ID $Obj $ObjT $descr_w $descr_r $name_w $lang $saved @@Languages $DefaultLanguage $use_lang $iframeHeight $all_params $skin $skinPath $imgType);
+d22 1
+d27 4
+d33 1
+a33 1
+	<td class="neutral_title">$lang->{'Format Edit'}</td>
+a35 14
+<br />
+<table class="page_skeleton">
+<tr class="page_skeleton">
+<td class="page_skeleton">
+	<IFRAME class="formatIframe" name='format' src="format.cgi?Lang=$use_lang&Skin=$skin&Type=graph2d&Form=$Obj->{form}" width="400px" height="$iframeHeight" scrolling="auto" frameborder="0"></IFRAME>
+</td>
+<td>&nbsp;</td>
+<td class="page_skeleton">
+	<table class="neutral">
+	<tr><td class="neutral_bold">$lang->{'Name'}</td></tr>
+	<tr><td align="center">
+		<span class='nowrap'>
+		<input value="" onchange="object_changed()" type="text" name="name" id="NAME" size="$name_w" maxlength="100"/>
+		<select name="langSpec" id="langSpec" onchange="tmpChangeLocal()">
+d37 6
+a42 41
+foreach (@@Languages) {
+	my $lcL = lc($_);
+	my $name = LocalizedObj($Obj->{name}, "Object #$ID", $lcL, $DefaultLanguage);
+	print "<option value='$name'>$_</option>";
+}
+print <<END;
+		</select>
+		<input type="hidden" name="item_id" id="ITEM_ID" value="$ID"/>
+		</span>
+	</td></tr>
+	<tr><td><hr></td></tr>
+	<tr><td class="neutral_bold">$lang->{'Description'}</td></tr>
+	<tr><td align="center"><textarea onchange="object_changed()" cols="$descr_w" rows="$descr_r" name="desc" id="DESC"></textarea></td></tr>
+	<tr><td><hr></td></tr>
+	<tr><td align="center">
+	<table class="buttons" cellpading="0" cellspacing="0">
+	<tr>	<td class="buttons"><input type="submit" name="Action" value="$lang->{'Save'}" onclick="check_name()"/></td>
+			<td class="buttons">	<input type="submit" name="Action" value="$lang->{'Save As'}" onclick="return readName();"/>
+						<input type="hidden" name="saveAsName" id="saveAsName" value="" /></td>
+		<td class="buttons"><input type="button" name="reset" value="$lang->{'Reset'}" onclick="subst_item_id(); self.frames['format'].location.reload(true)"/></td>
+		<td class="buttons"><input type="submit" name="Rights" value="$lang->{'Right'}" onclick='setRightsPage()' /></td>
+	</tr>
+	</table>
+	</td></tr>
+	</table>
+</td></tr></table>
+<input type="hidden" value="$Obj->{form}" name="form" id="form"/>\
+<input type="hidden" value="graph3d" name="type" id="type"/>
+<script type="text/javascript">
+	subst_item_id();
+	var saveAsMsg = "$lang->{SaveAsMsg}$lang->{'New Format2d'}";
+	reloadTree($saved);
+</script>
+END
+}
+
+#---------------------------------------------------
+sub set_next_param {
+	my $o=shift;
+	$o->{type} = param('type');
+	$o->{form} = param('form');
+@
+
+
+1.5
+log
+@tabs.cgi speed improvmnet, visual improvment on trees, rights and some other minor improvments
+@
+text
+@d4 1
+a4 1
+# $Id: format2d_ed.pl,v 1.4 2003/08/26 15:35:45 jiri_schmid Exp $
+d12 1
+a12 1
+use vars qw($ID $Obj $ObjT $descr_w $descr_r $name_w $lang $saved @@Languages $DefaultLanguage $use_lang $iframeHeight);
+d21 2
+d27 1
+a27 1
+	<td style='width:20px'><img src="img/format2d.gif"></td>
+d35 1
+a35 1
+	<IFRAME class="formatIframe" name='format' src="format.cgi?Lang=$use_lang&Type=graph2d&Form=$Obj->{form}" width="400px" height="$iframeHeight" scrolling="auto" frameborder="0"></IFRAME>
+@
+
+
+1.4
+log
+@rights improvment, create delete duplicate rule implemented
+@
+text
+@d4 1
+a4 1
+# $Id: format2d_ed.pl,v 1.3 2003/08/22 16:01:03 jiri_schmid Exp $
+d22 1
+a22 1
+
+d24 6
+a29 2
+<table><tr><td width="20"><img src="img/format2d.gif"></td><td class="neutral_title">$lang->{'Format Edit'}</td></tr></table>
+<br>
+@
+
+
+1.3
+log
+@access - rules changing implemented
+@
+text
+@d4 1
+a4 1
+# $Id: format2d_ed.pl,v 1.2 2003/08/20 14:23:45 jiri_schmid Exp $
+d60 1
+a60 1
+		<td class="buttons"><input type="submit" name="Rights" value="$lang->{'Right'}"/></td>
+@
+
+
+1.2
+log
+@access object implemented
+@
+text
+@d4 1
+a4 1
+# $Id: format2d_ed.pl,v 1.1 2003/08/19 13:05:58 jiri_schmid Exp $
+d29 1
+a29 1
+	<IFRAME class="formatIframe" name='format' src="format.cgi?Lang=$use_lang&Type=graph2d&Form=$Obj->{form}" width="480px" height="$iframeHeight" scrolling="auto" frameborder="0"></IFRAME>
+@
+
+
+1.1
+log
+@formats2d implemented
+@
+text
+@d4 1
+a4 1
+# $Id:  $
+d70 1
+a70 1
+	var saveAsMsg = "$lang->{SaveAsMsg}$lang->{'New Format3d'}";
+@
+

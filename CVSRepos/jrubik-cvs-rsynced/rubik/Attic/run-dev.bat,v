@@ -1,0 +1,40 @@
+head	1.2;
+access;
+symbols;
+locks; strict;
+comment	@:: @;
+
+
+1.2
+date	2008.05.17.15.43.49;	author fsaz;	state dead;
+branches;
+next	1.1;
+
+1.1
+date	2005.11.28.14.02.36;	author fsaz;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@borrando viejos
+@
+text
+@SET CP=classes;lib\jpf-0.6.jar;lib\jpf-tools-0.6.jar;lib\commons-logging.jar;lib\log4j-1.2.6.jar;lib\jxp-1.2.0.jar
+REM java -cp %CP% org.jpf.demo.toolbox.Boot
+START javaw -cp %CP% org.jpf.demo.toolbox.Boot
+REM pause@
+
+
+1.1
+log
+@*** empty log message ***
+@
+text
+@@
+

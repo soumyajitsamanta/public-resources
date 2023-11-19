@@ -1,0 +1,2709 @@
+head	1.100;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.100
+date	2004.04.15.08.42.06;	author jiri_schmid;	state Exp;
+branches;
+next	1.99;
+
+1.99
+date	2004.03.09.14.43.54;	author jiri_schmid;	state Exp;
+branches;
+next	1.98;
+
+1.98
+date	2004.03.04.14.43.16;	author jiri_schmid;	state Exp;
+branches;
+next	1.97;
+
+1.97
+date	2004.02.20.12.41.12;	author jiri_schmid;	state Exp;
+branches;
+next	1.96;
+
+1.96
+date	2004.02.18.16.19.17;	author jiri_schmid;	state Exp;
+branches;
+next	1.95;
+
+1.95
+date	2004.02.09.14.26.47;	author jiri_schmid;	state Exp;
+branches;
+next	1.94;
+
+1.94
+date	2003.12.12.16.48.12;	author jiri_schmid;	state Exp;
+branches;
+next	1.93;
+
+1.93
+date	2003.12.11.14.37.53;	author jiri_schmid;	state Exp;
+branches;
+next	1.92;
+
+1.92
+date	2003.11.18.14.38.40;	author jiri_schmid;	state Exp;
+branches;
+next	1.91;
+
+1.91
+date	2003.11.14.11.45.36;	author jiri_schmid;	state Exp;
+branches;
+next	1.90;
+
+1.90
+date	2003.11.04.15.19.00;	author jiri_schmid;	state Exp;
+branches;
+next	1.89;
+
+1.89
+date	2003.10.31.12.47.57;	author jiri_schmid;	state Exp;
+branches;
+next	1.88;
+
+1.88
+date	2003.10.16.14.08.53;	author jiri_schmid;	state Exp;
+branches;
+next	1.87;
+
+1.87
+date	2003.10.13.14.43.23;	author jiri_schmid;	state Exp;
+branches;
+next	1.86;
+
+1.86
+date	2003.10.09.13.53.24;	author jiri_schmid;	state Exp;
+branches;
+next	1.85;
+
+1.85
+date	2003.10.03.10.53.09;	author jiri_schmid;	state Exp;
+branches;
+next	1.84;
+
+1.84
+date	2003.10.02.15.33.34;	author jiri_schmid;	state Exp;
+branches;
+next	1.83;
+
+1.83
+date	2003.10.02.14.44.54;	author jiri_schmid;	state Exp;
+branches;
+next	1.82;
+
+1.82
+date	2003.09.25.15.04.16;	author jiri_schmid;	state Exp;
+branches;
+next	1.81;
+
+1.81
+date	2003.09.25.11.53.46;	author jiri_schmid;	state Exp;
+branches;
+next	1.80;
+
+1.80
+date	2003.09.24.14.59.18;	author jiri_schmid;	state Exp;
+branches;
+next	1.79;
+
+1.79
+date	2003.09.22.11.52.39;	author jiri_schmid;	state Exp;
+branches;
+next	1.78;
+
+1.78
+date	2003.09.19.10.24.58;	author jiri_schmid;	state Exp;
+branches;
+next	1.77;
+
+1.77
+date	2003.09.18.14.10.50;	author jiri_schmid;	state Exp;
+branches;
+next	1.76;
+
+1.76
+date	2003.09.17.14.51.14;	author jiri_schmid;	state Exp;
+branches;
+next	1.75;
+
+1.75
+date	2003.09.16.14.37.53;	author jiri_schmid;	state Exp;
+branches;
+next	1.74;
+
+1.74
+date	2003.08.28.09.26.16;	author jiri_schmid;	state Exp;
+branches;
+next	1.73;
+
+1.73
+date	2003.08.26.15.35.45;	author jiri_schmid;	state Exp;
+branches;
+next	1.72;
+
+1.72
+date	2003.08.25.15.09.20;	author jiri_schmid;	state Exp;
+branches;
+next	1.71;
+
+1.71
+date	2003.08.14.12.43.51;	author jiri_schmid;	state Exp;
+branches;
+next	1.70;
+
+1.70
+date	2003.08.13.13.16.29;	author jiri_schmid;	state Exp;
+branches;
+next	1.69;
+
+1.69
+date	2003.07.30.15.30.47;	author jiri_schmid;	state Exp;
+branches;
+next	1.68;
+
+1.68
+date	2003.07.29.15.15.36;	author jiri_schmid;	state Exp;
+branches;
+next	1.67;
+
+1.67
+date	2003.07.29.14.36.42;	author jiri_schmid;	state Exp;
+branches;
+next	1.66;
+
+1.66
+date	2003.07.29.12.28.34;	author jiri_schmid;	state Exp;
+branches;
+next	1.65;
+
+1.65
+date	2003.07.28.13.40.02;	author jiri_schmid;	state Exp;
+branches;
+next	1.64;
+
+1.64
+date	2003.07.25.10.53.23;	author jiri_schmid;	state Exp;
+branches;
+next	1.63;
+
+1.63
+date	2003.07.24.12.14.58;	author jiri_schmid;	state Exp;
+branches;
+next	1.62;
+
+1.62
+date	2003.07.24.10.37.52;	author jiri_schmid;	state Exp;
+branches;
+next	1.61;
+
+1.61
+date	2003.07.23.11.44.56;	author jiri_schmid;	state Exp;
+branches;
+next	1.60;
+
+1.60
+date	2003.07.22.15.13.08;	author jiri_schmid;	state Exp;
+branches;
+next	1.59;
+
+1.59
+date	2003.07.22.08.48.01;	author jiri_schmid;	state Exp;
+branches;
+next	1.58;
+
+1.58
+date	2003.07.18.10.51.02;	author jiri_schmid;	state Exp;
+branches;
+next	1.57;
+
+1.57
+date	2003.07.11.16.00.53;	author jiri_schmid;	state Exp;
+branches;
+next	1.56;
+
+1.56
+date	2003.07.10.13.00.04;	author jiri_schmid;	state Exp;
+branches;
+next	1.55;
+
+1.55
+date	2003.07.07.14.17.14;	author jiri_schmid;	state Exp;
+branches;
+next	1.54;
+
+1.54
+date	2003.07.04.14.29.33;	author jiri_schmid;	state Exp;
+branches;
+next	1.53;
+
+1.53
+date	2003.06.26.09.31.43;	author jiri_schmid;	state Exp;
+branches;
+next	1.52;
+
+1.52
+date	2003.06.19.14.59.45;	author jiri_schmid;	state Exp;
+branches;
+next	1.51;
+
+1.51
+date	2003.06.17.08.45.50;	author jiri_schmid;	state Exp;
+branches;
+next	1.50;
+
+1.50
+date	2003.06.03.11.07.35;	author jiri_schmid;	state Exp;
+branches;
+next	1.49;
+
+1.49
+date	2003.06.03.08.16.08;	author jiri_schmid;	state Exp;
+branches;
+next	1.48;
+
+1.48
+date	2003.05.29.08.19.18;	author jiri_schmid;	state Exp;
+branches;
+next	1.47;
+
+1.47
+date	2003.05.28.12.56.23;	author jiri_schmid;	state Exp;
+branches;
+next	1.46;
+
+1.46
+date	2003.05.27.08.42.31;	author jiri_schmid;	state Exp;
+branches;
+next	1.45;
+
+1.45
+date	2003.05.27.08.30.31;	author jiri_schmid;	state Exp;
+branches;
+next	1.44;
+
+1.44
+date	2003.05.26.15.30.40;	author jiri_schmid;	state Exp;
+branches;
+next	1.43;
+
+1.43
+date	2003.05.26.15.01.41;	author jiri_schmid;	state Exp;
+branches;
+next	1.42;
+
+1.42
+date	2003.05.21.11.39.46;	author jiri_schmid;	state Exp;
+branches;
+next	1.41;
+
+1.41
+date	2003.05.19.14.32.40;	author jiri_schmid;	state Exp;
+branches;
+next	1.40;
+
+1.40
+date	2003.05.19.14.18.35;	author jiri_schmid;	state Exp;
+branches;
+next	1.39;
+
+1.39
+date	2003.05.16.12.58.12;	author jiri_schmid;	state Exp;
+branches;
+next	1.38;
+
+1.38
+date	2003.05.16.11.28.26;	author jiri_schmid;	state Exp;
+branches;
+next	1.37;
+
+1.37
+date	2003.05.14.15.36.46;	author jiri_schmid;	state Exp;
+branches;
+next	1.36;
+
+1.36
+date	2003.05.14.14.28.21;	author jiri_schmid;	state Exp;
+branches;
+next	1.35;
+
+1.35
+date	2003.05.13.15.19.00;	author jiri_schmid;	state Exp;
+branches;
+next	1.34;
+
+1.34
+date	2003.05.08.15.41.58;	author jiri_schmid;	state Exp;
+branches;
+next	1.33;
+
+1.33
+date	2003.05.08.15.35.51;	author jiri_schmid;	state Exp;
+branches;
+next	1.32;
+
+1.32
+date	2003.05.07.13.11.51;	author jiri_schmid;	state Exp;
+branches;
+next	1.31;
+
+1.31
+date	2003.05.06.15.07.07;	author jiri_schmid;	state Exp;
+branches;
+next	1.30;
+
+1.30
+date	2003.05.06.10.38.20;	author jiri_schmid;	state Exp;
+branches;
+next	1.29;
+
+1.29
+date	2003.05.05.15.16.34;	author jiri_schmid;	state Exp;
+branches;
+next	1.28;
+
+1.28
+date	2003.05.01.09.50.54;	author jiri_schmid;	state Exp;
+branches;
+next	1.27;
+
+1.27
+date	2003.04.30.14.45.50;	author jiri_schmid;	state Exp;
+branches;
+next	1.26;
+
+1.26
+date	2003.04.30.09.53.40;	author jiri_schmid;	state Exp;
+branches;
+next	1.25;
+
+1.25
+date	2003.04.22.15.29.24;	author jiri_schmid;	state Exp;
+branches;
+next	1.24;
+
+1.24
+date	2003.04.22.08.03.59;	author jiri_schmid;	state Exp;
+branches;
+next	1.23;
+
+1.23
+date	2003.04.18.13.22.20;	author jiri_schmid;	state Exp;
+branches;
+next	1.22;
+
+1.22
+date	2003.04.16.11.18.15;	author jiri_schmid;	state Exp;
+branches;
+next	1.21;
+
+1.21
+date	2003.04.14.12.56.41;	author jiri_schmid;	state Exp;
+branches;
+next	1.20;
+
+1.20
+date	2003.04.14.11.06.11;	author jiri_schmid;	state Exp;
+branches;
+next	1.19;
+
+1.19
+date	2003.04.10.14.21.35;	author jiri_schmid;	state Exp;
+branches;
+next	1.18;
+
+1.18
+date	2003.04.07.15.28.52;	author jiri_schmid;	state Exp;
+branches;
+next	1.17;
+
+1.17
+date	2003.04.07.14.55.03;	author jiri_schmid;	state Exp;
+branches;
+next	1.16;
+
+1.16
+date	2003.04.04.12.27.02;	author jiri_schmid;	state Exp;
+branches;
+next	1.15;
+
+1.15
+date	2003.04.04.09.34.02;	author jiri_schmid;	state Exp;
+branches;
+next	1.14;
+
+1.14
+date	2003.04.03.09.52.50;	author jiri_schmid;	state Exp;
+branches;
+next	1.13;
+
+1.13
+date	2003.03.26.14.52.29;	author jiri_schmid;	state Exp;
+branches;
+next	1.12;
+
+1.12
+date	2003.03.26.13.54.25;	author jiri_schmid;	state Exp;
+branches;
+next	1.11;
+
+1.11
+date	2003.03.25.15.37.51;	author jiri_schmid;	state Exp;
+branches;
+next	1.10;
+
+1.10
+date	2003.03.24.12.17.54;	author jiri_schmid;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	2003.03.14.09.23.53;	author jiri_schmid;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	2003.03.12.16.32.56;	author jiri_schmid;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	2003.03.10.16.14.18;	author jiri_schmid;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	2003.03.07.16.18.47;	author jiri_schmid;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	2003.03.05.15.08.38;	author jiri_schmid;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2003.03.04.15.36.06;	author spanhel;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2003.03.03.16.44.03;	author jiri_schmid;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2003.02.28.10.43.39;	author jiri_schmid;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2003.02.26.13.21.50;	author jiri_schmid;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.100
+log
+@last used tab is active 4 viewing object, when possible
+@
+text
+@// $Id: attr.js,v 1.99 2004/03/09 14:43:54 jiri_schmid Exp $
+var treeIndex = 0;
+
+//sets the value of hidden input element to changed (1), the item was edited
+function object_changed(){
+var EID = top.frames["body"].document.getElementById("changed");
+if (EID) {
+	EID.value = 1
+}
+}
+
+function object_cleared(){
+var EID = top.frames["body"].document.getElementById("changed");
+if (EID) {
+	EID.value = 0
+}
+}
+
+function emptySelect(id,force){
+var EID = document.getElementById(id);
+if (EID.disabled) { return };
+var all = true;
+for (i=0; i<EID.length; i++) {
+	if (EID.options[i].selected)  { EID.remove(i); i--; all=false;}
+	}
+if (all || force) {
+	EID.length = 0;
+}
+object_changed();
+return(true);}
+
+function getObjectOrAtrrform(ID) {
+if (ID.match(/~/)) {
+	var nodeParent = findItemById(ID.match(/^[^~]*/));
+	var nodeChild = findItemById(ID,true);
+	return new Array(ID,nodeParent[0],nodeParent[2]+"~"+nodeChild[2],"Af")
+} else if (ID) {
+	var node = findItemById(ID);
+	return node
+} else {
+	return new Array(nodeId,nodeId," ?: "+nodeId,"","")
+}
+}
+
+function setResol() {
+document.getElementById('spanHEIGHT').innerHTML = screen.height +" px";
+document.getElementById('spanWIDTH').innerHTML = screen.width +" px";
+}
+
+function setThisRadio(EID) {
+var Input = EID.firstChild;
+Input.checked = true;
+object_changed();
+}
+
+function reSetIframe(){
+var high = (browsertype == 2) ? parseInt(self.innerHeight) : parseInt(document.getElementById('editBody').clientHeight);
+//test(self,'^\\d{3,4}$',true)
+//test(self,"height");
+high = parseInt(high*0.70);
+document.getElementById('formatIframe').height = high + 'px';
+}
+
+function setRightsPage() {
+parent.frames["tree_iframe"].oldType = parent.frames["tree_iframe"].editType;
+parent.frames["tree_iframe"].editType = 'Ri';
+show_load();
+}
+
+function test(EID,what,value) { //show properties of html elemnetn, that contains part of what
+var rgxp = (what) ? new RegExp(what,"i"): new RegExp(".*");
+alert(EID+","+rgxp);
+if (value) {	//test of value content
+	 for (i in EID){
+		if (String(EID[i]).match(rgxp)) {
+			var msg = confirm(i+":\n"+EID[i]);
+			if (!msg) return
+		}
+	}
+} else {	//test of attribute name
+	for (i in EID) {
+		if (String(i).match(rgxp)) {
+			var msg = confirm(i+":\n"+EID[i]);
+			if (!msg) return
+		}
+	}
+}
+}
+
+//finds the HTMLelement specified by elementId and tryes to assign value to defined property
+//if laud defined the objectChanged element will be set to "true"
+//the function doesn't check if value is valid to be assign with property!!
+function set(elementId,property,value,laud){
+var ready = false;
+var EID = document.getElementById(elementId);
+if (EID) {	//the HTMLelement exists
+	if (EID[property]) {	//the property exists
+		ready = true
+	} else {	 	//the property doesn't exists or it has value recognized by javascript as false
+		for (var item in EID) {	if (item == property) ready = true }; //try to find the property checking all properties defined in element
+	}
+	if (ready) {		//the property is ready to be set
+		EID[property] = value;
+		return (laud) ? objectChanged() : true	//set change-Flag element to "true"
+	}
+}
+return ready
+}
+
+function clearById(ID) {
+  document.getElementById(ID).value="";
+  object_changed();
+}
+
+function clearItem(ID) {
+  document.getElementById(ID).value="";
+  document.getElementById(ID+"_id").value="";
+  object_changed();
+  if (ID == "paramAttr") { emptySelect('paramElements',true) };
+}
+
+function msg_text(msgId) {
+  // localized messages from JavaScript
+  return top.frames["body"].window.langJS[msgId]
+}
+// -------------- END report.html -------------------------
+function exprr(ID,str) {
+EID = document.getElementById(ID);
+if (EID){
+	EID.value=EID.value + str;
+	if (str != ")") drop_textarea(EID); //drop_textarea defined in dad.js
+	EID.focus();
+	object_changed();
+	}
+}
+
+function changeStyle(Target) {
+document.getElementById("css_graph").src=Target;
+if (Target.match(/grid/)) 
+ {document.getElementById("in_css").checked="true";}
+ else {document.getElementById("in_graph").checked="true";}
+}
+
+function reset_tree_name() { //change the name a title after saving changes in the viewed tree on the left side
+top.frames["body"].document.getElementById("changed").value = 0;
+
+var hlp = document.getElementById("langSpec");
+if (hlp) {
+	hlp.options[hlp.selectedIndex].value = hlp.options[hlp.selectedIndex].text;
+	if (document.getElementById("activeLang").value != hlp.options[hlp.selectedIndex].text) return;
+} else { return	};
+
+var id = document.getElementById('ITEM_ID').value;
+var change = parent.frames["tree_iframe"].document.getElementById("view"+id);
+if (document.getElementById("NAME")) {
+	if (document.getElementById("NAME").name == 'ask') { return };
+	var Name = document.getElementById("NAME").value;
+	var Desc = document.getElementById("DESC").value;
+};
+
+if (Name) {
+	change.innerHTML = "&nbsp;" + Name + "&nbsp;";
+	change.title = String(Desc).replace(/\n/g," "); //remove \n (new line breaker) to show it in title of element
+	change = parent.frames["tree_iframe"].document.getElementById('icon'+id);
+	change.name = Name + String(change.name).match(/\|.*$/);
+	var MPole = parent.frames['tree_iframe'].Tree0;
+	for (I in MPole) {
+		var rgxp = new RegExp('^'+id+'\\|');
+		if (MPole[I].match(rgxp)) {
+			var hlp = String(MPole[I]).split("|");
+			hlp[2]=Name;
+			MPole[I] = hlp.join("|");
+			return true;
+		};
+	};
+	return false;
+} else return true;
+}
+
+function subst_ID(){
+var MPole = parent.frames['tree_iframe'].Tree0;
+var pole_ID = String(document.getElementById('ITEMS').value).split("|");
+for (i in pole_ID)
+   if (i>=0) {	//IE unbelieveble bug treatment
+	if (pole_ID[i]=="") {
+			document.getElementById(subst_ID.arguments[i]).value = "";
+			continue;}
+	if (String(pole_ID[i]).match(/~/)) {
+		var nodeParent = findItemById(String(pole_ID[i]).match(/^[^~]*/));
+		var nodeChild = findItemById(pole_ID[i],true);
+		if (nodeParent && nodeChild){
+			document.getElementById(subst_ID.arguments[i]).value = nodeParent[2]+"~"+nodeChild[2];
+			document.getElementById(subst_ID.arguments[i]+"_id").value = nodeChild[0];
+		}
+	} else {
+		var node = findItemById(pole_ID[i]);
+		if (node) {document.getElementById(subst_ID.arguments[i]).value = node[2];
+			   document.getElementById(subst_ID.arguments[i]+"_id").value = node[0];}
+	}
+   } else continue;//IE unbelieveble bug treatment
+return true;
+}
+
+function check_name(){
+var EID = document.getElementById('NAME');
+if (String(EID.value).match(/~/) || EID.value == "") {
+	do answer = prompt(msg,""); while (answer == "")
+	if (answer == null) return false;
+	EID.value = answer;
+}
+return true
+}
+
+function findItemById(nodeId,child) {
+if (top.frames['body'].frames['tree_iframe'].Tree0) {
+var MPole = top.frames['body'].frames['tree_iframe'].Tree0;
+var rgxp = new RegExp("^"+nodeId+"[\|]");
+start = (child) ? treeIndex : 0;
+for (I=start; I<MPole.length; I++) 
+	if (MPole[I].match(rgxp)) {
+		treeIndex=I;
+		return MPole[I].split("|");
+	}
+if (String(nodeId).match(/HASH/)) return new Array(nodeId,nodeId,localItem,"","");
+return new Array(nodeId,nodeId," ?: "+nodeId,"","");
+}}
+
+function hide_load(cancel){
+if (cancel) { return }
+if (parent.loading == 0) {parent.document.getElementById("loading").style.display = "none";}
+else parent.loading--;
+}
+
+function show_load(){
+parent.document.getElementById("loading").style.display = "block";
+}
+
+function readName(special) {
+var ready;
+switch (special) {
+	case "filter" : ready = filter_checker(); break;
+	case "metric" : ready = metric_checker(); break;
+	case "param" : ready = doSaveJob(); break;
+	default : ready = true;
+}
+var answer;
+if (ready) {
+	do answer = prompt(saveAsMsg,""); while (answer == "");
+	document.getElementById('saveAsName').value = answer;
+}
+return (answer) ? true : false;
+}
+
+function reloadTree(yes){
+if (yes) {
+	parent.savedAs = 1;
+	parent.frames['tree_iframe'].location.reload();
+	parent.loading++;
+	show_load(); 
+}
+else return;
+}
+
+function tmpChangeLocal() {
+var lang = document.getElementById("langSpec").value;
+if (self[[lang]]) {
+	document.getElementById('NAME').value=self[lang].name;
+	document.getElementById('DESC').value=self[lang].desc;
+}
+}
+
+
+function checkEnglishName() {
+if (justSaved) return;
+var EID = document.getElementById('langSpec');
+if (EID) {
+var node = findItemById(document.getElementById('ITEM_ID').value);
+var i = setLanguageIndex('EN');
+if (EID.options[i].value == "")
+	{
+	var answer;
+	do answer = prompt(saveEnName+node[2],""); while (answer == "");
+	document.getElementById('NAME').value = answer;
+	document.getElementsByName("Action")[0].click();
+	}
+}
+}
+
+function setLanguageIndex(lang){
+var EID = document.getElementById('langSpec');
+if (EID) {
+	for(var i=0; i<EID.length; i++) {
+		if (EID.options[i].text == lang) {
+			EID.options[i].selected = true;
+			return i;
+		}
+	}
+}
+return -1
+}
+
+function viewLocalTab(tab){
+set_cookie("tab",tab);
+var save = document.getElementById('SAVE');
+if (save && objectChanged(true) && document.getElementById('source_tab').value != 'rights') {
+	document.getElementById('target_tab').value = tab;
+	save.click();
+} else {
+	if (deniedQuit('treeInfQ')){
+		var common = "edit_obj.cgi?"+params+"&item_id="+document.getElementById('ITEM_ID').value+"&target_tab=";
+		self.location.href=common+tab;
+		show_load();
+	}
+}
+}
+
+function objectChanged(clear){
+var EID = top.frames["body"].document.getElementById("changed");
+if (EID){
+	var rtrn = (EID.value == 1) ? true : false;
+	if (clear) {
+		EID.value = 0
+	}
+	return rtrn
+} else {
+	return false
+}
+}
+
+function deniedQuit(msg){
+var EID = top.frames["body"].document.getElementById("changed");
+if (EID)
+	if (EID.value == 1) {
+		if (confirm(msg_text(msg))) {
+			EID.value = 0;
+			return true
+		} else {
+			return false
+		};
+	}
+EID.value = 0;
+return true
+}
+//---------------cookie control------------------------------------
+//content of cookie "id" clearing from tabs.js
+function set_cookie(prm,val) {	//cookie name, cookie value
+if (use_cookie == "off") return;
+var now = new Date();
+if (now.getMonth() == 12)
+ {now.setMonth(0);
+  now.setFullYear(now.getFullYear()+1);}
+ else
+ {now.setMonth(now.getMonth() + 1);}
+document.cookie = prm+"="+val+"; expires="+now.toUTCString();
+}
+
+function get_cookie(name_cookie) {
+var rgxp = new RegExp(name_cookie+"[^;]*");	//set regular expresion appropiate to find cookie by its name
+var cook = String(document.cookie.match(rgxp));	//get right cookie
+cook = cook.replace(/[\s]/g,""); 		//clear from white space
+return (cook.match(/[^=]*$/) == "null") ? '' : cook.match(/[^=]*$/);	//return content
+}
+
+/*
+//-----------temporary functions-------------------
+function get_tree_data(){ //report_ed.pl - input element - oncontextmenu
+document.getElementById('DESC').value=parent.frames['tree_iframe'].document.lastChild.innerHTML;
+return false;
+}
+
+ This function is able to read the whole html source on webbrowser side
+ and show it in dialogs by krok chars, where krok defines the amount of chars, actualy 1500
+function get_data(){
+var hlp = document.lastChild.innerHTML;
+var od = 0;	//from
+var msg;	//viewed segment from source
+var krok = 1500;//step num. of viewed chars
+var kam = 0;	//to, don't change inital value!!!
+do 
+{
+kam += krok;
+msg = hlp.substring(od,kam);
+od = kam;
+}
+while (confirm(msg) && (msg.length > 0));
+}*/
+
+@
+
+
+1.99
+log
+@fixed right menu after right scroll
+@
+text
+@d1 1
+a1 1
+// $Id: attr.js,v 1.98 2004/03/04 14:43:16 jiri_schmid Exp $
+d303 1
+d346 1
+a346 1
+function set_cookie(prm) {
+d354 1
+a354 1
+document.cookie = prm+"="+GID+"; expires="+now.toUTCString();
+@
+
+
+1.98
+log
+@fixing bugs and improving useability and performance
+@
+text
+@d1 1
+a1 1
+// $Id: attr.js,v 1.97 2004/02/20 12:41:12 jiri_schmid Exp $
+d73 2
+a74 2
+for (i in EID) {
+	if (value) {
+d79 3
+a81 1
+	} else {
+d87 1
+a87 1
+}	
+@
+
+
+1.97
+log
+@rights for edit page finished
+@
+text
+@d1 1
+a1 1
+// $Id: attr.js,v 1.96 2004/02/18 16:19:17 jiri_schmid Exp $
+d36 1
+a36 1
+	return new Array(ID,nodeParent[0],nodeParent[2]+"~"+nodeChild[2],"Af",nodeChild[4])
+d161 1
+a161 1
+	change.title = Desc;
+a169 1
+			hlp[4]=Desc;
+@
+
+
+1.96
+log
+@rights implemented
+@
+text
+@d1 1
+a1 1
+// $Id: attr.js,v 1.95 2004/02/09 14:26:47 jiri_schmid Exp $
+d120 3
+a122 7
+function msg_text(tt) {
+  // messages from JavaScript in hidden input lang_js
+  // form in hidden input value= "|id1|text_id1|id2|text_id2| ...|"
+  // tt variable is one of id in input lang_js
+  var reg_expr = new RegExp(tt + ".[^\|]*");
+  var aux = String(parent.document.getElementById("lang_js").value.match(reg_expr));  
+  return (aux.match(/[^\|]*$/));
+@
+
+
+1.95
+log
+@object tree remembers opened directory till webbrowser restarts
+@
+text
+@d1 1
+a1 1
+// $Id: attr.js,v 1.94 2003/12/12 16:48:12 jiri_schmid Exp $
+d307 1
+a307 1
+if (save && objectChanged(true)) {
+@
+
+
+1.94
+log
+@continuing in implementation of dynamic params
+@
+text
+@d1 1
+a1 1
+// $Id: attr.js,v 1.93 2003/12/11 14:37:53 jiri_schmid Exp $
+d363 1
+a363 1
+return cook.match(/[^=]*$/); 			//return ID
+@
+
+
+1.93
+log
+@refresh of tree implemented
+@
+text
+@d1 1
+a1 1
+// $Id: attr.js,v 1.92 2003/11/18 14:38:40 jiri_schmid Exp $
+d158 1
+@
+
+
+1.92
+log
+@auto save when changing tabs implemented
+@
+text
+@d1 1
+a1 1
+// $Id: attr.js,v 1.91 2003/11/14 11:45:36 jiri_schmid Exp $
+d217 1
+d228 1
+a228 1
+}
+@
+
+
+1.91
+log
+@question for dynamic param implemented
+@
+text
+@d1 1
+a1 1
+// $Id: attr.js,v 1.90 2003/11/04 15:19:00 jiri_schmid Exp $
+d4 15
+d304 7
+a310 2
+if (deniedQuit('treeInfQ')){
+	var common = "edit_obj.cgi?"+params+"&item_id="+document.getElementById('ITEM_ID').value+"&LocalTab=";
+d313 16
+a328 1
+}}
+@
+
+
+1.90
+log
+@save as - modperl fixies, code improvments
+@
+text
+@d1 1
+a1 1
+// $Id: attr.js,v 1.89 2003/10/31 12:47:57 jiri_schmid Exp $
+a200 9
+function subst_item_id(){
+var MPole = parent.frames['tree_iframe'].Tree0;
+var node = findItemById(document.getElementById('ITEM_ID').value);
+if (node) {
+	document.getElementById('NAME').value=node[2];
+	document.getElementById('DESC').value=node[4];
+	if (document.getElementById("activeLang")) {setLanguageIndex(document.getElementById("activeLang").value)};
+}}
+
+d251 5
+a255 6
+var hlp = document.getElementById("langSpec");
+if (document.getElementById("activeLang").value == hlp.options[hlp.selectedIndex].text) {subst_item_id()}
+else {
+	document.getElementById('NAME').value=hlp.options[hlp.selectedIndex].value;
+	document.getElementById('DESC').value="";
+	};
+@
+
+
+1.89
+log
+@mod perl rocks!
+@
+text
+@d1 1
+a1 1
+// $Id: attr.js,v 1.88 2003/10/16 14:08:53 jiri_schmid Exp $
+d233 8
+a240 1
+function readName() {
+d242 4
+a245 2
+do answer = prompt(saveAsMsg,""); while (answer == "");
+document.getElementById('saveAsName').value = answer;
+@
+
+
+1.88
+log
+@mod-perl implementation stage 1, rebuilding global vars in .pl to global pointers
+@
+text
+@d1 1
+a1 1
+// $Id: attr.js,v 1.87 2003/10/13 14:43:23 jiri_schmid Exp $
+d42 3
+a44 1
+var high = parseInt(document.getElementById('editBody').clientHeight);
+d55 1
+a55 1
+function test(EID,what) { //show properties of html elemnetn, that contains part of what
+d57 1
+a57 1
+alert(EID);
+d59 10
+a68 3
+	if (String(i).match(rgxp)) {
+		var msg = confirm(i+":\n"+EID[i]);
+		if (!msg) return
+@
+
+
+1.87
+log
+@description tab defined under two files, bug fixies
+@
+text
+@d1 1
+a1 1
+// $Id: attr.js,v 1.86 2003/10/09 13:53:24 jiri_schmid Exp $
+d84 2
+a85 2
+function clear_name(tt) {
+  tt.value="";
+d105 9
+a113 6
+function exprr(tt,str) {
+  tt.value=tt.value + str;
+  if (str != ")") drop_textarea(tt); //drop_textarea defined in dad.js
+  tt.focus();
+  object_changed();
+}  
+@
+
+
+1.86
+log
+@many EN language fixies
+@
+text
+@d1 1
+a1 1
+// $Id: attr.js,v 1.85 2003/10/03 10:53:09 jiri_schmid Exp $
+d181 1
+a181 1
+if (String(EID.value).match(/#/) || EID.value == "") {
+@
+
+
+1.85
+log
+@control improvments on param and format2d-color page
+@
+text
+@d1 1
+a1 1
+// $Id: attr.js,v 1.84 2003/10/02 15:33:34 jiri_schmid Exp $
+d93 1
+a93 1
+  if (id = "paramAttr") { emptySelect('paramElements',true) };
+@
+
+
+1.84
+log
+@VAU :-) param - objects implemented, bug in elements fixed
+@
+text
+@d1 1
+a1 1
+// $Id: attr.js,v 1.83 2003/10/02 14:44:54 jiri_schmid Exp $
+d6 1
+@
+
+
+1.83
+log
+@parameters - elements implemented
+@
+text
+@d1 1
+a1 1
+// $Id: attr.js,v 1.82 2003/09/25 15:04:16 jiri_schmid Exp $
+d4 1
+a4 1
+function emptySelect(id){
+d10 3
+a12 1
+if (all) {EID.length = 0}
+d16 1
+a16 1
+function getAttrOrAtrrform(ID) {
+d92 1
+@
+
+
+1.82
+log
+@operational commit for martin
+@
+text
+@d1 1
+a1 1
+// $Id: attr.js,v 1.81 2003/09/25 11:53:46 jiri_schmid Exp $
+d3 23
+@
+
+
+1.81
+log
+@operational commit for vladis
+@
+text
+@d1 1
+a1 1
+// $Id: attr.js,v 1.80 2003/09/24 14:59:18 jiri_schmid Exp $
+a252 1
+	if (String(tab).match(/attr|fact|urole|metric|grid|def|report|filter|format|sql|object|rights|diameter|transparency|shape|color|graph3d|y|x|z/)) {
+a254 3
+	} else {
+		alert("temporarily unavailable tab: "+tab);
+	}
+@
+
+
+1.80
+log
+@graph2d improvments
+@
+text
+@d1 1
+a1 1
+// $Id: attr.js,v 1.79 2003/09/22 11:52:39 jiri_schmid Exp $
+d4 5
+d17 1
+a17 1
+high = parseInt(high*0.65);
+d29 1
+@
+
+
+1.79
+log
+@format page - visual improvment
+@
+text
+@d1 1
+a1 1
+// $Id: attr.js,v 1.78 2003/09/19 10:24:58 jiri_schmid Exp $
+d4 6
+d12 1
+a12 1
+high = parseInt(high*0.70);
+@
+
+
+1.78
+log
+@tabs implemented everywhere
+@
+text
+@d1 1
+a1 1
+// $Id: attr.js,v 1.77 2003/09/18 14:10:50 jiri_schmid Exp $
+d3 6
+@
+
+
+1.77
+log
+@tabs imlemented almost everywhere
+@
+text
+@d1 1
+a1 1
+// $Id: attr.js,v 1.76 2003/09/17 14:51:14 jiri_schmid Exp $
+d235 1
+a235 1
+	if (String(tab).match(/metric|grid|def|report|filter|format|sql|object|rights|diameter|transparency|shape|color|graph3d|y|x|z/)) {
+@
+
+
+1.76
+log
+@tabed rights on graph3d and report
+@
+text
+@d1 1
+a1 1
+// $Id: attr.js,v 1.75 2003/09/16 14:37:53 jiri_schmid Exp $
+d235 1
+a235 1
+	if (String(tab).match(/def|report|filter|format|sql|object|rights|diameter|transparency|shape|color|graph3d|y|x|z/)) {
+@
+
+
+1.75
+log
+@rights page user improvments, unbelieveble IE bug fixed
+@
+text
+@d1 1
+a1 1
+// $Id: attr.js,v 1.74 2003/08/28 09:26:16 jiri_schmid Exp $
+d235 1
+a235 1
+	if (String(tab).match(/def|report|filter|format|sql|object|diameter|transparency|shape|color|graph3d|y|x|z/)) {
+@
+
+
+1.74
+log
+@tabs.cgi speed improvmnet, visual improvment on trees, rights and some other minor improvments
+@
+text
+@d1 1
+a1 1
+// $Id: attr.js,v 1.73 2003/08/26 15:35:45 jiri_schmid Exp $
+d6 1
+a6 1
+parent.frames["tree_iframe"].editType = 'Ro';
+d247 7
+a253 3
+		if (confirm(msg_text(msg))) {EID.value = 0; return true}
+		else {	return false; }
+};
+d267 2
+a268 1
+document.cookie = prm+"="+GID+"; expires="+now.toUTCString();}
+@
+
+
+1.73
+log
+@rights improvment, create delete duplicate rule implemented
+@
+text
+@d1 1
+a1 1
+// $Id: attr.js,v 1.72 2003/08/25 15:09:20 jiri_schmid Exp $
+a3 6
+function setPreviusPage() {
+document.getElementById('Rights').value = 0;
+parent.frames["tree_iframe"].editType = parent.frames["tree_iframe"].oldType;
+show_load();
+}
+
+a6 11
+show_load();
+}
+
+function dropRights() {
+return
+}
+
+function removeRights() { 
+document.getElementById('Rights').value = 1;
+document.getElementById('Remove').value = 1;
+document.getElementById('save').click();
+@
+
+
+1.72
+log
+@object acl, owner, modifier, datetime creation and modification implemented
+@
+text
+@d1 1
+a1 1
+// $Id: attr.js,v 1.71 2003/08/14 12:43:51 jiri_schmid Exp $
+d4 16
+d24 1
+@
+
+
+1.71
+log
+@huge code, minor functionality and design improvment on main tree
+@
+text
+@d1 1
+a1 1
+// $Id: attr.js,v 1.70 2003/08/13 13:16:29 jiri_schmid Exp $
+d3 6
+@
+
+
+1.70
+log
+@setting up rights inetrface for each object implemnted
+@
+text
+@d1 1
+a1 1
+// $Id: attr.js,v 1.69 2003/07/30 15:30:47 jiri_schmid Exp $
+d77 2
+a78 2
+var id = parent.frames["tree_iframe"].document.getElementById("active_id").value;
+var change = parent.frames["tree_iframe"].document.getElementById(id);
+@
+
+
+1.69
+log
+@right pane implementation stage 2
+@
+text
+@d1 1
+a1 1
+// $Id: attr.js,v 1.68 2003/07/29 15:15:36 jiri_schmid Exp $
+d215 6
+a220 4
+for(var i=0; i<EID.length; i++) {
+	if (EID.options[i].text == lang) {
+		EID.options[i].selected = true;
+		return i;
+@
+
+
+1.68
+log
+@some "cosmetic" changes
+@
+text
+@d1 1
+a1 1
+// $Id: attr.js,v 1.66 2003/07/29 12:28:34 jiri_schmid Exp $
+d5 1
+a5 1
+var rgxp = (what) ? new RegExp(what): new RegExp(".*");
+@
+
+
+1.67
+log
+@code improvments
+@
+text
+@@
+
+
+1.66
+log
+@right frame implemented
+@
+text
+@d1 1
+a1 1
+// $Id: attr.js,v 1.65 2003/07/28 13:40:02 jiri_schmid Exp $
+d4 2
+a5 1
+function test(EID) { //temporarily it shows procedures and elemnets of html element that contains words used in match fnc
+d7 1
+a7 1
+	if (String(i).match(/height|width|scroll|offset|top|left/i)) {
+d229 1
+@
+
+
+1.65
+log
+@minor code improvments
+@
+text
+@d1 1
+a1 1
+// $Id: attr.js,v 1.64 2003/07/25 10:53:23 jiri_schmid Exp $
+d4 1
+a4 3
+function test() { //temporarily it shows procedures and elemnets of html element that contains words used in match fnc
+var EID = document.getElementById('body');
+//var EID = document;
+@
+
+
+1.64
+log
+@switching tab bug fixed
+@
+text
+@d1 1
+a1 1
+// $Id: attr.js,v 1.63 2003/07/24 12:14:58 jiri_schmid Exp $
+d4 11
+d19 1
+a21 1
+	var ready = false;
+d32 1
+a32 1
+return false
+d228 1
+a228 1
+	if (String(tab).match(/def|report|filter|format|sql|object|x|y|z|diameter|transparency|shape|color|graph3d/)) {
+@
+
+
+1.63
+log
+@code change/improvment, bug fixies
+@
+text
+@d1 1
+a1 1
+// $Id: attr.js,v 1.62 2003/07/24 10:37:52 jiri_schmid Exp $
+d217 1
+a217 1
+	if (String(tab).match(/def|report|filter|format|sql|object|x|y|z|diameter|transparency|shape|color/)) {
+@
+
+
+1.62
+log
+@next tab implmented
+@
+text
+@d1 1
+a1 1
+// $Id: attr.js,v 1.61 2003/07/23 11:44:56 jiri_schmid Exp $
+d4 16
+a19 5
+function set(elementId,property,value,silent){
+if (document.getElementById(elementId)) {
+	var EID = document.getElementById(elementId);
+	EID[property] = value;
+	return (silent) ? true : objectChanged()
+@
+
+
+1.61
+log
+@next tab implemented on graph3d page
+@
+text
+@d1 1
+a1 1
+// $Id: attr.js,v 1.60 2003/07/22 15:13:08 jiri_schmid Exp $
+d7 1
+a7 1
+	if (EID[property]) EID[property] = value;
+@
+
+
+1.60
+log
+@new tabs on graph3d page implemented
+@
+text
+@d1 1
+a1 1
+// $Id: attr.js,v 1.59 2003/07/22 08:48:01 jiri_schmid Exp $
+d7 1
+a7 1
+	EID[property] = value;
+@
+
+
+1.59
+log
+@axis tabs on 3dgraph page implented
+@
+text
+@d1 1
+a1 1
+// $Id: attr.js,v 1.58 2003/07/18 10:51:02 jiri_schmid Exp $
+d206 1
+a206 1
+	if (String(tab).match(/def|report|filter|format|sql|object|x|y|z/)) {
+@
+
+
+1.58
+log
+@format3d implemented, format changed all dependencies fixed
+@
+text
+@d1 1
+a1 1
+// $Id: attr.js,v 1.57 2003/07/11 16:00:53 jiri_schmid Exp $
+d206 1
+a206 1
+	if (String(tab).match(/def|report|filter|format|sql|object/)) {
+@
+
+
+1.57
+log
+@graph3d next stage
+@
+text
+@d1 1
+a1 1
+// $Id: attr.js,v 1.56 2003/07/10 13:00:04 jiri_schmid Exp $
+d4 9
+d206 1
+a206 1
+	if (String(tab).match(/graph3d|def|report|filter|grid|format|sql/)) {
+@
+
+
+1.56
+log
+@tabed graph3d implemnted, code improvment
+@
+text
+@d1 1
+a1 1
+// $Id: attr.js,v 1.55 2003/07/07 14:17:14 jiri_schmid Exp $
+d197 5
+a201 1
+	if (String(tab).match(/graph3d|def|report|filter|grid|format|sql/)) self.location.href=common+tab;
+@
+
+
+1.55
+log
+@utf8 may work properly
+@
+text
+@d1 1
+a1 1
+// $Id: attr.js,v 1.54 2003/07/04 14:29:33 jiri_schmid Exp $
+d194 16
+@
+
+
+1.54
+log
+@utf8 handling fixed
+@
+text
+@d1 1
+a1 1
+// $Id: attr.js,v 1.53 2003/06/26 09:31:43 jiri_schmid Exp $
+d149 1
+a149 1
+	parent.savedAs = yes;
+@
+
+
+1.53
+log
+@css report visual changes, code improvment
+@
+text
+@d1 1
+a1 1
+// $Id: attr.js,v 1.52 2003/06/19 14:59:45 jiri_schmid Exp $
+d105 1
+a105 1
+return true;
+@
+
+
+1.52
+log
+@huge improvment on format page
+@
+text
+@d1 1
+a1 1
+// $Id: attr.js,v 1.51 2003/06/17 08:45:50 jiri_schmid Exp $
+d130 2
+a131 1
+function hide_load(){
+@
+
+
+1.51
+log
+@changed structure of format object
+@
+text
+@d1 1
+a1 1
+// $Id: attr.js,v 1.50 2003/06/03 11:07:35 jiri_schmid Exp $
+d31 1
+a31 1
+function change_style(Target) {
+@
+
+
+1.50
+log
+@wieving of dialog unsaved fixed
+@
+text
+@d1 1
+a1 1
+// $Id: attr.js,v 1.49 2003/06/03 08:16:08 jiri_schmid Exp $
+d33 1
+a33 1
+if (Target.match(/css/)) 
+@
+
+
+1.49
+log
+@code improvment
+@
+text
+@d1 1
+a1 1
+// $Id: attr.js,v 1.48 2003/05/29 08:19:18 jiri_schmid Exp $
+d39 2
+d42 5
+a46 2
+hlp.options[hlp.selectedIndex].value = hlp.options[hlp.selectedIndex].text
+if (document.getElementById("activeLang").value != hlp.options[hlp.selectedIndex].text) return;
+d53 1
+a53 1
+top.frames["body"].document.getElementById("changed").value = 0;
+@
+
+
+1.48
+log
+@little bug fix
+@
+text
+@d1 1
+a1 1
+// $Id: attr.js,v 1.47 2003/05/28 12:56:23 jiri_schmid Exp $
+d109 1
+a109 1
+	setLanguageIndex(document.getElementById("activeLang").value);
+@
+
+
+1.47
+log
+@forcearray fixies
+@
+text
+@d1 1
+a1 1
+// $Id: attr.js,v 1.46 2003/05/27 08:42:31 jiri_schmid Exp $
+d48 1
+@
+
+
+1.46
+log
+@tree generating visual bug fixed
+@
+text
+@d1 1
+a1 1
+// $Id: attr.js,v 1.45 2003/05/27 08:30:31 jiri_schmid Exp $
+a98 1
+justSaved = true;
+@
+
+
+1.45
+log
+@language switch fixed after clicking reload button
+@
+text
+@d1 1
+a1 1
+// $Id: attr.js,v 1.44 2003/05/26 15:30:40 jiri_schmid Exp $
+d207 1
+d214 1
+a214 1
+/* This function is able to read the whole html source on webbrowser side
+@
+
+
+1.44
+log
+@saving under EN name, when undefined implemented
+@
+text
+@d1 1
+a1 1
+// $Id: attr.js,v 1.43 2003/05/26 15:01:41 jiri_schmid Exp $
+d109 1
+d162 1
+a163 1
+if (justSaved) return;
+d166 1
+a166 2
+var i;
+for(i=0; i<EID.length; i++) {if (EID.options[i].text == 'EN') break;}
+a170 1
+	EID.options[i].selected = true;
+d175 11
+@
+
+
+1.43
+log
+@saving under non-selected language implemented
+@
+text
+@d1 1
+a1 1
+// $Id: attr.js,v 1.42 2003/05/21 11:39:46 jiri_schmid Exp $
+d99 1
+d157 19
+@
+
+
+1.42
+log
+@visual and code improvment
+@
+text
+@d1 1
+a1 1
+// $Id: attr.js,v 1.41 2003/05/19 14:32:40 jiri_schmid Exp $
+d39 3
+d147 9
+@
+
+
+1.41
+log
+@save-as bug when canceling saving fixed
+@
+text
+@d1 1
+a1 1
+// $Id: attr.js,v 1.40 2003/05/19 14:18:35 jiri_schmid Exp $
+d144 19
+@
+
+
+1.40
+log
+@very minor fixies and code improvmetns
+@
+text
+@d1 1
+a1 1
+// $Id: attr.js,v 1.39 2003/05/16 12:58:12 jiri_schmid Exp $
+d133 1
+@
+
+
+1.39
+log
+@save as implemented everywhere
+@
+text
+@d1 1
+a1 1
+// $Id: attr.js,v 1.38 2003/05/16 11:28:26 jiri_schmid Exp $
+a116 1
+//if (nodeId.match(/ARRAY/)) return new Array(nodeId,nodeId,localItem,"","");
+d139 1
+@
+
+
+1.38
+log
+@report page - save as functionality implemented
+@
+text
+@d1 1
+a1 1
+// $Id: attr.js,v 1.37 2003/05/14 15:36:46 jiri_schmid Exp $
+d139 2
+a140 1
+	parent.frames['tree_iframe'].location.reload(); 
+@
+
+
+1.37
+log
+@minor code improvments
+@
+text
+@d1 1
+a1 1
+// $Id: attr.js,v 1.36 2003/05/14 14:28:21 jiri_schmid Exp $
+d128 14
+@
+
+
+1.36
+log
+@next report improvment
+@
+text
+@d1 1
+a1 1
+// $Id: attr.js,v 1.35 2003/05/13 15:19:00 jiri_schmid Exp $
+d89 1
+a89 1
+function check_name(new_id){
+d91 1
+a91 2
+var rgxp = new RegExp(new_id);
+if (String(EID.value).match(rgxp) || EID.value == "") {
+@
+
+
+1.35
+log
+@new report page seems to be fullfunctional, javascript code huge improvment
+@
+text
+@d1 1
+a1 1
+// $Id: attr.js,v 1.34 2003/05/08 15:41:58 jiri_schmid Exp $
+d117 1
+a117 1
+if (nodeId.match(/HASH/)) return new Array(nodeId,nodeId,localItem,"","");
+@
+
+
+1.34
+log
+@micro bug fixed
+@
+text
+@d1 1
+a1 1
+// $Id: attr.js,v 1.33 2003/05/08 15:35:51 jiri_schmid Exp $
+d41 5
+a45 3
+var Desc = document.getElementById("DESC").value;
+var Name = document.getElementById("NAME").value;
+if (Name != "") {
+d53 10
+a62 5
+		if (MPole[I].match(rgxp)) {var hlp = String(MPole[I]).split("|"); hlp[2]=Name; hlp[4]=Desc; MPole[I] = hlp.join("|"); break}
+	}
+	return true;
+};
+return false;
+d117 3
+a119 2
+var rtrn = new Array(nodeId,nodeId,"  ?:"+nodeId,"","");
+return rtrn
+d131 1
+a131 1
+//-----------temporery functions-------------------
+@
+
+
+1.33
+log
+@report huge improvment
+@
+text
+@d1 1
+a1 1
+// $Id: attr.js,v 1.32 2003/05/07 13:11:51 jiri_schmid Exp $
+d71 1
+d75 2
+a76 1
+		if (node) {document.getElementById(subst_ID.arguments[i]).value = node[2];}
+@
+
+
+1.32
+log
+@bug fixies, code improvment
+@
+text
+@d1 1
+a1 1
+// $Id: attr.js,v 1.31 2003/05/06 15:07:07 jiri_schmid Exp $
+a57 16
+function run_result(){
+var open_in = (document.report.report_open_in.value == "_default") ? document.report.open_in.value : document.report.report_open_in.value;
+switch (open_in) {
+ case "_blank": {var EID = window.open('run.cgi?item_id='+document.report.item_id.value,document.report.item_id.value,"menubar=yes,toolbar=no,statusbar=no");
+ 		EID.focus();
+		top.location.href="index.cgi?TabAct=X&item_id="+document.report.item_id.value;
+		break;}
+ case "_one": {	top.location.href="index.cgi?TabAct=X&item_id="+document.report.item_id.value;
+ 		var EID = window.open('run.cgi?item_id='+document.report.item_id.value,'result',"menubar=yes,toolbar=no,statusbar=no");
+ 		EID.focus();
+		break;}
+ case "_self": {top.location.href="index.cgi?TabAct=R&item_id="+document.report.item_id.value; break;}
+ break;
+ }
+}
+
+a118 6
+}
+
+function newOrEdit(newItem,editItem){
+if (document.getElementById(editItem).value == "") { parent.location.href="edit.cgi?"+params+"&Action="+newItem;}
+else { self.location.href="edit_obj.cgi?"+params+"&item_id="+document.getElementById(editItem).value;}
+return false
+@
+
+
+1.31
+log
+@bug fixies, code improvment
+@
+text
+@d1 1
+a1 1
+// $Id: attr.js,v 1.30 2003/05/06 10:38:20 jiri_schmid Exp $
+d63 5
+a67 1
+ 		top.frames['tabs'].location.href="tabs.cgi?TabAct=E&item_id="+document.report.item_id.value;
+a68 4
+ case "_one": {var EID = window.open('run.cgi?item_id='+document.report.item_id.value,'result',"menubar=yes,toolbar=no,statusbar=no");
+ 		EID.focus(); 
+ 		top.frames['tabs'].location.href="tabs.cgi?TabAct=E&item_id="+document.report.item_id.value;
+ 		break;}
+d135 6
+@
+
+
+1.30
+log
+@code improvment
+@
+text
+@d1 1
+a1 1
+// $Id: attr.js,v 1.29 2003/05/05 15:16:34 jiri_schmid Exp $
+d43 9
+a51 8
+ change.innerHTML = "&nbsp;" + Name + "&nbsp;";
+ change.title = Desc;
+ change = parent.frames["tree_iframe"].document.getElementById('icon'+id);
+ change.name = Name + String(change.name).match(/\|.*$/);
+var MPole = parent.frames['tree_iframe'].Tree0;
+for (I in MPole) {
+	var rgxp = new RegExp('^'+id+'\\|');
+	if (MPole[I].match(rgxp)) {var hlp = String(MPole[I]).split("|"); hlp[2]=Name; hlp[4]=Desc; MPole[I] = hlp.join("|"); break}
+d53 3
+d99 1
+a99 1
+if (String(EID.value).match(rgxp)) {
+@
+
+
+1.29
+log
+@huge code improvment on client side when substituting from/to ID, minor language dependeces fixies
+@
+text
+@d1 2
+a2 1
+// $Id: attr.js,v 1.28 2003/05/01 09:50:54 jiri_schmid Exp $
+d80 1
+a80 1
+		var nodeChild = findItemById(pole_ID[i]);
+d111 1
+a111 1
+function findItemById(nodeId) {
+d114 8
+a121 5
+for (I in MPole) 
+	if (I>=0){	//IE unbelieveble bug treatment
+		if (MPole[I].match(rgxp)) {return MPole[I].split("|");}
+	} else continue;//IE unbelieveble bug treatment
+return null
+@
+
+
+1.28
+log
+@bug saving reports & metrics after erasing item fixed
+@
+text
+@d1 1
+a1 1
+// $Id: attr.js,v 1.27 2003/04/30 14:45:50 jiri_schmid Exp $
+d78 8
+a85 8
+		var rgxp = new RegExp("^"+String(pole_ID[i]).match(/^[^~]*/)+"\\|");
+		for (I in MPole) {
+			if (MPole[I].match(rgxp)) 
+				{
+				var hlp = String(MPole[I]).split("|");
+				document.getElementById(subst_ID.arguments[i]).value = hlp[2]+String(pole_ID[i]).match(/~.*$/);
+				break;}
+			}
+a86 10
+	else {
+		var rgxp = new RegExp("^"+pole_ID[i]+"\\|");
+		for (I in MPole) {
+			if (MPole[I].match(rgxp)) 
+				{
+				var hlp = String(MPole[I]).split("|");
+				document.getElementById(subst_ID.arguments[i]).value = hlp[2];
+				break}
+			}
+	};
+a102 1
+var item_id = document.getElementById('ITEM_ID').value;
+d104 14
+a117 15
+var rgxp = new RegExp('^'+item_id+'\\|');
+	for (I in MPole) {
+	   if (MPole[I].match(rgxp)) {
+		var hlp = String(MPole[I]).split("|");
+		document.getElementById('NAME').value=hlp[2];
+		document.getElementById('DESC').value=hlp[4];
+		break
+	   }
+	}
+}
+
+//-----------temporery functions-------------------
+function get_tree_data(){ //report_ed.pl - input element - oncontextmenu
+document.getElementById('DESC').value=parent.frames['tree_iframe'].document.lastChild.innerHTML;
+return false;
+d128 7
+@
+
+
+1.27
+log
+@removing results implemented, minor code improvment
+@
+text
+@d1 1
+a1 1
+// $Id: attr.js,v 1.26 2003/04/30 09:53:40 jiri_schmid Exp $
+d5 6
+@
+
+
+1.26
+log
+@tabs for results implemented
+@
+text
+@d1 1
+a1 1
+// $Id: attr.js,v 1.25 2003/04/22 15:29:24 jiri_schmid Exp $
+d50 2
+a51 1
+ case "_blank": {window.open('run.cgi?item_id='+document.report.item_id.value,document.report.item_id.value,"menubar=no,toolbar=no,statusbar=no"); 
+d54 2
+a55 1
+ case "_one": {var EID = window.open('run.cgi?item_id='+document.report.item_id.value,'result',"menubar=no,toolbar=no"); EID.focus(); 
+@
+
+
+1.25
+log
+@fixed a modified saving a loadin joined items A~Af
+@
+text
+@d1 1
+a1 1
+// $Id: attr.js,v 1.24 2003/04/22 08:03:59 jiri_schmid Exp $
+d50 6
+a55 2
+ case "_blank": {window.open('run.cgi?item_id='+document.report.item_id.value,'',"menubar=no,toolbar=no,statusbar=no"); break;}
+ case "_one": {var EID = window.open('run.cgi?item_id='+document.report.item_id.value,'result',"menubar=no,toolbar=no"); EID.focus(); break;}
+@
+
+
+1.24
+log
+@reset button fullfunctional on all pages
+@
+text
+@d1 1
+a1 1
+// $Id: attr.js,v 1.23 2003/04/18 13:22:20 jiri_schmid Exp $
+d60 3
+a62 3
+for (i in pole_ID) {
+	if (i>=0){
+		if (pole_ID[i]=="") {
+d64 3
+a66 2
+			break;}
+	var rgxp = new RegExp('^'+pole_ID[i]+'\\|');
+d68 2
+a69 1
+			if (MPole[I].match(rgxp)) {
+d71 11
+a81 1
+				document.getElementById(subst_ID.arguments[i]).value=hlp[2];
+d83 3
+a85 3
+		}
+	}
+}
+@
+
+
+1.23
+log
+@added disk-cache html/ for generated tree/tree.html and loading alert
+@
+text
+@d1 1
+a1 1
+// $Id: attr.js,v 1.22 2003/04/16 11:18:15 jiri_schmid Exp $
+d59 12
+a70 6
+for (i = 0; i<subst_ID.arguments.length; i++) 
+	{
+var item_id = document.getElementById(subst_ID.arguments[i]+"_id").value;
+var rgxp = new RegExp('^'+item_id+'\\|');
+for (I in MPole) {
+	if (MPole[I].match(rgxp)) {var hlp = String(MPole[I]).split("|"); document.getElementById(subst_ID.arguments[i]).value=hlp[2]; break}
+d73 1
+@
+
+
+1.22
+log
+@id substitution implemented in all of *_ed.pl
+@
+text
+@d1 1
+a1 1
+// $Id: attr.js,v 1.21 2003/04/14 12:56:41 jiri_schmid Exp $
+d101 8
+@
+
+
+1.21
+log
+@ID <-> name substitutions implemented on client side in required cases
+@
+text
+@d1 1
+a1 1
+// $Id: attr.js,v 1.20 2003/04/14 11:06:11 jiri_schmid Exp $
+d70 1
+a70 1
+function check_name(new_name){
+d72 2
+a73 1
+if (EID.value == new_name) {
+d95 5
+a100 1
+//---------------------------------------
+d116 2
+a117 2
+}
+*/
+@
+
+
+1.20
+log
+@new item localization implemented, prompt for changing name when saving under server side generated name
+@
+text
+@d1 1
+a1 1
+// $Id: attr.js,v 1.19 2003/04/10 14:21:35 jiri_schmid Exp $
+d72 5
+a76 2
+if (EID.value == new_name) do answer = prompt(msg,""); while (answer == "" || answer == null)
+EID.value = answer;
+d79 15
+@
+
+
+1.19
+log
+@metric, filter, report substitutes IDs by javascript, metric & filter resets the original expresion
+@
+text
+@d1 1
+a1 1
+// $Id: attr.js,v 1.18 2003/04/07 15:28:52 jiri_schmid Exp $
+a60 1
+
+d67 7
+@
+
+
+1.18
+log
+@metric checker error messages localized
+@
+text
+@d1 1
+a1 1
+// $Id: attr.js,v 1.17 2003/04/07 14:55:03 jiri_schmid Exp $
+d32 6
+a37 6
+ var id = parent.frames["tree_iframe"].document.getElementById("active_id").value;
+ var change = parent.frames["tree_iframe"].document.getElementById(id);
+ EID = document.getElementsByName("desc");
+ change.title = EID[0].value;
+ EID = document.getElementsByName("name");
+ change.innerHTML = "&nbsp;" + EID[0].value + "&nbsp;";
+d39 7
+a45 1
+ change.name = String(EID[0].value) + String(change.name).match(/\|.*$/);}
+d57 9
+a65 44
+function check_content(isin){
+var MPole = parent.frames['tree_iframe'].Tree0; //contains arrays of strings
+isin = String(isin).replace(/\[/g,"\\[");
+isin = String(isin).replace(/\]/g,"\\]");
+if (isin.match(/\./)) 
+	{var bckp = isin;
+	 var rgxP = new RegExp("[\|]"+isin.match(/^[^\.]*/)+"[\|]");
+	 for (I in MPole) {if (MPole[I].match(rgxP)) {var hlpX = MPole[I].split("|"); isin = hlpX[0]+isin.match(/\..*$/); break;};}
+	}
+var rgxp = new RegExp("[\|]"+isin+"[\|]");
+for (I in MPole) {if (MPole[I].match(rgxp)) {var hlpX = MPole[I].split("|"); return (hlpX[0]);}}
+return (bckp) ? bckp : isin.replace(/\\/g,"");
+}
+
+function check_metric_syntax(str){
+var pole = str.split("");
+var exprt = str;
+var round_bracket = 0;
+var square_bracket = 0;
+var from = 0; 
+var too = 0;
+var poleX = new Array();
+ function returner(I) { return (pole[I]+msg_text("position")+I) };
+ function whitespace(i) {while (String(pole[i]).match(/\s/)) i++; return pole[i];}
+ function wrong(i){ var test = whitespace(i); if (test) {if (test.match(/[\+\-\*\/\]\)]/)) return true;} else return true; return false;}
+ function right(i){ var test = whitespace(i); if (test) {if (test.match(/[^\+\-\*\/\]\)]/)) return true;} else return false; return false;}
+ function defauld(i){ var test = whitespace(i); if (test) {if (test.match(/[\+\-\*\/]/)) {return true;}} else return true; return false;}
+ function re_place(what,by) {
+ 	what = String(what).replace(/\[/g,"\\[");
+	what = String(what).replace(/\]/g,"\\]");
+	var rgxp = new RegExp(what); exprt = String(exprt).replace(rgxp,by);
+	}
+for (i in pole) {
+	switch (pole[i]) {
+		case "(": {round_bracket++; i++; if (wrong(i)) return returner(i); break;}
+		case ")": {round_bracket--; i++; if (right(i)) return returner(i); break;}
+		case "[": {i++; if (square_bracket == 0) from = i; square_bracket++; if (wrong(i)) return returner(i); break;}
+		case "]": {square_bracket--; if (square_bracket == 0) too = i; i++; if (right(i)) return returner(i); break;}
+		case "+": {i++; if (wrong(i)) return returner(i); break;}
+		case "-": {i++; if (wrong(i)) return returner(i); break;}
+		case "/": {i++; if (wrong(i)) return returner(i); break;}
+		case "*": {i++; if (wrong(i)) return returner(i); break;}
+		default: {if (String(pole[i]).match(/\s/)) {continue} else {i++; if (defauld(i)) return returner(i); break;}}
+		break;
+a66 7
+	if (from > 0 && too > 0) 
+		{var what = str.substring(from,too);
+		 var cntntID = check_content(what);
+		 if (what == cntntID) return what;
+		 re_place(what,cntntID);
+		 from = 0;
+		 too = 0;}
+d68 1
+a68 9
+if (round_bracket == 0 && square_bracket == 0) {} else return msg_text("bracket error");
+alert(exprt.replace(/\s/g,"")); //names replaced by id
+return 0;
+}
+
+function metric_checker(){
+var str = document.metric.expr.value;
+var pass = check_metric_syntax(str);
+if (pass==0) {reset_tree_name(); return true;} else {var hlp = msg_text("syntax error")+pass; alert(hlp); return false;};
+@
+
+
+1.17
+log
+@metric checker replaces names by id
+@
+text
+@d1 1
+a1 1
+// $Id: attr.js,v 1.16 2003/04/04 12:27:02 jiri_schmid Exp $
+d73 1
+a73 1
+ function returner(I) { return (pole[I]+" pozice:"+I) };
+d104 2
+a105 2
+if (round_bracket == 0 && square_bracket == 0) {} else return "(chyba zavorek)";
+alert(exprt.replace(/\s/g,"")); names replaced by id
+d112 1
+a112 1
+if (pass==0) {reset_tree_name(); return true;} else {var hlp = 'Chyba v syntaxi :-(\nznak:'+pass; alert(hlp); return false;};
+@
+
+
+1.16
+log
+@syntax checker for metric may be the right one
+@
+text
+@d1 1
+a1 1
+// $Id: attr.js,v 1.15 2003/04/04 09:34:02 jiri_schmid Exp $
+d51 12
+a62 31
+function wrong(test){
+if (test) {if (test.match(/[\+\-\*\/\]\)]/)) return true;}
+	else return true;
+return false;
+}
+
+function right(test){
+if (test) {if (test.match(/[^\+\-\*\/\]\)]/)) return true;}
+	else return false
+return false;
+}
+
+function defauld(test){
+if (test) {if (test.match(/[\+\-\*\/]/)) {return true;}}
+	else return true;
+return false;
+}
+
+function check_content(str){
+var pole = str.match(/\[[^\]]*\]{1,2}/g)
+var MPole = parent.frames['tree_iframe'].Tree0;
+var SPole;
+for (I in MPole) SPole += String(MPole[I]+"|");
+for (i in pole) {pole[i] = String(pole[i]).substring(1,pole[i].length-1);
+		 pole[i] = String(pole[i]).replace(/\[/g,"\\[");
+		 pole[i] = String(pole[i]).replace(/\]/g,"\\]");};
+for (i in pole)
+	{var rgxp = new RegExp("[\|]"+pole[i]+"[\|]");
+	 if (SPole.match(rgxp)) {} else {return pole[i]};
+	};
+return 0;
+d66 2
+a67 1
+var pole = String(str.replace(/\s/g,"")).split("");
+d70 13
+a82 1
+	function returner(I) { return (pole[I]+" pozice:"+I) };
+a83 1
+window.status=i;
+d85 9
+a93 9
+		case "(": {round_bracket++; i++; if (wrong(pole[i])) return returner(i); break;}
+		case ")": {round_bracket--; i++; if (right(pole[i])) return returner(i); break;}
+		case "[": {square_bracket++; i++; if (wrong(pole[i])) return returner(i); break;}
+		case "]": {square_bracket--; i++; if (right(pole[i])) return returner(i); break;}
+		case "+": {i++; if (wrong(pole[i])) return returner(i); break;}
+		case "-": {i++; if (wrong(pole[i])) return returner(i); break;}
+		case "/": {i++; if (wrong(pole[i])) return returner(i); break;}
+		case "*": {i++; if (wrong(pole[i])) return returner(i); break;}
+		default: {if (String(pole[i]) == " ") {break} else {i++; if (defauld(pole[i])) return returner(i); break;}}
+d96 7
+d105 2
+a106 1
+return check_content(str);
+@
+
+
+1.15
+log
+@metric checker improved, into filter page added buttons
+@
+text
+@d1 1
+a1 1
+// $Id: attr.js,v 1.3 2003/03/14 09:23:53 jiri_schmid Exp $
+d4 2
+a5 1
+  tt.value=""
+d21 1
+d52 3
+a54 1
+return (test == "+" || test == "-" || test == "*" || test == "/" || test == "]" || test == ")") ? true : false; 
+d58 3
+a60 1
+return (test == "+" || test == "-" || test == "*" || test == "/" || test == "]" || test == ")" || !test) ? false : true;
+d64 3
+a66 1
+return (test == "+" || test == "-" || test == "*" || test == "/") ? true : false;
+d69 17
+a85 2
+function check_syntax(str){
+var pole = str.split("");
+d90 1
+d100 1
+a100 1
+		default: {i++; if (defauld(pole[i])) return returner(i); break;}
+d104 2
+a105 13
+if (round_bracket == 0 && square_bracket == 0) {return 0;} else return "(chyba zavorek)";
+pole = str.match(/\[[^\]]*\]{1,2}/g)
+var MPole = parent.frames['tree_iframe'].Tree0;
+var SPole;
+for (I in MPole) SPole += String(MPole[I]+"|");
+for (i in pole) {pole[i] = String(pole[i]).substring(1,pole[i].length-1);
+		 pole[i] = String(pole[i]).replace(/\[/g,"\\[");
+		 pole[i] = String(pole[i]).replace(/\]/g,"\\]");};
+for (i in pole)
+	{var rgxp = new RegExp("[\|]"+pole[i]+"[\|]");
+	 if (SPole.match(rgxp)) {} else {return pole[i]};
+	};
+return 0;
+d110 1
+a110 1
+var pass = check_syntax(str);
+@
+
+
+1.14
+log
+@blocking sending action to server, when canceled confirm dialog from tabs.cgi
+@
+text
+@d1 2
+d65 1
+d68 9
+a76 9
+		case "(": {round_bracket++; i++; if (wrong(pole[i])) return i; break;}
+		case ")": {round_bracket--; i++; if (right(pole[i])) return i; break;}
+		case "[": {square_bracket++; i++; if (wrong(pole[i])) return i; break;}
+		case "]": {square_bracket--; i++; if (right(pole[i])) return i; break;}
+		case "+": {i++; if (wrong(pole[i])) return i; break;}
+		case "-": {i++; if (wrong(pole[i])) return i; break;}
+		case "/": {i++; if (wrong(pole[i])) return i; break;}
+		case "*": {i++; if (wrong(pole[i])) return i; break;}
+		default: {i++; if (defauld(pole[i])) return i; break;}
+d80 13
+a92 1
+if (round_bracket == 0 && square_bracket == 0) {return 0;} else return i;
+d98 1
+a98 1
+if (pass==0) {reset_tree_name(); return true;} else {var hlp = 'Chyba v syntaxi :-(\nznak: '+pass; alert(hlp); return false;};
+@
+
+
+1.13
+log
+@IE visual bugs on format page fixed
+@
+text
+@d83 1
+a83 1
+if (pass==0) {alert('OuKej ;-)');} else {var hlp = 'Chyba v syntaxi :-(\nznak: '+pass; alert(hlp);};
+@
+
+
+1.12
+log
+@total remake of format, files formatXXX.html repalced by format.cgi because of languge mutations
+@
+text
+@d14 6
+a25 6
+
+function exprr(tt,str) {
+  tt.value=tt.value + str;
+  if (str != ")") drop_textarea(tt); //drop_textarea defined in dad.js
+  tt.focus();
+}  
+@
+
+
+1.11
+log
+@syntax checker for metrics imrpoved, loading user pref file when file missing fixed/imrpoved
+@
+text
+@d16 1
+a16 1
+if (Target == "format_css.html") 
+@
+
+
+1.10
+log
+@IE5 bug fixed
+@
+text
+@d47 39
+@
+
+
+1.9
+log
+@solved problem with CZ chars, by forced 8bit operating XML-UTF8 files, removed unused images
+@
+text
+@d49 1
+a49 1
+ and show it in dialogs by krok chars, where krok defines the amount of chars, actualy 1500*/
+d64 1
+@
+
+
+1.8
+log
+@user prefernce - open result in: implemented
+@
+text
+@d38 3
+a40 2
+switch (document.report.open_in.value) {
+ case "_blank": {window.open('run.cgi?item_id='+document.report.item_id.value,'',"menubar=no,toolbar=no"); break;}
+@
+
+
+1.7
+log
+@charset fixed
+@
+text
+@d30 2
+d34 11
+a44 2
+ EID = document.getElementsByName("desc");
+ change.title = EID[0].value;}
+@
+
+
+1.6
+log
+@weekend commit, language not fixed :(
+@
+text
+@d37 1
+a37 1
+ and show it in dialogs by krok chars, where krok defines the amount of chars, actualy 2000*/
+a40 1
+var kam;	//to
+d42 2
+a43 1
+var krok = 2000;//step
+@
+
+
+1.5
+log
+@user preferences - cookie property succesfully implemented (not implemented into tabs.cgi)
+@
+text
+@d10 1
+a10 1
+  var aux = String(document.getElementById("lang_js").value.match(reg_expr));  
+@
+
+
+1.4
+log
+@JavaScript lang localization
+@
+text
+@d9 3
+a11 4
+  var aux = parent.document.getElementById("lang_js").value;  
+  var reg_expr = new RegExp(tt + "\\|[^\\|]*");
+  var typ = aux.match(reg_expr);
+  return (typ[0].split("|")[1]);
+@
+
+
+1.3
+log
+@cookie managing improvment for better cooperation with user preferences
+@
+text
+@d5 8
+a12 2
+function reload_btn() {
+  alert("hidden field:" + " | grid_name_h=" + document.report.grid_name_h.value + " | filter_name_h=" + document.report.filter_name_h.value +" + format_name_h= " + document.report.format_name_h.value);
+@
+
+
+1.2
+log
+@added files admin,prefer.cgi, unused content of *.css removed with minor visual changes
+@
+text
+@d26 1
+a26 1
+ change.innerHTML = "&nbsp;&nbsp;" + EID[0].value + "&nbsp;&nbsp;";
+@
+
+
+1.1
+log
+@huge javascript optimalization, also files moved to directory js
+@
+text
+@a0 2
+var NodeID = -1;
+
+a15 2
+// ********************** COOKIE ******************************
+
+d28 18
+a45 1
+ change.title = EID[0].value;
+@
+

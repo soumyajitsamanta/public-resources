@@ -1,0 +1,1154 @@
+head	1.17;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.17
+date	2003.10.16.14.08.51;	author jiri_schmid;	state dead;
+branches;
+next	1.16;
+
+1.16
+date	2003.10.07.05.47.58;	author michald;	state Exp;
+branches;
+next	1.15;
+
+1.15
+date	2003.10.05.18.51.59;	author michald;	state Exp;
+branches;
+next	1.14;
+
+1.14
+date	2003.10.05.08.14.29;	author vacula;	state Exp;
+branches;
+next	1.13;
+
+1.13
+date	2003.10.04.10.30.24;	author michald;	state Exp;
+branches;
+next	1.12;
+
+1.12
+date	2003.10.04.08.14.34;	author michald;	state Exp;
+branches;
+next	1.11;
+
+1.11
+date	2003.10.03.13.57.33;	author vacula;	state Exp;
+branches;
+next	1.10;
+
+1.10
+date	2003.10.03.10.46.46;	author michald;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	2003.10.02.08.43.44;	author vacula;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	2003.10.02.07.58.46;	author vacula;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	2003.10.01.15.19.36;	author vacula;	state dead;
+branches;
+next	1.6;
+
+1.6
+date	2003.09.30.16.36.38;	author vacula;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	2003.09.30.07.10.53;	author michald;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2003.09.29.15.44.08;	author vacula;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2003.09.29.05.43.13;	author michald;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2003.09.23.18.39.23;	author vacula;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2003.09.23.18.00.54;	author vacula;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.17
+log
+@mod-perl implementation stage 1, rebuilding global vars in .pl to global pointers
+@
+text
+@# $Id: run_graph2D.pl,v 1.16 2003/10/07 05:47:58 michald Exp $
+ 
+use strict;
+use vars qw($skinPath);
+
+use GD::Graph::colour;
+use GD::Graph::bars;
+use GD::Graph::hbars;
+use GD::Graph::lines;
+use GD::Graph::points;
+use GD::Graph::linespoints;
+use GD::Graph::mixed;
+use GD::Graph::area;
+use GD::Graph::pie;
+use GD::Graph::pie3d;
+use GD::Graph::bars3d;
+use GD::Graph::lines3d;
+use GD::Graph::Map;
+ 
+#use Data::Dumper;
+ 
+ 
+#--------------------------------------------------------------------------------------------------------------------------------------------
+
+sub exportToHTML {
+	my $ID = shift;
+	my $file = shift;
+	my $use_enc = shift;
+	my $use_lang = lc(shift);
+	my $style = shift;
+	my $cache_dir = shift;
+	my $dataset = shift;	# ptr to data hash
+	
+	my $css = 'default';	# default style (from grid styles) will be used for highlighting of the item in context right click menu
+
+	our $q = new CGI;
+
+	my ( $x_label, $y_label, $legend, @@data ) = data( $dataset, $style->{base}->{sets} );
+	my ( @@hrefs, @@lhrefs, @@contexts );	
+	for ( my $i=1; $i<@@data; $i++ ) {
+	    my ( @@hfs, @@cts );
+	    for ( my $j=0;$j<@@{$data[0]};$j++ ) {
+	        push(@@hfs,"javascript:alert('Test in objects')");
+	        push(@@cts,"return showMenu(this,'9210.fakturace')");
+	    }
+	    push(@@{$hrefs[$i]},@@hfs);
+	    push(@@{$contexts[$i]},@@cts);
+	}
+	for ( my $i=0;$i<@@{$legend};$i++ ) {
+	    push(@@lhrefs,"javascript:alert('Test in legends')");
+	}
+	
+	my $chart = "GD::Graph::$style->{form}";
+	my $name = $ID; #(exists $style->{name}{$lang}) ? $style->{name}{$lang} : $ID;
+	   
+	my $graph = $chart->new( $style->{base}->{width}, $style->{base}->{height} );
+#	my $graph = GD::Graph::bars->new(800, 600);
+
+	my %attributes = defineAttr($style->{form}, $name, $x_label, $y_label, $style->{layout}, $style->{colors});
+	my @@dclrs = dclrs($style->{colors}->{datas});
+	$graph->set( %attributes ) or die $graph->error;
+	$graph->set_legend(@@{$legend});
+	$graph->set( dclrs =>  \@@dclrs  );
+	$graph->set_legend_font("$TTFFontPath/luximbi.ttf",7) if ( defined $legend );
+	$graph->set_title_font("$TTFFontPath/luximbi.ttf",7) if ( exists $attributes{title} );	
+#	$graph->set_label_font("$TTFFontPath/luximbi.ttf",7) if ( exists $attributes{label} );	
+	$graph->set_x_label_font("$TTFFontPath/luximbi.ttf",7) if ( exists $attributes{x_label} );	
+	$graph->set_y_label_font("$TTFFontPath/luximbi.ttf",7) if ( exists $attributes{y_label} );	
+	$graph->set_x_axis_font("$TTFFontPath/luximbi.ttf",7) if ( exists $attributes{x_plot_values} );	
+	$graph->set_y_axis_font("$TTFFontPath/luximbi.ttf",7) if ( exists $attributes{y_plot_values} );	
+#	$graph->set_values_font("$TTFFontPath/luximbi.ttf",7) if ( exists $attributes{x_plot_values} or exists $attributes{y_plot_values} );	
+	$graph->set_value_font("$TTFFontPath/luximbi.ttf",7) if ( exists $attributes{value} );
+
+	my $gd = $graph->plot(\@@data) or die $graph->error;
+
+	writeToImg(\$gd,$Format2Dreport,$cache_dir,$name);
+
+	if ( $style->{form}=~/^pie$|^bars$|^lines$|^points$|^linespoints$/ ) {
+	    print $q->header(-charset=>$use_enc);
+		open(RT,">$cacheReport/$file") || &ErrorDie(" ERROR: can't write into report cache.");
+		print RT <<END;
+<?xml version="1.0" encoding="$use_enc"?>
+<!DOCTYPE html
+	PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="$Languages->{$use_lang}->{lang}" xml:lang="$Languages->{$use_lang}->{lang}">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=$use_enc" />
+<title>Report Result</title>
+<style>\@@import url("./CSS/$css.css");</style>
+<style>\@@import url("${skinPath}menu.css");</style>
+<script type="text/javascript" src="js/right_menu.js"></script>
+</head>
+<body onload="init_menu()" style="background-color: rgb($style->{colors}->{bgclr})">
+<input type='hidden' value='$ID' id='ID' name='id' />
+<input type='hidden' value='$use_lang' id='LANG' name='lang' />
+<div class="Menu" id="userMenu" style="display:block; position:absolute; top:0px; left:0px; visibility:hidden; z-index:5;"  onmouseover='hideSubmenus()'></div>
+<div class="Menu" id="userSubMenu" style="display:block; position:absolute; top:0px; left:0px; visibility:hidden; z-index:6;"></div>
+END
+	    my $map = new GD::Graph::Map($graph, hrefs => \@@hrefs, lhrefs => \@@lhrefs, contexts => \@@contexts );
+	    print RT $map->imagemap("graph2D.cgi?id=$ID.$Format2Dreport", \@@data);
+		# !!! testing parameters only:
+		print RT <<END;
+<script type='text/javascript'>var objectLinks = {'current9202.fakturace':'9202.fakturace|Datum (Fakturace)|kal|Kalendar|sum|Poznamka','down9202.fakturace':'','up9202.fakturace':'9212.fakturace|Mesic v roce (Fakturace)|9214.fakturace|Rok (Fakturace)|9210.fakturace|Mesic (Fakturace)|9221.fakturace|Kvartal (Fakturace)','current9214.fakturace':'9214.fakturace|Rok (Fakturace)','down9214.fakturace':'9202.fakturace|Datum (Fakturace)|9210.fakturace|Mesic (Fakturace)|9221.fakturace|Kvartal (Fakturace)','up9214.fakturace':'','current9201':'desc|Popis|po|Objednavka|9201|Vyrobek','down9201':'','up9201':'9204|Subkategorie vyrobku|9205|Kategorie vyrobku|9203|Typ vyrobku','current9203':'9203|Typ vyrobku','down9203':'9201|Vyrobek','up9203':'9204|Subkategorie vyrobku|9205|Kategorie vyrobku','current9210.fakturace':'9210.fakturace|Mesic (Fakturace)','down9210.fakturace':'9202.fakturace|Datum (Fakturace)','up9210.fakturace':'9212.fakturace|Mesic v roce (Fakturace)|9214.fakturace|Rok (Fakturace)|9221.fakturace|Kvartal (Fakturace)','export':'pdf|Portable Data Format (pdf)|xls|Excel Sheet (xls)|txt|Text (txt)','sort':'AZ|A-Z|ZA|Z-A','pivotY':'0|Rok (Fakturace)|0.5|MID|1|Mesic (Fakturace)|1.5|MID|2|Datum (Fakturace)|2.5|MID','pivotX':'0|Typ vyrobku|0.5|MID|1|Vyrobek|1.5|MID|2|Metrics|2.5|MID'}; var lang = {'pivotX':'pivot na osu X','sort':'t\x{0159}ídit','pivotY':'pivot na osu Y','down':'drill down','up':'drill up','export':'exportovat'};</script>
+END
+		print RT "</body></html>";
+		close(RT);
+	}
+	else {
+	    print $q->header( -location=>"graph2D.cgi?id=$ID.$Format2Dreport");
+	}
+}
+
+#--------------------------------------------------------------------------------------------------------------------------------------------
+
+sub data {
+	my $dataset = shift;
+	my $datasheet = shift;
+
+	my @@datarow = joinDataset(\$$dataset->{row});
+	my @@datacol = joinDataset(\$$dataset->{col});
+
+	my ( @@data, $legend, @@lhrefs, $x_label, $y_label );
+
+	if ( $datasheet eq 'rows' ) {
+	   for ( my $i=0;$i<@@datarow;$i++ ) {
+	       my @@datas;
+	       for ( my $j=0;$j<@@datacol;$j++ ) {
+	  	   push(@@datas,(exists $$dataset->{c}{$i}{$j}) ? $$dataset->{c}{$i}{$j} : undef);
+	       }
+	       push(@@{$data[$i]},@@datas);
+	   }
+	   unshift(@@data,\@@datacol);
+	   my $key = 0;
+	   foreach ( sort ( keys %{$$dataset->{colHeader}} ) ) {
+	      $x_label .= ($key == ( keys(%{$$dataset->{colHeader}}) - 1) ) ? $$dataset->{colHeader}{$_}{name} : $$dataset->{colHeader}{$_}{name}." | ";
+	      $key++;
+	   }
+	   $key = 0;
+	   foreach ( keys %{$$dataset->{rowHeader}} ) {
+	      if ( $$dataset->{rowHeader}{$_}{name} eq 'Metrics' ) {
+	          $y_label = "Metrics";
+	      }
+	      else {
+	          $y_label = "Metric";
+	      }
+#	      $y_label .= ($key == ( keys(%{$$dataset->{rowHeader}}) - 1) ) ? $$dataset->{rowHeader}{$_}{name} : $$dataset->{rowHeader}{$_}{name}." | ";
+#	      $key++;
+	   }
+	   $legend = \@@datarow;
+	}
+	if ( $datasheet eq 'cols' ) {
+	   for ( my $i=0;$i<@@datacol;$i++ ) {
+	       my @@datas;
+	       for ( my $j=0;$j<@@datarow;$j++ ) {
+	  	  push(@@datas,(exists $$dataset->{c}{$j}{$i}) ? $$dataset->{c}{$j}{$i} : undef);
+	       }
+	       push(@@{$data[$i]},@@datas);
+	   }
+	   unshift(@@data,\@@datarow);
+	   my $key = 0;
+	   foreach ( sort ( keys %{$$dataset->{rowHeader}} ) ) {
+	      $x_label .= ($key == ( keys(%{$$dataset->{rowHeader}}) - 1) ) ? $$dataset->{rowHeader}{$_}{name} : $$dataset->{rowHeader}{$_}{name}." | ";
+	      $key++;
+	   }
+	   $key = 0;
+	   foreach ( keys %{$$dataset->{colHeader}} ) {
+	      if ( $$dataset->{colHeader}{$_}{name} eq 'Metrics' ) {
+	          $y_label = "Metrics";
+	      }
+	      else {
+	          $y_label = "Metric";
+	      }
+#	      $y_label .= ($key == ( keys(%{$$dataset->{colHeader}}) - 1) ) ? $$dataset->{colHeader}{$_}{name} : $$dataset->{colHeader}{$_}{name}." | ";
+#	      $key++;
+	   }
+	   $legend = \@@datacol;
+	}
+
+	return ( $x_label, $y_label, $legend, @@data, );
+}
+
+#--------------------------------------------------------------------------------------------------------------------------------------------
+
+sub joinDataset {
+	my $dataset = shift;
+	my (@@data);
+	
+	for ( my $i=0; $i<scalar @@{$$dataset}; $i++ ) {
+	    my $rowItem;
+	    for ( my $j=0;$j<scalar @@{$$dataset->[$i]};$j++ ){
+	        $rowItem .= ($j == (scalar @@{$$dataset->[$i]}-1)) ? $$dataset->[$i][$j] : $$dataset->[$i][$j].'|';
+	    }
+	    push(@@data,$rowItem);
+	}
+	return @@data;
+}
+
+#--------------------------------------------------------------------------------------------------------------------------------------------
+
+sub defineAttr {
+	my $chart = shift;
+	my $name = shift;
+	my $x_label = shift;
+	my $y_label = shift;
+	my $layout = shift;
+	my $colors = shift;
+	my (%attr);
+
+	$attr{"t_margin"} = (exists $layout->{t_margin}) ? $layout->{t_margin} : 0;
+	$attr{"b_margin"} = (exists $layout->{b_margin}) ? $layout->{b_margin} : 0;
+	$attr{"l_margin"} = (exists $layout->{l_margin}) ? $layout->{l_margin} : 0;
+	$attr{"r_margin"} = (exists $layout->{r_margin}) ? $layout->{r_margin} : 0;
+	if ( $colors->{transparent} )  {
+	   $attr{"transparent"} = 1; 
+	}
+	else {
+	   $attr{"transparent"} = 0; 
+	}
+	if ( defined $colors->{bgclr} ) {
+	   my ($r,$g,$b) = split(/,/,$colors->{bgclr}); 
+	   $attr{"bgclr"} = rgb2hexa($r,$g,$b);
+	}
+	$attr{"legend_placement"} = 'RT';
+	if ( not ( $chart eq 'pie'  or  $chart eq 'pie3d' ) ) {
+	   $attr{"title"} = $name;
+	   $attr{"x_label"} = $x_label;
+	   $attr{"y_label"} = $y_label;
+	   $attr{"x_long_ticks"} = (exists $layout->{x_long_ticks}) ? $layout->{x_long_ticks} : 0;
+	   $attr{"y_long_ticks"} = (exists $layout->{y_long_ticks}) ? $layout->{y_long_ticks} : 0;
+	   $attr{"x_label_position"} = (exists $layout->{x_label_position}) ? $layout->{x_label_position} : 3/4;
+	   $attr{"y_label_position"} = (exists $layout->{y_label_position}) ? $layout->{y_label_position} : 3/4;
+	   $attr{"x_plot_values"} = (exists $layout->{x_plot_values}) ? $layout->{x_plot_values} : 0;
+	   $attr{"y_plot_values"} = (exists $layout->{y_plot_values}) ? $layout->{y_plot_values} : 0;
+	   $attr{"x_label_skip"} = (exists $layout->{x_label_skip}) ? $layout->{x_label_skip} : 1;
+	   $attr{"y_label_skip"} = (exists $layout->{y_label_skip}) ? $layout->{y_label_skip} : 1;
+	   $attr{"x_tick_offset"} = (exists $layout->{x_tick_offset}) ? $layout->{x_tick_offset} : 0;
+	   $attr{"x_labels_vertical"} = (exists $layout->{x_labels_vertical}) ? $layout->{x_labels_vertical} : 0;
+	   $attr{"axis_space"} = (exists $layout->{axis_space}) ? $layout->{axis_space} : 4;
+	   $attr{"text_space"} = (exists $layout->{text_space}) ? $layout->{text_space} : 8;
+	   if (defined $colors->{fgclr}) {
+	      my ($r,$g,$b) = split(/,/,$colors->{fgclr});
+	      $attr{"fgclr"} = rgb2hexa($r,$g,$b);
+	   }
+	   if (defined $colors->{labelclr}) {
+	      my ($r,$g,$b) = split(/,/,$colors->{labelclr});
+	      $attr{"labelclr"} = rgb2hexa($r,$g,$b);
+	   }
+	   if (defined $colors->{textclr}) {
+	      my ($r,$g,$b) = split(/,/,$colors->{textclr});
+	      $attr{"textclr"} = rgb2hexa($r,$g,$b);
+	   }
+	   if (defined $colors->{axislabelclr}) {
+	      my ($r,$g,$b) = split(/,/,$colors->{labelclr});
+	      $attr{"axislabelclr"} = rgb2hexa($r,$g,$b);
+	   }
+	   if (defined $colors->{borderclr}) {
+	      my ($r,$g,$b) = split(/,/,$colors->{borderclr});
+	      $attr{"borderclrs"} = rgb2hexa($r,$g,$b);
+	   }
+	}
+
+	return %attr;
+}
+
+#--------------------------------------------------------------------------------------------------------------------------------------------
+
+sub writeToSTDOUT {
+	my $gd = shift;
+	my $format = shift;
+	
+	print header("image/$format");
+	binmode STDOUT;
+	print $gd->$format;
+}
+
+#--------------------------------------------------------------------------------------------------------------------------------------------
+
+sub writeToImg {
+	my $gd = shift;
+	my $format = shift;
+	my $cache_dir = shift;
+	my $name = shift;
+
+	open(IMG, ">$cache_dir/$name.$format") or die $!;
+	binmode (IMG);
+	print IMG $$gd->$format;
+	close IMG;
+}
+
+#--------------------------------------------------------------------------------------------------------------------------------------------
+
+sub dclrs {
+	my $datas = shift;
+	my (@@data,$r,$g,$b);
+
+	foreach ( @@{$datas} ) {
+	    ($r,$g,$b) = split(/,/,$_);
+	    push(@@data,rgb2hexa($r,$g,$b));
+	} 
+
+	return @@data;
+}
+
+#--------------------------------------------------------------------------------------------------------------------------------------------
+
+sub rgb2hexa {
+	return unless @@_ == 3;
+	my $color = '#';
+	foreach my $cc (@@_) {
+	  $color .= sprintf("%02x", $cc);
+	}
+	return $color;
+
+}
+
+#--------------------------------------------------------------------------------------------------------------------------------------------
+
+1;
+@
+
+
+1.16
+log
+@loading RCache from DB
+@
+text
+@d1 1
+a1 1
+# $Id: run_graph2D.pl,v 1.15 2003/10/05 18:51:59 michald Exp $
+@
+
+
+1.15
+log
+@add prompt img to skins
+@
+text
+@d1 1
+a1 1
+# $Id: run_graph2D.pl,v 1.14 2003/10/05 08:14:29 vacula Exp $
+d20 1
+a20 1
+use Data::Dumper;
+d32 1
+a32 1
+	my $dataset = shift;
+d38 1
+a38 1
+	my ( $x_label, $y_label, $legend, @@data, ) = data( \$dataset , $style->{base}{sets} );
+d40 1
+a40 1
+	for ( my $i=1;$i<@@data;$i++ ) {
+d53 1
+a53 1
+	my $chart = "GD::Graph::".$style->{form};
+d56 1
+a56 1
+	my $graph = $chart->new( $style->{base}{width}, $style->{base}{height} );
+d59 2
+a60 3
+	my %attributes = defineAttr($style->{form},$name,$x_label,$y_label,$style->{layout},$style->{colors});
+	my @@dclrs = dclrs(\$style->{colors}{datas});
+	
+d120 2
+a121 2
+	my @@datarow = joinDataset(\$$$dataset->{row});
+	my @@datacol = joinDataset(\$$$dataset->{col});
+d129 1
+a129 1
+	  	   push(@@datas,(exists $$$dataset->{c}{$i}{$j}) ? $$$dataset->{c}{$i}{$j} : undef);
+d135 2
+a136 2
+	   foreach ( sort ( keys %{$$$dataset->{colHeader}} ) ) {
+	      $x_label .= ($key == ( keys(%{$$$dataset->{colHeader}}) - 1) ) ? $$$dataset->{colHeader}{$_}{name} : $$$dataset->{colHeader}{$_}{name}." | ";
+d140 2
+a141 2
+	   foreach ( keys %{$$$dataset->{rowHeader}} ) {
+	      if ( $$$dataset->{rowHeader}{$_}{name} eq 'Metrics' ) {
+d147 1
+a147 1
+#	      $y_label .= ($key == ( keys(%{$$$dataset->{rowHeader}}) - 1) ) ? $$$dataset->{rowHeader}{$_}{name} : $$$dataset->{rowHeader}{$_}{name}." | ";
+d156 1
+a156 1
+	  	  push(@@datas,(exists $$$dataset->{c}{$j}{$i}) ? $$$dataset->{c}{$j}{$i} : undef);
+d162 2
+a163 2
+	   foreach ( sort ( keys %{$$$dataset->{rowHeader}} ) ) {
+	      $x_label .= ($key == ( keys(%{$$$dataset->{rowHeader}}) - 1) ) ? $$$dataset->{rowHeader}{$_}{name} : $$$dataset->{rowHeader}{$_}{name}." | ";
+d167 2
+a168 2
+	   foreach ( keys %{$$$dataset->{colHeader}} ) {
+	      if ( $$$dataset->{colHeader}{$_}{name} eq 'Metrics' ) {
+d174 1
+a174 1
+#	      $y_label .= ($key == ( keys(%{$$$dataset->{colHeader}}) - 1) ) ? $$$dataset->{colHeader}{$_}{name} : $$$dataset->{colHeader}{$_}{name}." | ";
+d189 1
+a189 1
+	for ( my $i=0;$i<@@{$$dataset};$i++ ) {
+d191 2
+a192 2
+	    for ( my $j=0;$j<@@{$$dataset->[$i]};$j++ ){
+	        $rowItem .= ($j == (@@{$$dataset->[$i]}-1)) ? $$dataset->[$i][$j] : $$dataset->[$i][$j].'|';
+d297 1
+a297 1
+	foreach ( @@{$$datas} ) {
+@
+
+
+1.14
+log
+@interactive maps contains @@hrefs and @@lhrefs for left click, @@contexts for right click
+@
+text
+@d1 1
+a1 1
+# $Id: run_graph2D.pl,v 1.13 2003/10/04 10:30:24 michald Exp $
+d34 2
+d59 1
+a59 1
+	my %attributes = defineAttr($style->{form},$name,$x_label,$y_label,$style->{layout},$style->{colors},);
+d91 1
+d95 1
+a95 1
+<body onload="init_menu()">
+d103 1
+@
+
+
+1.13
+log
+@prototype of right click menu in graphs - need patch GDGraph-Map-1.05.patch
+@
+text
+@d1 1
+a1 1
+# $Id: run_graph2D.pl,v 1.12 2003/10/04 08:14:34 michald Exp $
+d37 1
+a37 1
+	my ( @@hrefs, @@lhrefs );	
+d39 1
+a39 1
+	    my (@@temp);
+d41 2
+a42 1
+	        push(@@temp,"return showMenu(this,'9210.fakturace')");
+d44 2
+a45 1
+	    push(@@{$hrefs[$i]},@@temp);
+d98 1
+a98 1
+	    my $map = new GD::Graph::Map($graph, contexts => \@@hrefs, lhrefs => \@@lhrefs );
+a107 5
+#open(HTML,">$cacheReport/$file") || return eval "print '<pre>something wrrrrrong!</pre>'";
+#binmode(HTML,":utf8");
+#print header(-charset=>$use_enc);
+#close RT ;
+
+@
+
+
+1.12
+log
+@writing 2D graphs html into cache
+@
+text
+@d1 1
+a1 1
+# $Id: run_graph2D.pl,v 1.11 2003/10/03 13:57:33 vacula Exp $
+a2 2
+use CGI qw(:standard);
+use CGI::Pretty;
+d4 1
+d41 1
+a41 1
+	        push(@@temp,"javascript:showMenu(this,'9210.fakturace')");
+d87 1
+d96 1
+a96 1
+	    my $map = new GD::Graph::Map($graph, hrefs => \@@hrefs, lhrefs => \@@lhrefs );
+d127 1
+a127 1
+	       my @@datas;my @@hrefss;
+@
+
+
+1.11
+log
+@interactive maps in graph2d
+@
+text
+@d1 1
+a1 1
+# $Id: run_graph2D.pl,v 1.10 2003/10/03 10:46:46 michald Exp $
+d27 1
+a27 1
+	my $id_report = shift;
+d42 1
+a42 1
+	        push(@@temp,"javascript:alert('Test in objects')");
+a49 1
+	my $format = "png";
+d51 1
+a51 1
+	my $name = $id_report; #(exists $style->{name}{$lang}) ? $style->{name}{$lang} : $id_report;
+d62 9
+a70 9
+	$graph->set_legend_font('/usr/X11R6/lib/X11/fonts/TTF/luximbi.ttf',7) if ( defined $legend );
+	$graph->set_title_font('/usr/X11R6/lib/X11/fonts/TTF/luximbi.ttf',7) if ( exists $attributes{title} );	
+#	$graph->set_label_font('/usr/X11R6/lib/X11/fonts/TTF/luximbi.ttf',7) if ( exists $attributes{label} );	
+	$graph->set_x_label_font('/usr/X11R6/lib/X11/fonts/TTF/luximbi.ttf',7) if ( exists $attributes{x_label} );	
+	$graph->set_y_label_font('/usr/X11R6/lib/X11/fonts/TTF/luximbi.ttf',7) if ( exists $attributes{y_label} );	
+	$graph->set_x_axis_font('/usr/X11R6/lib/X11/fonts/TTF/luximbi.ttf',7) if ( exists $attributes{x_plot_values} );	
+	$graph->set_y_axis_font('/usr/X11R6/lib/X11/fonts/TTF/luximbi.ttf',7) if ( exists $attributes{y_plot_values} );	
+#	$graph->set_values_font('/usr/X11R6/lib/X11/fonts/TTF/luximbi.ttf',7) if ( exists $attributes{x_plot_values} or exists $attributes{y_plot_values} );	
+	$graph->set_value_font('/usr/X11R6/lib/X11/fonts/TTF/luximbi.ttf',7) if ( exists $attributes{value} );
+d74 1
+a74 2
+#	writeToSTDOUT($gd,$format);
+	writeToImg(\$gd,$format,$cache_dir,$name);
+d76 1
+a76 1
+	if ( $style->{form} eq "pie" or $style->{form} eq "bars" or $style->{form} eq "lines" or $style->{form} eq "points" or $style->{form} eq "linespoints" ) {
+d78 18
+d97 6
+a102 1
+	    print $map->imagemap("graph2D.cgi?id=$id_report&cache=$cache_dir&format=$format", \@@data);
+d105 2
+a106 2
+	    print $q->header( -location=>"graph2D.cgi?id=$id_report&cache=$cache_dir&format=$format");
+#open(HTML,">html/$file") || return eval "print '<pre>something wrrrrrong!</pre>'";
+@
+
+
+1.10
+log
+@clarification of some skin images confusion
+@
+text
+@d1 1
+a1 1
+# $Id: run_graph2D.pl,v 1.9 2003/10/02 08:43:44 vacula Exp $
+d14 1
+d34 2
+d37 12
+a48 3
+	print header(-charset=>$use_enc);
+
+	my ( $x_label, $y_label, @@data ) = data( \$dataset , $style->{base}{sets} );
+a49 6
+	my @@hrefs = ["http://www.perl.org", 
+        	  "http://www.cpan.org", 
+		  "http://freshmeat.net", 
+		  "javascript:alert('Sample of using JavaScript');"
+	   ];
+
+d58 2
+a59 2
+#	my @@legend = @@datarow;
+
+d61 11
+a71 1
+#	$graph->set_legend(@@legend);
+a76 5
+	
+	my $map = new GD::Graph::Map($graph, hrefs => \@@hrefs);
+ 
+	print $map->imagemap("graph2D.cgi?id=$id_report&cache=$cache_dir&format=$format", \@@data);
+	
+d78 13
+d102 1
+a102 1
+	my (@@data,$x_label,$y_label);
+d106 1
+a106 1
+	       my @@datas;
+d114 1
+a114 1
+	   foreach ( keys %{$$$dataset->{colHeader}} ) {
+d120 8
+a127 2
+	      $y_label .= ($key == ( keys(%{$$$dataset->{rowHeader}}) - 1) ) ? $$$dataset->{rowHeader}{$_}{name} : $$$dataset->{rowHeader}{$_}{name}." | ";
+	      $key++;
+d129 1
+d141 1
+a141 1
+	   foreach ( keys %{$$$dataset->{rowHeader}} ) {
+d147 8
+a154 2
+	      $y_label .= ($key == ( keys(%{$$$dataset->{colHeader}}) - 1) ) ? $$$dataset->{colHeader}{$_}{name} : $$$dataset->{colHeader}{$_}{name}." | ";
+	      $key++;
+d156 1
+d159 1
+a159 1
+	return ($x_label,$y_label,@@data);
+d193 11
+a203 4
+#	if (defined $colors->{bgclr} ) {
+#	   $attr{"transparent"} = 0;
+#	   $attr{"bgclr"} = '#7fe310';
+#	}
+d220 20
+a239 9
+#	   if (defined $colors->{labelclr}) {
+#	      $attr{"labelclr"} = '#7fe310';
+#	   }
+#	   if (defined $colors->{textclr}) {
+#	      $attr{"textclr"} = '#7fe310';
+#	   }
+#	   if (defined $colors->{axislabelclr}) {
+#	      $attr{"axislabelclr"} = '#7fe310';
+#	   }
+d265 1
+a265 1
+	binmode IMG;
+d268 26
+@
+
+
+1.9
+log
+@generate 2D graphs
+@
+text
+@d1 1
+a1 1
+# $Id: run_graph2D.pl,v 1.8 2003/10/02 07:58:46 vacula Exp $
+d48 2
+a49 2
+#	my $graph = $chart->new( $style->{base}{width}, $style->{base}{height} );
+	my $graph = GD::Graph::bars->new(800, 600);
+@
+
+
+1.8
+log
+@generate 2D graph
+@
+text
+@d1 1
+a1 1
+# $Id: run_graph2D.pl,v 1.6 2003/09/30 16:36:38 vacula Exp $
+d63 2
+a64 2
+
+	print $map->imagemap("graf.cgi?id=$id_report&cache=$cache_dir&format=$format", \@@data);
+@
+
+
+1.7
+log
+@removed
+@
+text
+@d18 1
+d27 3
+d33 10
+a42 1
+#print header(-charset=>'utf-8');
+d46 15
+a60 1
+	my $name = $id_report;  #my $name = (exists $style->{name}{$lang}) ? $style->{name}{$lang} : $id_report;
+d62 3
+a64 3
+	my $width = (exists $style->{base}{width}) ? $style->{base}{width} : 400;
+	my $height = (exists $style->{base}{height}) ? $style->{base}{height} : 300;
+	my $datasheet = (exists $style->{base}{sets}) ? $style->{base}{sets} : 'rows';
+d66 12
+a77 2
+	my @@datarow = joinDataset(\$$dataset->{row});
+	my @@datacol = joinDataset(\$$dataset->{col});
+d84 1
+a84 1
+	  	   push(@@datas,(exists $$dataset->{c}{$i}{$j}) ? $$dataset->{c}{$i}{$j} : undef);
+d90 2
+a91 2
+	   foreach ( keys %{$$dataset->{colHeader}} ) {
+	      $x_label .= ($key == ( keys(%{$$dataset->{colHeader}}) - 1) ) ? $$dataset->{colHeader}{$_}{name} : $$dataset->{colHeader}{$_}{name}." | ";
+d95 2
+a96 2
+	   foreach ( keys %{$$dataset->{rowHeader}} ) {
+	      $y_label .= ($key == ( keys(%{$$dataset->{rowHeader}}) - 1) ) ? $$dataset->{rowHeader}{$_}{name} : $$dataset->{rowHeader}{$_}{name}." | ";
+d104 1
+a104 1
+	  	  push(@@datas,(exists $$dataset->{c}{$j}{$i}) ? $$dataset->{c}{$j}{$i} : undef);
+d110 2
+a111 2
+	   foreach ( keys %{$$dataset->{rowHeader}} ) {
+	      $x_label .= ($key == ( keys(%{$$dataset->{rowHeader}}) - 1) ) ? $$dataset->{rowHeader}{$_}{name} : $$dataset->{rowHeader}{$_}{name}." | ";
+d115 2
+a116 2
+	   foreach ( keys %{$$dataset->{colHeader}} ) {
+	      $y_label .= ($key == ( keys(%{$$dataset->{colHeader}}) - 1) ) ? $$dataset->{colHeader}{$_}{name} : $$dataset->{colHeader}{$_}{name}." | ";
+a119 10
+	  
+	my %attributes = defineAttr($style->{form},$name,$x_label,$y_label,$style->{layout},$style->{colors},);
+#	my @@legend = @@datarow;
+	
+	my $graph = $chart->new(500, 400);
+#	my $graph = GD::Graph::pie->new(500, 400);
+	
+	
+	$graph->set( %attributes ) or die $graph->error;
+#	$graph->set_legend(@@legend);
+d121 1
+a121 4
+	my $gd = $graph->plot(\@@data) or die $graph->error;
+	
+	writeToSTDOUT($gd,$format);
+	writeToFile($gd,$format,$cache_dir,$name);
+a141 24
+sub writeToSTDOUT {
+	my $gd = shift;
+	my $format = shift;
+	
+	print header("image/$format");
+	binmode STDOUT;
+	print $gd->$format;
+}
+
+#--------------------------------------------------------------------------------------------------------------------------------------------
+
+sub writeToFile {
+	my $gd = shift;
+	my $format = shift;
+	my $cache_dir = shift;
+	my $name = shift;
+	
+	open(IMG, ">$cache_dir/$name.$format") or die $!;
+	binmode IMG;
+	print IMG $gd->$format;
+}
+
+#--------------------------------------------------------------------------------------------------------------------------------------------
+
+d187 25
+@
+
+
+1.6
+log
+@defined attr for graphs
+@
+text
+@d1 1
+a1 1
+# $Id: run_graph2D.pl,v 1.5 2003/09/30 07:10:53 michald Exp $
+@
+
+
+1.5
+log
+@handling data by reference in exportToHTML
+@
+text
+@d1 1
+a1 1
+# $Id: run_graph2D.pl,v 1.4 2003/09/29 15:44:08 vacula Exp $
+d7 1
+d25 4
+a28 4
+my $id_report = shift;
+my $style = shift;
+my $cache_dir = shift;
+my $dataset = shift;
+d31 67
+a97 131
+my $format = "png";
+my $chart = "GD::Graph::".$style->{form};
+my $name = $id_report;  #my $name = (exists $style->{name}{$lang}) ? $style->{name}{$lang} : $id_report;
+
+my $width = (exists $style->{base}{width}) ? $style->{base}{width} : 400;
+my $height = (exists $style->{base}{height}) ? $style->{base}{height} : 300;
+my $datasheet = (exists $style->{base}{sets}) ? $style->{base}{sets} : 'rows';
+my $datasheet = (exists $style->{base}{sets}) ? $style->{base}{sets} : 'rows';
+my $t_margin = (exists $style->{layout}{t_margin}) ? $style->{layout}{t_margin} : 0;
+my $b_margin = (exists $style->{layout}{b_margin}) ? $style->{layout}{b_margin} : 0;
+my $l_margin = (exists $style->{layout}{l_margin}) ? $style->{layout}{l_margin} : 0;
+my $r_margin = (exists $style->{layout}{r_margin}) ? $style->{layout}{r_margin} : 0;
+
+#   if ($style->{form} ne 'pie' or $style->{form} ne 'pie3d') {
+
+my $x_long_ticks = (exists $style->{layout}{x_long_ticks}) ? $style->{layout}{x_long_ticks} : 0;
+my $y_long_ticks = (exists $style->{layout}{y_long_ticks}) ? $style->{layout}{y_long_ticks} : 0;
+my $x_label_position = (exists $style->{layout}{x_label_position}) ? $style->{layout}{x_label_position} : 3/4;
+my $y_label_position = (exists $style->{layout}{y_label_position}) ? $style->{layout}{y_label_position} : 3/4;
+my $x_plot_values = (exists $style->{layout}{x_plot_values}) ? $style->{layout}{x_plot_values} : 0;
+my $y_plot_values = (exists $style->{layout}{y_plot_values}) ? $style->{layout}{y_plot_values} : 0;
+my $x_label_skip = (exists $style->{layout}{x_label_skip}) ? $style->{layout}{x_label_skip} : 1;
+my $y_label_skip = (exists $style->{layout}{y_label_skip}) ? $style->{layout}{y_label_skip} : 1;
+my $x_tick_offset = (exists $style->{layout}{x_tick_offset}) ? $style->{layout}{x_tick_offset} : 0;
+my $x_labels_vertical = (exists $style->{layout}{x_labels_vertical}) ? $style->{layout}{x_labels_vertical} : 0;
+my $axis_space = (exists $style->{layout}{axis_space}) ? $style->{layout}{axis_space} : 4;
+my $text_space = (exists $style->{layout}{text_space}) ? $style->{layout}{text_space} : 8;
+
+#}
+
+my @@datarow = joinDataset(\$$dataset->{row});
+my @@datacol = joinDataset(\$$dataset->{col});
+my (@@data,$x_label,$y_label);
+
+if ( $datasheet eq 'rows' ) {
+   for ( my $i=0;$i<@@datarow;$i++ ) {
+       my @@datas;
+       for ( my $j=0;$j<@@datacol;$j++ ) {
+  	   push(@@datas,(exists $$dataset->{c}{$i}{$j}) ? $$dataset->{c}{$i}{$j} : undef);
+       }
+       push(@@{$data[$i]},@@datas);
+   }
+   unshift(@@data,\@@datacol);
+   my $key = 0;
+   foreach ( keys %{$$dataset->{colHeader}} ) {
+      $x_label .= ($key == ( keys(%{$$dataset->{colHeader}}) - 1) ) ? $$dataset->{colHeader}{$_}{name} : $$dataset->{colHeader}{$_}{name}." | ";
+      $key++;
+   }
+   $key = 0;
+   foreach ( keys %{$$dataset->{rowHeader}} ) {
+      $y_label .= ($key == ( keys(%{$$dataset->{rowHeader}}) - 1) ) ? $$dataset->{rowHeader}{$_}{name} : $$dataset->{rowHeader}{$_}{name}." | ";
+      $key++;
+   }
+}
+if ( $datasheet eq 'cols' ) {
+   for ( my $i=0;$i<@@datacol;$i++ ) {
+       my @@datas;
+       for ( my $j=0;$j<@@datarow;$j++ ) {
+  	  push(@@datas,(exists $$dataset->{c}{$j}{$i}) ? $$dataset->{c}{$j}{$i} : undef);
+       }
+       push(@@{$data[$i]},@@datas);
+   }
+   unshift(@@data,\@@datarow);
+   my $key = 0;
+   foreach ( keys %{$$dataset->{rowHeader}} ) {
+      $x_label .= ($key == ( keys(%{$$dataset->{rowHeader}}) - 1) ) ? $$dataset->{rowHeader}{$_}{name} : $$dataset->{rowHeader}{$_}{name}." | ";
+      $key++;
+   }
+   $key = 0;
+   foreach ( keys %{$$dataset->{colHeader}} ) {
+      $y_label .= ($key == ( keys(%{$$dataset->{colHeader}}) - 1) ) ? $$dataset->{colHeader}{$_}{name} : $$dataset->{colHeader}{$_}{name}." | ";
+      $key++;
+   }
+}
+
+#-------------------------------------------------------------------  
+#  @@data = ( 
+#    ["1st","2nd","3rd","4th","5th","6th","7th", "8th", "9th"],
+#    [    1,    2,    5,    6,    3,  1.5,    1,     3,     4],
+#    [ sort { $a <=> $b } (1, 2, 5, 6, 3, 1.5, 1, 3, 4) ]
+#  );
+#-------------------------------------------------------------------
+  
+  
+#my @@legend = @@{$datacol};
+
+#my $graph = $chart->new(500, 400);
+my $graph = GD::Graph::pie->new(500, 400);
+
+#   $graph->set_legend(@@legend);
+
+   $graph->set(
+      t_margin           => $t_margin,
+      b_margin           => $b_margin,
+      l_margin           => $l_margin,
+      r_margin           => $r_margin,
+      title              => $name,
+#   if ($style->{form} ne 'pie' or $style->{form} ne 'pie3d') {
+#      x_long_ticks	 => $x_long_ticks,
+#      y_long_ticks	 => $y_long_ticks,
+#      x_label_position	 => $x_label_position,
+#      y_label_position	 => $y_label_position,
+#      x_label            => $x_label,
+#      y_label            => $y_label,
+#   }
+
+#      x_label_position	=>1/2,
+#      y_label_position	=>1/2,
+#      y_max_value       => 8,
+#      y_tick_number     => 10,
+#      y_label_skip      => 2
+#      x_max_value       => 5,
+#      x_tick_number     => 15,
+#      x_label_skip      => 6,
+#      x_labels_vertical => 1,
+#      show_values	=> 1,
+#      values_vertical	=> 1,
+#      values_space	=> 4,
+#      logo              => 'html/logo.png',
+#      logo_position     => 'LL',
+#      legend_placement  => 'RT',
+   ) or die $graph->error;
+
+my $gd = $graph->plot(\@@data) or die $graph->error;
+
+writeToSTDOUT($gd,$format);
+writeToFile($gd,$format,$cache_dir,$name);
+
+#print "<pre>".Dumper(@@data)."</pre>";
+#print "<pre>".Dumper($$dataset)."</pre>";
+   
+d103 11
+a113 12
+my $dataset = shift;
+my (@@data);
+
+for ( my $i=0;$i<@@{$$dataset};$i++ ) {
+    my $rowItem;
+    for ( my $j=0;$j<@@{$$dataset->[$i]};$j++ ){
+        $rowItem .= ($j == (@@{$$dataset->[$i]}-1)) ? $$dataset->[$i][$j] : $$dataset->[$i][$j].'|';
+    }
+    push(@@data,$rowItem);
+}
+
+return @@data;
+d119 7
+a125 2
+my $gd = shift;
+my $format = shift;
+d127 1
+a127 3
+print header("image/$format");
+binmode STDOUT;
+print $gd->$format;
+d129 9
+d142 43
+a184 9
+sub writeToFile {
+my $gd = shift;
+my $format = shift;
+my $cache_dir = shift;
+my $name = shift;
+
+open(IMG, ">$cache_dir/$name.$format") or die $!;
+binmode IMG;
+print IMG $gd->$format;
+d186 1
+@
+
+
+1.4
+log
+@implement some parameters
+@
+text
+@d1 1
+a1 1
+# $Id: run_graph2D.pl,v 1.3 2003/09/29 05:43:13 michald Exp $
+d60 2
+a61 2
+my @@datarow = joinDataset($dataset->{row});
+my @@datacol = joinDataset($dataset->{col});
+d68 1
+a68 1
+  	   push(@@datas,(exists $dataset->{c}{$i}{$j}) ? $dataset->{c}{$i}{$j} : undef);
+d74 2
+a75 2
+   foreach ( keys %{$dataset->{colHeader}} ) {
+      $x_label .= ($key == ( keys(%{$dataset->{colHeader}}) - 1) ) ? $dataset->{colHeader}{$_}{name} : $dataset->{colHeader}{$_}{name}." | ";
+d79 2
+a80 2
+   foreach ( keys %{$dataset->{rowHeader}} ) {
+      $y_label .= ($key == ( keys(%{$dataset->{rowHeader}}) - 1) ) ? $dataset->{rowHeader}{$_}{name} : $dataset->{rowHeader}{$_}{name}." | ";
+d88 1
+a88 1
+  	  push(@@datas,(exists $dataset->{c}{$j}{$i}) ? $dataset->{c}{$j}{$i} : undef);
+d94 2
+a95 2
+   foreach ( keys %{$dataset->{rowHeader}} ) {
+      $x_label .= ($key == ( keys(%{$dataset->{rowHeader}}) - 1) ) ? $dataset->{rowHeader}{$_}{name} : $dataset->{rowHeader}{$_}{name}." | ";
+d99 2
+a100 2
+   foreach ( keys %{$dataset->{colHeader}} ) {
+      $y_label .= ($key == ( keys(%{$dataset->{colHeader}}) - 1) ) ? $dataset->{colHeader}{$_}{name} : $dataset->{colHeader}{$_}{name}." | ";
+d159 1
+a159 1
+#print "<pre>".Dumper($dataset)."</pre>";
+d169 1
+a169 1
+for ( my $i=0;$i<@@{$dataset};$i++ ) {
+d171 2
+a172 2
+    for ( my $j=0;$j<@@{$dataset->[$i]};$j++ ){
+        $rowItem .= ($j == (@@{$dataset->[$i]}-1)) ? $dataset->[$i][$j] : $dataset->[$i][$j].'|';
+@
+
+
+1.3
+log
+@new version of the metadata - multiple attribute PK implementation; improvement of the PrepareSQL
+@
+text
+@d1 1
+a1 1
+# $Id$
+d25 1
+a25 1
+my $typeOfGraph = "GD::Graph::".shift;
+d28 1
+a29 1
+my $name = $id_report;
+d31 26
+a56 1
+my $datasheet = 'row';
+d58 1
+a58 1
+#print header(-charset=>'utf-8');
+d64 1
+a64 1
+if ( $datasheet eq 'row' ) {
+d84 1
+a84 1
+if ( $datasheet eq 'col' ) {
+d105 9
+d115 3
+a117 2
+my $graph = $typeOfGraph->new(500, 400);
+#my $graph = GD::Graph::bars3d->new(500, 400);
+d122 16
+a137 5
+      x_label           => $x_label,
+      y_label           => $y_label,
+      title             => $name,
+      x_label_position	=>1/2,
+      y_label_position	=>1/2,
+d144 6
+a149 6
+      x_labels_vertical => 1,
+      show_values	=> 1,
+      values_vertical	=> 1,
+      values_space	=> 4,
+      logo              => 'html/logo.png',
+      logo_position     => 'LL',
+@
+
+
+1.2
+log
+@define and return graph2d
+@
+text
+@d1 1
+a1 1
+#!/usr/bin/perl
+@
+
+
+1.1
+log
+@define and return graph2d
+@
+text
+@d102 3
+@
+

@@ -1,0 +1,70 @@
+head	1.2;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2003.11.07.10.12.52;	author numberone;	state dead;
+branches;
+next	1.1;
+
+1.1
+date	2003.11.06.14.31.46;	author numberone;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@documentation 474 lines
+@
+text
+@
+Installing and setting up DAD daemon
+------------------------------------
+
+The BEE Project's architecture is distributed over several hosts.
+On all these machines there must be running DAD server, daemon
+gaining access to host's data sources or CPU resources.
+
+In minimal case, you can run BEE only on one machine. Even so,
+you need to run DAD daemon there!
+
+You must install DAD daemon on all hosts you plan to use in
+ETL process. Then you can use their's data or CPU resources.
+
+To install DAD daemon to particular host, you will need to
+
+  o  Copy installation tarball to these hosts
+  o  Install all required packages and modules
+     Note: You will not need Tk modules for DAD daemon.
+  o  Compile and install libNet and libData
+
+Now you can invoke DAD daemon using following commands:
+
+    bash$ cd $BEEDIR/dad
+    bash$ ./dad.pl
+    listenning on port 2333
+
+Consider automatical invoking of dad daemon on system startup.
+DAD daemon do not require root priviledges, but all data sources,
+that we wish to access (especially files stored on host's filesystem),
+must be readable by user executing DAD!
+
+
+@
+
+
+1.1
+log
+@demo updates (display:// problem)
+@
+text
+@@
+

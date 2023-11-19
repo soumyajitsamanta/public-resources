@@ -1,0 +1,157 @@
+head	1.5;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.5
+date	2003.10.31.12.47.54;	author jiri_schmid;	state dead;
+branches;
+next	1.4;
+
+1.4
+date	2003.10.01.15.29.37;	author jiri_schmid;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2003.10.01.05.38.25;	author michald;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2003.09.30.21.05.38;	author michald;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2003.09.30.19.39.17;	author michald;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.5
+log
+@mod perl rocks!
+@
+text
+@#-----------------------------------------------------
+#  Bear Tabs Structure Definition
+#-----------------------------------------------------
+# $Id: tabs.def,v 1.4 2003/10/01 15:29:37 jiri_schmid Exp $
+
+use utf8;
+
+#__________________________________________________________
+#
+
+our $tabsLogo = 'Insight Strategy, a. s.&nbsp;';	# Tabs Right Side Logo
+
+our $Tabs={
+#	H=>{name=>'Home',bg=>'006600',bgg=>'555555',cgi=>'home.shtml',img=>'home'},
+#	F=>{name=>'Folders',bg=>'660000',bgg=>'555555',cgi=>'fold.cgi',img=>'edit'},
+	R=>{name=>$lang->{'Result'},bg=>'006666',bgg=>'555555',cgi=>'run.cgi',img=>'table'},
+	D=>{name=>$lang->{'Debug'},bg=>'666666',bgg=>'444444',cgi=>'debug.cgi',img=>'debug'},
+	P=>{name=>$lang->{'Preferences'},bg=>'cc9900',bgg=>'885500',cgi=>'prefer.cgi',img=>'prefer'},
+	A=>{name=>$lang->{'Admin'},bg=>'0099CC',bgg=>'005588',cgi=>'admin.cgi',img=>'admin'},
+	E=>{name=>$lang->{'Edit'},bg=>'003c9b',bgg=>'002077',cgi=>'edit.cgi',img=>'fold'},
+	L=>{name=>$lang->{'LDM'},bg=>'007040',bgg=>'005030',cgi=>'ldm.cgi',img=>'fold'},
+};
+
+our @@Tabs=('E','P','A','L','D'); #have to be set manualy to define order of tabs
+
+our $TabsDef={
+	G=>{name=>$lang->{'New Grid'},id=>'NewGrid',cgi=>'edit.cgi?Action=NewGrid&',img=>'grid',target=>'body'},
+	G3=>{name=>$lang->{'New Graph3d'},id=>'NewGraph3d',cgi=>'edit.cgi?Action=NewGraph3d&',img=>'graph3d',target=>'body'},
+	Fi=>{name=>$lang->{'New Filter'},id=>'NewFilter',cgi=>'edit.cgi?Action=NewFilter&',img=>'filter',target=>'body'},
+	R=>{name=>$lang->{'New Report'},id=>'NewReport',cgi=>'edit.cgi?Action=NewReport&',img=>'report',target=>'body'},
+	Fo=>{name=>$lang->{'New Format'},id=>'NewFormat',cgi=>'edit.cgi?Action=NewFormat&',img=>'format',target=>'body'},
+	F3=>{name=>$lang->{'New Format3d'},id=>'NewFormat3d',cgi=>'edit.cgi?Action=NewFormat3d&',img=>'format3d',target=>'body'},
+	F2=>{name=>$lang->{'New Format2d'},id=>'NewFormat2d',cgi=>'edit.cgi?Action=NewFormat2d&',img=>'format2d',target=>'body'},
+	M=>{name=>$lang->{'New Metric'},id=>'NewMetric',cgi=>'edit.cgi?Action=NewMetric&',img=>'metric',target=>'body'},
+	P=>{name=>$lang->{'New Param'},id=>'NewParam',cgi=>'edit.cgi?Action=NewParam&',img=>'param',target=>'body'},
+	Cop=>{name=>$lang->{'Tabs Duplicate'},id=>'Duplicate',cgi=>'edit.cgi?',img=>'copy',target=>'body'},	
+	Del=>{name=>$lang->{'Tabs Delete'},id=>'Remove',cgi=>'edit.cgi?',img=>'delete',target=>'body'},
+	UU=>{name=>$lang->{'New User'},id=>'NewUser',cgi=>'admin.cgi?Action=NewUser',img=>'single',target=>'body'},
+	UR=>{name=>$lang->{'New Role'},id=>'NewRole',cgi=>'admin.cgi?Action=NewRole',img=>'role',target=>'body'},
+	UG=>{name=>$lang->{'New Group'},id=>'NewGroup',cgi=>'admin.cgi?Action=NewGroup',img=>'group',target=>'body'}
+
+};
+
+our @@TabsEdit=('M','Fi','Fo','F2','F3','G','G3','P','R','|','Cop','Del');
+
+our @@TabsAdmin=('UU','UG','UR','|','Cop','Del');
+
+#__________________________________________________________
+#
+
+1;
+@
+
+
+1.4
+log
+@prompt implemented
+@
+text
+@d4 1
+a4 1
+# $Id: tabs.def,v 1.3 2003/10/01 05:38:25 michald Exp $
+@
+
+
+1.3
+log
+@basic impl. of LDM preview
+@
+text
+@d4 1
+a4 1
+# $Id: tabs.def,v 1.2 2003/09/30 21:05:38 michald Exp $
+d35 1
+d44 1
+a44 1
+our @@TabsEdit=('M','Fi','Fo','F2','F3','G','G3','R','|','Cop','Del');
+@
+
+
+1.2
+log
+@fixing of the tabs css
+@
+text
+@d4 1
+a4 1
+# $Id: tabs.def,v 1.1 2003/09/30 19:39:17 michald Exp $
+d21 1
+a21 1
+	L=>{name=>$lang->{'LDM'},bg=>'007040',bgg=>'005030',cgi=>'edit.cgi',img=>'fold'},
+@
+
+
+1.1
+log
+@moving tabs definition out from the language def files
+@
+text
+@d4 1
+a4 1
+# $Id: const.def,v 1.63 2003/09/30 15:46:26 jiri_schmid Exp $
+d11 2
+d14 8
+a21 8
+#	H=>{name=>'Home',bg=>'006600',cgi=>'home.shtml',img=>'home'},
+#	F=>{name=>'Folders',bg=>'660000',cgi=>'fold.cgi',img=>'edit'},
+	R=>{name=>$lang->{'Result'},bg=>'006666',cgi=>'run.cgi',img=>'table'},
+	D=>{name=>$lang->{'Debug'},bg=>'666666',cgi=>'debug.cgi',img=>'debug'},
+	P=>{name=>$lang->{'Preferences'},bg=>'cc9900',cgi=>'prefer.cgi',img=>'prefer'},
+	A=>{name=>$lang->{'Admin'},bg=>'0099CC',cgi=>'admin.cgi',img=>'admin'},
+	E=>{name=>$lang->{'Edit'},bg=>'003c9b',cgi=>'edit.cgi',img=>'fold'},
+	L=>{name=>$lang->{'LDM'},bg=>'007040',cgi=>'edit.cgi',img=>'fold'},
+@
+

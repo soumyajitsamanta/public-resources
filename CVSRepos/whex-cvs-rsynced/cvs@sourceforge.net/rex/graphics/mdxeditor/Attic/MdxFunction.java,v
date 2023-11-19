@@ -1,0 +1,77 @@
+head	1.2;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2005.06.28.13.38.28;	author igorludi;	state dead;
+branches;
+next	1.1;
+
+1.1
+date	2005.06.28.11.35.03;	author igorludi;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@*** empty log message ***
+@
+text
+@package rex.graphics.mdxeditor;
+
+import javax.swing.ImageIcon;
+import rex.utils.S;
+class MdxFunction{
+      private String name, description, syntax;
+
+      static ImageIcon icon;
+      static {
+         icon = S.getAppIcon("mdxfunction.gif");
+      }
+
+
+      public MdxFunction(String _name, String _description, String _syntax){
+         name = _name;
+         description = _description;
+         syntax = _syntax;
+      }
+      public String getName(){
+         return name;
+      }
+      public String getDescription(){
+         return description;
+      }
+      public String getSyntax(){
+         return syntax;
+      }
+      public String toString(){
+         return name;
+      }
+      public String getToolTip(){
+         return "<html><b>Name:</b>   " + name
+                + "<br><b>Desc:</b>   " + description
+                + "<br><b>Sytnax:</b> " + syntax
+                + "</html>";
+      }
+      public ImageIcon getIcon(){
+         return icon;
+      }
+   }
+@
+
+
+1.1
+log
+@first time commit
+@
+text
+@@
+

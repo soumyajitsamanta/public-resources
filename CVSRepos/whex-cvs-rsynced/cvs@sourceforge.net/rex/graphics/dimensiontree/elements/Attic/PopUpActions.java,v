@@ -1,0 +1,78 @@
+head	1.2;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2005.06.28.13.38.27;	author igorludi;	state dead;
+branches;
+next	1.1;
+
+1.1
+date	2005.06.28.11.35.03;	author igorludi;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@*** empty log message ***
+@
+text
+@package rex.graphics.dimensiontree.elements;
+import rex.utils.Languages;
+import java.util.HashMap;
+
+/**
+ * <p>Title: WHEX</p>
+ * <p>Description: </p>
+ * <p>Copyright: Copyright (c) 2003</p>
+ * <p>Company: </p>
+ * @@author igor
+ * @@version 1.0
+ */
+
+public class PopUpActions {
+   public static final String
+       FLATTEN_DIMENSIONS,
+       GROUP_HIERARCHIES_BY_DIMENSION,
+       SEND_TO_ROWS,
+       SEND_TO_COLUMNS,
+       SEND_TO_MEASURES,
+       SEND_TO_PAGES;
+
+    public static HashMap popUpCaptions;
+    static {
+       FLATTEN_DIMENSIONS = "0";
+       GROUP_HIERARCHIES_BY_DIMENSION = "1";
+       SEND_TO_ROWS = "2";
+       SEND_TO_COLUMNS = "3";
+       SEND_TO_MEASURES = "4";
+       SEND_TO_PAGES = "5";
+
+
+       popUpCaptions = new HashMap(10);
+       popUpCaptions.put(FLATTEN_DIMENSIONS,"Flatten dimensions (lose hierarchies)");
+       popUpCaptions.put(GROUP_HIERARCHIES_BY_DIMENSION,"Group hierarchies by dimension");
+       popUpCaptions.put(SEND_TO_ROWS, "Send to rows");
+       popUpCaptions.put(SEND_TO_COLUMNS, "Send to columns");
+       popUpCaptions.put(SEND_TO_MEASURES, "Send to measures");
+       popUpCaptions.put(SEND_TO_PAGES, "Send to pages");
+    }
+
+}@
+
+
+1.1
+log
+@first time commit
+@
+text
+@@
+

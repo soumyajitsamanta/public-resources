@@ -1,0 +1,120 @@
+head	1.2;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2003.04.11.14.02.28;	author jiri_schmid;	state dead;
+branches;
+next	1.1;
+
+1.1
+date	2003.04.10.14.21.37;	author jiri_schmid;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@filter.js & metric.js optimalized and split in filter_metric.js
+@
+text
+@function check_content(isin){
+var MPole = parent.frames['tree_iframe'].Tree0; //contains arrays of strings
+isin = String(isin).replace(/\[/g,"\\[");
+isin = String(isin).replace(/\]/g,"\\]");
+if (isin.match(/\./)) 
+	{var bckp = isin;
+	 var rgxP = new RegExp("[\|]"+isin.match(/^[^\.]*/)+"[\|]");
+	 for (I in MPole) {if (MPole[I].match(rgxP)) {var hlpX = MPole[I].split("|"); isin = hlpX[0]+isin.match(/\..*$/); break;};}
+	}
+var rgxp = new RegExp("[\|]"+isin+"[\|]");
+for (I in MPole) {if (MPole[I].match(rgxp)) {var hlpX = MPole[I].split("|"); return (hlpX[0]);}}
+return (bckp) ? bckp : isin.replace(/\\/g,"");
+}
+
+function check_metric_syntax(str){
+var pole = str.split("");
+var exprt = str;
+var round_bracket = 0;
+var square_bracket = 0;
+var from = 0; 
+var too = 0;
+ function returner(I) { return (pole[I]+msg_text("position")+I) };
+ function whitespace(i) {while (String(pole[i]).match(/\s/)) i++; return pole[i];}
+ function wrong(i){ var test = whitespace(i); if (test) {if (test.match(/[\+\-\*\/\]\)]/)) return true;} else return true; return false;}
+ function right(i){ var test = whitespace(i); if (test) {if (test.match(/[^\+\-\*\/\]\)]/)) return true;} else return false; return false;}
+ function defauld(i){ var test = whitespace(i); if (test) {if (test.match(/[\+\-\*\/]/)) {return true;}} else return true; return false;}
+ function re_place(what,by) {
+ 	what = String(what).replace(/\[/g,"\\[");
+	what = String(what).replace(/\]/g,"\\]");
+	var rgxp = new RegExp(what); exprt = String(exprt).replace(rgxp,by);
+	}
+for (i in pole) {
+	switch (pole[i]) {
+		case "(": {round_bracket++; i++; if (wrong(i)) return returner(i); break;}
+		case ")": {round_bracket--; i++; if (right(i)) return returner(i); break;}
+		case "[": {i++; if (square_bracket == 0) from = i; square_bracket++; if (wrong(i)) return returner(i); break;}
+		case "]": {square_bracket--; if (square_bracket == 0) too = i; i++; if (right(i)) return returner(i); break;}
+		case "+": {i++; if (wrong(i)) return returner(i); break;}
+		case "-": {i++; if (wrong(i)) return returner(i); break;}
+		case "/": {i++; if (wrong(i)) return returner(i); break;}
+		case "*": {i++; if (wrong(i)) return returner(i); break;}
+		default: {if (String(pole[i]).match(/\s/)) {continue} else {i++; if (defauld(i)) return returner(i); break;}}
+		break;
+		}
+	if (from > 0 && too > 0) 
+		{var what = str.substring(from,too);
+		 var cntntID = check_content(what);
+		 if (what == cntntID) return what;
+		 re_place(what,cntntID);
+		 from = 0;
+		 too = 0;}
+	}
+if (round_bracket == 0 && square_bracket == 0) {} else return msg_text("bracket error");
+document.metric.expr_id.value = exprt.replace(/\s{2,}/g," "); //names replaced by id
+return 0;
+}
+
+function subst_ID_expr(param){
+var MPole = parent.frames['tree_iframe'].Tree0;
+var ided_str = String(document.getElementById(param+"_id").value);
+var subst_str = ided_str;
+var poleID = ided_str.match(/[^\[]*\]/g);
+for (i in poleID)
+	{
+	poleID[i] = String(poleID[i]).replace(/.$/,"");
+	var rgxp = new RegExp('^'+poleID[i]+'\\|');
+	for (I in MPole) {
+		if (MPole[I].match(rgxp)) 
+			{
+			var hlprgxp = new RegExp("\\["+poleID[i]+"\\]");
+			var hlp = String(MPole[I]).split("|");
+			subst_str = subst_str.replace(hlprgxp,"["+hlp[2]+"]");}
+		}
+	}
+document.getElementById(param).value = subst_str;
+}
+
+function metric_checker(){
+var str = document.metric.expr.value;
+var pass = check_metric_syntax(str);
+if (pass==0) { reset_tree_name(); return true;}
+else {var hlp = msg_text("syntax error")+pass; alert(hlp); return false;};
+}
+@
+
+
+1.1
+log
+@metric, filter, report substitutes IDs by javascript, metric & filter resets the original expresion
+@
+text
+@@
+

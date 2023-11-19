@@ -1,0 +1,100 @@
+head	1.2;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2007.07.11.09.09.51;	author pyadav;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2006.01.13.12.30.56;	author igorludi;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@Modified file's for Rex 0.7.
+@
+text
+@package rex.graphics.dimensiontree.elements;
+import rex.utils.Languages;
+import java.util.HashMap;
+import rex.utils.*;//sbalda
+
+/**
+ * <p>Title: WHEX</p>
+ * <p>Description: </p>
+ * <p>Copyright: Copyright (c) 2003</p>
+ * <p>Company: </p>
+ * @@author igor
+ * @@version 1.0
+ */
+
+public class PopUpActions {
+     public static String
+       FLATTEN_DIMENSIONS,
+       GROUP_HIERARCHIES_BY_DIMENSION,
+       SEND_TO_ROWS,
+       SEND_TO_COLUMNS,
+       SEND_TO_MEASURES,
+       SEND_TO_PAGES;
+
+    public static HashMap popUpCaptions;
+    static {
+       FLATTEN_DIMENSIONS = "0";
+       GROUP_HIERARCHIES_BY_DIMENSION = "1";
+       SEND_TO_ROWS = "2";
+       SEND_TO_COLUMNS = "3";
+       SEND_TO_MEASURES = "4";
+       SEND_TO_PAGES = "5";
+ /**
+  * Copyright (C) 2006 CINCOM SYSTEMS, INC.
+  * All Rights Reserved
+  * Copyright (C) 2006 Igor Mekterovic
+  * All Rights Reserved
+  */ 
+/* implementing localization */
+       popUpCaptions = new HashMap(10);
+       popUpCaptions.put(FLATTEN_DIMENSIONS,I18n.getString("menu.flattenDims"));
+       popUpCaptions.put(GROUP_HIERARCHIES_BY_DIMENSION,I18n.getString("menu.groupDim"));
+       popUpCaptions.put(SEND_TO_ROWS,I18n.getString("menu.sendToRows"));
+       popUpCaptions.put(SEND_TO_COLUMNS,I18n.getString("menu.sendToCols"));
+       popUpCaptions.put(SEND_TO_MEASURES, I18n.getString("menu.sendToMeasures"));
+       popUpCaptions.put(SEND_TO_PAGES, I18n.getString("menu.sendToPages"));
+         /* end of modification for I18n */
+
+    }
+
+}@
+
+
+1.1
+log
+@*** empty log message ***
+@
+text
+@d4 1
+d16 1
+a16 1
+   public static final String
+d32 15
+a47 8
+
+       popUpCaptions = new HashMap(10);
+       popUpCaptions.put(FLATTEN_DIMENSIONS,"Flatten dimensions (lose hierarchies)");
+       popUpCaptions.put(GROUP_HIERARCHIES_BY_DIMENSION,"Group hierarchies by dimension");
+       popUpCaptions.put(SEND_TO_ROWS, "Send to rows");
+       popUpCaptions.put(SEND_TO_COLUMNS, "Send to columns");
+       popUpCaptions.put(SEND_TO_MEASURES, "Send to measures");
+       popUpCaptions.put(SEND_TO_PAGES, "Send to pages");
+@
+

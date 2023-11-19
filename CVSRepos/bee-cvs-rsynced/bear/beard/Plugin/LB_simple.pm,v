@@ -1,0 +1,77 @@
+head	1.2;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2003.11.07.07.36.56;	author michald;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2003.08.04.05.42.36;	author michald;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@fix for not numeric fact ID
+@
+text
+@#-----------------------------------------------------
+#  Basic Load Balancer Plug-In
+#-----------------------------------------------------
+# $Id: LB_simple.pm,v 1.1 2003/08/04 05:42:36 michald Exp $
+
+package LB;
+
+use strict;
+use utf8;
+
+my $version = '0.1';
+my $copyright = '(C) Insight Strategy, a. s., 2003';
+
+#---------------------------------------
+
+sub about {                    
+  return "Basic Load Balancer v$version ($copyright)"  
+}
+
+#---------------------------------------
+
+sub src2run {	# function to select data source to run query
+	my $src=shift;	# keys of input hash are data sources
+#use Data::Dumper;
+#print Dumper($src);
+	my @@s = keys %{$src};
+	return $s[int(($#s+1)*rand())];	# this simple plug-in selects source on random base
+}
+
+#---------------------------------------
+
+1
+
+__END__
+
+
+@
+
+
+1.1
+log
+@first simple plugins
+@
+text
+@d4 1
+a4 1
+# $Id$
+d24 2
+@
+

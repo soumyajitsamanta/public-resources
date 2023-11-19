@@ -1,0 +1,55 @@
+head	1.2;
+access;
+symbols
+	start:1.1.1.1 vendor:1.1.1;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2003.06.03.13.16.15;	author numberone;	state dead;
+branches;
+next	1.1;
+
+1.1
+date	2002.09.24.01.34.12;	author michald;	state Exp;
+branches
+	1.1.1.1;
+next	;
+
+1.1.1.1
+date	2002.09.24.01.34.12;	author michald;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@0.9.1 -- version merge
+@
+text
+@V	030819201534Z		01	unknown	/CN=kerberos
+V	030819201658Z		02	unknown	/CN=otec
+V	030819201808Z		03	unknown	/CN=martin
+V	030819201942Z		04	unknown	/CN=janci
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@@
+
+
+1.1.1.1
+log
+@Initial public release of BEE Project.
+@
+text
+@@

@@ -1,0 +1,278 @@
+head	1.4;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.4
+date	2003.06.05.13.09.03;	author vacula;	state dead;
+branches;
+next	1.3;
+
+1.3
+date	2003.05.30.13.32.01;	author vacula;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2003.05.27.14.46.34;	author vacula;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2003.05.13.12.57.56;	author vacula;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.4
+log
+@*** empty log message ***
+@
+text
+@#!/usr/bin/perl -w
+
+
+%column = (
+	    'X' => { 'col'   => 0,
+		     'label' => 'Mesto',
+		     'value' => ["DVD","HiFi","Fotoaparat","Videokamera"],	   #seznam  
+	             }, 
+	    'Y' => { 'col'   => 1,
+	    	     'label' => 'Prodej',
+		     'min'   => 0,
+		     'max'   => 900,
+	     	    },
+
+	    'Z' => { 'col'   => 2,
+	    	     'label' => 'Rok',
+		     'value' => ['leden','unor','brezen','duben','kveten','cerven','cervenec','srpen','zari','rijen','listopad','prosinec'],        # seznam 
+	     	    },
+
+	    
+	    'DI' => { 'col'      => 3,
+	    	      'label'    => 'diameter',
+		      'min'      => 20,					## minimalni hodnota dat, (nebo se spocita z tabulky dat)
+		      'max'      => 30,					## maximalni hodnota dat, (nebo se spocita z tabulky dat)
+#		      'value'    => ['tuzka','pero'],			## velikost se rozdeli podle poctu polozek pole value
+	             },
+		     
+	    'TR' => { 'col'          => 4,
+		      'label'        => 'transparency',
+		      'transparency' => [0.3,0.7],			##  nastaveni hranice 0 = uplne viditelne .. 1= uplne neviditelne		
+#		      'min'	     => 20,				## min z dat, pokud neni zadano, spocita se z tabulky dat
+#		      'max'          => 60,				## max z dat, pokud neni zadano, spocita se z tabulky dat
+		      'value'        => ['prvni','druhy','treti'],	## rozcleneni bude podle poctu hodnot pole value .. 
+		     },
+	    'SH'=> { 'col'    => 5,
+		     'label'  => 'kategorie',				## 
+		     'default'=> 'box',					##  nedefinovane hodnoty jsou zobrazeny podle formatu default
+		     'shape'  => ['cylinder'],		## cone,sphere,cylinder,box,NULL (index odpovida value)
+#		     'value'  => ['alkohol','cigarety','potraviny'], 	## pocet hodnot v poli value = poctu intervalu z dat
+#		     'interval'  => [[1000,2999],[3000,4999],[5000,7000],], 	## definovani rozsahu ktery me zajima z dat
+		     'min'    => 1000,					## minimalni hodnota dat
+		     'max'    => 7000,					## maximalni hodnota dat
+		    },		    
+	    'CLR'=> { 'col'   => 6,					##
+		      'label' => 'barva',				## 
+		      'color' => [[1,1,0]],		## seznam barev, ktere chci v grafu videt (index odpovida value)
+#		      'value' => ['televize','pracka','lednicka',],	## pocet hodnot v poli value =  poctu intervalu z dat
+		      'interpolation' => 'constant',			## constant,linear
+#		      'interval'  => [[100,299],[300,499],[500,700],], 	## definovani rozsahu ktery me zajima z dat
+		      'min'   => 100,					## minimalni hodnota dat
+		      'max'   => 700,					## maximalni hodnota dat
+		     },	    
+);
+
+
+@@data = (
+
+#[ 1, 4,],
+#[ 2, 2,],
+#[ 3, 4,],
+#[ 4, 2,],
+
+[ 1,100,1,20,0,1000, 100,],
+[ 2,200,2,21,0,2999, 299,],
+[ 3,300,3,22,1,3000, 300,],
+[ 4,400,4,25,1,5999, 599,],
+[ 1,500,5,30,2,6000, 600,],
+[ 2,600,6,30,2,6000, 600,],
+[ 3,700,7,30,2,6000, 600,],
+[ 4,800,8,30,2,7000, 600,],
+[ 4,900,9,30,2,7000, 700,],
+[ 3,300,10,30,2,6000, 600,],
+[ 3,400,11,30,2,7000, 600,],
+[ 2,800,12,30,2,7000, 700,],
+
+);
+
+%format = ( 'axis' =>  {'color'      => 'green',
+			'format'     => 'cylinder',
+			'size'       => 1,
+			'crowfoot'   => 1,
+			'mindiameter'=> 0,
+			'maxdiameter'=> 0.3,
+		       },
+	  'lattice'=> {'X' => [ { 'length' => 10,},
+		       	        { 'step'   => 1,
+			          'format' => 'line',
+	 	 	          'size'   => 1,
+	 		          'color'  => 'blue', },
+				],
+		       
+		       'Y' => [ { 'length' => 10,},
+#	  			{ 'step'   => 3,
+#			          'format' => 'line',
+#	 	 	          'size'   => 1,
+#	 		          'color'  => 'green',},		       	       
+	  			{ 'step'   => 2,
+			          'format' => 'line',
+	 	 	          'size'   => 1,
+	 		          'color'  => 'red',},		       	       
+	  			{ 'step'   => 1,
+			          'format' => 'line',
+	 	 	          'size'   => 1,
+	 		          'color'  => 'blue',},		       	       
+				],
+
+		       'Z' => [ {'length'  => 12,},
+		       	        { 'step'   => 1,
+			          'format' => 'line',
+	 	 	          'size'   => 1,
+	 		          'color'  => 'blue', },
+				],
+		       
+		       
+		      },
+	  'graph'       => 'Histogram',     # Scatter , Histogram , 
+);
+@
+
+
+1.3
+log
+@example
+@
+text
+@@
+
+
+1.2
+log
+@parameters : diameter,transparency,shape,color
+@
+text
+@d7 1
+a7 1
+		     'value' => ["Praha","Brno","Liberec","Ostrava"],	   #seznam  
+d12 1
+a12 1
+		     'max'   => 500,
+d17 1
+a17 1
+		     'value' => [1998,1999,2000,2001,2002],        # seznam 
+a22 1
+		      'diameter' => [0,1],				## nastaveni hranice  [minimalni velikost,maximalni velikost] objektu
+d38 1
+a38 1
+		     'shape'  => ['cone','cylinder','box'],		## cone,sphere,cylinder,box,NULL (index odpovida value)
+d40 1
+a40 1
+		     'area'  => [[1000,2999],[3000,4999],[5000,7000],], 	## definovani rozsahu ktery me zajima z dat
+d46 1
+a46 1
+		      'color' => [[1,0,0],[0,1,0],[0,0,1],],		## seznam barev, ktere chci v grafu videt (index odpovida value)
+d48 2
+a49 1
+		      'area'  => [[100,299],[300,499],[500,700],], 	## definovani rozsahu ktery me zajima z dat
+d63 1
+a63 1
+[ 1,100,1,19,0,1000, 100,],
+d67 8
+a74 5
+[ 4,500,5,30,2,7000, 700,],
+[ 4,600,1,30,2,7000, 700,],
+[ 4,700,2,30,2,7000, 700,],
+[ 4,800,3,30,2,7000, 700,],
+[ 4,900,4,30,2,7000, 700,],
+d78 6
+a83 4
+%format = ( 'axis' =>  {'color'     => 'green',
+			'format'    => 'cylinder',
+			'size'      => 1,
+			'crowfoot'  => 1,
+d93 4
+a96 4
+	  			{ 'step'   => 3,
+			          'format' => 'line',
+	 	 	          'size'   => 1,
+	 		          'color'  => 'green',},		       	       
+d107 1
+a107 1
+		       'Z' => [ {'length'  => 10,},
+@
+
+
+1.1
+log
+@example
+@
+text
+@d3 3
+a5 1
+%column = ( 'X' => { 'col'   => 0,
+d9 5
+d15 1
+a15 1
+	    'Y' => { 'col'   => 1,
+a19 5
+	    'Z' => { 'col'   => 2,
+	    	     'label' => 'Prodej',
+		     'min'   => 240,
+		     'max'   => 300,
+	     	    },
+d21 6
+a26 4
+	    'DI' => { 'col'   => 3,
+	    	      'label' => '',
+		      'type'  => '',
+		      'value' => [0,50]			# min,max
+d29 24
+a52 3
+	    'TR' => {},
+	    'CLR'=> {},	    
+		    
+d58 14
+a71 4
+[ 0, 4, 301, 33, 0.9, 'red'      ,'box'],
+[ 1, 2, 411, 32, 0.9, 'blue'     ,'sphere'],
+[ 2, 4, 316, 31, 0.1, 'silver'   ,'cone'],
+[ 3, 2, 246, 30, 0.9, 'violet'   ,'cylinder'],
+d77 2
+a78 1
+			'size'      => 10,
+d80 1
+a80 8
+	  'lattice'=> {'X' => [
+		       	        { 'step'   => 1,
+			          'format' => 'line',
+	 	 	          'size'   => 1,
+	 		          'color'  => 'blue', },
+				],
+		       
+		       'Y' => [
+d87 1
+a87 1
+		       'Z' => [
+d101 8
+d111 1
+a111 1
+	  'graph'=> 'Histogram',     # Scatter , Histogram , 
+@
+

@@ -1,0 +1,26 @@
+head	1.1;
+access;
+symbols
+	test_tag:1.1
+	sfsync:1.1;
+locks; strict;
+comment	@# @;
+
+
+1.1
+date	2004.06.09.20.35.53;	author avix;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@initial checkin
+@
+text
+@runtime
+@

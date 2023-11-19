@@ -1,0 +1,224 @@
+head	1.8;
+access;
+symbols
+	start:1.1.1.1 vendor:1.1.1;
+locks; strict;
+comment	@# @;
+
+
+1.8
+date	2003.02.07.21.17.35;	author numberone;	state dead;
+branches;
+next	1.7;
+
+1.7
+date	2003.02.05.15.39.46;	author numberone;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	2003.01.21.18.32.15;	author numberone;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	2002.09.29.12.58.33;	author numberone;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2002.09.28.18.02.47;	author numberone;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2002.09.27.13.54.52;	author numberone;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2002.09.26.07.52.42;	author numberone;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2002.09.24.01.40.59;	author michald;	state Exp;
+branches
+	1.1.1.1;
+next	;
+
+1.1.1.1
+date	2002.09.24.01.40.59;	author michald;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.8
+log
+@removing old 'otec'
+@
+text
+@#!/usr/bin/perl -w
+# $Id: otec.pl,v 1.7 2003/02/05 15:39:46 numberone Exp $
+
+use lib '.';
+use client;
+use bee;
+use auth;
+
+#use POSIX;
+use Data::Dumper;
+
+use strict;
+
+our $auth = new auth(['localhost'],'','') or die;
+our $selfkey = "localhost:2333"; # fix: FUUJ !!!
+
+# otec daemon
+
+my $port = shift || 2333;
+my $msg_server = Msg->server('INET',$port);
+
+my @@client = (); # every client holds list of his bees
+
+# FIX daemonize
+
+print "listenning on $port\n";
+
+while(1) {
+	my $client; 
+
+	push @@client,new client($client) 
+		if($client = $msg_server->accept(0));
+
+	foreach $client (@@client) {
+		my $peek = $client->peek;
+
+		if($peek <  0) { $client->close; }
+		if($peek >  0) { $client->serve(); }
+		if($peek == 0) {
+			foreach (@@{$client->{bee}}) {
+				$client->watch($_);
+			}
+		}
+	}
+	@@client = grep { not $_->{closed} } @@client;
+
+#	while((my $pid = waitpid(-1,WNOHANG)) > 0) {
+#		print "bee $pid died\n";
+#	}
+
+}
+
+print "finishing\n";
+exit;
+
+
+@
+
+
+1.7
+log
+@SSL to INET - for testing...
+@
+text
+@d2 1
+a2 1
+# $Id: otec.pl,v 1.6 2003/01/21 18:32:15 numberone Exp $
+@
+
+
+1.6
+log
+@POSIX requirement removed
+@
+text
+@d2 1
+a2 1
+# $Id: otec.pl,v 1.5 2002/09/29 12:58:33 numberone Exp $
+d20 1
+a20 1
+my $msg_server = Msg->server('SSL',$port);
+d37 3
+a39 3
+		if(not defined $peek) { $client->close;
+		} elsif($peek)        { $client->serve();
+		} else {
+@
+
+
+1.5
+log
+@tablequery
+@
+text
+@d2 1
+a2 1
+# $Id: otec.pl,v 1.4 2002/09/28 18:02:47 numberone Exp $
+d9 1
+a9 1
+use POSIX;
+@
+
+
+1.4
+log
+@argument order fix in bee-rpc_input
+@
+text
+@d2 1
+a2 1
+# $Id: otec.pl,v 1.3 2002/09/27 13:54:52 numberone Exp $
+d15 1
+@
+
+
+1.3
+log
+@tablequery, bee->dad msg
+@
+text
+@d2 1
+a2 1
+# $Id: otec.pl,v 1.2 2002/09/26 07:52:42 numberone Exp $
+d14 1
+a14 1
+our $auth = new auth(['localhost']) or die;
+@
+
+
+1.2
+log
+@version merging with my cvs
+@
+text
+@d2 1
+a2 1
+# $Id: otec.pl,v 1.1.1.1 2002/09/24 01:40:59 michald Exp $
+d7 1
+d13 2
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d2 1
+a2 1
+# $Id: otec.pl,v 1.1.1.1 2002/08/21 02:00:30 cvs Exp $
+d51 1
+@
+
+
+1.1.1.1
+log
+@Initial public release of BEE Project.
+@
+text
+@@

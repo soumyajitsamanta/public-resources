@@ -1,0 +1,85 @@
+head     1.1;
+branch   1.1.1;
+access   ;
+symbols  start:1.1.1.1 vendor:1.1.1;
+locks    ; strict;
+comment  @# @;
+
+
+1.1
+date     2002.09.24.01.34.29;  author michald;  state Exp;
+branches 1.1.1.1;
+next     ;
+
+1.1.1.1
+date     2002.09.24.01.34.29;  author michald;  state Exp;
+branches ;
+next     ;
+
+
+desc
+@@
+
+
+
+1.1
+log
+@Initial revision
+@
+text
+@/* XPM */
+static char * triger_xpm[] = {
+"17 15 29 1",
+" 	c None",
+".	c #EF2F04",
+"+	c #EC2F05",
+"@@	c #6E4036",
+"#	c #A8381F",
+"$	c #474545",
+"%	c #E33008",
+"&	c #554340",
+"*	c #923B28",
+"=	c #D8320D",
+"-	c #4D4443",
+";	c #7F3E2F",
+">	c #E93006",
+",	c #BE3517",
+"'	c #783E32",
+")	c #E0310A",
+"!	c #B6361A",
+"~	c #8A3C2B",
+"{	c #BF3516",
+"]	c #494544",
+"^	c #56433F",
+"/	c #943B27",
+"(	c #EB3006",
+"_	c #D1330F",
+":	c #534340",
+"<	c #62413B",
+"[	c #E13109",
+"}	c #63413A",
+"|	c #64413A",
+"        .        ",
+"       ..+@@      ",
+"       ..#$      ",
+"      ..%&       ",
+"      ..*        ",
+"      .=-        ",
+"     ..;         ",
+"     .>,...'     ",
+"     .)!~{=]     ",
+"      ^  ./      ",
+"         (^      ",
+"       .._:      ",
+"       ..)<      ",
+"       .[}       ",
+"        |        "};
+@
+
+
+1.1.1.1
+log
+@Initial public release of BEE Project.
+@
+text
+@@

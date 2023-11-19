@@ -1,0 +1,69 @@
+head	1.2;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2003.10.02.08.03.42;	author vacula;	state dead;
+branches;
+next	1.1;
+
+1.1
+date	2003.10.01.15.22.52;	author vacula;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@removed
+@
+text
+@#!/usr/bin/perl
+
+use strict;
+use CGI qw( :standard );
+use CGI::Pretty;
+
+use Data::Dumper;
+
+
+my $id_img = param("id");			
+my $cachedir = param("cache");
+my $format = param("format");
+
+
+#print header("image/png");
+#my @@data = ( 
+#    ["1st","2nd","3rd","4th","5th","6th","7th", "8th", "9th"],
+#    [    1,    2,    5,    6,    3,  1.5,    1,     3,     4],
+#);
+# 
+#  my $graph = GD::Graph::bars->new(400, 300);
+#  
+#  my $gd = $my_graph->plot(\@@data) or die $my_graph->error;
+#  
+#  print $graph->plot(\@@data)->png;
+ 
+if (-e "$cachedir/$id_img.$format") {
+	print header("image/png");
+	open(IMG, "$cachedir/$id_img.$format");
+	while (<IMG>) {print}
+	close(IMG);
+}
+@
+
+
+1.1
+log
+@return img from storage
+@
+text
+@@
+

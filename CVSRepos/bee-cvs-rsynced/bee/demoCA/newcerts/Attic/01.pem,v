@@ -1,0 +1,110 @@
+head	1.2;
+access;
+symbols
+	start:1.1.1.1 vendor:1.1.1;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2003.06.03.13.16.15;	author numberone;	state dead;
+branches;
+next	1.1;
+
+1.1
+date	2002.09.24.01.34.12;	author michald;	state Exp;
+branches
+	1.1.1.1;
+next	;
+
+1.1.1.1
+date	2002.09.24.01.34.12;	author michald;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@0.9.1 -- version merge
+@
+text
+@Certificate:
+    Data:
+        Version: 3 (0x2)
+        Serial Number: 1 (0x1)
+        Signature Algorithm: md5WithRSAEncryption
+        Issuer: CN=kerberos
+        Validity
+            Not Before: Aug 19 20:15:34 2002 GMT
+            Not After : Aug 19 20:15:34 2003 GMT
+        Subject: CN=kerberos
+        Subject Public Key Info:
+            Public Key Algorithm: rsaEncryption
+            RSA Public Key: (1024 bit)
+                Modulus (1024 bit):
+                    00:a7:9e:27:a4:7d:0b:c5:b5:b2:1f:fd:de:a3:19:
+                    4d:b2:cc:25:a6:72:92:fe:54:e8:c1:00:8f:ab:5c:
+                    8d:63:06:21:55:69:3b:1d:bc:29:95:04:55:66:c5:
+                    69:2a:88:d4:e4:53:98:68:8d:ab:e1:2e:13:46:5b:
+                    71:73:9d:9c:98:06:7f:a6:38:29:af:b0:c0:a9:42:
+                    c7:d0:5f:7d:76:8b:f1:da:e0:c8:5c:45:65:20:77:
+                    78:a9:dd:43:62:ac:4e:f6:ea:d4:80:06:89:6d:5b:
+                    0d:58:66:a1:b9:6b:ec:b3:3f:44:0c:f8:be:1d:8f:
+                    ef:46:8f:4f:66:53:db:53:2f
+                Exponent: 65537 (0x10001)
+        X509v3 extensions:
+            X509v3 Basic Constraints: 
+                CA:FALSE
+            Netscape Comment: 
+                OpenSSL Generated Certificate
+            X509v3 Subject Key Identifier: 
+                E4:10:D5:C5:FA:1C:CF:FC:5E:5A:64:14:76:85:18:20:7A:4C:FF:F9
+            X509v3 Authority Key Identifier: 
+                keyid:C1:55:D5:CF:D0:C6:3D:FE:A4:E6:51:07:62:3E:A6:2D:F9:96:C7:86
+                DirName:/CN=kerberos
+                serial:00
+
+    Signature Algorithm: md5WithRSAEncryption
+        6a:35:58:ae:b7:a2:f6:8a:84:78:51:5d:c2:18:30:06:ad:d4:
+        7f:45:ab:fb:35:d4:01:05:35:e6:3d:0b:f4:bc:bc:f3:ef:09:
+        0b:62:4f:13:de:d1:0e:52:9f:f9:ff:a9:ec:1e:a4:57:bc:78:
+        d1:7a:49:35:d8:8c:a1:42:3a:e8:c4:44:75:1f:fb:12:b4:ed:
+        21:6b:9f:ef:cd:4c:ed:13:bd:f5:78:3b:7a:7d:a5:91:7c:e2:
+        54:04:40:9f:e9:f1:47:b4:6b:a5:09:df:be:ef:dd:d0:4f:49:
+        61:2e:83:64:ac:b3:c4:74:76:96:dc:7f:86:ee:53:b9:02:9e:
+        d2:de
+-----BEGIN CERTIFICATE-----
+MIICNTCCAZ6gAwIBAgIBATANBgkqhkiG9w0BAQQFADATMREwDwYDVQQDEwhrZXJi
+ZXJvczAeFw0wMjA4MTkyMDE1MzRaFw0wMzA4MTkyMDE1MzRaMBMxETAPBgNVBAMT
+CGtlcmJlcm9zMIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCnniekfQvFtbIf
+/d6jGU2yzCWmcpL+VOjBAI+rXI1jBiFVaTsdvCmVBFVmxWkqiNTkU5hojavhLhNG
+W3FznZyYBn+mOCmvsMCpQsfQX312i/Ha4MhcRWUgd3ip3UNirE726tSABoltWw1Y
+ZqG5a+yzP0QM+L4dj+9Gj09mU9tTLwIDAQABo4GYMIGVMAkGA1UdEwQCMAAwLAYJ
+YIZIAYb4QgENBB8WHU9wZW5TU0wgR2VuZXJhdGVkIENlcnRpZmljYXRlMB0GA1Ud
+DgQWBBTkENXF+hzP/F5aZBR2hRggekz/+TA7BgNVHSMENDAygBTBVdXP0MY9/qTm
+UQdiPqYt+ZbHhqEXpBUwEzERMA8GA1UEAxMIa2VyYmVyb3OCAQAwDQYJKoZIhvcN
+AQEEBQADgYEAajVYrrei9oqEeFFdwhgwBq3Uf0Wr+zXUAQU15j0L9Ly88+8JC2JP
+E97RDlKf+f+p7B6kV7x40XpJNdiMoUI66MREdR/7ErTtIWuf781M7RO99Xg7en2l
+kXziVARAn+nxR7RrpQnfvu/d0E9JYS6DZKyzxHR2ltx/hu5TuQKe0t4=
+-----END CERTIFICATE-----
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@@
+
+
+1.1.1.1
+log
+@Initial public release of BEE Project.
+@
+text
+@@

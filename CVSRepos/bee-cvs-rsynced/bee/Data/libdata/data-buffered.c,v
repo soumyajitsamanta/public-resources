@@ -1,0 +1,970 @@
+head	1.2;
+access;
+symbols;
+locks; strict;
+comment	@ * @;
+
+
+1.2
+date	2004.05.12.14.33.40;	author numberone;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2004.04.30.14.12.16;	author numberone;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@
+-unbuffered.{xs,c,h}
+  -- uses 1 syscall per row for sending, 2 syscalls p.r. for receiving
+
+-buffered.{xs,c,h}
+  -- sends data in 4096b chunks, low number of send()/recv() calls
+  -- generaly doesn't work because of buffer-locking in some scenarios
+
+benchmarks (put($i,'a' x ($i % 64))):
+
+         unbuff     buffered
+path     1M @@ 43s   -failed-
+bench    1M @@ 17s   1M @@ 9s
+@
+text
+@#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+#include "data.h"
+
+// htonl functions
+#ifdef WIN32
+#include<winsock.h>
+#else
+#include<netinet/in.h>
+#include<netdb.h>
+#include<sys/socket.h>
+#include<netinet/in.h>
+#include<sys/un.h>
+#include<arpa/inet.h>
+#include<signal.h>
+#include<unistd.h>
+#include<fcntl.h>
+#include<errno.h>
+#endif
+
+int unix_counter = 0; // unix filename suffix
+static int debug = 0;
+
+Data list = NULL;
+
+extern int h_errno;
+
+#define PERROR(fx) { perror(fx); exit(1); }
+
+#define QUIET 
+//#define DEBUG 
+#define DEBUG(fmt,arg...) { if(debug) printf("[%d] " fmt, getpid(), ## arg); }
+#define PRINT printf
+
+#ifdef WIN32
+typedef unsigned int uint32_t;
+#endif
+                                                                                
+static void NETERROR(char *fx,int status) {
+#ifdef WIN32
+    fprintf(stderr,"%s: %d\n",fx,WSAGetLastError());
+#else
+    herror(fx);
+#endif
+    if(status) exit(status);
+}
+                                                                                
+
+// one global buffer for receiving
+// max. row size limit
+#define BUFFSIZE (128*1024)
+static byte buff[BUFFSIZE];
+static int  buff_len = 0;
+
+#define BUFF_INIT 4096
+#define BUFF_PAGE 4096
+
+static void  buff_init(void **buff,int *pool,int *len) {
+    *len = 0;
+    if(*buff) return;
+    *buff = malloc(*pool = BUFF_INIT);
+}   
+static void *buff_extend(void **buff,int *pool,int *len,int size) {
+    int want = *len + size;
+    if(want > *pool) {
+        *pool += (want > BUFF_PAGE) ?
+                    BUFF_PAGE * (1 + (int)(want/BUFF_PAGE)) : BUFF_PAGE;
+        *buff = realloc(*buff,*pool);
+    }
+    return ((char*)*buff) + *len; // start of free area
+}   
+static void *buff_insert(void **buff,int *pool,int *len,int size) {
+    void *ptr = buff_extend(buff,pool,len,size);
+    *len += size;
+    return ptr;
+}   
+static void buff_clear(void **buff,int *pool,int *len) {
+    *len = 0;
+}   
+static void buff_free(void **buff,int *pool,int *len) {
+    if(*buff) free(*buff); 
+    *len = *pool = 0;
+}   
+
+
+void set_block(int sock,int block) {
+#ifdef WIN32
+    u_long arg = !block;
+    if(ioctlsocket(sock,FIONBIO,&arg)) NETERROR("ioctlsocket()",1);
+#else
+    int  flags;
+    flags = fcntl(sock,F_GETFL);
+    if(flags == -1) NETERROR("fcntp()",1);
+    flags = block ? (flags & (~O_NONBLOCK)) : (flags | O_NONBLOCK);
+    flags = fcntl(sock,F_SETFL,flags);
+    if(flags == -1) NETERROR("fcntl()",1);
+#endif
+}
+
+void data_init(char* arg) {
+	printf("data_init() called\n");
+}
+
+/* if unix_prefix != NULL, create unix-socket
+ * if port == 0, find any empty port number (actualy, kernel do this)
+ * todo: bzip, blowfish */
+Data data_listen(char* unix_prefix,int port) {
+	Data server;
+#ifdef WIN32
+    SOCKADDR_IN *sin,*sin2,*sun,*addr;
+	unsigned int dontblock = 1;
+	int xinu = 0; // UNIX sockets not used on Win32
+#else
+    struct sockaddr_in *sin,*sin2;
+	struct sockaddr_un *sun;
+	struct sockaddr *addr;
+	int xinu = unix_prefix ? 1 : 0;
+#endif
+    int  sock, addr_len, sin2_len;
+	char* name = NULL;
+
+	sock = socket(xinu ? AF_UNIX : AF_INET,SOCK_STREAM,0);
+	if(sock == -1) NETERROR("socket",11); /* ??? */
+
+	if(xinu) {
+		addr_len = sizeof(struct sockaddr_un);
+		sun = (void*)malloc(addr_len);
+		addr = (void*)sun;
+
+		sun->sun_family = AF_UNIX; // there is hardcoded 108 in my sys/un.h
+		snprintf(sun->sun_path,100,"%s-%d",unix_prefix,++unix_counter);
+		name = strdup(sun->sun_path);
+		unlink(name); // try to delete file first
+
+	} else {
+		addr_len = sin2_len = sizeof(struct sockaddr_in);
+		sin = (void*)malloc(addr_len);
+		addr = (void*)sin;
+
+		sin->sin_family = AF_INET;
+		sin->sin_addr.s_addr = INADDR_ANY;
+		sin->sin_port = htons((short)port);
+
+		sin2 = (void*)malloc(sin2_len); // for getsockname()
+	}
+
+    if(bind(sock,addr,addr_len)) NETERROR("bind()",1);
+
+	if(!xinu && !port) {
+        if(getsockname(sock, sin2, &sin2_len) < 0) 
+			NETERROR("getsockname",1);
+        port = ntohs(sin2->sin_port); 
+	}
+	
+    if(listen(sock,128) == -1) NETERROR("listen()",1);
+
+	set_block(sock,0); // non-blocking listenning socket
+
+	server = calloc(1,sizeof(*server));
+	server->sock 		= 0;
+	server->addr 		= addr;
+	server->addr_len 	= addr_len;
+	server->serversock 	= sock;
+	server->xinu 		= name;
+	server->port 		= port;
+
+	return server;
+}
+
+
+int data_accept(Data data) {
+    int sock;
+    int addr_len = data->addr_len;
+
+	if(data->sock) return 2; /* already connected */
+
+	// doing accept on server socket?
+	if(!data->serversock) exit(14);
+    if(!data->addr) exit(5); 
+
+	// accept, store client address to Data struct
+	sock = accept(data->serversock,data->addr,&addr_len);
+
+	if(sock == -1) {
+#ifdef WIN32
+        if(WSAGetLastError() == WSAEWOULDBLOCK) return 0;
+#else
+        if(errno == EAGAIN) return 0;
+#endif
+		else NETERROR("accept",12);
+    }
+
+
+#ifdef WIN32
+	closesocket(data->serversock);
+#else
+	close(data->serversock);
+#endif
+	data->serversock = 0;
+
+	set_block(sock,1);
+
+	data->sock = sock;
+
+	// add to list. data_listen didn't do that
+	data->next = list;
+	list = data;
+
+	return 1;
+}
+
+
+/* if port == 0, connect to unix-socket named host_unix
+ * todo: bzip, blowfish  */
+Data data_connect(const char *host_unix,int port) {
+#ifdef WIN32
+    LPHOSTENT hp;
+    SOCKADDR_IN sin,sun,*addr;
+	int xinu = 0; // UNIX sockets not used on Win32
+#else
+    struct hostent *hp;
+    struct sockaddr_in sin;
+	struct sockaddr_un sun;
+	struct sockaddr *addr;
+	int xinu = port ? 0 : 1;
+#endif
+    int addr_len,sock;
+	Data data;
+
+    sock = socket(xinu ? AF_UNIX : AF_INET,SOCK_STREAM,0);
+    if(sock == -1) NETERROR("socket",13);
+
+	if(xinu) {
+		addr = (void*)&sun; addr_len = sizeof(sun);
+		sun.sun_family = AF_UNIX;
+		strncpy(sun.sun_path,host_unix,100); // sys/un.h: [108]
+	} else {
+		addr = (void*)&sin; addr_len = sizeof(sin);
+
+	    if(!(hp = gethostbyname(host_unix))) NETERROR("gethostbyname",1);
+    	sin.sin_family = AF_INET;
+	    sin.sin_addr = **((struct in_addr **)hp->h_addr_list);
+		sin.sin_port = htons((short)port);
+	}
+
+    if(connect(sock,addr,addr_len)) {
+        fprintf(stderr,"connect('%s',%d)\n",host_unix,port);
+        NETERROR("connect()",1);
+    }
+
+/* unlink(2)
+ *  If the name referred to a socket, fifo or device the name for it is removed
+ *  but processes which have the object open may continue to use it. 
+ */
+
+#ifndef WIN32
+	if(xinu) unlink(sun.sun_path); 
+#endif
+
+	data = calloc(1,sizeof(*data));
+	data->sock = sock;
+	data->xinu = xinu ? strdup(host_unix) : NULL;
+
+	data->next = list;
+	list = data;
+
+	return data;
+}
+
+
+static int recv_count,send_count;
+
+void data_send_init(Data data,int cols) {
+	void *buff;
+
+	DEBUG("data_send_init\n");
+	if(!data->send_buff)
+		buff_init(&data->send_buff,&data->send_pool,&data->send_len);
+
+	buff = buff_insert(&data->send_buff,&data->send_pool,
+					   &data->send_len,sizeof(uint32_t));
+	data->send_size = buff - data->send_buff;
+}
+
+void data_send_append(Data data,char *col,int len) {
+    unsigned char code = LEN_RESERVED;
+    unsigned char *buff = NULL;
+    int buff_len = 0;
+
+    if(len <= 0) {
+        if(len < 0) exit(18);
+        code = col ? LEN_EMPTY : LEN_UNDEF;
+    }
+    if(len == 1 && isdigit(col[0])) {
+        code = LEN_0 + (col[0] - '0');
+    }
+    if(len == 2 && isdigit(col[0]) && isdigit(col[1])) {
+        code = LEN_00 + 10*(col[0] - '0') + (col[1] - '0');
+    }
+    if(code) {
+        buff = buff_insert(&data->send_buff,&data->send_pool,
+                          &data->send_len,buff_len = 1);
+        *buff = code;
+    }
+    if(!code) {
+        if(len <= LEN_MAXLEN) {
+            buff = buff_insert(&data->send_buff, &data->send_pool,
+                               &data->send_len, buff_len = 1 + len );
+            *buff = code = len;
+            memcpy(buff + 1, col, len);
+        } else {
+            uint32_t len32 = htonl(len);
+            buff = buff_insert(&data->send_buff, &data->send_pool,
+                               &data->send_len, buff_len = 1 + 4 + len );
+            *buff = code = LEN_32BIT;
+            memcpy(buff + 1, &len32, 4);
+            memcpy(buff + 5, col, len);
+        }
+    }
+}
+
+
+int data_send_flush(Data data) {
+    int len;
+	uint32_t len32 = (data->send_len - data->send_size);
+	*(uint32_t*)(data->send_buff + data->send_size) = htonl(len32);
+
+    if(data->send_len >= BUFF_PAGE) {
+        len = send(data->sock,data->send_buff,data->send_len,0);
+		if(len < 0) { perror("send"); exit(109); }
+		if(len != data->send_len)
+			printf("send(send_len=%d) returned %d\n",data->send_len,len);
+        data->send_len -= len;
+    }
+}
+
+
+void data_close(Data data) {
+	Data *ptr = &list;
+	int len = -1;
+
+	if(data->send_len) {
+		len = send(data->sock,data->send_buff,data->send_len,0);
+		if(len != data->send_len) {
+			if(len < 0) NETERROR("send",97);
+			NETERROR("send",96); // todo: repeat?
+		}
+	}
+	DEBUG("data_close() flushed %d bytes\n",len);
+	
+	while(*ptr) {
+		if(*ptr == data) {
+			*ptr = data->next;
+			break;
+		}
+		ptr = &((*ptr)->next);
+	}
+	
+#ifdef WIN32
+	closesocket(data->sock);
+#else
+	close(data->sock);
+#endif
+	if(data->addr) free(data->addr);
+	if(data->xinu) free(data->xinu);
+	free(data);
+}
+
+static ssize_t recv2(int fd,void *buf,size_t count,int flags) {
+	ssize_t ret;
+	DEBUG("recv(%d,%p,%d,0)",fd,buf,count);
+	ret = recv(fd,buf,count,flags);
+	DEBUG(" = %d\n",ret);
+	return ret;
+}
+
+int data_recv(Data data,byte** p_buff,int *p_len) {
+	uint32_t len32;
+	int columns, len, eof = 0;
+	void *buff,*ptr;
+
+	if(!data->recv_buff) {
+		data->recv_buff = malloc(data->recv_pool = BUFF_PAGE);
+		data->recv_row = data->recv_end = data->recv_buff;
+	}
+
+repeat:
+
+	// regular end-of-stream?
+	if((data->recv_end == data->recv_row) && eof) return 0;
+
+	// do we have whole line in buffer?
+	if(data->recv_end >= data->recv_row + sizeof(uint32_t)) {
+		len32 = ntohl(*(uint32_t*)data->recv_row);
+		DEBUG("data_recv(len32=%d,row=%p,end=%p)\n",
+			   len32,data->recv_row,data->recv_end);
+
+		if(data->recv_end >= data->recv_row + len32) {
+			data->recv_ptr = data->recv_row + sizeof(uint32_t);
+			data->recv_row += len32;
+
+		    // ok, we have whole line in buffer, count columns
+		    columns = 0;
+
+			// count columns in recv_ptr..recv_row 
+			ptr = data->recv_ptr;
+			while(ptr < data->recv_row) {
+				byte code = *(byte*)ptr++;
+				if(code > 0 && code <= LEN_MAXLEN) ptr += code;
+				if(code == LEN_32BIT) {
+					uint32_t *p_len32 = (uint32_t*)ptr;
+					ptr += sizeof(uint32_t);
+					ptr += ntohl(*p_len32);
+		        }
+		        columns++;
+			}
+			if(ptr != data->recv_row) exit(95);
+
+			// return columns
+			return columns;
+		}
+	}
+
+	// realloc buffer if necessary
+	len = (data->recv_buff + data->recv_pool) - data->recv_end;
+	if(len < BUFF_PAGE) {
+		DEBUG("data_recv() realloc(size=%d)\n",data->recv_pool + BUFF_PAGE);
+		buff = realloc(data->recv_buff,data->recv_pool += BUFF_PAGE);
+		data->recv_end  = buff + (data->recv_end - data->recv_buff);
+		data->recv_row  = buff + (data->recv_row - data->recv_buff);
+		data->recv_buff = buff;
+	}
+
+	// issue read(len>BUFF_PAGE) syscall
+	len = recv2(data->sock,data->recv_end,
+			   (data->recv_buff + data->recv_pool) - data->recv_end, 0);
+
+	if(len < 0) NETERROR("recv",95);
+	if(!len) {
+		// kdyz podruhe nula, je to taky chyba
+		if(eof++) { printf("unexcepted EOF\n"); exit(94); }
+	}
+	data->recv_end += len;
+
+	// again, do we have whole line in buffer?
+	goto repeat;
+}
+
+static const char *numbers = "00010203040506070809";
+
+byte* data_extract(Data data,byte *ptr,void **string,int *len) {
+	uint32_t *p_len32;
+	byte code = *(byte*)data->recv_ptr++;
+
+	if(!string || !len) exit(129);
+	*string = NULL;
+	*len = 0;
+
+	if(code >= 1 && code <= LEN_MAXLEN) {
+		*string = data->recv_ptr;
+		*len    = code;
+		data->recv_ptr += (*len);
+	}
+	if(code == LEN_32BIT) {
+		p_len32 = (uint32_t*)data->recv_ptr;
+		data->recv_ptr += sizeof(uint32_t);
+		*string = data->recv_ptr;
+		*len  = ntohl(*p_len32);
+		DEBUG("data_extract(LEN_32BIT,len=%d)\n",*len);
+		data->recv_ptr += (*len);
+	}
+	if(code >= LEN_0 && code <= LEN_9) {
+		*string = NULL; *len = code - LEN_0;
+	}
+	if(code >= LEN_00 && code <= LEN_09) {
+		*string = (void*)(numbers + 2*(code - LEN_00));
+		*len = 2;
+	}
+	if(code >= LEN_10 && code <= LEN_99) {
+		*len = 10 + code - LEN_10;
+	}
+	if(code == LEN_EMPTY) {
+		*string = (void*)numbers; *len = 0;
+	}
+	if(code == LEN_UNDEF) {
+		*len = -1;
+	}
+
+	return data->recv_ptr;
+}
+
+void data_move(Data data,byte *ptr) {
+	int offset,size = -1;
+
+	// muzeme uvolnit az do recv_row
+	offset = data->recv_row - data->recv_buff;
+	if(offset >= BUFF_PAGE) {
+		size = data->recv_end - data->recv_row; // often will be n==0
+		if(size) {
+			memmove(data->recv_row - offset, data->recv_row, size);
+			data->recv_row -= offset; // == recv_buff
+			data->recv_end -= offset;
+		}
+//		printf("data_move(offset=%d,size=%d)\n",offset,size);
+	}
+}
+
+/*
+int data_recv(Data data,byte** p_buff,int *p_len) {
+	unsigned int i,ret,len=-123,columns=0;
+	uint32_t len32,*p_len32;
+	byte *ptr;
+
+	ret = recv(data->sock,&len32,sizeof(uint32_t),0);
+	if(ret != sizeof(uint32_t)) {
+		if(!ret) return 0; // EOF
+
+		if(ret < 0) NETERROR("recv",112);
+		exit(123); // hm, recv(len=4) returned <4 ??
+	}
+	len = ntohl(len32);
+	len -= sizeof(uint32_t);
+
+	ptr = buff;
+	buff_len = len; // kolik zbyva
+	while(buff_len > 0) {
+		ret = recv(data->sock,ptr,buff_len,0);
+		if(!ret) { fprintf(stderr,"data_recv(): unexcepted EOF\n"); exit(112); }
+		if(ret < 0) NETERROR("recv",113);
+
+		ptr += ret;
+		buff_len -= ret;
+	}
+	
+	// ok, we have whole line in buffer, count columns
+	columns = 0;
+
+	ptr = buff;
+	while(ptr < buff + len) {
+		byte code = *ptr++;
+		if(code > 0 && code <= LEN_MAXLEN) ptr += code;
+		if(code == LEN_32BIT) {
+			uint32_t *p_len32 = (uint32_t*)ptr;
+			ptr += sizeof(uint32_t);
+			ptr += ntohl(*p_len32);
+		}
+		columns++;
+	}
+
+//	printf("data_recv(len=%d,columns=%d)\n   ",len,columns);
+//	for(i=0;i<len;i++) printf("%02x ",buff[i]); printf("\n");
+
+	if(p_buff) *p_buff = buff;
+	if(p_len)  *p_len  = len;
+	return columns;
+}
+
+
+byte* data_extract(Data data,byte *ptr,void **string,int *len) {
+}
+
+void data_move(Data data,byte *ptr) {
+	DEBUG("data_move\n");
+}
+*/
+
+int data_port(Data data) {
+	return data->port;
+}
+
+char* data_unix(Data data) {
+	return data->xinu;
+}
+
+@
+
+
+1.1
+log
+@
+new libData solving cycles in bee communication graph (i hope).
+@
+text
+@d15 1
+d23 7
+a31 1
+//#define DEBUG(format,args...)
+d33 2
+a34 1
+#define DEBUG 
+d41 1
+a41 1
+static void NETERROR(char *fx) {
+a43 1
+    exit(1);
+d45 1
+a45 2
+    perror(fx);
+    exit(1);
+d47 1
+d51 6
+d61 4
+a64 4
+	*len = 0;
+	if(*buff) return;
+	*buff = malloc(*pool = BUFF_INIT);
+}
+d66 8
+a73 8
+	int want = *len + size;
+	if(want > *pool) {
+		*pool += (want > BUFF_PAGE) ? 
+					BUFF_PAGE * (1 + (int)(want/BUFF_PAGE)) : BUFF_PAGE;
+		*buff = realloc(*buff,*pool);
+	}
+	return ((char*)*buff) + *len; // start of free area
+}
+d75 4
+a78 4
+	void *ptr = buff_extend(buff,pool,len,size);
+	*len += size;
+	return ptr;
+}
+d80 2
+a81 2
+	*len = 0;
+}
+d83 4
+a86 3
+	if(*buff) free(*buff);
+	*len = *pool = 0;
+}
+d91 1
+a91 1
+    if(ioctlsocket(sock,FIONBIO,&arg)) NETERROR("ioctlsocket()");
+d95 1
+a95 1
+    if(flags == -1) NETERROR("fcntp()");
+d98 1
+a98 1
+    if(flags == -1) NETERROR("fcntl()");
+d102 8
+a109 1
+Data data_listen(int port) {
+d112 1
+a112 1
+    SOCKADDR_IN *sin,sa;
+d114 1
+d116 4
+a119 1
+    struct sockaddr_in *sin,sa;
+d121 15
+a135 1
+    int  sock, n = sizeof(sa);
+d137 4
+a140 2
+	sock = socket(AF_INET,SOCK_STREAM,0);
+	if(sock == -1) exit(11); /* ??? */
+d142 3
+a144 4
+	sin = malloc(sizeof(*sin));
+	sin->sin_family = AF_INET;
+	sin->sin_addr.s_addr = INADDR_ANY;
+	sin->sin_port = htons((short)port);
+d146 4
+a149 1
+    if(bind(sock,(struct sockaddr*)sin,sizeof(*sin))) NETERROR("bind()");
+d151 4
+a154 3
+	if(!port) {
+        if(getsockname(sock,(struct sockaddr *)&sa, &n) < 0) exit(1);
+        port = ntohs(sa.sin_port); 
+d157 1
+a157 1
+    if(listen(sock,128) == -1) NETERROR("listen()");
+d162 7
+a168 4
+	server->sock = 0;
+	server->sin  = sin;
+	server->serversock = sock;
+	server->port = port;
+d175 1
+a175 9
+#ifdef WIN32
+    SOCKADDR_IN *sin;
+    int sin_len = sizeof(SOCKADDR_IN);
+    sin = (SOCKADDR_IN *)data->sin;
+#else
+    struct sockaddr_in *sin;
+    int sin_len = sizeof(struct sockaddr_in);
+    sin = (struct sockaddr_in *)data->sin;
+#endif
+a176 1
+	if(!data->serversock) exit(14);
+d179 3
+a181 1
+    if(!sin) exit(5); // doing accept on non-server socket
+d183 2
+a184 1
+	sock = accept(data->serversock,(void*)sin,&sin_len);
+d186 1
+a186 1
+    if(sock == -1) {
+d192 1
+a192 1
+		else exit(12);
+d195 1
+a200 1
+
+d207 4
+a210 2
+	// buffers..., init
+	buff_init(&data->buffer,&data->pool,&data->len);
+d215 3
+a217 1
+Data data_connect(const char *host,int port) {
+d220 2
+a221 1
+    SOCKADDR_IN sin;
+d223 1
+a223 1
+    struct  hostent *hp;
+d225 3
+d229 1
+a230 1
+    int sock;
+d232 2
+a233 2
+    sock = socket(AF_INET,SOCK_STREAM,0);
+    if(sock == -1) exit(13);
+d235 16
+a250 16
+    if(!(hp = gethostbyname(host))) {
+#ifdef WIN32
+        fprintf(stderr,"gethostbyname(): %d\n",WSAGetLastError());
+#else
+        herror("gethostbyname");
+#endif
+        exit(1);
+    }
+                                                                                
+    sin.sin_family = AF_INET;
+    sin.sin_addr = **((struct in_addr **)hp->h_addr_list);
+    sin.sin_port = htons((short)port);
+
+    if(connect(sock,(struct sockaddr*)&sin,sizeof(sin))) {
+        fprintf(stderr,"connect('%s',%d)\n",host,port);
+        NETERROR("connect()");
+d253 8
+a260 1
+	set_block(sock,1);
+d264 1
+d266 2
+a267 2
+	// buffers..., init
+	buff_init(&data->buffer,&data->pool,&data->len);
+d272 2
+a273 3
+//void *send_buff = NULL;
+//int   send_pool = 0; // size of malloced buffer
+//int	  send_len  = 0; // real data length
+d276 4
+a279 1
+	if(!data->send_buff) 
+d281 4
+d288 34
+a321 34
+	unsigned char code = LEN_RESERVED;
+	unsigned char *buff = NULL; 
+	int buff_len = 0;
+
+	if(len <= 0) {
+		if(len < 0) exit(18);
+		code = col ? LEN_EMPTY : LEN_UNDEF;
+	}
+	if(len == 1 && isdigit(col[0])) {
+		code = LEN_0 + (col[0] - '0');
+	}
+	if(len == 2 && isdigit(col[0]) && isdigit(col[1])) {
+		code = LEN_00 + 10*(col[0] - '0') + (col[1] - '0');
+	}
+	if(code) {
+		buff = buff_insert(&data->send_buff,&data->send_pool,
+						  &data->send_len,buff_len = 1);
+		*buff = code;
+	}
+	if(!code) {
+		if(len <= LEN_MAXLEN) {
+			buff = buff_insert(&data->send_buff, &data->send_pool,
+							   &data->send_len, buff_len = 1 + len );
+			*buff = code = len;
+			memcpy(buff + 1, col, len);
+		} else {
+			uint32_t len32 = htonl(len);
+			buff = buff_insert(&data->send_buff, &data->send_pool,
+							   &data->send_len, buff_len = 1 + 4 + len );
+			*buff = code = LEN_32BIT;
+			memcpy(buff + 1, &len32, 4);
+			memcpy(buff + 5, col, len);
+		}
+	}
+d324 13
+a336 21
+static int write2(int fd,unsigned char *buff,int len) {
+	printf("write(): writting %d bytes\n",len);
+/*	for(i=0;i<len;i++) {
+		printf("%3d ",buff[i]);
+		if(i%20==19) printf("\n");
+	}*/
+	len = send(fd,buff,len,0);
+//	len = write(fd,buff,len);
+	printf("write(): ... wrote %d bytes\n",len);
+	return len;
+}
+
+void data_send_flush(Data data) {
+	int len;
+	unsigned char *ptr = buff_insert(&data->send_buff,
+									 &data->send_pool,&data->send_len,1);
+	*ptr = LEN_ENDOFROW;
+	if(data->send_len >= BUFF_PAGE) {
+		len = write(data->sock,data->send_buff,data->send_len);
+		data->send_len = 0;
+	}
+d339 1
+d341 20
+a360 3
+	if(data->send_len) write(data->sock,data->send_buff,data->send_len);
+	buff_free(&data->send_buff,&data->send_pool,&data->send_len);
+	buff_free(&data->buffer,&data->pool,&data->len);
+d366 2
+d371 6
+a376 15
+int data_recv(Data data) {
+	int len;
+
+	buff_extend(&(void*)(data->buffer),&data->pool,&data->len,BUFF_PAGE);
+
+	set_block(data->sock,1);
+//	printf("read(): calling read(BUFF_PAGE=%d)\n",BUFF_PAGE);
+//	len = read(data->sock,(char*)data->buffer + data->len,BUFF_PAGE);
+	len = recv(data->sock,(char*)data->buffer + data->len,BUFF_PAGE,0);
+//	printf("read():  ... returned %d\n",len);
+	if(len == -1) return 1;
+    if(len <= 0) return 0;
+
+	data->len += len;
+	return len;
+d379 1
+a379 3
+
+int data_is_row(Data data) {
+	unsigned char code, *ptr;
+d381 2
+a382 4
+	int row, len, columns = 0;
+
+	len = data->len - data->offset;
+	if(len < 1) return -1;
+d384 36
+a419 1
+	ptr = (char*)data->buffer + data->offset;
+d421 2
+a422 5
+	while((len > 0) && ((code=(*ptr)) != LEN_ENDOFROW)) {
+		if(code >= 1 && code <= LEN_MAXLEN) row = code;
+		if(code == LEN_32BIT) {
+			memcpy(&len32,ptr+1,4);
+			row = 4 + ntohl(len32);
+d424 1
+a424 2
+		if(code >= LEN_0 && code <= LEN_99) row = 0;
+		if(code == LEN_EMPTY || code == LEN_UNDEF) row = 0;
+d426 20
+a445 1
+		if(row == -1) exit(20); // unknown code
+d447 2
+a448 5
+		len -= 1 + row;
+		ptr += 1 + row;
+		columns++;
+	}
+	return ((len > 0) && ((*ptr) == LEN_ENDOFROW)) ? columns : -1;
+d453 7
+a459 4
+int data_extract(Data data,void **buff,int *len) {
+	uint32_t len32;
+	unsigned char *ptr = (char*)data->buffer + data->offset;
+	unsigned char code = *ptr;
+d462 3
+a464 3
+		*buff = ptr + 1;
+		*len = code;
+		return 1 + code;
+d467 6
+a472 4
+		memcpy(&len32,ptr+1,4);
+		*len  = ntohl(len32);
+		*buff = ptr + 1 + 4;	
+		return 1 + 4 + (*len);
+d475 1
+a475 2
+		*buff = NULL; *len = code - LEN_0;
+		return 1;
+d478 1
+a478 1
+		*buff = (void*)(numbers + 2*(code - LEN_00));
+a479 1
+		return 1;
+d482 1
+a482 2
+		*buff = NULL; *len = 10 + code - LEN_10;
+		return 1;
+d485 1
+a485 2
+		*buff = (void*)numbers; *len = 0;
+		return 1;
+a487 1
+		*buff = NULL;
+a488 1
+		return 1;
+d491 67
+a557 2
+	printf("error: code=%d\n",code);
+	exit(21);
+d560 9
+d573 3
+@
+

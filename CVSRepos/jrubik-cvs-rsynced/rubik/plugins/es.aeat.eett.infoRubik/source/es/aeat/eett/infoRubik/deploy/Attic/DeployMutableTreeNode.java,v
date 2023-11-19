@@ -1,0 +1,211 @@
+head	1.2;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2008.05.17.15.37.41;	author fsaz;	state dead;
+branches;
+next	1.1;
+
+1.1
+date	2005.11.28.14.44.05;	author fsaz;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@Borrando
+@
+text
+@/*
+ * Created on 29-may-2005
+ *
+ * DeployMutableTreeNode.java
+ *
+ */
+package es.aeat.eett.infoRubik.deploy;
+
+import java.io.File;
+import java.util.Iterator;
+import java.util.StringTokenizer;
+
+import org.java.plugin.PluginManager;
+import org.jdom.Attribute;
+import org.jdom.Document;
+import org.jdom.Element;
+
+import swingUtil.Tamemasa.tree.CheckNode;
+
+import com.tonbeller.jpivot.olap.model.Dimension;
+import com.tonbeller.jpivot.olap.model.Hierarchy;
+import com.tonbeller.jpivot.olap.model.Level;
+import com.tonbeller.jpivot.olap.model.Member;
+import com.tonbeller.jpivot.olap.model.OlapModel;
+import com.tonbeller.jpivot.olap.query.MDXElement;
+import com.tonbeller.jpivot.olap.query.MDXLevel;
+import com.tonbeller.jpivot.olap.query.MDXMember;
+import com.tonbeller.jpivot.olap.query.MdxOlapModel;
+
+import es.aeat.eett.infoRubik.jobs.job_core.Job;
+import es.aeat.eett.rubik.core.RubikPlugin;
+import es.aeat.eett.rubik.core.cell.RubikCell;
+import es.aeat.eett.rubik.core.cell.RubikCellImpl;
+import es.aeat.eett.rubik.core.util.JDomUtil;
+import es.aeat.eett.workbench.core.PluginException;
+
+/**
+ * @@author f00992
+ */
+public class DeployMutableTreeNode extends CheckNode {
+	private static OlapModel olapModel=null;
+
+    public DeployMutableTreeNode(Object userObject) throws Exception {
+        this(userObject, false);
+        
+    }
+    DeployMutableTreeNode(Object userObject, boolean isSelected) throws Exception {
+        super(userObject, isSelected);
+        if(olapModel==null){
+	        PluginManager pm = PluginManager.lookup(DeployMutableTreeNode.class);
+	    	RubikPlugin rubikPlugin = ((RubikPlugin) pm.getPlugin(RubikPlugin.PLUGIN_ID));
+	        olapModel=rubikPlugin.getOlapModel();
+        }
+        
+    }
+
+    public void loadRootElement(File file) throws Exception{
+        if(!isRoot())
+            throw new UnsupportedOperationException();
+        Document document=new JDomUtil().JDomChk(file, Job.KEY_JOB);
+        Element eRoot=document.getRootElement();
+        Element eDeploy=eRoot.getChild(Job.KEY_DEPLOY);
+        if(eDeploy!=null){
+        	loadRootElement(eDeploy);
+        }
+    }
+
+    public void loadRootElement(Element eDeploy) throws Exception{
+        if(!isRoot())
+            throw new UnsupportedOperationException();
+		removeAllChildren();
+		loadRootElement(eDeploy, this);
+    }
+    private void loadRootElement(Element eParent, DeployMutableTreeNode nParent) throws Exception{
+		Iterator it = (eParent.getChildren()).iterator();
+		 RubikCell rubikCell;
+    	while(it.hasNext()){
+    		Element eChild=(Element) it.next();
+    		Attribute aUname=eChild.getAttribute(MasterDeploy.getKEY_UNIQUENAME());
+    		Attribute aEnabled=eChild.getAttribute(MasterDeploy.getKEY_ENABLED());
+    		if(MasterDeploy.getKEY_FLASE_TOTAL().equals(eChild.getName())){// False Total
+    		    rubikCell=new RubikCellImpl(AvailableHierarchies.FALSE_MEMBER_TOTAL);
+    		    DeployMutableTreeNode nChild= new DeployMutableTreeNode(rubikCell,aEnabled.getBooleanValue());
+    			nParent.add(nChild);
+    			loadRootElement(eChild, nChild);
+    		}else if(MasterDeploy.getKEY_LEVEL().equals(eChild.getName())){
+    			Level level=getLevel(aUname.getValue());
+    			rubikCell=new RubikCellImpl(level.getLabel(),level);
+    			DeployMutableTreeNode nChild= new DeployMutableTreeNode(rubikCell,aEnabled.getBooleanValue());
+    			nParent.add(nChild);
+    			loadRootElement(eChild, nChild);
+    		}else if(MasterDeploy.getKEY_MEMBER().equals(eChild.getName())){
+    			MdxOlapModel mdxModel=(MdxOlapModel)olapModel;
+    			Member m=mdxModel.lookupMemberByUName(aUname.getValue());
+    			if(m!=null){
+    			    rubikCell=new RubikCellImpl(m.getLabel(),m);
+        		    rubikCell.setCellType(RubikCell.MEMBER);
+    			    DeployMutableTreeNode nChild= new DeployMutableTreeNode(rubikCell,aEnabled.getBooleanValue());
+	    			nParent.add(nChild);
+	    			loadRootElement(eChild, nChild);
+    			}else{
+    			    throw new PluginException("Member: "+aUname.getValue()+" no found.");
+    			}
+    		}
+    	}
+    }
+    private Level getLevel(String uname) throws Exception{
+    	String hName=getNameHierarchy( uname);
+		Dimension[] dimensions=olapModel.getDimensions();
+		for(int i=0; i<dimensions.length;i++){
+			Hierarchy[] hierarchys=dimensions[i]. getHierarchies();
+			for (int j=0; j<hierarchys.length; j++){
+				if(hierarchys[j].getLabel().equals(hName)){
+					Level[] levels=hierarchys[j].getLevels();
+					for(int k=0; k<levels.length ; k++){
+						if(((MDXElement) levels[k]).getUniqueName().equals(uname))
+							return levels[k];
+					}// Fin for
+				}
+			}
+		}
+		 throw new PluginException("Level: "+uname+" no found.");
+    }
+    private String getNameHierarchy(String uname) throws Exception{
+    	StringTokenizer stokenizer = new StringTokenizer( uname, ".[]");
+        while (stokenizer.hasMoreTokens()){
+        	return stokenizer.nextToken();
+        }
+        throw new PluginException("Hierarchy: "+uname+" no found.");
+    }
+    public Element getRootElement(){
+    	Element eRoot= new Element (Job.KEY_DEPLOY);
+    	DeployMutableTreeNode nRoot=(DeployMutableTreeNode) getRoot();
+    	if(nRoot!=null && nRoot.getChildCount()==1){
+    		addChildren(eRoot, (DeployMutableTreeNode) nRoot.getFirstChild());
+    	}
+    	return eRoot;
+    }
+    private void addChildren(Element eParent, DeployMutableTreeNode node){
+    	RubikCell rCell=(RubikCell) node.getUserObject();
+    	Element eChild=null;
+    	if(rCell.getCellType()!=RubikCell.FALSECELL){
+	    	if(rCell.getDisplayable() instanceof Member){
+	    		MDXMember mdxM=(MDXMember) rCell.getDisplayable();
+	    		eChild= new Element (MasterDeploy.getKEY_MEMBER());
+	    		Attribute a= new Attribute(MasterDeploy.getKEY_UNIQUENAME(),mdxM.getUniqueName());
+	    		eChild.setAttribute(a);
+	    	}if(rCell.getDisplayable() instanceof Level){
+	    		MDXLevel mdxL=(MDXLevel) rCell.getDisplayable();
+	    		eChild= new Element (MasterDeploy.getKEY_LEVEL());
+	    		Attribute a= new Attribute(MasterDeploy.getKEY_UNIQUENAME(), mdxL.getUniqueName());
+	    		eChild.setAttribute(a);
+	    	}
+    	}else{ //FALSE TOTAL
+    		eChild= new Element (MasterDeploy.getKEY_FLASE_TOTAL());
+    		DeployMutableTreeNode nParent=(DeployMutableTreeNode) node.getParent();
+    		rCell=(RubikCell) nParent.getUserObject();
+    		MDXLevel mdxL=(MDXLevel) rCell.getDisplayable();
+    		Attribute a= new Attribute(MasterDeploy.getKEY_UNIQUENAME(), mdxL.getUniqueName());
+    		eChild.setAttribute(a);
+    	}
+		Attribute a= new Attribute(MasterDeploy.getKEY_ENABLED(), Boolean.toString(node.isSelected()));
+		eChild.setAttribute(a);
+    	eParent.addContent(eChild);
+    	if(!node.isLeaf()){
+    		int counter=node.getChildCount();
+    		for(int i=0; i<counter; i++){
+    		    DeployMutableTreeNode nChild=(DeployMutableTreeNode) node.getChildAt(i);
+    			addChildren(eChild, nChild);
+    		}
+    	}
+    }
+
+}
+@
+
+
+1.1
+log
+@*** empty log message ***
+@
+text
+@@
+

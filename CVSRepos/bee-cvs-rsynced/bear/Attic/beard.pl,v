@@ -1,0 +1,79 @@
+head	1.2;
+access;
+symbols
+	start:1.1.1.1 vendor:1.1.1;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2002.09.24.15.42.37;	author michald;	state dead;
+branches;
+next	1.1;
+
+1.1
+date	2002.09.24.01.56.46;	author michald;	state Exp;
+branches
+	1.1.1.1;
+next	;
+
+1.1.1.1
+date	2002.09.24.01.56.46;	author michald;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@minor change of cvs tree structure
+@
+text
+@#!/usr/bin/perl -w
+#-----------------------------------------------------
+#  Bear Daemon
+#-----------------------------------------------------
+# $Id: beard.pl,v 1.1 2002/09/24 01:56:46 michald Exp $
+
+use strict;
+
+use SOAP::Transport::HTTP;
+
+use Bear;
+
+# don't want to die on 'Broken pipe' or Ctrl-C
+$SIG{PIPE} = $SIG{INT} = 'IGNORE'; 
+
+my $daemon = SOAP::Transport::HTTP::Daemon
+	-> new (LocalPort => 3000, Reuse => 1)
+	-> dispatch_to('Bear')
+	-> options({compress_threshold => 10000});                
+
+print "Contact to SOAP server (PID $$) at ", $daemon->url, "\n";
+$daemon->handle;
+
+__END__
+
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d5 1
+a5 1
+# $Id: beard.pl,v 1.2 2002/09/12 16:17:14 michal Exp $
+@
+
+
+1.1.1.1
+log
+@Initial release of Bear ROLAP Portal
+@
+text
+@@

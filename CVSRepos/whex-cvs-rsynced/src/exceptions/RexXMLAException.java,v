@@ -1,0 +1,46 @@
+head	1.1;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.1
+date	2007.07.11.09.22.45;	author pyadav;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@Additional files for version 0.7.
+@
+text
+@
+package rex.exceptions;
+
+import javax.swing.JOptionPane;
+
+public class RexXMLAException extends Exception {
+	private String msg;
+	public RexXMLAException() {
+		super();
+    }
+	public RexXMLAException(String msg) {
+        super(msg);
+        this.msg=msg;
+    }
+	public String getError()
+	{
+		return msg;
+	}
+	public void showMessageErrorInDialog()
+	{
+		JOptionPane.showMessageDialog(null,msg,"Error",JOptionPane.WARNING_MESSAGE);
+	}	
+}
+@

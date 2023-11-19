@@ -1,0 +1,113 @@
+head	1.1;
+access;
+symbols
+	jpivot_1_8_0:1.1
+	focus_1_6_0:1.1.0.6
+	jpivot_1_7_0:1.1
+	jpivot_1_6_0:1.1
+	jpivot_1_5_0:1.1.0.4
+	Root_jpivot_1_5_0:1.1
+	mondrian_xmla_2005_08_25:1.1.0.2
+	sourceforge_sync:1.1;
+locks; strict;
+comment	@# @;
+expand	@k@;
+
+
+1.1
+date	2005.07.05.14.19.52;	author avix;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@initial version
+@
+text
+@/*
+ * ====================================================================
+ * This software is subject to the terms of the Common Public License
+ * Agreement, available at the following URL:
+ *   http://www.opensource.org/licenses/cpl.html .
+ * Copyright (C) 2003-2004 TONBELLER AG.
+ * All Rights Reserved.
+ * You must accept the terms of that agreement to use this software.
+ * ====================================================================
+ *
+ * 
+ */
+package com.tonbeller.jpivot.mondrian;
+
+import java.io.Serializable;
+
+import com.tonbeller.jpivot.olap.query.*;
+
+/**
+ * Java Bean object to hold the state of MondrianQuax.
+ * Used for serialization of MondrianModel via MondrianMemento.
+ * Referenced by MondrianMemento.
+ * 
+ */
+public class MondrianQuaxBean extends QuaxBean implements Serializable {
+	
+  
+  // old stuff
+  MondrianMemberSetBean[] memberSets = null; // Member sets, used in Qubon mode
+  MondrianDrillExBean[] drillExes; // List of drill expansions, used in normal mode
+
+// HHTASK : support Non Empty
+
+
+  /**
+   * Set drillExes.
+   * @@param drillExes
+   * Used by old memento (MDX Generation version 2)
+   * HHTASK: remove, when old Bookmarks are replaced
+   */
+  public void setDrillExes(MondrianDrillExBean[] drillExes) {
+    this.drillExes = drillExes;
+  }
+
+  /**
+   * Get drillExes.
+   * @@return drillExes
+   * Used by old memento (MDX Generation version 2)
+   * HHTASK: remove, when old Bookmarks are replaced
+   */
+  public MondrianDrillExBean[] getDrillExes() {
+    if (drillExes != null)
+      return drillExes;
+    else
+      return new MondrianDrillExBean[0];
+  }
+
+  /**
+   * Get memberSets.
+   * @@return memberSets
+   * Used by old memento (MDX Generation version 2)
+   * HHTASK: remove, when old Bookmarks are replaced
+   */
+  public MondrianMemberSetBean[] getMemberSets() {
+    if (memberSets != null)
+      return memberSets;
+    else
+      return new MondrianMemberSetBean[0];
+  }
+
+  /**
+   * Set memberSets.
+   * @@param memberSets
+   * Used by old memento (MDX Generation version 2)
+   * HHTASK: remove, when old Bookmarks are replaced
+   */
+  public void setMemberSets(MondrianMemberSetBean[] memberSets) {
+    this.memberSets = memberSets;
+  }
+
+} // End MondrianQuaxBean
+@

@@ -1,0 +1,100 @@
+head	1.1;
+access;
+symbols
+	jpivot_1_8_0:1.1
+	focus_1_6_0:1.1.0.6
+	wcf_1_7_0:1.1
+	wcf_1_6_0:1.1
+	jpivot_1_5_0:1.1.0.4
+	Root_jpivot_1_5_0:1.1
+	mondrian_xmla_2005_08_25:1.1.0.2
+	sourceforge_sync:1.1;
+locks; strict;
+comment	@# @;
+
+
+1.1
+date	2005.07.05.14.04.36;	author avix;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@initial version
+@
+text
+@/*
+ * ====================================================================
+ * This software is subject to the terms of the Common Public License
+ * Agreement, available at the following URL:
+ *   http://www.opensource.org/licenses/cpl.html .
+ * Copyright (C) 2003-2004 TONBELLER AG.
+ * All Rights Reserved.
+ * You must accept the terms of that agreement to use this software.
+ * ====================================================================
+ *
+ * 
+ */
+package com.tonbeller.wcf.changeorder;
+
+import java.util.List;
+
+/**
+ * @@author av
+ */
+public class ChangeOrderUtils {
+
+  /**
+   * validates that oldIndex and newIndex fit into an array of size
+   * @@return true when the indexes are valid
+   */
+  static boolean checkBounds(int size, int oldIndex, int newIndex) {
+    if (oldIndex < 0 || oldIndex >= size)
+      return false;
+    if (newIndex < 0 || newIndex >= size)
+      return false;
+    return true;
+  }
+  
+  public static boolean move(List list, int oldIndex, int newIndex) {
+    if (!checkBounds(list.size(), oldIndex, newIndex))
+        return false;
+    Object item = list.remove(oldIndex);
+    list.add(newIndex, item);
+    return true;
+  }
+
+
+  public static boolean move(Object[] array, int oldIndex, int newIndex) {
+    if (!checkBounds(array.length, oldIndex, newIndex))
+      return false;
+    if (oldIndex == newIndex)
+      return true;
+    Object item = array[oldIndex];
+    if (oldIndex < newIndex) {
+      for (int i = oldIndex; i < newIndex; i++)
+        array[i] = array[i+1];
+    }
+    else {
+      for (int i = oldIndex; i > newIndex; i--) 
+        array[i] = array[i-1];
+    }
+    array[newIndex] = item;
+    
+    return true;
+  }
+
+  public static int indexOf(Object[] array, Object item) {
+    for (int i = 0; i < array.length; i++)
+      if (item.equals(array[i]))
+        return i;
+    return -1;
+  }
+
+}
+@

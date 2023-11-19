@@ -1,0 +1,104 @@
+head	1.1;
+access;
+symbols
+	jpivot_1_8_0:1.1
+	focus_1_6_0:1.1.0.6
+	wcf_1_7_0:1.1
+	wcf_1_6_0:1.1
+	jpivot_1_5_0:1.1.0.4
+	Root_jpivot_1_5_0:1.1
+	mondrian_xmla_2005_08_25:1.1.0.2
+	sourceforge_sync:1.1;
+locks; strict;
+comment	@# @;
+
+
+1.1
+date	2005.07.05.14.04.34;	author avix;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@initial version
+@
+text
+@/*
+ * ====================================================================
+ * This software is subject to the terms of the Common Public License
+ * Agreement, available at the following URL:
+ *   http://www.opensource.org/licenses/cpl.html .
+ * Copyright (C) 2003-2004 TONBELLER AG.
+ * All Rights Reserved.
+ * You must accept the terms of that agreement to use this software.
+ * ====================================================================
+ *
+ * 
+ */
+package com.tonbeller.wcf.tree;
+
+/**
+ * exposes parent/child relationship between objects. 
+ * 
+ * @@author av
+ */
+public interface TreeModel {
+  
+  public static final TreeModel EMPTY_MODEL = new TreeModel() {
+    public Object[] getRoots() {
+      return new Object[0];
+    }
+    public boolean hasChildren(Object node) {
+      return false;
+    }
+    public Object[] getChildren(Object node) {
+      return null;
+    }
+    public Object getParent(Object node) {
+      return null;
+    }
+    public void addTreeModelChangeListener(TreeModelChangeListener l) {
+    }
+    public void removeTreeModelChangeListener(TreeModelChangeListener l) {
+    }
+    public void fireModelChanged(boolean identityChanged) {
+    }
+  };
+
+  /**
+   * returns the root members of the tree.
+   */
+  Object[] getRoots();
+  
+  /**
+   * @@return true if the member can be expanded
+   */
+  boolean hasChildren(Object node);
+  
+  /**
+   * @@return the children of the member
+   */
+  Object[] getChildren(Object node);
+  
+  /**
+   * @@return the parent of member or null, if this is a root member
+   */
+  Object getParent(Object node);
+  
+  void addTreeModelChangeListener(TreeModelChangeListener l);
+  void removeTreeModelChangeListener(TreeModelChangeListener l);
+
+  
+  /**
+   * fires a TreeModelChangeEvent. 
+   * @@param identityChanged if true, the identities of the tree nodes
+   * have changed and, for example, the selection will be cleared.
+   */
+  void fireModelChanged(boolean identityChanged);
+}
+@

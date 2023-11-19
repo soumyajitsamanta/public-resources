@@ -1,0 +1,93 @@
+head	1.1;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.1
+date	2004.04.18.02.54.54;	author michald;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@publication of the Czech Help
+@
+text
+@<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html>
+<head>
+  <meta http-equiv="CONTENT-TYPE" content="text/html; charset=utf-8">
+  <meta http-equiv="language" content="CZ">
+  <title>BEE Projekt - Nápověda</title>
+  <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+<center>
+<p align="center"><img hspace="30" src="bee_shadow200.jpg"
+ name="Obrázek1" alt="BEE Projekt" align="right"
+ style="border: 0px solid ; width: 200px; height: 219px;"></p>
+<br>
+<br>
+</center>
+<center>
+<table width="100%" border="0" cellpadding="2" cellspacing="1">
+  <tbody>
+    <tr>
+      <td style="vertical-align: top;"><br>
+      </td>
+      <td style="vertical-align: top;">
+      <h1><b>Projekt BEE</b></h1>
+      <h3><b><b>Tvorba reportů</b> - uživatelská příručka</b></h3>
+      <br>
+      <br>
+      </td>
+    </tr>
+    <tr valign="top">
+      <td width="80">
+      <p>&nbsp;</p>
+      </td>
+      <td>
+      <p><b>Obsah:</b></p>
+      <p><a href="1_uvod.html"><b>1 Úvod</b></a><br>
+&nbsp;&nbsp;<a href="1_1_pouzivane_pojmy.html">1.1 Používané pojmy</a><br>
+&nbsp;&nbsp;<a href="1_2_popis_uzivatelskeho_rozhrani.html">1.2 Popis
+uživatelského rozhraní</a><br>
+      </p>
+      <p> <a href="2_priklady_reportu.html"><b>2 Příklady použití
+Projektu
+BEE při tvorbě reportu</b></a><br>
+&nbsp;&nbsp;<a href="2_1_priklad1.html">2.1 Příklad 1</a><br>
+&nbsp;&nbsp;<a href="2_2_priklad2.html">2.2 Příklad 2</a><br>
+      </p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+</center>
+<p><br>
+&nbsp;</p>
+<hr>
+<p><i>©
+2003, Insight Strategy, a. s.</i><br>
+<i>Tento
+dokument je vlastnictvím firmy <a href="http://www.insightstrategy.cz/">Insight
+Strategy, a. s.</a> a smí
+být kopírován a šířen jen jako celek.
+Jeho jednotlivé části nesmí být
+kopírovány, přenášeny, předávány,
+přizpůsobovány, překládány do jiných
+jazyků a zveřejněny nebo předány třetí straně bez
+předběžného písemného souhlasu a vědomí
+společnosti Insight Strategy, a. s.. Každá kopie tohoto
+dokumentu musí obsahovat také kopii tohoto upozornění.</i>
+</p>
+</body>
+</html>
+@

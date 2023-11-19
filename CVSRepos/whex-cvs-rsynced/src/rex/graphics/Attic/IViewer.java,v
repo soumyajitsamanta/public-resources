@@ -1,0 +1,82 @@
+head	1.4;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.4
+date	2006.01.13.12.21.13;	author igorludi;	state dead;
+branches;
+next	1.3;
+
+1.3
+date	2005.10.18.14.04.40;	author igorludi;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2005.10.18.13.40.37;	author igorludi;	state dead;
+branches;
+next	1.1;
+
+1.1
+date	2005.06.28.14.10.46;	author igorludi;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.4
+log
+@*** empty log message ***
+@
+text
+@package rex.graphics;
+
+import rex.metadata.resultelements.Member;
+import rex.metadata.QueryElement;
+import rex.graphics.filtertree.*;
+
+public interface IViewer {
+
+   public void refreshQuery();
+
+   public FilterTreeModel addMemberToFilter(Member filterMember);
+
+   public void dropFilterTree(FilterTree filterToDrop);
+
+   public void enableTreeElements(QueryElement elementToEnable);
+
+   public void refreshFilterDisplay();
+
+}
+@
+
+
+1.3
+log
+@*** empty log message ***
+@
+text
+@@
+
+
+1.2
+log
+@*** empty log message ***
+@
+text
+@@
+
+
+1.1
+log
+@*** empty log message ***
+@
+text
+@@
+

@@ -1,0 +1,494 @@
+head	1.2;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2008.05.17.15.37.41;	author fsaz;	state dead;
+branches;
+next	1.1;
+
+1.1
+date	2005.11.28.14.44.05;	author fsaz;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@Borrando
+@
+text
+@/*
+ * Created on 14-mar-2005
+ *
+ * MasterDeploy.java
+ *
+ */
+package es.aeat.eett.infoRubik.deploy;
+
+import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.Iterator;
+import java.util.StringTokenizer;
+
+import javax.swing.tree.DefaultMutableTreeNode;
+
+import org.java.plugin.PluginManager;
+import org.jdom.Attribute;
+import org.jdom.Element;
+
+import swingUtil.Tamemasa.tree.CheckNode;
+
+import com.tonbeller.jpivot.olap.model.Dimension;
+import com.tonbeller.jpivot.olap.model.Hierarchy;
+import com.tonbeller.jpivot.olap.model.Level;
+import com.tonbeller.jpivot.olap.model.Member;
+import com.tonbeller.jpivot.olap.model.OlapModel;
+import com.tonbeller.jpivot.olap.navi.MemberTree;
+import com.tonbeller.jpivot.olap.query.MDXElement;
+import com.tonbeller.jpivot.olap.query.MDXLevel;
+import com.tonbeller.jpivot.olap.query.MDXMember;
+import com.tonbeller.jpivot.olap.query.MdxOlapModel;
+
+import es.aeat.eett.infoRubik.jobs.job_core.Job;
+import es.aeat.eett.rubik.core.RubikPlugin;
+import es.aeat.eett.rubik.core.cell.RubikCell;
+import es.aeat.eett.rubik.core.cell.RubikCellImpl;
+
+/**
+ * @@author f00992
+ *
+ */
+public class MasterDeploy {
+	private static final String KEY_LEVEL="level";
+	private static final String KEY_MEMBER="member";
+	private static final String KEY_UNIQUENAME="uname";
+	private static final String KEY_FLASE_TOTAL="falseTotal";
+	private static final String KEY_ENABLED="enabled";
+
+    private CheckNode rootDisponibles=null;
+    private DefaultMutableTreeNode rootElegidas=null;
+    private static OlapModel olapModel=null;
+
+    MasterDeploy() throws Exception{
+        this( null, null);
+    }
+    MasterDeploy(CheckNode rootDisponibles, DefaultMutableTreeNode rootElegidas) throws Exception {
+        this.rootDisponibles = rootDisponibles;
+        this.rootElegidas = rootElegidas;
+        if(olapModel==null){
+	        PluginManager pm = PluginManager.lookup(MasterDeploy.class);
+	    	RubikPlugin rubikPlugin = ((RubikPlugin) pm
+	    			.getPlugin(RubikPlugin.PLUGIN_ID));
+	        olapModel=rubikPlugin.getOlapModel();
+        }
+    }
+	void addLevelToDespliegue(CheckNode lastItem){
+		RubikCell cLast=(RubikCell) lastItem.getUserObject();
+		Level l =(Level) cLast.getDisplayable();
+		RubikCell cHoja=null;
+		Member m=null;
+		if(rootElegidas.getChildCount()>0){
+			cHoja=getFirstCedaValid(rootElegidas);
+			if(cHoja==null)//Solo se aniadio un FaseTotal operacion absurda no rota no hace nada
+			        return;
+			m=(Member) cHoja.getDisplayable();
+		}
+		//updateUserActions(lastItem);
+		if(m!=null && m.getLevel().getHierarchy().equals(l.getHierarchy())){
+			//System.out.println("Aniadiendo Levels de la Misma Hierarchy.");
+			MemberTree mmt=(MemberTree)olapModel.getExtension(MemberTree.ID);
+			addToHojas(rootElegidas,lastItem, mmt);
+		}else{
+			//System.out.println("Aniadiendo Levels de la Otra Hierarchy.");
+		    if(m!=null)
+		        removeHierarchyDisponibels(m.getLevel().getHierarchy());
+            addToHojas(rootElegidas,lastItem);
+		}
+    	clearLevelsInDisponibles(lastItem);
+        //if(!actionLimpiar.isEnabled()) actionLimpiar.setEnabled(true);
+
+	}
+    /**
+     * Aniade una copia de nHijo a cada hoja de nParent
+     * @@param nParent
+     * @@param nHijo
+     */
+    private void addToHojas(DefaultMutableTreeNode nParent,CheckNode nHijo ){
+    	int n_hijos=nParent.getChildCount();
+    	DefaultMutableTreeNode nHijoNew=copiaSimpleNode(nHijo);
+	    if(nParent!=null && nHijoNew!=null){
+	    	if(containsValidChildSelected(nHijo)){
+	    		if(n_hijos==0){//Es hoja
+	    		        nParent.add(nHijoNew);
+	    		}else{//Es Rama
+	    			for (int i=0; i<n_hijos; i++){
+	    				addToHojas((DefaultMutableTreeNode) nParent.getChildAt(i),nHijo);
+	    			}
+	    		}
+	    	}
+    	}
+    }
+
+    /**
+     * Aniade una copia de nHijo a cada hoja de nParent
+     * @@param nRootElegidas
+     * @@param nDisponibles
+     * @@param mmt
+     */
+    private void addToHojas(DefaultMutableTreeNode nRootElegidas,CheckNode nDisponibles, MemberTree mmt ){
+    	if(nRootElegidas!=null && nDisponibles!=null){
+    	    RubikCell cDisponible=(RubikCell) nDisponibles.getUserObject();
+    	    MDXLevel levelDisponible =(MDXLevel) cDisponible.getDisplayable();
+    	    boolean isAllInHierarchy=false;
+    	    if( nDisponibles.getChildCount()>0){
+    	        CheckNode nIsAll=(CheckNode) nDisponibles.getFirstChild();
+    	        RubikCell cIsAll=(RubikCell) nIsAll.getUserObject();
+    	        isAllInHierarchy=cIsAll.getCellType()==RubikCell.FALSECELL;
+    	    }
+
+    	    Enumeration  e=nRootElegidas.depthFirstEnumeration();
+    	    while(e.hasMoreElements()){
+    	        DefaultMutableTreeNode nParent=(DefaultMutableTreeNode) e.nextElement();
+    	        if(nParent.isLeaf() ){
+    	            //Se crea el nodo del nivel
+    	            DefaultMutableTreeNode nNivel= new DefaultMutableTreeNode(cDisponible);
+    	            nParent.add(nNivel);
+    	            //Se aniaden los hijos al nodo del nivel
+    	            RubikCell cParent=(RubikCell) nParent.getUserObject();
+    	            if(cParent.getDisplayable() instanceof Member){
+    	                Member mParent=(Member) cParent.getDisplayable();
+    	                Member[] mHijos=getChildrenMembers(mParent,levelDisponible , mmt);
+    	                boolean canAddFalseTotal=true;
+    	                //Si el level contiene un Member.getLabel()==AvailableHierarchies.FALSE_MEMBER_TOTAL
+    	                //No se puede aniadir el faseTotal (se perderian los nombres unicos en el nivel);
+    	                for(int i=0; i<mHijos.length; i++){
+    	                    if(isEnabledChildrenInLevel(nDisponibles, mHijos[i])){
+	    	                    RubikCell cHijo= new RubikCellImpl(mHijos[i].getLabel(), mHijos[i]);
+	    	                    DefaultMutableTreeNode nHijo= new DefaultMutableTreeNode(cHijo);
+	    	                    nNivel.add(nHijo);
+    	                    }
+    	                    if(AvailableHierarchies.FALSE_MEMBER_TOTAL.equals(mHijos[i].getLabel()))
+	                            canAddFalseTotal=false;
+    	                }
+    	                if(canAddFalseTotal && isAllInHierarchy && nNivel.getChildCount()>0){
+    	                    if(((CheckNode)nDisponibles.getFirstChild()).isSelected()){
+						        RubikCell cFalseTotal= new RubikCellImpl(AvailableHierarchies.FALSE_MEMBER_TOTAL);
+						        DefaultMutableTreeNode  nFalseTotal=new DefaultMutableTreeNode(cFalseTotal);
+						        nNivel.insert(nFalseTotal,0);
+    	                    }
+    	                }
+    	            }else{// Caso Especial False Total
+    	                //Los hijos aniadidos al FalseTotal estaran repetidos (por lo menos algunos)
+    	                /**
+    	                RubikCell cNivel=(RubikCell) nNivel.getUserObject();
+    	                Level level=(Level) cNivel.getDisplayable();
+    	                loadChildLevel(nNivel, level);
+    	                /**/
+    	            }
+	                if(nNivel.getChildCount()==0)
+	                    nParent.remove(nNivel);
+    	        }
+    	    }
+    	}
+    }
+    void clearNodes(){
+        //userActions.clear();
+    	if(rootDisponibles!=null){
+    		rootDisponibles.removeAllChildren();
+    	}
+    	if(rootElegidas!=null){
+    		rootElegidas.removeAllChildren();
+    	}
+    }
+
+    private void clearLevelsInDisponibles(CheckNode lastItem){
+        if(!containsValidChildSelected(lastItem)) return;
+        CheckNode chkParent=(CheckNode) lastItem.getParent();
+        RubikCell c= (RubikCell) lastItem.getUserObject();
+        MDXLevel level=(MDXLevel) c.getDisplayable();
+        for(int i=chkParent.getChildCount()-1; i>-1; i--){
+        	CheckNode chkHijo=(CheckNode) chkParent.getChildAt(i);
+            RubikCell cH= (RubikCell) chkHijo.getUserObject();
+            MDXLevel levelH=(MDXLevel)cH.getDisplayable();
+            if(levelH.getDepth()<=level.getDepth())
+            	chkParent.remove(chkHijo);
+        }
+        if(chkParent.getChildCount()==0){
+        	((DefaultMutableTreeNode) chkParent.getParent()).remove(chkParent);
+        }
+    }
+
+    private boolean containsValidChildSelected(CheckNode n){
+        if(n!=null){
+	        for(int i=0; i<n.getChildCount(); i++){
+	            CheckNode nHijo=(CheckNode) n.getChildAt(i);
+	            if(nHijo.isSelected()){
+	                if(((RubikCell) nHijo.getUserObject()).getCellType()!=RubikCell.FALSECELL)//
+	                    return true;
+	            }
+	        }
+        }
+        return false;
+    }
+    /**
+     * Crea una copia de nodo y de todos sus hijos.
+     *
+     * @@param nodo
+     * @@return DefaultMutableTreeNode (la copia de nodo)
+     */
+    private DefaultMutableTreeNode copiaSimpleNode(CheckNode nodo){
+        DefaultMutableTreeNode nHijo=null;
+    	if (nodo!=null && (nodo.isSelected()
+    	        || ((RubikCell) nodo.getUserObject()).getDisplayable() instanceof Level)){
+        	int n_hijos=nodo.getChildCount();
+        	nHijo=new DefaultMutableTreeNode(nodo.getUserObject());
+			for (int i=0; i<n_hijos; i++){
+			    DefaultMutableTreeNode nNewHijo=copiaSimpleNode((CheckNode) nodo.getChildAt(i));
+			    if(nNewHijo!=null) nHijo.add(nNewHijo);
+			}
+    	}
+    	return nHijo;
+    }
+    private Member[] getChildrenMembers(Member mParent, MDXLevel level, MemberTree mmt){
+        MDXLevel levelParent= (MDXLevel) mParent.getLevel();
+        Member[] mChildren=new Member[0];
+        if(levelParent.getDepth()<level.getDepth()){
+            if(levelParent.getDepth()+1 ==level.getDepth()){
+                mChildren= mmt.getChildren(mParent);
+            } else{
+                ArrayList listChildren=new ArrayList();
+                Member[] ms=mmt.getChildren(mParent);
+                for( int i=0; i<ms.length; i++){
+                    Member[] mTmp=getChildrenMembers(ms[i], level, mmt);
+                    for(int j=0; j<mTmp.length;j++){
+                            listChildren.add(mTmp[j]);
+                    }
+                }
+                if(!listChildren.isEmpty()){
+                    Member[] mNew= new Member[mChildren.length +listChildren.size()];
+                    System.arraycopy(mChildren,0,mNew,0,mChildren.length);
+                    for(int counter=0, k=mChildren.length; k<mNew.length
+                        	;mNew[k++]=(Member) listChildren.get(counter++));
+                    mChildren=mNew;
+                }
+            }
+        }
+            return mChildren;
+    }
+    private RubikCell getFirstCedaValid(DefaultMutableTreeNode root ){
+		DefaultMutableTreeNode nHoja=(DefaultMutableTreeNode) root.getFirstLeaf();
+		RubikCell cHoja=(RubikCell) nHoja.getUserObject();
+		if(cHoja.getCellType()==RubikCell.FALSECELL){
+		    nHoja=nHoja.getNextLeaf();
+		    cHoja=(RubikCell) nHoja.getUserObject();
+		    if(nHoja==null || (cHoja.getCellType()==RubikCell.FALSECELL)){
+		        Enumeration e=root.depthFirstEnumeration();
+		        while (e.hasMoreElements()){
+		            nHoja=(DefaultMutableTreeNode) e.nextElement();
+		            if(nHoja.isLeaf()){
+		                cHoja=(RubikCell) nHoja.getUserObject();
+		                if(cHoja.getCellType()!=RubikCell.FALSECELL) return cHoja;
+		            }
+		            cHoja=null;
+		        }
+		    }
+		}
+		return cHoja;
+    }
+
+    private boolean isEnabledChildrenInLevel(CheckNode nlevel, Member m){
+        boolean res =false;
+        for(int i=0; i< nlevel.getChildCount(); i++){
+            CheckNode nHijo=(CheckNode) nlevel.getChildAt(i);
+            RubikCell c=(RubikCell) nHijo.getUserObject();
+            if(c.getCellType()!=RubikCell.FALSECELL && c.getDisplayable().equals(m))
+                return nHijo.isSelected();
+        }
+        return res;
+    }
+	private void removeHierarchyDisponibels(Hierarchy hierarchy){
+		for(int i=rootDisponibles.getChildCount()-1; i>-1; i--){
+			CheckNode n=(CheckNode) rootDisponibles.getChildAt(i);
+			RubikCell c=(RubikCell) n.getUserObject();
+			Hierarchy h=(Hierarchy) c.getDisplayable();
+			if(hierarchy.equals(h)){
+				rootDisponibles.remove(n);
+				break;
+			}
+		}
+	}
+    /**
+     * @@param rootDisponibles The rootDisponibles to set.
+     */
+    void setRootDisponibles(CheckNode rootDisponibles) {
+        this.rootDisponibles = rootDisponibles;
+    }
+    /**
+     * @@param rootElegidas The rootElegidas to set.
+     */
+    void setRootElegidas(DefaultMutableTreeNode rootElegidas) {
+        this.rootElegidas = rootElegidas;
+    }
+
+
+    /**
+     * @@return Returns the rootDisponibles.
+     */
+    CheckNode getRootDisponibles() {
+        return rootDisponibles;
+    }
+    /**
+     * @@return Returns the rootElegidas.
+     */
+    public DefaultMutableTreeNode getRootElegidas() {
+        return rootElegidas;
+    }
+    public Element getRootElement(){
+    	Element eRoot= new Element (Job.KEY_DEPLOY);
+    	if(rootElegidas!=null && rootElegidas.getChildCount()==1){
+    		addChildren(eRoot, (DefaultMutableTreeNode) rootElegidas.getFirstChild());
+    	}
+    	return eRoot;
+    }
+    private void addChildren(Element eParent, DefaultMutableTreeNode node){
+    	RubikCell rCell=(RubikCell) node.getUserObject();
+    	Element eChild=null;
+    	if(rCell.getCellType()!=RubikCell.FALSECELL){
+	    	if(rCell.getDisplayable() instanceof Member){
+	    		MDXMember mdxM=(MDXMember) rCell.getDisplayable();
+	    		eChild= new Element (KEY_MEMBER);
+	    		Attribute a= new Attribute(KEY_UNIQUENAME,mdxM.getUniqueName());
+	    		eChild.setAttribute(a);
+	    	}if(rCell.getDisplayable() instanceof Level){
+	    		MDXLevel mdxL=(MDXLevel) rCell.getDisplayable();
+	    		eChild= new Element (KEY_LEVEL);
+	    		Attribute a= new Attribute(KEY_UNIQUENAME, mdxL.getUniqueName());
+	    		eChild.setAttribute(a);
+	    	}
+    	}else{ //FALSE TOTAL
+    		eChild= new Element (KEY_FLASE_TOTAL);
+    		DefaultMutableTreeNode nParent=(DefaultMutableTreeNode) node.getParent();
+    		rCell=(RubikCell) nParent.getUserObject();
+    		MDXLevel mdxL=(MDXLevel) rCell.getDisplayable();
+    		Attribute a= new Attribute(KEY_UNIQUENAME, mdxL.getUniqueName());
+    		eChild.setAttribute(a);
+    	}
+		Attribute a= new Attribute(KEY_ENABLED, "true");
+		eChild.setAttribute(a);
+    	eParent.addContent(eChild);
+    	if(!node.isLeaf()){
+    		int counter=node.getChildCount();
+    		for(int i=0; i<counter; i++){
+    			DefaultMutableTreeNode nChild=(DefaultMutableTreeNode) node.getChildAt(i);
+    			addChildren(eChild, nChild);
+    		}
+    	}
+    }
+    public void loadRootElement(Element eRoot) throws Exception{
+		rootElegidas.removeAllChildren();
+		loadRootElement(eRoot, rootElegidas);
+    }
+    private void loadRootElement(Element eParent, DefaultMutableTreeNode nParent) throws Exception{
+		Iterator it = (eParent.getChildren()).iterator();
+    	while(it.hasNext()){
+    		Element eChild=(Element) it.next();
+    		Attribute a=eChild.getAttribute(KEY_UNIQUENAME);
+    		if(KEY_FLASE_TOTAL.equals(eChild.getName())){// False Total
+    			DefaultMutableTreeNode nChild= new DefaultMutableTreeNode(new RubikCellImpl(AvailableHierarchies.FALSE_MEMBER_TOTAL));
+    			nParent.add(nChild);
+    			loadRootElement(eChild, nChild);
+    		}else if(KEY_LEVEL.equals(eChild.getName())){
+    			Level level=getLevel(a.getValue());
+    			DefaultMutableTreeNode nChild= new DefaultMutableTreeNode(new RubikCellImpl(level.getLabel(),level));
+    			nParent.add(nChild);
+    			removeHierarchyDisponibels(level.getHierarchy());
+    			loadRootElement(eChild, nChild);
+    		}else if(KEY_MEMBER.equals(eChild.getName())){
+    			MdxOlapModel mdxModel=(MdxOlapModel)olapModel;
+    			Member m=mdxModel.lookupMemberByUName(a.getValue());
+    			if(m!=null){
+	    			DefaultMutableTreeNode nChild= new DefaultMutableTreeNode(new RubikCellImpl(m.getLabel(),m));
+	    			nParent.add(nChild);
+	    			loadRootElement(eChild, nChild);
+    			}else{
+    			    throw new Exception("Member: "+a.getValue()+" no found.");
+    			}
+    		}
+    	}
+    }
+    private Level getLevel(String uname) throws Exception{
+    	String hName=getNameHierarchy( uname);
+		Dimension[] dimensions=olapModel.getDimensions();
+		for(int i=0; i<dimensions.length;i++){
+			Hierarchy[] hierarchys=dimensions[i]. getHierarchies();
+			for (int j=0; j<hierarchys.length; j++){
+				if(hierarchys[j].getLabel().equals(hName)){
+					Level[] levels=hierarchys[j].getLevels();
+					for(int k=0; k<levels.length ; k++){
+						//if(levels[k].getUniqueName().equals(uname))
+						if(((MDXElement) levels[k]).getUniqueName().equals(uname))
+							return levels[k];
+					}// Fin for
+				}
+			}
+		}
+		 throw new Exception("Level: "+uname+" no found.");
+    }
+    private String getNameHierarchy(String uname) throws Exception{
+    	StringTokenizer stokenizer = new StringTokenizer( uname, ".[]");
+        while (stokenizer.hasMoreTokens()){
+        	return stokenizer.nextToken();
+        }
+        throw new Exception("Hierarchy: "+uname+" no found.");
+    }
+
+
+    /**
+     * @@return Returns the kEY_ENABLED.
+     */
+    public static String getKEY_ENABLED() {
+        return KEY_ENABLED;
+    }
+    /**
+     * @@return Returns the kEY_FLASE_TOTAL.
+     */
+    public static String getKEY_FLASE_TOTAL() {
+        return KEY_FLASE_TOTAL;
+    }
+    /**
+     * @@return Returns the kEY_LEVEL.
+     */
+    public static String getKEY_LEVEL() {
+        return KEY_LEVEL;
+    }
+    /**
+     * @@return Returns the kEY_MEMBER.
+     */
+    public static String getKEY_MEMBER() {
+        return KEY_MEMBER;
+    }
+    /**
+     * @@return Returns the kEY_UNIQUENAME.
+     */
+    public static String getKEY_UNIQUENAME() {
+        return KEY_UNIQUENAME;
+    }
+}
+@
+
+
+1.1
+log
+@*** empty log message ***
+@
+text
+@@
+

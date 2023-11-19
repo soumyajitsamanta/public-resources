@@ -1,0 +1,261 @@
+head	1.2;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2003.11.20.16.48.03;	author tuco80;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2003.11.06.12.28.23;	author tuco80;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@Position is language dependant
+@
+text
+@#-----------------------------------------------------
+# File Object
+#-----------------------------------------------------
+# $Id: 
+
+package DBFile;
+use base Tk::Canvas;
+use Data::Dumper;
+use strict;
+use warnings;
+
+my $selBoxWidth = 3;  #width that selection box will have around the object
+my $selBoxCol = 'blue'; #fill color of the selection box
+my $EntityFont='-*-verdana-bold-r-normal-*-11-*-iso8859-2';
+my $NameFont='-*-arial-bold-r-normal-*-11-*-iso8859-2';
+my $uBannerClr = 'wheat3';
+my $wedgeXsize = 15;
+my $wedgeYsize = 15;
+my $tblHeadY = 30;
+my $attrXpad = 10;
+my $attrYpad = 7;  #Should be attrYstep/2  but only for appearance simetry (i.e. it CAN be anything)
+
+##################################################
+## the object constructor                       ##
+##################################################
+
+sub new {
+
+	my ($proto,$id,$name,$desc,$path,$x,$y)=@@_;
+
+	my $class = ref($proto) || $proto;
+	my $self  = {};
+
+	$self->{ID}    = $id;
+	$self->{NAME}    = $name;
+	$self->{DESC}    = $desc;
+	$self->{REL}     = [];	# array of relations
+	$self->{LAYERS}  = [1];	# list of layers in which this object is visible
+	$self->{CANV_ID} = [];	# list of canvas identifiers [head_text,head_rect,body_rect,...]
+	$self->{CANVAS} = '';	# canvas
+	$self->{COORDS}  = [$x,$y,$x,$y];	# coords of object outline box
+
+	$self->{TEXT_W}  = 0;	# largest text width
+	$self->{PATH}   = $path;	# path of the file in server
+	$self->{SELECTED} = 0;  # To know if the object is selected or not
+
+	bless ($self, $class);
+	return $self;
+
+}
+
+##############################################
+## methods to access per-object data        ##
+##                                          ##
+## With args, they set the value.  Without  ##
+## any, they only retrieve it/them.         ##
+##############################################
+
+sub name {
+	my $self = shift;
+	if (@@_) { 
+    		$self->{NAME} = shift;
+	}
+	return $self->{NAME};
+}
+
+sub desc {
+	my $self = shift;
+	if (@@_) { $self->{DESC} = shift }
+	return $self->{DESC};
+}
+
+sub id{
+	my $self = shift;
+	if(@@_){
+		$self->{ID} = shift;
+	}
+	return $self->{ID};
+}
+
+#Only for compliance of the objects, needed for creation of new relations beteween objects
+sub type{
+	return 'FILE';
+}
+
+sub selected {
+	my $self = shift;
+	if (@@_) { $self->{SELECTED} = shift }
+	return $self->{SELECTED};
+}
+
+sub set_selected{
+	my $self = shift;
+	$self->{SELECTED} = 1;
+	my($x1,$y1,$x2,$y2)=$self->coords();
+	my $temp = $selBoxWidth;
+	$temp--;
+	my $sx1 = $x1-$temp;
+	my $sy1 = $y1-$temp;
+	my $sx2 = $x2+$temp;
+	my $sy2 = $y2+$temp;
+	$self->{CANVAS}->coords($self->{CANV_ID}[2], $sx1, $sy1, $sx2, $sy2);			
+}
+
+sub set_deselected{
+	my $self = shift;
+	$self->{SELECTED} = 0;
+	$self->{CANVAS}->coords($self->{CANV_ID}[2], -10, -10, -10, -10);
+}
+
+sub coords {
+	my $self = shift;
+	if (@@_) {
+		my ($x1,$y1,$x2,$y2) = @@_;
+		$self->{COORDS} = [$x1,$y1,$x2,$y2];
+		#$self->{CANVAS}->coords($self->{CANV_ID}[0],$x1,$y1,$x2,$y2);
+	}
+	return ($self->{CANV_ID}[0]) ? $self->{CANVAS}->coords($self->{CANV_ID}[0]) : [0,0,0,0];
+}
+
+sub getAttrY {	#return Y coordinate of connection point
+	my $self = shift;
+	return ($self->{COORDS}[3]-$self->{COORDS}[1])/2;
+}
+
+sub getAttrX {	#return X coordinate of connection point
+	my $self = shift;
+	return $self->{COORDS}[3]-$self->{COORDS}[1];
+}
+
+sub relation {
+	my $self = shift;
+	if (@@_) {
+		my ($id,$edge) = @@_;	# relation id, edge position [0,1] ... first or last
+        	push (@@{$self->{REL}}, $id);
+	}
+	return $self->{REL}
+}
+
+sub delRelation{
+	my $self = shift;
+	my ($relID) = @@_;
+	my @@newRels;
+	foreach (@@{$self->relation}) {	#move all connected relations
+		unless ($_->id eq $relID){
+			push(@@newRels,$_);
+		}
+	}
+	@@{$self->{REL}}=@@newRels;
+}
+
+sub move {
+	my $self = shift;
+	my ($c,$x,$y) = @@_;	# canvas,x,y
+	my $tag_name = '_'.$self->{ID};
+	$c->move($tag_name, $x, $y);
+	$self->{COORDS}[0]+=$x;
+	$self->{COORDS}[2]+=$x;
+	$self->{COORDS}[1]+=$y;
+	$self->{COORDS}[3]+=$y;
+	if($self->{SELECTED}){$c->move($self->{CANV_ID}[2],$x,$y);}
+	foreach (@@{$self->relation}) {	#move all connected relations
+		$_->adjustCoords;
+	};
+	$self->{COORDS} = $self->{CANVAS}->coords($self->{CANV_ID}[0]);
+}
+ 
+sub draw {
+	my ($self,$c) = @@_;	# canvas
+	$self->{CANVAS}=$c;
+	my ($x1,$y1) = @@{$self->{COORDS}};
+	my $tag_name = '_'.$self->{ID};
+	#This is the selection box which will remain hidden until object is selected
+	$self->{CANV_ID}[2]=$c->createRectangle(-10,-10,-10,-10,-width=>$selBoxWidth, -outline => $selBoxCol,-tags=>['SELECTED'.$tag_name]);
+	$self->{CANV_ID}[0]=$c->createRectangle(0,0,0,0,-width=>1, -fill => $uBannerClr, -tags=>[$tag_name,'item']);
+	$self->{CANV_ID}[1]=$c->createText(0,0, qw/ -fill black/,-text=>$self->{NAME},-font=>$NameFont, -tags=>[$tag_name,'attr']);
+	
+	my @@w=$c->bbox($self->{CANV_ID}[1]);	# check text outline coords
+	$self->{TEXT_W}=$w[2]-$w[0];
+	my $x2=$x1+$self->{TEXT_W}+($attrXpad*2);
+	my $y2=$y1+$tblHeadY;
+	
+	#$c->delete($self->{CANV_ID}[1]);
+=pod	$self->{CANV_ID}[0]=$c->createPolygon($x1,$y1,
+			    	  ($x2-$wedgeXsize), $y1,
+					  $x2, ($y1+$wedgeYsize),
+					  $x2, $y2,
+					  $x1, $y2, -joinstyle=>'round', -fill => $uBannerClr, -tags=>[$tag_name,'item'] );
+	$self->{CANV_ID}[1]=$c->createText(0,0, qw/ -fill black/,-text=>$self->{NAME},-font=>$NameFont, -tags=>[$tag_name,'attr']);
+=cut
+	$c->coords($self->{CANV_ID}[0], $x1,$y1,$x2,$y2);
+	$c->coords($self->{CANV_ID}[1], (($x1+$x2)/2), ($y1+$y2)/2);
+	$self->coords($x1, $y1, $x2, $y2);
+	if ($self->{SELECTED}){$self->set_selected();}
+
+}
+
+sub delFromGUI{
+	#first we are only going to delete from gui-layer
+	#after that it's just determining wether hash is empty or not
+	#and if it is, it must be deleted from project completely
+	my $self = shift;
+	my ($layerID) = @@_;
+	$self->clear;
+	foreach (@@{$self->relation}) {	#delete all connected relations
+		$_->delFromGUI($layerID, $self->{ID});
+	};
+	return @@{$self->relation};
+}
+
+#-----------------------------
+
+sub clear {
+	my $self = shift;
+	foreach (@@{$self->{CANV_ID}}) {
+		$self->{CANVAS}->delete($_);
+	}
+	$self->{CANV_ID}=();
+}
+
+#-----------------------------
+
+1;
+@
+
+
+1.1
+log
+@+Color changing for Groups, +Property edition for groups/roles
+@
+text
+@d165 1
+@
+

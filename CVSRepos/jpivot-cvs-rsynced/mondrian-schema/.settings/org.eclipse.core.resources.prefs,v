@@ -1,0 +1,29 @@
+head	1.1;
+access;
+symbols
+	test_tag:1.1
+	sfsync:1.1;
+locks; strict;
+comment	@# @;
+expand	@b@;
+
+
+1.1
+date	2004.06.30.13.45.53;	author avix;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@Fixed bug with Join Element
+@
+text
+@#Wed Jun 30 14:05:29 CEST 2004
+encoding//src/model/mondrian.xsd=UTF8
+eclipse.preferences.version=1
+@

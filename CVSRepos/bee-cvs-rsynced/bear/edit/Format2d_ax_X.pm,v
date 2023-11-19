@@ -1,0 +1,188 @@
+head	1.1;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.1
+date	2004.04.16.16.21.49;	author vacula;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@new interface
+@
+text
+@#-----------------------------------------------------
+#  Format Editation
+#-----------------------------------------------------
+# $Id: Format2d_color.pm,v 1.3 2003/11/18 14:38:40 jiri_schmid Exp $
+
+package Format2d_ax_X;
+
+use strict;
+
+#-----------------------------------------------------
+# print_form is called from edit.cgi
+
+sub generateContent {
+my($variables, $lang, $obj) = (shift, shift, shift);
+my $saved = $$variables->{saved} if exists $$variables->{saved};
+
+print <<END;
+<br />
+<table class="page_skeleton_ex" style='width:100%'>
+<tr class="page_skeleton">
+<td class="page_skeleton_ex" style='padding: 10px'>
+
+
+	<table>
+		<tr><td class='neutral_bold' colspan='3'>$$lang->{'Format2d Label'}:</td></tr>
+		<tr><td colspan='3'><hr /></td></tr>
+END
+ my $check_label = ($$obj->{ax_X}{show_label}) ? " checked='checked'" : ""; 
+ print "<tr><td style='nowrap;padding:0px 10px 0px 0px'>$$lang->{'Format2d label'}:</td><td style='nowrap;padding:0px 10px 0px 0px'>$$lang->{'Format2d show'}</td><td style='nowrap;padding:0px 10px 0px 0px'><input name='show_label' id='show_label' type='checkbox' $check_label value='1' onchange='object_changed()'/></td></tr>";
+ 
+ print "<tr><td style='nowrap;padding:0px 10px 0px 0px'>&nbsp;</td><td style='nowrap;padding:0px 10px 0px 0px'>$$lang->{'Format2d position'}</td><td style='nowrap;padding:0px 10px 0px 0px'><select name='label_position' onchange='object_changed()'>";
+ foreach ('left','center','right') {
+	if ( $_ eq $$obj->{ax_X}{label_position} ) {
+		print "<option value='$_' selected>$$lang->{\"Format2d $_\"}";
+	}
+	else {
+		print "<option value='$_'>$$lang->{\"Format2d $_\"}";
+	}
+ }
+ print "</select></td></tr>";
+ print "<tr><td style='nowrap;padding:0px 10px 0px 0px'>&nbsp;</td><td style='nowrap;padding:0px 10px 0px 0px'>$$lang->{'Format2d font'}</td><td style='nowrap'><select name='label_font' onchange='object_changed()'>";
+
+#foreach my $label_font (&Local::GetFiles("$Const::myPath$Const::trueTypeFontPath",'ttf')){
+foreach my $label_font (&Local::GetFiles("$Const::trueTypeFontPath",'ttf')){
+	if ( $label_font eq "$$obj->{ax_X}{label_font}" ) {
+		print "<option selected>$label_font";
+	}
+	else {
+		print "<option>$label_font";
+	}	
+}
+	print "</select><select name='label_fontsize' onchange='object_changed()'>";
+for ( my $i = 6; $i <= 18; $i++ ) {
+	if ( $i eq $$obj->{ax_X}{label_fontsize} ) {
+		print "<option selected>$i";
+	}
+	else {
+		print "<option>$i";
+	}	
+}
+print <<END;
+		</select> </td></tr>
+		<tr><td colspan='3'><hr size='1' noshade='noshade' /></td></tr>
+END
+ my $check_axislabel = ($$obj->{ax_X}{show_axislabel}) ? " checked='checked'" : ""; 
+ print "<tr><td style='nowrap;padding:0px 10px 0px 0px'>$$lang->{'Format2d axislabel'}:</td><td style='nowrap;padding:0px 10px 0px 0px'>$$lang->{'Format2d show'}</td><td style='nowrap;padding:0px 10px 0px 0px'><input name='show_axislabel' id='show_axislabel' type='checkbox' $check_axislabel value='1' onchange='object_changed()'/></td></tr>";
+ my $check_axislabel_vertical = ($$obj->{ax_X}{axislabel_vertical}) ? " checked='checked'" : ""; 
+ print "<tr><td style='nowrap;padding:0px 10px 0px 0px'>&nbsp;</td><td style='nowrap;padding:0px 10px 0px 0px'>$$lang->{'Format2d x_labels_vertical'}</td><td style='nowrap;padding:0px 10px 0px 0px'><input name='axislabel_vertical' id='axislabel_vertical' type='checkbox' $check_axislabel_vertical value='1' onchange='object_changed()' /></td></tr>";
+ print "<tr><td style='nowrap;padding:0px 10px 0px 0px'>&nbsp;</td><td style='nowrap;padding:0px 10px 0px 0px'>$$lang->{'Format2d x_label_skip_part1'}</td><td style='font-size:75%;nowrap'><input class='right' type='input' size='1' name='axislabel_skip' value='$$obj->{ax_X}{axislabel_skip}' onchange='object_changed()' /> &nbsp; $$lang->{'Format2d x_label_skip_part2'} </td></tr>";
+ print "<tr><td style='nowrap;padding:0px 10px 0px 0px'>&nbsp;</td><td style='nowrap;padding:0px 10px 0px 0px'>$$lang->{'Format2d x_tick_offset_part1'}</td><td style='font-size:75%;nowrap'><input class='right' type='input' size='1' name='axislabel_offset' value='$$obj->{ax_X}{axislabel_offset}' onchange='object_changed()' /> &nbsp; $$lang->{'Format2d x_tick_offset_part2'} </td></tr>";
+ print "<tr><td style='nowrap;padding:0px 10px 0px 0px'>&nbsp;</td><td style='nowrap;padding:0px 10px 0px 0px'>$$lang->{'Format2d font'}</td><td style='nowrap'><select name='axislabel_font' onchange='object_changed()'>";
+
+#foreach my $axislabel_font (&Local::GetFiles("$Const::myPath$Const::trueTypeFontPath",'ttf')){
+foreach my $axislabel_font (&Local::GetFiles("$Const::trueTypeFontPath",'ttf')){
+	if ( $axislabel_font eq "$$obj->{ax_X}{axislabel_font}" ) {
+		print "<option selected>$axislabel_font";
+	}
+	else {
+		print "<option>$axislabel_font";
+	}	
+}
+	print "</select><select name='axislabel_fontsize' onchange='object_changed()'>";
+for ( my $i = 6; $i <= 18; $i++ ) {
+	if ( $i eq $$obj->{ax_X}{axislabel_fontsize} ) {
+		print "<option selected>$i";
+	}
+	else {
+		print "<option>$i";
+	}	
+}
+print <<END;
+		</select> </td></tr>
+		<tr><td colspan='3'><hr size='1' noshade='noshade' /></td></tr>
+	</table>
+
+
+
+</td>
+<td class="page_skeleton_ex" style='padding:10px'>
+
+
+	<table>
+		<tr><td class='neutral_bold' colspan='3'>$$lang->{'Format2d Axis ticks'}:</td></tr>
+		<tr><td colspan='3'><hr /></td></tr>
+END
+ my $check_ticks = ($$obj->{ax_X}{show_ticks}) ? " checked='checked'" : ""; 
+ print "<tr><td style='nowrap;padding:0px 10px 0px 0px'>$$lang->{'Format2d x_ticks'}</td><td style='nowrap;padding:0px 10px 0px 0px'><input name='show_ticks' id='show_ticks' type='checkbox' $check_ticks value='1' onchange='object_changed()' /></td></tr>";
+ my $check_longticks = ($$obj->{ax_X}{long_ticks}) ? " checked='checked'" : ""; 
+ print "<tr><td style='nowrap;padding:0px 10px 0px 0px'>$$lang->{'Format2d x_long_ticks'}</td><td style='nowrap;padding:0px 10px 0px 0px'><input name='long_ticks' id='long_ticks' type='checkbox' $check_longticks value='1' onchange='object_changed()' /></td></tr>";
+ print "<tr><td style='nowrap;padding:0px 10px 0px 0px'>$$lang->{'Format2d Axis ticks length'}</td><td><input class='right' type='input' size='2' name='tick_length' value='$$obj->{ax_X}{tick_length}' onchange='object_changed()' /></td></tr>";
+ print <<END;
+	</table>
+
+
+</td>
+</tr>
+END
+
+print <<END;
+<tr class="page_skeleton" >
+<td class="page_skeleton" colspan='2'>
+	<table class="neutral_100">
+		<tr><td align="center">
+		<table class="buttons" cellpading="0" cellspacing="0">
+		<tr>	<td class="buttons"><input id='SAVE' type="submit" name="Action" value="$$lang->{'Save'}"/></td>
+			<td class="buttons">	<input type="submit" name="Action" value="$$lang->{'Save As'}" onclick="return readName();"/>
+						<input type="hidden" name="saveAsName" id="saveAsName" value="" /></td>
+			<td class="buttons"><input type="button" name="reset" value="$$lang->{'Reset'}" onclick="self.frames['format'].location.reload(true)"/></td>
+		</tr>
+		</table>
+	</td></tr>
+	</table>
+</td></tr></table>
+END
+
+print <<END;
+<script type="text/javascript">
+	var saveAsMsg = "$$lang->{SaveAsMsg}$$lang->{'New Format2d'}";
+	reloadTree($saved);
+	setResol();
+	reSetIframe();
+</script>
+END
+
+
+}
+
+#---------------------------------------------------
+sub set_next_param {
+	my ($o,$q) = (shift, shift);
+# save checkboxs	
+	foreach ('show_label','show_axislabel','axislabel_vertical','show_ticks','long_ticks') {
+		$$o->{ax_X}{$_} = ($$q->param("$_")) ? $$q->param("$_") : 0;
+	}
+# save selected
+	foreach ('label_position','label_font','label_fontsize','axislabel_font','axislabel_fontsize') {
+		$$o->{ax_X}{$_} = $$q->param("$_");
+	}
+# save input texts
+	$$o->{ax_X}{axislabel_skip} = $$q->param("axislabel_skip");	
+	$$o->{ax_X}{axislabel_offset} = $$q->param("axislabel_offset");	
+	$$o->{ax_X}{tick_length} = $$q->param("tick_length");	
+}
+
+1
+@

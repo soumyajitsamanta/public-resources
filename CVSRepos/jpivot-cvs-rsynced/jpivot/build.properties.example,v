@@ -1,0 +1,93 @@
+head	1.3;
+access;
+symbols
+	jpivot_1_8_0:1.3
+	focus_1_6_0:1.3.0.2
+	jpivot_1_7_0:1.3
+	jpivot_1_6_0:1.3
+	jpivot_1_5_0:1.1.0.2
+	Root_jpivot_1_5_0:1.1
+	sourceforge_sync:1.3;
+locks; strict;
+comment	@# @;
+
+
+1.3
+date	2006.11.09.14.14.47;	author avix;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2006.11.09.13.25.42;	author avix;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2005.09.03.21.40.08;	author sgwood;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.3
+log
+@synchronized with tonbeller cvs changes
+@
+text
+@# where to find the external libraries
+repository.home=../jpivot_repository
+
+jdbc.driver=com.mysql.jdbc.Driver
+jdbc.url=jdbc:mysql://localhost/foodmart
+jdbc.user=root
+jdbc.password=
+jdbc.jardir=c:/Java/mysql-connector-java-3.1.12
+
+# needed for xmla tests (currently disabled)
+# xmla.uri=http://SINTANW/XMLA/msxisapi.dll
+# xmla.catalog=Foodmart 2000
+
+# tomcat manager
+catalina.home=C:/Java/apache-tomcat-5.5.12
+manager.username=manager
+manager.password=manager
+
+jboss.home=C:/jboss-4.0.2
+@
+
+
+1.2
+log
+@synchronized with tonbeller cvs
+@
+text
+@d8 1
+d10 3
+a12 3
+# These settings allow the source to build and tests to run
+
+jboss.home=C:/jboss-4.0.2
+d19 1
+a19 2
+xmla.uri=http://localhost:8080/mondrian/xmla
+xmla.catalog=MondrianFoodMart
+@
+
+
+1.1
+log
+@Revise build system to include use of jpivot_repository in CVS. JPivot portlet build and packaging. Test cases work.
+@
+text
+@d1 7
+d13 4
+a16 4
+catalina.home=C:/Source/jakarta-tomcat-5.5.9
+
+manager.username=tomcat
+manager.password=tomcat
+@
+

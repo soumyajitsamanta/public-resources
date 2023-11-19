@@ -1,0 +1,727 @@
+head	1.23;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.23
+date	2004.03.04.14.43.16;	author jiri_schmid;	state Exp;
+branches;
+next	1.22;
+
+1.22
+date	2004.03.02.13.01.03;	author jiri_schmid;	state Exp;
+branches;
+next	1.21;
+
+1.21
+date	2004.02.18.16.19.17;	author jiri_schmid;	state Exp;
+branches;
+next	1.20;
+
+1.20
+date	2004.01.12.13.50.25;	author jiri_schmid;	state Exp;
+branches;
+next	1.19;
+
+1.19
+date	2003.11.05.10.44.57;	author jiri_schmid;	state Exp;
+branches;
+next	1.18;
+
+1.18
+date	2003.10.31.12.47.57;	author jiri_schmid;	state Exp;
+branches;
+next	1.17;
+
+1.17
+date	2003.10.13.14.43.23;	author jiri_schmid;	state Exp;
+branches;
+next	1.16;
+
+1.16
+date	2003.09.29.09.21.58;	author jiri_schmid;	state Exp;
+branches;
+next	1.15;
+
+1.15
+date	2003.09.29.06.52.09;	author jiri_schmid;	state Exp;
+branches;
+next	1.14;
+
+1.14
+date	2003.09.15.13.04.08;	author jiri_schmid;	state Exp;
+branches;
+next	1.13;
+
+1.13
+date	2003.09.01.12.40.09;	author jiri_schmid;	state Exp;
+branches;
+next	1.12;
+
+1.12
+date	2003.08.28.09.26.16;	author jiri_schmid;	state Exp;
+branches;
+next	1.11;
+
+1.11
+date	2003.08.22.16.01.03;	author jiri_schmid;	state Exp;
+branches;
+next	1.10;
+
+1.10
+date	2003.08.21.14.23.31;	author jiri_schmid;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	2003.08.20.14.23.45;	author jiri_schmid;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	2003.08.19.13.05.58;	author jiri_schmid;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	2003.08.18.13.17.13;	author jiri_schmid;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	2003.08.13.14.22.03;	author jiri_schmid;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	2003.08.12.09.19.19;	author jiri_schmid;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2003.08.11.13.50.29;	author jiri_schmid;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2003.08.11.12.30.59;	author jiri_schmid;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2003.08.07.08.02.21;	author jiri_schmid;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2003.08.06.15.26.29;	author jiri_schmid;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.23
+log
+@fixing bugs and improving useability and performance
+@
+text
+@// $Id: access.js,v 1.22 2004/03/02 13:01:03 jiri_schmid Exp $
+var divID;
+var dragLocator;
+var browsertype = 0;	// 0: unknown; 1:IE; 2:mozila based 3:netscape6 (not functional now)
+var posleft = 0;
+var plusleft = 0;	//global vars for actual mouse position
+var postop = 0;
+var plustop = 6;
+var plusleft = 0;
+var ctrl = false; //control key pressed, when mouseDown
+var allowHide = true;
+var oldItem;
+
+function checkCouple(EID){
+var name = (EID.name.match(/^allow/)) ? EID.name.replace(/allow/,"deny") : EID.name.replace(/deny/,"allow");
+var pole = document.getElementsByName(name);
+if (pole.length == 1) {
+		pole.item(0).checked = false;
+	}
+}
+
+
+function findItemById(ID) {
+for (i in structure) {
+	for (ii in structure[i]) {
+		if (structure[i][ii] == ID) {
+			return new Array (i,structure[i][ii]);
+		}
+	}
+}
+return new Array(false,false)
+}
+
+function openHierarchy(GID){
+if (document.getElementById('ITEM_ID').value) {
+	GID = document.getElementById('ITEM_ID').value;
+} else {
+	GID = (useCookie == "on") ? getCookie("uid") : false;
+}
+if (GID) {
+	var node = findItemById(GID);
+	if (GID == node[1]) {
+		var cycleOpen = true;
+		while (cycleOpen) {
+			if (document.getElementById("view"+node[1])) {
+				document.getElementById(node[1]).onclick();
+				node = findItemById(node[0]);
+			} else {
+				cycleOpen = false;
+			}
+		}
+		jump(document.getElementById(GID));
+		}
+	}
+}
+
+function reload() { if (saved) parent.frames['list_iframe'].location.reload()}
+
+function emptySelect(id){
+var EID = document.getElementById(id);
+var all = true;
+for (i=0; i<EID.length; i++) {
+	if (EID.options[i].selected)  { EID.remove(i); i--; all=false;}
+	}
+if (all) {EID.length = 0}
+return(true);}
+
+function selectSelect() {
+for (i=0; i<arguments.length; i++) {
+	var EID = document.getElementById(arguments[i]);
+	for (ii=0; ii<EID.length; ii++) { EID.options[ii].selected = true }
+}
+}
+
+function checkDrop(ID,typ){
+switch (ID) {
+	case "uuser" : return (typ == "U") ? true : false; break;
+	case "ugroup": return (typ == "G") ? true : false; break;
+	case "members": return (typ == "U") ? true : false; break;
+}
+return false
+}
+
+function dropItHere(EID) {
+var pole = String(dragLocator.name).split(/\|/);
+if (checkDrop(EID.id,pole[1])) {
+	var rgxp = new RegExp(dragLocator.id);
+	var dropable = (EID.innerHTML.match(rgxp)) ? false : true;
+	if (dropable) {
+		EID.options[EID.length]= new Option(pole[0],dragLocator.id,false,false);
+		EID.selectedIndex=-1;
+	}
+}
+}
+
+function tmpChangeLocal(EID) {
+var lang = document.getElementById("langSpec").value;
+if (self[[lang]]) {
+	document.getElementById('NAME').value=self[lang].name;
+	document.getElementById('DESC').value=self[lang].desc;
+}
+}
+
+function useStyle(EID) {
+if (oldItem) { document.getElementById("view"+oldItem).className = ""; }
+document.getElementById("view"+EID.id).className = 'selected';
+oldItem = EID.id;
+}
+
+function jump(EID) {
+var str = document.getElementById("icon"+EID.id).name;
+var project = '';
+var typ = str.match(/[^\|]*$/);
+switch (String(typ)) {
+	case "U" : str = 'user'; break;
+	case "G" : str = 'group'; break;
+	case "R" :
+		str = 'role';
+		break
+}
+useStyle(EID);
+parent.frames['definition_iframe'].location.href = "access_obj.cgi?"+all_params+"&Type="+str+"&Item_id="+EID.id;
+setCookie('uid',EID.id);
+hideMe();
+}
+
+function showMe(EID) {
+dragLocator.id = EID.id;
+EID = document.getElementById("icon"+EID.id);
+if (EID) {
+	if (String(EID.name).match(/\|R/)) {return}
+	dragLocator.icon = EID.src;
+	dragLocator.name = EID.name;
+	var hlp = divID.innerHTML.replace(/src="[^"]*/,"src='"+dragLocator.icon+"'");//replace the src of icon, which has to be viewed
+	divID.innerHTML = hlp.replace(/[^>]*$/,String(dragLocator.name).match(/^[^\|]*/));	//replace the name to be viewed
+	if (divID.style.visibility == "hidden")	{ divID.style.visibility = "visible"; moveimg(); }
+	}
+}
+
+function browserdetect() {
+var agt = navigator.userAgent.toLowerCase();
+browsertype = (agt.indexOf('msie') < 0) ? (agt.indexOf('mozilla') < 0 ) ?  0 : 2 : 1;
+if (parseFloat(navigator.appVersion.toLowerCase() < 4)) browsertype = 0;
+}
+
+browserdetect();
+
+//hide the dragged object, after drop or else, webbrowser window.event.onclick (registered event) 
+function hideMe() {
+if (divID.style.visibility == "visible" && allowHide) {
+	divID.style.visibility="hidden";
+	dragLocator.id = '';
+	dragLocator.name = '';
+	dragLocator.typ = '';
+} else { allowHide = true;}
+}
+
+function initVars(cnt) {
+divID = parent.document.getElementById("maindiv");
+switch (browsertype) {
+	case 2:
+		document.captureEvents(Event.MOUSEMOVE);
+		document.onmousemove=mousemoveNS;
+		break;
+	case 1:
+        	document.onmousemove=mousemoveIE;
+		break;
+	case 0: alert('Fatal Error!\nNon-compatible browser detected\nInitializing of vars failed!')
+		return false
+	break; }
+dragLocator = top.frames['body'].dragObject;
+initOffset(cnt);
+}
+
+function hideLoad() {
+	document.getElementById("loading").style.display = "none";
+}
+
+function initOffset(cnt){
+plusleft = 6;
+if (cnt) {
+	if (cnt > 1) plusleft += parent.document.getElementById('list_iframe').scrollWidth;	//scrollWidth - the real width of the tree-iframe computed by browser
+	if (cnt > 2) plusleft += parent.document.getElementById('definition_iframe').scrollWidth;	//scrollWidth - the real width of the tree-iframe computed by browser
+}}
+
+//move the icon when dragging - engine, called by mousemoveNS | mousemoveIE
+function moveimg() {
+posleft += plusleft; postop += plustop;
+    if (divID) {
+     if (divID.style) {
+	divID.style.left= posleft+"px";
+	divID.style.top= postop+"px";
+      } else {
+	divID.left= posleft;
+	divID.top= postop; }}
+//window.status = posleft + "::" + postop;
+}
+
+//move the icon when dragging, webbrowser window.event.onmousemove (registered event), for NN only
+function mousemoveNS(e) {
+posleft = e.pageX - window.pageXOffset;
+postop = e.pageY - window.pageYOffset;
+if (divID.style.visibility == "visible") moveimg();
+return(false); }
+
+//move the icon when dragging, webbrowser window.event.onmousemove (registered event), for IE only
+function mousemoveIE() {
+       posleft = event.clientX;
+       postop = event.clientY;
+       if (divID.style.visibility == "visible") moveimg();
+return(false); }
+
+function showLoad() {document.getElementById("loading").style.display = "block";}
+
+function objectChanged() {document.getElementById("changed").value = 1;}
+function objectCleared(){document.getElementById("changed").value = 0;}
+
+function ocFolder(EID) {
+var commonObject = document.getElementById("segment"+EID.id);
+if (commonObject) {
+	var OC = (commonObject.style.display == 'block') ? 1 : 0;	//1-block is visible; 0 block is hidden
+	commonObject.style.display = (OC) ? 'none' : 'block';
+	commonObject = document.getElementById("icon"+EID.id);
+	if (String(commonObject.src).match(/bottom/)) {
+		commonObject.src = (OC) ? icons['plusBottom'] : icons['minusBottom'];
+	} else {
+		commonObject.src = (OC) ? icons['plus'] : icons['minus'];
+	}
+	EID = document.getElementById("folderIcon"+EID.id);
+	var folder = String(EID.name).split(/\|/);
+	if (OC) {	//close
+		EID.src = (icons[folder[0]+"Close"]) ?  icons[folder[0]+"Close"] : icons["folderClose"];
+	} else {	//open
+		EID.src = (icons[folder[0]+"Open"]) ?  icons[folder[0]+"Open"] : icons["folderOpen"];
+	}
+}
+}
+
+//---------------cookie control------------------------------------
+//content of cookie "id" clearing from tabs.js
+function setCookie(prm,cntn) {
+if (useCookie == "off") return;
+var now = new Date();
+if (now.getMonth() == 12)
+ {now.setMonth(0);
+  now.setFullYear(now.getFullYear()+1);}
+ else
+ {now.setMonth(now.getMonth() + 1);}
+document.cookie = prm+"="+cntn+"; expires="+now.toUTCString();}
+
+function getCookie(nameCookie) {
+var rgxp = new RegExp(nameCookie+"[^;]*");	//set regular expresion appropiate to find cookie by its name
+var cook = String(document.cookie.match(rgxp));	//get right cookie
+cook = cook.replace(/[\s]/g,""); 		//clear from white space
+return (cook.match(/=/)) ? cook.match(/[^=]*$/) : false;	//return content
+}
+@
+
+
+1.22
+log
+@changed id handling 4 access tree
+@
+text
+@d1 1
+a1 1
+// $Id: access.js,v 1.21 2004/02/18 16:19:17 jiri_schmid Exp $
+d97 5
+a101 3
+document.getElementById('saveLang').value = EID.options[EID.selectedIndex].text;
+document.getElementById('NAME').value = EID.value;
+document.getElementById('DESC').value = '';
+@
+
+
+1.21
+log
+@rights implemented
+@
+text
+@d1 1
+a1 1
+// $Id: access.js,v 1.20 2004/01/12 13:50:25 jiri_schmid Exp $
+d24 5
+a28 4
+var rgxp = new RegExp("[\|]"+ID+"$");
+for (i=0;i<structure.length;i++) {
+	if (structure[i].match(rgxp)) {
+		return structure[i].split("|");
+@
+
+
+1.20
+log
+@dynamic param fixations
+@
+text
+@d1 1
+a1 1
+// $Id: access.js,v 1.19 2003/11/05 10:44:57 jiri_schmid Exp $
+d14 9
+@
+
+
+1.19
+log
+@pointers everywhere, reapply of removed fix
+@
+text
+@d1 1
+a1 1
+// $Id: access.js,v 1.18 2003/10/31 12:47:57 jiri_schmid Exp $
+d5 3
+a7 1
+var posleft, postop, plusleft = 0;	//global vars for actual mouse position
+@
+
+
+1.18
+log
+@mod perl rocks!
+@
+text
+@d1 1
+a1 1
+// $Id: access.js,v 1.17 2003/10/13 14:43:23 jiri_schmid Exp $
+d98 1
+d103 3
+a105 1
+	case "R" : str = 'role'; break
+@
+
+
+1.17
+log
+@description tab defined under two files, bug fixies
+@
+text
+@d1 1
+a1 1
+// $Id: access.js,v 1.86 2003/10/09 13:53:24 jiri_schmid Exp $
+d61 9
+@
+
+
+1.16
+log
+@code improvments a fixies
+@
+text
+@d1 1
+a1 1
+// $Id:
+@
+
+
+1.15
+log
+@minor improvments a bug fix
+@
+text
+@d1 1
+a1 1
+// $Id: access.js,v 1.14 2003/09/15 13:04:08 jiri_schmid Exp $
+d23 5
+a27 1
+GID = (useCookie == "on") ? getCookie("uid") : false;
+d30 11
+a40 7
+	var cycleOpen = true;
+	while (cycleOpen) {
+		if (document.getElementById("view"+node[1])) {
+			document.getElementById(node[1]).onclick();
+			node = findItemById(node[0]);
+		} else {
+			cycleOpen = false;
+a42 2
+	jump(document.getElementById(GID));
+	}
+a54 9
+
+
+function checkDrop(dropTyp,incomeTyp) {
+switch (dropTyp) {
+	case "uuser" : return (incomeTyp == "U") ? true : false;
+	case "ugroup" : return (incomeTyp == "G") ? true : false;
+	case "members" : return false;//return (incomeTyp == "R") ? false : true;
+}
+}
+@
+
+
+1.14
+log
+@code changes and improvments
+@
+text
+@d1 1
+a1 1
+// $Id: access.js,v 1.13 2003/09/01 12:40:09 jiri_schmid Exp $
+d23 1
+a23 3
+if (!GID) {
+	GID = (useCookie == "on") ? getCookie("uid") : null;
+	};
+d232 1
+a232 1
+return cook.match(/[^=]*$/); 			//return content
+@
+
+
+1.13
+log
+@skins implemented. mozilla skin - temporarily copy msie content
+@
+text
+@d1 1
+a1 1
+// $Id: access.js,v 1.12 2003/08/28 09:26:16 jiri_schmid Exp $
+d12 28
+a39 1
+function reload() { self.location.reload()}
+d41 1
+d92 1
+a92 1
+function jump(EID,e) {
+d102 1
+d218 18
+@
+
+
+1.12
+log
+@tabs.cgi speed improvmnet, visual improvment on trees, rights and some other minor improvments
+@
+text
+@d1 1
+a1 1
+// $Id: access.js,v 1.11 2003/08/22 16:01:03 jiri_schmid Exp $
+d73 1
+a73 1
+parent.frames['definition_iframe'].location.href = "access_obj.cgi?Lang="+document.getElementById('useLang').value+"&Type="+str+"&Item_id="+EID.id;
+@
+
+
+1.11
+log
+@access - rules changing implemented
+@
+text
+@d1 1
+a1 1
+// $Id: access.js,v 1.10 2003/08/21 14:23:31 jiri_schmid Exp $
+d59 1
+a59 1
+if (oldItem) { document.getElementById("view"+oldItem).className = "view"; }
+d166 1
+@
+
+
+1.10
+log
+@role implementation next step
+@
+text
+@d1 1
+a1 1
+// $Id: access.js,v 1.9 2003/08/20 14:23:45 jiri_schmid Exp $
+d12 40
+d78 1
+d81 1
+@
+
+
+1.9
+log
+@access object implemented
+@
+text
+@d1 1
+a1 1
+// $Id: access.js,v 1.8 2003/08/19 13:05:58 jiri_schmid Exp $
+d12 6
+a21 3
+/*if (oldItem) { oldItem.className = ""; }
+EID.className = 'selected';
+oldItem = EID;*/
+@
+
+
+1.8
+log
+@formats2d implemented
+@
+text
+@d1 1
+a1 1
+// $Id: access.js,v 1.7 2003/08/18 13:17:13 jiri_schmid Exp $
+a20 1
+
+d133 7
+a139 1
+	document.getElementById("folderIcon"+EID.id).src = (OC) ? icons['folderClose'] : icons['folderOpen'];
+@
+
+
+1.7
+log
+@admin page reading rutines implemented
+@
+text
+@d1 1
+a1 1
+// $Id: access.js,v 1.6 2003/08/13 14:22:03 jiri_schmid Exp $
+a22 2
+e.preventDefault();
+e.stopPropagation();
+@
+
+
+1.6
+log
+@code clearing and improvment
+@
+text
+@d1 1
+a1 1
+// $Id: access.js,v 1.5 2003/08/12 09:19:19 jiri_schmid Exp $
+d22 3
+a24 1
+function jump(EID) {
+d33 1
+a33 1
+parent.frames['definition_iframe'].location.href = "access_obj.cgi?Lang="+document.getElementById('useLang').value+"&Type="+str;
+@
+
+
+1.5
+log
+@ACL implementation, datas moved into beard"s caches
+@
+text
+@d1 1
+a1 1
+// $Id: access.js,v 1.4 2003/08/11 13:50:29 jiri_schmid Exp $
+d10 11
+d30 1
+@
+
+
+1.4
+log
+@admin page drag-drop implemented
+@
+text
+@d1 1
+a1 1
+// $Id: access.js,v 1.3 2003/08/11 12:30:59 jiri_schmid Exp $
+d11 11
+@
+
+
+1.3
+log
+@admin page implementation started
+@
+text
+@d1 56
+a56 1
+// $Id: access.js,v 1.2 2003/08/07 08:02:21 jiri_schmid Exp $
+d62 34
+d114 1
+@
+
+
+1.2
+log
+@elements negation implemented
+@
+text
+@d1 1
+a1 1
+// $Id: acces.js $
+d10 15
+@
+
+
+1.1
+log
+@implementation of user ACL started
+@
+text
+@d1 2
+@
+

@@ -1,0 +1,61 @@
+head	1.2;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2003.08.11.06.53.57;	author numberone;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2003.07.10.07.45.13;	author numberone;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@merging old version to cvs
+@
+text
+@<?xml version="1.0" encoding="ISO-8859-2"?>
+<script lang="perl" name='fact'>
+
+<input name="Time"   type='stream' arity="1" />
+<input name="Domain" type='stream' arity="1" />
+
+<code>
+<![CDATA[
+
+while(1) {
+	my($year,$month,$day,$hour,$minute) = $Time->fetch;
+	my($domain) = $Domain->fetch;
+	last unless $time or $domain;
+#	print "$hour:$minute $domain\n";
+}
+
+]]>
+</code>
+
+</script>
+
+@
+
+
+1.1
+log
+@demo example -- apache
+@
+text
+@d14 1
+a14 1
+	print "$hour:$minute $domain\n";
+@
+

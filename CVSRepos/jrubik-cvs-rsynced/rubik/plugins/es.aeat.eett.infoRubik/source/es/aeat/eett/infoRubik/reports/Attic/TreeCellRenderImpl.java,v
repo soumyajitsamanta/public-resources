@@ -1,0 +1,130 @@
+head	1.2;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2008.05.17.15.40.41;	author fsaz;	state dead;
+branches;
+next	1.1;
+
+1.1
+date	2005.11.28.15.40.54;	author fsaz;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@borrando viejos
+@
+text
+@/*
+ * Created on 03-feb-2005
+ *
+ * TreeCellRenderImpl.java
+ *
+ */
+package es.aeat.eett.infoRubik.reports;
+
+import java.awt.Component;
+
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JTree;
+import javax.swing.tree.DefaultTreeCellRenderer;
+
+
+/**
+ * @@author f00992
+ */
+public class TreeCellRenderImpl extends DefaultTreeCellRenderer{
+	private static Icon rOpenIcon=null;
+	private static Icon rCosedIcon=null;
+	private static Icon fixedJobIcon=null;
+
+
+	/**
+	 *
+	 */
+	TreeCellRenderImpl() {
+		super();
+		if(rOpenIcon==null){
+			rOpenIcon=new ImageIcon(getClass().getResource("icons/prj_obj.gif"));
+		}
+		if(rCosedIcon==null){
+			rCosedIcon=new ImageIcon(getClass().getResource("icons/cprj_obj.gif"));
+		}
+		if(fixedJobIcon==null){
+		    fixedJobIcon=new ImageIcon(getClass().getResource("icons/showtsk_tsk.gif"));
+		}
+	}
+	public Component getTreeCellRendererComponent(JTree tree, Object value,
+			boolean sel,
+			boolean expanded,
+			boolean leaf, int row,
+			boolean hasFocus) {
+
+		String stringValue = tree.convertValueToText(value, sel,
+				  expanded, leaf, row, hasFocus);
+		setText(stringValue);
+		if(sel)
+		    setForeground(getTextSelectionColor());
+		else
+		    setForeground(getTextNonSelectionColor());
+
+        ReportMutableTreeNode n =(ReportMutableTreeNode)value;
+        if(n.getLevel()<=1){
+        	if(expanded){
+        		setIcon(rOpenIcon);
+        	}else{
+        		setIcon(rCosedIcon);
+        	}
+        }else if(n.isEmpty()){
+            if (!tree.isEnabled())
+                setDisabledIcon(getClosedIcon());
+            else
+                setIcon(getClosedIcon());
+        }else{
+			if (!tree.isEnabled()) {
+				setEnabled(false);
+				if (leaf ) {
+					setDisabledIcon(getLeafIcon());
+				} else if (expanded) {
+					setDisabledIcon(getOpenIcon());
+				} else {
+					setDisabledIcon(getClosedIcon());
+				}
+			}
+			else {
+				setEnabled(true);
+				if (leaf) {
+					setIcon(getLeafIcon());
+				} else if (expanded) {
+					setIcon(getOpenIcon());
+				} else {
+					setIcon(getClosedIcon());
+				}
+			}
+        }
+        setComponentOrientation(tree.getComponentOrientation());
+        selected = sel;
+		return this;
+	}
+}
+@
+
+
+1.1
+log
+@*** empty log message ***
+@
+text
+@@
+

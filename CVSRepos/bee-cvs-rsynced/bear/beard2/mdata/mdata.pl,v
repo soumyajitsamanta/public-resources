@@ -1,0 +1,324 @@
+head	1.2;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2004.03.23.07.33.32;	author numberone;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2004.03.01.16.16.49;	author numberone;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@
+beard2/cached
+
+funkcni metoda 'start <report_id>' (krome samotneho vraceni dotazu)
+
+xml konfigurace prepsana na includovany .pm soubor
+
+do MData.pm pripravena metoda get_report a sql_gen pro cached
+@
+text
+@#!/usr/bin/perl -w
+
+BEGIN { chdir '..' if($0 =~ /^\.\/[^\/]+$/ or $0 !~ /\//); }
+
+use Storable qw(nstore_fd retrieve_fd freeze thaw);
+use POSIX ":sys_wait_h";
+use IPC::ShareLite;
+use Data::Dumper;
+use Getopt::Std;
+use Socket;
+
+use etc::bear;
+use lib::beard;
+use mdata::MData;
+
+our($opt_d);
+getopts("d");
+
+# nacti metadata a dgraphy
+MData->init();
+
+# prepare RW socket
+my $sockrw = $Config::MData_write::socket;
+my $rw_addr = sockaddr_un($sockrw);
+unlink($sockrw);
+
+socket(SOCKRW,PF_UNIX,SOCK_STREAM,0) or die $!;
+bind(SOCKRW,$rw_addr) 				 or die $!;
+listen(SOCKRW,SOMAXCONN) 			 or die $!;
+
+# prepare RO socket
+my $sockro = $Config::MData_read::socket;
+my $ro_addr = sockaddr_un($sockro);
+unlink($sockro);
+
+socket(SOCKRO,PF_UNIX,SOCK_STREAM,0) or die $!;
+bind(SOCKRO,$ro_addr) 				 or die $!;
+listen(SOCKRO,SOMAXCONN) 			 or die $!;
+
+# signal handlers
+my $quit  = 0;
+#$SIG{INT}  = sub { $quit = 1 }; # prerusuje syscally, pote radsi exit()
+$SIG{PIPE} = sub { };           # nekillni se pri zrusenem spojeni
+
+my $number = 0;     # kid number (1..n), 0 je parent
+my @@pid = ($$);     # pidy kidu, [0] je parent
+my $set = {};       # hash se zmenamy. kidy ho ctou z shm
+my $setid = 1;      # zmena, na kterou kidy cekaji
+my $setpending = 1; # nejvic opozdena zmena
+
+my $prefix = "write: "; # for printing, "readX: " for kids
+
+# create new private shm structures
+my $shm_kid = new IPC::ShareLite() or die $!;
+my $shm_set = new IPC::ShareLite() or die $!;
+
+# initialize them
+my $sizeof_int = length(pack('I',0));
+$shm_kid->store(pack('I',$setid));
+$shm_set->store(freeze({}));
+
+# create initial pool
+my $pool = $Config::MData::pool;
+create_mdata_ro() for(1..$pool);
+
+print "mdata_rw started on $sockrw\n";
+print "mdata_ro started $pool times on $sockro\n";
+
+# $0 = "mdata-rw";
+mdata_rw();
+
+# uklid
+kill INT, 0;
+unlink($sockro);
+unlink($sockrw);
+
+exit(0);
+
+sub create_mdata_ro {
+
+	set_table(++$number,$setid);
+
+	defined(my $pid = fork()) or die $!;
+	if($pid) {
+		push @@pid,$pid;
+		return $number;
+	}
+
+	$prefix = "read$number\: ";
+	close(Client); # pokud vytvarime z 'new' metody
+
+	# $0 = 'mdata-ro';
+	mdata_ro();
+	exit;
+}
+
+sub handle {
+	my $w = (shift eq 'w') ? 1 : 0;
+	my @@new;
+
+	my $thaw = eval { retrieve_fd(\*Client) };
+	my($method,@@args) = @@$thaw if ref $thaw;
+
+	if($method) {
+		my $result;
+		debug($prefix,"\"$method\"\n");
+		if($w) {
+			if($method eq 'debug') {
+				$result = {'kids'   => [@@pid],
+				           'table'  => [unpack("I*",$shm_kid->fetch())],
+						   'set'    => $set,
+				           'setid'  => $setid };
+			} elsif($method eq 'new') {
+					$result = [create_mdata_ro()];
+					print $prefix,"created new mdata_ro (read$number)\n";
+			} else {
+				($result,@@new) = MData->write_call($method,@@args);
+			}
+		} else {
+			if($method eq 'debug') {
+				$result = {'pid'    => $$, 
+				           'number' => $number, 
+				           'setid'  => $setid };
+			} elsif($method eq 'sleep') {
+					my $sec = $args[0];
+					print $prefix,"sleeping $sec\n";
+					$sec = sleep $sec;
+					print $prefix,"weaking up, $sec\n";
+			} else {
+				$result = MData->read_call($method,@@args);
+			}
+		}
+		nstore_fd($result, \*Client);
+##		unless(syswrite(Client,freeze($result))) { # print is buffered
+##			print $prefix,"connection lost\n";
+##		}
+	} else {
+		warn $prefix,"No request from client\n";
+		syswrite(Client,"Hello, I'm mdata daemon\n");
+	}
+
+	return @@new;
+}
+
+sub debug { print(@@_) if($opt_d); }
+
+# uloz cislo zmeny do shm_kid table
+sub set_table {
+	my($number,$value) = @@_;
+	my $int_val = pack('I',$value);
+	$shm_kid->lock(0);
+	my $table = $shm_kid->fetch();
+	substr($table,$sizeof_int*$number,$sizeof_int,$int_val);
+	$shm_kid->store($table);
+	$shm_kid->unlock();
+}
+
+# ------------------------------------------------------------------------
+# obsluhuj mdata-rw
+sub mdata_rw {
+
+	while(1) {
+
+		$SIG{ALRM} = sub { };
+		alarm 1; # po sekunde zkontroluj kidy a $quit
+		my $accept = accept(Client,SOCKRW);
+		$SIG{ALRM} = 'IGNORE';
+
+		if((my $pid = waitpid(-1, WNOHANG)) > 0) {
+			warn "kid $pid died, status $?, exiting too..\n";
+			last;
+		}
+
+		# TODO: pool balancing pri velkem zatizeni
+		last if $quit;
+		next unless $accept;
+
+		# obsluz klienta
+		my @@new = handle('w');
+
+		# aktualizuj seznam zmen
+		if(@@new) {
+
+			my $min = $setid; # najdi nejstarsi neprectenou
+			foreach(unpack("I*",$shm_kid->fetch())) {
+				$min = $_ if($_ < $min);
+			}
+
+			# smaz stare, vsemi prectene updaty
+			for(; $setpending < $min; $setpending++) {
+				delete $set->{$setpending};
+			}
+
+			# uloz vsechny nove
+			$set->{$setid++} = $_ foreach(@@new);
+
+			$shm_set->store(freeze($set));
+
+			# dej vedet deckam o nove zmene
+			set_table(0,$setid);
+			kill ALRM, @@pid[1..$#pid];
+		} 
+		# close az nyni - po zmene shm
+		close(Client);
+	}
+}
+
+# ------------------------------------------------------------------------
+# obsluhuj mdata-ro
+
+sub mdata_ro {
+	
+	while(1) {
+		my($kid,$set);
+
+		$SIG{ALRM} = sub { };
+		alarm 1; # SIGALRM posle tez rodic pri zmene
+		my $accept = accept(Client,SOCKRO);
+		$SIG{ALRM} = 'IGNORE';
+
+		last if $quit;
+
+		# zkontroluj zda nenastala nova zmena
+		my $table = $shm_kid->fetch();
+		my $last = unpack("I",$table); # [0]
+
+		# aplikuj zmeny
+		if($last > $setid) {
+			my($set) = thaw($shm_set->fetch());
+			for(; $last > $setid ; $setid++) {
+				debug($prefix,"applying set $setid\n");
+				MData->update($set->{$setid});
+			}
+
+			# zapis, ze jsme zmeny precetli
+			set_table($number,$setid);
+		}
+
+		# obsluz klienta
+		if($accept) {
+			handle('r');
+			close(Client);
+		}
+	}
+}
+
+
+@
+
+
+1.1
+log
+@
+Added beard2 -- new bear daemon source tree.
+
+mdata subsystem works, some docs, some tests, etc.
+
+cached in progress
+@
+text
+@d12 3
+a14 2
+use lib "mdata";
+use MData;
+d16 2
+a17 10
+use lib "lib";
+use beard;
+
+our($opt_f,$opt_d);
+getopts("df:");
+
+my $bear_conf = beard->read_conf($opt_f);
+my $conf    = $bear_conf->{'mdata'};
+my $conf_rw = $conf->{'rw'};
+my $conf_ro = $conf->{'ro'};
+d20 1
+a20 1
+MData->init($conf);
+d23 1
+a23 1
+my $sockrw = $conf_rw->{'socket'};
+d32 1
+a32 1
+my $sockro = $conf_ro->{'socket'};
+d63 1
+a63 1
+my $pool = $conf->{'pool'};
+@
+

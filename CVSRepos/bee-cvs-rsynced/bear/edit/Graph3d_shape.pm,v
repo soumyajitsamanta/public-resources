@@ -1,0 +1,200 @@
+head	1.3;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.3
+date	2003.11.18.14.38.40;	author jiri_schmid;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2003.11.07.13.40.49;	author jiri_schmid;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2003.10.31.12.47.57;	author jiri_schmid;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.3
+log
+@auto save when changing tabs implemented
+@
+text
+@#-----------------------------------------------------
+#  Grid Editation
+#-----------------------------------------------------
+# $Id: Graph3d_shape.pm,v 1.2 2003/11/07 13:40:49 jiri_schmid Exp $
+
+package Graph3d_shape;
+
+use strict;
+require "local/Graph3d_lib.pm";
+#-----------------------------------------------------
+sub generateContent() {
+my($variables, $lang, $obj) = (shift, shift, shift);
+my $saved = $$variables->{saved} if exists $$variables->{saved};
+my $localTab = $$variables->{localTab};
+my ($fill, $shape, $itemsType);
+print "<br><table class='page_skeleton'><tr class='page_skeleton'><td class='page_skeleton_ex' align='center'>";
+if (&Graph3d_lib::existsDefinition($obj,$localTab)) {
+if (@@{$$obj->{$localTab}{items}} == 0) {
+	print "<span style='padding: 15px; line-height: 30px'>$$lang->{'Report Qualitative'}</span>";
+} else {
+my ($rowspan, $check);
+if ($$obj->{$localTab}{quantity} eq "on") {
+	$rowspan = "rowspan='3'";
+	$check = "onchange='checkNum(this)'";
+};
+my @@shapeFiles = &Local::GetFiles("$Const::myPath"."img/vrmltypes",'png');
+my $colspan = @@shapeFiles;
+print <<END;
+	<table style='text-align:left; width:100%'>
+	<tr>	<th style='white-space:nowrap'>$$lang->{'Graph3d default'}</td>
+		<td><input onfocus='setSelf(this)' type='text' name='default' $check id='default0' size='10' value="$Const::shapes->{$$obj->{$localTab}{default}}{name}"/></td>
+		<td $rowspan><table class='neutral_100'><tr><td colspan="$colspan">$$lang->{'Graph3d shape'}:</td>
+	</tr>
+	<tr>
+END
+	my @@shapes;
+	foreach (@@shapeFiles) {
+		print "<td onmouseover='active(this)' onmouseout='passive(this)' class='shape'><img onclick='addSelf(this)' title='$Const::shapes->{$_}{name}' src='img/vrmltypes/$_.png' alt='$_' style='margin:1px;' /></td>";
+		push(@@shapes,"$Const::shapes->{$_}{name}:'$_'");
+	}
+	$shape = join(",",@@shapes);
+print "</tr></table></td></tr>";
+	if ($rowspan) {
+		print "<tr><th style='white-space:nowrap'>Minimum:</th><td><input $check size='10' type='text' name='min' id='inputmin' value='$$obj->{$localTab}{min}'/></td></tr>";
+		print "<tr><th style='white-space:nowrap'>Maximum:</th><td><input $check size='10' type='text' name='max' id='inputmax' value='$$obj->{$localTab}{max}'/></td></tr>";
+	}
+	my @@ids;
+	print "<tr><td colspan='3'><hr/></td></tr>";
+	my $name = "Graph3d Item$localTab";
+	print "<tr><th style='text-align:left' colspan='2'>$$lang->{$name}</th><td style='text-align:right'><img class='cursor' src='$$variables->{skinPath}img/delete.$$variables->{imgType}' title=\"$$lang->{'Delete Active'}\" onclick='emptyBin()'></td></tr></table>";
+	print "<table style='text-align:left; width:100%''>";
+	if (SOAP->GetObjectType(${$$obj->{$localTab}{items}}[$#{$$obj->{$localTab}{items}}]) =~ /metric/) {
+		$itemsType = "<input type='hidden' value='1' name='metric' id='metric' />";
+		foreach (0..$#{$$obj->{$localTab}{items}}) {
+		print "<tr><td colspan='3'><hr/></td></tr>";
+			my $id = @@{$$obj->{$localTab}{items}}[$_];
+			my $end = sprintf("%.0f",8/@@{$$obj->{$localTab}{items}});
+			my $rowspan = $end+2;
+			print "<tr><td style='text-align:center' rowspan='$rowspan'><span id='$id'>$id</span>:</td><td style='text-align:center'>$$lang->{'Graph3d Interval'}</td><td style='text-align:center'>$$lang->{'Graph3d Size'}</td></tr>";
+				for my $cnt (0..$end) {
+				my $index1 = $cnt * 2;
+				my $index2 = $cnt * 2 + 1;
+				my @@convert;
+				foreach ( split(/,/,$$obj->{$localTab}{rules}[$_][$index2]) ) { push(@@convert,$Const::shapes->{$_}{name}) }
+				my $convert = join(',',@@convert);
+				print "<tr><td><input type='text' style='width:100%' name='view${_}$cnt' value='$$obj->{$localTab}{rules}[$_][$index1]' onfocus='setBin(this)'/></td><td><input type='text' style='width:100%' value='$convert' name='change${_}$cnt' id='change${_}$cnt' onfocus='setSelf(this); setBin(this)'></td></tr>";
+				}
+			push(@@ids,$id);
+		}
+	} else {
+		$itemsType = "<input type='hidden' value='0' name='metric' id='metric' />";
+		foreach (0..$#{$$obj->{$localTab}{items}}) {
+			my $id = @@{$$obj->{$localTab}{items}}[$_];
+			push(@@ids,$id);
+			print "<td style='text-align:center'><span class='cursor' title=\"$$lang->{'Elements show'}\" id='$id' onclick='loadElement(this)'>$id</span>:</td>"; 
+		}
+		print "<td style='text-align:center'>$$lang->{'Graph3d Size'}</td></tr>";
+		my $plusOne = @@{$$obj->{$localTab}{items}};
+		for my $cnt (0..5) {
+			print "<tr>";
+			foreach (0..$#{$$obj->{$localTab}{items}}) {
+				print "<td><input type='text' style='width:100%' name='view${cnt}_${_}' value=\"$$obj->{$localTab}{rules}[$cnt][$_]\" onfocus='setBin(this)' onclick='addValue(this)'/></td>"; 
+				}
+			my @@convert;
+			foreach ( split(/,/,$$obj->{$localTab}{rules}[$cnt][$plusOne]) ) { push(@@convert,$Const::shapes->{$_}{name}) }
+			my $convert = join(',',@@convert);
+			print "<td><input type='text' style='width:100%' value='$convert' name='change${cnt}' id='change${cnt}' onfocus='setSelf(this); setBin(this)'></td>";
+			print "</tr>";
+		}
+	}
+	print "</table>";
+	print "<input type='hidden' id='ids' value='".join("|",@@ids)."'/>";
+	$fill = "fillAxis(true);";
+print <<END;
+	</td></tr>	
+	<tr class="page_skeleton">
+	<td class="page_skeleton">
+		<table class="neutral_100">
+		<tr><td align="center">
+			<table class="buttons" cellpading="0" cellspacing="0">
+			<tr>	<td class="buttons"><input id='SAVE' type="submit" name="Action" value="$$lang->{'Save'}" onclick='convertShapes("default","change")'/></td>
+				<td class="buttons">
+						<input type="submit" name="Action" value="$$lang->{'Save As'}" onclick="convertShapes('default','change');return readName();"/>
+						<input type="hidden" name="saveAsName" id="saveAsName" value="" />
+				</td>
+				<td class="buttons"><input type="button" name="reset" value="$$lang->{'Reset'}" onclick='convertShapes("default","change")'/></td>
+			</tr>
+			</table>
+		</td></tr>
+		</table>
+	</td></tr>
+END
+}
+}
+print <<END;
+</td></tr>
+</table>
+$itemsType
+<script type="text/javascript" src="js/graph3d.js"></script>	
+<script type="text/javascript">
+	var msg="$$lang->{'New Save Part1'}$$lang->{'New Graph3d Save'}$$lang->{'New Save Part2'}";
+	var saveAsMsg = "$$lang->{SaveAsMsg}$$lang->{'New Graph3d'}";
+	var TargeT;
+	var shapeObject = { $shape };
+	reloadTree($saved);
+	$fill
+</script>
+END
+}
+
+#---------------------------------------------------
+
+sub set_next_param {
+my ($o,$q,$localTab) = (shift,shift,shift);
+&Graph3d_lib::saveDTSC($q,$o,$localTab);
+}
+
+1
+@
+
+
+1.2
+log
+@tested a fixed saving of all objects
+@
+text
+@d4 1
+a4 1
+# $Id: Graph3d_shape.pm,v 1.1 2003/10/31 12:47:57 jiri_schmid Exp $
+d101 1
+a101 1
+			<tr>	<td class="buttons"><input type="submit" name="Action" value="$$lang->{'Save'}" onclick='convertShapes("default","change")'/></td>
+@
+
+
+1.1
+log
+@mod perl rocks!
+@
+text
+@d4 1
+a4 1
+# $Id: graph3d_shape_ed.pl,v 1.14 2003/10/17 11:36:16 jiri_schmid Exp $
+d103 1
+a103 1
+						<input type="submit" name="Action" value="$$lang->{'Save As'}" onclick="return readName();"/>
+@
+

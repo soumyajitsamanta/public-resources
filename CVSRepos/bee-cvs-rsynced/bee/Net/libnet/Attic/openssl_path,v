@@ -1,0 +1,37 @@
+head	1.2;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2003.07.09.11.18.03;	author numberone;	state dead;
+branches;
+next	1.1;
+
+1.1
+date	2003.07.07.11.09.52;	author numberone;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@send/recv read(4096), write(4096)
+@
+text
+@/usr@
+
+
+1.1
+log
+@Net -- moving from Net-1.x directories to 'Net/' directory
+@
+text
+@@
+

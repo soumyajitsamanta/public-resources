@@ -1,0 +1,550 @@
+head	1.16;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.16
+date	2003.10.16.14.08.53;	author jiri_schmid;	state dead;
+branches;
+next	1.15;
+
+1.15
+date	2003.09.17.14.51.14;	author jiri_schmid;	state Exp;
+branches;
+next	1.14;
+
+1.14
+date	2003.09.01.12.40.08;	author jiri_schmid;	state Exp;
+branches;
+next	1.13;
+
+1.13
+date	2003.08.28.09.26.16;	author jiri_schmid;	state Exp;
+branches;
+next	1.12;
+
+1.12
+date	2003.08.13.14.22.03;	author jiri_schmid;	state Exp;
+branches;
+next	1.11;
+
+1.11
+date	2003.08.05.08.39.25;	author jiri_schmid;	state Exp;
+branches;
+next	1.10;
+
+1.10
+date	2003.07.29.12.28.34;	author jiri_schmid;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	2003.07.25.10.53.21;	author jiri_schmid;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	2003.07.22.15.13.08;	author jiri_schmid;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	2003.07.22.08.48.01;	author jiri_schmid;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	2003.07.11.16.00.53;	author jiri_schmid;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	2003.07.10.13.00.04;	author jiri_schmid;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2003.07.09.15.30.18;	author jiri_schmid;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2003.07.09.09.28.10;	author jiri_schmid;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2003.07.07.14.17.14;	author jiri_schmid;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2003.07.04.14.32.09;	author jiri_schmid;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.16
+log
+@mod-perl implementation stage 1, rebuilding global vars in .pl to global pointers
+@
+text
+@#-----------------------------------------------------
+#  Format Editation
+#-----------------------------------------------------
+# $Id: graph3d_ed.pl,v 1.15 2003/09/17 14:51:14 jiri_schmid Exp $
+
+use strict;
+use CGI qw( :standard );
+use CGI::Pretty;
+
+require "const.def";
+
+use vars qw($ID $ObjT $lang $all_params $localTab $use_lang $skin $skinPath $imgType);
+
+
+#-----------------------------------------------------
+# print_form is called from edit.cgi
+
+sub print_form {
+	print startform(-action=>'', -name=>'graph3d', onsubmit=>'return reset_tree_name();');
+	print hidden('ObjT',$ObjT);
+	print hidden('all_params',$all_params);
+	print hidden('local_tab',$localTab);
+	my $name = LocalizedObj($Obj->{name}, "Object #$ID", lc($use_lang), $DefaultLanguage);
+print <<END;
+<input type="hidden" value="$use_lang" id="activeLang" name="active_lang" />
+<input type="hidden" value="$skin" id="skin" name="skin">
+<input type="hidden" value="$imgType" id="imgType" />
+<script src='js/graph3d.js' type='text/javascript'></script>
+<input type='hidden' name='item_id' id='ITEM_ID' value='$ID'/>
+<table><tr>
+	<td style='width:20px'><img style='padding:0px 5px 0px 5px' src='${skinPath}img/graph3d.$imgType'></td>
+	<td class='neutral_title'>&nbsp;$lang->{'Graph3d Edit'}</td>
+	<td >- $name</td>
+</tr></table>
+END
+&generateTabs($localTab,'Graph3d','graph3d','def','x','y','z','diameter','transparency','shape','color','rights');#active tab, edited item name, tabs...
+print "<table class='local_tabline' cellspacing='0'><tr><td>\n";
+&generateContent();
+print "</td></tr><tr><td>&nbsp;</td></tr></table>";
+print "<script type='text/javascript'>var params = '$all_params';</script>";
+print &endform;
+}
+
+#-----------------------------------------------------
+sub existsDefinition {
+if (exists $Obj->{$localTab}) {
+	if (exists $Obj->{$localTab}->{items} && exists $Obj->{$localTab}->{quantity}) { return 1 }
+}
+return undef
+}
+
+
+#-----------------------------------------------------
+sub saveDTSC { #saving procedure for Diameter, Transparency, Shape and Color
+#theses two lines may be removed, of "old" datas do not contain keys sizes and intervals anymore
+delete $Obj->{$localTab}{sizes} if exists $Obj->{$localTab}{sizes};
+delete $Obj->{$localTab}{intervals} if exists $Obj->{$localTab}{intervals};
+
+my @@pole;
+my $name;
+my $add;
+delete $Obj->{$localTab}{rules} if exists $Obj->{$localTab}{rules};
+if (param('metric')) {
+	foreach (0..$#{$Obj->{$localTab}{items}}) {
+		undef @@pole;
+		my $id = @@{$Obj->{$localTab}{items}}[$_];
+		my $end = sprintf("%.0f",8/@@{$Obj->{$localTab}{items}});
+		for my $cnt (0..$end) {
+			$name = "view${_}$cnt";
+			push(@@pole,param($name),param("change".${_}.$cnt)) if param($name);
+			}
+		@@{$Obj->{$localTab}{rules}}[$_] = [@@pole];
+	}
+} else {
+	for my $cnt (0..5) {
+		$add = 0;
+		undef @@pole;
+		foreach (0..$#{$Obj->{$localTab}{items}}) {
+			$name = "view${cnt}_$_";
+			$add++ if param($name);
+			push(@@pole,param($name));
+		}
+		$name = "change${cnt}";
+		push(@@pole,param($name));
+		@@{$Obj->{$localTab}{rules}}[$cnt] = [@@pole] if $add > 0;
+	}
+}
+if ($Obj->{$localTab}{quantity} eq "on") {
+	$Obj->{$localTab}{interpolation} = param('interpolation');
+	$Obj->{$localTab}{max} = param('max');
+	$Obj->{$localTab}{min} = param('min');
+} else {
+$Obj->{$localTab}{interpolation} = 'constant';
+}
+$Obj->{$localTab}{default} = param('default');
+}
+
+1
+@
+
+
+1.15
+log
+@tabed rights on graph3d and report
+@
+text
+@d4 1
+a4 1
+# $Id: graph3d_ed.pl,v 1.14 2003/09/01 12:40:08 jiri_schmid Exp $
+@
+
+
+1.14
+log
+@skins implemented. mozilla skin - temporarily copy msie content
+@
+text
+@d4 1
+a4 1
+# $Id: graph3d_ed.pl,v 1.13 2003/08/28 09:26:16 jiri_schmid Exp $
+d12 1
+a12 1
+use vars qw($ID $ObjT $lang $all_params $localTab $use_lang $skin $skinPath);
+d27 1
+d36 1
+a36 1
+&generateTabs($localTab,'Graph3d','graph3d','def','x','y','z','diameter','transparency','shape','color');#active tab, edited item name, tabs...
+@
+
+
+1.13
+log
+@tabs.cgi speed improvmnet, visual improvment on trees, rights and some other minor improvments
+@
+text
+@d4 1
+a4 1
+# $Id: graph3d_ed.pl,v 1.12 2003/08/13 14:22:03 jiri_schmid Exp $
+d12 1
+a12 1
+use vars qw($ID $ObjT $lang $all_params $localTab $use_lang);
+d25 2
+a26 1
+<input type="hidden" value="$use_lang" id="activeLang" name="active_lang">
+d30 1
+a30 1
+	<td style='width:20px'><img style='padding:0px 5px 0px 5px' src='img/graph3d.gif'></td>
+@
+
+
+1.12
+log
+@code clearing and improvment
+@
+text
+@d4 1
+a4 1
+# $Id: graph3d_ed.pl,v 1.11 2003/08/05 08:39:25 jiri_schmid Exp $
+d23 1
+d31 1
+@
+
+
+1.11
+log
+@minor code simplification
+@
+text
+@d4 1
+a4 1
+# $Id: graph3d_ed.pl,v 1.10 2003/07/29 12:28:34 jiri_schmid Exp $
+d19 4
+a22 5
+	my $cgi = shift;
+	print $cgi->startform(-action=>'', -name=>'graph3d', onsubmit=>'return reset_tree_name();');
+	print $cgi->hidden('ObjT',$ObjT);
+	print $cgi->hidden('all_params',$all_params);
+	print $cgi->hidden('local_tab',$localTab);
+d37 1
+a37 1
+print $cgi->endform;
+@
+
+
+1.10
+log
+@right frame implemented
+@
+text
+@d4 1
+a4 1
+# $Id: graph3d_ed.pl,v 1.9 2003/07/25 10:53:21 jiri_schmid Exp $
+d41 1
+d47 46
+@
+
+
+1.9
+log
+@switching tab bug fixed
+@
+text
+@d4 1
+a4 1
+# $Id: graph3d_ed.pl,v 1.8 2003/07/22 15:13:08 jiri_schmid Exp $
+d28 4
+a31 1
+<table><tr><td width='20'><img src='img/graph3d.gif'></td><td class='neutral_title'>&nbsp;$lang->{'Graph3d Edit'}</td></tr></table>
+@
+
+
+1.8
+log
+@new tabs on graph3d page implemented
+@
+text
+@d4 1
+a4 1
+# $Id: graph3d_ed.pl,v 1.7 2003/07/22 08:48:01 jiri_schmid Exp $
+d36 7
+@
+
+
+1.7
+log
+@axis tabs on 3dgraph page implented
+@
+text
+@d4 1
+a4 1
+# $Id: graph3d_ed.pl,v 1.6 2003/07/11 16:00:53 jiri_schmid Exp $
+d30 1
+a30 1
+&generateTabs($localTab,'Graph3d','graph3d','def','x','y','z');#active tab, edited item name, tabs...
+@
+
+
+1.6
+log
+@graph3d next stage
+@
+text
+@d4 1
+a4 1
+# $Id: graph3d_ed.pl,v 1.5 2003/07/10 13:00:04 jiri_schmid Exp $
+d30 1
+a30 1
+&generateTabs($localTab,'Graph3d','graph3d','def','xAxis','yAxis','zAxis');
+@
+
+
+1.5
+log
+@tabed graph3d implemnted, code improvment
+@
+text
+@d4 1
+a4 1
+# $Id: format_ed.pl,v 1.37 2003/07/04 14:29:33 jiri_schmid Exp $
+d28 1
+a28 1
+<table><tr><td width='20'><img src='img/format.gif'></td><td class='neutral_title'>&nbsp;$lang->{'Format Edit'}</td></tr></table>
+d30 1
+a30 1
+&generateTabs($localTab,'Graph3d','graph3d','def');
+@
+
+
+1.4
+log
+@minor bug fixies, 3dgraph interface changes
+@
+text
+@d2 1
+a2 1
+#  Grid Editation
+d4 1
+a4 1
+# $Id: graph3d_ed.pl,v 1.3 2003/07/09 09:28:10 jiri_schmid Exp $
+a10 1
+require "local_lib.pl";
+d12 1
+a13 1
+use vars qw($ID $Obj $ObjT $ObjectAttr $MetricsIdent $descr_w $descr_r $name_w $use_lang $saved @@Languages $DefaultLanguage);
+d17 1
+a19 3
+	my $item;
+	my $empty=0; # empty array; will write "-none-"
+
+d22 2
+a23 23
+	print "<input type=\"hidden\" value=\"$use_lang\" id=\"activeLang\" name=\"active_lang\">\n";
+	print <<END ;   # openNodes ... list of nodes which are currently open
+<table><tr><td width="20"><img src="img/graph3d.gif"></td><td class="neutral_title">$lang->{'Graph3d Edit'}</td></tr></table>
+<br>	
+<table class="page_skeleton">
+<tr class="page_skeleton"><td class="page_skeleton_ex" align="center">
+END
+&generateGraph3DEdit();
+print <<END ;
+</td>
+<td class="page_skeleton">&nbsp;</td>
+<td class="page_skeleton">
+	<table class="neutral">
+	<tr><td class="neutral_bold">$lang->{'Name'}</td></tr>
+	<tr><td align="center">
+		<input value="" onchange="object_changed()" type="text" name="name" id="NAME" size="$name_w" maxlength="100"/>
+		<select name="langSpec" id="langSpec" onchange="tmpChangeLocal()">
+END
+foreach (@@Languages) {
+	my $lcL = lc($_);
+	my $name = LocalizedObj($Obj->{name}, "Object #$ID", $lcL, $DefaultLanguage);
+	print "<option value='$name'>$_</option>";
+}
+d25 4
+a28 18
+		</select>
+		<input type="hidden" name="item_id" id="ITEM_ID" value="$ID"/>
+	</td></tr>
+	<tr><td><hr></td></tr>
+	<tr><td class="neutral_bold">$lang->{'Description'}</td></tr>
+	<tr><td align="center"><textarea onchange="object_changed()" cols="$descr_w" rows="$descr_r" name="desc" id="DESC"></textarea></td></tr>
+	<tr><td><hr></td></tr>
+	<tr><td align="center">
+	<table class="buttons" cellpading="0" cellspacing="0">
+	<tr>	<td class="buttons"><input type="submit" name="Action" value="$lang->{'Save'}" onclick="fill_selects();return check_name();"/></td>
+		<td class="buttons">	<input type="submit" name="Action" value="$lang->{'Save As'}" onclick="fill_selects();return readName();"/>
+					<input type="hidden" name="saveAsName" id="saveAsName" value="" /></td>
+		<td class="buttons"><input type="button" name="reset" value="$lang->{'Reset'}" onclick="subst_item_id(); fill_tables();"/></td>
+	</td></tr>
+	</table>
+	</td></tr>
+	</table>
+</td></tr></table>
+d30 6
+a35 26
+&generateGraph3DEditFields();
+print <<END;
+<br>
+<script type="text/javascript" src="js/graph3d.js"></script>	
+<script type="text/javascript">
+	var mg_img="$ObjectAttr->{$MetricsIdent}->{img}";
+	var mg_remove="$lang->{'Grid Remove MG'}";
+	var msg="$lang->{'New Save Part1'}$lang->{'New Graph3d Save'}$lang->{'New Save Part2'}";
+	subst_item_id();
+	fill_tables();
+	var saveAsMsg = "$lang->{SaveAsMsg}$lang->{'New Graph3d'}";
+	reloadTree($saved);
+</script>
+END
+	print $cgi->endform;
+}
+
+#---------------------------------------------------
+
+sub set_next_param {
+	my($cgi) = shift;
+	my $o=shift;
+	$o->{x} = [$cgi->param('XObj')];
+	$o->{y} = [$cgi->param('YObj')];
+	$o->{pages} = [$cgi->param('PagesObj')];
+	$o->{z} = [$cgi->param('ZObj')];
+@
+
+
+1.3
+log
+@major manipulating functions for graph3d definition implemented
+@
+text
+@d4 1
+a4 1
+# $Id: graph3d_ed.pl,v 1.2 2003/07/07 14:17:14 jiri_schmid Exp $
+d23 1
+a23 1
+	print $cgi->startform(-action=>'', -name=>'grid', onsubmit=>'return reset_tree_name();');
+d59 1
+a59 1
+		<td class="buttons">	<input type="submit" name="Action" value="$lang->{'Save As'}" onclick="return readName();"/>
+@
+
+
+1.2
+log
+@utf8 may work properly
+@
+text
+@d4 1
+a4 1
+# $Id: graph3d_ed.pl,v 1.1 2003/07/04 14:32:09 jiri_schmid Exp $
+a30 1
+undefined yet
+d32 1
+a32 1
+
+d58 1
+a58 1
+	<tr>	<td class="buttons"><input type="submit" name="Action" value="$lang->{'Save'}" onclick="return check_name();"/></td>
+d61 1
+a61 1
+		<td class="buttons"><input type="button" name="reset" value="$lang->{'Reset'}" onclick="subst_item_id();"/></td>
+d67 5
+a71 1
+<br>	
+d77 1
+a81 3
+	use Data::Dumper;
+	print "<PRE>".Dumper($Obj)."</PRE>";
+
+a84 1
+
+d90 4
+@
+
+
+1.1
+log
+@added prototype page for vrml
+@
+text
+@d4 1
+a4 1
+# $Id: grid_ed.pl,v 1.57 2003/06/03 08:16:08 jiri_schmid Exp $
+a15 8
+my $none='-none-';
+my @@RowObj = [$none];
+my @@ColObj = [$none];
+my @@PageObj = [$none];
+
+my @@Metrics = ['A','B','C','D','E'];
+my @@MetricsUse = [$none];
+
+a17 1
+
+d26 42
+a67 4
+	use Data::Dumper;
+	print "<PRE>A".Dumper($Obj)."</PRE>";
+print <<END ;   # openNodes ... list of nodes which are currently open
+<table><tr><td width="20"><img src="img/grid.gif"></td><td class="neutral_title">$lang->{'Grid Edit'}</td></tr></table>
+a68 1
+<!--
+d72 1
+a72 1
+	var msg="$lang->{'New Save Part1'}$lang->{'New Graph 3D Save'}$lang->{'New Save Part2'}";
+d74 1
+a74 1
+	var saveAsMsg = "$lang->{SaveAsMsg}$lang->{'New Grid'}";
+a76 1
+-->
+d78 2
+@
+

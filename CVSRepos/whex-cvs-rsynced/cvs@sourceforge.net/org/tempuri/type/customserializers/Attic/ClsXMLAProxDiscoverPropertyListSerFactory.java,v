@@ -1,0 +1,117 @@
+head	1.2;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2005.06.28.12.26.17;	author igorludi;	state dead;
+branches;
+next	1.1;
+
+1.1
+date	2005.06.28.11.35.03;	author igorludi;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@*** empty log message ***
+@
+text
+@// to be deleted
+
+package org.tempuri.type.customserializers;
+
+/**
+ * <p>Title: WHEX</p>
+ * <p>Description: </p>
+ * <p>Copyright: Copyright (c) 2003</p>
+ * <p>Company: </p>
+ * @@author igor
+ * @@version 1.0
+ */
+
+
+import org.apache.axis.Constants;
+import org.apache.axis.encoding.SerializerFactory;
+
+import java.util.Iterator;
+import java.util.Vector;
+import org.apache.axis.encoding.ser.BaseSerializerFactory;
+import javax.xml.namespace.QName;
+import org.apache.axis.description.TypeDesc;
+import org.apache.axis.utils.BeanPropertyDescriptor;
+import org.apache.axis.utils.JavaUtils;
+import org.apache.axis.encoding.ser.EnumSerializer;
+import javax.xml.rpc.JAXRPCException;
+import org.apache.axis.utils.BeanUtils;
+import org.apache.axis.encoding.Serializer;
+
+
+public class ClsXMLAProxDiscoverPropertyListSerFactory extends BaseSerializerFactory {//implements SerializerFactory{
+   public ClsXMLAProxDiscoverPropertyListSerFactory() {
+      super(ClsXMLAProxDiscoverPropertyListSer.class);
+   }
+   protected TypeDesc typeDesc = null;
+     protected BeanPropertyDescriptor[] propertyDescriptor = null;
+
+     public ClsXMLAProxDiscoverPropertyListSerFactory(Class javaType, QName xmlType) {
+         super(ClsXMLAProxDiscoverPropertyListSer.class, xmlType, javaType);
+         // Sometimes an Enumeration class is registered as a Bean.
+         // If this is the case, silently switch to the EnumSerializer
+         if (JavaUtils.isEnumClass(javaType)) {
+             serClass = EnumSerializer.class;
+         }
+
+         typeDesc = TypeDesc.getTypeDescForClass(javaType);
+
+         if (typeDesc != null) {
+             propertyDescriptor = typeDesc.getPropertyDescriptors();
+         } else {
+             propertyDescriptor = BeanUtils.getPd(javaType, null);
+         }
+     }
+
+     public javax.xml.rpc.encoding.Serializer getSerializerAs(String mechanismType)
+         throws JAXRPCException {
+         return (Serializer) super.getSerializerAs(mechanismType);
+     }
+
+     /**
+      * Optimize construction of a BeanSerializer by caching the
+      * type and property descriptors.
+      */
+     public Serializer getGeneralPurpose(String mechanismType) {
+         if (javaType == null || xmlType == null) {
+            return super.getGeneralPurpose(mechanismType);
+         }
+
+         if (serClass == EnumSerializer.class) {
+            return super.getGeneralPurpose(mechanismType);
+         }
+
+         return new ClsXMLAProxDiscoverPropertyListSer();
+     }
+
+
+}
+
+
+
+@
+
+
+1.1
+log
+@first time commit
+@
+text
+@@
+

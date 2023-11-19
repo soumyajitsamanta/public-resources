@@ -1,0 +1,75 @@
+head	1.2;
+access;
+symbols
+	jpivot_1_8_0:1.2
+	focus_1_6_0:1.2.0.4
+	jpivot_1_7_0:1.2
+	jpivot_1_6_0:1.2
+	jpivot_1_5_0:1.2.0.2
+	Root_jpivot_1_5_0:1.2
+	mondrian_xmla_2005_08_25:1.1.0.2
+	sourceforge_sync:1.2;
+locks; strict;
+comment	@# @;
+expand	@k@;
+
+
+1.2
+date	2005.12.13.11.56.41;	author avix;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2005.07.05.14.19.46;	author avix;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@Synchronized with Tonbeller CVS:
+  * Supports Mondrian 2.x API
+  * Added BEA / Websphere Support
+  * More tags in wcf tag library
+  * Bugfixes
+@
+text
+@#sortform.xml
+sortform.title=Sort Optionen
+sortform.close=Schließen
+sortform.mode=Sortiermodus
+sortform.hierup=Hierarchisch Aufsteigend
+sortform.hierdown=Hierarchisch Absteigend
+sortform.flatup=Flach Aufsteigend
+sortform.flatdown=Flach Absteigend
+sortform.topcount=Top Count
+sortform.bottomcount=Bottom Count
+sortform.rowcount=Zeilenzahl für Rank
+sortform.enternumber=Bitte geben Sie eine Zahl ein
+sortform.showprops=Elementeigenschaften zeigen
+sortform.ok=OK
+sortform.cancel=Abbrechen
+
+# ================================================================
+#mdxedit.xml
+mdxedit.title=MDX Editor
+mdxedit.close=Schließen
+mdxedit.apply=Übernehmen
+mdxedit.reset=Zurücksetzen
+@
+
+
+1.1
+log
+@initial version
+@
+text
+@d1 22
+a22 1
+# no resources in this package yet
+@
+

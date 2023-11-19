@@ -1,0 +1,30 @@
+head	1.1;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.1
+date	2003.07.24.10.40.44;	author jiri_schmid;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@formats3d xml added
+@
+text
+@<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<project>
+  <folder id="_FORMAT3D_" description="3D Formats Folder">
+    <name><cz>Formáty 3D</cz><en>Formats 3D</en></name>
+    <gui-presentation line="9" />
+  </folder>
+</project>
+@

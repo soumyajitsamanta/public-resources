@@ -1,0 +1,2071 @@
+head	1.55;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.55
+date	2004.02.24.10.21.34;	author jiri_schmid;	state Exp;
+branches;
+next	1.54;
+
+1.54
+date	2004.02.18.16.19.06;	author jiri_schmid;	state Exp;
+branches;
+next	1.53;
+
+1.53
+date	2004.02.13.17.09.33;	author jiri_schmid;	state Exp;
+branches;
+next	1.52;
+
+1.52
+date	2004.02.12.16.24.21;	author jiri_schmid;	state Exp;
+branches;
+next	1.51;
+
+1.51
+date	2004.02.11.16.05.46;	author jiri_schmid;	state Exp;
+branches;
+next	1.50;
+
+1.50
+date	2004.02.05.08.53.47;	author jiri_schmid;	state Exp;
+branches;
+next	1.49;
+
+1.49
+date	2004.01.29.13.20.34;	author jiri_schmid;	state Exp;
+branches;
+next	1.48;
+
+1.48
+date	2004.01.20.13.06.01;	author jiri_schmid;	state Exp;
+branches;
+next	1.47;
+
+1.47
+date	2003.12.04.14.30.09;	author jiri_schmid;	state Exp;
+branches;
+next	1.46;
+
+1.46
+date	2003.11.25.10.07.42;	author michald;	state Exp;
+branches;
+next	1.45;
+
+1.45
+date	2003.11.04.09.38.41;	author jiri_schmid;	state Exp;
+branches;
+next	1.44;
+
+1.44
+date	2003.10.31.12.47.54;	author jiri_schmid;	state Exp;
+branches;
+next	1.43;
+
+1.43
+date	2003.10.16.14.08.51;	author jiri_schmid;	state Exp;
+branches;
+next	1.42;
+
+1.42
+date	2003.10.06.11.09.33;	author jiri_schmid;	state Exp;
+branches;
+next	1.41;
+
+1.41
+date	2003.10.06.10.00.36;	author jiri_schmid;	state Exp;
+branches;
+next	1.40;
+
+1.40
+date	2003.09.23.15.42.50;	author jiri_schmid;	state Exp;
+branches;
+next	1.39;
+
+1.39
+date	2003.09.01.15.03.39;	author jiri_schmid;	state Exp;
+branches;
+next	1.38;
+
+1.38
+date	2003.09.01.12.40.05;	author jiri_schmid;	state Exp;
+branches;
+next	1.37;
+
+1.37
+date	2003.08.12.14.09.45;	author jiri_schmid;	state Exp;
+branches;
+next	1.36;
+
+1.36
+date	2003.07.08.08.24.43;	author jiri_schmid;	state Exp;
+branches;
+next	1.35;
+
+1.35
+date	2003.07.08.07.12.02;	author jiri_schmid;	state Exp;
+branches;
+next	1.34;
+
+1.34
+date	2003.07.07.14.17.10;	author jiri_schmid;	state Exp;
+branches;
+next	1.33;
+
+1.33
+date	2003.06.03.08.31.09;	author jiri_schmid;	state Exp;
+branches;
+next	1.32;
+
+1.32
+date	2003.06.02.14.47.34;	author jiri_schmid;	state Exp;
+branches;
+next	1.31;
+
+1.31
+date	2003.05.30.09.13.25;	author jiri_schmid;	state Exp;
+branches;
+next	1.30;
+
+1.30
+date	2003.05.29.08.19.00;	author jiri_schmid;	state Exp;
+branches;
+next	1.29;
+
+1.29
+date	2003.05.28.15.18.32;	author jiri_schmid;	state Exp;
+branches;
+next	1.28;
+
+1.28
+date	2003.05.28.12.56.12;	author jiri_schmid;	state Exp;
+branches;
+next	1.27;
+
+1.27
+date	2003.05.28.10.40.10;	author jiri_schmid;	state Exp;
+branches;
+next	1.26;
+
+1.26
+date	2003.05.21.11.39.43;	author jiri_schmid;	state Exp;
+branches;
+next	1.25;
+
+1.25
+date	2003.05.15.11.36.04;	author jiri_schmid;	state Exp;
+branches;
+next	1.24;
+
+1.24
+date	2003.05.08.15.35.44;	author jiri_schmid;	state Exp;
+branches;
+next	1.23;
+
+1.23
+date	2003.05.08.07.42.43;	author michald;	state Exp;
+branches;
+next	1.22;
+
+1.22
+date	2003.05.06.09.20.57;	author jiri_schmid;	state Exp;
+branches;
+next	1.21;
+
+1.21
+date	2003.05.05.15.16.20;	author jiri_schmid;	state Exp;
+branches;
+next	1.20;
+
+1.20
+date	2003.05.05.06.41.42;	author michald;	state Exp;
+branches;
+next	1.19;
+
+1.19
+date	2003.04.30.09.53.35;	author jiri_schmid;	state Exp;
+branches;
+next	1.18;
+
+1.18
+date	2003.04.25.11.27.20;	author jiri_schmid;	state Exp;
+branches;
+next	1.17;
+
+1.17
+date	2003.03.25.15.37.36;	author jiri_schmid;	state Exp;
+branches;
+next	1.16;
+
+1.16
+date	2003.03.18.08.58.05;	author jiri_schmid;	state Exp;
+branches;
+next	1.15;
+
+1.15
+date	2003.03.14.09.23.44;	author jiri_schmid;	state Exp;
+branches;
+next	1.14;
+
+1.14
+date	2003.03.11.16.17.10;	author jiri_schmid;	state Exp;
+branches;
+next	1.13;
+
+1.13
+date	2003.03.11.11.05.30;	author jiri_schmid;	state Exp;
+branches;
+next	1.12;
+
+1.12
+date	2003.03.11.10.01.30;	author jiri_schmid;	state Exp;
+branches;
+next	1.11;
+
+1.11
+date	2003.03.07.16.18.36;	author jiri_schmid;	state Exp;
+branches;
+next	1.10;
+
+1.10
+date	2003.03.06.15.52.15;	author jiri_schmid;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	2003.03.06.14.48.59;	author jiri_schmid;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	2003.03.06.08.49.27;	author jiri_schmid;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	2003.03.05.15.08.22;	author jiri_schmid;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	2003.03.05.10.31.33;	author jiri_schmid;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	2003.03.04.16.32.01;	author jiri_schmid;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2003.03.04.08.24.41;	author jiri_schmid;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2003.03.03.16.43.57;	author jiri_schmid;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2003.02.28.13.43.11;	author jiri_schmid;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2003.02.28.10.43.31;	author jiri_schmid;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.55
+log
+@prefer access and rights logic changed
+@
+text
+@#!/usr/bin/perl
+#-----------------------------------------------------
+#  Folder Display
+#-----------------------------------------------------
+# $Id: prefer.cgi,v 1.54 2004/02/18 16:19:06 jiri_schmid Exp $
+
+use strict;
+my $run_mod_perl = defined(&Apache::RequestRec::BINMODE);	# are we running under mod_perl?
+if ($run_mod_perl) { Apache::RequestRec::BINMODE(':utf8') } else { binmode STDOUT,':utf8' }
+
+use CGI qw( :standard );
+use CGI::Pretty;
+require "const/Const.pm";
+require "const/Tabs.pm";
+require "local/Local.pm";
+
+# ---- init SOAP ---------
+#-------------------------
+our $load = 1;
+if ($load) {	# ensure require will be performed only once in case of mod_perl execution
+	eval "use SOAP::Lite +autodispatch => 
+		uri => 'Bear', 
+		proxy => ['http://$Const::bearHost:$Const::bearPort/',
+		options => {compress_threshold => $Const::compressThreshold}];
+		1"
+	or ( &ErrorDie("ERROR in eval of \"use SOAP::Lite ...\".") );
+	undef $load;
+}
+my $q = new CGI;
+
+# --- test SOAP connection ---
+#-----------------------------
+my $serverVerbName="SOAP Server http://$Const::bearHost:$Const::bearPort/";
+if (! eval "SOAP::Lite->self->fault") {
+	ErrorDie('ERROR: '.$serverVerbName.' not responding<br><form><input type="submit" name="Refresh" value="Refresh" /></form>');
+}
+#*SOAP::Serializer::as_string = \&SOAP::Serializer::as_base64;	#reducing number of XML::Parser char() callbaks  for every single portion of processed stream (e.g. \n)
+
+# --- determine user and his preferences ---
+#-------------------------------------------
+my $wb = $q->user_agent()=~/MSIE/ ? 'msie' : 'mozilla';
+my $user = $q->remote_user();
+my $ObjPref = SOAP->GetUserPref($user,'Beard');
+my @@names = SOAP->GetProjects($user);
+my $use_lang = ($q->param('language')) ? $q->param('language') : ($ObjPref->{'language'}) ? $ObjPref->{'language'} : "en";
+my $length = ($ObjPref->{'tablength'}) ? $ObjPref->{'tablength'} : 10;
+my $use_enc = $Const::languages->{$use_lang}->{enc};
+
+my $saved = &do_work($q,$ObjPref,$user,@@names) if $q->param('Action');	# handle recieved parameters
+
+my $proj = $ObjPref->{project} ? $ObjPref->{project} : $q->param('Proj') ? $q->param('Proj') : 'TRYNEW'; #have to be after loading user pref to get actual project name
+
+# --- load message dictionary ---
+#---------------------------------
+require "lang/$use_lang.utf";
+
+# --- determine path to skins ---
+#--------------------------------
+my $skinPath;
+if ($q->param('Skin')) {	# takes it as param from index.cgi
+	$skinPath = "skins/".$q->param('Skin');
+} elsif ($q->param('skin')) {	# I've received parameter from myself after Save
+	$skinPath = "$Const::wb_const->{$wb}{skinDir}/".$q->param('skin');
+} elsif (defined $ObjPref->{skin}) {	# there is no param available
+	$skinPath = "$Const::wb_const->{$wb}{skinDir}/".$ObjPref->{skin};
+} else {
+	$skinPath = "$Const::wb_const->{$wb}{skinDir}/default";	#let use default
+}
+
+# --- print out html form ---
+#----------------------------
+print $q->header(-charset=>$use_enc);
+print $q->start_html(
+	-title=>"Prefer page",
+  	-lang=>$Const::languages->{$use_lang}->{lang},	#return language specification in format: language-country (it differs from param Lang)
+	-encoding=>$use_enc,
+	-head=>meta({ -http_equiv => 'Content-Type', -content => "text/html; charset=$use_enc" }),
+	-style=>{-src=>"${skinPath}/css.css"},
+	-script=>[{-language=>'JAVASCRIPT', -src=>'js/prefer.js'}],
+	-onload=>'hideLoad()'
+);
+my $choosed;
+print <<END;
+<div class="loading" id="loading"><img src="img/bear_tiny.png">$Const::lang->{$use_lang}->{'Loading'}</div>
+<form method="post" enctype="application/x-www-form-urlencoded" name="preferences">
+<input type="hidden" value="0" id="changed">
+<table><tr><td class="neutral_bold">$Const::lang->{$use_lang}->{'Prefer Title'}</td><td><input type="hidden" value="none"/>$user<td/></tr></table>
+<br>	
+<table class="neutral">
+<tr><td colspan="2" class='neutral_bold'>$Const::lang->{$use_lang}->{'Prefer Base'}:</td></tr>
+<tr>	<td>
+		$Const::lang->{$use_lang}->{'Prefer Project'}
+		<input type='hidden' value="$proj" name='Proj' id='Proj' />
+	</td>
+	<td>
+	
+	<select name="project" onchange="objectChanged()" style='width:100%'>
+END
+foreach (@@names) {
+ $choosed = ($_ eq $ObjPref->{'project'}) ? ' selected' : '';
+ print "<option value=\"$_\"$choosed>$_</option>";
+}
+print <<END;
+	</select>
+	</td>
+</tr>
+<tr>	<td>$Const::lang->{$use_lang}->{'Prefer Language'}</td>
+	<td>
+	<select name="language" onchange="objectChanged()" style='width:100%'>
+END
+foreach (keys %{$Const::languages}) {
+ $choosed = ($_ eq $ObjPref->{'language'}) ? ' selected' : '';
+ print "<option value='$_'$choosed>$_</option>";
+}
+print <<END;
+	</select>
+	</td>
+</tr>
+<tr><td colspan="2"><hr></td></tr>
+<tr><td colspan="2" class='neutral_bold'>$Const::lang->{$use_lang}->{'Prefer Ext'}:</td></tr>
+<tr>	<td>$Const::lang->{$use_lang}->{'Prefer Skin'}:</td>
+	<td>
+	<select name="skin" onchange="objectChanged()" style='width:100%'>
+END
+foreach (&getSkins("$Const::myPath$Const::wb_const->{$wb}{skinDir}/")) {
+ $choosed = ($_ eq $ObjPref->{'skin'}) ? ' selected' : '';
+ print "<option value='$_'$choosed>$_</option>";
+}
+print "</select></td></tr><tr><td>$Const::lang->{$use_lang}->{'Prefer Cookie'}</td><td>";
+$choosed = ($ObjPref->{'cookie'} eq "on") ? "checked='checked' " : '';	#insert atribut checked if so
+print "<input name='cookie' onchange='objectChanged()' type='checkbox'$choosed/>";		#htmlinputelement - checkbox for using cookies
+print <<END;
+	</td>
+</tr>
+<tr>
+	<td>$Const::lang->{$use_lang}->{'Prefer Length'}</td>
+	<td><input type="text" size="5" maxlength="2" value="$length" align="right" name="tablength" onchange="objectChanged()" /><span class="range">&nbsp;(10-99)</span></td>
+</tr>
+<tr><td colspan='2'><hr /></td></tr>
+<tr>
+	<td colspan='2' class='neutral_bold'>$Const::lang->{$use_lang}->{'Prefer Width'}</td>
+</tr>
+END
+foreach ('treewidth','collectwidth','derivatewidth') {
+	my $width = ($ObjPref->{$_}) ? $ObjPref->{$_} : 25;
+	my $name = "Prefer $_";
+	print "<tr><td>$Const::lang->{$use_lang}->{$name}</td>";
+	print "<td><input type='text' size='5' maxlength='2' value='$width' align='right' name='$_' onchange='objectChanged()' />&nbsp;%<span class='range'>&nbsp;(10-35)</span></td></tr>"
+}
+print <<END;
+	<tr><td colspan='2'><hr></td></tr>
+<tr><td colspan="2" class='neutral_bold'>$Const::lang->{$use_lang}->{'Prefer Report'}:</td></tr>
+<tr>	<td>$Const::lang->{$use_lang}->{'Prefer Open Result'}</td>
+	<td>
+	<select name="open_in" onchange="objectChanged()" style='width:100%'>
+END
+foreach ('_blank','_one','_self','_collect') {
+ $choosed = ($_ eq $ObjPref->{'open_in'}) ? ' selected' : '';
+ print "<option value='$_'$choosed>$Const::lang->{$use_lang}->{\"Prefer OpenR $_\"}</option>";
+}
+print "</select></td></tr>";
+
+=sql access
+my $default = SOAP->GetSqlAccess($user,$ObjPref->{project});
+my $disable;
+if ($default eq 'none')  {
+	$disable = " disabled='disabled'";
+	$ObjPref->{'sql-access'} = 'none';
+}
+print <<END;
+<tr>	<td>$Const::lang->{$use_lang}->{'Prefer SQL Access'}</td>
+	<td>
+	<select name="sql-access" onchange="objectChanged()" style='width:100%' $disable>
+END
+my @@sql = ('none','view');
+push @@sql,$default if $default eq 'edit';
+foreach (@@sql) {
+	my $choosed = ($_ eq $ObjPref->{'sql-access'}) ? ' selected' : '';
+	print "<option value='$_'$choosed>$Const::lang->{$use_lang}->{\"Prefer SQL Access $_\"}</option>";
+}
+print "</select></td></tr>";
+=cut
+my $roleTabs = SOAP->GetRoleTabs($user,$ObjPref->{'project'});
+my @@passedTabs;
+foreach (@@Tabs::TabsCntrlUser) {
+	next if $roleTabs =~ /$_/;
+	push @@passedTabs,$_;
+}
+if (@@passedTabs > 0) {
+print "<tr><td colspan='2'><hr></td></tr><tr><td colspan='2' class='neutral_bold'>$Const::lang->{$use_lang}->{'Prefer Tabs'}:</td></tr>";
+foreach (sort {$Const::lang->{$use_lang}->{ $Tabs::Tabs->{$a}->{name} } cmp $Const::lang->{$use_lang}->{ $Tabs::Tabs->{$b}->{name} }} @@passedTabs) {
+	print "<tr><td>$Const::lang->{$use_lang}->{ $Tabs::Tabs->{$_}->{name} }</td>";
+	my $checked = ($ObjPref->{'tabs'} =~ /$_/) ? "" : "checked='checked' "; #hidden tabs stored in $obj->{'tabs'}
+	print "<td><input type='checkbox' value='$_' name='tab$_' $checked/></td></tr>\n";
+}
+print "</tr>";
+}
+print <<END;
+<tr><td colspan="2"><hr /></td></tr>
+
+<tr align="right"><td colspan="2">
+	<table class="buttons">
+	<tr><td class="buttons"><input type="submit" name="Action" value="$Const::lang->{$use_lang}->{'Save'}" onclick="showLoad();"></td></tr>
+	</table>
+</td></tr>
+</table>
+</form>
+<script type='text/javascript'>
+END
+
+my $tabs = "";
+my @@tabs = ();
+foreach (keys(%{$ObjPref->{report}})){
+	next if ($ObjPref->{report}->{$_}->{project} ne $ObjPref->{'project'});
+	push @@tabs,"$ObjPref->{report}->{$_}->{name}~$_";
+}
+$tabs = join("|",@@tabs);
+$saved = ($saved) ? "var saved = 1;var tabs = '&Tabs=$tabs&View=$saved';" : "var saved;";	#$saved contains hidden tabs or 1
+print $saved;
+print "</script>";
+
+print $q->end_html;
+
+#---------------------------------------------------
+
+sub do_work {
+my($q,$ObjPref,$user,@@projn) = @@_;
+	foreach ('treewidth','collectwidth','derivatewidth') {
+		$ObjPref->{$_} = ($q->param($_) < 10 || $q->param($_) > 35) ? 25 : $q->param($_);
+	}
+	$ObjPref->{'tablength'} = ($q->param('tablength') < 10) ? 10 : $q->param('tablength');
+	
+	foreach ('language','open_in','project','skin') { # removed 'sql-access', controled from admin page
+		$ObjPref->{$_} = $q->param($_);
+	}
+	foreach ('cookie') {
+		if ($q->param($_)) { $ObjPref->{$_} = $q->param($_)} else {$ObjPref->{$_} = 'off'};
+	}
+
+	my @@tabs;
+	foreach (@@Tabs::TabsCntrlUser) {	#store unselected values => hidden tabs
+		next if $q->param("tab$_");
+		push(@@tabs,$_);
+	}
+	$ObjPref->{tabs} = join("",sort @@tabs);
+
+	my $op;
+	$op->{Beard} = $ObjPref;	# add key for propper storing of the pref hash
+	my $r=SOAP->SaveUserPref($op, $user);
+	if ($r) {
+		foreach (@@projn) {	# delete all html tree cache instances for specific user
+			unlink (&Local::TreeFileName($Const::myPath,$_, $user));
+		}
+		return $ObjPref->{tabs} ? $ObjPref->{tabs} : 1
+	} else {
+		print "<span>ERROR: Saving Object Preferences into metadata failed. ..</span>";
+		return 0
+	};
+return 0
+}
+
+#---------------------------------------------------
+
+sub getSkins {
+	my $where = shift;
+	my @@skins;
+	if (opendir SKNS,$where) {
+		foreach (sort (readdir SKNS)) {
+			if ($_ =~ /^\./ || $_=~ /CVS/) {
+				next
+			} else {
+				push @@skins, $_;
+			}
+		}
+		closedir SKNS;
+	}
+	return @@skins
+}
+
+1
+@
+
+
+1.54
+log
+@rights implemented
+@
+text
+@d5 1
+a5 1
+# $Id: prefer.cgi,v 1.53 2004/02/13 17:09:33 jiri_schmid Exp $
+a72 1
+if (SOAP->CheckAccess('P',$user,$proj)) {
+d151 1
+a151 1
+<tr><td colspan="2"><hr></td></tr>
+d161 9
+a170 3
+	</select>
+	</td>
+</tr>
+d173 1
+a173 1
+	<select name="sql-access" onchange="objectChanged()" style='width:100%'>
+d175 3
+a177 1
+foreach ('none','view','edit') {
+d182 1
+a220 4
+} else {
+	print $q->start_html(-style=>{-src=>"${skinPath}/css.css"});
+	&Local::accessForbidden($Const::lang->{$use_lang}{'Forbidden Tab'});
+}
+d233 1
+a233 1
+	foreach ('language','open_in','project','sql-access','skin') {
+@
+
+
+1.53
+log
+@major tabs control implemented
+@
+text
+@d5 1
+a5 1
+# $Id: prefer.cgi,v 1.52 2004/02/12 16:24:21 jiri_schmid Exp $
+a47 1
+my $proj = $q->param('Proj');
+d49 3
+a51 1
+my $saved = &do_work($q,$ObjPref,$user,@@names);	# handle form sent parameters
+a82 1
+
+d94 1
+a94 1
+		<input type='hidden' value="$proj" name='Proj' />
+d215 1
+a215 1
+	&Local::accessForbidden('Prefer',$user);
+d224 18
+a241 13
+	if ($q->param('Action')) {
+		
+		foreach ('treewidth','collectwidth','derivatewidth') {
+			$ObjPref->{$_} = ($q->param($_) < 10 || $q->param($_) > 35) ? 25 : $q->param($_);
+		}
+		$ObjPref->{'tablength'} = ($q->param('tablength') < 10) ? 10 : $q->param('tablength');
+		
+		foreach ('language','open_in','project','sql-access','skin') {
+			$ObjPref->{$_} = $q->param($_);
+		}
+		foreach ('cookie') {
+			if ($q->param($_)) { $ObjPref->{$_} = $q->param($_)} else {$ObjPref->{$_} = 'off'};
+		}
+d243 6
+a248 4
+		my @@tabs;
+		foreach (@@Tabs::TabsCntrlUser) {	#store unselected values => hidden tabs
+			next if $q->param("tab$_");
+			push(@@tabs,$_);
+d250 4
+a253 14
+		$ObjPref->{tabs} = join("",sort @@tabs);
+
+		my $op;
+		$op->{Beard} = $ObjPref;	# add key for propper storing of the pref hash
+		my $r=SOAP->SaveUserPref($op, $user);
+		if ($r) {
+			foreach (@@projn) {	# delete all html tree cache instances for specific user
+				unlink (&Local::TreeFileName($Const::myPath,$_, $user));
+			}
+			return $ObjPref->{tabs} ? $ObjPref->{tabs} : 1
+		} else {
+			print "<span>ERROR: Saving Object Preferences into metadata failed. ..</span>";
+			return 0
+		};
+@
+
+
+1.52
+log
+@prototype of tabs hidding implemented
+@
+text
+@d5 1
+a5 1
+# $Id: prefer.cgi,v 1.51 2004/02/11 16:05:46 jiri_schmid Exp $
+d48 1
+d72 1
+a72 1
+
+d85 1
+a86 1
+<div class="loading" id="loading"><img src="img/bear_tiny.png">$Const::lang->{$use_lang}->{'Loading'}</div>
+d92 4
+a95 1
+<tr>	<td>$Const::lang->{$use_lang}->{'Prefer Project'}</td>
+d97 1
+d174 4
+a177 9
+print <<END;
+	</select>
+	</td>
+</tr>
+<tr><td colspan="2"><hr></td></tr>
+<tr><td colspan="2" class='neutral_bold'>$Const::lang->{$use_lang}->{'Prefer Tabs'}:</td></tr>
+END
+my $roleTabs = SOAP->getRoleTabs($user,$ObjPref->{'project'})."P";	# P -> avoid self hidding of prefernces tab
+foreach (sort {$Const::lang->{$use_lang}->{ $Tabs::Tabs->{$a}->{name} } cmp $Const::lang->{$use_lang}->{ $Tabs::Tabs->{$b}->{name} }} @@Tabs::TabsCntrl) {
+d179 5
+d188 2
+a190 1
+</tr>
+a208 1
+
+a209 1
+
+d213 5
+d239 1
+a239 1
+		foreach (@@Tabs::TabsCntrl) {	#store unselected values => hidden tabs
+a240 1
+			next if $_ eq 'P'; # P -> avoid self hidding of prefernces tab
+@
+
+
+1.51
+log
+@local format improvment and started implementation of tabs selection
+@
+text
+@d5 1
+a5 1
+# $Id: prefer.cgi,v 1.50 2004/02/05 08:53:47 jiri_schmid Exp $
+d176 3
+a178 1
+foreach (sort {$Const::lang->{$use_lang}->{ $Tabs::Tabs->{$a}->{name} } cmp $Const::lang->{$use_lang}->{ $Tabs::Tabs->{$b}->{name} }} keys %{$Tabs::Tabs}) {
+d180 1
+a180 1
+	my $checked = ($ObjPref->{'tabs'} =~ /$_/) ? "checked='checked' " : "";
+d203 1
+d206 1
+a206 1
+$saved = ($saved) ? "var saved = 1;var tabs = '$tabs';" : "var saved;";
+d230 4
+a233 2
+		foreach (%{$Tabs::Tabs}) {
+			push(@@tabs,$q->param("tab$_"));
+d244 1
+a244 1
+			return 1
+@
+
+
+1.50
+log
+@derivated reports redesigned
+@
+text
+@d5 1
+a5 1
+# $Id: prefer.cgi,v 1.49 2004/01/29 13:20:34 jiri_schmid Exp $
+d14 1
+d49 1
+a49 1
+my $saved = &do_work(\$q,\$ObjPref,$user,@@names);	# handle form sent parameters
+d126 1
+a126 1
+$choosed = ($ObjPref->{'cookie'} eq "on") ? ' checked' : '';	#insert atribut checked if so
+d174 11
+d211 2
+a212 2
+my($cgi,$ObjPref,$user,@@projn) = @@_;
+	if ($$cgi->param('Action')) {
+d215 1
+a215 1
+			$$ObjPref->{$_} = ($$cgi->param($_) < 10 || $$cgi->param($_) > 35) ? 25 : $$cgi->param($_);
+d217 1
+a217 1
+		$$ObjPref->{'tablength'} = ($$cgi->param('tablength') < 10) ? 10 : $$cgi->param('tablength');
+d220 1
+a220 1
+			$$ObjPref->{$_} = $$cgi->param($_);
+d223 6
+a228 1
+			if ($$cgi->param($_)) { $$ObjPref->{$_} = $$cgi->param($_)} else {$$ObjPref->{$_} = 'off'};
+d230 1
+d233 1
+a233 1
+		$op->{Beard} = $$ObjPref;	# add key for propper storing of the pref hash
+@
+
+
+1.49
+log
+@collected tab implemented
+@
+text
+@d5 1
+a5 1
+# $Id: prefer.cgi,v 1.48 2004/01/20 13:06:01 jiri_schmid Exp $
+a44 1
+my $width = ($ObjPref->{'treewidth'}) ? $ObjPref->{'treewidth'} : 25;
+d134 1
+d136 1
+a136 2
+	<td>$Const::lang->{$use_lang}->{'Prefer Width'}</td>
+	<td><input type="text" size="5" maxlength="2" value="$width" align="right" name="treewidth" onchange="objectChanged()" />&nbsp;%<span class="range">&nbsp;(10-35)</span></td>
+d138 8
+d201 4
+a204 2
+
+		$$ObjPref->{'treewidth'} = ($$cgi->param('treewidth') < 10 || $$cgi->param('treewidth') > 35) ? 25 : $$cgi->param('treewidth');
+@
+
+
+1.48
+log
+@collected reports tab implementation started
+@
+text
+@d5 1
+a5 1
+# $Id: prefer.cgi,v 1.47 2003/12/04 14:30:09 jiri_schmid Exp $
+d177 1
+d180 1
+a180 1
+	$tabs .= $_."~".$ObjPref->{report}->{$_}->{name}."|";
+d182 2
+a183 1
+$tabs = $tabs;
+@
+
+
+1.47
+log
+@finishing replacing of gif files
+@
+text
+@d5 1
+a5 1
+# $Id: prefer.cgi,v 1.46 2003/11/25 10:07:42 michald Exp $
+d145 1
+a145 1
+foreach ('_blank','_one','_self') {
+@
+
+
+1.46
+log
+@Project ACL implementation
+@
+text
+@d5 1
+a5 1
+# $Id: prefer.cgi,v 1.45 2003/11/04 09:38:41 jiri_schmid Exp $
+d85 1
+a85 1
+<div class="loading" id="loading"><img src="img/bear_tiny.gif">$Const::lang->{$use_lang}->{'Loading'}</div>
+@
+
+
+1.45
+log
+@back changes
+@
+text
+@d5 1
+a5 1
+# $Id: prefer.cgi,v 1.44 2003/10/31 12:47:54 jiri_schmid Exp $
+d43 1
+a43 1
+my @@names = SOAP->GetProjects();
+@
+
+
+1.44
+log
+@mod perl rocks!
+@
+text
+@d5 1
+a5 1
+# $Id: prefer.cgi,v 1.43 2003/10/16 14:08:51 jiri_schmid Exp $
+d14 1
+a14 1
+#require "local/Local.pm";
+d44 1
+a44 1
+my $use_lang = ($q->param('Lang')) ? $q->param('Lang') : ($ObjPref->{'language'}) ? $ObjPref->{'language'} : "en";
+d49 1
+a49 1
+my $saved = &do_work($q,\$ObjPref,$user,@@names);	# handle form sent parameters
+d191 1
+a191 1
+	if ($cgi->param('Action')) {
+d193 2
+a194 2
+		$$ObjPref->{'treewidth'} = ($cgi->param('treewidth') < 10 || $cgi->param('treewidth') > 35) ? 25 : $cgi->param('treewidth');
+		$$ObjPref->{'tablength'} = ($cgi->param('tablength') < 10) ? 10 : $cgi->param('tablength');
+d197 1
+a197 1
+			$$ObjPref->{$_} = $cgi->param($_);
+d200 1
+a200 1
+			if ($cgi->param($_)) { $$ObjPref->{$_} = $cgi->param($_)} else {$$ObjPref->{$_} = 'off'};
+@
+
+
+1.43
+log
+@mod-perl implementation stage 1, rebuilding global vars in .pl to global pointers
+@
+text
+@d5 1
+a5 1
+# $Id: prefer.cgi,v 1.42 2003/10/06 11:09:33 jiri_schmid Exp $
+d8 2
+a9 1
+binmode(STDOUT, ':utf8');
+d13 2
+a14 2
+our $q = new CGI;
+use vars qw($StyleSheet $bearHost $bearPort $compress_threshold $MyName $Languages @@Languages $Languages $lang %js);
+d16 17
+a32 15
+require "const.def";
+require "local/local_lib.pl";
+
+local($") = ' '; # white-space
+my $selSize=4;
+
+# --- make SOAP connection ---
+eval "use SOAP::Lite +autodispatch => 
+	uri => 'Bear', 
+	proxy => ['http://$bearHost:$bearPort/', 
+	options => {compress_threshold => $compress_threshold}]; 
+	1"
+or ( &ErrorDie("ERROR in eval of \"use SOAP::Lite ...\".") );
+
+my $serverVerbName="SOAP Server http://$bearHost:$bearPort/";
+d38 5
+a42 5
+#my $user = $ENV{REMOTE_USER};
+my $User=$q->remote_user();
+our $ObjPref->{Beard} = SOAP->GetUserPref($User,'Beard');
+
+&do_work($q);
+d44 20
+a63 14
+my $saved;
+my $use_lang = (param('Lang')) ? param('Lang') : ($ObjPref->{'Beard'}->{'language'}) ? $ObjPref->{'Beard'}->{'language'} : "EN";
+my $width = ($ObjPref->{'Beard'}->{'treewidth'}) ? $ObjPref->{'Beard'}->{'treewidth'} : 25;
+my $length = ($ObjPref->{'Beard'}->{'tablength'}) ? $ObjPref->{'Beard'}->{'tablength'} : 10;
+my $use_enc = $Languages->{$use_lang}->{enc};
+require $Languages->{$use_lang}->{'src'};
+
+my $wb = ($q->user_agent()=~/MSIE/) ? 'msie' : 'mozilla';
+
+our $skinPath;
+if (param('Skin')) {
+	$skinPath = "skins/".param('Skin');
+} elsif (param('skin')) {
+	$skinPath = "skins/$wb/".param('skin');
+d65 1
+a65 1
+	$skinPath = "skins/$wb/default";
+d68 2
+a69 2
+my $style = "${skinPath}/css.css";
+
+d74 1
+a74 1
+  	-lang=>$Languages->{$use_lang}->{lang},	#return language specification in format: language-country (it differs from param Lang)
+d76 2
+a77 2
+	-head=>meta({	-http_equiv => 'Content-Type', 
+		-content => "text/html; charset=$use_enc" }),
+a78 1
+	-style=>{-src=>$style},
+d81 1
+d85 1
+a85 1
+<div class="loading" id="loading"><img src="img/bear_tiny.gif">$lang->{'Loading'}</div>
+d87 1
+a87 1
+<table><tr><td class="neutral_bold">$lang->{'Prefer Title'}</td><td><input type="hidden" value="none"/>$User<td/></tr></table>
+d90 2
+a91 2
+<tr><td colspan="2" class='neutral_bold'>$lang->{'Prefer Base'}:</td></tr>
+<tr>	<td>$lang->{'Prefer Project'}</td>
+d96 1
+a96 1
+ $choosed = ($_ eq $ObjPref->{'Beard'}->{'project'}) ? ' selected' : '';
+d103 1
+a103 1
+<tr>	<td>$lang->{'Prefer Language'}</td>
+d107 2
+a108 2
+foreach (@@Languages) {
+ $choosed = ($_ eq $ObjPref->{'Beard'}->{'language'}) ? ' selected' : '';
+d116 2
+a117 2
+<tr><td colspan="2" class='neutral_bold'>$lang->{'Prefer Ext'}:</td></tr>
+<tr>	<td>$lang->{'Prefer Skin'}:</td>
+d121 2
+a122 2
+foreach (&getSkins) {
+ $choosed = ($_ eq $ObjPref->{'Beard'}->{'skin'}) ? ' selected' : '';
+d125 2
+a126 2
+print "</select></td></tr><tr><td>$lang->{'Prefer Cookie'}</td><td>";
+$choosed = ($ObjPref->{'Beard'}->{'cookie'} eq "on") ? ' checked' : '';	#insert atribut checked if so
+d132 1
+a132 1
+	<td>$lang->{'Prefer Length'}</td>
+d136 1
+a136 1
+	<td>$lang->{'Prefer Width'}</td>
+d140 2
+a141 2
+<tr><td colspan="2" class='neutral_bold'>$lang->{'Prefer Report'}:</td></tr>
+<tr>	<td>$lang->{'Prefer Open Result'}</td>
+d146 2
+a147 2
+ $choosed = ($_ eq $ObjPref->{'Beard'}->{'open_in'}) ? ' selected' : '';
+ print "<option value='$_'$choosed>$lang->{\"Prefer OpenR $_\"}</option>";
+d153 1
+a153 1
+<tr>	<td>$lang->{'Prefer SQL Access'}</td>
+d158 2
+a159 2
+	my $choosed = ($_ eq $ObjPref->{'Beard'}->{'sql-access'}) ? ' selected' : '';
+	print "<option value='$_'$choosed>$lang->{\"Prefer SQL Access $_\"}</option>";
+d168 1
+a168 1
+	<tr><td class="buttons"><input type="submit" name="Action" value="$lang->{'Save'}" onclick="showLoad();"></td></tr>
+d177 3
+a179 3
+foreach (keys(%{$ObjPref->{Beard}->{report}})){
+	next if ($ObjPref->{Beard}->{report}->{$_}->{project} ne $ObjPref->{'Beard'}->{'project'});
+	$tabs .= $_."~".$ObjPref->{Beard}->{report}->{$_}->{name}."|";
+a186 1
+
+d190 1
+a190 1
+	my($cgi) = @@_;
+d193 2
+a194 2
+		$ObjPref->{Beard}->{'treewidth'} = (param('treewidth') < 10 || param('treewidth') > 35) ? 25 : param('treewidth');
+		$ObjPref->{Beard}->{'tablength'} = (param('tablength') < 10) ? 10 : param('tablength');
+d197 1
+a197 1
+			$ObjPref->{Beard}->{$_} = param($_);
+d200 1
+a200 1
+			if (param($_)) { $ObjPref->{Beard}->{$_} = param($_)} else {$ObjPref->{Beard}->{$_} = 'off'};
+d203 6
+a208 7
+		my $r=SOAP->SaveUserPref($ObjPref,$User);
+		if (!$r) {
+			print "<span>ERROR: Saving Object Preferences into metadata failed. ..</span>"
+		}
+		else {
+			foreach (SOAP->GetProjects()) {	# delete all html tree cache instances for specific user
+				unlink (main::TreeFileName($_, $User));
+d210 4
+a213 1
+		$saved = "true"
+d216 1
+d222 1
+d224 1
+a224 2
+	my $wb = ($q->user_agent()=~/MSIE/) ? 'msie' : 'mozilla';
+	if (opendir SKNS,"./skins/$wb/") {
+d236 2
+@
+
+
+1.42
+log
+@one fix of fix of dynamic skins change
+@
+text
+@d5 1
+a5 1
+# $Id: prefer.cgi,v 1.41 2003/10/06 10:00:36 jiri_schmid Exp $
+d16 1
+a16 1
+require "local_lib.pl";
+@
+
+
+1.41
+log
+@skins change fix
+@
+text
+@d5 1
+a5 1
+# $Id: prefer.cgi,v 1.40 2003/09/23 15:42:50 jiri_schmid Exp $
+d50 8
+a57 2
+our $skin = (param('Skin')) ? param('Skin') : (param('skin')) ? param('skin') : undef;
+our $skinPath = (defined $skin) ? "skins/$wb/$skin/" : "skins/$wb/default/" ;
+d59 1
+a59 1
+my $style = "${skinPath}css.css";
+@
+
+
+1.40
+log
+@bug fixies, web browser oriented skins implemented
+@
+text
+@d5 1
+a5 1
+# $Id: prefer.cgi,v 1.39 2003/09/01 15:03:39 jiri_schmid Exp $
+d50 2
+a51 2
+our $skin = (param('Skin')) ? param('Skin') : (param('skin')) ? param('skin') : "";
+our $skinPath = (param('Skin')) ? "skins/$skin/" : "skins/$wb/default/";
+@
+
+
+1.39
+log
+@final changes, skins seems to be implemented properly
+@
+text
+@d5 1
+a5 1
+# $Id: prefer.cgi,v 1.38 2003/09/01 12:40:05 jiri_schmid Exp $
+d48 2
+d51 2
+a52 1
+our $skinPath = ($skin) ? "skins/$skin/" : "skins/msie/";
+d206 2
+a207 1
+	if (opendir SKNS,"./skins/") {
+@
+
+
+1.38
+log
+@skins implemented. mozilla skin - temporarily copy msie content
+@
+text
+@d5 1
+a5 1
+# $Id: prefer.cgi,v 1.37 2003/08/12 14:09:45 jiri_schmid Exp $
+d49 2
+a50 2
+our $skinPath = ($skin) ? "skins/$skin/" : "";
+my $style = ($skin) ? "${skinPath}css.css" : "css.css";
+d67 1
+a67 1
+<div class="loading" id="loading"><img src="${skinPath}img/bear_tiny.gif">$lang->{'Loading'}</div>
+d205 1
+a205 1
+			if ($_ =~ /^\./) {
+@
+
+
+1.37
+log
+@left pane is colapsible now
+@
+text
+@d5 1
+a5 1
+# $Id: prefer.cgi,v 1.36 2003/07/08 08:24:43 jiri_schmid Exp $
+d48 4
+d61 1
+a61 1
+	-style=>{-src=>'css.css'},
+d64 1
+d67 1
+a67 1
+<div class="loading" id="loading"><img src="img/bear_tiny.gif">$lang->{'Loading'}</div>
+d72 2
+a73 1
+<tr>	<td>$lang->{'Prefer Language'}</td>
+d75 1
+a75 1
+	<select name="language" onchange="objectChanged()">
+d77 3
+a79 4
+my $choosed;
+foreach (@@Languages) {
+ $choosed = ($_ eq $ObjPref->{'Beard'}->{'language'}) ? ' selected' : '';
+ print "<option value='$_'$choosed>$_</option>";
+d85 1
+a85 1
+<tr>	<td>$lang->{'Prefer SQL Access'}</td>
+d87 1
+a87 1
+	<select name="sql-access" onchange="objectChanged()">
+d89 3
+a91 3
+foreach ('none','view','edit') {
+	my $choosed = ($_ eq $ObjPref->{'Beard'}->{'sql-access'}) ? ' selected' : '';
+	print "<option value='$_'$choosed>$lang->{\"Prefer SQL Access $_\"}</option>";
+d97 3
+a99 1
+<tr>	<td>$lang->{'Prefer Cookie'}</td>
+d101 1
+d103 5
+d113 10
+d125 1
+a125 1
+	<select name="open_in" onchange="objectChanged()">
+d135 1
+a135 9
+<tr>
+	<td>$lang->{'Prefer Length'}</td>
+	<td><input type="text" size="5" maxlength="2" value="$length" align="right" name="tablength" onchange="objectChanged()" /><span class="range">&nbsp;(10-99)</span></td>
+</tr>
+<tr>
+	<td>$lang->{'Prefer Width'}</td>
+	<td><input type="text" size="5" maxlength="2" value="$width" align="right" name="treewidth" onchange="objectChanged()" />&nbsp;%<span class="range">&nbsp;(10-35)</span></td>
+</tr>
+<tr>	<td>$lang->{'Prefer Project'}</td>
+d137 1
+a137 1
+	<select name="project" onchange="objectChanged()">
+d139 3
+a141 3
+foreach (@@names) {
+ $choosed = ($_ eq $ObjPref->{'Beard'}->{'project'}) ? ' selected' : '';
+ print "<option value=\"$_\"$choosed>$_</option>";
+a146 1
+
+d179 1
+a179 1
+		foreach ('language','open_in','project','sql-access') {
+d197 17
+@
+
+
+1.36
+log
+@binmode for STDIN changes
+@
+text
+@d5 1
+a5 1
+# $Id: prefer.cgi,v 1.35 2003/07/08 07:12:02 jiri_schmid Exp $
+d118 1
+a118 1
+	<td><input type="text" size="5" maxlength="2" value="$width" align="right" name="treewidth" onchange="objectChanged()" />&nbsp;%<span class="range">&nbsp;(10-50)</span></td>
+d162 1
+a162 1
+		$ObjPref->{Beard}->{'treewidth'} = (param('treewidth') < 10 || param('treewidth') > 50) ? 25 : param('treewidth');
+@
+
+
+1.35
+log
+@utf8 implementation in last stage
+@
+text
+@d5 1
+a5 1
+# $Id: prefer.cgi,v 1.34 2003/07/07 14:17:10 jiri_schmid Exp $
+a8 1
+binmode(STDIN, ':utf8');
+@
+
+
+1.34
+log
+@utf8 may work properly
+@
+text
+@d5 1
+a5 1
+# $Id: prefer.cgi,v 1.33 2003/06/03 08:31:09 jiri_schmid Exp $
+d8 3
+d150 1
+a150 1
+$tabs = encode_utf8($tabs);
+@
+
+
+1.33
+log
+@visual improvment/fixies
+@
+text
+@d5 1
+a5 1
+# $Id: prefer.cgi,v 1.32 2003/06/02 14:47:34 jiri_schmid Exp $
+d147 1
+a147 1
+
+@
+
+
+1.32
+log
+@user prefernces handled with getuserpref only
+@
+text
+@d5 1
+a5 1
+# $Id: prefer.cgi,v 1.31 2003/05/30 09:13:25 jiri_schmid Exp $
+d35 1
+a35 1
+our $ObjPref->{Beard} = SOAP->GetUserPref($User,'Beard'); #undef path, force reading from disk
+@
+
+
+1.31
+log
+@minor fixies and code improvment
+@
+text
+@d5 1
+a5 1
+# $Id: prefer.cgi,v 1.30 2003/05/29 08:19:00 jiri_schmid Exp $
+d35 1
+a35 1
+our $ObjPref = SOAP->LoadUserPref($User,undef,1); #undef path, force reading from disk
+@
+
+
+1.30
+log
+@little bug fix
+@
+text
+@d5 1
+a5 1
+# $Id: prefer.cgi,v 1.29 2003/05/28 15:18:32 jiri_schmid Exp $
+d35 1
+a35 1
+our $ObjPref = SOAP->LoadUserPref($User);
+@
+
+
+1.29
+log
+@user pref changes
+@
+text
+@d5 1
+a5 1
+# $Id: prefer.cgi,v 1.28 2003/05/28 12:56:12 jiri_schmid Exp $
+d72 1
+a72 1
+ print "<option value=\"$_\"$choosed>$_</option>";
+d84 1
+a84 1
+	print "<option value=\"$_\"$choosed>$lang->{\"Prefer SQL Access $_\"}</option>";
+d94 1
+a94 1
+print "<input name=\"cookie\" type=\"checkbox\"$choosed/>";		#htmlinputelement - checkbox for using cookies
+d104 1
+a104 1
+ print "<option value=\"$_\"$choosed>$lang->{\"Prefer OpenR $_\"}</option>";
+@
+
+
+1.28
+log
+@forcearray fixies
+@
+text
+@d5 1
+a5 1
+# $Id: prefer.cgi,v 1.27 2003/05/28 10:40:10 jiri_schmid Exp $
+d41 2
+d112 1
+a112 1
+	<td><input type="text" size="5" maxlength="2" value="$ObjPref->{'Beard'}->{'tablength'}" align="right" name="tablength" onchange="objectChanged()" /></td>
+d116 1
+a116 1
+	<td><input type="text" size="5" maxlength="2" value="$ObjPref->{'Beard'}->{'treewidth'}" align="right" name="treewidth" onchange="objectChanged()" />&nbsp;(10-50%)</td>
+d159 5
+a163 1
+		foreach ('language','open_in','project','tablength','sql-access','treewidth') {
+d169 1
+@
+
+
+1.27
+log
+@code-improvment bug removed
+@
+text
+@d5 1
+a5 1
+# $Id: prefer.cgi,v 1.26 2003/05/21 11:39:43 jiri_schmid Exp $
+d11 1
+a11 1
+use vars qw($StyleSheet $bearHost $bearPort $compress_threshold $MyName $Languages @@Languages $Languages $lang);
+d54 1
+a54 1
+	-onload=>"hideLoad()",
+d59 1
+d65 1
+a65 1
+	<select name="language">
+d78 1
+a78 1
+	<select name="sql-access">
+d98 1
+a98 1
+	<select name="open_in">
+d110 1
+a110 1
+	<td><input type="text" size="5" maxlength="2" value="$ObjPref->{'Beard'}->{'tablength'}" align="right" name="tablength" /></td>
+d114 1
+a114 1
+	<td><input type="text" size="5" maxlength="2" value="$ObjPref->{'Beard'}->{'treewidth'}" align="right" name="treewidth" />&nbsp;(10-50%)</td>
+d118 1
+a118 1
+	<select name="project">
+d137 1
+d146 1
+a146 1
+$saved = ($saved) ? "<script type='text/javascript'>var saved = 1;var tabs = '$tabs';</script>" : "<script type='text/javascript'>var saved;</script>";
+d148 1
+@
+
+
+1.26
+log
+@visual and code improvment
+@
+text
+@d5 1
+a5 1
+# $Id: prefer.cgi,v 1.25 2003/05/15 11:36:04 jiri_schmid Exp $
+d54 1
+a54 1
+	-onload=>"dataSaved()",
+d58 1
+d131 1
+a131 1
+	<tr><td class="buttons"><input type="submit" name="Action" value="$lang->{'Save'}"></td></tr>
+d144 1
+a144 1
+$saved = ($saved) ? "<script type='text/javascript'>var saved = '".$lang->{'Saved'}."';var tabs = '$tabs';</script>" : "<script type='text/javascript'>var saved;</script>";
+@
+
+
+1.25
+log
+@report - sql tab implemented
+@
+text
+@d5 1
+a5 1
+# $Id: prefer.cgi,v 1.24 2003/05/08 15:35:44 jiri_schmid Exp $
+d110 4
+a113 1
+
+d153 1
+a153 1
+		foreach ('language','open_in','project','tablength','sql-access') {
+@
+
+
+1.24
+log
+@report huge improvment
+@
+text
+@d5 1
+a5 1
+# $Id: prefer.cgi,v 1.23 2003/05/08 07:42:43 michald Exp $
+d11 1
+a11 1
+use vars qw($StyleSheet $bearHost $bearPort $compress_threshold $MyName $Languages @@Languages $Languages $lang @@open_result);
+d78 1
+a78 2
+my @@open_result = ('none','view','edit');	#set values for open_in parameter used in user preferences
+foreach (@@open_result) {
+d98 1
+a98 2
+my @@open_result = ('_blank','_one','_self');	#set values for open_in parameter used in user preferences
+foreach (@@open_result) {
+@
+
+
+1.23
+log
+@customization of report SQL
+@
+text
+@d5 1
+a5 1
+# $Id: prefer.cgi,v 1.22 2003/05/06 09:20:57 jiri_schmid Exp $
+d110 1
+a110 1
+	<td><input type="text" size="5" maxlength="2" value="$ObjPref->{'Beard'}->{'length'}" align="right" name="length" /></td>
+d152 1
+a152 1
+		foreach ('language','open_in','project','length','sql-access') {
+@
+
+
+1.22
+log
+@loading user pref from cache, tabs length implemented
+@
+text
+@d5 1
+a5 1
+# $Id: prefer.cgi,v 1.21 2003/05/05 15:16:20 jiri_schmid Exp $
+d74 13
+d110 1
+a110 1
+	<td><input type="text" size="5" maxlength="2" value="$ObjPref->{'Beard'}->{'length'}" align="right" name="Length" /></td>
+d152 6
+a157 5
+		$ObjPref->{Beard}->{language} = param('language');
+		if (param('cookie')) { $ObjPref->{Beard}->{cookie} = param('cookie')} else {$ObjPref->{Beard}->{cookie} = 'off'};
+		$ObjPref->{Beard}->{open_in} = param('open_in');
+		$ObjPref->{Beard}->{project} = param('project');
+		$ObjPref->{Beard}->{length} = param('Length');
+@
+
+
+1.21
+log
+@huge code improvment on client side when substituting from/to ID, minor language dependeces fixies
+@
+text
+@d5 1
+a5 1
+# $Id: prefer.cgi,v 1.20 2003/05/05 06:41:42 michald Exp $
+d95 5
+d139 5
+a143 4
+		$ObjPref->{Beard}->{language} = $cgi->param('language');
+		if ($cgi->param('cookie')) { $ObjPref->{Beard}->{cookie} = $cgi->param('cookie')} else {$ObjPref->{Beard}->{cookie} = 'off'};
+		$ObjPref->{Beard}->{open_in} = $cgi->param('open_in');
+		$ObjPref->{Beard}->{project} = $cgi->param('project');
+@
+
+
+1.20
+log
+@implementation of full localized metadata
+@
+text
+@d5 1
+a5 1
+# $Id: prefer.cgi,v 1.19 2003/04/30 09:53:35 jiri_schmid Exp $
+d117 8
+a124 1
+$saved = ($saved) ? "<script type='text/javascript'>var saved = '".$lang->{'Saved'}."';</script>" : "<script type='text/javascript'>var saved;</script>";
+d146 1
+a146 1
+			$saved = "true"
+@
+
+
+1.19
+log
+@tabs for results implemented
+@
+text
+@d5 1
+a5 1
+# $Id: prefer.cgi,v 1.18 2003/04/25 11:27:20 jiri_schmid Exp $
+d33 4
+a36 2
+my $user = $ENV{REMOTE_USER};
+our $ObjPref; 
+d38 1
+a38 1
+my @@names = SOAP->getProjectsNames();
+d58 1
+a58 1
+<table><tr><td class="neutral_bold">$lang->{'Prefer Title'}</td><td><input type="hidden" value="none"/>$user<td/></tr></table>
+a126 1
+		$ObjPref = SOAP->LoadUserPref($user);
+d131 10
+a140 3
+		my $r=SOAP->SaveUserPref($ObjPref,$user);
+		if (!$r) {print "<span>ERROR: Saving Object Preferences into metadata failed. ..</span>";}
+		else {$saved = "true"};
+a141 1
+	$ObjPref = SOAP->LoadUserPref($user);	
+@
+
+
+1.18
+log
+@switching among projects implemented
+@
+text
+@d5 1
+a5 1
+# $Id: prefer.cgi,v 1.17 2003/03/25 15:37:36 jiri_schmid Exp $
+a15 3
+my $ObjPref;
+our $User=$q->remote_user();
+
+d34 2
+d37 1
+a37 3
+
+&do_work($q);
+
+d51 2
+a52 1
+	-style=>{-src=>'css.css'}
+d84 1
+a84 1
+my @@open_result = ('_blank','_self','_one');	#set values for open_in parameter used in user preferences
+d109 1
+a109 1
+	<tr><td class="buttons"><input onclick="re_init_lang();return true;" type="submit" name="Action" value="$lang->{'Save'}"></td></tr>
+d115 2
+a116 1
+
+d124 6
+a129 7
+	if ($cgi->param('Action')){
+		my $active;
+		$active->{language} = $cgi->param('language');
+		if ($cgi->param('cookie')) { $active->{cookie} = $cgi->param('cookie')} else {$active->{cookie} = 'off'};
+		$active->{open_in} = $cgi->param('open_in');
+		$active->{project} = $cgi->param('project');
+		$ObjPref->{Beard} = $active;
+d131 4
+a134 3
+		if (!$r) {print "<span>ERROR: Saving Object Preferences into metadata failed. ..</span>"}
+	}
+	$ObjPref = SOAP->LoadUserPref($user);
+@
+
+
+1.17
+log
+@syntax checker for metrics imrpoved, loading user pref file when file missing fixed/imrpoved
+@
+text
+@d5 1
+a5 1
+# $Id: prefer.cgi,v 1.16 2003/03/18 08:58:05 jiri_schmid Exp $
+d37 2
+a55 3
+#use Data::Dumper;
+#print "<PRE>A".Dumper($ObjPref)."</PRE>";
+#print "<PRE>A".Dumper(%ENV)."</PRE>";
+d65 5
+a69 6
+my $hlp = "";
+foreach (@@Languages){ $hlp.="<option>".$_."</option>"}; #options of htmlselectelement for language
+my $find = $ObjPref->{'Beard'}->{'language'};		#value of choosed option saved in mdata
+	$hlp =~s/>$find/ selected>$find/;		#insert atribut selected into the proper option
+	# =~s -> destroyes the UTF-8 coding after replaced value !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	print $hlp;
+d77 2
+a78 3
+$hlp = "<input name=\"cookie\" type=\"checkbox\"/>";	#htmlinputelement - checkbox for using cookies
+$hlp =~s/\// checked\// if ($ObjPref->{'Beard'}->{'cookie'} eq "on");	#insert atribut checked if so
+	print $hlp;
+a86 3
+$hlp = "";					#clear from previus text content
+$find = $ObjPref->{'Beard'}->{'open_in'};	#value of choosed option saved in mdata
+my $select;
+d88 14
+a101 2
+ $select = ($_ eq $find) ? ' selected' : '';
+ $hlp .= "<option value=\"$_\"$select>".$lang->{"Prefer OpenR $_"}."</option>";
+a102 1
+print $hlp;
+d107 1
+d130 1
+@
+
+
+1.16
+log
+@language change affects TABS immediatly
+@
+text
+@d5 1
+a5 1
+# $Id: prefer.cgi,v 1.15 2003/03/14 09:23:44 jiri_schmid Exp $
+d39 1
+a39 1
+my $use_lang = $ObjPref->{'Beard'}->{'language'};
+@
+
+
+1.15
+log
+@solved problem with CZ chars, by forced 8bit operating XML-UTF8 files, removed unused images
+@
+text
+@d5 1
+a5 1
+# $Id: prefer.cgi,v 1.14 2003/03/11 16:17:10 jiri_schmid Exp $
+d51 1
+d105 1
+a105 1
+	<tr><td class="buttons"><input type="submit" name="Action" value="$lang->{'Save'}"></td></tr>
+@
+
+
+1.14
+log
+@fixed wrong calling of index.cgi, some unused variables removed
+@
+text
+@d5 1
+a5 1
+# $Id: prefer.cgi,v 1.13 2003/03/11 11:05:30 jiri_schmid Exp $
+d88 1
+@
+
+
+1.13
+log
+@language bug in prefer.cgi fixed
+@
+text
+@d5 1
+a5 1
+# $Id: prefer.cgi,v 1.12 2003/03/11 10:01:30 jiri_schmid Exp $
+a16 1
+#our $ID=&SetParam('ID','id');
+a55 1
+
+@
+
+
+1.12
+log
+@unused directories mye be removed, minor language changes for more compatibility
+@
+text
+@d5 1
+a5 1
+# $Id: prefer.cgi,v 1.11 2003/03/07 16:18:36 jiri_schmid Exp $
+d11 1
+a11 1
+use vars qw($StyleSheet $bearHost $bearPort $compress_threshold $MyName $Languages @@Languages $Languages $lang);
+d71 1
+d90 1
+a90 2
+$hlp = "<option value=\"_blank\">".$lang->{'Prefer OpenR new'}."</option><option value=\"_self\">".$lang->{'Prefer OpenR self'}."</option><option value=\"_one\">".$lang->{'Prefer OpenR one'}."</option>";
+#options of htmlselectelement for result output
+d92 6
+a97 2
+	$hlp =~s/$find"/$find" selected/;	#insert atribut selected into the proper option
+	print $hlp;
+@
+
+
+1.11
+log
+@weekend commit, language not fixed :(
+@
+text
+@d5 1
+a5 1
+# $Id: prefer.cgi,v 1.10 2003/03/06 15:52:15 jiri_schmid Exp $
+d11 1
+a11 1
+use vars qw($StyleSheet $bearHost $bearPort $compress_threshold $MyName $Languages @@Languages $lang);
+a22 7
+print $q->header;
+
+print $q->start_html(
+   -title=>"Prefer page",
+   -style=>{-src=>'css.css'}
+);
+
+d36 1
+a36 1
+#loadMetadata($ID);
+d39 15
+a53 1
+require $Languages->{$ObjPref->{'Beard'}->{'language'}}->{src};
+d124 1
+a124 1
+	$ObjPref = SOAP->LoadUserPref($User);
+@
+
+
+1.10
+log
+@language files and language options are from now specifed only in const.def
+@
+text
+@d5 1
+a5 1
+# $Id: prefer.cgi,v 1.9 2003/03/06 14:48:59 jiri_schmid Exp $
+a15 1
+#our $ID="user_pref";
+d73 1
+a73 2
+$find = $ObjPref->{'Beard'}->{'cookie'};		#value of choosed option saved in mdata
+	$hlp =~s/\// checked\// if ($find eq "on");	#insert atribut checked if so
+@
+
+
+1.9
+log
+@loading and saving user preferneces under its name functional, preferences affects edit.cgi, tabs.cgi and prefer.cgi for now
+@
+text
+@d5 1
+a5 1
+# $Id: prefer.cgi,v 1.8 2003/03/06 08:49:27 jiri_schmid Exp $
+d11 1
+a11 1
+use vars qw($StyleSheet $bearHost $bearPort $compress_threshold $MyName $Languages $lang);
+d45 1
+a45 1
+my $User = $ENV{REMOTE_USER};
+d54 1
+a54 1
+<table><tr><td class="neutral_bold">$lang->{'Prefer Title'}</td><td><input type="hidden" value="none"/>$User<td/></tr></table>
+d61 2
+a62 1
+my $hlp = "<option>CZE</option><option>EN</option>";	#options of htmlselectelement for language
+d116 1
+a116 1
+		my $r=SOAP->SaveUserPref($ObjPref,$User);
+@
+
+
+1.8
+log
+@saving user pref under loged user name may work properly
+@
+text
+@d5 1
+a5 1
+# $Id: prefer.cgi,v 1.7 2003/03/05 15:08:22 jiri_schmid Exp $
+d11 1
+a11 1
+use vars qw($StyleSheet $bearHost $bearPort $compress_threshold $MyName $al $lang);
+a13 2
+if ($al eq 'cz') {require 'lang/cz.def'}
+if ($al eq 'us') {require 'lang/us.def'}
+d47 1
+@
+
+
+1.7
+log
+@user preferences - cookie property succesfully implemented (not implemented into tabs.cgi)
+@
+text
+@d5 1
+a5 1
+# $Id: prefer.cgi,v 1.6 2003/03/05 10:31:33 jiri_schmid Exp $
+d47 1
+d55 1
+a55 1
+<table><tr><td class="neutral_bold">$lang->{'Prefer Title'}</td><td><input type="hidden" value="none"/>$ENV{LOGNAME}<td/></tr></table>
+d116 1
+a116 1
+		my $r=SOAP->SaveUserPref($ObjPref);
+d119 1
+a119 1
+	$ObjPref = SOAP->LoadUserPref();
+@
+
+
+1.6
+log
+@save and load user pref functional, but it does not affect something yet
+@
+text
+@d5 1
+a5 1
+# $Id: prefer.cgi,v 1.5 2003/03/04 16:32:01 jiri_schmid Exp $
+d61 3
+a63 3
+my $hlp = "<option>CZE</option><option>EN</option>";
+my $find = $ObjPref->{'Beard'}->{'language'};
+	$hlp =~s/$find"/$find" selected/;
+d72 3
+a74 3
+$hlp = "<input name=\"cookie\" type=\"checkbox\"/>";
+$find = $ObjPref->{'Beard'}->{'cookie'};
+	$hlp =~s/\// checked\// if ($find eq "on");
+d84 3
+a86 2
+$find = $ObjPref->{'Beard'}->{'open_in'};
+	$hlp =~s/$find"/$find" selected/;
+@
+
+
+1.5
+log
+@saving prefernces into xml is functional, loading almost too
+@
+text
+@d5 1
+a5 1
+# $Id: prefer.cgi,v 1.4 2003/03/04 08:24:41 jiri_schmid Exp $
+d60 6
+a65 2
+		<option>CZE</option>
+		<option selected>EN</option>
+d71 6
+a76 1
+	<input name="cookie" type="checkbox"/>
+d82 6
+a87 3
+		<option selected value="_blank">$lang->{'Prefer OpenR new'}</option>
+		<option value="_self">$lang->{'Prefer OpenR self'}</option>
+		<option value="">$lang->{'Prefer OpenR one'}</option>
+d108 8
+a115 7
+	if ($q->param('Action')){
+	my $active->{language} = $cgi->param('language');
+	if ($cgi->param('cookie')) { $active->{cookie} = $cgi->param('cookie')} else {$active->{cookie} = 'off'};
+	$active->{open_in} = $cgi->param('open_in');
+	$ObjPref->{Beard} = $active;
+	my $r=SOAP->SaveUserPref($ObjPref);
+	if (!$r) {print "<span>ERROR: Saving Object Preferences into metadata failed. ..</span>"}
+@
+
+
+1.4
+log
+@internal technical-development commit
+@
+text
+@d5 1
+a5 1
+# $Id: prefer.cgi,v 1.3 2003/03/03 16:43:57 jiri_schmid Exp $
+d18 3
+a20 1
+our $ID=&SetParam('ID','id');
+d46 5
+d53 2
+a54 2
+<form method="post" action="" enctype="application/x-www-form-urlencoded" onsubmit="" name="prefer">
+<table><tr><td class="neutral_bold">$lang->{'Prefer Title'}</td><td><input type="hidden" value="$ID"/>$ID (irrelevant ID)<td/></tr></table>
+d59 1
+a59 1
+	<select id="language">
+d67 1
+a67 1
+	<input id="cookie" type="checkbox"/>
+d72 1
+a72 1
+	<select id="open_in">
+d82 1
+a82 1
+	<tr><td class="buttons"><input type="button" value="$lang->{'Save'}" onclick=""></td></tr>
+d86 1
+a86 1
+</from>
+d88 1
+a88 1
+&do_work();
+d95 10
+a104 1
+   print "<pre>Not operational yet.</pre>"
+a105 3
+
+#---------------------------------------------------
+
+@
+
+
+1.3
+log
+@cookie managing improvment for better cooperation with user preferences
+@
+text
+@d5 1
+a5 1
+# $Id: prefer.cgi,v 1.2 2003/02/28 13:43:11 jiri_schmid Exp $
+d11 1
+a11 1
+use vars qw($StyleSheet $bearHost $bearPort $compress_threshold $MyName);
+d14 2
+d47 1
+a47 1
+<table><tr><td class="neutral_bold">Prefer Title</td><td><input type="hidden" value="$ID"/>$ID (irrelevant ID)<td/></tr></table>
+d50 1
+a50 1
+<tr>	<td>Prefer Language</td>
+d58 1
+a58 1
+<tr>	<td>Prefer Cookie</td>
+d63 1
+a63 1
+<tr>	<td>Open Result</td>
+d66 3
+a68 3
+		<option selected value="_blank">OpenR new</option>
+		<option value="_self">Prefer OpenR self</option>
+		<option value="">Prefer OpenR one</option>
+d75 1
+a75 1
+	<tr><td class="buttons"><input type="button" value="Save" onclick=""></td></tr>
+@
+
+
+1.2
+log
+@weekend-leaving commit, (last?) code cleaning
+@
+text
+@d5 1
+a5 1
+# $Id: prefer.cgi,v 1.1 2003/02/28 10:43:31 jiri_schmid Exp $
+d11 1
+a11 1
+use vars qw($StyleSheet $bearHost $bearPort $compress_threshold $MyName $al);
+d45 1
+a45 1
+<table><tr><td class="neutral_bold">$al->{'Prefer Title'}</td><td><input type="hidden" value="$ID"/>$ID (irrelevant ID)<td/></tr></table>
+d48 1
+a48 1
+<tr>	<td>$al->{'Prefer Language'}</td>
+d56 1
+a56 1
+<tr>	<td>$al->{'Prefer Cookie'}</td>
+d61 1
+a61 1
+<tr>	<td>$al->{'Prefer Open Result'}</td>
+d64 3
+a66 3
+		<option selected value="_blank">$al->{'Prefer OpenR new'}</option>
+		<option value="_self">$al->{'Prefer OpenR self'}</option>
+		<option value="">$al->{'Prefer OpenR one'}</option>
+d73 1
+a73 1
+	<tr><td class="buttons"><input type="button" value="$al->{'Save'}" onclick=""></td></tr>
+@
+
+
+1.1
+log
+@added files admin,prefer.cgi, unused content of *.css removed with minor visual changes
+@
+text
+@d5 1
+a5 1
+# $Id: run.cgi,v 1.4 2003/01/30 06:36:20 michald Exp $
+d25 2
+a26 2
+   -title=>"Admin page",
+   -style=>{-src=>$StyleSheet}
+d44 2
+a45 1
+<table><tr><td class="neutral_bold">$al->{'Admin Title'}</td><td><input type="hidden" value="$ID"/>Irelevant ID<td/></tr></table>
+d48 1
+a48 1
+<tr>	<td>$al->{'Admin Language'}</td>
+d56 1
+a56 1
+<tr>	<td>$al->{'Admin Cookie'}</td>
+d61 1
+a61 1
+<tr>	<td>$al->{'Admin Open Result'}</td>
+d64 3
+a66 3
+		<option selected value="_blank">$al->{'Admin OpenR new'}</option>
+		<option value="_self">$al->{'Admin OpenR self'}</option>
+		<option value="">$al->{'Admin OpenR one'}</option>
+d70 6
+d77 1
+d86 1
+a86 1
+   print "<pre>Not functional yet.</pre>"
+@
+

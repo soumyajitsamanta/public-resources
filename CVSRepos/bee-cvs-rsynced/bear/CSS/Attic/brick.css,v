@@ -1,0 +1,220 @@
+head	1.10;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.10
+date	2004.05.06.00.29.52;	author michald;	state dead;
+branches;
+next	1.9;
+
+1.9
+date	2003.10.01.19.38.22;	author vasekd;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	2003.09.22.14.15.26;	author jiri_schmid;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	2003.09.19.12.48.39;	author jiri_schmid;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	2003.09.17.11.41.25;	author jiri_schmid;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	2003.09.10.09.08.58;	author jiri_schmid;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2003.07.02.13.44.34;	author jiri_schmid;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2003.06.26.07.53.55;	author jiri_schmid;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2003.06.24.15.17.43;	author jiri_schmid;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2003.06.20.15.29.24;	author jiri_schmid;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.10
+log
+@removing of the old report CSS
+@
+text
+@/* this part does not affect the REPORT, is used to proper view of style in format page on both Mozilla and IE based web browsers*/
+BODY.graph {background-color:transparent; padding: 0; margin: 0px, 0px, 0px, 5px;}
+TABLE.graph {border-style: none; empty-cells:show; padding:0; border-spacing:0;}
+TABLE.graph  TD { color: inherit; background-color: inherit; text-align: center;}
+SPAN.cursor {white-space:nowrap; font-weight:normal; cursor:pointer; cursor:hand;}
+TABLE.Neutral {	color: inherit;
+		background-color: inherit;
+		border: none;
+		text-align:left;
+		margin:0px; }
+TD.Neutral {text-align:left; font-weight:bold; padding:5px;}
+TD.bcg { background-color: #eee; }
+
+THEAD.t{ background-color: #ffb056; border-bottom: 2px solid #b25d03; padding: inherit; margin: inherit;}	/*color even even (first dark) */
+TBODY.t1 {background-color: #ffcf82; border-bottom: 2px solid #b25d03; padding: inherit; margin: inherit;} /*color odd even (second dark)*/
+TR.t1 {background-color: #ffdda8;}									/*color odd odd (second light)*/
+TBODY.t2 {background-color: #ffb056; border-bottom: 2px solid #b25d03; padding: inherit; margin: inherit;} /*color even even (second dark) */
+TR.t2 {background-color: #ffc482}									/*color even odd (first light)*/
+
+TD.None { color: inherit;  background-color: inherit;  border: none;}
+
+/* this part defines fonts, colors and borders of the REPORT*/
+
+/*T A B L E  L A Y O U T*/
+BODY {background-color:#eee}
+TABLE {	font-family: Arial, sans-serif;
+	font-size: 14px;
+	color: #000000;
+	border: 4px solid #b25d03;
+	border-collapse: collapse;
+	padding: 1px;
+	margin: 5px;
+	white-space: nowrap;
+	empty-cells: show;}
+
+TH {padding: 1px; margin: 0; text-align: center !important; white-space: nowrap;}
+TR {padding: 1px; margin: 0; white-space: nowrap;}
+TD {padding: 1px; margin: 0; text-align: right; white-space: nowrap;}
+
+/*B O R D E R S*/
+.t { border-top: 1px solid #b25d03; padding: 1px; margin: 0;}	   /*top*/
+.r { border-right: 2px solid #b25d03; padding: 1px; margin: 0;} 			   /*vertical border bold*/
+.d { border-right: 1px dashed #b25d03; padding: 1px; margin: 0;}			   /*vertical border thin-dashed*/
+.tt{ border-top: 2px solid #b25d03; padding: 1px; margin: 0;}				   /*horizontal border bold */
+.tr{ border-top: 1px solid #b25d03; border-right: 2px solid #b25d03; padding: 0; margin: 0;}  /*horizontal and vertical border thin*/
+.td{ border-top: 1px solid #b25d03; border-right: 1px dashed #b25d03; padding: 0; margin: 0;} /*horizontal and vertical border thin-dashed*/
+.ttr{ border-top: 2px solid #b25d03; border-right: 2px solid #b25d03; padding: 0; margin: 0;} /*horizontal and vertical border bold*/
+.ttd{ border-top: 2px solid #b25d03; border-right: 1px dashed #b25d03; padding: 0; margin: 0;}/*horizontal and vertical border bold-dashed*/
+
+/*C O L O R S*/
+.ee{ background-color: #ffb056; padding: 1px; margin: 0; text-align:right;}	  	/*color even even (first dark) */
+.eo{ background-color: #ffc482; padding: 1px; margin: 0; text-align:right;}	  	/*color even odd (first light)*/
+.oe{ background-color: #ffcf82; padding: 1px; margin: 0; text-align:right;}	  	/*color odd even (second dark)*/
+.oo{ background-color: #ffdda8; padding: 1px; margin: 0; text-align:right;}	  	/*color odd odd (second light)*/
+TH.ch{ background-color: #ffb056; padding: 1px; margin: 0; text-align:right;}		/*color column header */  	    
+/* S E L E C T E D  I T E M*/
+.set {background-color: #e07b00 !important; color: #fff !important}@
+
+
+1.9
+log
+@new skin cube
+@
+text
+@@
+
+
+1.8
+log
+@report menu improvments
+@
+text
+@d2 1
+a2 1
+BODY.graph {background-color:#5190e2; padding: 0; margin: 0px, 0px, 0px, 5px;}
+@
+
+
+1.7
+log
+@sort and export menu impleneted
+@
+text
+@d57 1
+a57 1
+.set {background-color: #e07b00 !important; color: #fff; }@
+
+
+1.6
+log
+@bug fixies
+@
+text
+@d57 1
+a57 1
+.set {background-color: #e07b00; color: #fff; }@
+
+
+1.5
+log
+@ACl changes, report outup visual improvments
+@
+text
+@d55 1
+a55 1
+
+@
+
+
+1.4
+log
+@header descriptions finally implemented
+@
+text
+@d54 4
+a57 1
+.oo{ background-color: #ffdda8; padding: 1px; margin: 0; text-align:right;}	  	/*color odd odd (second light)*/@
+
+
+1.3
+log
+@report ids substitution by lookup content seems to be full functional
+@
+text
+@d5 1
+a5 1
+
+@
+
+
+1.2
+log
+@metric mData change, minor code improvment
+@
+text
+@d36 3
+a38 3
+TH {padding: 1px; margin: 0; text-align: center !important}
+TR {padding: 1px; margin: 0;}
+TD {padding: 1px; margin: 0; text-align: right}
+@
+
+
+1.1
+log
+@added new css style
+@
+text
+@d17 1
+a17 1
+TBODY.t2 {background-color: #ffb056; border-bottom: 2px solid #b25d03; padding: inherit; margin: inherit;} /*color even even (first dark) */
+@
+

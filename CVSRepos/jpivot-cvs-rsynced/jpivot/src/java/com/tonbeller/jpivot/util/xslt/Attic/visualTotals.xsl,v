@@ -1,0 +1,115 @@
+head	1.1;
+access;
+symbols
+	focus_1_6_0:1.1.0.2;
+locks; strict;
+comment	@# @;
+
+
+1.1
+date	2008.04.17.10.44.59;	author hbaier;	state dead;
+branches
+	1.1.2.1;
+next	;
+
+1.1.2.1
+date	2008.04.17.10.45.00;	author hbaier;	state Exp;
+branches;
+next	1.1.2.2;
+
+1.1.2.2
+date	2008.04.24.04.40.14;	author kunarief;	state Exp;
+branches;
+next	1.1.2.3;
+
+1.1.2.3
+date	2008.05.19.06.13.47;	author kunarief;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@file visualTotals.xsl was initially added on branch focus_1_6_0.
+@
+text
+@@
+
+
+1.1.2.1
+log
+@* merged focus changes of jpivot into focus_1_6_0
+@
+text
+@a0 37
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+
+<xsl:template match="@@*|node()">
+   <xsl:copy>
+      <xsl:apply-templates select="@@*|node()"/>
+   </xsl:copy>
+</xsl:template>
+
+<xsl:template match="FunCall[@@function='{}']">
+	<FunCall syntacticType="0" function="VisualTotals">
+		<args>
+			<xsl:copy>
+				<xsl:apply-templates select="@@*|node()"/>
+			</xsl:copy>
+			<Literal type="2">
+				<o class="string">"*"</o>
+			</Literal>
+		</args>
+	</FunCall>
+</xsl:template>
+
+<xsl:template match="exp[@@function='{}']">
+	<exp class="FunCall" syntacticType="0" function="VisualTotals">
+		<args>
+			<xsl:copy>
+				<xsl:apply-templates select="@@*|node()"/>
+			</xsl:copy>
+			<Literal type="2">
+				<o class="string">"*"</o>
+			</Literal>
+		</args>
+	</exp>
+</xsl:template>
+
+
+</xsl:stylesheet>
+@
+
+
+1.1.2.2
+log
+@* bug fix for visualTotals on a tuple
+@
+text
+@d10 1
+a10 1
+<xsl:template match="FunCall[@@function='{}' and args/CompoundId]">
+d16 3
+d23 1
+a23 1
+<xsl:template match="exp[@@function='{}' and args/CompoundId]">
+d29 3
+@
+
+
+1.1.2.3
+log
+@* adding feature for hidden member selection
+@
+text
+@d1 1
+a1 1
+<?xml version="1.0" encoding="UTF-8"?>
+@
+
+

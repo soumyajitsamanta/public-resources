@@ -1,0 +1,366 @@
+head	1.7;
+access;
+symbols
+	start:1.1.1.1 vendor:1.1.1;
+locks; strict;
+comment	@# @;
+
+
+1.7
+date	2003.06.03.13.16.16;	author numberone;	state dead;
+branches;
+next	1.6;
+
+1.6
+date	2002.09.29.14.47.16;	author numberone;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	2002.09.28.20.33.27;	author numberone;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2002.09.28.20.32.31;	author numberone;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2002.09.27.13.54.52;	author numberone;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2002.09.26.07.52.42;	author numberone;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2002.09.24.01.40.58;	author michald;	state Exp;
+branches
+	1.1.1.1;
+next	;
+
+1.1.1.1
+date	2002.09.24.01.40.58;	author michald;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.7
+log
+@0.9.1 -- version merge
+@
+text
+@# $Id: source.pm,v 1.6 2002/09/29 14:47:16 numberone Exp $
+
+package source;
+
+use Msg;
+use auth;
+use libBee;
+use url;
+
+use Data::Dumper;
+use strict;
+
+# definice datovych zdroju se bude hodne menit - prechazime na URL
+# notaci dbi://user@@host:3306/dbname - viz ~/auth/auth.conf
+
+our $job;
+our $auth;
+
+sub init {
+	my($authlist,$cert,$key) = @@_;
+
+	$auth = new auth($authlist,$cert,$key);
+	$job = new libBee;
+
+	return $auth and $job;
+}
+
+# todo: cache results ?
+
+sub dads	{ 
+	my @@dads = @@{$auth->query('dads')};
+	map { $_->{name} = $_->{host}.":".$_->{port} } @@dads;
+	return @@dads;
+}
+
+sub sources	{ @@{$auth->query('sources')} }
+
+# read($user,$dad,$source); - can we ($user==undef) or $user read $source on 
+# 							  $dad? returns undef/"reason why not"
+sub read {
+	my($user,$dad,$url) = @@_;
+	my @@source = url::split($url);
+	my($table,@@fields) = splice(@@source,6);
+	my $source = url::construct(@@source);
+
+	my $read = $auth->query('read',defined $user ? $user : "",$dad,$source);
+
+	return $read;
+}
+
+
+sub tables {
+	my($dadname,$url,$select) = @@_;
+	my($host,$port) = split /\:/,$dadname;
+	die unless($host and $port);
+	my $dad = $job->otec(host=>$host,port=>$port);
+	my $tables = $dad->tables($url,$select ? $select : '');
+	die "error: $tables" if(ref $tables ne 'ARRAY');
+	return @@$tables;
+}
+
+
+sub tablequery {
+	my($dbi) = @@_;
+	return $auth->query('tablequery',$dbi);
+}
+
+1;
+
+@
+
+
+1.6
+log
+@table query seems to work
+@
+text
+@d1 1
+a1 1
+# $Id: source.pm,v 1.5 2002/09/28 20:33:27 numberone Exp $
+@
+
+
+1.5
+log
+@hardcoded sources finally removed 2
+@
+text
+@d1 1
+a1 1
+# $Id: source.pm,v 1.4 2002/09/28 20:32:31 numberone Exp $
+d57 1
+a57 1
+	my $tables = $dad->tables($url,$select? $select : '');
+@
+
+
+1.4
+log
+@hardcoded sources finally removed
+@
+text
+@d1 1
+a1 1
+# $Id: source.pm,v 1.3 2002/09/27 13:54:52 numberone Exp $
+a68 135
+
+__END__
+
+# ===============================================================
+#  .plan: move rest to auth/dad/bee
+
+# sub enum_source
+# sub enum_table
+# sub enum_field
+# sub enum_index
+# sub enum_otec
+# sub table_summary
+
+my %source = (
+
+	"localhost:3306:user:dbi/mysql:shop" => {
+		"product" => [
+			{ name => 'id',    type => 'int',     pkey => 1, null => 0 },
+			{ name => 'name',  type => 'varchar', pkey => 0, null => 0 },
+			{ name => 'price', type => 'varchar', pkey => 0, null => 1 },
+		],
+		"customer" => [
+			{ name => 'rc',     type => 'int',     pkey => 1, null => 0 },
+			{ name => 'name',   type => 'varchar', pkey => 0, null => 0 },
+			{ name => 'email',  type => 'varchar', pkey => 0, null => 1 },
+			{ name => 'bonity', type => 'int',     pkey => 0, null => 1 },
+		],
+		"branch" => [
+			{ name => 'town',   type => 'varchar', pkey => 1, null => 0 },
+			{ name => 'street', type => 'varchar', pkey => 0, null => 1 },
+			{ name => 'chief',  type => 'varchar', pkey => 0, null => 0 },
+		],
+	},
+
+	"localhost:3306:user:dbi/mysql:geo" => {
+		"okres" => [
+			{ name => 'id',   type => 'int',     pkey => 1, null => 0 },
+			{ name => 'name', type => 'varchar', pkey => 0, null => 0 },
+			{ name => 'psc',  type => 'int',     pkey => 0, null => 0 },
+		],
+		"vlastnik" => [
+			{ name => 'rc',      type => 'int',     pkey => 1, null => 0 },
+			{ name => 'name',    type => 'varchar', pkey => 0, null => 0 },
+			{ name => 'address', type => 'varchar', pkey => 0, null => 0 },
+		],
+		"parcela" => [
+			{ name => 'okres',    type => 'fkey', pkey => 1, null => 0 },
+			{ name => 'lokace',   type => 'int',  pkey => 1, null => 0 },
+			{ name => 'vlastnik', type => 'fkey', pkey => 0, null => 1 },
+		],
+	},
+
+	"localhost:2330:nobdy:fs:/tmp" => { # ?
+		"pico03920" => [], "mutt-3209" => [], "temp.XX903" => []
+	},
+
+	"pooh:2330:ftp:fs:/share" => {
+		"addressbook.xls" => [ # nevime co je primarni klic
+			{ name => 'name',   type => 'int'     },
+			{ name => 'email',  type => 'varchar' },
+			{ name => 'phone',  type => 'varchar' },
+			{ name => 'postal', type => 'varchar' },
+		],
+		"svatky.html" => [ # nevime ani typ
+			{ name => 'jmeno' },
+			{ name => 'day'   },
+			{ name => 'month' },
+		],
+		"output.dat" => [ # nejaka binarni data - nevime nazvy sloupcu
+			{},{},{}
+		],
+	}
+);
+
+
+sub enum_source {
+	die unless $job;
+
+	my($h,$p,$u,$t,$d) = @@_; # selection mask
+	my $dbd = undef;
+	($t,$dbd) = split(/\//,$t) if(defined $t and $t =~ /^dbi\//);
+
+	my @@source = ();
+	foreach (keys %source) {
+		my ($sh,$sp,$su,$st,$sd) = split(/\:/,$_);
+		my $sdbd = undef;
+		($st,$sdbd) = split(/\//,$st) if($st =~ /^dbi\//);
+		next if(defined $h and ($h ne $sh));
+		next if(defined $p and ($p ne $sp));
+		next if(defined $u and ($u ne $su));
+		if(defined $t) {
+			next if($t ne $st);
+			next if(defined $dbd and ($dbd ne $sdbd));
+		}
+		next if(defined $d and ($d ne $sd));
+		push @@source,$_;
+	}
+	return @@source;
+}
+
+sub enum_otec {
+	return ("localhost:2330","pooh:2330");
+}
+
+
+sub enum_table {
+	my($source,$spec) = @@_;
+	die unless exists $source{$source};
+	return keys %{$source{$source}};
+}
+
+sub enum_field {
+	my($source,$table,$spec) = @@_;
+	die unless exists $source{$source};
+	die unless exists $source{$source}->{$table};
+	return @@{$source{$source}->{$table}};
+}
+
+# tralala
+
+sub table_summary {
+	my($source,$table) = @@_;
+	return () unless($source eq 'localhost:3306:user:dbi/mysql:geo' and 
+					 $table  eq 'okres');
+	return (
+		jeste => 'nevim',
+	);
+}
+
+sub enum_index {
+	die "dodelat";
+}
+
+1;
+
+@
+
+
+1.3
+log
+@tablequery, bee->dad msg
+@
+text
+@d1 1
+a1 1
+# $Id: source.pm,v 1.2 2002/09/26 07:52:42 numberone Exp $
+d64 2
+a65 5
+	my($dadname,$url) = @@_;
+	my($host,$port) = split /\:/,$dadname;
+	die unless($host and $port);
+	my $dad = $job->otec(host=>$host,port=>$port);
+	return $dad->tablequery($url);
+d68 3
+@
+
+
+1.2
+log
+@version merging with my cvs
+@
+text
+@d1 1
+a1 1
+# $Id: source.pm,v 1.1.1.1 2002/09/24 01:40:58 michald Exp $
+d16 2
+a17 2
+my $job;
+my $auth;
+d51 1
+d53 1
+a53 1
+	my($dadname,$url)  = @@_;
+d57 1
+a57 1
+	my $tables = $dad->tables($url);
+d59 10
+a68 1
+	return @@{$dad->tables($url)};
+d70 1
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d1 1
+a1 1
+# $Id: source.pm,v 1.7 2002/08/28 21:31:14 martin Exp $
+d192 1
+@
+
+
+1.1.1.1
+log
+@Initial public release of BEE Project.
+@
+text
+@@

@@ -1,0 +1,39 @@
+head	1.2;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2003.08.11.06.34.18;	author numberone;	state dead;
+branches;
+next	1.1;
+
+1.1
+date	2003.02.05.15.46.36;	author numberone;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@removing old dir Net-1.0
+@
+text
+@Net		T_PTROBJ
+const char *	T_PV  
+@
+
+
+1.1
+log
+@libnet-1.0, README
+@
+text
+@@
+

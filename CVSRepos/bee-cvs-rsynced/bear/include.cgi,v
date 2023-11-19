@@ -1,0 +1,291 @@
+head	1.7;
+access;
+symbols
+	start:1.1.1.1 vendor:1.1.1;
+locks; strict;
+comment	@# @;
+
+
+1.7
+date	2003.10.31.12.47.54;	author jiri_schmid;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	2003.10.16.14.08.51;	author jiri_schmid;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	2003.08.18.05.50.52;	author michald;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2003.05.01.12.17.13;	author michald;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2002.10.05.17.32.02;	author michald;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2002.09.26.18.21.22;	author michald;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2002.09.24.01.56.46;	author michald;	state Exp;
+branches
+	1.1.1.1;
+next	;
+
+1.1.1.1
+date	2002.09.24.01.56.46;	author michald;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.7
+log
+@mod perl rocks!
+@
+text
+@#!/usr/bin/perl
+#-----------------------------------------------------
+#  Folder Display
+#-----------------------------------------------------
+# $Id: include.cgi,v 1.6 2003/10/16 14:08:51 jiri_schmid Exp $
+
+# Necesary Apache configuration (/etc/httpd/conf/httpd.conf) for enabling Server Side Includes:
+# 
+#     AddType text/html .shtml
+#     AddHandler server-parsed .shtml
+# 
+# Corresponding <Directory> section has to include
+# 
+#     Options +Includes
+#
+# See also http://httpd.apache.org/docs/mod/mod_include.html
+#
+# Example of Include tag in *.shtml:
+#
+#     <!--#include virtual="include.cgi?Action=Ping" -->
+#
+
+use strict;
+use utf8;
+binmode(STDOUT, ":utf8");
+binmode(STDIN, ":utf8");
+
+use Date::Manip;
+use CGI qw( :standard );
+use CGI::Pretty;
+our $q = new CGI;
+use vars qw($StyleSheet $bearHost $bearPort $compress_threshold $MyName $Languages $DefaultLanguage $texture_dir);
+require "const.def";
+require "local/local_lib.pl";
+
+our $Action=$q->param('Action');
+our $ID=$q->param('ID');
+our $User=$q->remote_user();
+
+print "Content-Type: text/html\n\n";
+
+# --- make SOAP connection ---
+eval "use SOAP::Lite +autodispatch => 
+	uri => 'Bear', 
+	proxy => ['http://$bearHost:$bearPort/', 
+	options => {compress_threshold => $compress_threshold}]; 
+	1"
+or ( &ErrorDie("ERROR in eval of \"use SOAP::Lite ...\".") );
+
+my $serverVerbName="SOAP Server http://$bearHost:$bearPort/";
+
+if (! eval "SOAP::Lite->self->fault") {
+	if ($Action eq 'Refresh') {
+		print "	<META HTTP-EQUIV=\"Refresh\" CONTENT=5>\n";
+	}
+	ErrorDie("ERROR: $serverVerbName not responding");
+}
+
+my $user = $ENV{REMOTE_USER};
+my $ObjPref={};
+$ObjPref->{Beard} = SOAP->GetUserPref($user,'Beard');
+our $use_lang = $ObjPref->{'Beard'}->{'language'} ? $ObjPref->{'Beard'}->{'language'} : $DefaultLanguage;
+our $use_enc = $Languages->{$use_lang}->{enc};
+require $Languages->{$use_lang}->{'src'};
+
+#--------Actions-------------
+
+if ($Action eq 'Show') {
+	print "<IMG SRC=\"$ID\">";
+
+} elsif ($Action eq 'Refresh') {
+	print "	<META HTTP-EQUIV=\"Refresh\" CONTENT=5>\n";
+
+} elsif ($Action eq 'Ping') {
+	my $t=time;
+	SOAP->echo($t);
+	if (SOAP::Lite->self->call->fault) {
+		&ErrorDie(&UnixDate("today","%d.%m.%Y %T").": $serverVerbName returns faultstring: ".SOAP::Lite->self->call->faultstring."\n");
+	} else {
+		if (SOAP::Lite->self->call->result eq $t) {
+			print &UnixDate("today","%d.%m.%Y %T").": $serverVerbName is running, respond time < ".(time-$t+1)."s";
+		} else {
+			print &ErrorDie(&UnixDate("today","%d.%m.%Y %T").": $serverVerbName returns wrong echo");
+		}
+	}
+
+} elsif ($Action eq 'TestString') {
+	&testStrings;
+
+} else {
+	&ErrorDie("Parameter \"Action\" is missing or has unexpected value");
+};
+
+#----------------------------------------
+
+sub testStrings {
+	print <<END
+<P><STYLE TYPE="text/css">
+<!--
+SPAN.strong#11 {color: white; background-color:#ee0000}
+-->
+</STYLE>
+
+<b>ID</b>=$ID<BR>
+<b>User</b>=<SPAN class="strong" id="11"> $User </SPAN><BR>
+<b>UTF-8 test:</b> B\x{11b}\x{17e}n\x{e9} pe\x{10d}ivo
+</P>
+END
+}
+
+#----------------------------------------
+
+1@
+
+
+1.6
+log
+@mod-perl implementation stage 1, rebuilding global vars in .pl to global pointers
+@
+text
+@d5 1
+a5 1
+# $Id: include.cgi,v 1.5 2003/08/18 05:50:52 michald Exp $
+d113 1
+@
+
+
+1.5
+log
+@some ACL improvement
+@
+text
+@d5 1
+a5 1
+# $Id: include.cgi,v 1.4 2003/05/01 12:17:13 michald Exp $
+d34 1
+a34 1
+require "local_lib.pl";
+@
+
+
+1.4
+log
+@some minor fixes
+@
+text
+@d5 1
+a5 1
+# $Id: include.cgi,v 1.3 2002/10/05 17:32:02 michald Exp $
+d24 4
+d32 1
+d42 1
+d46 1
+a46 1
+	options => {compress_threshold => 10000}]; 
+d58 7
+a64 1
+*SOAP::Serializer::as_string = \&SOAP::Serializer::as_base64;	#reducing number of XML::Parser char() callbaks  for every single portion of processed stream (e.g. \n)
+d106 1
+a106 1
+<b>ISO-Latin-2 test:</b> ì¹èø¾ýáíé
+@
+
+
+1.3
+log
+@grid edit window
+@
+text
+@d5 1
+a5 1
+# $Id: include.cgi,v 1.2 2002/09/26 18:21:22 michald Exp $
+d23 1
+@
+
+
+1.2
+log
+@some new icons
+@
+text
+@d5 1
+a5 1
+# $Id: include.cgi,v 1.1.1.1 2002/09/24 01:56:46 michald Exp $
+d28 1
+a80 8
+#----------------------------------------
+
+sub ErrorDie {
+	my $errS=shift;
+	print "<FONT COLOR=\"#CC0000\"><STRONG>$errS</STRONG></FONT><BR>";
+	die
+}
+	
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d5 1
+a5 1
+# $Id: include.cgi,v 1.1 2002/09/16 15:00:20 michal Exp $
+d40 1
+a40 1
+or ( &printError("ERROR in eval of \"use SOAP::Lite ...\".") );
+d48 1
+a48 1
+	printError("ERROR: $serverVerbName not responding");
+d64 1
+a64 1
+		&printError(&UnixDate("today","%d.%m.%Y %T").": $serverVerbName returns faultstring: ".SOAP::Lite->self->call->faultstring."\n");
+d69 1
+a69 1
+			print &printError(&UnixDate("today","%d.%m.%Y %T").": $serverVerbName returns wrong echo");
+d77 1
+a77 1
+	&printError("Parameter \"Action\" is missing or has unexpected value");
+d82 1
+a82 1
+sub printError {
+@
+
+
+1.1.1.1
+log
+@Initial release of Bear ROLAP Portal
+@
+text
+@@

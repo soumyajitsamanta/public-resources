@@ -1,0 +1,176 @@
+head	1.2;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2003.09.22.11.24.20;	author vacula;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2003.07.15.13.40.54;	author vacula;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@style of graph
+@
+text
+@<?xml version="1.0" encoding="ISO-8859-1" standalone="yes"?><!--file saved UTF-8, encoding ISO-8859-1 si forced for reading because of compatibility issue on Soap Server -->
+<format base="xz" graph="Scatter">
+  <SH default="line">
+    <shapes>line</shapes>
+    <shapes>quadrilateral</shapes>
+    <shapes>pyramid</shapes>
+    <shapes>box</shapes>
+    <shapes>cylinder</shapes>
+    <shapes>cone</shapes>
+    <shapes>sphere</shapes>
+  </SH>
+  <DI min="0" max="1" default="0.3" />
+  <lattice>
+    <y transparency="0" step="1" format="line" size="1">
+      <color>0</color>
+      <color>0</color>
+      <color>255</color>
+      <label fontsize="12" visible="1" align="middle" font="luximb.ttf">
+        <color>0</color>
+        <color>0</color>
+        <color>255</color>
+      </label>
+    </y>
+    <x transparency="0" step="1" format="line" size="1">
+      <color>0</color>
+      <color>0</color>
+      <color>255</color>
+      <label fontsize="12" visible="1" align="middle" font="luximb.ttf">
+        <color>0</color>
+        <color>0</color>
+        <color>255</color>
+      </label>
+    </x>
+    <x transparency="0" step="2" format="box" size="2">
+      <color>0</color>
+      <color>0</color>
+      <color>255</color>
+      <label fontsize="12" visible="1" align="middle" font="luximb.ttf">
+        <color>0</color>
+        <color>0</color>
+        <color>255</color>
+      </label>
+    </x>
+    <z transparency="0" step="1" format="line" size="1">
+      <color>0</color>
+      <color>0</color>
+      <color>255</color>
+      <label fontsize="12" visible="1" align="middle" font="luximb.ttf">
+        <color>0</color>
+        <color>0</color>
+        <color>255</color>
+      </label>
+    </z>
+  </lattice>
+  <CLR>
+    <default>255</default>
+    <default>0</default>
+    <default>0</default>
+    <colors>
+      <anon>255</anon>
+      <anon>0</anon>
+      <anon>0</anon>
+    </colors>
+    <colors>
+      <anon>0</anon>
+      <anon>255</anon>
+      <anon>0</anon>
+    </colors>
+    <colors>
+      <anon>0</anon>
+      <anon>0</anon>
+      <anon>255</anon>
+    </colors>
+  </CLR>
+  <TR min="0" max="1" default="0" />
+  <axis transparency="0" name="Z" indent="1" size="3" length="10" format="cylinder">
+    <crowfoot transparency="0" visible="1" format="cone" size="5">
+      <color>0</color>
+      <color>255</color>
+      <color>0</color>
+    </crowfoot>
+    <color>0</color>
+    <color>255</color>
+    <color>0</color>
+    <label fontsize="12" visible="1" align="middle" font="luximb.ttf">
+      <color>0</color>
+      <color>255</color>
+      <color>0</color>
+    </label>
+  </axis>
+  <axis transparency="0" name="X" indent="1" size="3" length="10" format="cylinder">
+    <crowfoot transparency="0" visible="1" format="cone" size="5">
+      <color>0</color>
+      <color>255</color>
+      <color>0</color>
+    </crowfoot>
+    <color>0</color>
+    <color>255</color>
+    <color>0</color>
+    <label fontsize="12" visible="1" align="middle" font="luximb.ttf">
+      <color>0</color>
+      <color>255</color>
+      <color>0</color>
+    </label>
+  </axis>
+  <axis transparency="0" name="Y" indent="1" size="3" length="10" format="cylinder">
+    <crowfoot transparency="0" visible="1" format="cone" size="5">
+      <color>0</color>
+      <color>255</color>
+      <color>0</color>
+    </crowfoot>
+    <color>0</color>
+    <color>255</color>
+    <color>0</color>
+    <label fontsize="12" visible="1" align="middle" font="luximb.ttf">
+      <color>0</color>
+      <color>255</color>
+      <color>0</color>
+    </label>
+  </axis>
+</format>
+@
+
+
+1.1
+log
+@format
+@
+text
+@d3 10
+a12 1
+  <parameters mindiameter="0" mintransparency="0" maxtransparency="1" maxdiameter="1" />
+d14 40
+a53 3
+    <y fontsize="14" color="blue" step="1" format="line" label="visible" font="luximb.ttf" size="1" />
+    <x fontsize="14" color="blue" step="1" format="line" label="visible" font="luximb.ttf" size="1" />
+    <z fontsize="14" color="blue" step="1" format="line" label="visible" font="luximb.ttf" size="1" />
+d55 66
+a120 8
+  <default SH="line" DI="0.8" TR="0">
+    <CLR>1</CLR>
+    <CLR>0</CLR>
+    <CLR>0</CLR>
+  </default>
+  <axis name="Z" crowfoot="1" indent="1" font="luximb.ttf" size="1" fontsize="14" color="green" length="10" format="cylinder" />
+  <axis name="X" crowfoot="1" indent="1" font="luximb.ttf" size="1" fontsize="14" color="green" length="10" format="cylinder" />
+  <axis name="Y" crowfoot="1" indent="1" font="luximb.ttf" size="1" fontsize="14" color="green" length="10" format="cylinder" />
+@
+

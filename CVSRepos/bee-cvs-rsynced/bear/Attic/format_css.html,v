@@ -1,0 +1,316 @@
+head	1.7;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.7
+date	2003.03.26.13.54.13;	author jiri_schmid;	state dead;
+branches;
+next	1.6;
+
+1.6
+date	2003.03.18.09.34.12;	author jiri_schmid;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	2003.03.17.16.04.56;	author jiri_schmid;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2003.02.12.15.01.46;	author jiri_schmid;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2003.02.11.16.06.57;	author jiri_schmid;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2003.01.30.12.50.41;	author jiri_schmid;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2002.11.26.16.28.58;	author spanhel;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.7
+log
+@total remake of format, files formatXXX.html repalced by format.cgi because of languge mutations
+@
+text
+@<html>
+
+<head>
+<META NAME="robots" CONTENT="NOFOLLOW,NOINDEX">
+
+<link id="style_css" rel="stylesheet" href="CSS/default.css">
+
+<script language="JavaScript" type="text/javascript">
+<!--
+var styleID;
+var listID;
+
+function change_style()
+{
+styleID.disabled = true;
+styleID.href = "CSS/" + listID.options[listID.selectedIndex].value;
+parent.document.getElementById("forma").value = "css";
+parent.document.getElementById("typ_css").value = listID.options[listID.selectedIndex].text;
+styleID.disabled = false;
+}
+
+function load_grid() {  //setting CSS style acording MD
+styleID = document.getElementById("style_css");
+listID = document.getElementById("list_css");
+var what = parent.document.getElementById("typ_css").value
+parent.document.getElementById("forma").value = "css";
+for (i = 0; i<listID.length; i++)
+ if (listID.options[i].text == what) {listID.selectedIndex = i; change_style(); return;}
+}
+
+-->
+</script>
+
+</head>
+
+<body onload="load_grid();return true;">
+<form name="list" method="">  
+<h4>CSS style:</h4>
+<table class="Neutral">
+    <tr><td><select id="list_css" name="list_css" size = "4" onchange="change_style();return true;">
+		<option value="default.css">Default
+		<option value="bluesea.css">Blue sea
+		<option value="greenwood.css">Greenwood
+		<option value="high_mountains.css">High Mountains
+	  </select>
+    </td></tr> 
+</table>
+<br><br>
+<TABLE>
+<col><col class="right_solid"><col class="right_dashed"><col class="right_solid"><col class="right_dashed"><col>
+
+<THEAD>
+     <TR><tH>&nbsp<th>&nbsp<th colspan="2">Department A<th colspan="2">Department Z
+     <tr><th>&nbsp<th>&nbsp<th>AA<th>AH<th>ZA<th>ZD
+</THEAD>
+
+<TBODY class="t1">
+     <TR><th rowspan="2">2001<th>Q3<td>104<td>85<td>111<td>32
+     <TR class="t1"><th>Q4<td>108<td>89<td>121<td>35
+</TBODY>
+
+<TBODY class="t2">
+     <TR><th rowspan="4" class="tbody">2002<th>Q1<td>100<td>81<td>107<td>32
+     <TR class="t2"><th>Q2<td>99<td>79<td>104<td>31
+     <TR><th>Q3<td>102<td>83<td>106<td>32
+     <TR class="t2"><th>Q4<td>107<td>88<td>130<td>35
+</TBODY>
+</table>
+
+</form>
+</body>
+</html>
+
+@
+
+
+1.6
+log
+@language bug fixed
+@
+text
+@@
+
+
+1.5
+log
+@css improvment for better result with xml-xsl conversion
+@
+text
+@d41 1
+a41 1
+		<option value="default.css">Deafult
+@
+
+
+1.4
+log
+@format_ed.pl, format.html, format_[css|graph].html fixed and tuned
+@
+text
+@d50 1
+a50 11
+<colgroup class="right">
+<col class="init"><col class="init">
+</colgroup>
+
+<colgroup class="right">
+<col class="right"><col>
+</colgroup>
+
+<colgroup class="last">
+<col class="right"><col>
+</colgroup>
+@
+
+
+1.3
+log
+@large rebuilding of format_ed.pl and linked files format[|_css|_graph].html,
+@
+text
+@d18 1
+a18 1
+parent.document.getElementById("typ").value = listID.options[listID.selectedIndex].text;
+d25 2
+a26 1
+var what = parent.document.getElementById("forma").value;
+@
+
+
+1.2
+log
+@Dad.js seems to be working properly
+@
+text
+@d17 2
+d23 6
+a28 2
+ styleID = document.getElementById("style_css");
+ listID = document.getElementById("list_css");}
+d41 3
+a43 3
+	     <option value="bluesea.css">Blue sea
+	     <option value="greenwood.css">Greenwood
+    	     <option value="high_mountains.css">High Mountains
+@
+
+
+1.1
+log
+@format_ed.pl - grid & graph
+@
+text
+@d6 1
+a6 7
+<link rel="stylesheet" href="CSS/none.css">
+<link rel="stylesheet" href="CSS/bluesea.css">
+<link rel="stylesheet" href="CSS/bluesea_b.css">
+<link rel="stylesheet" href="CSS/greenwood.css">
+<link rel="stylesheet" href="CSS/greenwood_b.css">
+<link rel="stylesheet" href="CSS/none.css">
+<script language="JAVASCRIPT" src="attr.js" type="text/javascript"></script>
+d8 1
+a8 1
+<script language="JavaScript">
+d10 2
+d13 10
+a22 36
+function changeCSS(idd) {
+    var len = document.styleSheets.length;
+    for(var i=0;i<len-1;i++) {    
+            if (idd!=i) document.styleSheets[i+1].disabled=true;
+            else {
+	      document.styleSheets[i+1].disabled=false;       
+	    }
+       }
+     }
+
+     function set_grid() {
+       var id = document.list.list_css.selectedIndex;
+       if (id!=-1) {
+         var a = document.list.list_css.options[id].text;
+	 changeCSS(id);
+ 	 parent.document.forms[0].form.value= "grid";
+ 	 parent.document.forms[0].type.value=a;
+
+       }
+
+     }
+     // loading MD and displaying format_css.html or format_graph.html
+     function load_grid() {  //setting CSS style acording MD
+       if (parent.document.forms[0].type.value=="") { // in MD was saved grid style
+	   for(var i=0;i<document.list.list_css.length;i++) {
+		if (document.list.list_css.options[i].text == parent.document.forms[0].form.value) document.list.list_css.selectedIndex=i;
+	  }
+	  set_grid();  
+	}
+	else {
+	   //in MD was saved graph style
+	   parent.document.format.style[0].checked="false";
+	   parent.document.format.style[1].checked="true";	   
+	   change_style(parent.document);
+	}
+     }	
+d24 1
+a24 1
+//-->
+d30 1
+a30 1
+<form name="list" metod="">  
+d32 6
+a37 10
+ 
+<table>
+    <tr>
+      <td>
+
+	 <select name="list_css" size = "4" onchange='set_grid();return true;'>
+	     <option value"bluesea">Blue sea
+	     <option value"blueseab">Blue sea (bold)
+	     <option value"greenwwod">Greenwood
+    	     <option value"greenwwodb">Greenwood (bold)
+d39 33
+a72 38
+	  
+       </td>
+    </tr> 
+
+<table width=100% >
+ <tr>
+  <td>     
+    <table class="mains">
+     <tr>
+       <br>
+       <th class="re">Rok</th>
+       <th class="ro">Obrat A</th>
+       <th class="re">Obrat B</th>
+     </tr>
+       <th class="co">2001</th>
+       <td class="o">12</td>
+       <td class="o">12</td>
+     <tr>
+     </tr>
+       <th class="ce">2002</th>
+       <td class="e">15</td>
+       <td class="e">16</td>
+     <tr>
+     </tr>
+       <th class="co">2003</th>
+       <td class="o">15</td>
+       <td class="o">16</td>
+     <tr>
+     </tr>
+       <th class="ce">2004</th>
+       <td class="e">15</td>
+       <td class="e">16</td>
+     <tr>
+     </tr>  
+   </table>
+  </td>     
+ </tr>
+</table>
+@
+

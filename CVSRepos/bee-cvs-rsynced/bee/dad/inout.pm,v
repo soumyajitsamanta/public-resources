@@ -1,0 +1,552 @@
+head	1.10;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.10
+date	2004.06.15.10.11.41;	author numberone;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	2004.06.08.15.12.37;	author numberone;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	2004.05.08.10.28.12;	author numberone;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	2004.04.13.11.59.05;	author numberone;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	2004.03.24.14.47.16;	author numberone;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	2004.01.08.13.48.20;	author numberone;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2003.09.15.08.08.08;	author numberone;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2003.06.03.13.16.14;	author numberone;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2003.03.12.23.35.13;	author numberone;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2003.02.05.17.20.26;	author numberone;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.10
+log
+@
+new Prepare API
+
+This breaks compatibility with old .bee code, because every stream
+input/output must be initialized first, bee has to call ->prepare()
+method on stream objects in .bee code before calling ->put or ->get.
+
+Or, instead of ->prepare(), bee can call general ->prepare_sql($cmd),
+or, in the future, methods like ->prepare_select($table,$cols,$where,..),
+->prepare_update(...), ->prepare_delete(...)
+
+Next new method, execute(), is same as put() for UPDATE or DELETE.
+But note that in order to do SELECT, we need to call DBI's execute().
+Method prepare() with no arguments call's execute() for as.
+
+So, correct is:
+
+$input->prepare()
+$input->fetch, fetch, fetch, ..
+
+$input->prepare_sql("SELECT ...") or die "no SQL stream"
+$input->exeucte() # !
+$input->fetch, fetch, fetch, ..
+
+$input->prepare_sql("UPDATE ...") or die "no SQL stream"
+$input->execute(..), execute, excute (or put())
+
+All stream .bee input/output variables have following methods:
+
+prepare()         -- prepare and execute DBI statement
+prepare_sql($cmd) -- prepare DBI statement
+execute()         -- execute DBI statement
+put()             -- execute DBI statement or write to stream
+fetch()           -- fetch from DBI statement or read to stream
+table()           -- returns table name, from URL
+fields()          -- returns list of fields, from URL
+@
+text
+@# $Id: inout.pm,v 1.9 2004/06/08 15:12:37 numberone Exp $
+
+# some types (dbi, table) are same for both input and output
+package inout;
+
+use lib '.';
+use common;
+
+use lib '../lib';
+use url;
+
+use Data::Dumper;
+use strict;
+
+use DBI;
+#use Carp qw(cluck confess);
+
+sub url2class {
+	my($url,$type,$inout) = @@_;
+
+	my $proto = $url->{proto};
+	$proto = 'file' if($proto eq 'dir'); # huh :-)
+
+	return "$inout\::$proto" if(($proto eq 'signal') or ($proto eq 'scalar'));
+	return "input::array" if(($inout eq 'input') and ($proto eq 'array'));
+
+	return "$inout\::table::$proto"  if($type eq 'table');
+	if($type eq 'stream') {
+		if($proto eq 'dbi') {
+			return $inout eq 'input' ? "input::stream::select" :
+									   "output::stream::insert";
+		}
+		return "$inout\::stream::$proto" 
+			if($proto eq 'file' or $proto eq 'bee');
+		return "output::stream::display" 
+			if($proto eq 'display' and $inout eq 'output');
+	}
+	return "$inout\::dbi"            if($proto eq 'dbi' and not $url->{table});
+	die "url2class: url=",Dumper($url)."type=$type";
+}
+
+
+sub new {
+	my($name,$type,$data_p,$arg) = @@_;
+	my $url = url::split($arg->{url});
+	die unless($url);
+
+	# map url & name to type descendant
+	# (dbi://host/db/table:f1:f2 & 'input') -> input::stream::dbi
+	# (dbi://host/db/table & 'input')       -> input::table::dbi
+	# (dbi://host/db & 'input')             -> input::dbi
+
+	my $new = url2class($url,$type,$name);
+	die unless($new);
+
+	my $obj;
+    {	no strict "refs";
+		$obj = eval { new $new($url,$arg,$data_p) }; 
+		die "failed creating $new\: $@@" if $@@;
+	}
+
+	my $ret = '';
+	($obj,$ret) = @@$obj if(ref $obj eq 'ARRAY');
+
+	$$data_p = $obj;
+	return defined $ret ? $ret : '';
+}
+
+
+# ----------------------------------------------
+
+package inout;
+
+sub prepare        { 1 }
+
+sub prepare_sql    { 0 }
+sub prepare_select { 0 }
+sub prepare_update { 0 }
+sub prepare_delete { 0 }
+
+sub table  { undef }
+sub fields { undef }
+
+# ----------------------------------------------
+# input/output::table::file - open, create/append, put, fetch, delete
+
+package inout::file;
+
+our @@ISA = qw(inout);
+
+use Data::Dumper;
+use FileHandle;
+
+sub new {
+	my($pkg,$url,$arg) = @@_;
+
+	die unless($url->{db} and $url->{table});
+	die if(@@{$url->{fields}});
+
+	# todo: format
+
+	# fix: check special chars came in filename !!! (|,>>,..)
+
+	return bless { 
+		name	  => $url->{db}.$url->{table},
+		handle    => undef, # not opened
+
+		# when reading, separator is regex, when writing, it's string!
+		separator => $arg->{separator} ?
+					 $arg->{separator} : "\t",
+
+		create	  => $arg->{create},
+	}, $pkg;
+}
+
+sub open {
+	my($self,$mode) = @@_;
+
+	my $fh = new FileHandle;
+
+	my $open = $self->{name} or die;
+	if($mode == 0) {
+		$open = "<$open";
+	} elsif($mode == 1) {
+		truncate $open,0;
+		$open = ">$open";
+	} elsif($mode == 2) {
+		$open = ">>$open";
+	} else {
+		die
+	}
+
+	open($fh,$open) or die "$open\: $!";
+
+	$self->{handle} = $fh;
+
+	return 1;
+}
+
+
+sub create {
+	my($self,$create) = @@_;
+	my $filename = $self->{name} or die; # fix: unnamed as temporary?
+
+	my($perm,$uid,$gid) = split(/\:/,$create);
+
+	# todo: handle with care, do not unlink, set rights, check errors
+	truncate $filename,0 if -e $filename;
+	CORE::open(X,">$filename") or die "$filename\: $!"; close(X); # creat() ???
+
+	chmod oct("0".(int($perm))), $filename if $perm ne '';
+
+	# todo: chown
+}
+
+sub put {
+    my $self = shift;
+	die unless($self->{handle});
+    my $fh = $self->{handle};
+
+    print $fh join($self->{separator},@@_),"\n";
+}
+
+sub fetch {
+	my $self = shift;
+	die unless($self->{handle});
+	my $line = readline($self->{handle});
+	return () unless defined $line;
+	chomp($line);        # use LIMIT version ?
+	return $line if($self->{separator} eq '');
+	return split /$self->{separator}/, $line;
+}
+
+# should this be callable from script?
+sub close {
+	my $self = shift;
+	close $self->{handle};
+	$self->{handle} = undef;	
+}
+
+sub delete {
+	my $self = shift;
+	$self->close() if($self->{handle});
+	unlink $self->{name};
+	$self->{name}   = undef;	
+}
+
+
+# ----------------------------------------------
+# dbi streaming ('LOAD/SAVE FILE' thru pipe, auto COMMIT after xMB)
+# for in/out::table::dbi, 
+# 	  input::stream::select, 
+# 	  output::stream::insert
+
+package inout::table;
+
+our @@ISA = qw(inout);
+
+use FileHandle;
+use DBI;
+
+sub new {
+	my($pkg,$url,$arg) = @@_;
+
+	my $db = common::database($url,$arg->{auth});
+
+	# @@colmuns ?
+
+	die unless($url->{table} or $arg->{view});
+	die unless($url->{fields});
+
+	return bless { 
+		dbi	   => $db,
+		view   => $arg->{view},
+		table  => $url->{table},
+		fields => $url->{fields},
+		sth	   => undef, # statement
+
+		create => $arg->{create}, # it's here because of prepare_*
+	}, $pkg;
+}
+
+sub create {
+	my($self,$create) = @@_;
+	my $table = "`".$self->{table}."`"; #$self->{dbi}->quote($self->{table});
+
+	# if 'create' attribut was send, DROP TABLE !
+	if($create) {
+		$self->{dbi}->do("DROP TABLE IF EXISTS $table");
+		$self->{dbi}->do($create);
+#	for web log xpav/sarfy 21-05-2003 from 13:00 - 21:00
+#	} else {
+#		$self->{dbi}->do("DELETE FROM $table");
+	}
+}
+
+
+sub open {
+	my($self,$mode) = @@_;
+	die unless defined $mode;
+	my $table = "`".$self->{table}."`"; #$self->{dbi}->quote($self->{table});
+
+	$self->{dbi}->do("DELETE FROM $table") if($mode > 1);
+
+	my $cmd;
+	if($mode == 0) {
+		if($self->{view}) { 
+			$cmd = $self->{view} 
+		} else {
+			my @@fields = map {$_ ? $_ : 'NULL'} @@{$self->{fields}};
+			$cmd = "SELECT ".(join(",",@@fields))." FROM $table";
+		}
+	} else {
+        my $cols = join(",",@@{$self->{fields}});
+        $cmd = "INSERT INTO $table ($cols) VALUES (".
+                    ("?, " x (@@{$self->{fields}}-1))."?)";
+	}
+
+	$self->{sth} = $self->{dbi}->prepare($cmd) or die;
+	$self->{sth}->execute() unless($mode); # start select
+}
+
+sub put     { shift->{sth}->execute(@@_) } # synonyms
+sub execute { shift->{sth}->execute(@@_) }
+
+sub fetch   { shift->{sth}->fetchrow_array }
+
+sub prepare_sql {
+    my($self,$cmd) = @@_;
+
+    my($package, $filename, $line) = caller;
+    print "prepare_sql: called from $package $filename\:$line (".
+            ref($obj).")\n";
+
+	$self->{sth} = $self->{dbi}->prepare($cmd);
+
+	return $self->{sth} ? 1 : 0;
+}
+
+sub table  { shift->{table} }
+
+sub fields { 
+	my $self = shift;
+	reutrn $self->{fields} ? @@{$self->{fields}} : undef;
+}
+
+1;
+
+
+@
+
+
+1.9
+log
+@
+Prepare API
+
+every bee must call ->prepare() before ->put()/->fetch()
+
+or they can call ->prepare_sql("SELECT/INSERT ...")
+
+->put() is identical to new ->execute()
+@
+text
+@d1 1
+a1 1
+# $Id: inout.pm,v 1.8 2004/05/08 10:28:12 numberone Exp $
+d81 2
+d280 6
+@
+
+
+1.8
+log
+@
+elegant client speedup -- do not sleep if there was message last cycle
+@
+text
+@d1 1
+a1 1
+# $Id: inout.pm,v 1.7 2004/04/13 11:59:05 numberone Exp $
+d70 11
+d87 2
+d109 2
+d195 2
+d216 2
+d261 7
+a267 1
+sub put   { shift->{sth}->execute(@@_) }
+d269 8
+a276 1
+sub fetch { shift->{sth}->fetchrow_array }
+@
+
+
+1.7
+log
+@
+Do not destroy table on insert, unless there is create=".." arg in .xml
+@
+text
+@d1 1
+a1 1
+# $Id: inout.pm,v 1.6 2004/03/24 14:47:16 numberone Exp $
+d16 1
+@
+
+
+1.6
+log
+@returns whole line if separator=''
+@
+text
+@d1 1
+a1 1
+# $Id: inout.pm,v 1.5 2004/01/08 13:48:20 numberone Exp $
+d221 1
+a221 1
+	$self->{dbi}->do("DELETE FROM $table") if($mode == 1);
+@
+
+
+1.5
+log
+@INSERT in right order
+@
+text
+@d1 1
+a1 1
+# $Id: inout.pm,v 1.4 2003/09/15 08:08:08 numberone Exp $
+d152 1
+@
+
+
+1.4
+log
+@t:a::c -- select a,NULL,c from t;
+bench -- mysql,
+@
+text
+@d1 1
+a1 1
+# $Id: inout.pm,v 1.3 2003/06/03 13:16:14 numberone Exp $
+d231 3
+a233 2
+		$cmd = "INSERT INTO $table VALUES (".
+					("?, " x (@@{$self->{fields}}-1))."?)";
+@
+
+
+1.3
+log
+@0.9.1 -- version merge
+@
+text
+@d1 1
+a1 1
+# $Id: inout.pm,v 1.2 2003/03/12 23:35:13 numberone Exp $
+d227 2
+a228 2
+			$cmd = "SELECT ".(join(",",map $_,@@{$self->{fields}})).
+				   " FROM $table";
+@
+
+
+1.2
+log
+@bee/ directory - where to store temporary script files
+dad now use processes (fork and exec) to run bee instead
+of forking and `eval`-uating.
+perl -e "use DBI; fork;" sigfaults on Microsoft Windows
+so this fixes this problem
+@
+text
+@d1 1
+a1 1
+# $Id: inout.pm,v 1.1 2003/02/05 17:20:26 numberone Exp $
+d131 1
+a131 1
+	CORE::open(X,$filename) or die "$filename\: $!"; close(X); # creat() ???
+d204 1
+d208 3
+a210 2
+	} else {
+		$self->{dbi}->do("DELETE FROM $table");
+d227 2
+a228 2
+			$cmd = "SELECT ".(join(",",map $self->{dbi}->quote($_), 
+									@@{$self->{fields}}))." FROM $table";
+@
+
+
+1.1
+log
+@otec deleted
+@
+text
+@d1 1
+a1 1
+# $Id: inout.pm,v 1.6 2002/12/16 02:18:33 numberone Exp $
+d23 2
+a24 2
+	return "$inout\::$proto" if($proto eq 'signal' or $proto eq 'scalar');
+	return "input::array" if($inout eq 'input' and $proto eq 'array');
+d57 2
+a58 1
+		$obj = new $new($url,$arg,$data_p); # create input/output object
+d60 1
+@
+

@@ -1,0 +1,135 @@
+head	1.7;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.7
+date	2003.09.24.08.52.50;	author jiri_schmid;	state dead;
+branches;
+next	1.6;
+
+1.6
+date	2003.09.22.14.15.31;	author jiri_schmid;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	2003.09.22.11.52.39;	author jiri_schmid;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2003.09.22.09.16.26;	author jiri_schmid;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2003.09.09.09.41.30;	author jiri_schmid;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2003.09.04.15.09.54;	author jiri_schmid;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2003.09.03.15.10.47;	author jiri_schmid;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.7
+log
+@added web browser oriented directory for skins
+@
+text
+@DIV.Menu {	color: inherit;
+		background-color: transparent;
+		padding:5px 5px 5px 5px;
+		background-image: url('menu.gif');
+		border: 1px solid #000;
+		font-size: 12px;
+		text-decoration: none;
+		font-weight: bold;
+		cursor:default;
+	}
+DIV.Menu A {color: #000; font-weight: bold; font-size: 12px; text-decoration: none; }
+DIV.Menu A:hover {color: #000; font-weight: bold; font-size: 12px; text-decoration: underline; }
+DIV.Menu A.pivot {color: #000; font-weight: bold; font-size: 12px; text-decoration: none; }
+DIV.Menu Span {white-space:nowrap; text-decoration: none;  }
+DIV.Menu Span:hover {white-space:nowrap; text-decoration: underline;  }
+@
+
+
+1.6
+log
+@report menu improvments
+@
+text
+@@
+
+
+1.5
+log
+@format page - visual improvment
+@
+text
+@d13 3
+a15 1
+DIV.Menu Span {white-space:nowrap}
+@
+
+
+1.4
+log
+@operational commit for vladis
+@
+text
+@d13 1
+a13 1
+
+@
+
+
+1.3
+log
+@ACL for facts and attrs implemented
+@
+text
+@d5 6
+a10 1
+		border: 1px solid #000;}
+@
+
+
+1.2
+log
+@two level menu imlemented
+@
+text
+@d6 2
+a7 2
+DIV.Menu A {color: #FF0; font-weight: bold; font-size: 12px; text-decoration: none; }
+DIV.Menu A:hover {color: #FF0; font-weight: bold; font-size: 12px; text-decoration: underline; }
+@
+
+
+1.1
+log
+@implementation of right clik menu
+@
+text
+@d5 3
+a7 3
+		border: 1px solid #20601b;}
+DIV.Menu A {color: #000; font-weight: bold; font-size: 12px; text-decoration: none; }
+DIV.Menu A:hover {color: #000; font-weight: bold; font-size: 12px; text-decoration: underline; }
+@
+

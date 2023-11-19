@@ -1,0 +1,56 @@
+head	1.2;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2003.06.26.14.11.46;	author spanhel;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2003.05.20.16.25.53;	author spanhel;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@logical and fys. model
+@
+text
+@#---------------------- Fonts -----------------------------
+our $FontFamily = '-*-verdana';
+
+# --------------------- DBLogObj --------------------------
+our $EntityFont='-*-verdana-bold-r-normal-*-12-*-iso8859-2';
+our $AttributeFont=$FontFamily.'-medium-r-normal-*-10-*-iso8859-2';
+our $RoleFont=$FontFamily.'-medium-r-normal-*-10-*-iso8859-2';
+our $NameFont='-*-arial-bold-r-normal-*-10-*-iso8859-2';
+
+# -------------------- DBTable.pm -------------------------
+
+
+
+
+
+@
+
+
+1.1
+log
+@tree history, colors of attributs
+@
+text
+@d6 2
+d12 3
+a14 1
+our $AttributeFont=$FontFamily.'-medium-r-normal-*-10-*-iso8859-2';
+@
+

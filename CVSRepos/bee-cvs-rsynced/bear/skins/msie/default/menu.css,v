@@ -1,0 +1,104 @@
+head	1.5;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.5
+date	2004.03.09.14.43.54;	author jiri_schmid;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2003.12.04.10.44.36;	author jiri_schmid;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2003.10.13.14.43.23;	author jiri_schmid;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2003.09.29.15.37.51;	author jiri_schmid;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2003.09.24.09.04.34;	author jiri_schmid;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.5
+log
+@fixed right menu after right scroll
+@
+text
+@DIV.Menu {	color: inherit;
+		background-color: transparent;
+		padding:5px 5px 5px 5px;
+		background-image: url('menu.png');
+		border: 1px solid #000;
+		font-size: 12px;
+		text-decoration: none;
+		font-weight: bold;
+		cursor:default;
+	}
+SPAN.cursor {font-size: inherit;font-weight: inherit; cursor:pointer; cursor:hand}
+DIV.Menu A {color: #000; font-weight: bold; font-size: 12px; text-decoration: none; }
+DIV.Menu A:hover {color: #000; font-weight: bold; font-size: 12px; text-decoration: underline; }
+DIV.Menu A.pivot {color: #000; font-weight: bold; font-size: 12px; text-decoration: none; }
+DIV.Menu A.pivot:hover {font-weight: bold; font-size: 12px; text-decoration: none; }
+DIV.Menu Span {white-space:nowrap; text-decoration: none;  }
+DIV.Menu Span:hover {white-space:nowrap; text-decoration: underline;  }
+DIV.Menu SPAN.none {font-size: inherit;font-weight: inherit; text-decoration:none;}
+DIV.Menu SPAN.none:hover {font-size: inherit;font-weight: inherit; text-decoration:none;}
+@
+
+
+1.4
+log
+@visaul changes and improvments
+@
+text
+@d18 2
+@
+
+
+1.3
+log
+@description tab defined under two files, bug fixies
+@
+text
+@d4 1
+a4 1
+		background-image: url('menu.gif');
+@
+
+
+1.2
+log
+@report result parameters handling changed, minor code improvments
+@
+text
+@d11 1
+a11 1
+SPAN.cursor {font-size: inherit;font-weight: inherit; cursor:pointer; cursor:hand}	
+d15 1
+@
+
+
+1.1
+log
+@added files for skins
+@
+text
+@d11 1
+@
+

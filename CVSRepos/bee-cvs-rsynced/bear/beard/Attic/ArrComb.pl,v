@@ -1,0 +1,71 @@
+head	1.2;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2003.07.30.07.46.09;	author michald;	state dead;
+branches;
+next	1.1;
+
+1.1
+date	2003.07.29.16.56.56;	author michald;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@creation of lookup table combinations
+@
+text
+@package ArrComb;
+
+use strict;
+use warnings;
+
+our $rep;	# number of combinations
+my @@r;	# array of cardinalities of each element
+my @@l;	# array to keep latest combination returned
+
+#-------------------------------------------
+
+sub init {
+    @@r = @@_;
+	$rep = 1;
+	@@l = ();
+	
+	map {$rep*=($_+1); push(@@l,0)} @@r;	# set 'rep' as product of all values and initialize 'l'
+}
+
+#-------------------------------------------
+
+sub getIndex {
+	foreach (0..$#l) {	# let increment all elements
+		$l[$_]++;
+		$l[$_]=0 if ($l[$_]>$r[$_]);	# reset it if element overflows
+	}
+	return @@l;	# return elements
+}
+
+#-------------------------------------------
+    
+1
+
+__END__
+@
+
+
+1.1
+log
+@ArrComb.pl introduction
+@
+text
+@@
+

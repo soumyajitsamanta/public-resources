@@ -1,0 +1,95 @@
+head	1.2;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2003.11.18.14.38.40;	author jiri_schmid;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2003.10.31.12.47.57;	author jiri_schmid;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@auto save when changing tabs implemented
+@
+text
+@#-----------------------------------------------------
+#  Format Editation
+#-----------------------------------------------------
+# $Id: format3d_ed.pl
+
+package Format3d;
+
+use strict;
+
+#-----------------------------------------------------
+# print_form is called from edit.cgi
+
+sub generateContent {
+my($variables, $lang, $obj) = (shift, shift, shift);
+my $saved = $$variables->{saved} if exists $$variables->{saved};
+
+print <<END;
+<br />
+<table class="page_skeleton" style='width:100%'>
+<tr class="page_skeleton">
+<td class="page_skeleton_ex">
+	<IFRAME name="format" class="formatIframe" id="formatIframe" src="format.cgi?Lang=$$variables->{useLang}&Skin=$$variables->{skin}&Type=graph3d&Form=$$obj->{form}" width="100%" height="$Const::wb_const->{ $$variables->{wb} }{iframeHeight}" scrolling="auto" frameborder="0"></IFRAME>
+</td>
+<tr class="page_skeleton" >
+<td class="page_skeleton">
+	<table class="neutral_100">
+	<tr><td align="center">
+	<table class="buttons" cellpading="0" cellspacing="0">
+	<tr>	<td class="buttons"><input id='SAVE' type="submit" name="Action" value="$$lang->{'Save'}"/></td>
+		<td class="buttons">	<input type="submit" name="Action" value="$$lang->{'Save As'}" onclick="return readName();"/>
+					<input type="hidden" name="saveAsName" id="saveAsName" value="" /></td>
+		<td class="buttons"><input type="button" name="reset" value="$$lang->{'Reset'}" onclick="self.frames['format'].location.reload(true)"/></td>
+	</tr>
+	</table>
+	</td></tr>
+	</table>
+</td></tr></table>
+<script type="text/javascript">
+	var saveAsMsg = "$$lang->{SaveAsMsg}$$lang->{'New Format3d'}";
+	reloadTree($saved);
+	reSetIframe();
+</script>
+END
+}
+
+#---------------------------------------------------
+sub set_next_param {
+	my ($o,$q) = (shift, shift);
+	$$o->{type} = $$q->param('type');
+	$$o->{form} = $$q->param('form');
+}
+
+1
+@
+
+
+1.1
+log
+@mod perl rocks!
+@
+text
+@d29 3
+a31 3
+	<tr>	<td class="buttons"><input type="submit" name="Action" value="$$lang->{'Save'}"/></td>
+			<td class="buttons">	<input type="submit" name="Action" value="$$lang->{'Save As'}" onclick="return readName();"/>
+						<input type="hidden" name="saveAsName" id="saveAsName" value="" /></td>
+@
+

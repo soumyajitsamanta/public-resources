@@ -1,0 +1,480 @@
+head	1.10;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.10
+date	2003.10.31.12.47.57;	author jiri_schmid;	state dead;
+branches;
+next	1.9;
+
+1.9
+date	2003.10.17.11.36.16;	author jiri_schmid;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	2003.10.16.14.08.53;	author jiri_schmid;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	2003.10.03.10.53.09;	author jiri_schmid;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	2003.10.01.11.32.12;	author jiri_schmid;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	2003.10.01.09.19.08;	author jiri_schmid;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2003.09.30.15.46.41;	author jiri_schmid;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2003.09.26.12.21.32;	author jiri_schmid;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2003.09.26.11.16.26;	author jiri_schmid;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2003.09.25.15.05.24;	author jiri_schmid;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.10
+log
+@mod perl rocks!
+@
+text
+@#-----------------------------------------------------
+#  Format Editation
+#-----------------------------------------------------
+# $Id: format2d_color_ed.pl,v 1.9 2003/10/17 11:36:16 jiri_schmid Exp $
+
+use strict;
+our(@@predefinedColors); #from require const.def
+
+#-----------------------------------------------------
+# print_form is called from edit.cgi
+
+sub generateContent {
+my($variables, $lang, $obj) = (shift, shift, shift);
+my $saved = $$variables->{saved} if exists $$variables->{saved};
+my $imgType = \$$variables->{imgType};
+my $skinPath = \$$variables->{skinPath};
+
+my $split = "255,255,255";
+my @@colors = split(/,/,$split);
+print <<END;
+<br />
+<table class="page_skeleton_ex" style='width:100%'>
+<tr class="page_skeleton">
+<td class="page_skeleton_ex" style='padding: 10px' align='center'>
+	<table style="text-align:center">
+		<tr><td colspan='5' class='neutral_bold' style="text-align:left" class='nowrap'>$$lang->{'Format2d Color'}:</td></tr>
+		<tr><td colspan='5'><hr /></td></tr>
+		<tr>	<td id='color' class='cursor' style='background-color:rgb($split); width:100px; border:thin solid #424242' title='$split' onclick='addColor(this)' rowspan='4'>
+				<img src='$${skinPath}img/color.$$imgType'>
+				<input type='hidden' value='' id='takeColor' />
+			</td>
+			<td style='text-align:right; color:#f00'>$$lang->{'Graph3d red'}</td>
+			<td><img class='cursor' onclick='minus("red")' src='$${skinPath}img/downArr.$$imgType' onmousedown="startDecrease('red')" onmouseup='stopTimer()'></td>
+			<td><input id='red' size='4' style='text-align:center' type='text' value='$colors[0]' onchange='changeColor()'/></td>
+			<td><img onclick='plus("red")' class='cursor' style='padding:2px' src='$${skinPath}img/upArr.$$imgType' onmousedown="startIncrease('red')" onmouseup='stopTimer()'></td>
+		</tr>
+		<tr>	<td style='text-align:right; color:#0f0'>$$lang->{'Graph3d green'}</td><td><img class='cursor' onclick='minus("green")' src='$${skinPath}img/downArr.$$imgType' onmousedown="startDecrease('green')" onmouseup='stopTimer()'></td>
+			<td><input id='green' type='text' style='text-align:center' size='4' value='$colors[1]' onchange='changeColor()'/></td>
+			<td><img onclick='plus("green")' class='cursor' style='padding:2px' src='$${skinPath}img/upArr.$$imgType' onmousedown="startIncrease('green')" onmouseup='stopTimer()'></td>
+		</tr><tr><td style='text-align:right; color:#00f'>$$lang->{'Graph3d blue'}</td><td><img class='cursor' onclick='minus("blue")' src='$${skinPath}img/downArr.$$imgType' onmousedown="startDecrease('blue')" onmouseup='stopTimer()'></td>
+			<td><input id='blue' type='text' style='text-align:center' size='4' value='$colors[2]' onchange='changeColor()'/></td>
+			<td><img onclick='plus("blue")' class='cursor' style='padding:2px' src='$${skinPath}img/upArr.$$imgType' onmousedown="startIncrease('blue')" onmouseup='stopTimer()'></td>
+		</tr>
+	</table>
+	<hr size='1' noshade='noshade' />
+	<table style="text-align:center">
+END
+#use Data::Dumper;
+#print Dumper(@@predefinedColors);
+for my $row (0..6) {
+	print "<tr>";
+	for my $col (0..9) {
+		print "<td title='$predefinedColors[$row][$col]' onclick='setSelfColor(this)' style='background-color:rgb($predefinedColors[$row][$col]); width:25px; height:13px'></td>";
+	}
+	print "</tr>";
+}
+print <<END;
+	</table>	
+</td>
+<td class="page_skeleton_ex" style='padding: 10px; width:100%'>
+	<table>
+	<tr>	<td class='neutral_bold'>$$lang->{'Format2d Items'}:</td>
+		<td></td>
+		<td style='text-align:right'>
+			<img class='cursor' src='$${skinPath}img/delete.$$imgType' title="$$lang->{'Delete Active'}" onclick='emptyBin()'>
+		</td>
+	</tr>
+	<tr><td colspan='3'><hr /></td></tr>
+	<tr>
+	<td>
+		<table>
+END
+foreach('fgclr','bgclr'){
+	my $name ="Format2d $_";
+	print "<tr><td style='nowrap'>$$lang->{$name}</td><td><input name='$_' id='$_' onclick='setSelf(this)' type='hidden' value='$$obj->{colors}{$_}'/></td><td class='cursor' id='color$_' onclick='reloadColor(this)' style='background-color:rgb($$obj->{colors}{$_}); width:25px; border:1px solid #424242'><img src='$${skinPath}img/smallcolor.$$imgType' /></td></tr>";
+}
+my $check = ($$obj->{colors}{transparent}) ? " checked='checked'" : "";
+print "<tr><td colspan='2' class='nowrap'>$$lang->{'Format2d Transparent'}</td><td><input name='transparent' id='transparent' type='checkbox' $check value='1' /></td></tr>";
+print "<tr><td colspan='3'><hr size='1' noshade='noshade'/></td></tr>";
+foreach('labelclr','axislabelclr','textclr'){
+	my $name ="Format2d $_";
+	print "<tr><td style='nowrap'>$$lang->{$name}</td><td><input name='$_' id='$_' onclick='setSelf(this)' type='hidden' value='$$obj->{colors}{$_}'/></td><td class='cursor' id='color$_' onclick='reloadColor(this)' style='background-color:rgb($$obj->{colors}{$_}); width:25px; border:1px solid #424242'><img src='$${skinPath}img/smallcolor.$$imgType' /></td></tr>";
+}
+print "<tr><td colspan='3'><hr size='1' noshade='noshade'/></td></tr>";
+foreach('borderclr'){
+	my $name ="Format2d $_";
+	print "<tr><td style='nowrap'>$$lang->{$name}</td><td><input name='$_' id='$_' onclick='setSelf(this)' type='hidden' value='$$obj->{colors}{$_}'/></td><td class='cursor' id='color$_' onclick='reloadColor(this)' style='background-color:rgb($$obj->{colors}{$_}); width:25px; border:1px solid #424242'><img src='$${skinPath}img/smallcolor.$$imgType' /></td></tr>";
+}
+print "</table></td><td rowspan='9'></td><td rowspan='9'>";
+print "<table><tr><td colspan='3'>$$lang->{'Format2d Datas'}</td></tr><tr><td colspan='3'><hr size='1' noshade='noshade' /></td></tr>";
+for(1..7) {
+	print "<tr><td class='nowrap'>$$lang->{'Format2d Data item'} $_</td><td><input name='data$_' id='data$_' onclick='setSelf(this)' type='hidden' value='$$obj->{colors}{datas}[$_-1]'/></td><td class='cursor' id='colordata$_' onclick='reloadColor(this)' style='background-color:rgb($$obj->{colors}{datas}[$_-1]); width:25px; border:1px solid #424242'><img src='$${skinPath}img/smallcolor.$$imgType' /></td></tr>";
+}
+print <<END;
+		</table>	
+	</td>
+	</tr>
+	</table>
+</td>
+</td>
+</tr>
+<tr class="page_skeleton">
+<td class="page_skeleton" colspan='3'>
+	<table class="neutral_100">
+		<tr><td align="center">
+		<table class="buttons" cellpading="0" cellspacing="0">
+		<tr>	<td class="buttons"><input type="submit" name="Action" value="$$lang->{'Save'}" onclick='fillDatasItems()'/></td>
+				<td class="buttons">	<input type="submit" name="Action" value="$$lang->{'Save As'}" onclick="fillDatasItems(); return readName();"/>
+						<input type="hidden" name="saveAsName" id="saveAsName" value="" /></td>
+		</tr>
+		</table>
+	</td></tr>
+	</table>
+</td></tr></table>
+<div class="invisible" style='position:absolute; top:10px; left:10px; z-index:-5'>
+	<select type='hidden' multiple='multiple' id='datasItems' name='datasItems'>
+		<option>necesery one</option>
+	</select>
+</div>
+<script type="text/javascript" src="js/format_color.js"></script>
+<script type="text/javascript">
+	var saveAsMsg = "$$lang->{SaveAsMsg}$$lang->{'New Format2d'}";
+	reloadTree($saved);
+</script>
+END
+}
+
+#---------------------------------------------------
+sub set_next_param {
+	my $o=shift;
+foreach('bgclr','fgclr','labelclr','axislabelclr','textclr','borderclr','transparent'){
+	$o->{colors}{$_} = (param($_)) ? param($_) : undef;
+}
+$o->{colors}{datas} = [param('datasItems')];
+}
+
+1
+@
+
+
+1.9
+log
+@last changes-fixies coresponding mod-perl stage 1
+@
+text
+@d4 1
+a4 1
+# $Id: format2d_color_ed.pl,v 1.8 2003/10/16 14:08:53 jiri_schmid Exp $
+@
+
+
+1.8
+log
+@mod-perl implementation stage 1, rebuilding global vars in .pl to global pointers
+@
+text
+@d4 1
+a4 1
+# $Id: format2d_color_ed.pl,v 1.7 2003/10/03 10:53:09 jiri_schmid Exp $
+d108 1
+a108 1
+				<td class="buttons">	<input type="submit" name="Action" value="$$lang->{'Save As'}" onclick="return readName();"/>
+@
+
+
+1.7
+log
+@control improvments on param and format2d-color page
+@
+text
+@d4 1
+a4 1
+# $Id: format2d_color_ed.pl,v 1.6 2003/10/01 11:32:12 jiri_schmid Exp $
+d7 1
+a7 7
+use CGI qw( :standard );
+use CGI::Pretty;
+
+require "const.def";
+
+use vars qw($ID $Obj $lang $saved $skinPath $imgType @@predefinedColors);
+
+d13 5
+d26 1
+a26 1
+		<tr><td colspan='5' class='neutral_bold' style="text-align:left" class='nowrap'>$lang->{'Format2d Color'}:</td></tr>
+d29 1
+a29 1
+				<img src='${skinPath}img/color.$imgType'>
+d32 2
+a33 2
+			<td style='text-align:right; color:#f00'>$lang->{'Graph3d red'}</td>
+			<td><img class='cursor' onclick='minus("red")' src='${skinPath}img/downArr.$imgType' onmousedown="startDecrease('red')" onmouseup='stopTimer()'></td>
+d35 1
+a35 1
+			<td><img onclick='plus("red")' class='cursor' style='padding:2px' src='${skinPath}img/upArr.$imgType' onmousedown="startIncrease('red')" onmouseup='stopTimer()'></td>
+d37 1
+a37 1
+		<tr>	<td style='text-align:right; color:#0f0'>$lang->{'Graph3d green'}</td><td><img class='cursor' onclick='minus("green")' src='${skinPath}img/downArr.$imgType' onmousedown="startDecrease('green')" onmouseup='stopTimer()'></td>
+d39 2
+a40 2
+			<td><img onclick='plus("green")' class='cursor' style='padding:2px' src='${skinPath}img/upArr.$imgType' onmousedown="startIncrease('green')" onmouseup='stopTimer()'></td>
+		</tr><tr><td style='text-align:right; color:#00f'>$lang->{'Graph3d blue'}</td><td><img class='cursor' onclick='minus("blue")' src='${skinPath}img/downArr.$imgType' onmousedown="startDecrease('blue')" onmouseup='stopTimer()'></td>
+d42 1
+a42 1
+			<td><img onclick='plus("blue")' class='cursor' style='padding:2px' src='${skinPath}img/upArr.$imgType' onmousedown="startIncrease('blue')" onmouseup='stopTimer()'></td>
+d62 1
+a62 1
+	<tr>	<td class='neutral_bold'>$lang->{'Format2d Items'}:</td>
+d65 1
+a65 1
+			<img class='cursor' src='${skinPath}img/delete.$imgType' title="$lang->{'Delete Active'}" onclick='emptyBin()'>
+d75 1
+a75 1
+	print "<tr><td style='nowrap'>$lang->{$name}</td><td><input name='$_' id='$_' onclick='setSelf(this)' type='hidden' value='$Obj->{colors}{$_}'/></td><td class='cursor' id='color$_' onclick='reloadColor(this)' style='background-color:rgb($Obj->{colors}{$_}); width:25px; border:1px solid #424242'><img src='${skinPath}img/smallcolor.$imgType' /></td></tr>";
+d77 2
+a78 2
+my $check = ($Obj->{colors}{transparent}) ? " checked='checked'" : "";
+print "<tr><td colspan='2' class='nowrap'>$lang->{'Format2d Transparent'}</td><td><input name='transparent' id='transparent' type='checkbox' $check value='1' /></td></tr>";
+d82 1
+a82 1
+	print "<tr><td style='nowrap'>$lang->{$name}</td><td><input name='$_' id='$_' onclick='setSelf(this)' type='hidden' value='$Obj->{colors}{$_}'/></td><td class='cursor' id='color$_' onclick='reloadColor(this)' style='background-color:rgb($Obj->{colors}{$_}); width:25px; border:1px solid #424242'><img src='${skinPath}img/smallcolor.$imgType' /></td></tr>";
+d87 1
+a87 1
+	print "<tr><td style='nowrap'>$lang->{$name}</td><td><input name='$_' id='$_' onclick='setSelf(this)' type='hidden' value='$Obj->{colors}{$_}'/></td><td class='cursor' id='color$_' onclick='reloadColor(this)' style='background-color:rgb($Obj->{colors}{$_}); width:25px; border:1px solid #424242'><img src='${skinPath}img/smallcolor.$imgType' /></td></tr>";
+d90 1
+a90 1
+print "<table><tr><td colspan='3'>$lang->{'Format2d Datas'}</td></tr><tr><td colspan='3'><hr size='1' noshade='noshade' /></td></tr>";
+d92 1
+a92 1
+	print "<tr><td class='nowrap'>$lang->{'Format2d Data item'} $_</td><td><input name='data$_' id='data$_' onclick='setSelf(this)' type='hidden' value='$Obj->{colors}{datas}[$_-1]'/></td><td class='cursor' id='colordata$_' onclick='reloadColor(this)' style='background-color:rgb($Obj->{colors}{datas}[$_-1]); width:25px; border:1px solid #424242'><img src='${skinPath}img/smallcolor.$imgType' /></td></tr>";
+d107 2
+a108 2
+		<tr>	<td class="buttons"><input type="submit" name="Action" value="$lang->{'Save'}" onclick='fillDatasItems()'/></td>
+				<td class="buttons">	<input type="submit" name="Action" value="$lang->{'Save As'}" onclick="return readName();"/>
+d122 1
+a122 1
+	var saveAsMsg = "$lang->{SaveAsMsg}$lang->{'New Format2d'}";
+@
+
+
+1.6
+log
+@some visual improvments of format2d - colors
+@
+text
+@d4 1
+a4 1
+# $Id: format2d_color_ed.pl,v 1.5 2003/10/01 09:19:08 jiri_schmid Exp $
+d29 4
+a32 1
+		<tr>	<td id='color' class='cursor' style='background-color:rgb($split); width:100px; border:thin solid #424242' title='$split' onclick='addColor(this)' rowspan='4'><img src='${skinPath}img/color.$imgType'></td>
+@
+
+
+1.5
+log
+@visual re-fix
+@
+text
+@d4 1
+a4 1
+# $Id: format2d_color_ed.pl,v 1.4 2003/09/30 15:46:41 jiri_schmid Exp $
+d51 1
+a51 1
+		print "<td title='$predefinedColors[$row][$col]' onclick='setSelfColor(this)' style='background-color:rgb($predefinedColors[$row][$col]); width:25px; height:17px'></td>";
+d73 1
+a73 1
+	print "<tr><td style='nowrap'>$lang->{$name}</td><td><input name='$_' id='$_' onfocus='setSelf(this)' ondblclick='setColor(this)' type='input' size='10' value='$Obj->{colors}{$_}'/></td><td class='cursor' id='color$_' onclick='reloadColor(this)' style='background-color:rgb($Obj->{colors}{$_}); width:25px; border:thin solid #424242'></td></tr>";
+d76 1
+a76 1
+print "<tr><td class='nowrap'>$lang->{'Format2d Transparent'}</td><td><input name='transparent' id='transparent' onfocus='setSelf(this)' type='checkbox' $check value='1' /></td><td></td></tr>";
+d80 1
+a80 1
+	print "<tr><td style='nowrap'>$lang->{$name}</td><td><input name='$_' id='$_' onfocus='setSelf(this)' ondblclick='setColor(this)' type='input' size='10' value='$Obj->{colors}{$_}'/></td><td class='cursor' id='color$_' onclick='reloadColor(this)' style='background-color:rgb($Obj->{colors}{$_}); width:25px; border:thin solid #424242'></td></tr>";
+d85 1
+a85 1
+	print "<tr><td style='nowrap'>$lang->{$name}</td><td><input name='$_' id='$_' onfocus='setSelf(this)' ondblclick='setColor(this)' type='input' size='10' value='$Obj->{colors}{$_}'/></td><td class='cursor' id='color$_' onclick='reloadColor(this)' style='background-color:rgb($Obj->{colors}{$_}); width:25px; border:thin solid #424242'></td></tr>";
+d90 1
+a90 1
+	print "<tr><td class='nowrap'>$lang->{'Format2d Data item'} $_</td><td><input name='data$_' id='data$_' onfocus='setSelf(this)' ondblclick='setColor(this)' type='input' size='10' value='$Obj->{colors}{datas}[$_-1]'/></td><td class='cursor' id='colordata$_' onclick='reloadColor(this)' style='background-color:rgb($Obj->{colors}{datas}[$_-1]); width:25px; border:1px solid #424242'></td></tr>";
+a107 1
+			<td class="buttons"><input type="reset" name="reset" value="$lang->{'Reset'}" /></td>
+@
+
+
+1.4
+log
+@elements handling changes, format2d colors changes
+@
+text
+@d4 1
+a4 1
+# $Id: format2d_color_ed.pl,v 1.3 2003/09/26 12:21:32 jiri_schmid Exp $
+d50 2
+a51 2
+	for my $col (0..10) {
+		print "<td id='tc${row}$col' style='background-color:rgb($predefinedColors[$row][$col]); width:20px; height:20px'></td>";
+d90 1
+a90 1
+	print "<tr><td class='nowrap'>$lang->{'Format2d Data item'} $_</td><td><input name='data$_' id='data$_' onfocus='setSelf(this)' ondblclick='setColor(this)' type='input' size='10' value='$Obj->{colors}{datas}[$_-1]'/></td><td class='cursor' id='colordata$_' onclick='reloadColor(this)' style='background-color:rgb($Obj->{colors}{datas}[$_-1]); width:25px; border:thin solid #424242'></td></tr>";
+@
+
+
+1.3
+log
+@format2d added logo page, minor visual improvments on layout, color page
+@
+text
+@d4 1
+a4 1
+# $Id: format2d_color_ed.pl,v 1.2 2003/09/26 11:16:26 jiri_schmid Exp $
+d12 1
+a12 1
+use vars qw($ID $Obj $lang $saved $skinPath $imgType);
+d19 1
+a19 1
+my $split = "120,120,120";
+d25 1
+a25 1
+<td class="page_skeleton_ex" style='padding: 10px'>
+d27 1
+a27 1
+		<tr><td colspan='5' class='neutral_bold' style="text-align:left" class='nowrap'>$lang->{'Graph3d color'}:</td></tr>
+d43 14
+d60 6
+a65 1
+	<tr><td class='neutral_bold'>$lang->{'Format2d Items'}:</td><td></td><td style='text-align:right'><img class='cursor' src='${skinPath}img/delete.$imgType' title="$lang->{'Delete Active'}" onclick='emptyBin()'></td></tr>
+d67 3
+d71 1
+a71 1
+foreach('bgclr','fgclr'){
+d73 1
+a73 1
+	print "<tr><td style='nowrap'>$lang->{$name}</td><td><input name='$_' id='$_' onfocus='setSelf(this)' ondblclick='setColor(this)' type='input' size='15' value='$Obj->{colors}{$_}'/></td><td class='cursor' id='color$_' onclick='reloadColor(this)' style='background-color:rgb($Obj->{colors}{$_}); width:25px'></td></tr>";
+d75 2
+d80 1
+a80 1
+	print "<tr><td style='nowrap'>$lang->{$name}</td><td><input name='$_' id='$_' onfocus='setSelf(this)' ondblclick='setColor(this)' type='input' size='15' value='$Obj->{colors}{$_}'/></td><td class='cursor' id='color$_' onclick='reloadColor(this)' style='background-color:rgb($Obj->{colors}{$_}); width:25px'></td></tr>";
+d85 6
+a90 1
+	print "<tr><td style='nowrap'>$lang->{$name}</td><td><input name='$_' id='$_' onfocus='setSelf(this)' ondblclick='setColor(this)' type='input' size='15' value='$Obj->{colors}{$_}'/></td><td class='cursor' id='color$_' onclick='reloadColor(this)' style='background-color:rgb($Obj->{colors}{$_}); width:25px'></td></tr>";
+a91 1
+
+d93 3
+d98 1
+d105 1
+a105 1
+		<tr>	<td class="buttons"><input type="submit" name="Action" value="$lang->{'Save'}"/></td>
+d108 1
+a108 1
+			<td class="buttons"><input type="button" name="reset" value="$lang->{'Reset'}" onclick="self.frames['format'].location.reload(true)"/></td>
+d114 5
+d130 1
+a130 1
+foreach('bgclr','fgclr','labelclr','axislabelclr','textclr','borderclr'){
+d133 1
+@
+
+
+1.2
+log
+@format2d color tab implemented
+@
+text
+@d4 1
+a4 1
+# $Id: format2d_color_ed.pl,v 1.1 2003/09/25 15:05:24 jiri_schmid Exp $
+d19 1
+a19 1
+my $split = (defined $Obj->{colors}{default}) ? $Obj->{colors}{default} : "120,40,80";
+d27 1
+a27 1
+		<tr><td colspan='5' class='neutral_bold' style="text-align:left">$lang->{'Graph3d color'}:</td></tr>
+d29 1
+a29 1
+		<tr>	<td id='color' class='cursor' style='background-color:rgb($split); width:100px' title='$split' onclick='addColor(this)' rowspan='4'>&nbsp</td>
+d44 1
+a44 1
+<td class="page_skeleton_ex" style='padding: 10px; width:65%'>
+d49 1
+a49 1
+foreach('bgclr','fgclr','labelclr','axislabelclr','textclr','borderclr'){
+d53 11
+d69 1
+a69 1
+<td class="page_skeleton" colspan='2'>
+@
+
+
+1.1
+log
+@added files for 2d graph enhenced settings
+@
+text
+@d4 1
+a4 1
+# $Id: format2d_def_ed.pl,v 1.6 2003/09/25 11:53:46 jiri_schmid Exp $
+d12 1
+a12 1
+use vars qw($ID $Obj $lang $saved);
+d19 2
+d23 1
+a23 1
+<table class="page_skeleton" style='width:100%'>
+d26 29
+d57 1
+a57 1
+<tr class="page_skeleton" >
+d71 1
+d82 3
+@
+

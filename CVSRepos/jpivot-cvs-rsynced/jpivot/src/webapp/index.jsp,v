@@ -1,0 +1,126 @@
+head	1.3;
+access;
+symbols
+	jpivot_1_8_0:1.3
+	focus_1_6_0:1.3.0.4
+	jpivot_1_7_0:1.3
+	jpivot_1_6_0:1.3
+	jpivot_1_5_0:1.3.0.2
+	Root_jpivot_1_5_0:1.3
+	mondrian_xmla_2005_08_25:1.1.0.2
+	sourceforge_sync:1.3;
+locks; strict;
+comment	@# @;
+expand	@k@;
+
+
+1.3
+date	2005.09.08.22.14.36;	author sgwood;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2005.09.03.21.37.27;	author sgwood;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2005.07.05.14.19.55;	author avix;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.3
+log
+@Some explanation and XML/A example
+@
+text
+@<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN"
+     "http://www.w3.org/TR/REC-html40/strict.dtd">
+<%@@ taglib uri="http://www.tonbeller.com/jpivot" prefix="jp" %>
+<%@@ taglib uri="http://www.tonbeller.com/wcf" prefix="wcf" %>
+<%@@ taglib prefix="c" uri="http://java.sun.com/jstl/core" %>
+<html>
+<head>
+  <title>JPivot Demo</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+  <link rel="stylesheet" type="text/css" href="css/mdxtable.css">
+  <link rel="stylesheet" type="text/css" href="css/mdxnavi.css">
+</head>
+<body>
+<p>
+<h2>JPivot Demonstration</h2>
+<c:if test="${query01 != null}">
+  <jp:destroyQuery id="query01"/>
+</c:if>
+
+<h3>Using the Mondrian OLAP engine</h3>
+
+<ul>
+  <li><a href="testpage.jsp?query=mondrian">Slice and Dice with two hierarchies</a></li>
+  <li><a href="testpage.jsp?query=fourhier">...and with four hierachies</a></li>
+  <li><a href="test/param3.jsp?query=mondrian">Dynamic parameters with Mondrian</a></li>
+  <li><a href="testpage.jsp?query=arrows">Arrows in Cells</a></li>
+  <li><a href="testpage.jsp?query=colors">Colors in Cells</a></li>
+  <li><a href="testpage.jsp?query=testquery">Test data</a></li>
+  <li><a href="test/param1.jsp?query=testquery">Dynamic parameters with test data</a></li>
+</ul>
+<p/>
+
+<h3>Using XML/A</h3>
+<p/>
+XML/A is a Web services protocol and standard that allows JPivot to connect to Microsoft 
+Analysis Services and Mondrian on other machines. This example connects to Mondrian via
+XML/A where you are running JPivot.
+<p/>
+<ul>
+  <li><a href="testpage.jsp?query=mondrianXMLA">Slice and Dice with two hierarchies</a></li>
+</ul>
+<p/>
+
+
+</body>
+</html>
+@
+
+
+1.2
+log
+@JPivot Portlet
+@
+text
+@d15 1
+a15 1
+<h2>JPivot Demo</h2>
+d20 2
+d23 3
+a25 5
+  <li><a href="testpage.jsp?query=testquery">Testpage using testdata</a></li>
+  <li><a href="testpage.jsp?query=mondrian">Testpage using mondrian</a></li>
+  <li><a href="testpage.jsp?query=fourhier">Mondrian fourhier test</a></li>
+  <li><a href="test/param1.jsp?query=testquery">Parameters with builtin Testdata</a></li>
+  <li><a href="test/param3.jsp?query=mondrian">Parameters with Mondrian</a></li>
+d28 13
+d42 1
+a42 1
+<p>
+@
+
+
+1.1
+log
+@initial version
+@
+text
+@d3 3
+d16 3
+d26 2
+a27 2
+  <li><a href="testpage.jsp?query=arrows.jsp">Arrows in Cells</a></li>
+  <li><a href="testpage.jsp?query=colors.jsp">Colors in Cells</a></li>
+@
+

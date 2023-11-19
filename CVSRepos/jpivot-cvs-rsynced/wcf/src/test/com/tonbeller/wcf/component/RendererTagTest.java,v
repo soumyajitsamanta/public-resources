@@ -1,0 +1,60 @@
+head	1.1;
+access;
+symbols
+	jpivot_1_8_0:1.1
+	focus_1_6_0:1.1.0.6
+	wcf_1_7_0:1.1
+	wcf_1_6_0:1.1
+	jpivot_1_5_0:1.1.0.4
+	Root_jpivot_1_5_0:1.1
+	mondrian_xmla_2005_08_25:1.1.0.2
+	sourceforge_sync:1.1;
+locks; strict;
+comment	@# @;
+
+
+1.1
+date	2005.07.05.14.04.32;	author avix;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@initial version
+@
+text
+@package com.tonbeller.wcf.component;
+
+import java.net.URL;
+
+import junit.framework.TestCase;
+
+import org.jaxen.dom.DOMXPath;
+import org.w3c.dom.Document;
+
+import com.tonbeller.wcf.utils.XmlUtils;
+
+public class RendererTagTest extends TestCase {
+
+  public RendererTagTest(String name) {
+    super(name);
+  }
+
+  public void testSetXmlParameters() throws Exception {
+  	URL url = getClass().getResource("paramtest.xml");
+  	Document doc = XmlUtils.parse(url);
+  	RendererTag rt = new RendererTag();
+  	rt.parameters.put("param1", "value1");
+  	rt.setXmlParameters( doc);
+  	DOMXPath dx = new DOMXPath("/xform/node[@@attr1='value1']");
+  	assertEquals("param not set", 1, dx.selectNodes(doc).size());
+  	
+  }
+
+}
+@

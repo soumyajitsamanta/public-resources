@@ -1,0 +1,49 @@
+head	1.1;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.1
+date	2004.03.23.07.33.25;	author numberone;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@
+beard2/cached
+
+funkcni metoda 'start <report_id>' (krome samotneho vraceni dotazu)
+
+xml konfigurace prepsana na includovany .pm soubor
+
+do MData.pm pripravena metoda get_report a sql_gen pro cached
+@
+text
+@#!/usr/bin/perl -w
+
+use IO::Handle;
+use Socket;
+use Data::Dumper;
+use Storable qw(freeze thaw nstore_fd retrieve_fd);
+
+my $socket =  "../tmp/cached.sock";
+
+socket(SOCK,PF_UNIX,SOCK_STREAM,0) or die $!;
+connect(SOCK,sockaddr_un($socket)) or die $!;
+binmode(SOCK,":unix");
+
+nstore_fd \@@ARGV, \*SOCK;
+#IO::Handle::flush(SOCK); # important?
+
+my $thaw = eval { retrieve_fd(\*SOCK) };
+print Dumper($thaw);
+
+@

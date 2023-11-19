@@ -1,0 +1,760 @@
+head	1.18;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.18
+date	2004.08.04.15.12.50;	author numberone;	state Exp;
+branches;
+next	1.17;
+
+1.17
+date	2004.05.13.12.31.54;	author numberone;	state Exp;
+branches;
+next	1.16;
+
+1.16
+date	2004.05.13.07.56.00;	author numberone;	state Exp;
+branches;
+next	1.15;
+
+1.15
+date	2004.05.11.18.08.13;	author numberone;	state Exp;
+branches;
+next	1.14;
+
+1.14
+date	2004.05.10.13.14.30;	author numberone;	state Exp;
+branches;
+next	1.13;
+
+1.13
+date	2004.05.08.10.49.52;	author numberone;	state Exp;
+branches;
+next	1.12;
+
+1.12
+date	2004.04.30.14.12.10;	author numberone;	state Exp;
+branches;
+next	1.11;
+
+1.11
+date	2003.10.30.09.41.14;	author numberone;	state Exp;
+branches;
+next	1.10;
+
+1.10
+date	2003.10.29.12.26.13;	author numberone;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	2003.10.29.08.18.30;	author numberone;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	2003.10.29.06.59.08;	author numberone;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	2003.10.27.15.08.02;	author numberone;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	2003.09.15.08.20.04;	author numberone;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	2003.08.11.06.58.05;	author numberone;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2003.08.11.06.43.48;	author numberone;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2003.07.09.09.43.20;	author numberone;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2003.07.08.17.55.32;	author numberone;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2003.07.07.11.06.24;	author numberone;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.18
+log
+@
+Development moved to cobra server,
+
+only working releases will be uploaded to the public
+@
+text
+@#define PERL_NO_GET_CONTEXT
+#include "EXTERN.h"
+#include "perl.h"
+#include "XSUB.h"
+
+#include<stdio.h>
+#include "libdata/data.h"
+
+
+MODULE = Data	PACKAGE = Data
+
+void
+init(pkg,arg)
+	char* pkg
+	char* arg
+CODE:
+	data_init(arg);
+
+Data
+listen(pkg,unix_prefix,port)
+	char*	pkg
+	char*	unix_prefix
+	int		port
+PREINIT:
+	int		hack;
+CODE:
+	hack = (unix_prefix && *unix_prefix); // undef is "" ??
+	RETVAL = data_listen(hack ? unix_prefix : NULL,port);
+OUTPUT:
+	RETVAL
+
+int
+accept(server,tout)
+	Data	server
+	int		tout
+CODE:
+	RETVAL = data_accept(server,tout);
+OUTPUT:
+	RETVAL
+
+Data
+connect(pkg,host_unix,port)
+	char*	pkg
+	char*	host_unix
+	int		port
+CODE:
+	RETVAL = data_connect(host_unix,port);
+OUTPUT:
+	RETVAL
+
+void
+send(data,...)
+	Data	data
+PREINIT:
+	int  i;
+	STRLEN len;
+	void *ptr;
+CODE:
+	data_send_init(data,items - 1);
+	for(i=1;i<items;i++) {
+		if(SvIOK(ST(i))) {
+				data_send_int(data,SvIV(ST(i)));
+		} else {
+			if(SvOK(ST(i))) {
+				ptr = SvPV(ST(i),len);
+				data_send_string(data,ptr,len);
+			} else {
+				printf("Data::send() only SCALARs are supported");
+				exit(92);
+			}
+		}
+	}
+	data_send_flush(data);
+
+SV*
+recv(data)
+	Data	data
+PREINIT:
+	int	i,columns,n;
+	void *a = NULL;
+PPCODE:
+	// wait for row
+	columns = data_recv(data);
+
+	// not sure whether these are distinguishable
+	if(columns <= 0) XSRETURN_EMPTY;
+	//
+	if(columns <  0) XSRETURN_UNDEF;
+	if(columns == 0) XSRETURN_EMPTY;
+
+	// extract row to STACK @@array
+	EXTEND(SP,columns);
+	for(i=0;i<columns;i++) {
+		if(data_extract(data,&n,&a)) {
+			if(n == -1) PUSHs( &PL_sv_undef );
+			       else PUSHs(sv_2mortal(newSVpvn( a , n )));
+		} else {
+			PUSHs(sv_2mortal(newSViv( n )));
+		}
+	}
+
+	data_move(data);
+
+	// ok, row are extracted to STACK now
+	XSRETURN(columns);
+
+
+void
+DESTROY(data)
+	Data	data
+CODE:
+	data_close(data);
+	XSRETURN_EMPTY;
+
+int
+port(data)
+	Data	data
+CODE: 
+	RETVAL = data_port(data);
+OUTPUT:
+	RETVAL
+
+char*
+unix(data)
+	Data	data
+CODE: 
+	RETVAL = data_unix(data);
+OUTPUT:
+	RETVAL
+
+
+@
+
+
+1.17
+log
+@
+libData:
+
+  better bandwidth utilization:
+
+  0-199 ints: 1 byte
+  short ints: 1 + 2
+  32bit ints: 1 + 4
+  strings with length n < 40: 1 + n
+  strings n >= 40: 1 + 4 + n
+@
+text
+@d33 1
+a33 1
+accept(server)
+d35 1
+d37 1
+a37 1
+	RETVAL = data_accept(server);
+d86 2
+@
+
+
+1.16
+log
+@
+working bufferred (!) version of libData.
+
+handle data as chunks of 256 rows, sends them using one send(),
+reads with one recv(). this solves locking problem, while is
+still efficient enough.
+
+path-17x100k @@ 18s
+
+todo: send(n) may return <n, we should repeat { send }
+@
+text
+@d60 2
+a61 3
+		if(SvOK(ST(i))) {
+			ptr = SvPV(ST(i),len);
+			data_send_append(data,ptr,len);
+d63 7
+a69 1
+			data_send_append(data,NULL,0);
+d78 2
+a79 3
+	int	i,columns,len,string_len;
+	void *string;
+	byte *ptr;
+d82 1
+a82 1
+	columns = data_recv(data,&ptr,&len);
+d84 1
+d91 3
+a93 5
+		ptr = data_extract(data,ptr,&string,&string_len);
+
+		if(!string) {
+			if(string_len == -1) PUSHs(&PL_sv_undef);
+					        else PUSHs(sv_2mortal(newSViv(string_len)));
+d95 1
+a95 1
+			PUSHs(sv_2mortal(newSVpvn(string,string_len)));
+d99 1
+a99 1
+	data_move(data,ptr);
+@
+
+
+1.15
+log
+@
+Support for UNIX sockets in Data library. Runs 2 times faster now :-)
+
+inet: 1M @@ 95s
+
+unix: 1M @@ 47s
+
+Creates pipe in "/tmp/.bee-$$-".(i++), removes them after connection
+success (pipe still work)
+@
+text
+@a81 4
+//	if(columns <= 0) {
+//		// fix: empty or undef?
+//		XSRETURN_EMPTY;
+//	}
+a86 1
+//	while((ptr = data_extract(data,ptr,&string,&string_len))) {
+@
+
+
+1.14
+log
+@
+8 hours of debugging, several bugs solved.
+
+path-17x100k successed now.
+
+calls one send() and min. 2 recv() per row
+
+speed: 1000000 x put("") in 38s (70k rps)
+       path-17x100k in 120s (833 rps)
+
+needs modifications to work under windows
+@
+text
+@d20 1
+a20 1
+listen(pkg,port)
+d22 1
+d24 2
+d27 2
+a28 1
+	RETVAL = data_listen(port);
+d41 1
+a41 1
+connect(pkg,host,port)
+d43 1
+a43 1
+	char*	host
+d46 1
+a46 1
+	RETVAL = data_connect(host,port);
+d121 10
+@
+
+
+1.13
+log
+@
+My last libData patch didn't solve bug, and was 5x slower..
+
+reverting to previous version of libData.. :-(
+@
+text
+@d12 7
+d69 3
+a71 2
+	int	i,columns,len,ret;
+	void *buff;
+d73 2
+a74 11
+	// are here any data in buffer
+	columns = data_is_row(data);
+
+	if(columns == -1) {
+
+		if(data->offset) {
+			data->len -= data->offset;
+			memmove((char*)data->buffer,
+					(char*)data->buffer + data->offset,data->len);
+			data->offset = 0;
+		}
+d76 6
+a81 14
+		// cycle until some row is entirely readed
+		do {
+			ret = data_recv(data);
+			// try again
+			columns = data_is_row(data);
+			if(columns == -1 && !ret) {
+				if(data->len) { 
+					printf("EOF: o=%d, l=%d\n",data->offset,data->len);
+					exit(23);
+				}
+				XSRETURN_EMPTY;
+			}
+		} while(columns == -1);
+	}
+d86 6
+a91 4
+		data->offset += data_extract(data,&buff,&len);
+		if(!buff) {
+			if(len == -1) PUSHs(&PL_sv_undef);
+					 else PUSHs(sv_2mortal(newSViv(len)));
+d93 1
+a93 1
+			PUSHs(sv_2mortal(newSVpvn(buff,len)));
+d96 2
+a97 2
+	if(((unsigned char*)data->buffer)[data->offset++] 
+			!= LEN_ENDOFROW) exit(22);
+a116 1
+
+@
+
+
+1.12
+log
+@
+new libData solving cycles in bee communication graph (i hope).
+@
+text
+@d62 2
+a63 3
+	int	i,columns,len,string_len;
+	void *string;
+	byte *ptr;
+d65 2
+a66 2
+	// wait for row
+	columns = data_recv(data,&ptr,&len);
+d68 22
+a89 3
+	if(columns <= 0) {
+		// fix: empty or undef?
+		XSRETURN_EMPTY;
+d95 4
+a98 6
+		ptr = data_extract(data,ptr,&string,&string_len);
+//	while((ptr = data_extract(data,ptr,&string,&string_len))) {
+
+		if(!string) {
+			if(string_len == -1) PUSHs(&PL_sv_undef);
+					        else PUSHs(sv_2mortal(newSViv(string_len)));
+d100 1
+a100 1
+			PUSHs(sv_2mortal(newSVpvn(string,string_len)));
+d103 2
+a104 2
+
+	data_move(data,ptr);
+@
+
+
+1.11
+log
+@Data no warnings.. i hope..
+@
+text
+@d62 3
+a64 2
+	int	i,columns,len,ret;
+	void *buff;
+d66 2
+a67 2
+	// are here any data in buffer
+	columns = data_is_row(data);
+d69 3
+a71 22
+	if(columns == -1) {
+
+		if(data->offset) {
+			data->len -= data->offset;
+			memmove((char*)data->buffer,
+					(char*)data->buffer + data->offset,data->len);
+			data->offset = 0;
+		}
+
+		// cycle until some row is entirely readed
+		do {
+			ret = data_recv(data);
+			// try again
+			columns = data_is_row(data);
+			if(columns == -1 && !ret) {
+				if(data->len) { 
+					printf("EOF: o=%d, l=%d\n",data->offset,data->len);
+					exit(23);
+				}
+				XSRETURN_EMPTY;
+			}
+		} while(columns == -1);
+d77 6
+a82 4
+		data->offset += data_extract(data,&buff,&len);
+		if(!buff) {
+			if(len == -1) PUSHs(&PL_sv_undef);
+					 else PUSHs(sv_2mortal(newSViv(len)));
+d84 1
+a84 1
+			PUSHs(sv_2mortal(newSVpvn(buff,len)));
+d87 2
+a88 2
+	if(((unsigned char*)data->buffer)[data->offset++] 
+			!= LEN_ENDOFROW) exit(22);
+@
+
+
+1.10
+log
+@Data -- automatic port allocation
+@
+text
+@d115 1
+a123 2
+
+
+@
+
+
+1.9
+log
+@XSRETURN ok, debug prints removed
+@
+text
+@d116 10
+@
+
+
+1.8
+log
+@libNet -- no warnings..
+@
+text
+@d107 1
+a107 1
+	XSRETURN(0);
+a113 1
+	printf("DESTROY\n");
+@
+
+
+1.7
+log
+@shit, i copied Data to Net subdir, this is fix
+@
+text
+@d62 1
+a62 1
+	int	i,columns,len,code,ret;
+d107 1
+@
+
+
+1.6
+log
+@data -- implementation
+@
+text
+@d1 1
+d6 2
+a7 1
+#include "ppport.h"
+a8 1
+#include <libdata/data.h>
+d10 1
+a10 7
+#include "const-c.inc"
+
+#include "libdata/data.h"  
+
+MODULE = Data		PACKAGE = Data		
+
+INCLUDE: const-xs.inc
+d72 2
+a73 1
+			memmove(data->buffer,data->buffer + data->offset,data->len);
+d87 1
+a87 1
+				return XSRETURN_EMPTY;
+@
+
+
+1.5
+log
+@merging Data to cvs
+@
+text
+@d16 104
+@
+
+
+1.4
+log
+@Data update
+@
+text
+@a15 103
+
+Data
+listen(pkg,port)
+	char*	pkg
+	int		port
+CODE:
+	RETVAL = data_listen(port);
+OUTPUT:
+	RETVAL
+
+int
+accept(server)
+	Data	server
+CODE:
+	RETVAL = data_accept(server);
+OUTPUT:
+	RETVAL
+
+Data
+connect(pkg,host,port)
+	char*	pkg
+	char*	host
+	int		port
+CODE:
+	RETVAL = data_connect(host,port);
+OUTPUT:
+	RETVAL
+
+void
+send(data,...)
+	Data	data
+PREINIT:
+	int  i;
+	STRLEN len;
+	void *ptr;
+CODE:
+	data_send_init(data,items - 1);
+	for(i=1;i<items;i++) {
+		if(SvOK(ST(i))) {
+			ptr = SvPV(ST(i),len);
+			data_send_append(data,ptr,len);
+		} else {
+			data_send_append(data,NULL,0);
+		}
+	}
+	data_send_flush(data);
+
+SV*
+recv(data)
+	Data	data
+PREINIT:
+	int	i,columns,len,code,ret;
+	void *buff;
+PPCODE:
+	// are here any data in buffer
+	columns = data_is_row(data);
+
+	if(columns == -1) {
+
+		if(data->offset) {
+			data->len -= data->offset;
+			memmove(data->buffer,data->buffer + data->offset,data->len);
+			data->offset = 0;
+		}
+
+		// cycle until some row is entirely readed
+		do {
+			ret = data_recv(data);
+			// try again
+			columns = data_is_row(data);
+			if(columns == -1 && !ret) {
+				if(data->len) { 
+					printf("EOF: o=%d, l=%d\n",data->offset,data->len);
+					exit(23);
+				}
+				return XSRETURN_EMPTY;
+			}
+		} while(columns == -1);
+	}
+
+	// extract row to STACK @@array
+	EXTEND(SP,columns);
+	for(i=0;i<columns;i++) {
+		data->offset += data_extract(data,&buff,&len);
+		if(!buff) {
+			if(len == -1) PUSHs(&PL_sv_undef);
+					 else PUSHs(sv_2mortal(newSViv(len)));
+		} else {
+			PUSHs(sv_2mortal(newSVpvn(buff,len)));
+		}
+	}
+	if(((unsigned char*)data->buffer)[data->offset++] 
+			!= LEN_ENDOFROW) exit(22);
+
+	// ok, row are extracted to STACK now
+
+
+void
+DESTROY(data)
+	Data	data
+CODE:
+	data_close(data);
+
+@
+
+
+1.3
+log
+@send/recv bugs in buffers, minimum syscalls
+@
+text
+@a116 1
+	printf("DESTROY\n");
+@
+
+
+1.2
+log
+@send/recv, in C, optimized, LEN_ code, small integers
+@
+text
+@d54 1
+a54 3
+		if(ST(i) == PL_sv_undef) 
+			data_send_append(data,NULL,0);
+		else {
+d57 2
+a60 1
+//	foreach item data_send_append(data,&item,item->len);
+d102 1
+a102 1
+					 else PUSHs(sv_2mortal(newSVnv(len)));
+d112 7
+@
+
+
+1.1
+log
+@Data module added (empty)
+@
+text
+@d16 98
+@
+

@@ -1,0 +1,402 @@
+head	1.2;
+access;
+symbols;
+locks; strict;
+comment	@ * @;
+
+
+1.2
+date	2003.10.27.15.28.43;	author numberone;	state dead;
+branches;
+next	1.1;
+
+1.1
+date	2003.10.27.14.58.59;	author numberone;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@cleaning Data out from Net
+@
+text
+@#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+#include "data.h"
+
+// htonl functions
+#ifdef WIN32
+#include<winsock.h>
+#else
+#include <netinet/in.h>
+#include <netdb.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
+#include <signal.h>
+#include <unistd.h>
+#include <fcntl.h>
+#include <errno.h>
+#endif
+
+#define PERROR(fx) { perror(fx); exit(1); }
+
+//#define DEBUG(format,args...)
+#define QUIET 
+#define DEBUG 
+#define PRINT printf
+
+#ifndef uint32_t
+typedef unsigned int uint32_t;
+#endif
+                                                                                
+static void NETERROR(char *fx) {
+#ifdef WIN32
+    fprintf(stderr,"%s: %d\n",fx,WSAGetLastError());
+    exit(1);
+#else
+    perror(fx);
+    exit(1);
+#endif
+}
+                                                                                
+
+#define BUFF_INIT 4096
+#define BUFF_PAGE 4096
+
+static void  buff_init(void **buff,int *pool,int *len) {
+	*len = 0;
+	if(*buff) return;
+	*buff = malloc(*pool = BUFF_INIT);
+}
+static void *buff_extend(void **buff,int *pool,int *len,int size) {
+	int want = *len + size;
+	if(want > *pool) {
+		*pool += (want > BUFF_PAGE) ? 
+					BUFF_PAGE * (1 + (int)(want/BUFF_PAGE)) : BUFF_PAGE;
+		*buff = realloc(*buff,*pool);
+	}
+	return ((char*)*buff) + *len; // start of free area
+}
+static void *buff_insert(void **buff,int *pool,int *len,int size) {
+	void *ptr = buff_extend(buff,pool,len,size);
+	*len += size;
+	return ptr;
+}
+static void buff_clear(void **buff,int *pool,int *len) {
+	*len = 0;
+}
+static void buff_free(void **buff,int *pool,int *len) {
+	if(*buff) free(*buff);
+	*len = *pool = 0;
+}
+
+
+
+Data data_listen(int port) {
+	Data server;
+#ifdef WIN32
+    SOCKADDR_IN *sin;
+	unsigned int dontblock = 1;
+#else
+    struct sockaddr_in *sin;
+#endif
+    int  sock;
+
+	sock = socket(AF_INET,SOCK_STREAM,0);
+	if(sock == -1) exit(11); /* ??? */
+
+	sin = malloc(sizeof(*sin));
+	sin->sin_family = AF_INET;
+	sin->sin_addr.s_addr = INADDR_ANY;
+	sin->sin_port = htons((short)port);
+
+    if(bind(sock,(struct sockaddr*)sin,sizeof(*sin))) NETERROR("bind()");
+
+    if(listen(sock,128) == -1) NETERROR("listen()");
+
+#ifdef WIN32
+	if(ioctlsocket(sock,FIONBIO,&dontblock)) NETERROR("ioctlsocket()");
+#else
+    if(fcntl(sock, F_SETFL, O_NDELAY) < 0) {
+        perror("Can't set server data socket to non-blocking");
+        exit(19);
+    }
+#endif
+
+	server = calloc(1,sizeof(*server));
+	server->sock = 0;
+	server->sin  = sin;
+	server->serversock = sock;
+	return server;
+}
+
+
+int data_accept(Data data) {
+    int sock;
+#ifdef WIN32
+    SOCKADDR_IN *sin;
+    int sin_len = sizeof(SOCKADDR_IN);
+    sin = (SOCKADDR_IN *)data->sin;
+#else
+    struct sockaddr_in *sin;
+    int sin_len = sizeof(struct sockaddr_in);
+    sin = (struct sockaddr_in *)data->sin;
+#endif
+
+	if(!data->serversock) exit(14);
+	if(data->sock) return 2; /* already connected */
+
+    if(!sin) exit(5); // doing accept on non-server socket
+
+	sock = accept(data->serversock,(void*)sin,&sin_len);
+
+    if(sock == -1) {
+#ifdef WIN32
+        if(WSAGetLastError() == WSAEWOULDBLOCK) return 0;
+#else
+        if(errno == EAGAIN) return 0;
+#endif
+		else exit(12);
+    }
+
+#ifdef WIN32
+	closesocket(data->serversock);
+#else
+	close(data->serversock);
+#endif
+
+	data->serversock = 0;
+
+	data->sock = sock;
+
+	// buffers..., init
+	buff_init(&data->buffer,&data->pool,&data->len);
+	return 1;
+}
+
+
+Data data_connect(const char *host,int port) {
+#ifdef WIN32
+    LPHOSTENT hp;
+    SOCKADDR_IN sin;
+#else
+    struct  hostent *hp;
+    struct sockaddr_in sin;
+#endif
+	Data data;
+    int sock;
+
+    sock = socket(AF_INET,SOCK_STREAM,0);
+    if(sock == -1) exit(13);
+
+    if(!(hp = gethostbyname(host))) {
+#ifdef WIN32
+        fprintf(stderr,"gethostbyname(): %d\n",WSAGetLastError());
+#else
+        herror("gethostbyname");
+#endif
+        exit(1);
+    }
+                                                                                
+    sin.sin_family = AF_INET;
+    sin.sin_addr = **((struct in_addr **)hp->h_addr_list);
+    sin.sin_port = htons((short)port);
+
+    if(connect(sock,(struct sockaddr*)&sin,sizeof(sin))) {
+        fprintf(stderr,"connect('%s',%d)\n",host,port);
+        NETERROR("connect()");
+    }
+
+	data = calloc(1,sizeof(*data));
+	data->sock = sock;
+
+	// buffers..., init
+	buff_init(&data->buffer,&data->pool,&data->len);
+
+	return data;
+}
+
+//void *send_buff = NULL;
+//int   send_pool = 0; // size of malloced buffer
+//int	  send_len  = 0; // real data length
+
+void data_send_init(Data data,int cols) {
+	if(!data->send_buff) 
+		buff_init(&data->send_buff,&data->send_pool,&data->send_len);
+}
+
+void data_send_append(Data data,char *col,int len) {
+	unsigned char code = LEN_RESERVED;
+	unsigned char *buff = NULL; 
+	int buff_len = 0;
+
+	if(len <= 0) {
+		if(len < 0) exit(18);
+		code = col ? LEN_EMPTY : LEN_UNDEF;
+	}
+	if(len == 1 && isdigit(col[0])) {
+		code = LEN_0 + (col[0] - '0');
+	}
+	if(len == 2 && isdigit(col[0]) && isdigit(col[1])) {
+		code = LEN_00 + 10*(col[0] - '0') + (col[1] - '0');
+	}
+	if(code) {
+		buff = buff_insert(&data->send_buff,&data->send_pool,
+						  &data->send_len,buff_len = 1);
+		*buff = code;
+	}
+	if(!code) {
+		if(len <= LEN_MAXLEN) {
+			buff = buff_insert(&data->send_buff, &data->send_pool,
+							   &data->send_len, buff_len = 1 + len );
+			*buff = code = len;
+			memcpy(buff + 1, col, len);
+		} else {
+			uint32_t len32 = htonl(len);
+			buff = buff_insert(&data->send_buff, &data->send_pool,
+							   &data->send_len, buff_len = 1 + 4 + len );
+			*buff = code = LEN_32BIT;
+			memcpy(buff + 1, &len32, 4);
+			memcpy(buff + 5, col, len);
+		}
+	}
+}
+
+/*static void write2(int fd,unsigned char *buff,int len) {
+	int i;
+	printf(">>> write(%d):\n",len);
+	for(i=0;i<len;i++) {
+		printf("%3d ",buff[i]);
+		if(i%20==19) printf("\n");
+	}
+	write(fd,buff,len);
+	printf("<<<\n");
+}*/
+
+void data_send_flush(Data data) {
+	unsigned char *ptr = buff_insert(&data->send_buff,
+									 &data->send_pool,&data->send_len,1);
+	*ptr = LEN_ENDOFROW;
+	if(data->send_len >= BUFF_PAGE) {
+		write(data->sock,data->send_buff,data->send_len);
+		data->send_len = 0;
+	}
+}
+
+void data_close(Data data) {
+	if(data->send_len) write(data->sock,data->send_buff,data->send_len);
+	buff_free(&data->send_buff,&data->send_pool,&data->send_len);
+	buff_free(&data->buffer,&data->pool,&data->len);
+#ifdef WIN32
+	closesocket(data->sock);
+#else
+	close(data->sock);
+#endif
+	free(data);
+}
+
+int data_recv(Data data) {
+	int len;
+
+	buff_extend(&(void*)(data->buffer),&data->pool,&data->len,BUFF_PAGE);
+
+	len = read(data->sock,(char*)data->buffer + data->len,BUFF_PAGE);
+	if(len < 0) exit(17);
+
+	data->len += len;
+	return len;
+}
+
+
+int data_is_row(Data data) {
+	unsigned char code, *ptr;
+	uint32_t len32;
+	int row, len, columns = 0;
+
+	len = data->len - data->offset;
+	if(len < 1) return -1;
+
+	ptr = (char*)data->buffer + data->offset;
+
+	while((len > 0) && ((code=(*ptr)) != LEN_ENDOFROW)) {
+		if(code >= 1 && code <= LEN_MAXLEN) row = code;
+		if(code == LEN_32BIT) {
+			memcpy(&len32,ptr+1,4);
+			row = 4 + ntohl(len32);
+		}
+		if(code >= LEN_0 && code <= LEN_99) row = 0;
+		if(code == LEN_EMPTY || code == LEN_UNDEF) row = 0;
+
+		if(row == -1) exit(20); // unknown code
+
+		len -= 1 + row;
+		ptr += 1 + row;
+		columns++;
+	}
+	return ((len > 0) && ((*ptr) == LEN_ENDOFROW)) ? columns : -1;
+}
+
+static const char *numbers = "00010203040506070809";
+
+int data_extract(Data data,void **buff,int *len) {
+	uint32_t len32;
+	unsigned char *ptr = (char*)data->buffer + data->offset;
+	unsigned char code = *ptr;
+
+	if(code >= 1 && code <= LEN_MAXLEN) {
+		*buff = ptr + 1;
+		*len = code;
+		return 1 + code;
+	}
+	if(code == LEN_32BIT) {
+		memcpy(&len32,ptr+1,4);
+		*len  = ntohl(len32);
+		*buff = ptr + 1 + 4;	
+		return 1 + 4 + (*len);
+	}
+	if(code >= LEN_0 && code <= LEN_9) {
+		*buff = NULL; *len = code - LEN_0;
+		return 1;
+	}
+	if(code >= LEN_00 && code <= LEN_09) {
+		*buff = (void*)(numbers + 2*(code - LEN_00));
+		*len = 2;
+		return 1;
+	}
+	if(code >= LEN_10 && code <= LEN_99) {
+		*buff = NULL; *len = 10 + code - LEN_10;
+		return 1;
+	}
+	if(code == LEN_EMPTY) {
+		*buff = (void*)numbers; *len = 0;
+		return 1;
+	}
+	if(code == LEN_UNDEF) {
+		*buff = NULL;
+		*len = -1;
+		return 1;
+	}
+
+	printf("error: code=%d\n",code);
+	exit(21);
+}
+
+
+@
+
+
+1.1
+log
+@Data: files added
+@
+text
+@@
+

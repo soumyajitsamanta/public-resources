@@ -1,0 +1,55 @@
+head	1.2;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2008.05.17.15.40.42;	author fsaz;	state dead;
+branches;
+next	1.1;
+
+1.1
+date	2005.11.28.14.39.23;	author fsaz;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@borrando viejos
+@
+text
+@/*
+ * Created on 18-jul-2005
+ *
+ * Index.java
+ */
+package es.aeat.eett.infoRubik.index.index_core;
+
+import es.aeat.eett.infoRubik.reports.Report;
+
+
+/**
+ * @@author f00992
+ *
+ */
+public interface Index {
+//	public String getCaption();
+	public void createFileOut(Report report) throws Exception;
+}
+@
+
+
+1.1
+log
+@*** empty log message ***
+@
+text
+@@
+

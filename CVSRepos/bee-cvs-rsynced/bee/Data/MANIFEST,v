@@ -1,0 +1,108 @@
+head	1.4;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.4
+date	2003.10.27.15.08.02;	author numberone;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2003.08.11.06.58.05;	author numberone;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2003.07.09.11.18.02;	author numberone;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2003.07.07.11.06.24;	author numberone;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.4
+log
+@shit, i copied Data to Net subdir, this is fix
+@
+text
+@Changes
+Data.pm
+Data.xs
+Makefile.PL
+MANIFEST
+README
+libdata/Makefile.PL
+libdata/data.c
+libdata/data.h
+typemap
+@
+
+
+1.3
+log
+@merging Data to cvs
+@
+text
+@a5 1
+ppport.h
+a10 3
+t/1.t
+fallback/const-c.inc
+fallback/const-xs.inc
+@
+
+
+1.2
+log
+@send/recv read(4096), write(4096)
+@
+text
+@a0 2
+README
+MANIFEST
+d2 2
+d5 1
+a5 2
+Data.xs
+Data.pm
+d7 1
+a7 3
+fallback/const-c.inc
+fallback/const-xs.inc
+typemap
+d11 1
+d13 2
+@
+
+
+1.1
+log
+@Data module added (empty)
+@
+text
+@d1 2
+d4 2
+a6 3
+Data.xs
+Makefile.PL
+MANIFEST
+d8 3
+a10 1
+README
+a13 1
+typemap
+a14 2
+fallback/const-c.inc
+fallback/const-xs.inc
+@
+

@@ -1,0 +1,3905 @@
+head	1.91;
+access;
+symbols
+	start:1.1.1.1 vendor:1.1.1;
+locks; strict;
+comment	@# @;
+
+
+1.91
+date	2003.10.16.14.08.51;	author jiri_schmid;	state dead;
+branches;
+next	1.90;
+
+1.90
+date	2003.10.04.08.14.34;	author michald;	state Exp;
+branches;
+next	1.89;
+
+1.89
+date	2003.10.02.14.44.42;	author jiri_schmid;	state Exp;
+branches;
+next	1.88;
+
+1.88
+date	2003.10.01.15.29.37;	author jiri_schmid;	state Exp;
+branches;
+next	1.87;
+
+1.87
+date	2003.09.24.13.40.06;	author jiri_schmid;	state Exp;
+branches;
+next	1.86;
+
+1.86
+date	2003.09.23.13.06.42;	author jiri_schmid;	state Exp;
+branches;
+next	1.85;
+
+1.85
+date	2003.09.18.14.10.45;	author jiri_schmid;	state Exp;
+branches;
+next	1.84;
+
+1.84
+date	2003.09.15.10.46.07;	author jiri_schmid;	state Exp;
+branches;
+next	1.83;
+
+1.83
+date	2003.09.11.16.22.57;	author jiri_schmid;	state Exp;
+branches;
+next	1.82;
+
+1.82
+date	2003.09.01.15.03.39;	author jiri_schmid;	state Exp;
+branches;
+next	1.81;
+
+1.81
+date	2003.09.01.12.40.05;	author jiri_schmid;	state Exp;
+branches;
+next	1.80;
+
+1.80
+date	2003.08.25.15.09.09;	author jiri_schmid;	state Exp;
+branches;
+next	1.79;
+
+1.79
+date	2003.08.22.16.00.53;	author jiri_schmid;	state Exp;
+branches;
+next	1.78;
+
+1.78
+date	2003.08.21.14.23.28;	author jiri_schmid;	state Exp;
+branches;
+next	1.77;
+
+1.77
+date	2003.08.20.14.23.41;	author jiri_schmid;	state Exp;
+branches;
+next	1.76;
+
+1.76
+date	2003.08.19.13.05.55;	author jiri_schmid;	state Exp;
+branches;
+next	1.75;
+
+1.75
+date	2003.08.18.13.17.09;	author jiri_schmid;	state Exp;
+branches;
+next	1.74;
+
+1.74
+date	2003.08.14.16.26.54;	author jiri_schmid;	state Exp;
+branches;
+next	1.73;
+
+1.73
+date	2003.08.14.12.43.47;	author jiri_schmid;	state Exp;
+branches;
+next	1.72;
+
+1.72
+date	2003.08.12.15.05.58;	author jiri_schmid;	state Exp;
+branches;
+next	1.71;
+
+1.71
+date	2003.08.12.14.09.45;	author jiri_schmid;	state Exp;
+branches;
+next	1.70;
+
+1.70
+date	2003.08.05.12.49.44;	author jiri_schmid;	state Exp;
+branches;
+next	1.69;
+
+1.69
+date	2003.07.25.09.28.48;	author jiri_schmid;	state Exp;
+branches;
+next	1.68;
+
+1.68
+date	2003.07.24.10.37.48;	author jiri_schmid;	state Exp;
+branches;
+next	1.67;
+
+1.67
+date	2003.07.23.11.44.52;	author jiri_schmid;	state Exp;
+branches;
+next	1.66;
+
+1.66
+date	2003.07.22.15.13.03;	author jiri_schmid;	state Exp;
+branches;
+next	1.65;
+
+1.65
+date	2003.07.22.08.47.56;	author jiri_schmid;	state Exp;
+branches;
+next	1.64;
+
+1.64
+date	2003.07.18.10.50.59;	author jiri_schmid;	state Exp;
+branches;
+next	1.63;
+
+1.63
+date	2003.07.14.11.52.23;	author jiri_schmid;	state Exp;
+branches;
+next	1.62;
+
+1.62
+date	2003.07.11.16.06.34;	author jiri_schmid;	state Exp;
+branches;
+next	1.61;
+
+1.61
+date	2003.07.11.16.00.49;	author jiri_schmid;	state Exp;
+branches;
+next	1.60;
+
+1.60
+date	2003.07.11.05.40.54;	author michald;	state Exp;
+branches;
+next	1.59;
+
+1.59
+date	2003.07.10.13.00.00;	author jiri_schmid;	state Exp;
+branches;
+next	1.58;
+
+1.58
+date	2003.07.09.15.30.14;	author jiri_schmid;	state Exp;
+branches;
+next	1.57;
+
+1.57
+date	2003.07.09.09.28.10;	author jiri_schmid;	state Exp;
+branches;
+next	1.56;
+
+1.56
+date	2003.07.08.07.12.02;	author jiri_schmid;	state Exp;
+branches;
+next	1.55;
+
+1.55
+date	2003.07.07.14.17.10;	author jiri_schmid;	state Exp;
+branches;
+next	1.54;
+
+1.54
+date	2003.07.04.14.29.27;	author jiri_schmid;	state Exp;
+branches;
+next	1.53;
+
+1.53
+date	2003.07.02.13.44.29;	author jiri_schmid;	state Exp;
+branches;
+next	1.52;
+
+1.52
+date	2003.06.26.09.31.40;	author jiri_schmid;	state Exp;
+branches;
+next	1.51;
+
+1.51
+date	2003.06.24.15.17.39;	author jiri_schmid;	state Exp;
+branches;
+next	1.50;
+
+1.50
+date	2003.06.19.15.28.42;	author jiri_schmid;	state Exp;
+branches;
+next	1.49;
+
+1.49
+date	2003.06.19.14.59.41;	author jiri_schmid;	state Exp;
+branches;
+next	1.48;
+
+1.48
+date	2003.06.17.08.45.46;	author jiri_schmid;	state Exp;
+branches;
+next	1.47;
+
+1.47
+date	2003.06.16.11.09.08;	author jiri_schmid;	state Exp;
+branches;
+next	1.46;
+
+1.46
+date	2003.06.13.15.57.03;	author jiri_schmid;	state Exp;
+branches;
+next	1.45;
+
+1.45
+date	2003.06.02.12.09.02;	author jiri_schmid;	state Exp;
+branches;
+next	1.44;
+
+1.44
+date	2003.05.30.12.39.20;	author jiri_schmid;	state Exp;
+branches;
+next	1.43;
+
+1.43
+date	2003.05.30.09.13.25;	author jiri_schmid;	state Exp;
+branches;
+next	1.42;
+
+1.42
+date	2003.05.28.07.34.14;	author jiri_schmid;	state Exp;
+branches;
+next	1.41;
+
+1.41
+date	2003.05.27.14.12.05;	author jiri_schmid;	state Exp;
+branches;
+next	1.40;
+
+1.40
+date	2003.05.27.08.42.28;	author jiri_schmid;	state Exp;
+branches;
+next	1.39;
+
+1.39
+date	2003.05.26.15.01.23;	author jiri_schmid;	state Exp;
+branches;
+next	1.38;
+
+1.38
+date	2003.05.23.15.03.31;	author jiri_schmid;	state Exp;
+branches;
+next	1.37;
+
+1.37
+date	2003.05.21.15.00.37;	author jiri_schmid;	state Exp;
+branches;
+next	1.36;
+
+1.36
+date	2003.05.21.11.39.42;	author jiri_schmid;	state Exp;
+branches;
+next	1.35;
+
+1.35
+date	2003.05.21.08.04.57;	author michald;	state Exp;
+branches;
+next	1.34;
+
+1.34
+date	2003.05.19.14.18.21;	author jiri_schmid;	state Exp;
+branches;
+next	1.33;
+
+1.33
+date	2003.05.14.15.36.44;	author jiri_schmid;	state Exp;
+branches;
+next	1.32;
+
+1.32
+date	2003.05.14.14.28.18;	author jiri_schmid;	state Exp;
+branches;
+next	1.31;
+
+1.31
+date	2003.05.13.15.18.56;	author jiri_schmid;	state Exp;
+branches;
+next	1.30;
+
+1.30
+date	2003.05.08.07.42.43;	author michald;	state Exp;
+branches;
+next	1.29;
+
+1.29
+date	2003.05.07.14.24.32;	author jiri_schmid;	state Exp;
+branches;
+next	1.28;
+
+1.28
+date	2003.05.07.13.11.47;	author jiri_schmid;	state Exp;
+branches;
+next	1.27;
+
+1.27
+date	2003.05.06.15.07.06;	author jiri_schmid;	state Exp;
+branches;
+next	1.26;
+
+1.26
+date	2003.05.05.15.16.20;	author jiri_schmid;	state Exp;
+branches;
+next	1.25;
+
+1.25
+date	2003.05.05.06.41.42;	author michald;	state Exp;
+branches;
+next	1.24;
+
+1.24
+date	2003.04.30.09.53.35;	author jiri_schmid;	state Exp;
+branches;
+next	1.23;
+
+1.23
+date	2003.04.25.11.27.20;	author jiri_schmid;	state Exp;
+branches;
+next	1.22;
+
+1.22
+date	2003.04.24.11.28.52;	author jiri_schmid;	state Exp;
+branches;
+next	1.21;
+
+1.21
+date	2003.04.23.14.38.57;	author jiri_schmid;	state Exp;
+branches;
+next	1.20;
+
+1.20
+date	2003.04.22.15.29.14;	author jiri_schmid;	state Exp;
+branches;
+next	1.19;
+
+1.19
+date	2003.03.25.15.37.35;	author jiri_schmid;	state Exp;
+branches;
+next	1.18;
+
+1.18
+date	2003.03.24.12.17.43;	author jiri_schmid;	state Exp;
+branches;
+next	1.17;
+
+1.17
+date	2003.03.10.16.14.00;	author jiri_schmid;	state Exp;
+branches;
+next	1.16;
+
+1.16
+date	2003.03.06.15.52.14;	author jiri_schmid;	state Exp;
+branches;
+next	1.15;
+
+1.15
+date	2003.03.03.16.43.57;	author jiri_schmid;	state Exp;
+branches;
+next	1.14;
+
+1.14
+date	2003.02.26.13.21.32;	author jiri_schmid;	state Exp;
+branches;
+next	1.13;
+
+1.13
+date	2003.02.25.16.46.02;	author jiri_schmid;	state Exp;
+branches;
+next	1.12;
+
+1.12
+date	2003.02.25.13.57.40;	author jiri_schmid;	state Exp;
+branches;
+next	1.11;
+
+1.11
+date	2003.02.20.14.44.49;	author jiri_schmid;	state Exp;
+branches;
+next	1.10;
+
+1.10
+date	2003.02.19.16.06.48;	author jiri_schmid;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	2003.02.19.13.11.14;	author jiri_schmid;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	2003.02.17.16.16.53;	author jiri_schmid;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	2003.01.26.14.16.27;	author michald;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	2003.01.16.17.20.19;	author spanhel;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	2002.11.01.11.49.39;	author spanhel;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2002.10.25.15.05.21;	author spanhel;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2002.10.25.14.03.20;	author spanhel;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2002.10.05.17.32.02;	author michald;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2002.09.24.01.56.42;	author michald;	state Exp;
+branches
+	1.1.1.1;
+next	;
+
+1.1.1.1
+date	2002.09.24.01.56.42;	author michald;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.91
+log
+@mod-perl implementation stage 1, rebuilding global vars in .pl to global pointers
+@
+text
+@#-----------------------------------------------------
+#  Bear Library
+#-----------------------------------------------------
+# $Id: local_lib.pl,v 1.90 2003/10/04 08:14:34 michald Exp $
+
+use strict;
+use Encode;
+use vars qw($q @@cookie $cookie_path $cookie_exp $descr_w $descr_r $lang $Obj $use_lang $skinPath $imgType);
+
+our $MyName = $q->url() if ($q);
+#__________________________________________________________
+#
+sub getImageType {
+my ($path)= shift;	# directory
+if (opendir IMG, $path) {
+	foreach (readdir IMG) {
+		if ($_ =~ /^\./) {
+			next
+		} else {
+			my ($rtrn) = /\.(...)$/;
+			if ($rtrn) {
+				closedir IMG;
+				return $rtrn
+				}
+		}
+	}
+}
+return "ndf"
+}
+
+#__________________________________________________________
+#
+sub getTime {
+my @@time = localtime(time);
+return sprintf "%d-%02d-%02d, %02d:%02d:%02d",($time[5] += 1900),($time[4]++),($time[3]++),$time[2],$time[1],$time[0];
+}
+
+#__________________________________________________________
+#
+
+sub SetParam {
+	my ($pName,$cName,$def) = @@_;
+	my $v;
+	$v=param($pName);
+	if (!defined $v) { 
+		$v=cookie($cName);
+	};
+	if ($def && !defined $v) { $v=$def };
+	if (defined $v) {
+		push (@@cookie, $q->cookie(-name=>$cName, -value=>$v, -path=>$cookie_path, -expires=>$cookie_exp));
+	}
+	return $v
+}
+
+#__________________________________________________________
+#
+
+sub SQL2HTML {
+# returns HTML formated text SQL with syntax highlighting
+
+	my $sql=shift;
+
+	$sql =~ s/\b(SELECT|FROM|WHERE|GROUP BY|ORDER BY)\b/<BR><STRONG>$1<\/STRONG>/gi;
+	$sql =~ s/\b(AND|IN|OR|AS|JOIN|LIKE|LEFT|RIGHT|ON)\b/<STRONG>$1<\/STRONG>/gi;
+	$sql =~ s/(=|\(|\))/<STRONG>$1<\/STRONG>/gi;
+	$sql =~ s/\b(INNER|OUTER)\b/<BR>&nbsp;&nbsp;&nbsp;&nbsp;<STRONG>$1<\/STRONG>/gi;
+	$sql =~ s/^(\s*<BR>\s*)*//;
+
+	return $sql
+}
+
+#__________________________________________________________
+#
+
+sub ErrorDie {
+	my $errS=shift;
+	print "<FONT COLOR=\"#CC0000\"><STRONG>$errS</STRONG></FONT></html>";
+	die
+}
+	
+#---------------------------------------------------
+
+sub TreeFileName {
+	my $pr=shift;	#project name
+	my $User=shift;	#user name
+	return ("./html/$User-$pr.html")
+}
+
+#----------------------------------------
+
+sub DefHiearchy {
+	my $pn=shift;	# project name
+	my $User=shift;	# user name
+	my $ti=shift;	# project id unique on page
+	my $constr=shift;	# obj type constrain RE
+	my $file=shift;
+	my $useLang=shift;
+	
+	
+	my $icons={
+		plus=>"${skinPath}img/tree/plus.$imgType",
+		plusBottom=>"${skinPath}img/tree/plusbottom.$imgType",
+		minus=>"${skinPath}img/tree/minus.$imgType",
+		minusBottom=>"${skinPath}img/tree/minusbottom.$imgType",
+		folder=>"${skinPath}img/tree/folder.$imgType",
+		folderOpen=>"${skinPath}img/tree/folderopen.$imgType",
+		line=>"${skinPath}img/tree/line.$imgType",
+		base=>"${skinPath}img/tree/base.$imgType",
+		attr=>"${skinPath}img/tree/attr.$imgType",
+		join=>"${skinPath}img/tree/join.$imgType",
+		joinBottom=>"${skinPath}img/tree/joinbottom.$imgType",
+		empty=>"${skinPath}img/tree/empty.$imgType",
+		attr_form=>"${skinPath}img/tree/attr_form.$imgType",
+		"_METRICS_"=>"${skinPath}img/tree/metric.$imgType",
+		"_GRIDS_"=>"${skinPath}img/tree/grid.$imgType",
+		"_GRAPH3D_"=>"${skinPath}img/tree/graph3d.$imgType",
+		"_FORMAT3D_"=>"${skinPath}img/tree/format3d.$imgType",
+		"_FORMAT2D_"=>"${skinPath}img/tree/format2d.$imgType",
+		"_FILTERS_"=>"${skinPath}img/tree/filter.$imgType",
+		"_FORMATS_"=>"${skinPath}img/tree/format.$imgType",
+		"_REPORTS_"=>"${skinPath}img/tree/report.$imgType",
+		"_FACTS_"=>"${skinPath}img/tree/fact.$imgType",
+		"_ATTRIBUTES_"=>"${skinPath}img/tree/attr.$imgType",
+		"_ROLES_"=>"${skinPath}img/role.$imgType",
+		"_DPARAMS_"=>"${skinPath}img/param.$imgType",
+	};
+	
+	$constr='.*' if (!$constr);
+	my $i=0;	#Tree id
+	my $l=$i;	#dir level
+	my $AAB = 'align="absbottom"';
+	my $SDN = 'style="display:none"';
+	my ($firstIcon, $secondIcon, @@hlp, $lastInField, $joinIcon);
+
+	my $scriptArray = ("\n<script type=\"text/javascript\">\nvar Tree$ti = new Array;\n");
+
+	open(TREE, ">./html/$file.html") || die "print '$file'";
+	binmode(TREE, ":utf8");
+	print TREE "<div id='content' class='folder'><table><tr><td><span class='tree'><img src='$icons->{base}' style='vertical-align:bottom' alt='base'/>&nbsp;$pn</span></td></tr></table>";
+	
+	my $m;
+	my $objTr = { 	# hash for translation from Directory name, this strench method is connected with fixed directory structure and should be removed ASAP
+		'_METRICS_'=>{'type'=>'metric', 'icon'=>'M'},
+		'_GRIDS_'=>{'type'=>'grid', 'icon'=>'G'},
+		'_FORMAT3D_'=>{'type'=>'format3d', 'icon'=>'F3'},
+		'_FORMAT2D_'=>{'type'=>'format2d', 'icon'=>'F2'},
+		'_FORMATS_'=>{'type'=>'format', 'icon'=>'Fo'},
+		'_GRAPH3D_'=>{'type'=>'graph3d', 'icon'=>'G3'},
+		'_FILTERS_'=>{'type'=>'filter', 'icon'=>'Fi'},
+		'_REPORTS_'=>{'type'=>'report', 'icon'=>'R'},
+		'_FACTS_'=>{'type'=>'fact', 'icon'=>'Fa'},
+		'_ROLES_'=>{'type'=>'urole', 'icon'=>'Ro'},
+		'_ATTRIBUTES_'=>{'type'=>'attr', 'icon'=>'A'},
+		'_DPARAMS_'=>{'type'=>'param', 'icon'=>'P'}
+	};
+	
+	$m=SOAP->GetMetadataList($pn, 'folder', $User, $useLang);
+
+	my @@folders = sort(keys(%{$m}));			#get list of folder items
+	my $lastInFolders = $folders[$#folders];    #get the name of last item in a field of folders, needed for setting first icon in tree - line/empty when closing tree structure
+#use Data::Dumper;
+#print TREE "<pre>".Dumper($m)."</pre>";
+
+my $subM;
+foreach my $activeFolderId (@@folders) {			#for each folder item generate childs in tree
+	$firstIcon = $icons->{line};
+	$joinIcon = $icons->{plus};
+	if ($activeFolderId eq '_ATTRIBUTES_') {
+	my $dtn = $m->{$activeFolderId}->{name};
+	if ($objTr->{$dtn}->{type}=~/$constr/) {
+
+		$scriptArray .= ("Tree${ti}\[$i\]  = \"$activeFolderId|$i|$m->{$activeFolderId}->{name}|D|$m->{$activeFolderId}->{description}\";\n");
+		$i++;
+		$joinIcon = $icons->{plus};
+
+		print TREE "<span id='$activeFolderId' onclick='ocFolder(this)'><img id='icon$activeFolderId' src='$joinIcon' $AAB/><a href='javascript:{}'><img id='folderIcon$activeFolderId' src='$icons->{folder}' $AAB/><span id='view$activeFolderId' title='$m->{$activeFolderId}->{description}'>$m->{$activeFolderId}->{name}</span></a></span><br />";
+		print TREE "<div id='segment$activeFolderId' $SDN>";
+
+		# Load Attributes
+		$subM=SOAP->GetMetadataList($pn, $objTr->{$activeFolderId}->{type}, $User, $useLang);	#full List is used due need for Attribute Displays information
+#use Data::Dumper;
+#print TREE "<pre>".Dumper($subM)."</pre>";
+
+	my @@group = sort(keys(%{$subM}));
+	my $lastInMainField = $group[$#group];
+	$firstIcon = $icons->{line};
+	my $joinFolderIcon = $icons->{plus};
+	my $joinSubFolder = 0;
+
+	foreach my $group (@@group) {
+		
+		my $displayName = $subM->{$group}->{display}->{name};
+		my $displayDesc = $subM->{$group}->{display}->{description};
+		delete ($subM->{$group}->{display});
+		@@hlp = sort(keys(%{$subM->{$group}}));
+		$lastInField = $hlp[$#hlp];
+		my $previousItemId = $group;
+
+		$scriptArray .= ("Tree${ti}\[$i\]  = \"$group|$activeFolderId|$subM->{$group}->{display}->{name}|D|\";\n");
+		$i++;
+		
+		my $insertIcon;
+		
+		if ($group eq '~group') {
+			$insertIcon = '';
+		} else {
+			if ($lastInMainField eq $group) {
+				$firstIcon = $icons->{empty}; $joinSubFolder=1; $joinFolderIcon = $icons->{plusBottom};
+			} else {
+				$firstIcon = $icons->{line}; $joinSubFolder = 0; $joinFolderIcon = $icons->{plus}; 
+			};
+			$insertIcon = "<img src=\"$firstIcon\" $AAB />";
+			print TREE "<span><img src='$icons->{line}' $AAB /><span id='$group' onclick='ocFolder(this)'><img id='icon$group' src='$joinFolderIcon' $AAB /><a href='javascript:{}'><img id='folderIcon$group' src='$icons->{folder}' $AAB /><span id='view$group' title='$displayDesc'>$displayName</span></a></span></span><br />";
+			print TREE "<div id='segment$group' $SDN>";
+		};
+		
+		$secondIcon = $icons->{line};
+		$joinIcon = $icons->{plus};
+		foreach my $rule (@@hlp) {
+	
+			my $displayName = $subM->{$group}->{$rule}->{display}->{name};
+			my $displayDesc = $subM->{$group}->{$rule}->{display}->{description};
+			delete ($subM->{$group}->{$rule}->{display});
+			my @@rulesField = sort(keys(%{$subM->{$group}->{$rule}}));
+			my $lastInRulesField = $rulesField[$#rulesField];
+			my $shortHash = $subM->{$group}->{$rule};
+			
+			
+			if ($rule eq '~role') {
+				foreach (@@rulesField) {
+				my $des=$shortHash->{$_}->{description}; $des=~s/^(.{77}).{3,}$/$1.../;	#description has to be cutted explicitly as Attributes are not readed thru ShortList
+				$scriptArray .= ("Tree${ti}\[$i\]  = \"$_|$previousItemId|$shortHash->{$_}->{name}|A|$des\";\n");
+				$i++;
+				if (exists $shortHash->{$_}->{display}) {
+					if ($lastInRulesField eq $_) {
+						$secondIcon = $icons->{empty}; $joinIcon = $icons->{plusBottom};
+					}
+				} else {
+					if ($lastInRulesField eq $_) {
+						$secondIcon = $icons->{empty}; $joinIcon = $icons->{join};
+					} else {
+						$secondIcon = $icons->{empty}; $joinIcon = $icons->{joinBottom};
+					}
+				}
+				
+				print TREE "<span><img src='$icons->{line}' $AAB />$insertIcon<img id='Attr$_' onclick=\"ocAttr('$_')\" src='$joinIcon' $AAB />";
+				print TREE "<a href='javascript:{}'><span id='$_' onclick='showMe(this)' ondblclick='jump(this)'><img id='icon$_' name='$shortHash->{$_}->{name}|A' src='$icons->{attr}' $AAB /><span id='view$_' title='$des'>&nbsp;$shortHash->{$_}->{name}&nbsp;</span></span></a></span><br/>";
+				my $ll=$_;
+				print TREE "<div id='segment$_' $SDN>";
+				my @@hlp = sort(keys(%{$shortHash->{$ll}->{display}}));
+				my $lastInSubField = $hlp[$#hlp];
+				my $thirdIcon = $icons->{joinBottom};
+				foreach (@@hlp) {
+					$scriptArray .= ("Tree${ti}\[$i\]  = \"$ll~$_|$ll|$shortHash->{$ll}->{display}->{$_}->{name}|Af|$shortHash->{$ll}->{display}->{$_}->{description}\";\n");
+					$thirdIcon = $icons->{join} if ($lastInSubField eq $_);
+					print TREE "<span><img src='$icons->{line}' $AAB />$insertIcon<img src='$secondIcon' $AAB /><img src='$thirdIcon' $AAB />";
+					print TREE "<a href='javascript:{}'><span id='$ll~$_' onclick='showMe(this)'><img id='icon$ll~$_' name='$_|Af' src='$icons->{attr_form}' $AAB /><span id='view$ll~$_' title='$shortHash->{$ll}->{display}->{$_}->{description}'>&nbsp;$shortHash->{$ll}->{display}->{$_}->{name}&nbsp;</span></span></a></span><br />";
+					$i++;
+				}
+				print TREE "</div>";
+				}
+			} else {
+#			use Data::Dumper;
+#			print TREE "<pre>".Dumper($shortHash)."</pre>";
+				$scriptArray .= ("Tree${ti}\[$i\]  = \"$group.$rule|$group|$rule|D|\";\n");
+				$i++;
+				
+				if ($lastInField eq $rule) {$secondIcon = $icons->{empty}; $joinIcon = $icons->{plusBottom}; $joinFolderIcon = $icons->{plusBottom}; $joinSubFolder=1;}				
+				
+				print TREE "<span><img src='$icons->{line}' $AAB /><img src='$icons->{line}' $AAB /><span id='$group.$rule' onclick='ocFolder(this)'><img id='icon$group.$rule' src='$joinFolderIcon' $AAB /><a href='javascript:{}'><img id='folderIcon$group.$rule' src='$icons->{folder}' $AAB /><span id='view$group.$rule' title='$displayDesc'>$displayName</span></a></span></span><br />";
+				print TREE "<div id='segment$group.$rule' $SDN>";
+				
+				my $thirdIcon = $icons->{line};
+				$joinIcon = $icons->{plus};
+				
+				foreach (@@rulesField) {
+				my $des=$shortHash->{$_}->{description}; $des=~s/^(.{77}).{3,}$/$1.../;	#description has to be cutted explicitly as Attributes are not readed thru ShortList
+				$scriptArray .= ("Tree${ti}\[$i\]  = \"$_|$group.$rule|$shortHash->{$_}->{name}|A|$des\";\n");
+				$i++;
+				
+				if (exists $shortHash->{$_}->{display}) {
+					if ($lastInRulesField eq $_) {
+						$thirdIcon = $icons->{empty}; $joinIcon = $icons->{plusBottom};
+					} else {
+						$thirdIcon = $icons->{line}; $joinIcon = $icons->{plus};
+					}
+				} else {
+					$thirdIcon = $icons->{empty};
+					$joinIcon = ($lastInRulesField eq $_) ? $icons->{join} : $icons->{joinBottom};
+				}
+			
+				print TREE "<span><img src='$icons->{line}' $AAB /><img src='$firstIcon' $AAB /><img src='$secondIcon' $AAB /><img id='Attr$_' onclick=\"ocAttr('$_')\" src='$joinIcon' $AAB />";
+				print TREE "<a href='javascript:{}' ><span id='$_' onclick='showMe(this)' ondblclick='jump(this)'><img id='icon$_' name='$shortHash->{$_}->{name}|A' src='$icons->{attr}' $AAB/><span id='view$_' title='$des'>&nbsp;$shortHash->{$_}->{name}&nbsp;</span></span></a></span><br />";
+				my $ll=$_;
+					print TREE "<div id='segment$_' $SDN>";
+				my @@hlp = sort(keys(%{$shortHash->{$ll}->{display}}));
+				my $lastInSubField = $hlp[$#hlp];
+				my $fourthIcon = $icons->{joinBottom};
+				foreach (@@hlp) {
+					$scriptArray .= ("Tree${ti}\[$i\]  = \"$ll~$_|$ll|$shortHash->{$ll}->{display}->{$_}->{name}|Af|$shortHash->{$ll}->{display}->{$_}->{description}\";\n");
+					$fourthIcon = $icons->{join} if ($lastInSubField eq $_);
+					print TREE "<span><img src='$icons->{line}' $AAB /><img src='$firstIcon' $AAB /><img src='$secondIcon' $AAB /><img src='$thirdIcon' $AAB /><img src='$fourthIcon' $AAB />";
+					print TREE "<a href='javascript:{}'><span id='$ll~$_' onclick='showMe(this)'><img id='icon$ll~$_' name='$_|Af' src='$icons->{attr_form}' $AAB /><span id='view$ll~$_' title='$shortHash->{$ll}->{display}->{$_}->{description}'>&nbsp;$shortHash->{$ll}->{display}->{$_}->{name}&nbsp;</span></span></a></span><br />";
+					$i++;
+				}
+					print TREE "</div>";
+				}
+				print TREE "</div>";
+			}
+			}
+			print TREE "</div>";
+	};
+	print TREE "</div>";
+	};
+	} else {
+		my $dtn = $m->{$activeFolderId}->{name};
+		if ($objTr->{$dtn}->{type}=~/$constr/) { 
+			$scriptArray .= "Tree${ti}\[$i\]='$activeFolderId|0|$m->{$activeFolderId}->{name}|D|$m->{$activeFolderId}->{description}';\n";
+
+			$i++;
+			$subM=SOAP->GetMetadataList($pn, $objTr->{$activeFolderId}->{type}, $User, $useLang);#get child for handled folder
+			my @@hlp = keys(%{$subM});
+			$lastInField = ($hlp[$#hlp]) ? ($hlp[$#hlp]) : undef;	#last child in handled folder or none
+
+			if ($lastInFolders eq $activeFolderId) {			#set diferent tree navigation icons for last child in folder
+				$firstIcon = $icons->{empty};
+				$joinIcon = $icons->{plusBottom};
+			}
+
+			if ($lastInField) {	#set active folder if childs present
+				print TREE "<span id='$activeFolderId' onclick='ocFolder(this)'><img id='icon$activeFolderId' src='$joinIcon' $AAB /><a href='javascript:{}'><img id='folderIcon$activeFolderId' src='$icons->{folder}' $AAB /><span id='view$activeFolderId' title='$m->{$activeFolderId}->{description}'>$m->{$activeFolderId}->{name}</span></a></span><br />";
+			} else {
+				my $emptyJoinIcon = ($lastInFolders eq $activeFolderId) ? $icons->{join} : $icons->{joinBottom};	#set diferent navigation tree icons for empty folder
+				print TREE "<span id='$activeFolderId' onclick='ocFolder(this)'><img id='icon$activeFolderId' src='$emptyJoinIcon' $AAB /><a href='javascript:{}'><img id='folderIcon$activeFolderId' src='$icons->{folder}' $AAB /><span id='view$activeFolderId' title='$m->{$activeFolderId}->{description}'>$m->{$activeFolderId}->{name}</span></a></span><br />";
+			}
+
+			print TREE "<div id='segment$activeFolderId' $SDN>";
+
+			$secondIcon = $icons->{joinBottom}; #pre-expected "join" navigation icon (most cases)
+			foreach (@@hlp) {
+				$scriptArray .= ($objTr->{$activeFolderId}->{type} eq "urole") ? "Tree${ti}\[$i\]='$_|$activeFolderId|$subM->{$_}->{name}|$objTr->{$activeFolderId}->{icon}|$subM->{$_}->{description}|$subM->{$_}->{rights}';\n":"Tree${ti}\[$i\]='$_|$activeFolderId|$subM->{$_}->{name}|$objTr->{$activeFolderId}->{icon}|$subM->{$_}->{description}';\n";
+				$secondIcon = $icons->{join} if ($lastInField eq $_); #set diferent navigation tree icons for last child
+
+				print TREE "<span><img src='$firstIcon' $AAB /><img src='$secondIcon' $AAB />";
+				print TREE "<a href='javascript:{}' ><span id='$_' onclick='showMe(this)' ondblclick='jump(this)'><img id='icon$_' name='$subM->{$_}->{name}|$objTr->{$activeFolderId}->{icon}' src='$icons->{$activeFolderId}' $AAB /><span id='view$_' title='$subM->{$_}->{description}'>&nbsp;$subM->{$_}->{name}&nbsp;</span></span></a></span><br />";
+
+				$i++;
+			}					
+		}
+		print TREE "</div>";
+	}
+}
+	print "</div>";
+	
+	my @@object;
+	foreach (keys %{$icons}) { push(@@object,"$_:'$icons->{$_}'") }
+	my $objectIcons = join(",",@@object);
+	
+	$scriptArray .= "var icons={$objectIcons};</script>\n";
+	print TREE $scriptArray;
+
+	close(TREE);
+}
+
+#---------------------------------------------------
+sub generateFilterEdit() {
+my $local = (ref($Obj->{filter_def})) ? $Obj->{filter_def} : $Obj;
+
+print <<END ;
+<table class = "neutral" cellpading="0" cellspacing="0">
+  <tr>	<td class="neutral_bold" colspan="3">$lang->{'Filter expresion'}</td></tr>
+  <tr>
+  	<td valign="top"><img src="${skinPath}img/tree/metric.$imgType" vspace="5"><br><img src="${skinPath}img/tree/attr.$imgType"><br><img src="${skinPath}img/tree/fact.$imgType" vspace="5"><br><img src='${skinPath}img/tree/attr_form.$imgType'></td>
+    	<td>
+		<textarea id="object_filter" onclick="drop_textarea(this)" onchange="object_changed()" name="expr" cols="$descr_w" rows="$descr_r"></textarea>
+		<input type="hidden" name="expr_id" id="object_filter_id" value="$local->{expr}"/>
+	</td>
+	<td valign="bottom" align="center" width="20"><img class="cursor" src="${skinPath}img/delete.$imgType" title="$lang->{Delete}" onclick='clear_name(document.object.expr);return true;'></td>
+  </tr>
+  <tr><td align="center" colspan="3">
+  <table width="60%">
+    <tr><td class="visual_down">
+	<table class="visual_up" cellpading="0" cellspacing="0">
+	<tr>
+	 <td class="visual_up_button" onmouseover='active(this)' onmouseout='passive(this)' onclick='exprr(document.object.expr,"(");'><a name="lb">(</a></td>
+	 <td class="visual_up_button" onmouseover='active(this)' onmouseout='passive(this)' onclick='exprr(document.object.expr,")");'><a name="rb">)</a></td>
+         <td class="visual_up_button" onmouseover='active(this)' onmouseout='passive(this)' onclick='exprr(document.object.expr,"=");'><a name="eq">=</a></td>
+	 <td class="visual_up_button" onmouseover='active(this)' onmouseout='passive(this)' onclick='exprr(document.object.expr,"<");'><a name="lr">&lt;</a></td>
+	 <td class="visual_up_button" onmouseover='active(this)' onmouseout='passive(this)' onclick='exprr(document.object.expr,">");'><a name="gr">&gt;</a></td>
+	</tr>
+	</table>
+   </td></tr>
+   <tr><td class="visual_down">
+	<table class="visual_up" cellpading="0" cellspacing="0">
+	<tr>
+	 <td class="visual_up_button" onmouseover='active(this)' onmouseout='passive(this)' onclick='exprr(document.object.expr,"AND");'><a name="AND">AND</a></td>
+	 <td class="visual_up_button" onmouseover='active(this)' onmouseout='passive(this)' onclick='exprr(document.object.expr,"OR");'><a name="OR">OR</a></td>
+	 <td class="visual_up_button" onmouseover='active(this)' onmouseout='passive(this)' onclick='exprr(document.object.expr,"IN");'><a name="IN">IN</a></td>
+         <td class="visual_up_button" onmouseover='active(this)' onmouseout='passive(this)' onclick='exprr(document.object.expr,"NOT");'><a name="NOT">NOT</a></td>
+	</tr>
+	</table>
+   </td></tr>
+   </table>
+   </td></tr>
+</table>
+
+END
+}
+
+#---------------------------------------------------
+sub generateGridEdit() {
+print <<END ;
+ <table width="100%" align="center">
+ <tr><td>
+  <table class="visual_grid_none" id="drop_area_0" width="100%">
+  <tr><td colspan="2">
+   <table class="visual_down" width="100%">
+    <tr><th align="left">$lang->{'Grid Pages'}</th><td style='text-align:right'><img class="cursor" src="${skinPath}img/delete.$imgType" title="$lang->{Delete}" onclick="clearGrid('drop_zone_page');"></td></tr>
+    <tr><td class="visual_down" colspan="2">
+    <table class="visual_up" id="drop_zone_page" cellpadding="0" cellspacing="0">
+   <tr onclick="decide(this)"><td class="visual_up_special" onmouseover="active(this);return(true);" onmouseout="passive(this);return(true);">$lang->{'Grid Table end'}</td></tr>
+    </table>
+  </td></tr>
+  </table>
+ <tr><td colspan="2"><hr></td></tr>
+ <tr><th width="50%">$lang->{'Grid Table'}</th>
+    <td width="50%">
+    <table class="neutral_100">
+	 <tr><th>$lang->{'Grid Table_col'}</th><td style='text-align:right'><img class="cursor" src="${skinPath}img/delete.$imgType" title="$lang->{Delete}" onclick="clearGrid('drop_zone_collumn');"></td></tr>
+	 <tr><td class="visual_down" colspan="2">
+	 <table class="visual_up" id="drop_zone_collumn" cellpadding="0" cellspacing="0">
+      <tr onclick="decide(this)">
+	  <td class="visual_up_special" onmouseover="active(this);return(true);" onmouseout="passive(this);return(true);">$lang->{'Grid Table end'}</td>
+	  </tr>
+	</table>
+	</td></tr></table>
+	</td>
+	</tr>
+	<tr valign="top">  
+	  <td>
+	  <table class="neutral_100">
+	  <tr><th>$lang->{'Grid Table_row'}</th><td style='text-align:right'><img class="cursor" src="${skinPath}img/delete.$imgType" title="$lang->{Delete}" onclick="clearGrid('drop_zone_row');"></td></tr>
+	  <tr><td class="visual_down" colspan="2">
+	  <table class="visual_up" id="drop_zone_row" cellpadding="0" cellspacing="0">
+	    <tr onclick="decide(this)">
+	    <td class="visual_up_special" onmouseover="active(this);return(true);" onmouseout="passive(this);return(true);">$lang->{'Grid Table end'}</td>
+	    </tr>
+	   </table>
+	   </td></tr></table>
+	  </td>
+	  <td>
+	  <table class="metrics_down">
+	  <tr><th>$lang->{'Grid Table_cell'}</th><td style='text-align:right'><img class="cursor" src="${skinPath}img/delete.$imgType" title="$lang->{Delete}" onclick="clearGrid('drop_zone_metrics');"></td></tr>
+	  <tr><td class="visual_down" colspan="2">
+  	   <table class="metrics_up" id="drop_zone_metrics" cellpadding="0" cellspacing="0">
+	    <tr onclick="decide(this)">
+	    <td class="metrics_special" onmouseover="active(this);return(true);" onmouseout="passive(this);return(true);">$lang->{'Grid Table end'}</td>
+	    </tr>
+	   </table>
+	   </td></tr></table>
+	  </td>
+	</tr>
+	</table>
+  </td></tr>
+  </table> 
+END
+}
+
+#---------------------------------------------------
+sub generateGridEditFields() {
+print <<END ;
+<div class="invisible" style='position:absolute; top:10px; left:10px; z-index:-5'>
+<select id="PageObj" name="PageObj" multiple="multiple"></select>
+<select id="Metrics" name="Metrics" multiple="multiple"></select><br>
+<select id="ColObj" name="ColObj" multiple="multiple"></select>
+<select id="RowObj" name="RowObj" multiple="multiple"></select><br>
+</div>
+END
+my $local = (exists($Obj->{var_def})) ? $Obj->{var_def} : $Obj;
+foreach my $IH ('page','col','row','metric') { # IH: name of element input, type hidden
+my $hlp = "";	
+	foreach (@@{$local->{$IH}}) { # read from mdata and fill proper hidden input
+		$hlp .= "$_|";
+	}
+print "<input type=\"hidden\" id=\"$IH\" value=\"$hlp\"\/>\n";
+}
+print "<input type='hidden' name='objectType' value='grid'/>";
+}
+
+#---------------------------------------
+#copy of LocalizedObj in bearlib.pl
+
+sub LocalizedObj {		# returns localized description
+						# $descr = LocalizedObj($descrObj, "NA", 'cz', 'en', ...);
+
+	my $descr=shift;	# description with possible locale
+	my $alter=shift;	# alternate description for case specific locale is not defined
+	my @@lang=@@_;		# locale(s)
+	
+	if ($descr) {
+		if (ref($descr)=~/HASH/) {
+			foreach (@@lang) {
+				my $lng = lc($_);
+				if (exists ($descr->{$lng})) {
+					if (ref($descr->{$lng})=~/HASH/) {	# empty string is presented as empty hash
+						return ''
+					} else {
+						return $descr->{$lng}
+					}
+				}
+			}
+		} else {
+			return $descr
+		}
+	}
+	return $alter
+
+}
+
+#---------------------------------------------------
+sub generateGraph3DEdit() {
+print <<END ;
+<table width="100%" align="center">
+<tr><td>
+  <table id="drop_area_2" width="100%">
+  <tr><td>
+    <table class="visual_grid">
+		<tr><th align="left">$lang->{'Graph3d Pages'}</th><td style='text-align:right'><img class="cursor" src="${skinPath}img/delete.$imgType" title="$lang->{Delete}" onclick="clearTable('drop_zone_pages');"></td></tr>
+		<tr><td class="visual_down" colspan="2">
+			<table class="visual_up" id="drop_zone_pages" cellpadding="0" cellspacing="0">
+			<tr onclick="decide(this)"><td class="visual_up_special" onmouseover="active(this);return(true);" onmouseout="passive(this);return(true);">$lang->{'Graph3d end'}</td></tr>
+			</table>
+		</td></tr>
+   </table>
+  <tr><td><hr></td></tr>
+  </table>
+  <table class="visual_grid_none" id="drop_area_1" width="100%">
+  <tr style="vertical-align:top;">
+    <th style="vertical-align:middle;">$lang->{'Graph3d Table'}</th>
+    <td>
+     <table class="neutral_100">
+		<tr><th>$lang->{'Graph3d y'}:</th><td style='text-align:right'><img class="cursor" src="${skinPath}img/delete.$imgType" title="$lang->{Delete}" onclick="clearTable('drop_zone_y');"></td></tr>
+		<tr><td class="visual_down" colspan="2">
+			<table class="visual_up" id="drop_zone_y" cellpadding="0" cellspacing="0">
+			<tr onclick="decide(this)"><td class="visual_up_special" onmouseover="active(this);return(true);" onmouseout="passive(this);return(true);">$lang->{'Graph3d end'}</td></tr>
+			</table>
+		</td></tr>
+		<tr><td colspan="2"><span class="nowrap" title="$lang->{'Graph3d QDescr'}"><input type="checkbox" value="on" name="yQ" id="yQ">$lang->{'Graph3d Quantity'}</span></td></tr>
+     </table>
+    </td>
+    <td class='separator' rowspan="2" style="width:1px"></td>
+    <td>
+     <table class="neutral_100">
+		<tr><th>$lang->{'Graph3d diameter'}:</th><td style='text-align:right'><img class="cursor" src="${skinPath}img/delete.$imgType" title="$lang->{Delete}" onclick="clearTable('drop_zone_diameter');"></td></tr>
+		<tr><td class="visual_down" colspan="2">
+			<table class="visual_up" id="drop_zone_diameter" cellpadding="0" cellspacing="0">
+			<tr onclick="decide(this)"><td class="visual_up_special" onmouseover="active(this);return(true);" onmouseout="passive(this);return(true);">$lang->{'Graph3d end'}</td></tr>
+			</table>
+		</td></tr>
+		<tr><td colspan="2"><span class="nowrap" title="$lang->{'Graph3d QDescr'}"><input type="checkbox" value="on" name="diameterQ" id="diameterQ">$lang->{'Graph3d Quantity'}</span></td></tr>
+     </table>
+    </td>
+    <td>
+     <table class="neutral_100">
+		<tr><th>$lang->{'Graph3d transparency'}:</th><td style='text-align:right'><img class="cursor" src="${skinPath}img/delete.$imgType" title="$lang->{Delete}" onclick="clearTable('drop_zone_transparency');"></td></tr>
+		<tr><td class="visual_down" colspan="2">
+			<table class="visual_up" id="drop_zone_transparency" cellpadding="0" cellspacing="0">
+			<tr onclick="decide(this)"><td class="visual_up_special" onmouseover="active(this);return(true);" onmouseout="passive(this);return(true);">$lang->{'Graph3d end'}</td></tr>
+			</table>
+		</td></tr>
+		<tr><td colspan="2"><span class="nowrap" title="$lang->{'Graph3d QDescr'}"><input type="checkbox" value="on" name="transparencyQ" id="transparencyQ">$lang->{'Graph3d Quantity'}</span></td></tr>
+     </table>
+    </td>
+  </tr>
+  <tr valign="top">  
+    <td>
+     <table class="neutral_100">
+		<tr><th>$lang->{'Graph3d x'}:</th><td style='text-align:right'><img class="cursor" src="${skinPath}img/delete.$imgType" title="$lang->{Delete}" onclick="clearTable('drop_zone_x');"></td></tr>
+	  	<tr><td class="visual_down" colspan="2">
+			<table class="visual_up" id="drop_zone_x" cellpadding="0" cellspacing="0">
+			<tr onclick="decide(this)"><td class="visual_up_special" onmouseover="active(this);return(true);" onmouseout="passive(this);return(true);">$lang->{'Graph3d end'}</td></tr>
+			</table>
+		</td></tr>
+		<tr><td colspan="2"><span class="nowrap" title="$lang->{'Graph3d QDescr'}"><input type="checkbox" value="on" name="xQ" id="xQ">$lang->{'Graph3d Quantity'}</span></td></tr>
+     </table>
+    </td>
+    <td>
+     <table class="neutral_100">
+		<tr><th>$lang->{'Graph3d z'}:</th><td style='text-align:right'><img class="cursor" src="${skinPath}img/delete.$imgType" title="$lang->{Delete}" onclick="clearTable('drop_zone_z');"></td></tr>
+		<tr><td class="visual_down" colspan="2">
+			<table class="visual_up" id="drop_zone_z" cellpadding="0" cellspacing="0">
+			<tr onclick="decide(this)"><td class="visual_up_special" onmouseover="active(this);return(true);" onmouseout="passive(this);return(true);">$lang->{'Graph3d end'}</td></tr>
+			</table>
+		</td></tr>
+		<tr><td colspan="2"><span class="nowrap" title="$lang->{'Graph3d QDescr'}"><input type="checkbox" value="on" name="zQ" id="zQ">$lang->{'Graph3d Quantity'}</span></td></tr>
+     </table>
+   </td>
+
+   <td>
+     <table class="neutral_100">
+		<tr><th>$lang->{'Graph3d shape'}:</th><td style='text-align:right'><img class="cursor" src="${skinPath}img/delete.$imgType" title="$lang->{Delete}" onclick="clearTable('drop_zone_shape');"></td></tr>
+		<tr><td class="visual_down" colspan="2">
+			<table class="visual_up" id="drop_zone_shape" cellpadding="0" cellspacing="0">
+			<tr onclick="decide(this)"><td class="visual_up_special" onmouseover="active(this);return(true);" onmouseout="passive(this);return(true);">$lang->{'Graph3d end'}</td></tr>
+			</table>
+		</td></tr>
+		<tr><td colspan="2"><span class="nowrap" title="$lang->{'Graph3d QDescr'}"><input type="checkbox" value="on" name="shapeQ" id="shapeQ">$lang->{'Graph3d Quantity'}</span></td></tr>
+     </table>
+   </td>
+       <td>
+     <table class="neutral_100">
+		<tr><th>$lang->{'Graph3d color'}:</th><td style='text-align:right'><img class="cursor" src="${skinPath}img/delete.$imgType" title="$lang->{Delete}" onclick="clearTable('drop_zone_color');"></td></tr>
+		<tr><td class="visual_down" colspan="2">
+			<table class="visual_up" id="drop_zone_color" cellpadding="0" cellspacing="0">
+			<tr onclick="decide(this)"><td class="visual_up_special" onmouseover="active(this);return(true);" onmouseout="passive(this);return(true);">$lang->{'Graph3d end'}</td></tr>
+			</table>
+		</td></tr>
+		<tr><td colspan="2"><span class="nowrap" title="$lang->{'Graph3d QDescr'}"><input type="checkbox" value="on" name="colorQ" id="colorQ">$lang->{'Graph3d Quantity'}</span></td></tr>
+     </table>
+   </td>
+   </tr>
+  </table>
+</td>
+</tr>
+</table> 
+END
+}
+
+#---------------------------------------------------
+sub generateGraph3DEditFields() {
+print "<div class='invisible' style='position:absolute; top:10px; left:10px; z-index:-5;'>";
+my @@checked;
+my $local = (exists($Obj->{var_def})) ? $Obj->{var_def} : $Obj;
+foreach my $IH ('pages','y','x','z','transparency','diameter','shape','color') { # IH: name of element input, type hidden
+print "<select id='$IH' name='$IH' multiple='multiple'></select>\n";
+my @@items;
+	foreach (@@{$local->{$IH}{items}}) { # read from mdata and fill proper hidden input
+		push @@items,$_;
+	}
+print "<input id='id_$IH' type='hidden'  value='".join("|",@@items)."'/>\n";
+push @@checked,"$IH~$local->{$IH}{quantity}" if $IH ne 'pages';
+}
+print "<input type='hidden' id='checked' value='".join("|",@@checked)."'/>\n";
+print "</div>";
+print "<input type='hidden' name='objectType' value='graph3d'/>";
+}
+
+#---------------------------------------------------
+#setLocalizedObj returns hash or single string
+#depending on definition of language specification
+#with no return flag (\r) a with substituted 
+#new-line (\n ->> \\n)
+
+sub setLocalizedObj {		#sets the object with or without localized names / descriptions
+
+ my $localObj = shift;
+ my $stringToSave = shift;
+ my $lang = lc (shift);
+$stringToSave =~ s/\r//g;
+$stringToSave =~ s/\n/\\n/g;
+
+if ($lang) {						#if localized data is to save
+	$localObj = undef if (ref($localObj)!~/HASH/);	#prepare/clear object for saving if no other localized datas presented
+	$localObj->{$lang} = $stringToSave;
+	return $localObj
+} else {
+	return $stringToSave;
+}
+}
+
+#---------------------------------------------------
+#This function returns forced flaged utf8 string
+#matched to named CGI page parameter.
+#From native CGI function param($name) expets
+#well formed unflaged utf8 string.
+
+sub param_utf8 {
+my $name = shift;
+return if !$name;
+$name = param($name);
+Encode::_utf8_on($name);
+return $name
+}
+#-----------------------------------------------------
+
+sub generateTabs(){
+my ($localTab, $editName) = (shift, shift);
+my $lastTab = $_[$#_];
+my $hlp = "<td></td>";
+print "<table class='local_tabs' cellspacing='0'><tr>\n";
+foreach (@@_) {
+	my $activeTab = ($localTab eq $_) ? "active" : "tabs";
+	my $viewName = "$editName $_";
+	$hlp = "" if ($_ eq $lastTab);
+	print "<td class='$activeTab"."Corner'><img src='${skinPath}img/leftCorner.$imgType'/></td><td class='$activeTab'><a href=\"javascript: viewLocalTab('$_')\" >$lang->{$viewName}</a></td><td class='$activeTab"."Corner'><img src='${skinPath}img/rightCorner.$imgType'/></td>$hlp\n";
+};
+print "</tr></table>";
+}
+
+#---------------------------------------------------
+sub GetFiles {
+	my ($td, $fExt)=@@_;	# directory, file ext
+	my @@fList=();
+
+	if (opendir(DIR, $td) ) {
+		@@fList = grep { /^\w.*$fExt$/ && -f "$td/$_" } readdir(DIR);
+		closedir DIR;
+	}
+	@@fList = sort @@fList;
+	foreach (@@fList) { s/\.$fExt$// };
+	@@fList
+}
+
+1
+@
+
+
+1.90
+log
+@writing 2D graphs html into cache
+@
+text
+@d4 1
+a4 1
+# $Id: local_lib.pl,v 1.89 2003/10/02 14:44:42 jiri_schmid Exp $
+@
+
+
+1.89
+log
+@parameters - elements implemented
+@
+text
+@d4 1
+a4 1
+# $Id: local_lib.pl,v 1.88 2003/10/01 15:29:37 jiri_schmid Exp $
+a69 17
+}
+
+#__________________________________________________________
+#
+
+my $IDGen=0;
+my $IDSt;
+
+sub IDGen {	# unique ID generator
+	if (!$IDGen) { 
+		($IDSt=sprintf('%04x', time))=~s/.*(\w{4})$/$1/;	#lower 4char hexa presentation of current time
+		$IDSt.=sprintf('%04x', $$);	#PID
+	}
+	if ($IDGen==255) {$IDGen=0} else {$IDGen++};
+
+	return $IDSt.sprintf('%02x',$IDGen);
+
+@
+
+
+1.88
+log
+@prompt implemented
+@
+text
+@d4 1
+a4 1
+# $Id: local_lib.pl,v 1.87 2003/09/24 13:40:06 jiri_schmid Exp $
+d142 1
+a142 1
+		"_PARAMS_"=>"${skinPath}img/param.$imgType",
+d171 1
+a171 1
+		'_PARAMS_'=>{'type'=>'param', 'icon'=>'P'}
+@
+
+
+1.87
+log
+@open icon for attr-forms fixed
+@
+text
+@d4 1
+a4 1
+# $Id: local_lib.pl,v 1.86 2003/09/23 13:06:42 jiri_schmid Exp $
+d142 1
+d170 2
+a171 1
+		'_ATTRIBUTES_'=>{'type'=>'attr', 'icon'=>'A'}
+@
+
+
+1.86
+log
+@bee demo changes
+@
+text
+@d4 1
+a4 1
+# $Id: local_lib.pl,v 1.85 2003/09/18 14:10:45 jiri_schmid Exp $
+d149 1
+a149 1
+	my ($firstIcon, $secondIcon, @@hlp, $lastInField, $join, $joinIcon);
+a181 1
+	$join = 0;
+a188 1
+		$join = 0;
+a233 1
+		$join=0;
+d251 1
+a251 1
+						$secondIcon = $icons->{empty}; $join=1; $joinIcon = $icons->{plusBottom};
+d255 1
+a255 1
+						$secondIcon = $icons->{empty}; $join=0; $joinIcon = $icons->{join};
+d257 1
+a257 1
+						$secondIcon = $icons->{empty}; $join=0; $joinIcon = $icons->{joinBottom};
+d283 1
+a283 1
+				if ($lastInField eq $rule) {$secondIcon = $icons->{empty}; $join=1; $joinIcon = $icons->{plusBottom}; $joinFolderIcon = $icons->{plusBottom}; $joinSubFolder=1;}				
+a289 1
+				$join=0;
+d298 3
+a300 1
+						$thirdIcon = $icons->{empty}; $join=1; $joinIcon = $icons->{plusBottom};
+d303 2
+a304 5
+					if ($lastInRulesField eq $_) {
+						$thirdIcon = $icons->{empty}; $join=0; $joinIcon = $icons->{join};
+					} else {
+						$thirdIcon = $icons->{empty}; $join=0; $joinIcon = $icons->{joinBottom};
+					}
+a341 1
+				$join=1;
+@
+
+
+1.85
+log
+@tabs imlemented almost everywhere
+@
+text
+@d4 1
+a4 1
+# $Id: local_lib.pl,v 1.84 2003/09/15 10:46:07 jiri_schmid Exp $
+d230 1
+a230 1
+			print TREE "<span><img src='$icons->{line}' $AAB /><span id='$group' onclick='ocFolder(this)'><img id='icon$group' src='$joinIcon' $AAB /><a href='javascript:{}'><img id='folderIcon$group' src='$icons->{folder}' $AAB /><span id='view$group' title='$displayDesc'>$displayName</span></a></span></span><br />";
+d252 12
+a263 2
+				if ($lastInRulesField eq $_) {$secondIcon = $icons->{empty}; $join=1; $joinIcon = $icons->{plusBottom}; }
+			
+@
+
+
+1.84
+log
+@acl changes implemented
+@
+text
+@d4 1
+a4 1
+# $Id: local_lib.pl,v 1.83 2003/09/11 16:22:57 jiri_schmid Exp $
+d483 1
+a483 1
+<div class="invisible">
+@
+
+
+1.83
+log
+@minor code changes and visual improvments
+@
+text
+@d4 1
+a4 1
+# $Id: local_lib.pl,v 1.82 2003/09/01 15:03:39 jiri_schmid Exp $
+d328 1
+a328 1
+			$scriptArray .= ("Tree${ti}\[$i\]  = \"$activeFolderId|0|$m->{$activeFolderId}->{name}|D|$m->{$activeFolderId}->{description}\";\n");
+d352 1
+a352 1
+				$scriptArray .= ("Tree${ti}\[$i\]  = \"$_|$activeFolderId|$subM->{$_}->{name}|$objTr->{$activeFolderId}->{icon}|$subM->{$_}->{description}\";\n");
+@
+
+
+1.82
+log
+@final changes, skins seems to be implemented properly
+@
+text
+@d4 1
+a4 1
+# $Id: local_lib.pl,v 1.81 2003/09/01 12:40:05 jiri_schmid Exp $
+d701 1
+a701 1
+print "<table class='local_tabs' cellspacing='0' width='100%'><tr>\n";
+@
+
+
+1.81
+log
+@skins implemented. mozilla skin - temporarily copy msie content
+@
+text
+@d4 1
+a4 1
+# $Id: local_lib.pl,v 1.80 2003/08/25 15:09:09 jiri_schmid Exp $
+d20 5
+a24 3
+			closedir IMG;
+			/(...)$/;
+			return $1
+d28 1
+a28 1
+return undef
+@
+
+
+1.80
+log
+@object acl, owner, modifier, datetime creation and modification implemented
+@
+text
+@d4 1
+a4 1
+# $Id: local_lib.pl,v 1.79 2003/08/22 16:00:53 jiri_schmid Exp $
+d8 1
+a8 1
+use vars qw($q @@cookie $cookie_path $cookie_exp $descr_w $descr_r $lang $Obj $use_lang);
+d13 18
+d115 25
+a139 25
+	my $icons={ 
+		plus=>'img/tree/plus.gif',
+		plusBottom=>'img/tree/plusbottom.gif',
+		minus=>'img/tree/minus.gif',
+		minusBottom=>'img/tree/minusbottm.gif',
+		folder=>'img/tree/folder.gif',
+		folderOpen=>'img/tree/folderopen.gif',
+		line=>'img/tree/line.gif',
+		base=>'img/tree/base.gif',
+		attr=>'img/tree/attr.gif',
+		join=>'img/tree/join.gif',
+		joinBottom=>'img/tree/joinbottom.gif',
+		empty=>'img/tree/empty.gif',
+		attr_form=>'img/tree/attr_form.gif',
+		'_METRICS_'=>'img/tree/metric.gif',
+		'_GRIDS_'=>'img/tree/grid.gif',
+		'_GRAPH3D_'=>'img/tree/graph3d.gif',
+		'_FORMAT3D_'=>'img/tree/format3d.gif',
+		'_FORMAT2D_'=>'img/tree/format2d.gif',
+		'_FILTERS_'=>'img/tree/filter.gif',
+		'_FORMATS_'=>'img/tree/format.gif',
+		'_REPORTS_'=>'img/tree/report.gif',
+		'_FACTS_'=>'img/tree/fact.gif',
+		'_ATTRIBUTES_'=>'img/tree/attr.gif',
+		'_ROLES_'=>'img/role.gif',
+d363 6
+a368 1
+	$scriptArray .= "</script>\n";
+d382 1
+a382 1
+  	<td valign="top"><img src="img/tree/metric.gif" vspace="5"><br><img src="img/tree/attr.gif"><br><img src="img/tree/fact.gif" vspace="5"><br><img src='img/tree/attr_form.gif'></td>
+d387 1
+a387 1
+	<td valign="bottom" align="center" width="20"><img class="cursor" src="img/delete.gif" title="$lang->{Delete}" onclick='clear_name(document.object.expr);return true;'></td>
+d427 1
+a427 1
+    <tr><th align="left">$lang->{'Grid Pages'}</th><td style='text-align:right'><img class="cursor" src="img/delete.gif" title="$lang->{Delete}" onclick="clearGrid('drop_zone_page');"></td></tr>
+d438 1
+a438 1
+	 <tr><th>$lang->{'Grid Table_col'}</th><td style='text-align:right'><img class="cursor" src="img/delete.gif" title="$lang->{Delete}" onclick="clearGrid('drop_zone_collumn');"></td></tr>
+d451 1
+a451 1
+	  <tr><th>$lang->{'Grid Table_row'}</th><td style='text-align:right'><img class="cursor" src="img/delete.gif" title="$lang->{Delete}" onclick="clearGrid('drop_zone_row');"></td></tr>
+d462 1
+a462 1
+	  <tr><th>$lang->{'Grid Table_cell'}</th><td style='text-align:right'><img class="cursor" src="img/delete.gif" title="$lang->{Delete}" onclick="clearGrid('drop_zone_metrics');"></td></tr>
+d537 1
+a537 1
+		<tr><th align="left">$lang->{'Graph3d Pages'}</th><td style='text-align:right'><img class="cursor" src="img/delete.gif" title="$lang->{Delete}" onclick="clearTable('drop_zone_pages');"></td></tr>
+d551 1
+a551 1
+		<tr><th>$lang->{'Graph3d y'}:</th><td style='text-align:right'><img class="cursor" src="img/delete.gif" title="$lang->{Delete}" onclick="clearTable('drop_zone_y');"></td></tr>
+d563 1
+a563 1
+		<tr><th>$lang->{'Graph3d diameter'}:</th><td style='text-align:right'><img class="cursor" src="img/delete.gif" title="$lang->{Delete}" onclick="clearTable('drop_zone_diameter');"></td></tr>
+d574 1
+a574 1
+		<tr><th>$lang->{'Graph3d transparency'}:</th><td style='text-align:right'><img class="cursor" src="img/delete.gif" title="$lang->{Delete}" onclick="clearTable('drop_zone_transparency');"></td></tr>
+d587 1
+a587 1
+		<tr><th>$lang->{'Graph3d x'}:</th><td style='text-align:right'><img class="cursor" src="img/delete.gif" title="$lang->{Delete}" onclick="clearTable('drop_zone_x');"></td></tr>
+d598 1
+a598 1
+		<tr><th>$lang->{'Graph3d z'}:</th><td style='text-align:right'><img class="cursor" src="img/delete.gif" title="$lang->{Delete}" onclick="clearTable('drop_zone_z');"></td></tr>
+d610 1
+a610 1
+		<tr><th>$lang->{'Graph3d shape'}:</th><td style='text-align:right'><img class="cursor" src="img/delete.gif" title="$lang->{Delete}" onclick="clearTable('drop_zone_shape');"></td></tr>
+d621 1
+a621 1
+		<tr><th>$lang->{'Graph3d color'}:</th><td style='text-align:right'><img class="cursor" src="img/delete.gif" title="$lang->{Delete}" onclick="clearTable('drop_zone_color');"></td></tr>
+d704 1
+a704 1
+	print "<td class='$activeTab"."Corner'><img src='img/leftCorner.gif'/></td><td class='$activeTab'><a href=\"javascript: viewLocalTab('$_')\" >$lang->{$viewName}</a></td><td class='$activeTab"."Corner'><img src='img/rightCorner.gif'/></td>$hlp\n";
+@
+
+
+1.79
+log
+@access - rules changing implemented
+@
+text
+@d4 1
+a4 1
+# $Id: local_lib.pl,v 1.78 2003/08/21 14:23:28 jiri_schmid Exp $
+d11 6
+@
+
+
+1.78
+log
+@role implementation next step
+@
+text
+@d4 1
+a4 1
+# $Id: local_lib.pl,v 1.77 2003/08/20 14:23:41 jiri_schmid Exp $
+d129 1
+a129 1
+	print TREE "<table><tr><td class='neutral_bold'><span><img src='$icons->{base}' style='vertical-align:bottom' alt='base'/>&nbsp;$pn</span></td></tr></table><div id='content' class='folder'>";
+d398 1
+a398 1
+    <tr><th align="left">$lang->{'Grid Pages'}</th><td align="right"><img class="cursor" src="img/delete.gif" title="$lang->{Delete}" onclick="clearGrid('drop_zone_page');"></td></tr>
+d409 1
+a409 1
+	 <tr><th>$lang->{'Grid Table_col'}</th><td align="right"><img class="cursor" src="img/delete.gif" title="$lang->{Delete}" onclick="clearGrid('drop_zone_collumn');"></td></tr>
+d422 1
+a422 1
+	  <tr><th>$lang->{'Grid Table_row'}</th><td align="right"><img class="cursor" src="img/delete.gif" title="$lang->{Delete}" onclick="clearGrid('drop_zone_row');"></td></tr>
+d433 1
+a433 1
+	  <tr><th>$lang->{'Grid Table_cell'}</th><td align="right"><img class="cursor" src="img/delete.gif" title="$lang->{Delete}" onclick="clearGrid('drop_zone_metrics');"></td></tr>
+d508 1
+a508 1
+		<tr><th align="left">$lang->{'Graph3d Pages'}</th><td align="right"><img class="cursor" src="img/delete.gif" title="$lang->{Delete}" onclick="clearTable('drop_zone_pages');"></td></tr>
+d522 1
+a522 1
+		<tr><th>$lang->{'Graph3d y'}:</th><td align="right"><img class="cursor" src="img/delete.gif" title="$lang->{Delete}" onclick="clearTable('drop_zone_y');"></td></tr>
+d534 1
+a534 1
+		<tr><th>$lang->{'Graph3d diameter'}:</th><td align="right"><img class="cursor" src="img/delete.gif" title="$lang->{Delete}" onclick="clearTable('drop_zone_diameter');"></td></tr>
+d545 1
+a545 1
+		<tr><th>$lang->{'Graph3d transparency'}:</th><td align="right"><img class="cursor" src="img/delete.gif" title="$lang->{Delete}" onclick="clearTable('drop_zone_transparency');"></td></tr>
+d558 1
+a558 1
+		<tr><th>$lang->{'Graph3d x'}:</th><td align="right"><img class="cursor" src="img/delete.gif" title="$lang->{Delete}" onclick="clearTable('drop_zone_x');"></td></tr>
+d569 1
+a569 1
+		<tr><th>$lang->{'Graph3d z'}:</th><td align="right"><img class="cursor" src="img/delete.gif" title="$lang->{Delete}" onclick="clearTable('drop_zone_z');"></td></tr>
+d581 1
+a581 1
+		<tr><th>$lang->{'Graph3d shape'}:</th><td align="right"><img class="cursor" src="img/delete.gif" title="$lang->{Delete}" onclick="clearTable('drop_zone_shape');"></td></tr>
+d592 1
+a592 1
+		<tr><th>$lang->{'Graph3d color'}:</th><td align="right"><img class="cursor" src="img/delete.gif" title="$lang->{Delete}" onclick="clearTable('drop_zone_color');"></td></tr>
+@
+
+
+1.77
+log
+@access object implemented
+@
+text
+@d4 1
+a4 1
+# $Id: local_lib.pl,v 1.76 2003/08/19 13:05:55 jiri_schmid Exp $
+d511 1
+a511 1
+			<tr onclick="decide(this)"><td class="visual_up_special" onmouseover="active_special(this);return(true);" onmouseout="passive_special(this);return(true);">$lang->{'Graph3d end'}</td></tr>
+d525 1
+a525 1
+			<tr onclick="decide(this)"><td class="visual_up_special" onmouseover="active_special(this);return(true);" onmouseout="passive_special(this);return(true);">$lang->{'Graph3d end'}</td></tr>
+d537 1
+a537 1
+			<tr onclick="decide(this)"><td class="visual_up_special" onmouseover="active_special(this);return(true);" onmouseout="passive_special(this);return(true);">$lang->{'Graph3d end'}</td></tr>
+d548 1
+a548 1
+			<tr onclick="decide(this)"><td class="visual_up_special" onmouseover="active_special(this);return(true);" onmouseout="passive_special(this);return(true);">$lang->{'Graph3d end'}</td></tr>
+d561 1
+a561 1
+			<tr onclick="decide(this)"><td class="visual_up_special" onmouseover="active_special(this);return(true);" onmouseout="passive_special(this);return(true);">$lang->{'Graph3d end'}</td></tr>
+d572 1
+a572 1
+			<tr onclick="decide(this)"><td class="visual_up_special" onmouseover="active_special(this);return(true);" onmouseout="passive_special(this);return(true);">$lang->{'Graph3d end'}</td></tr>
+d584 1
+a584 1
+			<tr onclick="decide(this)"><td class="visual_up_special" onmouseover="active_special(this);return(true);" onmouseout="passive_special(this);return(true);">$lang->{'Graph3d end'}</td></tr>
+d595 1
+a595 1
+			<tr onclick="decide(this)"><td class="visual_up_special" onmouseover="active_special(this);return(true);" onmouseout="passive_special(this);return(true);">$lang->{'Graph3d end'}</td></tr>
+d638 1
+a638 1
+ my $lang = shift;
+@
+
+
+1.76
+log
+@formats2d implemented
+@
+text
+@d4 1
+a4 1
+# $Id: local_lib.pl,v 1.75 2003/08/18 13:17:09 jiri_schmid Exp $
+d115 1
+d137 1
+a139 1
+		'_FORMATS_'=>{'type'=>'format', 'icon'=>'Fo'},
+d142 1
+d221 1
+a221 1
+			if ($rule eq '~rule') {
+d401 1
+a401 1
+   <tr onclick="decide(this)"><td class="visual_up_special" onmouseover="active_special(this);return(true);" onmouseout="passive_special(this);return(true);">$lang->{'Grid Table end'}</td></tr>
+d413 1
+a413 1
+	  <td class="visual_up_special" onmouseover="active_special(this);return(true);" onmouseout="passive_special(this);return(true);">$lang->{'Grid Table end'}</td>
+d426 1
+a426 1
+	    <td class="visual_up_special" onmouseover="active_special(this);return(true);" onmouseout="passive_special(this);return(true);">$lang->{'Grid Table end'}</td>
+d437 1
+a437 1
+	    <td class="metrics_special" onmouseover="active_special(this);return(true);" onmouseout="passive_special(this);return(true);">$lang->{'Grid Table end'}</td>
+@
+
+
+1.75
+log
+@admin page reading rutines implemented
+@
+text
+@d4 1
+a4 1
+# $Id: local_lib.pl,v 1.74 2003/08/14 16:26:54 jiri_schmid Exp $
+d109 1
+d128 1
+a128 1
+	print TREE "<div id='content' class='folder'><img src='$icons->{base}' align='top' hspace='5' /><span class='project'/>$pn</span><br />";
+d135 1
+d165 1
+a165 1
+		print TREE "<span id='$activeFolderId' onclick='ocFolder(this)'><img id='icon$activeFolderId' src='$joinIcon' $AAB /><a href='javascript:{}'><img id='folderIcon$activeFolderId' src='$icons->{folder}' $AAB /><span id='view$activeFolderId' title='$m->{$activeFolderId}->{description}'>$m->{$activeFolderId}->{name}</span></a></span><br />";
+@
+
+
+1.74
+log
+@icons rebuilding
+@
+text
+@d4 1
+a4 1
+# $Id: local_lib.pl,v 1.73 2003/08/14 12:43:47 jiri_schmid Exp $
+d479 3
+a481 2
+				if (exists ($descr->{$_})) {
+					if (ref($descr->{$_})=~/HASH/) {	# empty string is presented as empty hash
+d484 1
+a484 1
+						return $descr->{$_}
+@
+
+
+1.73
+log
+@huge code, minor functionality and design improvment on main tree
+@
+text
+@d4 1
+a4 1
+# $Id: local_lib.pl,v 1.72 2003/08/12 15:05:58 jiri_schmid Exp $
+d108 1
+a108 1
+		'_FORMAT3D_'=>'img/tree/format.gif',
+@
+
+
+1.72
+log
+@MSIE viewtree bug found and fixed
+@
+text
+@d4 1
+a4 1
+# $Id: local_lib.pl,v 1.71 2003/08/12 14:09:45 jiri_schmid Exp $
+a120 1
+	my $RT = ' return true;';
+d127 1
+a127 1
+	print TREE "<div id='content' class='content'><img src=\"$icons->{base}\" align=\"top\" hspace=\"5\" alt=\"\"/><span class=\"project\"/>$pn</span><br />";
+d163 2
+a164 3
+		print TREE "<a href=\"javascript: oc('$activeFolderId',$join,'D');\"><img id=\"join$activeFolderId\" src=\"$joinIcon\" $AAB alt=\"N\"/></a>";
+		print TREE "<span id=\"span$activeFolderId\"><a onclick=\"show_me_ex('$activeFolderId',$join);$RT\"><img id=\"icon$activeFolderId\" src=\"$icons->{folder}\" $AAB alt=\"F\"/><span id=\"$activeFolderId\" title=\"$m->{$activeFolderId}->{description}\">&nbsp;$m->{$activeFolderId}->{name}&nbsp;</span></a><br></span>";
+		print TREE "<div id=\"div$activeFolderId\" $SDN>";
+d199 3
+a201 4
+			$insertIcon = "<img src=\"$firstIcon\" $AAB alt=\"l\"/>";
+			print TREE "<img src=\"$icons->{line}\" $AAB alt=\"l\"/><a href=\"javascript: oc('$group',$joinSubFolder,'D');\"><img id=\"join$group\" src=\"$joinFolderIcon\" $AAB alt=\"N\"/></a>";
+			print TREE "<span id=\"span$group\"><a onclick=\"show_me_ex('$group',$joinSubFolder);$RT\"><img id=\"icon$group\" src=\"$icons->{folder}\" $AAB alt=\"F\"/><span id=\"$group\" title=\"$displayDesc\">&nbsp;$displayName&nbsp;</span></a><br></span>";
+			print TREE "<div id=\"div$group\" $SDN>";
+d224 2
+a225 3
+				print TREE "<img src=\"$icons->{line}\" $AAB alt=\"l\"/>$insertIcon";
+				print TREE "<a href=\"javascript: oc('$_',$join,'A');\"><img id=\"join$_\" src=\"$joinIcon\" $AAB alt=\"N\"/></a>";
+				print TREE "<span id=\"span$_\"><a ondblclick=\"jump('$_')\" onclick=\"show_me_ex('$_','$previousItemId');$RT\"><img id=\"icon$_\" name=\"$shortHash->{$_}->{name}|A\" src=\"$icons->{attr}\" $AAB alt=\"A\"/><span id=\"$_\" title=\"$des\">&nbsp;$shortHash->{$_}->{name}&nbsp;</span></a><br></span>";
+d227 1
+a227 1
+				print TREE "<div id=\"div$_\" $SDN>";
+d234 2
+a235 2
+					print TREE "<img src=\"$icons->{line}\" $AAB alt=\"l\"/>$insertIcon<img src=\"$secondIcon\" $AAB alt=\"l\"/><img src=\"$thirdIcon\" $AAB alt=\"l\"/>";
+					print TREE "<span id=\"$ll~$_\"><a onclick=\"show_me_ex('$ll~$_','$ll');$RT\"><img id=\"icon$ll~$_\" name=\"$_|Af\" src=\"$icons->{attr_form}\" $AAB alt=\"AF\"/><span id=\"$ll~$_\" title=\"$shortHash->{$ll}->{display}->{$_}->{description}\">&nbsp;$shortHash->{$ll}->{display}->{$_}->{name}&nbsp;</span></a><br></span>";
+d248 2
+a249 3
+				print TREE "<img src=\"$icons->{line}\" $AAB alt=\"l\"/><img src=\"$icons->{line}\" $AAB alt=\"l\"/><a href=\"javascript: oc('$group.$rule',$joinSubFolder,'D');\"><img id=\"join$group.$rule\" src=\"$joinFolderIcon\" $AAB alt=\"N\"/></a>";
+				print TREE "<span id=\"span$group.$rule\"><a onclick=\"show_me_ex('$group.$rule',$joinSubFolder);$RT\"><img id=\"icon$group.$rule\" src=\"$icons->{folder}\" $AAB alt=\"F\"/><span id=\"$group.$rule\" title=\"$displayDesc\">&nbsp;$displayName&nbsp;</span></a><br></span>";
+				print TREE "<div id=\"div$group.$rule\" $SDN>";
+d272 2
+a273 3
+				print TREE "<img src=\"$icons->{line}\" $AAB alt=\"l\"/><img src=\"$firstIcon\" $AAB alt=\"l\"/><img src=\"$secondIcon\" $AAB alt=\"l\"/>";
+				print TREE "<a href=\"javascript: oc('$_',$join,'A');\"><img id=\"join$_\" src=\"$joinIcon\" $AAB alt=\"N\"/></a>";
+				print TREE "<span id=\"span$_\"><a ondblclick=\"jump('$_')\" onclick=\"show_me_ex('$_','$group.$rule');$RT\"><img id=\"icon$_\" name=\"$shortHash->{$_}->{name}|A\" src=\"$icons->{attr}\" $AAB alt=\"A\"/><span id=\"$_\" title=\"$des\">&nbsp;$shortHash->{$_}->{name}&nbsp;</span></a><br></span>";
+d275 1
+a275 1
+					print TREE "<div id=\"div$_\" $SDN>";
+d282 2
+a283 2
+					print TREE "<img src=\"$icons->{line}\" $AAB alt=\"l\"/><img src=\"$firstIcon\" $AAB alt=\"l\"/><img src=\"$secondIcon\" $AAB alt=\"l\"/><img src=\"$thirdIcon\" $AAB alt=\"l\"/><img src=\"$fourthIcon\" $AAB alt=\"l\"/>";
+					print TREE "<span id=\"$ll~$_\"><a onclick=\"show_me_ex('$ll~$_','$ll');$RT\"><img id=\"icon$ll~$_\" name=\"$_|Af\" src=\"$icons->{attr_form}\" $AAB alt=\"AF\"/><span id=\"$ll~$_\" title=\"$shortHash->{$ll}->{display}->{$_}->{description}\">&nbsp;$shortHash->{$ll}->{display}->{$_}->{name}&nbsp;</span></a><br></span>";
+d312 1
+a312 2
+				print TREE "<a href=\"javascript: oc('$activeFolderId',$join,'D');\"><img id=\"join$activeFolderId\" src=\"$joinIcon\" $AAB alt=\"N\"/></a>";
+				print TREE "<span id=\"span$activeFolderId\"><a onclick=\"show_me_ex('$activeFolderId',$join);$RT\"><img id=\"icon$activeFolderId\" src=\"$icons->{folder}\" $AAB alt=\"F\"/><span id=\"$activeFolderId\" title=\"$m->{$activeFolderId}->{description}\">&nbsp;$m->{$activeFolderId}->{name}&nbsp;</span></a><br></span>";
+d315 1
+a315 2
+				print TREE "<img id=\"join$activeFolderId\" src=\"$emptyJoinIcon\" $AAB alt=\"N\"/>";
+				print TREE "<span id=\"span$activeFolderId\"><img id=\"icon$activeFolderId\" src=\"$icons->{folder}\" $AAB alt=\"F\"/><span id=\"$activeFolderId\" title=\"$m->{$activeFolderId}->{description}\">&nbsp;$m->{$activeFolderId}->{name}&nbsp;</span><br></span>";
+d318 1
+a318 1
+			print TREE "<div id=\"div$activeFolderId\" $SDN>";
+d325 2
+a326 2
+				print TREE "<img src=\"$firstIcon\" $AAB alt=\"l\"/><img src=\"$secondIcon\" $AAB alt=\"l\"/>";
+				print TREE "<span id=\"span$_\"><a ondblclick=\"jump('$_')\" onclick=\"show_me_ex('$_','$activeFolderId');$RT\"><img id=\"icon$_\" name=\"$subM->{$_}->{name}|$objTr->{$activeFolderId}->{icon}\" src=\"$icons->{$activeFolderId}\" $AAB alt=\"$dtn\"/><span id=\"$_\" title=\"$subM->{$_}->{description}\">&nbsp;$subM->{$_}->{name}&nbsp;</span></a><br></span>";
+@
+
+
+1.71
+log
+@left pane is colapsible now
+@
+text
+@d4 1
+a4 1
+# $Id: local_lib.pl,v 1.70 2003/08/05 12:49:44 jiri_schmid Exp $
+a119 1
+	my $SCD = 'style="cursor:default"';
+d128 1
+a128 1
+	print TREE "<div id='content'><img src=\"$icons->{base}\" align=\"top\" hspace=\"5\" alt=\"\"/><span class=\"project\"/>$pn</span><br />";
+d165 1
+a165 1
+		print TREE "<span id=\"span$activeFolderId\" $SCD><a onclick=\"show_me_ex('$activeFolderId',$join);$RT\"><img id=\"icon$activeFolderId\" src=\"$icons->{folder}\" $AAB alt=\"F\"/><span id=\"$activeFolderId\" title=\"$m->{$activeFolderId}->{description}\">&nbsp;$m->{$activeFolderId}->{name}&nbsp;</span></a><br></span>";
+d203 1
+a203 1
+			print TREE "<span id=\"span$group\" $SCD><a onclick=\"show_me_ex('$group',$joinSubFolder);$RT\"><img id=\"icon$group\" src=\"$icons->{folder}\" $AAB alt=\"F\"/><span id=\"$group\" title=\"$displayDesc\">&nbsp;$displayName&nbsp;</span></a><br></span>";
+d229 1
+a229 1
+				print TREE "<span id=\"span$_\" $SCD><a ondblclick=\"jump('$_')\" onclick=\"show_me_ex('$_','$previousItemId');$RT\"><img id=\"icon$_\" name=\"$shortHash->{$_}->{name}|A\" src=\"$icons->{attr}\" border=\"0\" $AAB alt=\"A\"/><span id=\"$_\" title=\"$des\">&nbsp;$shortHash->{$_}->{name}&nbsp;</span></a><br></span>";
+d239 1
+a239 1
+					print TREE "<span id=\"$ll~$_\" $SCD><a onclick=\"show_me_ex('$ll~$_','$ll');$RT\"><img id=\"icon$ll~$_\" name=\"$_|Af\" src=\"$icons->{attr_form}\" border=\"0\" $AAB alt=\"AF\"/><span id=\"$ll~$_\" title=\"$shortHash->{$ll}->{display}->{$_}->{description}\">&nbsp;$shortHash->{$ll}->{display}->{$_}->{name}&nbsp;</span></a><br></span>";
+d253 1
+a253 1
+				print TREE "<span id=\"span$group.$rule\" $SCD><a onclick=\"show_me_ex('$group.$rule',$joinSubFolder);$RT\"><img id=\"icon$group.$rule\" src=\"$icons->{folder}\" $AAB alt=\"F\"/><span id=\"$group.$rule\" title=\"$displayDesc\">&nbsp;$displayName&nbsp;</span></a><br></span>";
+d279 1
+a279 1
+				print TREE "<span id=\"span$_\" $SCD><a ondblclick=\"jump('$_')\" onclick=\"show_me_ex('$_','$group.$rule');$RT\"><img id=\"icon$_\" name=\"$shortHash->{$_}->{name}|A\" src=\"$icons->{attr}\" border=\"0\" $AAB alt=\"A\"/><span id=\"$_\" title=\"$des\">&nbsp;$shortHash->{$_}->{name}&nbsp;</span></a><br></span>";
+d289 1
+a289 1
+					print TREE "<span id=\"$ll~$_\" $SCD><a onclick=\"show_me_ex('$ll~$_','$ll');$RT\"><img id=\"icon$ll~$_\" name=\"$_|Af\" src=\"$icons->{attr_form}\" border=\"0\" $AAB alt=\"AF\"/><span id=\"$ll~$_\" title=\"$shortHash->{$ll}->{display}->{$_}->{description}\">&nbsp;$shortHash->{$ll}->{display}->{$_}->{name}&nbsp;</span></a><br></span>";
+d319 1
+a319 1
+				print TREE "<span id=\"span$activeFolderId\" $SCD><a onclick=\"show_me_ex('$activeFolderId',$join);$RT\"><img id=\"icon$activeFolderId\" src=\"$icons->{folder}\" $AAB alt=\"F\"/><span id=\"$activeFolderId\" title=\"$m->{$activeFolderId}->{description}\">&nbsp;$m->{$activeFolderId}->{name}&nbsp;</span></a><br></span>";
+d323 1
+a323 1
+				print TREE "<span id=\"span$activeFolderId\" $SCD><img id=\"icon$activeFolderId\" src=\"$icons->{folder}\" $AAB alt=\"F\"/><span id=\"$activeFolderId\" title=\"$m->{$activeFolderId}->{description}\">&nbsp;$m->{$activeFolderId}->{name}&nbsp;</span><br></span>";
+d334 1
+a334 1
+				print TREE "<span id=\"span$_\" $SCD><a ondblclick=\"jump('$_')\" onclick=\"show_me_ex('$_','$activeFolderId');$RT\"><img id=\"icon$_\" name=\"$subM->{$_}->{name}|$objTr->{$activeFolderId}->{icon}\" src=\"$icons->{$activeFolderId}\" border=\"0\" $AAB alt=\"$dtn\"/><span id=\"$_\" title=\"$subM->{$_}->{description}\">&nbsp;$subM->{$_}->{name}&nbsp;</span></a><br></span>";
+d678 1
+a678 1
+	print "<td class='$activeTab"."Corner'><img src='img/leftCorner.gif'/></td><td class='$activeTab' ><a href=\"javascript: viewLocalTab('$_')\" >$lang->{$viewName}</a></td><td class='$activeTab"."Corner'><img src='img/rightCorner.gif'/></td>$hlp\n";
+@
+
+
+1.70
+log
+@fact input field on right pane implemented
+@
+text
+@d4 1
+a4 1
+# $Id: local_lib.pl,v 1.69 2003/07/25 09:28:48 jiri_schmid Exp $
+d125 1
+a125 1
+	my $scriptArray = ("\n<script type=\"text/javascript\"><!-- \nvar Tree$ti = new Array;\n");
+d129 1
+a129 1
+	print TREE "<img src=\"$icons->{base}\" align=\"top\" hspace=\"5\" alt=\"\"/><span class=\"project\"/>$pn</span><br />";
+d343 2
+a344 1
+	$scriptArray .= "//--></script>\n";
+@
+
+
+1.69
+log
+@minor bug fixies and code improvment
+@
+text
+@d4 1
+a4 1
+# $Id: local_lib.pl,v 1.68 2003/07/24 10:37:48 jiri_schmid Exp $
+d382 1
+@
+
+
+1.68
+log
+@next tab implmented
+@
+text
+@d4 1
+a4 1
+# $Id: local_lib.pl,v 1.67 2003/07/23 11:44:52 jiri_schmid Exp $
+d530 1
+a530 1
+		<tr><td colspan="2"><span class="q" title="$lang->{'Graph3d QDescr'}"><input type="checkbox" value="on" name="yQ" id="yQ">$lang->{'Graph3d Quantity'}</span></td></tr>
+d542 1
+a542 1
+		<tr><td colspan="2"><span class="q" title="$lang->{'Graph3d QDescr'}"><input type="checkbox" value="on" name="diameterQ" id="diameterQ">$lang->{'Graph3d Quantity'}</span></td></tr>
+d553 1
+a553 1
+		<tr><td colspan="2"><span class="q" title="$lang->{'Graph3d QDescr'}"><input type="checkbox" value="on" name="transparencyQ" id="transparencyQ">$lang->{'Graph3d Quantity'}</span></td></tr>
+d566 1
+a566 1
+		<tr><td colspan="2"><span class="q" title="$lang->{'Graph3d QDescr'}"><input type="checkbox" value="on" name="xQ" id="xQ">$lang->{'Graph3d Quantity'}</span></td></tr>
+d577 1
+a577 1
+		<tr><td colspan="2"><span class="q" title="$lang->{'Graph3d QDescr'}"><input type="checkbox" value="on" name="zQ" id="zQ">$lang->{'Graph3d Quantity'}</span></td></tr>
+d589 1
+a589 1
+		<tr><td colspan="2"><span class="q" title="$lang->{'Graph3d QDescr'}"><input type="checkbox" value="on" name="shapeQ" id="shapeQ">$lang->{'Graph3d Quantity'}</span></td></tr>
+d600 1
+a600 1
+		<tr><td colspan="2"><span class="q" title="$lang->{'Graph3d QDescr'}"><input type="checkbox" value="on" name="colorQ" id="colorQ">$lang->{'Graph3d Quantity'}</span></td></tr>
+@
+
+
+1.67
+log
+@next tab implemented on graph3d page
+@
+text
+@d4 1
+a4 1
+# $Id: local_lib.pl,v 1.66 2003/07/22 15:13:03 jiri_schmid Exp $
+d530 1
+a530 1
+		<tr><td colspan="2"><span title="$lang->{'Graph3d QDescr'}"><input type="checkbox" value="on" name="yQ" id="yQ">$lang->{'Graph3d Quantity'}</span></td></tr>
+d542 1
+a542 1
+		<tr><td colspan="2"><span title="$lang->{'Graph3d QDescr'}"><input type="checkbox" value="on" name="diameterQ" id="diameterQ">$lang->{'Graph3d Quantity'}</span></td></tr>
+d553 1
+a553 1
+		<tr><td colspan="2"><span title="$lang->{'Graph3d QDescr'}"><input type="checkbox" value="on" name="transparencyQ" id="transparencyQ">$lang->{'Graph3d Quantity'}</span></td></tr>
+d566 1
+a566 1
+		<tr><td colspan="2"><span title="$lang->{'Graph3d QDescr'}"><input type="checkbox" value="on" name="xQ" id="xQ">$lang->{'Graph3d Quantity'}</span></td></tr>
+d577 1
+a577 1
+		<tr><td colspan="2"><span title="$lang->{'Graph3d QDescr'}"><input type="checkbox" value="on" name="zQ" id="zQ">$lang->{'Graph3d Quantity'}</span></td></tr>
+d589 1
+a589 1
+		<tr><td colspan="2"><span title="$lang->{'Graph3d QDescr'}"><input type="checkbox" value="on" name="shapeQ" id="shapeQ">$lang->{'Graph3d Quantity'}</span></td></tr>
+d600 1
+a600 1
+		<tr><td colspan="2"><span title="$lang->{'Graph3d QDescr'}"><input type="checkbox" value="on" name="colorQ" id="colorQ">$lang->{'Graph3d Quantity'}</span></td></tr>
+@
+
+
+1.66
+log
+@new tabs on graph3d page implemented
+@
+text
+@d4 1
+a4 1
+# $Id: local_lib.pl,v 1.65 2003/07/22 08:47:56 jiri_schmid Exp $
+d536 1
+a536 1
+		<tr><th>$lang->{'Graph3d diameter'}:</th><td align="right"><img class="cursor" src="img/delete.gif" title="$lang->{Delete}" onclick="clearTable('drop_zone_diam');"></td></tr>
+d547 1
+a547 1
+		<tr><th>$lang->{'Graph3d transparency'}:</th><td align="right"><img class="cursor" src="img/delete.gif" title="$lang->{Delete}" onclick="clearTable('drop_zone_trans');"></td></tr>
+@
+
+
+1.65
+log
+@axis tabs on 3dgraph page implented
+@
+text
+@d4 1
+a4 1
+# $Id: local_lib.pl,v 1.64 2003/07/18 10:50:59 jiri_schmid Exp $
+d524 1
+a524 1
+		<tr><th>$lang->{'Graph3d y'}</th><td align="right"><img class="cursor" src="img/delete.gif" title="$lang->{Delete}" onclick="clearTable('drop_zone_y');"></td></tr>
+d536 1
+a536 1
+		<tr><th>$lang->{'Graph3d Diam'}</th><td align="right"><img class="cursor" src="img/delete.gif" title="$lang->{Delete}" onclick="clearTable('drop_zone_diam');"></td></tr>
+d547 1
+a547 1
+		<tr><th>$lang->{'Graph3d Trans'}</th><td align="right"><img class="cursor" src="img/delete.gif" title="$lang->{Delete}" onclick="clearTable('drop_zone_trans');"></td></tr>
+d560 1
+a560 1
+		<tr><th>$lang->{'Graph3d x'}</th><td align="right"><img class="cursor" src="img/delete.gif" title="$lang->{Delete}" onclick="clearTable('drop_zone_x');"></td></tr>
+d571 1
+a571 1
+		<tr><th>$lang->{'Graph3d z'}</th><td align="right"><img class="cursor" src="img/delete.gif" title="$lang->{Delete}" onclick="clearTable('drop_zone_z');"></td></tr>
+d583 1
+a583 1
+		<tr><th>$lang->{'Graph3d Shape'}</th><td align="right"><img class="cursor" src="img/delete.gif" title="$lang->{Delete}" onclick="clearTable('drop_zone_shape');"></td></tr>
+d594 1
+a594 1
+		<tr><th>$lang->{'Graph3d Color'}</th><td align="right"><img class="cursor" src="img/delete.gif" title="$lang->{Delete}" onclick="clearTable('drop_zone_color');"></td></tr>
+@
+
+
+1.64
+log
+@format3d implemented, format changed all dependencies fixed
+@
+text
+@d4 1
+a4 1
+# $Id: local_lib.pl,v 1.63 2003/07/14 11:52:23 jiri_schmid Exp $
+d524 1
+a524 1
+		<tr><th>$lang->{'Graph3d yAxis'}</th><td align="right"><img class="cursor" src="img/delete.gif" title="$lang->{Delete}" onclick="clearTable('drop_zone_y');"></td></tr>
+d560 1
+a560 1
+		<tr><th>$lang->{'Graph3d xAxis'}</th><td align="right"><img class="cursor" src="img/delete.gif" title="$lang->{Delete}" onclick="clearTable('drop_zone_x');"></td></tr>
+d571 1
+a571 1
+		<tr><th>$lang->{'Graph3d zAxis'}</th><td align="right"><img class="cursor" src="img/delete.gif" title="$lang->{Delete}" onclick="clearTable('drop_zone_z');"></td></tr>
+@
+
+
+1.63
+log
+@3dgraph webpage-rules implantation, minor code changes
+@
+text
+@d4 1
+a4 1
+# $Id: local_lib.pl,v 1.62 2003/07/11 16:06:34 jiri_schmid Exp $
+d108 1
+d135 1
+a393 45
+sub generateFormatEdit() {
+my $local;
+$local = (ref($Obj->{format_def}) =~ /HASH/) ? $Obj->{format_def} : $Obj;
+my $Type = ($local->{type}) ? $local->{type} : "grid";
+my $Form = ($local->{form}) ? $local->{form} : "default";
+my $Header = ($local->{header}) ? $local->{header} : "none";
+my ($checkedGraph, $checkedGrid, $checkedVrml);
+
+if ($Type eq "graph") {
+	$checkedGraph = "checked='true'";
+} elsif ($Type eq "grid") {
+	$checkedGrid = "checked='true'";
+} elsif ($Type eq "vrml") {
+	$checkedVrml = "checked='true'";
+}
+print <<END ;
+	<table class="format_100">
+	<tr><td style="vertical-align:top; width:110px; border: 2px solid #064fa8; height:265px;">
+		<table class="format_radio_btn">
+		<tr><td>
+			<span class="cursor" onclick="next(this)"><input type="radio" id="in_css" name="style" value="CSS" $checkedGrid onclick="changeStyle('grid')"/>$lang->{'Format radio_btn css'}</span>
+		</td></tr>
+		<tr><td>
+			<span class="cursor" onclick="next(this)"><input type="radio" id="in_graph" name="style" value="Graph" $checkedGraph onclick="changeStyle('graph')"/>$lang->{'Format radio_btn graph'}</span>
+		</td></tr>
+		<tr><td>
+			<span class="cursor" onclick="next(this)"><input type="radio" id="in_vrml" name="style" value="Vrml" $checkedVrml onclick="changeStyle('vrml')"/>$lang->{'Format radio_btn vrml'}</span>
+		</td></tr>
+		</table>
+		<input id="typ" value="$Type" type="hidden" name="typ"/>
+		<input id="form" value="$Form" type="hidden" name="form"/>
+		<input id="header" value="$Header" type="hidden" name="header"/>
+		<input id="originalForm" value="$Form" type="hidden"/>
+		<input id="originalType" value="$Type" type="hidden"/>
+		<input id="originalHeader" value="$Header" type="hidden"/>
+	</td>
+	<td style="background-color:#5190e2; border: 2px solid #064fa8;">
+		<IFRAME id="css_graph" src="format.cgi?Lang=$use_lang&Type=$Type&Form=$Form&Header=$Header" width="99%" height="99%" scrolling="auto" frameborder="0"></IFRAME>
+	</td>
+	</tr>
+	</table>
+END
+}
+
+#---------------------------------------------------
+d462 1
+a462 1
+my $local = (exists($Obj->{grid_def})) ? $Obj->{grid_def} : $Obj;
+d470 1
+d530 1
+a530 1
+		<tr><td colspan="2"><span class="cursor" title="$lang->{'Graph3d QDescr'}" onclick="next(this)"><input type="checkbox" value="on" name="yQ" id="yQ">$lang->{'Graph3d Quantity'}</span></td></tr>
+d542 1
+a542 1
+		<tr><td colspan="2"><span class="cursor" title="$lang->{'Graph3d QDescr'}" onclick="next(this)"><input type="checkbox" value="on" name="diameterQ" id="diameterQ">$lang->{'Graph3d Quantity'}</span></td></tr>
+d553 1
+a553 1
+		<tr><td colspan="2"><span class="cursor" title="$lang->{'Graph3d QDescr'}" onclick="next(this)"><input type="checkbox" value="on" name="transparencyQ" id="transparencyQ">$lang->{'Graph3d Quantity'}</span></td></tr>
+d566 1
+a566 1
+		<tr><td colspan="2"><span class="cursor" title="$lang->{'Graph3d QDescr'}" onclick="next(this)"><input type="checkbox" value="on" name="xQ" id="xQ">$lang->{'Graph3d Quantity'}</span></td></tr>
+d577 1
+a577 1
+		<tr><td colspan="2"><span class="cursor" title="$lang->{'Graph3d QDescr'}" onclick="next(this)"><input type="checkbox" value="on" name="zQ" id="zQ">$lang->{'Graph3d Quantity'}</span></td></tr>
+d589 1
+a589 1
+		<tr><td colspan="2"><span class="cursor" title="$lang->{'Graph3d QDescr'}" onclick="next(this)"><input type="checkbox" value="on" name="shapeQ" id="shapeQ">$lang->{'Graph3d Quantity'}</span></td></tr>
+d600 1
+a600 1
+		<tr><td colspan="2"><span class="cursor" title="$lang->{'Graph3d QDescr'}" onclick="next(this)"><input type="checkbox" value="on" name="colorQ" id="colorQ">$lang->{'Graph3d Quantity'}</span></td></tr>
+d615 1
+a615 1
+my $local = (exists($Obj->{graph3d_def})) ? $Obj->{graph3d_def} : $Obj;
+d623 1
+a623 1
+push @@checked,"$IH~$Obj->{$IH}{quantity}" if $IH ne 'pages';
+d627 1
+d683 12
+@
+
+
+1.62
+log
+@micro-bug fixed
+@
+text
+@d4 1
+a4 1
+# $Id: local_lib.pl,v 1.61 2003/07/11 16:00:49 jiri_schmid Exp $
+a168 1
+
+d263 12
+a274 1
+				if ($lastInRulesField eq $_) {$thirdIcon = $icons->{empty}; $join=1; $joinIcon = $icons->{plusBottom}; }
+d580 1
+a580 1
+			<table class="visual_up" id="drop_zone_diam" cellpadding="0" cellspacing="0">
+d591 1
+a591 1
+			<table class="visual_up" id="drop_zone_trans" cellpadding="0" cellspacing="0">
+@
+
+
+1.61
+log
+@graph3d next stage
+@
+text
+@d4 1
+a4 1
+# $Id: local_lib.pl,v 1.60 2003/07/11 05:40:54 michald Exp $
+d655 1
+a655 1
+push @@checked,"$IH~$Obj->{$IH}{quantity}" if exists $Obj->{$IH}{quantity};
+@
+
+
+1.60
+log
+@minor fixes
+@
+text
+@d4 1
+a4 1
+# $Id: local_lib.pl,v 1.59 2003/07/10 13:00:00 jiri_schmid Exp $
+d437 1
+a437 1
+   <tr onclick="decide(this)"><td class="visual_up_special" onmouseover="active_special(this);return(true);" onmouseout="passive_special(this);return(true);">$lang->{'Grid Pages_end'}</td></tr>
+d449 1
+a449 1
+	  <td class="visual_up_special" onmouseover="active_special(this);return(true);" onmouseout="passive_special(this);return(true);">$lang->{'Grid Table_col_end'}</td>
+d462 1
+a462 1
+	    <td class="visual_up_special" onmouseover="active_special(this);return(true);" onmouseout="passive_special(this);return(true);">$lang->{'Grid Table_row_end'}</td>
+d473 1
+a473 1
+	    <td class="metrics_special" onmouseover="active_special(this);return(true);" onmouseout="passive_special(this);return(true);">$lang->{'Grid Table_cell_end'}</td>
+d537 14
+a550 2
+ <table width="100%" align="center">
+ <tr><td>
+d552 84
+a635 8
+  <tr><td colspan="2">
+   <table class="visual_down" width="100%">
+    <tr><th align="left">$lang->{'Graph3d Pages'}</th><td align="right"><img class="cursor" src="img/delete.gif" title="$lang->{Delete}" onclick="clearGrid('drop_zone_pages');"></td></tr>
+    <tr><td class="visual_down" colspan="2">
+    <table class="visual_up" id="drop_zone_pages" cellpadding="0" cellspacing="0">
+   <tr onclick="decide(this)"><td class="visual_up_special" onmouseover="active_special(this);return(true);" onmouseout="passive_special(this);return(true);">$lang->{'Graph3d Pages_end'}</td></tr>
+    </table>
+  </td></tr>
+d637 3
+a639 41
+ <tr><td colspan="2"><hr></td></tr>
+ <tr><th width="50%">$lang->{'Graph3d Table'}</th>
+    <td width="50%">
+    <table class="neutral_100">
+	 <tr><th>$lang->{'Graph3d Table_y'}</th><td align="right"><img class="cursor" src="img/delete.gif" title="$lang->{Delete}" onclick="clearGrid('drop_zone_y');"></td></tr>
+	 <tr><td class="visual_down" colspan="2">
+	 <table class="visual_up" id="drop_zone_y" cellpadding="0" cellspacing="0">
+      <tr onclick="decide(this)">
+	  <td class="visual_up_special" onmouseover="active_special(this);return(true);" onmouseout="passive_special(this);return(true);">$lang->{'Graph3d Table_y_end'}</td>
+	  </tr>
+	</table>
+	</td></tr></table>
+	</td>
+	</tr>
+	<tr valign="top">  
+	  <td>
+	  <table class="neutral_100">
+	  <tr><th>$lang->{'Graph3d Table_x'}</th><td align="right"><img class="cursor" src="img/delete.gif" title="$lang->{Delete}" onclick="clearGrid('drop_zone_x');"></td></tr>
+	  <tr><td class="visual_down" colspan="2">
+	  <table class="visual_up" id="drop_zone_x" cellpadding="0" cellspacing="0">
+	    <tr onclick="decide(this)">
+	    <td class="visual_up_special" onmouseover="active_special(this);return(true);" onmouseout="passive_special(this);return(true);">$lang->{'Graph3d Table_x_end'}</td>
+	    </tr>
+	   </table>
+	   </td></tr></table>
+	  </td>
+	  <td>
+	  <table class="neutral_100">
+	  <tr><th>$lang->{'Graph3d Table_z'}</th><td align="right"><img class="cursor" src="img/delete.gif" title="$lang->{Delete}" onclick="clearGrid('drop_zone_z');"></td></tr>
+	  <tr><td class="visual_down" colspan="2">
+  	   <table class="visual_up" id="drop_zone_z" cellpadding="0" cellspacing="0">
+	    <tr onclick="decide(this)">
+	    <td class="visual_up_special" onmouseover="active_special(this);return(true);" onmouseout="passive_special(this);return(true);">$lang->{'Graph3d Table_z_end'}</td>
+	    </tr>
+	   </table>
+	   </td></tr></table>
+	  </td>
+	</tr>
+	</table>
+  </td></tr>
+  </table> 
+d645 2
+a646 8
+print <<END ;
+<div class="invisible">
+<select id="PagesObj" name="PagesObj" multiple="multiple"></select>
+<select id="ZObj" name="ZObj" multiple="multiple"></select><br>
+<select id="YObj" name="YObj" multiple="multiple"></select>
+<select id="XObj" name="XObj" multiple="multiple"></select><br>
+</div>
+END
+d648 5
+a652 4
+foreach my $IH ('pages','y','x','z') { # IH: name of element input, type hidden
+my $hlp = "";
+	foreach (@@{$local->{$IH}}) { # read from mdata and fill proper hidden input
+		$hlp .= "$_|";
+d654 2
+a655 1
+print "<input type=\"hidden\" id=\"$IH\" value=\"$hlp\"\/>\n";
+d657 2
+@
+
+
+1.59
+log
+@tabed graph3d implemnted, code improvment
+@
+text
+@d4 1
+a4 1
+# $Id: local_lib.pl,v 1.58 2003/07/09 15:30:14 jiri_schmid Exp $
+d653 1
+a653 1
+my $lastTab = @@_[$#_];
+@
+
+
+1.58
+log
+@minor bug fixies, 3dgraph interface changes
+@
+text
+@d4 1
+a4 1
+# $Id: local_lib.pl,v 1.57 2003/07/09 09:28:10 jiri_schmid Exp $
+d614 5
+d624 2
+a625 2
+Encode::_utf8_on($stringToSave);#cgi input send unflaged utf8 string !!!
+$stringToSave =~ s/\n/\\n/g;	#regular expression issue on utf8 chars
+d635 31
+@
+
+
+1.57
+log
+@major manipulating functions for graph3d definition implemented
+@
+text
+@d4 1
+a4 1
+# $Id: local_lib.pl,v 1.56 2003/07/08 07:12:02 jiri_schmid Exp $
+d605 1
+a605 1
+my $hlp = "";	
+d619 2
+@
+
+
+1.56
+log
+@utf8 implementation in last stage
+@
+text
+@d4 1
+a4 1
+# $Id: local_lib.pl,v 1.55 2003/07/07 14:17:10 jiri_schmid Exp $
+d495 1
+a495 1
+my $local = (ref($Obj->{grid_def})) ? $Obj->{grid_def} : $Obj;
+d534 58
+a591 1
+#-----------------------------------------------------
+d593 21
+@
+
+
+1.55
+log
+@utf8 may work properly
+@
+text
+@d4 1
+a4 1
+# $Id: local_lib.pl,v 1.54 2003/07/04 14:29:27 jiri_schmid Exp $
+d332 1
+a332 1
+	print TREE encode_utf8($scriptArray);
+d547 1
+a547 1
+	return decode_utf8($stringToSave);
+@
+
+
+1.54
+log
+@utf8 handling fixed
+@
+text
+@d4 1
+a4 1
+# $Id: local_lib.pl,v 1.53 2003/07/02 13:44:29 jiri_schmid Exp $
+d7 1
+a7 1
+
+d124 1
+a124 1
+	my $scriptArray = "\n<script type=\"text/javascript\"><!-- \nvar Tree$ti = new Array;\n";
+d158 1
+a158 1
+		$scriptArray .= "Tree${ti}\[$i\]  = \"$activeFolderId|$i|$m->{$activeFolderId}->{name}|D|$m->{$activeFolderId}->{description}\";\n";
+d188 1
+a188 1
+		$scriptArray .= "Tree${ti}\[$i\]  = \"$group|$activeFolderId|$subM->{$group}->{display}->{name}|D|\";\n";
+d223 1
+a223 1
+				$scriptArray .= "Tree${ti}\[$i\]  = \"$_|$previousItemId|$shortHash->{$_}->{name}|A|$des\";\n";
+d236 1
+a236 1
+					$scriptArray .= "Tree${ti}\[$i\]  = \"$ll~$_|$ll|$shortHash->{$ll}->{display}->{$_}->{name}|Af|$shortHash->{$ll}->{display}->{$_}->{description}\";\n";
+d247 1
+a247 1
+				$scriptArray .= "Tree${ti}\[$i\]  = \"$group.$rule|$group|$rule|D|\";\n";
+d262 1
+a262 1
+				$scriptArray .= "Tree${ti}\[$i\]  = \"$_|$group.$rule|$shortHash->{$_}->{name}|A|$des\";\n";
+d275 1
+a275 1
+					$scriptArray .= "Tree${ti}\[$i\]  = \"$ll~$_|$ll|$shortHash->{$ll}->{display}->{$_}->{name}|Af|$shortHash->{$ll}->{display}->{$_}->{description}\";\n";
+d293 1
+a293 1
+			$scriptArray .= "Tree${ti}\[$i\]  = \"$activeFolderId|0|$m->{$activeFolderId}->{name}|D|$m->{$activeFolderId}->{description}\";\n";
+d319 1
+a319 1
+				$scriptArray .= "Tree${ti}\[$i\]  = \"$_|$activeFolderId|$subM->{$_}->{name}|$objTr->{$activeFolderId}->{icon}|$subM->{$_}->{description}\";\n";
+a331 1
+	use Encode;
+d537 1
+d547 1
+a547 1
+	return $stringToSave;
+@
+
+
+1.53
+log
+@header descriptions finally implemented
+@
+text
+@d4 1
+a4 1
+# $Id: local_lib.pl,v 1.52 2003/06/26 09:31:40 jiri_schmid Exp $
+d107 1
+d126 3
+a128 4
+	local(*STDOUT);
+	open(STDOUT,">./html/$file.html") || print "<!--something wrong?-->";
+
+	print "<img src=\"$icons->{base}\" align=\"top\" hspace=\"5\" alt=\"\"/><span class=\"project\"/>$pn</span><br />";
+d134 1
+d147 1
+a147 1
+#print "<pre>".Dumper($m)."</pre>";
+d163 3
+a165 3
+		print "<a href=\"javascript: oc('$activeFolderId',$join,'D');\"><img id=\"join$activeFolderId\" src=\"$joinIcon\" $AAB alt=\"N\"/></a>";
+		print "<span id=\"span$activeFolderId\" $SCD><a onclick=\"show_me_ex('$activeFolderId',$join);$RT\"><img id=\"icon$activeFolderId\" src=\"$icons->{folder}\" $AAB alt=\"F\"/><span id=\"$activeFolderId\" title=\"$m->{$activeFolderId}->{description}\">&nbsp;$m->{$activeFolderId}->{name}&nbsp;</span></a><br></span>";
+		print "<div id=\"div$activeFolderId\" $SDN>";
+d171 1
+a171 1
+#print "<pre>".Dumper($subM)."</pre>";
+d202 3
+a204 3
+			print "<img src=\"$icons->{line}\" $AAB alt=\"l\"/><a href=\"javascript: oc('$group',$joinSubFolder,'D');\"><img id=\"join$group\" src=\"$joinFolderIcon\" $AAB alt=\"N\"/></a>";
+			print "<span id=\"span$group\" $SCD><a onclick=\"show_me_ex('$group',$joinSubFolder);$RT\"><img id=\"icon$group\" src=\"$icons->{folder}\" $AAB alt=\"F\"/><span id=\"$group\" title=\"$displayDesc\">&nbsp;$displayName&nbsp;</span></a><br></span>";
+			print "<div id=\"div$group\" $SDN>";
+d227 3
+a229 3
+				print "<img src=\"$icons->{line}\" $AAB alt=\"l\"/>$insertIcon";
+				print "<a href=\"javascript: oc('$_',$join,'A');\"><img id=\"join$_\" src=\"$joinIcon\" $AAB alt=\"N\"/></a>";
+				print "<span id=\"span$_\" $SCD><a ondblclick=\"jump('$_')\" onclick=\"show_me_ex('$_','$previousItemId');$RT\"><img id=\"icon$_\" name=\"$shortHash->{$_}->{name}|A\" src=\"$icons->{attr}\" border=\"0\" $AAB alt=\"A\"/><span id=\"$_\" title=\"$des\">&nbsp;$shortHash->{$_}->{name}&nbsp;</span></a><br></span>";
+d231 1
+a231 1
+				print "<div id=\"div$_\" $SDN>";
+d238 2
+a239 2
+					print "<img src=\"$icons->{line}\" $AAB alt=\"l\"/>$insertIcon<img src=\"$secondIcon\" $AAB alt=\"l\"/><img src=\"$thirdIcon\" $AAB alt=\"l\"/>";
+					print "<span id=\"$ll~$_\" $SCD><a onclick=\"show_me_ex('$ll~$_','$ll');$RT\"><img id=\"icon$ll~$_\" name=\"$_|Af\" src=\"$icons->{attr_form}\" border=\"0\" $AAB alt=\"AF\"/><span id=\"$ll~$_\" title=\"$shortHash->{$ll}->{display}->{$_}->{description}\">&nbsp;$shortHash->{$ll}->{display}->{$_}->{name}&nbsp;</span></a><br></span>";
+d242 1
+a242 1
+				print "</div>";
+d246 1
+a246 1
+#			print "<pre>".Dumper($shortHash)."</pre>";
+d252 3
+a254 3
+				print "<img src=\"$icons->{line}\" $AAB alt=\"l\"/><img src=\"$icons->{line}\" $AAB alt=\"l\"/><a href=\"javascript: oc('$group.$rule',$joinSubFolder,'D');\"><img id=\"join$group.$rule\" src=\"$joinFolderIcon\" $AAB alt=\"N\"/></a>";
+				print "<span id=\"span$group.$rule\" $SCD><a onclick=\"show_me_ex('$group.$rule',$joinSubFolder);$RT\"><img id=\"icon$group.$rule\" src=\"$icons->{folder}\" $AAB alt=\"F\"/><span id=\"$group.$rule\" title=\"$displayDesc\">&nbsp;$displayName&nbsp;</span></a><br></span>";
+				print "<div id=\"div$group.$rule\" $SDN>";
+d266 3
+a268 3
+				print "<img src=\"$icons->{line}\" $AAB alt=\"l\"/><img src=\"$firstIcon\" $AAB alt=\"l\"/><img src=\"$secondIcon\" $AAB alt=\"l\"/>";
+				print "<a href=\"javascript: oc('$_',$join,'A');\"><img id=\"join$_\" src=\"$joinIcon\" $AAB alt=\"N\"/></a>";
+				print "<span id=\"span$_\" $SCD><a ondblclick=\"jump('$_')\" onclick=\"show_me_ex('$_','$group.$rule');$RT\"><img id=\"icon$_\" name=\"$shortHash->{$_}->{name}|A\" src=\"$icons->{attr}\" border=\"0\" $AAB alt=\"A\"/><span id=\"$_\" title=\"$des\">&nbsp;$shortHash->{$_}->{name}&nbsp;</span></a><br></span>";
+d270 1
+a270 1
+					print "<div id=\"div$_\" $SDN>";
+d277 2
+a278 2
+					print "<img src=\"$icons->{line}\" $AAB alt=\"l\"/><img src=\"$firstIcon\" $AAB alt=\"l\"/><img src=\"$secondIcon\" $AAB alt=\"l\"/><img src=\"$thirdIcon\" $AAB alt=\"l\"/><img src=\"$fourthIcon\" $AAB alt=\"l\"/>";
+					print "<span id=\"$ll~$_\" $SCD><a onclick=\"show_me_ex('$ll~$_','$ll');$RT\"><img id=\"icon$ll~$_\" name=\"$_|Af\" src=\"$icons->{attr_form}\" border=\"0\" $AAB alt=\"AF\"/><span id=\"$ll~$_\" title=\"$shortHash->{$ll}->{display}->{$_}->{description}\">&nbsp;$shortHash->{$ll}->{display}->{$_}->{name}&nbsp;</span></a><br></span>";
+d281 1
+a281 1
+					print "</div>";
+d283 1
+a283 1
+				print "</div>";
+d286 1
+a286 1
+			print "</div>";
+d288 1
+a288 1
+	print "</div>";
+d307 2
+a308 2
+				print "<a href=\"javascript: oc('$activeFolderId',$join,'D');\"><img id=\"join$activeFolderId\" src=\"$joinIcon\" $AAB alt=\"N\"/></a>";
+				print "<span id=\"span$activeFolderId\" $SCD><a onclick=\"show_me_ex('$activeFolderId',$join);$RT\"><img id=\"icon$activeFolderId\" src=\"$icons->{folder}\" $AAB alt=\"F\"/><span id=\"$activeFolderId\" title=\"$m->{$activeFolderId}->{description}\">&nbsp;$m->{$activeFolderId}->{name}&nbsp;</span></a><br></span>";
+d311 2
+a312 2
+				print "<img id=\"join$activeFolderId\" src=\"$emptyJoinIcon\" $AAB alt=\"N\"/>";
+				print "<span id=\"span$activeFolderId\" $SCD><img id=\"icon$activeFolderId\" src=\"$icons->{folder}\" $AAB alt=\"F\"/><span id=\"$activeFolderId\" title=\"$m->{$activeFolderId}->{description}\">&nbsp;$m->{$activeFolderId}->{name}&nbsp;</span><br></span>";
+d315 1
+a315 1
+			print "<div id=\"div$activeFolderId\" $SDN>";
+d322 2
+a323 2
+				print "<img src=\"$firstIcon\" $AAB alt=\"l\"/><img src=\"$secondIcon\" $AAB alt=\"l\"/>";
+				print "<span id=\"span$_\" $SCD><a ondblclick=\"jump('$_')\" onclick=\"show_me_ex('$_','$activeFolderId');$RT\"><img id=\"icon$_\" name=\"$subM->{$_}->{name}|$objTr->{$activeFolderId}->{icon}\" src=\"$icons->{$activeFolderId}\" border=\"0\" $AAB alt=\"$dtn\"/><span id=\"$_\" title=\"$subM->{$_}->{description}\">&nbsp;$subM->{$_}->{name}&nbsp;</span></a><br></span>";
+d328 1
+a328 1
+		print "</div>";
+d332 2
+a333 1
+	print "$scriptArray";
+d335 1
+a335 1
+	close(STDOUT);
+@
+
+
+1.52
+log
+@css report visual changes, code improvment
+@
+text
+@d4 1
+a4 1
+# $Id: local_lib.pl,v 1.51 2003/06/24 15:17:39 jiri_schmid Exp $
+d386 1
+d412 4
+a415 2
+		<input id="originalForm" value="$Form" type="hidden" name="originalForm"/>
+		<input id="originalType" value="$Type" type="hidden" name="originalType"/>
+d418 1
+a418 1
+		<IFRAME id="css_graph" src="format.cgi?Lang=$use_lang&Type=$Type&Form=$Form" width="99%" height="99%" scrolling="auto" frameborder="0"></IFRAME>
+@
+
+
+1.51
+log
+@metric mData change, minor code improvment
+@
+text
+@d4 1
+a4 1
+# $Id: local_lib.pl,v 1.50 2003/06/19 15:28:42 jiri_schmid Exp $
+d397 1
+a397 1
+	<tr><td style="vertical-align:top; width:110px; border: 2px solid #064fa8; height:245px;">
+@
+
+
+1.50
+log
+@reload button on format page fullfunctional
+@
+text
+@d4 1
+a4 1
+# $Id: local_lib.pl,v 1.49 2003/06/19 14:59:41 jiri_schmid Exp $
+d397 1
+a397 1
+	<tr><td style="vertical-align:top; width:110px; border: 2px solid #064fa8; height:235px;">
+d400 1
+a400 2
+			<input type="radio" id="in_css" name="style" value="CSS" $checkedGrid onclick="changeStyle('grid');return true;"/>
+			<span class="cursor" onclick="document.getElementById('in_css').onclick()">$lang->{'Format radio_btn css'}</span>
+d403 1
+a403 2
+			<input type="radio" id="in_graph" name="style" value="Graph" $checkedGraph onclick="changeStyle('graph');return true;"/>
+			<span class="cursor" onclick="document.getElementById('in_graph').onclick()">$lang->{'Format radio_btn graph'}</span>
+d406 1
+a406 2
+			<input type="radio" id="in_vrml" name="style" value="Vrml" $checkedVrml onclick="changeStyle('vrml');return true;"/>
+			<span class="cursor" onclick="document.getElementById('in_vrml').onclick()">$lang->{'Format radio_btn vrml'}</span>
+@
+
+
+1.49
+log
+@huge improvment on format page
+@
+text
+@d4 1
+a4 1
+# $Id: local_lib.pl,v 1.48 2003/06/17 08:45:46 jiri_schmid Exp $
+d415 1
+@
+
+
+1.48
+log
+@changed structure of format object
+@
+text
+@d4 1
+a4 1
+# $Id: local_lib.pl,v 1.47 2003/06/16 11:09:08 jiri_schmid Exp $
+d386 1
+a386 2
+my $checkedGraph = "";
+my $checkedGrid = ""; 
+d389 5
+a393 3
+	$checkedGraph = "checked=\"true\"";
+} else	{
+	$checkedGrid = "checked=\"true\"";
+a394 1
+
+d396 5
+a400 2
+	<table class="neutral">
+	<tr>	<td>	<input type="radio" id="in_css" name="style" value="CSS" $checkedGrid onclick="change_style('format.cgi?Lang=$use_lang&Type=grid&Form=$Form');return true;"/>
+d402 3
+a404 1
+			<input type="radio" id="in_graph" name="style" value="Graph" $checkedGraph onclick="change_style('format.cgi?Lang=$use_lang&Type=graph&Form=$Form');return true;"/>
+d406 13
+a418 5
+			<input id="typ" value="$Type" type="hidden" name="typ"/>
+			<input id="form" value="$Form" type="hidden" name="form"/>
+			</td>
+	</tr>
+	<tr>	<td align="center"><IFRAME id="css_graph" src="format.cgi?Lang=$use_lang&Type=$Type&Form=$Form" width="250" height="305" scrolling="auto" frameborder="0"></IFRAME>         	      
+@
+
+
+1.47
+log
+@css changes-visual imrpovments
+@
+text
+@d4 1
+a4 1
+# $Id: local_lib.pl,v 1.46 2003/06/13 15:57:03 jiri_schmid Exp $
+d383 10
+a392 8
+if (ref($Obj->{format_def})) {
+	if (exists($Obj->{format_def}->{graph})) { 
+		$local->{graph} = $Obj->{format_def}->{graph};
+	} else {
+		$local->{css} = $Obj->{format_def}->{css};
+	}
+} else {
+	$local = $Obj;
+a394 14
+#use Data::Dumper;
+#print "<pre>".Dumper($local)."</pre>";
+#print "<pre>".Dumper($Obj)."</pre>";
+
+my $Form = (exists($local->{graph})) ? "graph" : "css";
+my $checked_graph = "";
+my $checked_css = ""; 
+my $Type = "";
+if ($Form eq "graph") 
+	{$Type = $local->{graph}->{type};
+	 $checked_graph = "checked=\"true\"";}
+else
+	{$Type = $local->{css}->{type};
+	$checked_css = "checked=\"true\"";}
+d397 1
+a397 1
+	<tr>	<td>	<input type="radio" id="in_css" name="style" value="CSS" $checked_css onclick="change_style('format.cgi?Lang=$use_lang&Form=css&Type=$local->{css}->{type}');return true;"/>
+d399 1
+a399 1
+			<input type="radio" id="in_graph" name="style" value="Graph" $checked_graph onclick="change_style('format.cgi?Lang=$use_lang&Form=graph&Type=$local->{graph}->{type}');return true;"/>
+d401 2
+a402 3
+			<input id="forma" value="" type="hidden" name="form"/>
+			<input id="typ_css" value="$local->{css}->{type}" type="hidden" name="type_css"/>
+			<input id="typ_graph" value="$local->{graph}->{type}" type="hidden" name="type_graph"/>
+d405 1
+a405 1
+	<tr>	<td align="center"><IFRAME id="css_graph" src="format.cgi?Lang=$use_lang&Form=$Form&Type=$Type" width="250" height="305" scrolling="auto" frameborder="0"></IFRAME>         	      
+@
+
+
+1.46
+log
+@title bug fixed
+@
+text
+@d4 1
+a4 1
+# $Id: local_lib.pl,v 1.45 2003/06/02 12:09:02 jiri_schmid Exp $
+d418 1
+a418 1
+	<tr>	<td align="center"><IFRAME id="css_graph" src="format.cgi?Lang=$use_lang&Form=$Form&Type=$Type" width="275" height="305" scrolling="auto" frameborder="0"></IFRAME>         	      
+@
+
+
+1.45
+log
+@code improvment, bug fixies
+@
+text
+@d4 1
+a4 1
+# $Id: local_lib.pl,v 1.44 2003/05/30 12:39:20 jiri_schmid Exp $
+d322 1
+a322 1
+				print "<span id=\"span$_\" $SCD><a ondblclick=\"jump('$_')\" onclick=\"show_me_ex('$_','$activeFolderId');$RT\"><img id=\"icon$_\" name=\"$subM->{$_}->{name}|$objTr->{$activeFolderId}->{icon}\" src=\"$icons->{$activeFolderId}\" border=\"0\" $AAB alt=\"$dtn\"/><span id=\"$_\" title=\"\">&nbsp;$subM->{$_}->{name}&nbsp;</span></a><br></span>";
+@
+
+
+1.44
+log
+@fixed bug with user prefernces
+@
+text
+@d4 1
+a4 1
+# $Id: local_lib.pl,v 1.43 2003/05/30 09:13:25 jiri_schmid Exp $
+d190 1
+a190 1
+		my $insertIcon = "<img src=\"$firstIcon\" $AAB alt=\"l\"/>";
+d200 1
+@
+
+
+1.43
+log
+@minor fixies and code improvment
+@
+text
+@d4 1
+a4 1
+# $Id: local_lib.pl,v 1.42 2003/05/28 07:34:14 jiri_schmid Exp $
+d88 1
+d141 1
+a141 1
+	$m=SOAP->GetMetadataList($pn, 'folder', $User);
+d167 1
+a167 1
+		$subM=SOAP->GetMetadataList($pn, $objTr->{$activeFolderId}->{type}, $User);	#full List is used due need for Attribute Displays information
+d294 1
+a294 1
+			$subM=SOAP->GetMetadataList($pn, $objTr->{$activeFolderId}->{type}, $User);#get child for handled folder
+@
+
+
+1.42
+log
+@cvs add/remove changes
+@
+text
+@d4 1
+a4 1
+# $Id: local_lib.pl,v 1.41 2003/05/27 14:12:05 jiri_schmid Exp $
+d89 1
+d139 1
+d141 1
+@
+
+
+1.41
+log
+@implemented setLocalizedObj & LocalizedObj on client side
+@
+text
+@d4 1
+a4 1
+# $Id: local_lib.pl,v 1.39 2003/05/26 15:01:23 jiri_schmid Exp $
+d499 1
+d534 1
+a534 1
+if ($lang) {						#if localized string is to save
+@
+
+
+1.40
+log
+@tree generating visual bug fixed
+@
+text
+@d192 1
+a192 1
+				$firstIcon = $icons->{empty}; $joinSubFolder=1; $joinFolderIcon = $icons->{plusBottom}; $insertIcon = "<img src=\"$icons->{empty}\" $AAB alt=\"l\"/>";
+d497 45
+@
+
+
+1.39
+log
+@saving under non-selected language implemented
+@
+text
+@d4 1
+a4 1
+# $Id: local_lib.pl,v 1.38 2003/05/23 15:03:31 jiri_schmid Exp $
+d192 1
+a192 1
+				$firstIcon = $icons->{empty}; $joinSubFolder=1; $joinFolderIcon = $icons->{plusBottom};
+@
+
+
+1.38
+log
+@rules and groups for attributes implemented, metric & filter checker remaked
+@
+text
+@d4 1
+a4 1
+# $Id: local_lib.pl,v 1.37 2003/05/21 15:00:37 jiri_schmid Exp $
+d165 1
+a165 1
+use Data::Dumper;
+@
+
+
+1.37
+log
+@subfolders in attributes implemented
+@
+text
+@d4 1
+a4 1
+# $Id: local_lib.pl,v 1.36 2003/05/21 11:39:42 jiri_schmid Exp $
+d103 7
+a109 6
+		fact=>'img/tree/fact.gif',
+		Metrics=>'img/tree/metric.gif',
+		Grids=>'img/tree/grid.gif',
+		Filters=>'img/tree/filter.gif',
+		Formats=>'img/tree/format.gif',
+		Reports=>'img/tree/report.gif'
+d129 14
+a142 2
+	my $ot='attr';	
+	if ($ot=~/$constr/) {
+d144 10
+a153 2
+		$l=SOAP->NewID();
+		$scriptArray .= "Tree${ti}\[$i\]  = \"$l|0|Attributes|D|\";\n";
+d158 3
+a160 3
+		print "<a href=\"javascript: oc('$l',$join,'D');\"><img id=\"join$l\" src=\"$joinIcon\" $AAB alt=\"N\"/></a>";
+		print "<span id=\"span$l\" $SCD><a onclick=\"show_me_ex('$l',$join);$RT\"><img id=\"icon$l\" src=\"$icons->{folder}\" $AAB alt=\"F\"/><span id=\"$l\">&nbsp;Attributes&nbsp;</span></a><br></span>";
+		print "<div id=\"div$l\" $SDN>";
+d163 6
+a168 6
+		$m=SOAP->GetMetadataList($pn, $ot, $User);	#full List is used due need for Attribute Displays information
+#		use Data::Dumper;
+#		print "<pre>".Dumper($m)."</pre>";
+		
+	
+	my @@group = sort(keys(%{$m}));
+d173 1
+d175 7
+d183 1
+a183 1
+		$scriptArray .= "Tree${ti}\[$i\]  = \"$group|$l|$group|D|\";\n";
+a184 1
+		$l = $group;
+d186 14
+a199 1
+		if ($lastInMainField eq $group) {$firstIcon = $icons->{empty}; $joinSubFolder=1; $joinFolderIcon = $icons->{plusBottom}; }
+a200 6
+		print "<img src=\"$icons->{line}\" $AAB alt=\"l\"/><a href=\"javascript: oc('$group',$joinSubFolder,'D');\"><img id=\"join$group\" src=\"$joinFolderIcon\" $AAB alt=\"N\"/></a>";
+		print "<span id=\"span$group\" $SCD><a onclick=\"show_me_ex('$group',$joinSubFolder);$RT\"><img id=\"icon$group\" src=\"$icons->{folder}\" $AAB alt=\"F\"/><span id=\"$group\">&nbsp;$group&nbsp;</span></a><br></span>";
+		print "<div id=\"div$group\" $SDN>";
+
+		@@hlp = sort(keys(%{$m->{$group}}));
+		$lastInField = $hlp[$#hlp];
+d204 8
+a211 4
+		foreach (@@hlp) {
+			my $des=$m->{$_}->{description}; $des=~s/^(.{77}).{3,}$/$1.../;	#description has to be cutted explicitly as Attributes are not readed thru ShortList
+			$scriptArray .= "Tree${ti}\[$i\]  = \"$_|$l|$m->{$group}->{$_}->{name}|A|$des\";\n";
+			if ($lastInField eq $_) {$secondIcon = $icons->{empty}; $join=1; $joinIcon = $icons->{plusBottom}; }
+a212 3
+			print "<img src=\"$icons->{line}\" $AAB alt=\"l\"/><img src=\"$firstIcon\" $AAB alt=\"l\"/>";
+			print "<a href=\"javascript: oc('$_',$join,'A');\"><img id=\"join$_\" src=\"$joinIcon\" $AAB alt=\"N\"/></a>";
+			print "<span id=\"span$_\" $SCD><a ondblclick=\"jump('$_')\" onclick=\"show_me_ex('$_','$l');$RT\"><img id=\"icon$_\" name=\"$m->{$group}->{$_}->{name}|A\" src=\"$icons->{attr}\" border=\"0\" $AAB alt=\"A\"/><span id=\"$_\" title=\"$des\">&nbsp;$m->{$group}->{$_}->{name}&nbsp;</span></a><br></span>";
+d214 6
+a219 2
+			$i++;
+			my $ll=$_;
+d221 21
+a241 12
+			print "<div id=\"div$_\" $SDN>";
+			
+			my @@hlp = sort(keys(%{$m->{$group}->{$ll}->{display}}));
+			my $lastInSubField = $hlp[$#hlp];
+			my $thirdIcon = $icons->{joinBottom};
+			foreach (@@hlp) {
+				$scriptArray .= "Tree${ti}\[$i\]  = \"$ll~$_|$ll|$m->{$group}->{$ll}->{display}->{$_}->{name}|Af|$m->{$group}->{$ll}->{display}->{$_}->{description}\";\n";
+				$thirdIcon = $icons->{join} if ($lastInSubField eq $_);
+			
+				print "<img src=\"$icons->{line}\" $AAB alt=\"l\"/><img src=\"$firstIcon\" $AAB alt=\"l\"/><img src=\"$secondIcon\" $AAB alt=\"l\"/><img src=\"$thirdIcon\" $AAB alt=\"l\"/>";
+				print "<span id=\"$ll~$_\" $SCD><a onclick=\"show_me_ex('$ll~$_','$ll');$RT\"><img id=\"icon$ll~$_\" name=\"$_|Af\" src=\"$icons->{attr_form}\" border=\"0\" $AAB alt=\"AF\"/><span id=\"$ll~$_\" title=\"\">&nbsp;$m->{$group}->{$ll}->{display}->{$_}->{name}&nbsp;</span></a><br></span>";
+
+a242 30
+			}
+			print "</div>";
+		}
+		print "</div>";
+	}
+	print "</div>";
+	}# attr
+
+	$ot='fact';	
+	$join = 0;
+	if ($ot=~/$constr/) {
+			$l=SOAP->NewID();
+			$scriptArray .= "Tree${ti}\[$i\]  = \"$l|0|Facts|D|\";\n";
+
+			print "<a href=\"javascript: oc('$l',$join,'D');\"><img id=\"join$l\" src=\"$icons->{plus}\" $AAB alt=\"N\"/></a>";
+			print "<span id=\"span$l\" $SCD><a onclick=\"show_me_ex('$l',$join);$RT\"><img id=\"icon$l\" src=\"$icons->{folder}\" $AAB alt=\"F\"/><span id=\"$l\">&nbsp;Facts&nbsp;</span></a><br></span>";
+			print "<div id=\"div$l\" $SDN>";
+			
+			$i++;
+			# Load Facts
+			$m=SOAP->GetMetadataList($pn, $ot, $User);
+			@@hlp = keys(%{$m});
+			$lastInField = $hlp[$#hlp];
+			$secondIcon = $icons->{joinBottom};
+ 			foreach (@@hlp) {
+				$scriptArray .= "Tree${ti}\[$i\]  = \"$_|$l|$m->{$_}->{name}|Fa|$m->{$_}->{description}\";\n";
+				$secondIcon = $icons->{join} if ($lastInField eq $_);
+
+				print "<img src=\"$icons->{line}\" $AAB alt=\"l\"/><img src=\"$secondIcon\" $AAB alt=\"l\"/>";
+				print "<span id=\"span$_\" $SCD><a ondblclick=\"jump('$_')\" onclick=\"show_me_ex('$_','$l');$RT\"><img id=\"icon$_\" name=\"$m->{$_}->{name}|Fa\" src=\"$icons->{fact}\" border=\"0\" $AAB alt=\"F\"/><span id=\"$_\" title=\"\">&nbsp;$m->{$_}->{name}&nbsp;</span></a><br></span>";
+d244 13
+d258 21
+a280 9
+        }
+
+	my $objTr = { 	# hash for translation from Directory name, this strench method is connected with fixed directory structure and should be removed ASAP
+		'Metrics'=>{'type'=>'metric', 'icon'=>'M'},
+		'Grids'=>{'type'=>'grid', 'icon'=>'G'},
+		'Filters'=>{'type'=>'filter', 'icon'=>'Fi'},
+		'Formats'=>{'type'=>'format', 'icon'=>'Fo'},
+		'Reports'=>{'type'=>'report', 'icon'=>'R'},
+
+d282 4
+a285 8
+	$m=SOAP->GetMetadataList($pn, 'folder', $User);
+	@@hlp = sort(keys(%{$m}));			#get list of folder items
+	my $lastInFolders = $hlp[$#hlp];	#get the name of last item in a field of folders, needed for setting first icon in tree - line/empty when closing tree structure
+	$firstIcon = $icons->{line};
+	$join = 0;
+	$joinIcon = $icons->{plus};		#pre-expected icon "plus" in generated tree
+	foreach my $l (@@hlp) {			#for each folder item generate childs in tree
+		my $dtn = $m->{$l}->{name};
+d287 1
+a287 1
+			$scriptArray .= "Tree${ti}\[$i\]  = \"$l|0|$m->{$l}->{name}|D|$m->{$l}->{description}\";\n";
+d290 1
+a290 1
+			my $subM=SOAP->GetMetadataList($pn, $objTr->{$l}->{type}, $User);#get child for handled folder
+d294 1
+a294 1
+			if ($lastInFolders eq $l) {			#set diferent tree navigation icons for last child in folder
+d301 2
+a302 2
+				print "<a href=\"javascript: oc('$l',$join,'D');\"><img id=\"join$l\" src=\"$joinIcon\" $AAB alt=\"N\"/></a>";
+				print "<span id=\"span$l\" $SCD><a onclick=\"show_me_ex('$l',$join);$RT\"><img id=\"icon$l\" src=\"$icons->{folder}\" $AAB alt=\"F\"/><span id=\"$l\" title=\"$m->{$l}->{description}\">&nbsp;$m->{$l}->{name}&nbsp;</span></a><br></span>";
+d304 3
+a306 3
+				my $emptyJoinIcon = ($lastInFolders eq $l) ? $icons->{join} : $icons->{joinBottom};	#set diferent navigation tree icons for empty folder
+				print "<img id=\"join$l\" src=\"$emptyJoinIcon\" $AAB alt=\"N\"/>";
+				print "<span id=\"span$l\" $SCD><img id=\"icon$l\" src=\"$icons->{folder}\" $AAB alt=\"F\"/><span id=\"$l\" title=\"$m->{$l}->{description}\">&nbsp;$m->{$l}->{name}&nbsp;</span><br></span>";
+d309 1
+a309 1
+			print "<div id=\"div$l\" $SDN>";
+d313 1
+a313 1
+				$scriptArray .= "Tree${ti}\[$i\]  = \"$_|$l|$subM->{$_}->{name}|$objTr->{$l}->{icon}|$subM->{$_}->{description}\";\n";
+d317 1
+a317 1
+				print "<span id=\"span$_\" $SCD><a ondblclick=\"jump('$_')\" onclick=\"show_me_ex('$_','$l');$RT\"><img id=\"icon$_\" name=\"$subM->{$_}->{name}|$objTr->{$l}->{icon}\" src=\"$icons->{$l}\" border=\"0\" $AAB alt=\"$dtn\"/><span id=\"$_\" title=\"\">&nbsp;$subM->{$_}->{name}&nbsp;</span></a><br></span>";
+d324 1
+a324 1
+
+@
+
+
+1.36
+log
+@visual and code improvment
+@
+text
+@d4 1
+a4 1
+# $Id: local_lib.pl,v 1.35 2003/05/21 08:04:57 michald Exp $
+d143 22
+a164 1
+		@@hlp = keys(%{$m});
+d167 2
+d171 1
+a171 1
+			$scriptArray .= "Tree${ti}\[$i\]  = \"$_|$l|$m->{$_}->{name}|A|$des\";\n";
+d174 1
+a174 1
+			print "<img src=\"$icons->{line}\" $AAB alt=\"l\"/>";
+d176 1
+a176 1
+			print "<span id=\"span$_\" $SCD><a ondblclick=\"jump('$_')\" onclick=\"show_me_ex('$_','$l');$RT\"><img id=\"icon$_\" name=\"$m->{$_}->{name}|A\" src=\"$icons->{attr}\" border=\"0\" $AAB alt=\"A\"/><span id=\"$_\" title=\"$des\">&nbsp;$m->{$_}->{name}&nbsp;</span></a><br></span>";
+d183 1
+a183 1
+			my @@hlp = keys(%{$m->{$ll}->{display}});
+d187 1
+a187 1
+				$scriptArray .= "Tree${ti}\[$i\]  = \"$ll~$_|$ll|$m->{$ll}->{display}->{$_}->{name}|Af|$m->{$ll}->{display}->{$_}->{description}\";\n";
+d190 2
+a191 2
+				print "<img src=\"$icons->{line}\" $AAB alt=\"l\"/><img src=\"$secondIcon\" $AAB alt=\"l\"/><img src=\"$thirdIcon\" $AAB alt=\"l\"/>";
+				print "<span id=\"$ll~$_\" $SCD><a onclick=\"show_me_ex('$ll~$_','$ll');$RT\"><img id=\"icon$ll~$_\" name=\"$_|Af\" src=\"$icons->{attr_form}\" border=\"0\" $AAB alt=\"AF\"/><span id=\"$ll~$_\" title=\"\">&nbsp;$m->{$ll}->{display}->{$_}->{name}&nbsp;</span></a><br></span>";
+d197 4
+a200 2
+		print "</div>"
+	} # attr
+@
+
+
+1.35
+log
+@minor improovement in debug list page
+@
+text
+@d4 1
+a4 1
+# $Id: local_lib.pl,v 1.34 2003/05/19 14:18:21 jiri_schmid Exp $
+d125 1
+a125 1
+	print "<img src=\"$icons->{base}\" align=\"top\" hspace=\"5\" alt=\"\"/><span class=\"project\"/>$pn</span><br>";
+@
+
+
+1.34
+log
+@very minor fixies and code improvmetns
+@
+text
+@d4 1
+a4 1
+# $Id: local_lib.pl,v 1.33 2003/05/14 15:36:44 jiri_schmid Exp $
+d37 4
+a40 2
+	$sql =~ s/(SELECT|FROM|WHERE|GROUP BY|ORDER BY)/<BR><STRONG>$1<\/STRONG>/gi;
+	$sql =~ s/(AND|IN|OR|AS)/<STRONG>$1<\/STRONG>/gi;
+d189 1
+a189 1
+			$m=SOAP->GetMetadataShortList($pn, $ot, $User);
+d213 1
+a213 1
+	$m=SOAP->GetMetadataShortList($pn, 'folder', $User);
+d225 1
+a225 1
+			my $subM=SOAP->GetMetadataShortList($pn, $objTr->{$l}->{type}, $User);#get child for handled folder
+@
+
+
+1.33
+log
+@minor code improvments
+@
+text
+@d4 1
+a4 1
+# $Id: local_lib.pl,v 1.32 2003/05/14 14:28:18 jiri_schmid Exp $
+d277 1
+a277 1
+	<td valign="bottom" align="center" width="20"><img class="cursor" src="img/delete.gif" onclick='clear_name(document.object.expr);return true;'></td>
+d360 2
+a361 2
+    <th align="left">$lang->{'Grid Pages'}</th>
+    <tr><td class="visual_down">
+d371 2
+a372 2
+	 <tr><th>$lang->{'Grid Table_col'}</th><tr>
+	 <tr><td class="visual_down">
+d384 2
+a385 2
+	  <tr><th>$lang->{'Grid Table_row'}</th></tr>
+	  <tr><td class="visual_down">
+d395 2
+a396 2
+	  <tr><th>$lang->{'Grid Table_cell'}</th></tr>
+	  <tr><td class="visual_down">
+@
+
+
+1.32
+log
+@next report improvment
+@
+text
+@d4 1
+a4 1
+# $Id: local_lib.pl,v 1.31 2003/05/13 15:18:56 jiri_schmid Exp $
+d274 1
+a274 1
+		<textarea id="object_filter" onclick="drop_textarea(this)" name="expr" cols="$descr_w" rows="$descr_r"></textarea>
+d346 1
+a346 1
+	<tr>	<td align="center"><IFRAME id="css_graph" src="format.cgi?Lang=$use_lang&Form=$Form&Type=$Type" width="275" height="375" scrolling="auto" frameborder="0"></IFRAME>         	      
+@
+
+
+1.31
+log
+@new report page seems to be fullfunctional, javascript code huge improvment
+@
+text
+@d4 1
+a4 1
+# $Id: local_lib.pl,v 1.30 2003/05/08 07:42:43 michald Exp $
+d266 1
+a266 1
+my $local = (ref($Obj->{filter})) ? $Obj->{filter} : $Obj;
+d311 3
+a313 3
+if (ref($Obj->{format})) {
+	if (exists($Obj->{format}->{graph})) { 
+		$local->{graph} = $Obj->{format}->{graph};
+d315 1
+a315 1
+		$local->{css} = $Obj->{format}->{css};
+d421 1
+a421 1
+my $local = (ref($Obj->{grid})) ? $Obj->{grid} : $Obj;
+@
+
+
+1.30
+log
+@customization of report SQL
+@
+text
+@d4 1
+a4 1
+# $Id: local_lib.pl,v 1.29 2003/05/07 14:24:32 jiri_schmid Exp $
+d8 1
+a8 1
+use vars qw($q @@cookie $cookie_path $cookie_exp);
+d121 1
+a121 1
+	open(STDOUT,">html/$file.html") || print "<!--something wrong?-->";
+d264 166
+@
+
+
+1.29
+log
+@tuning, code improvment
+@
+text
+@d4 1
+a4 1
+# $Id: local_lib.pl,v 1.28 2003/05/07 13:11:47 jiri_schmid Exp $
+d27 15
+@
+
+
+1.28
+log
+@bug fixies, code improvment
+@
+text
+@d4 1
+a4 1
+# $Id: local_lib.pl,v 1.27 2003/05/06 15:07:06 jiri_schmid Exp $
+d197 1
+a197 1
+	@@hlp = keys(%{$m});			#get list of folder items
+a203 1
+		my $dtnEn = $m->{$l}->{en};
+d208 1
+a208 1
+			my $subM=SOAP->GetMetadataShortList($pn, $objTr->{$dtnEn}->{type}, $User);#get child for handled folder
+d231 1
+a231 1
+				$scriptArray .= "Tree${ti}\[$i\]  = \"$_|$l|$subM->{$_}->{name}|$objTr->{$dtnEn}->{icon}|$subM->{$_}->{description}\";\n";
+d235 1
+a235 1
+				print "<span id=\"span$_\" $SCD><a ondblclick=\"jump('$_')\" onclick=\"show_me_ex('$_','$l');$RT\"><img id=\"icon$_\" name=\"$subM->{$_}->{name}|$objTr->{$dtnEn}->{icon}\" src=\"$icons->{$dtnEn}\" border=\"0\" $AAB alt=\"$dtn\"/><span id=\"$_\" title=\"\">&nbsp;$subM->{$_}->{name}&nbsp;</span></a><br></span>";
+@
+
+
+1.27
+log
+@bug fixies, code improvment
+@
+text
+@d4 1
+a4 1
+# $Id: local_lib.pl,v 1.26 2003/05/05 15:16:20 jiri_schmid Exp $
+d204 1
+d208 2
+a209 2
+			$i++;		
+			my $subM=SOAP->GetMetadataShortList($pn, $objTr->{$dtn}->{type}, $User);#get child for handled folder
+d232 1
+a232 1
+				$scriptArray .= "Tree${ti}\[$i\]  = \"$_|$l|$subM->{$_}->{name}|$objTr->{$dtn}->{icon}|$subM->{$_}->{description}\";\n";
+d236 1
+a236 1
+				print "<span id=\"span$_\" $SCD><a ondblclick=\"jump('$_')\" onclick=\"show_me_ex('$_','$l');$RT\"><img id=\"icon$_\" name=\"$subM->{$_}->{name}|$objTr->{$dtn}->{icon}\" src=\"$icons->{$dtn}\" border=\"0\" $AAB alt=\"$dtn\"/><span id=\"$_\" title=\"\">&nbsp;$subM->{$_}->{name}&nbsp;</span></a><br></span>";
+@
+
+
+1.26
+log
+@huge code improvment on client side when substituting from/to ID, minor language dependeces fixies
+@
+text
+@d4 1
+a4 1
+# $Id: local_lib.pl,v 1.25 2003/05/05 06:41:42 michald Exp $
+d120 2
+a121 2
+		print "<a href=\"javascript: oc('$l',$join,'D');\"><img id=\"join$l\" src=\"$joinIcon\" $AAB alt=\"Open/Close node\"/></a>";
+		print "<span id=\"span$l\" $SCD><a onclick=\"show_me_ex('$l',$join);$RT\"><img id=\"icon$l\" src=\"$icons->{folder}\" $AAB alt=\"Folder\"/><span id=\"$l\">&nbsp;Attributes&nbsp;</span></a><br></span>";
+d134 3
+a136 3
+			print "<img src=\"$icons->{line}\" $AAB alt=\"\"/>";
+			print "<a href=\"javascript: oc('$_',$join,'A');\"><img id=\"join$_\" src=\"$joinIcon\" $AAB alt=\"Open/Close node\"/></a>";
+			print "<span id=\"span$_\" $SCD><a ondblclick=\"jump('$_')\" onclick=\"show_me_ex('$_','$l');$RT\"><img id=\"icon$_\" name=\"$m->{$_}->{name}|A\" src=\"$icons->{attr}\" border=\"0\" $AAB alt=\"Attribute\"/><span id=\"$_\" title=\"$des\">&nbsp;$m->{$_}->{name}&nbsp;</span></a><br></span>";
+d150 2
+a151 2
+				print "<img src=\"$icons->{line}\" $AAB alt=\"\"/><img src=\"$secondIcon\" $AAB alt=\"\"/><img src=\"$thirdIcon\" $AAB alt=\"\"/>";
+				print "<span id=\"$ll~$_\" $SCD><a onclick=\"show_me_ex('$ll~$_','$ll');$RT\"><img id=\"icon$ll~$_\" name=\"$_|Af\" src=\"$icons->{attr_form}\" border=\"0\" $AAB alt=\"Attribute Form\"/><span id=\"$ll~$_\" title=\"\">&nbsp;$m->{$ll}->{display}->{$_}->{name}&nbsp;</span></a><br></span>";
+d166 2
+a167 2
+			print "<a href=\"javascript: oc('$l',$join,'D');\"><img id=\"join$l\" src=\"$icons->{plus}\" $AAB alt=\"Open/Close node\"/></a>";
+			print "<span id=\"span$l\" $SCD><a onclick=\"show_me_ex('$l',$join);$RT\"><img id=\"icon$l\" src=\"$icons->{folder}\" $AAB alt=\"Folder\"/><span id=\"$l\">&nbsp;Facts&nbsp;</span></a><br></span>";
+d180 2
+a181 2
+				print "<img src=\"$icons->{line}\" $AAB alt=\"\"/><img src=\"$secondIcon\" $AAB alt=\"\"/>";
+				print "<span id=\"span$_\" $SCD><a ondblclick=\"jump('$_')\" onclick=\"show_me_ex('$_','$l');$RT\"><img id=\"icon$_\" name=\"$m->{$_}->{name}|Fa\" src=\"$icons->{fact}\" border=\"0\" $AAB alt=\"Fact\"/><span id=\"$_\" title=\"\">&nbsp;$m->{$_}->{name}&nbsp;</span></a><br></span>";
+d197 1
+a197 1
+	@@hlp = keys(%{$m});
+d201 2
+a202 2
+	$joinIcon = $icons->{plus};
+	foreach my $l (@@hlp) {               
+a205 1
+			if ($lastInFolders eq $l) {$firstIcon = $icons->{empty}; $join=1; $joinIcon = $icons->{plusBottom}; }
+d207 20
+a226 2
+			print "<a href=\"javascript: oc('$l',$join,'D');\"><img id=\"join$l\" src=\"$joinIcon\" $AAB alt=\"Open/Close node\"/></a>";
+			print "<span id=\"span$l\" $SCD><a onclick=\"show_me_ex('$l',$join);$RT\"><img id=\"icon$l\" src=\"$icons->{folder}\" $AAB alt=\"Folder\"/><span id=\"$l\" title=\"$m->{$l}->{description}\">&nbsp;$m->{$l}->{name}&nbsp;</span></a><br></span>";
+d229 1
+a229 5
+			$i++;		
+			my $m=SOAP->GetMetadataShortList($pn, $objTr->{$dtn}->{type}, $User);
+			my @@hlp = keys(%{$m});
+			$lastInField = $hlp[$#hlp];
+			$secondIcon = $icons->{joinBottom};
+d231 2
+a232 2
+				$scriptArray .= "Tree${ti}\[$i\]  = \"$_|$l|$m->{$_}->{name}|$objTr->{$dtn}->{icon}|$m->{$_}->{description}\";\n";
+				$secondIcon = $icons->{join} if ($lastInField eq $_);
+d234 2
+a235 2
+				print "<img src=\"$firstIcon\" $AAB alt=\"\"/><img src=\"$secondIcon\" $AAB alt=\"\"/>";
+				print "<span id=\"span$_\" $SCD><a ondblclick=\"jump('$_')\" onclick=\"show_me_ex('$_','$l');$RT\"><img id=\"icon$_\" name=\"$m->{$_}->{name}|$objTr->{$dtn}->{icon}\" src=\"$icons->{$dtn}\" border=\"0\" $AAB alt=\"$dtn\"/><span id=\"$_\" title=\"\">&nbsp;$m->{$_}->{name}&nbsp;</span></a><br></span>";
+@
+
+
+1.25
+log
+@implementation of full localized metadata
+@
+text
+@d4 1
+a4 1
+# $Id: local_lib.pl,v 1.24 2003/04/30 09:53:35 jiri_schmid Exp $
+d127 1
+a127 1
+		$lastInField = pop(@@hlp);
+d129 1
+a129 1
+		foreach (keys %{$m}) {
+d143 2
+a144 2
+			@@hlp = keys(%{$m->{$ll}->{display}});
+			my $lastInSubField = pop(@@hlp);
+d146 1
+a146 1
+			foreach (keys %{$m->{$ll}->{display}}) {
+d151 1
+a151 1
+				print "<span id=\"$ll~$_\" $SCD><a onclick=\"show_me_ex('$ll~$_','$ll');$RT\"><img id=\"icon$ll~$_\" name=\"$_|Af\" src=\"$icons->{attr_form}\" border=\"0\" $AAB alt=\"Attribute Form\"/><span id=\"$ll~$_\" title=\"\">&nbsp;$_&nbsp;</span></a><br></span>";
+d174 1
+a174 1
+			$lastInField = pop(@@hlp);
+d176 1
+a176 1
+ 			foreach (keys %{$m}) {
+@
+
+
+1.24
+log
+@tabs for results implemented
+@
+text
+@d4 1
+a4 1
+# $Id: local_lib.pl,v 1.23 2003/04/25 11:27:20 jiri_schmid Exp $
+d6 5
+a10 1
+$MyName = $q->url() if ($q);
+d55 8
+d67 1
+d105 2
+a106 2
+local(*STDOUT);
+open(STDOUT,">html/$file.html") || print "<!--something wrong?-->";
+d108 2
+a109 1
+print "<img src=\"$icons->{base}\" align=\"top\" hspace=\"5\" alt=\"\"/><span class=\"project\"/>$pn</span><br>";
+d119 5
+a123 3
+print "<a href=\"javascript: oc('$l',$join,'D');\"><img id=\"join$l\" src=\"$joinIcon\" $AAB alt=\"Open/Close node\"/></a>";
+print "<span id=\"span$l\" $SCD><a onclick=\"show_me_ex('$l',$join);$RT\"><img id=\"icon$l\" src=\"$icons->{folder}\" $AAB alt=\"Folder\"/><span id=\"$l\">&nbsp;Attributes&nbsp;</span></a><br></span>";
+print "<div id=\"div$l\" $SDN>";
+d125 1
+a125 1
+		$m=SOAP->GetMetadataList($pn,$ot);	#full List is used due need for Attribute Displays information
+d134 3
+a136 3
+print "<img src=\"$icons->{line}\" $AAB alt=\"\"/>";
+print "<a href=\"javascript: oc('$_',$join,'A');\"><img id=\"join$_\" src=\"$joinIcon\" $AAB alt=\"Open/Close node\"/></a>";
+print "<span id=\"span$_\" $SCD><a ondblclick=\"jump('$_')\" onclick=\"show_me_ex('$_','$l');$RT\"><img id=\"icon$_\" name=\"$m->{$_}->{name}|A\" src=\"$icons->{attr}\" border=\"0\" $AAB alt=\"Attribute\"/><span id=\"$_\" title=\"$des\">&nbsp;$m->{$_}->{name}&nbsp;</span></a><br></span>";
+d140 3
+a142 1
+print "<div id=\"div$_\" $SDN>";
+d147 1
+a147 1
+				$scriptArray .= "Tree${ti}\[$i\]  = \"$ll~$_|$ll|$_|Af|$m->{'$ll'}->{display}->{$_}->{description}\";\n";
+d150 2
+a151 2
+print "<img src=\"$icons->{line}\" $AAB alt=\"\"/><img src=\"$secondIcon\" $AAB alt=\"\"/><img src=\"$thirdIcon\" $AAB alt=\"\"/>";
+print "<span id=\"$ll~$_\" $SCD><a onclick=\"show_me_ex('$ll~$_','$ll');$RT\"><img id=\"icon$ll~$_\" name=\"$_|Af\" src=\"$icons->{attr_form}\" border=\"0\" $AAB alt=\"Attribute Form\"/><span id=\"$ll~$_\" title=\"\">&nbsp;$_&nbsp;</span></a><br></span>";
+d155 1
+a155 1
+print "</div>";
+d157 1
+a157 1
+print "</div>"
+d166 3
+a168 3
+print "<a href=\"javascript: oc('$l',$join,'D');\"><img id=\"join$l\" src=\"$icons->{plus}\" $AAB alt=\"Open/Close node\"/></a>";
+print "<span id=\"span$l\" $SCD><a onclick=\"show_me_ex('$l',$join);$RT\"><img id=\"icon$l\" src=\"$icons->{folder}\" $AAB alt=\"Folder\"/><span id=\"$l\">&nbsp;Facts&nbsp;</span></a><br></span>";
+print "<div id=\"div$l\" $SDN>";
+d172 1
+a172 1
+			$m=SOAP->GetMetadataShortList($pn,$ot);
+d180 2
+a181 2
+print "<img src=\"$icons->{line}\" $AAB alt=\"\"/><img src=\"$secondIcon\" $AAB alt=\"\"/>";
+print "<span id=\"span$_\" $SCD><a ondblclick=\"jump('$_')\" onclick=\"show_me_ex('$_','$l');$RT\"><img id=\"icon$_\" name=\"$m->{$_}->{name}|Fa\" src=\"$icons->{fact}\" border=\"0\" $AAB alt=\"Fact\"/><span id=\"$_\" title=\"\">&nbsp;$m->{$_}->{name}&nbsp;</span></a><br></span>";
+d185 1
+a185 1
+print "</div>";
+d196 1
+a196 1
+	$m=SOAP->GetMetadataShortList($pn,'folder');
+d198 1
+a198 1
+	my $lastInFolders = pop(@@hlp);#get the name of last item in field of folders, needed for setting first icon in tree - line/empty when closing tree structure
+d202 1
+a202 2
+	foreach (keys %{$m}) {               
+		my $l=$_;
+d205 1
+a205 1
+			$scriptArray .= "Tree${ti}\[$i\]  = \"$_|0|$m->{$_}->{name}|D|$m->{$_}->{description}\";\n";
+d208 3
+a210 3
+print "<a href=\"javascript: oc('$_',$join,'D');\"><img id=\"join$_\" src=\"$joinIcon\" $AAB alt=\"Open/Close node\"/></a>";
+print "<span id=\"span$_\" $SCD><a onclick=\"show_me_ex('$_',$join);$RT\"><img id=\"icon$_\" src=\"$icons->{folder}\" $AAB alt=\"Folder\"/><span id=\"$_\" title=\"$m->{$_}->{description}\">&nbsp;$m->{$_}->{name}&nbsp;</span></a><br></span>";
+print "<div id=\"div$l\" $SDN>";
+d213 3
+a215 3
+			my $m=SOAP->GetMetadataShortList($pn,$objTr->{$dtn}->{type});
+			@@hlp = keys(%{$m});
+			$lastInField = pop(@@hlp);
+d217 1
+a217 1
+			foreach (keys %{$m}) {
+d221 2
+a222 2
+print "<img src=\"$firstIcon\" $AAB alt=\"\"/><img src=\"$secondIcon\" $AAB alt=\"\"/>";
+print "<span id=\"span$_\" $SCD><a ondblclick=\"jump('$_')\" onclick=\"show_me_ex('$_','$l');$RT\"><img id=\"icon$_\" name=\"$m->{$_}->{name}|$objTr->{$dtn}->{icon}\" src=\"$icons->{$dtn}\" border=\"0\" $AAB alt=\"$dtn\"/><span id=\"$_\" title=\"\">&nbsp;$m->{$_}->{name}&nbsp;</span></a><br></span>";
+d227 1
+a227 1
+print "</div>";
+d230 2
+a231 2
+$scriptArray .= "//--></script>\n";
+print "$scriptArray";
+d233 1
+a233 1
+close(STDOUT);
+@
+
+
+1.23
+log
+@switching among projects implemented
+@
+text
+@d4 1
+a4 1
+# $Id: local_lib.pl,v 1.22 2003/04/24 11:28:52 jiri_schmid Exp $
+d93 1
+a93 1
+open(STDOUT,">html/$file.html") || print "<!--something wrong?-->";;
+@
+
+
+1.22
+log
+@IE bug fixed, code improvment
+@
+text
+@d4 1
+a4 1
+# $Id: local_lib.pl,v 1.21 2003/04/23 14:38:57 jiri_schmid Exp $
+d57 1
+d88 1
+a88 1
+	my ($firstIcon, $secondIcon, @@hlp, $lastInField);
+d93 1
+a93 1
+open(STDOUT,">html/tree.html") || print "<!--something wrong?-->";;
+d103 4
+a106 2
+print "<a href=\"javascript: oc('$l', 0,'D');\"><img id=\"join$l\" src=\"$icons->{plus}\" $AAB alt=\"Open/Close node\"/></a>";
+print "<span id=\"span$l\" $SCD><a onclick=\"show_me_ex('$l','0');$RT\"><img id=\"icon$l\" src=\"$icons->{folder}\" $AAB alt=\"Folder\"/><span id=\"$l\">&nbsp;Attributes&nbsp;</span></a><br></span>";
+d116 1
+a116 1
+			$secondIcon = $icons->{empty} if ($lastInField eq $_);
+d119 1
+a119 1
+print "<a href=\"javascript: oc('$_', 0,'A');\"><img id=\"join$_\" src=\"$icons->{plus}\" $AAB alt=\"Open/Close node\"/></a>";
+d133 1
+a133 1
+print "<span id=\"$ll~$_\" $SCD><a ondblclick=\"jump('$ll~$_');\" onclick=\"show_me_ex('$ll~$_','$ll');$RT\"><img id=\"icon$ll~$_\" name=\"$_|Af\" src=\"$icons->{attr_form}\" border=\"0\" $AAB alt=\"Attribute Form\"/><span id=\"$ll~$_\" title=\"\">&nbsp;$_&nbsp;</span></a><br></span>";
+d143 1
+d148 2
+a149 2
+print "<a href=\"javascript: oc('$l', 0,'D');\"><img id=\"join$l\" src=\"$icons->{plus}\" $AAB alt=\"Open/Close node\"/></a>";
+print "<span id=\"span$l\" $SCD><a onclick=\"show_me_ex('$l','0');$RT\"><img id=\"icon$l\" src=\"$icons->{folder}\" $AAB alt=\"Folder\"/><span id=\"$l\">&nbsp;Facts&nbsp;</span></a><br></span>";
+d159 1
+a159 1
+				$scriptArray .= "  Tree${ti}\[$i\]  = \"$_|$l|$m->{$_}->{name}|Fa|$m->{$_}->{description}\";\n";
+d182 2
+d189 1
+d191 2
+a192 2
+print "<a href=\"javascript: oc('$_', 0,'D');\"><img id=\"join$_\" src=\"$icons->{plus}\" $AAB alt=\"Open/Close node\"/></a>";
+print "<span id=\"span$_\" $SCD><a onclick=\"show_me_ex('$_','0');$RT\"><img id=\"icon$_\" src=\"$icons->{folder}\" $AAB alt=\"Folder\"/><span id=\"$_\" title=\"$m->{$_}->{description}\">&nbsp;$m->{$_}->{name}&nbsp;</span></a><br></span>";
+a198 1
+			$firstIcon = $icons->{empty} if ($lastInFolders eq $_);
+@
+
+
+1.21
+log
+@the tree is generated now on server side in html directory as tree.html
+@
+text
+@d4 1
+a4 1
+# $Id: local_lib.pl,v 1.20 2003/04/22 15:29:14 jiri_schmid Exp $
+d87 1
+d94 1
+a94 1
+print "<img src=\"$icons->{base}\" align=\"top\" hspace=\"5\" alt=\"\"><span class=\"project\">$pn</span><br>";
+d100 1
+a100 1
+		$scriptArray .= " Tree${ti}\[$i\]  = \"$l|0|Attributes|D|\";\n";
+d102 2
+a103 2
+print "<a href=\"javascript: oc('$l', 0,'D');\"><img id=\"join$l\" src=\"$icons->{plus}\" $AAB alt=\"Open/Close node\"></a>";
+print "<span id=\"span$l\" $SCD><a name=\"$l\" onclick=\"show_me_ex(this,'0');$RT\"><img id=\"icon$l\" src=\"$icons->{folder}\" $AAB alt=\"Folder\"><span id=\"$l\">&nbsp;Attributes&nbsp;</span></a><br></span>";
+d107 3
+a109 2
+		my @@hlp = keys(%{$m});
+		my $lastInField = pop(@@hlp);
+d112 2
+a113 1
+			$scriptArray .= "  Tree${ti}\[$i\]  = \"$_|$l|$m->{$_}->{name}|A|$des\";\n";
+d115 3
+a117 3
+print "<img src=\"$icons->{line}\" $AAB alt=\"\">";
+print "<a href=\"javascript: oc('$_', 0,'A');\"><img id=\"join$_\" src=\"$icons->{plus}\" $AAB alt=\"Open/Close node\"></a>";
+print "<span id=\"span$_\" $SCD><a name=\"$_\" ondblclick=\"jumpT(this)\" onclick=\"show_me_ex(this,'$l');$RT\"><img id=\"icon$_\" name=\"$m->{$_}->{name}|A\" src=\"$icons->{attr}\" border=\"0\" $AAB alt=\"Attribute\"><span id=\"$_\" title=\"$des\">&nbsp;$m->{$_}->{name}&nbsp;</span></a><br></span>";
+d122 1
+a122 1
+			my @@hlp = keys(%{$m->{$ll}->{display}});
+d124 1
+a124 1
+			my $secondIcon = ($lastInField eq $_) ? $icons->{empty} : $icons->{line};
+d126 2
+a127 2
+				$scriptArray .= "   Tree${ti}\[$i\]  = \"$ll~$_|$ll|$_|Af|$m->{'$ll'}->{display}->{$_}->{description}\";\n";
+				my $thirdIcon = ($lastInSubField eq $_) ? $icons->{join} : $icons->{joinBottom};
+d129 2
+a130 2
+print "<img src=\"$icons->{line}\" $AAB alt=\"\"><img src=\"$secondIcon\" $AAB alt=\"\"><img src=\"$thirdIcon\" $AAB alt=\"\">";
+print "<span id=\"$ll~$_\" $SCD><a name=\"$ll~$_\" ondblclick=\"jumpT(this);\" onclick=\"show_me_ex(this,'$_');$RT\"><img id=\"icon$ll~$_\" name=\"$_|Af\" src=\"$icons->{attr_form}\" border=\"0\" $AAB alt=\"Attribute Form\"><span id=\"$ll~$_\" title=\"\">&nbsp;$_&nbsp;</span></a><br></span>";
+d142 1
+a142 1
+			$scriptArray .= " Tree${ti}\[$i\]  = \"$l|0|Facts|D|\";\n";
+d144 2
+a145 2
+print "<a href=\"javascript: oc('$l', 0,'D');\"><img id=\"join$l\" src=\"$icons->{plus}\" $AAB alt=\"Open/Close node\"></a>";
+print "<span id=\"span$l\" $SCD><a name=\"$l\" onclick=\"show_me_ex(this,'0');$RT\"><img id=\"icon$l\" src=\"$icons->{folder}\" $AAB alt=\"Folder\"><span id=\"$l\">&nbsp;Facts&nbsp;</span></a><br></span>";
+d151 3
+a153 2
+			my @@hlp = keys(%{$m});
+			my $lastInField = pop(@@hlp);
+d156 1
+a156 1
+				my $secondIcon = ($lastInField eq $_) ? $icons->{join} : $icons->{joinBottom};
+d158 2
+a159 2
+print "<img src=\"$icons->{line}\" $AAB alt=\"\"><img src=\"$secondIcon\" $AAB alt=\"\">";
+print "<span id=\"span$_\" $SCD><a name=\"$_\" ondblclick=\"jumpT(this)\" onclick=\"show_me_ex(this,'$l');$RT\"><img id=\"icon$_\" name=\"$m->{$_}->{name}|Fa\" src=\"$icons->{fact}\" border=\"0\" $AAB alt=\"Fact\"><span id=\"$_\" title=\"\">&nbsp;$m->{$_}->{name}&nbsp;</span></a><br></span>";
+d175 1
+a175 1
+	my @@hlp = keys(%{$m});
+d177 1
+d182 1
+a182 1
+			$scriptArray .= "  Tree${ti}\[$i\]  = \"$_|0|$m->{$_}->{name}|D|$m->{$_}->{description}\";\n";
+d184 2
+a185 2
+print "<a href=\"javascript: oc('$_', 0,'D');\"><img id=\"join$_\" src=\"$icons->{plus}\" $AAB alt=\"Open/Close node\"></a>";
+print "<span id=\"span$_\" $SCD><a name=\"$_\" onclick=\"show_me_ex(this,'0');$RT\"><img id=\"icon$_\" src=\"$icons->{folder}\" $AAB alt=\"Folder\"><span id=\"$_\" title=\"$m->{$_}->{description}\">&nbsp;$m->{$_}->{name}&nbsp;</span></a><br></span>";
+d190 4
+a193 3
+			my $firstIcon = ($lastInFolders eq $_) ? $icons->{empty} : $icons->{line};
+			my @@hlp = keys(%{$m});
+			my $lastInField = pop(@@hlp);
+d195 2
+a196 2
+				$scriptArray .= "  Tree${ti}\[$i\]  = \"$_|$l|$m->{$_}->{name}|$objTr->{$dtn}->{icon}|$m->{$_}->{description}\";\n";
+				my $secondIcon = ($lastInField eq $_) ? $icons->{join} : $icons->{joinBottom};
+d198 2
+a199 2
+print "<img src=\"$firstIcon\" $AAB alt=\"\"><img src=\"$secondIcon\" $AAB alt=\"\">";
+print "<span id=\"span$_\" $SCD><a name=\"$_\" ondblclick=\"jumpT(this)\" onclick=\"show_me_ex(this,'$l');$RT\"><img id=\"icon$_\" name=\"$m->{$_}->{name}|$objTr->{$dtn}->{icon}\" src=\"$icons->{$dtn}\" border=\"0\" $AAB alt=\"$dtn\"><span id=\"$_\" title=\"\">&nbsp;$m->{$_}->{name}&nbsp;</span></a><br></span>";
+d207 1
+a207 1
+$scriptArray .= "//--></script>";
+a211 43
+
+sub ListHiearchy {
+	my $pn=shift;
+	my $i=shift;
+	my $mark = shift; #mark edit (=="ed") or fold (=="foo") bookmark
+	my $IDj=($ID==-1 ? 0 : $ID);
+
+#alert("toto je tvuj git ziskany z cookie   " + GID);
+	#GID = '$ID';
+	print <<END
+
+<script type="text/javascript">
+<!--        
+function is_id(itemID){
+var hlp = Tree0.toString();
+return (hlp.indexOf(itemID) > 0) ? true : false;
+}
+
+GID = document.getElementById("active_id").value;
+if (GID != "")
+ { createTree(Tree$i,"$pn",0,GID,openNodes,"$mark");
+   parent.document.getElementById("tree_iframe").name=get_type(GID);
+   jump(GID);}
+
+//--> load id from cookie, it is not necessary, can be erased from mark --> to mark <--  (the tree will not be open after reloading}
+else
+ { GID = get_cookie("id");
+   if (is_id(GID))
+	  {createTree(Tree$i,"$pn",0,GID,openNodes,"$mark");
+	   jump(GID);
+	  }
+//end of cookie loading <--
+
+//when GID undefined create default tree (GID = 0)
+  else createTree(Tree$i,"$pn",0,0,openNodes,"$mark");
+}
+		   
+//-->
+</script>
+END
+}
+
+
+@
+
+
+1.20
+log
+@fixed a modified saving a loadin joined items A~Af
+@
+text
+@d4 1
+a4 1
+# $Id: local_lib.pl,v 1.19 2003/03/25 15:37:35 jiri_schmid Exp $
+d58 22
+d83 9
+a91 5
+	print <<END ;
+<script type="text/javascript">
+<!--
+var Tree$ti = new Array;
+END
+d93 1
+d99 1
+a99 1
+		print " Tree${ti}\[$i\]  = \"$l|0|Attributes|D|\";\n";
+d101 3
+d106 2
+d110 6
+a115 1
+			print "  Tree${ti}\[$i\]  = \"$_|$l|$m->{$_}->{name}|A|$des\";\n";
+d118 4
+d123 6
+a128 1
+				print "   Tree${ti}\[$i\]  = \"$ll~$_|$ll|$_|Af|$m->{'$ll'}->{display}->{$_}->{description}\";\n";
+d131 1
+d133 1
+d139 6
+a144 1
+			print " Tree${ti}\[$i\]  = \"$l|0|Facts|D|\";\n";
+d148 2
+d151 6
+a156 1
+				print "  Tree${ti}\[$i\]  = \"$_|$l|$m->{$_}->{name}|Fa|$m->{$_}->{description}\";\n";
+d159 1
+a159 1
+
+d171 2
+d177 6
+a182 1
+			print "  Tree${ti}\[$i\]  = \"$_|0|$m->{$_}->{name}|D|$m->{$_}->{description}\";\n";
+d185 3
+d189 6
+a194 1
+				print "  Tree${ti}\[$i\]  = \"$_|$l|$m->{$_}->{name}|$objTr->{$dtn}->{icon}|$m->{$_}->{description}\";\n";
+d198 1
+d201 4
+a204 4
+	print <<END ;
+//-->
+</script>
+END
+@
+
+
+1.19
+log
+@syntax checker for metrics imrpoved, loading user pref file when file missing fixed/imrpoved
+@
+text
+@d4 1
+a4 1
+# $Id: local_lib.pl,v 1.18 2003/03/24 12:17:43 jiri_schmid Exp $
+d82 1
+a82 1
+				print "   Tree${ti}\[$i\]  = \"$ll.$_|$ll|$_|Af|$m->{'$ll'}->{display}->{$_}->{description}\";\n";
+@
+
+
+1.18
+log
+@IE5 bug fixed
+@
+text
+@d4 1
+a4 1
+# $Id: local_lib.pl,v 1.17 2003/03/10 16:14:00 jiri_schmid Exp $
+d47 1
+a47 1
+	print "<FONT COLOR=\"#CC0000\"><STRONG>$errS</STRONG></FONT><BR>";
+@
+
+
+1.17
+log
+@charset fixed
+@
+text
+@d4 1
+a4 1
+# $Id: local_lib.pl,v 1.16 2003/03/06 15:52:14 jiri_schmid Exp $
+d144 1
+a144 1
+var hlp = document.lastChild.innerHTML;
+@
+
+
+1.16
+log
+@language files and language options are from now specifed only in const.def
+@
+text
+@d4 1
+a4 1
+# $Id: local_lib.pl,v 1.15 2003/03/03 16:43:57 jiri_schmid Exp $
+d150 1
+a150 1
+ { createTree(Tree$i,"<B>$pn</B>",0,GID,openNodes,"$mark");
+d158 1
+a158 1
+	  {createTree(Tree$i,"<B>$pn</B>",0,GID,openNodes,"$mark");
+d164 1
+a164 1
+  else createTree(Tree$i,"<B>$pn</B>",0,0,openNodes,"$mark");
+@
+
+
+1.15
+log
+@cookie managing improvment for better cooperation with user preferences
+@
+text
+@d4 1
+a4 1
+# $Id: local_lib.pl,v 1.14 2003/02/26 13:21:32 jiri_schmid Exp $
+d151 2
+a152 2
+   highlight(GID);
+   parent.document.getElementById("tree_iframe").name=get_type(GID);}
+@
+
+
+1.14
+log
+@huge javascript optimalization, also files moved to directory js
+@
+text
+@d4 1
+a4 1
+# $Id: local_lib.pl,v 1.13 2003/02/25 16:46:02 jiri_schmid Exp $
+d143 5
+d157 1
+a157 1
+   if (GID != "null" && GID != 0)
+@
+
+
+1.13
+log
+@removed unused functions from attr.js, language fixies in tabs.cgi and linked files
+@
+text
+@d4 1
+a4 1
+# $Id: local_lib.pl,v 1.12 2003/02/25 13:57:40 jiri_schmid Exp $
+d148 2
+a149 2
+//--> load id from cookie, it is not necessary, can be erased from mark --> to mark <-- 
+//the tree will note be open after reloading
+d152 3
+a154 6
+   if (GID != "null")
+	{ var hlp = String(Tree0.join());
+	  if (hlp.indexOf(GID) > -1)
+	  {
+	  createTree(Tree$i,"<B>$pn</B>",0,GID,openNodes,"$mark");
+	  jump(GID);
+a155 2
+	  else createTree(Tree$i,"<B>$pn</B>",0,0,openNodes,"$mark");
+	}
+d157 1
+d159 2
+a160 2
+    else createTree(Tree$i,"<B>$pn</B>",0,0,openNodes,"$mark");
+ }
+@
+
+
+1.12
+log
+@cookie with id enabled
+@
+text
+@d4 1
+a4 1
+# $Id: local_lib.pl,v 1.11 2003/02/20 14:44:49 jiri_schmid Exp $
+d148 2
+a149 1
+//load id from cookie
+d161 1
+a161 1
+//end of cookie loading
+@
+
+
+1.11
+log
+@save item bug and delete item bug fixed
+@
+text
+@d4 1
+a4 1
+# $Id: local_lib.pl,v 1.10 2003/02/19 16:06:48 jiri_schmid Exp $
+d143 21
+a163 3
+	GID = (document.getElementById("active_id").value == "") ? 0 : document.getElementById("active_id").value;
+	createTree(Tree$i,"<B>$pn</B>",0,GID,openNodes,"$mark");
+	if (GID != 0) {highlight(GID); parent.document.getElementById("tree_iframe").name=get_type(GID);}
+@
+
+
+1.10
+log
+@activating of new items fullfunctional, deleting also
+@
+text
+@d4 1
+a4 1
+# $Id: local_lib.pl,v 1.9 2003/02/19 13:11:14 jiri_schmid Exp $
+a26 8
+sub OverRideParam {
+	my ($cName,$def) = @@_;
+	push (@@cookie, $q->cookie(-name=>$cName, -value=>$def, -path=>$cookie_path, -expires=>$cookie_exp));
+	return 1
+}
+
+#__________________________________________________________
+#
+d145 2
+a146 1
+	if (GID != 0) highlight(GID);	   
+@
+
+
+1.9
+log
+@opening the new item after its creating almost fullfunctional
+@
+text
+@d4 1
+a4 1
+# $Id: local_lib.pl,v 1.8 2003/02/17 16:16:53 jiri_schmid Exp $
+d153 1
+a153 1
+	jump(GID);	   
+@
+
+
+1.8
+log
+@finally deleting of tree items is woking properly
+@
+text
+@d4 1
+a4 1
+# $Id: local_lib.pl,v 1.7 2003/01/26 14:16:27 michald Exp $
+d151 3
+a153 2
+        GID=get_cookie("id"); 	
+	createTree(Tree$i,"<B>$pn</B>",0,GID,openNodes,"$mark");	   
+@
+
+
+1.7
+log
+@some small fixes
+@
+text
+@d4 1
+a4 1
+# $Id: local_lib.pl,v 1.6 2003/01/16 17:20:19 spanhel Exp $
+d23 8
+@
+
+
+1.6
+log
+@change edit.cgi - tree and object edit desided into two iframes
+@
+text
+@d4 1
+a4 1
+# $Id: local_lib.pl,v 1.5 2002/11/01 11:49:39 spanhel Exp $
+d6 1
+a6 1
+$MyName = $q->url();
+@
+
+
+1.5
+log
+@added dynamic tree for edit html pages, created format_ed.pl (CSS), changed cookie ID (edit.cgi)
+@
+text
+@d4 1
+a4 1
+# $Id: local_lib.pl,v 1.4 2002/10/25 15:05:21 spanhel Exp $
+d134 1
+a136 1
+
+d139 1
+a140 2
+	print <<END
+	
+d143 2
+a144 2
+        GID=get_cookie(); 	
+	createTree(Tree$i,"<B>$pn</B>",0,GID,openNodes);	   
+@
+
+
+1.4
+log
+@*** empty log message ***
+@
+text
+@d4 1
+a4 1
+# $Id: local_lib.pl,v 1.3 2002/10/25 14:03:20 spanhel Exp $
+d135 5
+d141 1
+d144 2
+a145 2
+	GID = '$ID';
+	createTree(Tree$i,"<B>$pn</B>",0,'$IDj',openNodes);	   
+@
+
+
+1.3
+log
+@edit pages created
+@
+text
+@d4 1
+a4 1
+# $Id: local_lib.pl,v 1.2 2002/10/05 17:32:02 michald Exp $
+a66 2
+
+	my $ot='attr';
+d68 1
+d86 13
+a98 1
+	}
+d100 1
+a100 9
+	$l=SOAP->NewID();
+	print " Tree${ti}\[$i\]  = \"$l|0|Facts|D|\";\n";
+	$i++;
+	# Load Facts
+	$m=SOAP->GetMetadataShortList($pn,'fact');
+ 	foreach (keys %{$m}) {
+		print "  Tree${ti}\[$i\]  = \"$_|$l|$m->{$_}->{name}|Fa|$m->{$_}->{description}\";\n";
+		$i++;
+	}
+d111 1
+a111 3
+	foreach (keys %{$m}) {
+		print "  Tree${ti}\[$i\]  = \"$_|0|$m->{$_}->{name}|D|$m->{$_}->{description}\";\n";
+		$i++;
+d114 3
+a116 1
+#		if ($m->{$l}->{name} eq 'Metrics') {
+d121 2
+a122 2
+			}
+#		}
+@
+
+
+1.2
+log
+@grid edit window
+@
+text
+@d4 1
+a4 1
+# $Id: local_lib.pl,v 1.1.1.1 2002/09/24 01:56:42 michald Exp $
+d52 92
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d4 1
+a4 1
+# $Id: local_lib.pl,v 1.2 2002/09/23 18:11:50 spanhel Exp $
+d22 1
+a22 1
+	$v
+d44 8
+@
+
+
+1.1.1.1
+log
+@Initial release of Bear ROLAP Portal
+@
+text
+@@

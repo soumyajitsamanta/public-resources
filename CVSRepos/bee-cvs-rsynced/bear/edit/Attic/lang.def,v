@@ -1,0 +1,59 @@
+head	1.2;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2003.03.04.10.19.19;	author spanhel;	state dead;
+branches;
+next	1.1;
+
+1.1
+date	2003.01.20.18.23.51;	author spanhel;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@added cz localization
+@
+text
+@our $lang={
+	us=>{save=>'Save'
+		res=>'Result',
+		ed=>'Edit',
+		deb=>'Debug',
+		save=>'Save', # all *_ed.pl
+		savea=>'Save as',
+		reset=>'Reset',
+		reload=>'Reload',
+		g_edit=>'Grid Edit', # grid_ed.pl
+		g_pag=>'Pages', 
+		g_name=>'Grid name',
+		g_desc=>'Grid description',
+		f_edit=>'Filter Edit', # filter_ed.pl
+		f_expr=>'Filter expresion',
+		f_name=>'Filter name',
+		f_desc=>'Filter description',
+		r_edit=>'Report Edit', # report_ed.pl
+		r_name=>'Report name',
+		r_desc=>'Report description',
+	    }
+};
+@
+
+
+1.1
+log
+@reduce number of tabs
+@
+text
+@@
+

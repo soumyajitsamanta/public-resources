@@ -1,0 +1,126 @@
+head	1.1;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.1
+date	2004.04.16.16.21.49;	author vacula;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@new interface
+@
+text
+@#-----------------------------------------------------
+#  Format Editation
+#-----------------------------------------------------
+# $Id: Format2d.pm,v 1.3 2003/11/20 15:47:41 jiri_schmid Exp $
+
+package Format2d_galery;
+
+use XML::Simple;
+use strict;
+
+#-----------------------------------------------------
+# print_form is called from edit.cgi
+
+sub generateContent {
+my($variables, $lang, $obj) = (shift, shift, shift);
+my $saved = $$variables->{saved} if exists $$variables->{saved};
+
+#set defaults parameters of base :
+	my ($row, $col, $width, $height);
+	if ($$obj->{base}{sets} eq 'cols') {
+		$row = '';
+		$col = ' checked="checked"';
+	} 
+	else {
+		$col = '';
+		$row = ' checked="checked"';
+	}
+	$width = $$obj->{base}{width};
+	$height = $$obj->{base}{height};
+
+print <<END ;
+<br />
+<table class="page_skeleton_ex" style='width:100%'>
+<tr class="page_skeleton">
+<td class="page_skeleton_ex" style='padding: 12px 10px 10px 10px'>
+
+
+	<table>
+END
+	foreach ( @@{$Const::graph2DformatsTypes} ) {
+		print "<tr><td><span class='cursor' onclick='setThisRadio(this)'><input type='radio' name='$_' value='$_' />$_</span></td></tr>";
+	}
+print <<END;
+	</table>
+
+
+</td>
+<td class="page_skeleton_ex" style='width:100%;padding: 12px 10px 10px 10px'>
+END
+
+	foreach (&Local::GetFiles("$Const::myPath$Const::graph2Dformats",'xml')) {
+		#print $_;
+		#print $_.".xml";
+		my $src = (-e "$Const::myPath$Const::graph2DformatIcons/$_.png") ? "$Const::graph2DformatIcons/$_.png" : "$Const::graph2DformatIcons/2d.png";
+		#my $src = "$Const::graph2Dicons/$_.gif";
+		next if $_ eq "2d";
+		print "<span class='preview' onclick='setVrml(this)'><input type='radio' name='graph2d' value='$_' id='$_' /><img class='cursor' src='$src' alt='$_' title='$_'/></span> ";
+	}
+
+print <<END;
+</td>
+</tr>
+END
+
+print <<END;
+<tr class="page_skeleton" >
+<td class="page_skeleton" colspan='2'>
+	<table class="neutral_100">
+		<tr><td align="center">
+		<table class="buttons" cellpading="0" cellspacing="0">
+		<tr>	<td class="buttons"><input id='SAVE' type="submit" name="Action" value="$$lang->{'Save'}"/></td>
+			<td class="buttons">	<input type="submit" name="Action" value="$$lang->{'Save As'}" onclick="return readName();"/>
+						<input type="hidden" name="saveAsName" id="saveAsName" value="" /></td>
+			<td class="buttons"><input type="button" name="reset" value="$$lang->{'Reset'}" onclick="self.frames['format'].location.reload(true)"/></td>
+		</tr>
+		</table>
+	</td></tr>
+	</table>
+</td></tr></table>
+<script type="text/javascript">
+	var saveAsMsg = "$$lang->{SaveAsMsg}$$lang->{'New Format2d'}";
+	reloadTree($saved);
+	setResol();
+	reSetIframe();
+</script>
+END
+}
+
+#---------------------------------------------------
+sub set_next_param {
+	my ($o,$q) = (shift, shift);
+	$$o->{type} = $$q->param('type');
+	$$o->{form} = $$q->param('form');
+	$$o->{base}{sets} = $$q->param('dataset');
+	$$o->{base}{width} = $$q->param('width');
+	$$o->{base}{height} = $$q->param('height');
+	$$o->{base}{l_margin} = $$q->param('l_margin');
+	$$o->{base}{r_margin} = $$q->param('r_margin');
+	$$o->{base}{t_margin} = $$q->param('t_margin');
+	$$o->{base}{b_margin} = $$q->param('b_margin');
+}
+
+1
+@

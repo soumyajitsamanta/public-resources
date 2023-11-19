@@ -1,0 +1,101 @@
+head	1.2;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2003.08.11.06.34.18;	author numberone;	state dead;
+branches;
+next	1.1;
+
+1.1
+date	2003.02.05.15.46.36;	author numberone;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@removing old dir Net-1.0
+@
+text
+@# Before `make install' is performed this script should be runnable with
+# `make test'. After `make install' it should work as `perl test.pl'
+
+#########################
+
+# change 'tests => 1' to 'tests => last_test_to_print';
+
+use Test;
+BEGIN { plan tests => 3 };
+require Net;
+ok(1); # If we made it this far, we're ok.
+
+#########################
+
+# Insert your test code below, the Test module is use()ed here so read
+# its man page ( perldoc Test ) for help writing this test script.
+
+#print &Net::foo(1, 2, "0.0") == 7 ? "ok 3\n" : "not ok 3\n";
+#print abs(&Net::foo(0, 0, "-3.4") - 0.6) <= 0.01 ? "ok 4\n" : "not ok 4\n";  
+
+use Devel::Peek;
+use Data::Dumper;
+
+
+# INET
+print "INET: ";
+if(exists $ENV{INET}) {
+	my $PORT = 2051;
+#	if($ENV{INET}) {
+		my $server = Net->server("INET",$PORT);
+		print "server listenning on ".$server->peer."\n";
+		my $client = $server->accept(1);
+		print "client ".$client->peer." connected\n";
+		$client->write("hello from windoze");
+		until($client->peek) { }
+		print "read: '",$client->read,"'\n";
+#		$client->write("zdar");
+#	} else {
+#		my $net = Net->connect('INET',"grg",$PORT);
+#		print "client connected to server ".$net->peer."\n";
+#		sleep 1;
+#		print "write: ",$net->write("ahoj"),"\n";
+#		until($net->peek) {  }
+#		print "read: '",$net->read,"'\n";
+#	}
+} else {
+	print "use: 'INET=1 make test' ";
+	print  "and 'INET=0 make test' to try client-server\n";
+}
+ok(2);
+
+
+# UNIX
+my($a,$b) = Net->socketpair;
+die "nefunguje" unless($a);
+
+print "UNIX: socketpair [ ".$a->peer." <-> ".$b->peer." ] created\n";
+$a->write("ahojky");
+until($b->peek) {  }
+print "write -> read: ".$b->read."\n";
+ok(3);
+
+
+
+@
+
+
+1.1
+log
+@libnet-1.0, README
+@
+text
+@@
+

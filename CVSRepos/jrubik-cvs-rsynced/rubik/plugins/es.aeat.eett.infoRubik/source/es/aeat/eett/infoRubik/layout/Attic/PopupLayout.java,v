@@ -1,0 +1,533 @@
+head	1.2;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2008.05.17.15.40.42;	author fsaz;	state dead;
+branches;
+next	1.1;
+
+1.1
+date	2005.11.28.15.13.35;	author fsaz;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@borrando viejos
+@
+text
+@/*
+ * Created on 13-abr-2005
+ *
+ * PopupLayout.java
+ *
+ */
+package es.aeat.eett.infoRubik.layout;
+
+import java.awt.Component;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.io.File;
+import java.util.List;
+import java.util.ResourceBundle;
+
+import javax.swing.AbstractAction;
+import javax.swing.ActionMap;
+import javax.swing.Icon;
+import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+import javax.swing.JPopupMenu;
+import javax.swing.JSeparator;
+
+import org.apache.commons.logging.LogFactory;
+import org.apache.log4j.Logger;
+import org.jdom.Document;
+import org.jdom.Element;
+
+import es.aeat.eett.infoRubik.JobFactoryInfo;
+import es.aeat.eett.infoRubik.deploy.DeployPanel;
+import es.aeat.eett.infoRubik.deploy.MasterDeployPanel;
+import es.aeat.eett.infoRubik.jobs.job_core.Job;
+import es.aeat.eett.infoRubik.jobs.job_core.JobFactory;
+import es.aeat.eett.infoRubik.reports.Report;
+import es.aeat.eett.rubik.core.util.JDomUtil;
+
+
+/**
+ * @@author f00992
+ */
+public class PopupLayout extends JPopupMenu {
+    private final ResourceBundle localizationResources =
+        ResourceBundle.getBundle("es.aeat.eett.infoRubik.layout.locale.LocalizationBundle");
+
+    private final String HDIV=localizationResources.getString("HDiv");
+    private final String VDIV=localizationResources.getString("VDiv");
+    private final String OLAP_JOBS=localizationResources.getString("olpaJobs");
+    private final String FIXED_JOBS=localizationResources.getString("fiexedJobs");
+    private final String RUM_JOB=localizationResources.getString("runJob");
+
+	public static final String KEY_ACTION_DIV_HOR="actionDivHor";
+	public static final String KEY_ACTION_DIV_VER="actionDivVer";
+	public static final String KEY_EXECUTE_JOB="actionExecute";
+	public static final String KEY_MASTER_DEPLOY_JOB="actionMasterDeploy";
+	public static final String KEY_DEPLOY_JOB="actionDeploy";
+
+	private JMenu menuOlapJobs= null;
+	private JMenu menuFixedJobs= null;
+
+    PopupLayout() throws Exception {
+        iniPopup();
+    }
+    private void iniPopup() throws Exception{
+		ActionMap am= new ActionMap();
+		am.put(KEY_ACTION_DIV_HOR,new ActionDivHor(HDIV));
+		am.put(KEY_ACTION_DIV_VER,new ActionDivVer(VDIV));
+		add(am.get(KEY_ACTION_DIV_HOR));
+		add(am.get(KEY_ACTION_DIV_VER));
+		add(new JSeparator());
+		menuOlapJobs=new JMenu(OLAP_JOBS);
+		add(menuOlapJobs);
+		menuFixedJobs=new JMenu(FIXED_JOBS);
+		add(menuFixedJobs);
+		addPluginsMenus();
+		am.put(KEY_EXECUTE_JOB,new ActionExecuteJob(RUM_JOB));
+		add(am.get(KEY_EXECUTE_JOB));
+
+		am.put(KEY_MASTER_DEPLOY_JOB, new ActionMasterDeploy());
+		add(am.get(KEY_MASTER_DEPLOY_JOB));
+		//
+		am.put(KEY_DEPLOY_JOB, new ActionDeploy());
+		add(am.get(KEY_DEPLOY_JOB));
+
+		setActionMap(am);
+    }
+    private void addPluginsMenus(){
+    	Object[] jobFactoryInfos= JobFactoryInfo.getAll().toArray();
+    	for (int i = 0; i < jobFactoryInfos.length; i++) {
+			JobFactoryInfo jfi=(JobFactoryInfo) jobFactoryInfos[i];
+    		try{
+    			ActionAddJob actionAddJob= new ActionAddJob(jfi.getNameJob(), jfi.getJobFactory());
+		        menuOlapJobs.add(actionAddJob);
+    		} catch (Exception e) {
+    			 LogFactory.getLog(PopupLayout.class).error(
+                        "failed "+jfi.getId(), e);    		
+    		}
+    	}
+		revalidate();
+
+    }
+    /**
+     * @@return Returns the menuFixedJobs.
+     */
+    JMenu getMenuFixedJobs() {
+        return menuFixedJobs;
+    }
+    /**
+     * @@param menuFixedJobs The menuFixedJobs to set.
+     */
+    void setMenuFixedJobs(JMenu menuFixedJobs) {
+        this.menuFixedJobs = menuFixedJobs;
+    }
+    /**
+     * @@return Returns the menuOlapJobs.
+     */
+    JMenu getMenuOlapJobs() {
+        return menuOlapJobs;
+    }
+    /**
+     * @@param menuOlapJobs The menuOlapJobs to set.
+     */
+    void setMenuOlapJobs(JMenu menuOlapJobs) {
+        this.menuOlapJobs = menuOlapJobs;
+    }
+}// Fin class PopupLayout
+
+abstract class AbstractLayoutAction extends AbstractAction{
+	AbstractLayoutAction() {
+        super();
+    }
+	AbstractLayoutAction(String name) {
+        super(name);
+    }
+    protected LayoutPanel getRootLayoutPanel(LayoutPanel layoutPanel){
+    	LayoutPanel lRoot=layoutPanel;
+    	while (lRoot.getParent() instanceof LayoutPanel){
+    		lRoot=(LayoutPanel) lRoot.getParent();
+    	}
+    	return lRoot;
+    }
+}
+class  ActionDivHor extends AbstractLayoutAction{
+
+    ActionDivHor() {
+        super();
+    }
+    ActionDivHor(String name) {
+        super(name);
+    }
+    /* (non-Javadoc)
+     * @@see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+     */
+    public void actionPerformed(ActionEvent e) {
+		if(!(e.getSource() instanceof JMenuItem)) return;
+		JMenuItem it=(JMenuItem) e.getSource();
+		if(!(it.getParent() instanceof PopupLayout))return;
+		PopupLayout jp=(PopupLayout) it.getParent();
+		if(jp.getInvoker()instanceof  LayoutPanel){
+		    LayoutPanel layoutPanel=(LayoutPanel) jp.getInvoker();
+		    addChildren(layoutPanel);
+		    getRootLayoutPanel(layoutPanel).fireLeafReportChanged();
+		}
+    }
+    void addChildren(LayoutPanel layoutPanel){
+        layoutPanel.setLayout(new GridLayout( 2,  1));
+        layoutPanel.setBorder(null);
+        layoutPanel.add( new LayoutPanel(layoutPanel));
+        layoutPanel.add( new LayoutPanel(layoutPanel));
+	    layoutPanel.revalidate();
+	    layoutPanel.repaint();
+    }
+}// Fin class ActionDivHor
+
+class  ActionDivVer extends AbstractLayoutAction{
+
+
+    ActionDivVer() {
+        super();
+    }
+    ActionDivVer(String name) {
+        super(name);
+    }
+    /* (non-Javadoc)
+     * @@see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+     */
+    public void actionPerformed(ActionEvent e) {
+		if(!(e.getSource() instanceof JMenuItem)) return;
+		JMenuItem it=(JMenuItem) e.getSource();
+		if(!(it.getParent() instanceof PopupLayout))return;
+		PopupLayout jp=(PopupLayout) it.getParent();
+		if(jp.getInvoker()instanceof  LayoutPanel){
+		    LayoutPanel layoutPanel=(LayoutPanel) jp.getInvoker();
+		    addChildren(layoutPanel);
+		    getRootLayoutPanel(layoutPanel).fireLeafReportChanged();
+		}
+    }
+    void addChildren(LayoutPanel layoutPanel){
+        layoutPanel.setLayout(new GridLayout( 1,  2));
+        layoutPanel.setBorder(null);
+        layoutPanel.add( new LayoutPanel(layoutPanel));
+        layoutPanel.add( new LayoutPanel(layoutPanel));
+	    layoutPanel.revalidate();
+	    layoutPanel.repaint();
+    }
+
+}// Fin class ActionDivVer
+class  ActionAddJob extends AbstractLayoutAction{
+    private final ResourceBundle localizationResources =
+        ResourceBundle.getBundle("es.aeat.eett.infoRubik.layout.locale.LocalizationBundle");
+    static private Logger logger = Logger.getLogger(ActionAddJob.class);
+
+    private final String STR_ERROR=localizationResources.getString("Error");
+
+    private JobFactory jobFactory=null;
+
+    ActionAddJob() {
+        super();
+    }
+    ActionAddJob(String name, JobFactory jobFactory) {
+        super(name);
+        this.jobFactory=jobFactory;
+    }
+    /* (non-Javadoc)
+     * @@see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+     */
+    public void actionPerformed(ActionEvent e) {
+		if(!(e.getSource() instanceof JMenuItem)) return;
+		JMenuItem it=(JMenuItem) e.getSource();
+		if(!(it.getParent() instanceof JPopupMenu))return;
+		JPopupMenu jm=(JPopupMenu) it.getParent();
+		JMenu menu=(JMenu) jm.getInvoker();
+		PopupLayout jp=(PopupLayout) menu.getParent();
+		if(jp.getInvoker()instanceof  LayoutPanel){
+		    LayoutPanel layoutPanel=(LayoutPanel) jp.getInvoker();
+		    addJob(layoutPanel);
+		    getRootLayoutPanel(layoutPanel).fireLeafReportChanged();
+		}
+    }
+    void addJob( LayoutPanel layoutPanel){
+        LayoutPanel rootLayout=getRootLayoutPanel(layoutPanel);
+        String  idLeaf=rootLayout.getNLeaf().getLeafReport().getIDLeaf();
+        Job job=layoutPanel.getJob();
+        Report report=(Report)rootLayout.getNLeaf().getReportRootNode().getUserObject();
+        if(job!=null){//Si hay otro job se borra
+            String nameJob=job.getFileJob().getName();
+            File fOldJob=new File(report.getJobsDir(), nameJob);
+            fOldJob.delete();
+        }
+        //Se crea el nuevo job
+        File fJob=null;
+        try {
+            fJob=File.createTempFile(idLeaf+"J",".xml",report.getJobsDir());
+            job=jobFactory.createJob();
+            job.ini();
+            new JDomUtil().saveDocument(new Document(job.getRootElement()), fJob);
+            job.setFileJob(fJob);
+	        layoutPanel.setJob(job);
+	        layoutPanel.add(new JLabel(job.getCaption()));
+			logger.info("");
+		} catch (Exception e) {
+		    if(fJob!=null){
+		        fJob.delete();
+		    }
+	        layoutPanel.setJob(null);
+		    logger.error(e);
+		}
+	    layoutPanel.revalidate();
+	    layoutPanel.repaint();
+    }
+
+}// Fin class ActionAddJob
+class  ActionExecuteJob extends AbstractAction{
+    private final ResourceBundle localizationResources =
+        ResourceBundle.getBundle("es.aeat.eett.infoRubik.layout.locale.LocalizationBundle");
+    static private Logger logger = Logger.getLogger(ActionExecuteJob.class);
+
+    private final String STR_ERROR=localizationResources.getString("Error");
+
+    ActionExecuteJob(String name) {
+        super(name);
+    }
+    /* (non-Javadoc)
+     * @@see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+     */
+    public void actionPerformed(ActionEvent e) {
+		if(!(e.getSource() instanceof JMenuItem)) return;
+		JMenuItem it=(JMenuItem) e.getSource();
+		if(!(it.getParent() instanceof JPopupMenu))return;
+		JPopupMenu jm=(JPopupMenu) it.getParent();
+		PopupLayout jp=(PopupLayout) it.getParent();
+		if(jp.getInvoker()instanceof  LayoutPanel){
+		    LayoutPanel layoutPanel=(LayoutPanel) jp.getInvoker();
+		    executeJob(layoutPanel);
+		}
+    }
+    void executeJob(LayoutPanel layoutPanel){
+        try {
+        	Job job=layoutPanel.getJob();
+        	if(job!=null){
+        		job.run();
+        		job.show();
+        	}
+		} catch (Exception e) {
+		    logger.error(STR_ERROR, e);
+		}
+	    layoutPanel.revalidate();
+	    layoutPanel.repaint();
+    }
+
+}// Fin class ActionExecuteJob
+class ActionMasterDeploy extends AbstractLayoutAction {
+    private final ResourceBundle localizationResources =
+        ResourceBundle.getBundle("es.aeat.eett.infoRubik.layout.locale.LocalizationBundle");
+    private Logger logger = Logger.getLogger(ActionMasterDeploy.class);
+    private final String CAPTION=localizationResources.getString("actionMasterDespliege");
+    private final String DESC=localizationResources.getString("actionMasterDespliegeDes");
+    private final String STR_ERROR=localizationResources.getString("Error");
+
+	private final String[] optionNames = {
+			localizationResources.getString("OK"),
+			localizationResources.getString("Cancel")
+			};
+
+	private Icon icon=null;
+	
+	private MasterDeployPanel masterDeployPanel=null;
+	public ActionMasterDeploy() throws Exception {
+		putValue(NAME, CAPTION);
+		putValue(SHORT_DESCRIPTION, DESC);
+		masterDeployPanel=new MasterDeployPanel();
+	}
+
+	public void actionPerformed(ActionEvent e) {
+		PopupLayout  popup=(PopupLayout) ((Component)e.getSource()).getParent();
+		Component c=popup.getInvoker();
+		if(c!=null && c instanceof LayoutPanel){
+			LayoutPanel layoutPanel=(LayoutPanel) c;
+			if(layoutPanel==null) return;
+			LeafPanel leafPanel=(LeafPanel) getRootLayoutPanel(layoutPanel).getParent();
+			logger.info(CAPTION);
+			//masterDeployPanel=null;
+			LeafReport leafReport=(LeafReport) layoutPanel.getNLeaf().getLeafReport();
+			Report report=(Report) layoutPanel.getNLeaf().getReportRootNode().getUserObject();			
+			List listNamesJobs=leafReport.getJobsNames();
+			
+			executeJob(layoutPanel);
+			try {
+				masterDeployPanel.initNodes(listNamesJobs, report.getJobsDir());
+			}catch (Exception e1) {
+				logger.error( e1);
+				return;
+			}
+			Element eDeploy=getDeployElement(layoutPanel);
+			if(eDeploy!=null){
+	            try {
+	                masterDeployPanel.getDespliegue().loadRootElement(eDeploy);
+	            } catch (Exception e1) {
+				    logger.error(e1.getMessage(), e1);
+	            }
+			}
+			masterDeployPanel.updateTrees();
+			int res=JOptionPane.showOptionDialog(leafPanel , masterDeployPanel, CAPTION,
+					JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,
+					null, optionNames, optionNames[0]);
+			if(res==JOptionPane.OK_OPTION){
+				for(int i=0; i<listNamesJobs.size(); i++){
+					//System.out.println(list.get(i));
+					File fileJob=new File(report.getJobsDir(),(String) listNamesJobs.get(i) );
+					setDeployElement(fileJob, masterDeployPanel.getDespliegue().getRootElement());
+				}
+			}
+		}
+	}
+	private void setDeployElement(File fileJob, Element eDeploy){
+		try {
+			Document document=new JDomUtil().JDomChk(fileJob, Job.KEY_JOB);
+			Element eRoot=document.getRootElement();
+			Element eDeploy_old=eRoot.getChild(Job.KEY_DEPLOY);
+			if(eDeploy_old!=null){
+				eRoot.removeContent(eDeploy_old);
+			}
+			eRoot.addContent(eDeploy);
+			new JDomUtil().saveDocument(document, fileJob);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+    void executeJob(LayoutPanel layoutPanel){
+        try {
+        	Job job=layoutPanel.getJob();
+        	if(job!=null){
+        		job.run();
+        	}
+		} catch (Exception e) {
+		    logger.error(e);
+		}
+	    layoutPanel.revalidate();
+	    layoutPanel.repaint();
+    }
+    private Element getDeployElement(LayoutPanel layoutPanel){
+    	Element eDeploy=null;
+    	Job job=layoutPanel.getJob();
+    	if(job!=null){
+    		Element eRoot=job.getRootElement();
+    		if(eRoot!=null)
+    			eDeploy=eRoot.getChild(Job.KEY_DEPLOY);
+    	}
+    	return eDeploy;
+    }
+
+}// Fin class ActionMasterDeploy
+
+///////////////////////////////////////////////////////
+class ActionDeploy extends AbstractLayoutAction {
+    private final ResourceBundle localizationResources =
+        ResourceBundle.getBundle("es.aeat.eett.infoRubik.layout.locale.LocalizationBundle");
+    static private Logger logger = Logger.getLogger(ActionDeploy.class);
+
+    private final String CAPTION=localizationResources.getString("actionDespliege");
+    private final String DESC=localizationResources.getString("actionDespliegeDes");
+    private final String STR_ERROR=localizationResources.getString("Error");
+
+	private final String[] optionNames = {
+			localizationResources.getString("OK"),
+			localizationResources.getString("Cancel")
+			};
+
+	private Icon icon=null;
+	public ActionDeploy() {
+		super();
+		putValue(NAME, CAPTION);
+		putValue(SHORT_DESCRIPTION, DESC);
+	}
+
+	public void actionPerformed(ActionEvent e) {
+		PopupLayout  popup=(PopupLayout) ((Component)e.getSource()).getParent();
+		Component c=popup.getInvoker();
+		if(c!=null && c instanceof LayoutPanel){
+			LayoutPanel layoutPanel=(LayoutPanel) c;
+			executeJob(layoutPanel);
+			Element eDeploy=getDeployElement(layoutPanel);
+			if(eDeploy!=null){
+		        try {
+		            DeployPanel depoyPanel=new DeployPanel(eDeploy);
+		    		int res=JOptionPane.showOptionDialog(layoutPanel.getRootPane() , depoyPanel
+		    		        , CAPTION, 	JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,
+		    				null, optionNames, optionNames[0]);
+		    		if(res==JOptionPane.OK_OPTION){
+		    		    eDeploy=depoyPanel.getRootElement();
+		    		    setDeployElement(layoutPanel.getJob().getFileJob(), eDeploy);
+		    		}
+		        } catch (Exception e1) {
+				    logger.error(e1);
+		        }
+			}
+		}
+	}
+	private void setDeployElement(File fileJob, Element eDeploy) throws Exception{
+			Document document=new JDomUtil().JDomChk(fileJob, Job.KEY_JOB);
+			Element eRoot=document.getRootElement();
+			Element eDeploy_old=eRoot.getChild(Job.KEY_DEPLOY);
+			if(eDeploy_old!=null){
+				eRoot.removeContent(eDeploy_old);
+			}
+			eRoot.addContent(eDeploy);
+			new JDomUtil().saveDocument(document, fileJob);
+	}
+    void executeJob(LayoutPanel layoutPanel){
+        try {
+        	Job job=layoutPanel.getJob();
+        	if(job!=null){
+        		job.run();
+        	}
+		} catch (Exception e) {
+		    logger.error(e.getMessage(), e);
+		}
+	    layoutPanel.revalidate();
+	    layoutPanel.repaint();
+    }
+    private Element getDeployElement(LayoutPanel layoutPanel){
+    	Element eDeploy=null;
+    	Job job=layoutPanel.getJob();
+    	if(job!=null){
+    		Element eRoot=job.getRootElement();
+    		if(eRoot!=null)
+    			eDeploy=eRoot.getChild(Job.KEY_DEPLOY);
+    	}
+    	return eDeploy;
+    }
+
+}// Fin class ActionDeploy
+
+@
+
+
+1.1
+log
+@*** empty log message ***
+@
+text
+@@
+

@@ -1,0 +1,76 @@
+head	1.2;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2008.05.17.15.43.54;	author fsaz;	state dead;
+branches;
+next	1.1;
+
+1.1
+date	2005.11.28.15.28.59;	author fsaz;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@borrando viejos
+@
+text
+@/*
+ * Created on 19-abr-2005
+ *
+ * ScrollTablePrint.java
+ *
+ */
+package es.aeat.eett.rubik.basicStat;
+
+import java.awt.Graphics;
+import java.awt.print.PageFormat;
+import java.awt.print.Printable;
+import java.awt.print.PrinterException;
+
+import javax.swing.JScrollPane;
+
+import es.aeat.eett.rubik.core.util.JTableSimplePrint;
+
+
+/**
+ * @@author f00992
+ *
+ */
+public class ScrollTablePrint extends JScrollPane  implements Printable{
+	JTableSimplePrint table=null;
+
+
+	ScrollTablePrint(JTableSimplePrint table) {
+		super(table);
+		this.table = table;
+	}
+
+
+	/**
+	 * @@see java.awt.print.Printable#print(java.awt.Graphics, java.awt.print.PageFormat, int)
+	 */
+	public int print(Graphics graphics, PageFormat pageFormat, int pageIndex) throws PrinterException {
+		return table.print(graphics, pageFormat, pageIndex);
+	}
+}
+@
+
+
+1.1
+log
+@*** empty log message ***
+@
+text
+@@
+

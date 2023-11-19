@@ -1,0 +1,134 @@
+head	1.2;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2008.05.17.15.40.42;	author fsaz;	state dead;
+branches;
+next	1.1;
+
+1.1
+date	2005.11.28.14.02.37;	author fsaz;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@borrando viejos
+@
+text
+@/*
+ * Created on 14-jul-2005
+ *
+ * LogPane.java
+ */
+package es.aeat.eett.infoRubik;
+
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+
+import org.java.plugin.PluginManager;
+
+import es.aeat.eett.workbench.core.AppenderEvent;
+import es.aeat.eett.workbench.core.AppenderListener;
+import es.aeat.eett.workbench.core.CorePlugin;
+
+
+
+/**
+ * @@author f00992
+ *
+ */
+public class LogPane extends JScrollPane implements AppenderListener{
+	private JTextArea textArea=null;
+	private String[] msgs= new String[20];
+	private boolean autoUpdate=true;
+
+	public LogPane() throws Exception{
+		super(new JTextArea());
+		textArea=(JTextArea) getViewport().getView();
+		textArea.setEditable(false);
+        PluginManager pm = PluginManager.lookup(LogPane.class);
+        CorePlugin corePlugin = ((CorePlugin) pm
+        		.getPlugin(CorePlugin.PLUGIN_ID));
+        corePlugin.getAppender().addAppenderListener(this);
+
+	}
+	/**
+	 * @@param autoUpdate The autoUpdate to set.
+	 */
+	public void setAutoUpdate(boolean autoUpdate) {
+		if(this.autoUpdate!=autoUpdate){
+			this.autoUpdate = autoUpdate;
+			revalidate();
+			repaint();			
+		}
+	}
+
+	/**
+	 * @@return Returns the autoUpdate.
+	 */
+	boolean isAutoUpdate() {
+		return autoUpdate;
+	}
+	/////////// Implementacion de RubikAppenderListener ////////////////////
+	/* (non-Javadoc)
+	 * @@see es.aeat.eett.workbench.core.AppenderListener#mensajeApprender(es.aeat.eett.workbench.core.AppenderEvent)
+	 */
+	public void mensajeApprender(AppenderEvent appenderEvent) {
+		if(autoUpdate && appenderEvent!=null){
+			if(appenderEvent.getLongMensage().toString().length()>0){
+				updateMsgs(appenderEvent.getLongMensage());
+				textArea.setText(getText(msgs));
+				revalidate();
+				repaint();
+				//paintImmediately(getBounds());
+			}
+		}
+	}
+	
+	private void updateMsgs(String longMensage){
+		int index=0;
+		for(int i=0; i<msgs.length; i++){
+			index=i;
+			if(msgs[i]==null){
+				break;
+			}
+		}
+		if(index==msgs.length-1){
+			for(int i=1; i<msgs.length; i++){
+				msgs[i-1]=msgs[i];
+			}
+		}
+		msgs[index]=longMensage;
+
+	}
+	private String getText(String[] strings){
+		StringBuffer sb= new StringBuffer();
+		for(int i=0; i<msgs.length; i++){
+			if(msgs[i]!=null){
+				sb.append(msgs[i]+"\n");
+			}
+		}
+		return sb.toString();
+	}
+
+}
+@
+
+
+1.1
+log
+@*** empty log message ***
+@
+text
+@@
+

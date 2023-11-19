@@ -1,0 +1,134 @@
+head	1.3;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.3
+date	2003.10.31.12.47.57;	author jiri_schmid;	state dead;
+branches;
+next	1.2;
+
+1.2
+date	2003.10.16.14.08.53;	author jiri_schmid;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2003.09.18.14.10.50;	author jiri_schmid;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.3
+log
+@mod perl rocks!
+@
+text
+@#-----------------------------------------------------
+#  Filter Editation
+#-----------------------------------------------------
+# $Id: filter_def_ed.pl,v 1.2 2003/10/16 14:08:53 jiri_schmid Exp $
+
+use strict;
+require "local/generate.pl";
+
+#-----------------------------------------------------
+# print_form is called from edit.cgi
+
+sub generateContent {
+my($variables, $lang, $obj) = (shift, shift, shift);
+my $saved = $$variables->{saved} if exists $$variables->{saved};
+print '<br /><table class="page_skeleton"><tr class="page_skeleton"><td class="page_skeleton">';
+
+&generateFilterEdit($lang,$$variables->{skinPath},$$variables->{imgType},$obj);
+
+print <<END ;
+<tr class="page_skeleton">
+<td class="page_skeleton">
+	<table class="neutral_100">
+	<tr><td align="center">
+		<table class="buttons" cellpading="0" cellspacing="0">
+		<tr>	<td class="buttons"><input type="submit" name="Action" value="$$lang->{'Save'}" onclick="return filter_checker()"/></td>
+			<td class="buttons">	<input type="submit" name="Action" value="$$lang->{'Save As'}" onclick="return readName();"/>
+						<input type="hidden" name="saveAsName" id="saveAsName" value="" /></td>
+			<td class="buttons"><input type="button" name="reset" value="$$lang->{'Reset'}" onclick="subst_ID_expr('object_filter')"/></td>
+		</td></tr>
+		</table>
+	</td></tr>
+	</table>
+</td></tr></table>
+<script type="text/javascript">
+	var msg="$$lang->{'New Save Part1'}$$lang->{'New Filter Save'}$$lang->{'New Save Part2'}";
+	subst_ID_expr('object_filter');
+	var saveAsMsg = "$$lang->{SaveAsMsg}$$lang->{'New Filter'}";
+	reloadTree($saved);
+</script>
+END
+}
+
+#---------------------------------------------------
+
+sub set_next_param {
+	my $o=shift;
+	# !!! parametry ColObj, ... budou nahrazeny parametry nesoucimi ID objektu nastavovanym JavaScripten onUnload
+	delete $o->{expr};
+	$o->{expr} = param('expr_id');
+}
+
+1
+@
+
+
+1.2
+log
+@mod-perl implementation stage 1, rebuilding global vars in .pl to global pointers
+@
+text
+@d4 1
+a4 1
+# $Id: filter_def_ed.pl,v 1.1 2003/09/18 14:10:50 jiri_schmid Exp $
+@
+
+
+1.1
+log
+@tabs imlemented almost everywhere
+@
+text
+@d4 1
+a4 1
+# $Id: filter_ed.pl,v 1.49 2003/09/01 12:40:08 jiri_schmid Exp $
+d7 1
+a7 7
+use CGI qw( :standard );
+use CGI::Pretty;
+
+require "const.def";
+require "local_lib.pl";
+
+use vars qw($ID $Obj $ObjT $descr_w $descr_r $lang $name_w $use_lang $saved @@Languages $Languages $DefaultLanguage $all_params $skin $skinPath $imgType $localTab);
+d13 2
+d17 1
+a17 1
+&generateFilterEdit();
+d25 2
+a26 2
+		<tr>	<td class="buttons"><input type="submit" name="Action" value="$lang->{'Save'}" onclick="return filter_checker()"/></td>
+			<td class="buttons">	<input type="submit" name="Action" value="$lang->{'Save As'}" onclick="return readName();"/>
+d28 1
+a28 1
+			<td class="buttons"><input type="button" name="reset" value="$lang->{'Reset'}" onclick="subst_ID_expr('object_filter')"/></td>
+d35 1
+a35 1
+	var msg="$lang->{'New Save Part1'}$lang->{'New Filter Save'}$lang->{'New Save Part2'}";
+d37 1
+a37 1
+	var saveAsMsg = "$lang->{SaveAsMsg}$lang->{'New Filter'}";
+@
+

@@ -1,0 +1,38 @@
+head	1.2;
+access;
+symbols;
+locks; strict;
+comment	@:: @;
+
+
+1.2
+date	2008.05.17.15.43.49;	author fsaz;	state dead;
+branches;
+next	1.1;
+
+1.1
+date	2005.11.28.14.02.36;	author fsaz;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@borrando viejos
+@
+text
+@START javaw -Xms100m -Xmx500m -jar JRubik.jar
+REM pause@
+
+
+1.1
+log
+@*** empty log message ***
+@
+text
+@@
+

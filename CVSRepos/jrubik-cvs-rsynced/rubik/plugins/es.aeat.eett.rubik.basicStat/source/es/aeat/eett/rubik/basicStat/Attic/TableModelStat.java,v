@@ -1,0 +1,230 @@
+head	1.2;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2008.05.17.15.43.54;	author fsaz;	state dead;
+branches;
+next	1.1;
+
+1.1
+date	2005.11.28.15.28.59;	author fsaz;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@borrando viejos
+@
+text
+@/*
+ * Created on 01-dic-2004
+ *
+ * TableModelEstadisticas.java
+ *
+ */
+
+package es.aeat.eett.rubik.basicStat;
+
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+import java.util.ResourceBundle;
+
+import javax.swing.table.AbstractTableModel;
+
+
+import com.tonbeller.jpivot.olap.model.Cell;
+import com.tonbeller.jpivot.olap.model.Member;
+import com.tonbeller.jpivot.olap.model.Position;
+import com.tonbeller.jpivot.olap.model.Result;
+
+import es.aeat.eett.rubik.basicStat.operation.CoeficienteDeVariacion;
+import es.aeat.eett.rubik.basicStat.operation.DesviacionMedia;
+import es.aeat.eett.rubik.basicStat.operation.DesviacionTipica;
+import es.aeat.eett.rubik.basicStat.operation.Media;
+import es.aeat.eett.rubik.basicStat.operation.Suma;
+import es.aeat.eett.rubik.basicStat.operation.Varianza;
+import es.aeat.eett.rubik.core.util.FortmatUtil;
+
+/**
+ * <p>
+ * en: Statistical table data model. 
+ * </p>
+ * <p>
+ * es: Modelo de datos para la tabla de estadisticas.
+ * </p>
+ * @@author f00992
+ */
+public class TableModelStat extends AbstractTableModel {
+    private static final ResourceBundle localizationResources =
+        ResourceBundle.getBundle("locale.LocalizationBundle");
+
+    private static final String NUM_FILAS=localizationResources.getString("NumFilas");
+    private Locale locale;
+    private Result result=null;
+    private String[] nColumns=null;
+    private String[]  rowZero;
+    private List[] listCols=null;
+
+    TableModelStat(Result result, Locale locale) {
+        this.result = result;
+        this.locale=locale;
+        iniRowZero();
+        update();
+    }
+    /**
+     * @@see javax.swing.table.TableModel#getRowCount()
+     */
+    public int getRowCount() {
+        return  rowZero.length;
+    }
+    private void iniRowZero(){
+        rowZero= new String[7];
+        rowZero[0]=NUM_FILAS ;//"Numero de filas";
+        rowZero[1]=Suma.getName();
+        rowZero[2]=Media.getName();
+        rowZero[3]=DesviacionMedia.getName();
+        rowZero[4]=Varianza.getName();
+        rowZero[5]=DesviacionTipica.getName();
+        rowZero[6]=CoeficienteDeVariacion.getName();
+    }
+    public String getColumnName(int columnIndex) {
+      return nColumns[columnIndex];
+    }
+    /**
+     * @@see javax.swing.table.TableModel#getColumnCount()
+     */
+    public int getColumnCount() {
+        return  nColumns.length;
+    }
+
+    /**
+     * @@see javax.swing.table.TableModel#getValueAt(int, int)
+     */
+    public Object getValueAt(int rowIndex, int columnIndex) {
+        if(columnIndex==0){
+            return rowZero[rowIndex];
+        }else{
+            switch(rowIndex){
+            case 0:
+                return Integer.toString(listCols[columnIndex-1].size());
+            case 1:
+                return new FortmatUtil().formatFloat(Suma.result(listCols[columnIndex-1]), 1, 2, locale);
+            case 2:
+                return new FortmatUtil().formatFloat(Media.result(listCols[columnIndex-1]), 1, 2, locale);
+            case 3:
+                return new FortmatUtil().formatFloat(DesviacionMedia.result(listCols[columnIndex-1]), 1, 2, locale);
+            case 4:
+                return new FortmatUtil().formatFloat(Varianza.result(listCols[columnIndex-1]), 1, 2, locale);
+            case 5:
+                return new FortmatUtil().formatFloat(DesviacionTipica.result(listCols[columnIndex-1]), 1, 2, locale);
+            case 6:
+                return new FortmatUtil().formatFloat(CoeficienteDeVariacion.result(listCols[columnIndex-1]), 1, 2, locale);
+            default:
+                return null;
+            }
+        }
+    }
+    void update(){
+        updateColumnsNames();
+        uptaListCols();
+        fireTableStructureChanged();
+    }
+    void setResult( Result result){
+    	this.result=result;
+    	update();
+    }
+    void updateColumnsNames(){
+    	String s="                   ";
+
+    	if(result!=null && result.getCells().size()>0 && result.getAxes().length==2){
+    		List columns=result.getAxes()[0].getPositions();
+        	int size_c=columns.size();
+        	int last_col=((Position)columns.get(0)).getMembers().length;
+        	nColumns= new String[size_c+1];
+        	nColumns[0]=s;
+			for(int i=0; i<size_c; i++){
+				Member member=((Position)columns.get(i)).getMembers()[last_col-1];
+				nColumns[i+1]=member.getLabel();
+			}
+    	}else{//Result is null
+        	nColumns= new String[1];
+        	nColumns[0]=s;
+    	}
+    }
+
+    void uptaListCols(){
+		uptaListColsReslt();
+    }
+    void uptaListColsReslt(){
+        Float cero= new Float(0);
+        if(result!=null && result.getCells().size()>0
+        		&& result.getAxes().length>1){
+			int columns = result.getAxes()[0].getPositions().size();
+			int rows;
+			if(result.getAxes().length>1){
+				rows=result.getAxes()[1].getPositions().size();
+			}else{
+				rows=1;
+			}
+
+			clearList();
+	        listCols= new List[nColumns.length-1];
+	        for(int i=0; i<listCols.length; i++){
+	            listCols[i]=new ArrayList(rows);
+	        }
+	        List celdas=result.getCells();
+
+			if (columns==0 && rows==0)  //La consulta no produce resultados
+				return;
+			for (int j=0; j<rows; j++){//Recorriendo filas
+				for (int i = 0; i < columns; i++) {//Recorriendo columnas
+					int pos= columns*j+i;
+					Cell cell=(Cell) celdas.get(pos);
+	                if(!cell.isNull()){
+	                    if(cell.getValue()!=null && (cell.getValue()instanceof Number))
+	                        listCols[i].add(cell.getValue());
+	                }else{
+	                    listCols[i].add( cero);
+	                }
+				}// Fin columnas
+			}// Fin Filas
+        }
+    }
+
+    private void clearList(){
+        if(listCols !=null){
+            for(int i=0; i<listCols.length; i++){
+                listCols[i].clear();
+            }
+        }
+        listCols=null;
+    }
+    void clear(){
+    	clearList();
+    	String [] tmp=nColumns;
+    	nColumns= new String[1];
+    	nColumns[0]=tmp[0];
+    	fireTableStructureChanged();
+    }
+}
+@
+
+
+1.1
+log
+@*** empty log message ***
+@
+text
+@@
+

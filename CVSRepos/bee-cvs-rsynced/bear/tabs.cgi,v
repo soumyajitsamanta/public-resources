@@ -1,0 +1,2558 @@
+head	1.80;
+access;
+symbols
+	start:1.1.1.1 vendor:1.1.1;
+locks; strict;
+comment	@# @;
+
+
+1.80
+date	2004.04.14.12.21.26;	author jiri_schmid;	state Exp;
+branches;
+next	1.79;
+
+1.79
+date	2004.04.13.12.42.23;	author michald;	state Exp;
+branches;
+next	1.78;
+
+1.78
+date	2004.04.09.07.04.07;	author michald;	state Exp;
+branches;
+next	1.77;
+
+1.77
+date	2004.02.24.10.21.34;	author jiri_schmid;	state Exp;
+branches;
+next	1.76;
+
+1.76
+date	2004.02.13.17.09.33;	author jiri_schmid;	state Exp;
+branches;
+next	1.75;
+
+1.75
+date	2004.02.12.16.24.21;	author jiri_schmid;	state Exp;
+branches;
+next	1.74;
+
+1.74
+date	2004.02.02.09.13.55;	author michald;	state Exp;
+branches;
+next	1.73;
+
+1.73
+date	2004.01.29.13.20.34;	author jiri_schmid;	state Exp;
+branches;
+next	1.72;
+
+1.72
+date	2004.01.20.13.06.01;	author jiri_schmid;	state Exp;
+branches;
+next	1.71;
+
+1.71
+date	2004.01.15.03.23.16;	author michald;	state Exp;
+branches;
+next	1.70;
+
+1.70
+date	2003.12.12.12.12.06;	author jiri_schmid;	state Exp;
+branches;
+next	1.69;
+
+1.69
+date	2003.12.04.15.56.26;	author jiri_schmid;	state Exp;
+branches;
+next	1.68;
+
+1.68
+date	2003.12.04.12.15.14;	author jiri_schmid;	state Exp;
+branches;
+next	1.67;
+
+1.67
+date	2003.11.20.15.47.29;	author jiri_schmid;	state Exp;
+branches;
+next	1.66;
+
+1.66
+date	2003.11.20.09.42.45;	author michald;	state Exp;
+branches;
+next	1.65;
+
+1.65
+date	2003.11.12.12.44.21;	author jiri_schmid;	state Exp;
+branches;
+next	1.64;
+
+1.64
+date	2003.11.07.13.40.44;	author jiri_schmid;	state Exp;
+branches;
+next	1.63;
+
+1.63
+date	2003.11.04.15.18.54;	author jiri_schmid;	state Exp;
+branches;
+next	1.62;
+
+1.62
+date	2003.10.31.12.47.54;	author jiri_schmid;	state Exp;
+branches;
+next	1.61;
+
+1.61
+date	2003.10.09.13.52.51;	author jiri_schmid;	state Exp;
+branches;
+next	1.60;
+
+1.60
+date	2003.09.30.21.05.38;	author michald;	state Exp;
+branches;
+next	1.59;
+
+1.59
+date	2003.09.30.19.39.17;	author michald;	state Exp;
+branches;
+next	1.58;
+
+1.58
+date	2003.09.29.05.43.13;	author michald;	state Exp;
+branches;
+next	1.57;
+
+1.57
+date	2003.09.24.09.43.24;	author jiri_schmid;	state Exp;
+branches;
+next	1.56;
+
+1.56
+date	2003.09.01.15.03.39;	author jiri_schmid;	state Exp;
+branches;
+next	1.55;
+
+1.55
+date	2003.09.01.12.40.05;	author jiri_schmid;	state Exp;
+branches;
+next	1.54;
+
+1.54
+date	2003.08.28.09.26.11;	author jiri_schmid;	state Exp;
+branches;
+next	1.53;
+
+1.53
+date	2003.08.26.15.35.41;	author jiri_schmid;	state Exp;
+branches;
+next	1.52;
+
+1.52
+date	2003.08.25.15.09.09;	author jiri_schmid;	state Exp;
+branches;
+next	1.51;
+
+1.51
+date	2003.08.20.14.23.41;	author jiri_schmid;	state Exp;
+branches;
+next	1.50;
+
+1.50
+date	2003.08.18.05.50.52;	author michald;	state Exp;
+branches;
+next	1.49;
+
+1.49
+date	2003.08.14.16.26.54;	author jiri_schmid;	state Exp;
+branches;
+next	1.48;
+
+1.48
+date	2003.07.08.07.12.02;	author jiri_schmid;	state Exp;
+branches;
+next	1.47;
+
+1.47
+date	2003.07.07.07.10.39;	author michald;	state Exp;
+branches;
+next	1.46;
+
+1.46
+date	2003.07.04.06.19.13;	author michald;	state Exp;
+branches;
+next	1.45;
+
+1.45
+date	2003.06.21.16.13.05;	author michald;	state Exp;
+branches;
+next	1.44;
+
+1.44
+date	2003.06.20.08.42.29;	author michald;	state Exp;
+branches;
+next	1.43;
+
+1.43
+date	2003.06.03.08.31.09;	author jiri_schmid;	state Exp;
+branches;
+next	1.42;
+
+1.42
+date	2003.06.02.07.34.59;	author jiri_schmid;	state Exp;
+branches;
+next	1.41;
+
+1.41
+date	2003.05.29.09.52.44;	author jiri_schmid;	state Exp;
+branches;
+next	1.40;
+
+1.40
+date	2003.05.28.15.44.12;	author jiri_schmid;	state Exp;
+branches;
+next	1.39;
+
+1.39
+date	2003.05.28.15.18.32;	author jiri_schmid;	state Exp;
+branches;
+next	1.38;
+
+1.38
+date	2003.05.28.07.34.14;	author jiri_schmid;	state Exp;
+branches;
+next	1.37;
+
+1.37
+date	2003.05.23.06.40.44;	author michald;	state Exp;
+branches;
+next	1.36;
+
+1.36
+date	2003.05.21.11.39.43;	author jiri_schmid;	state Exp;
+branches;
+next	1.35;
+
+1.35
+date	2003.05.15.15.28.17;	author jiri_schmid;	state Exp;
+branches;
+next	1.34;
+
+1.34
+date	2003.05.15.14.54.51;	author jiri_schmid;	state Exp;
+branches;
+next	1.33;
+
+1.33
+date	2003.05.15.13.47.32;	author jiri_schmid;	state Exp;
+branches;
+next	1.32;
+
+1.32
+date	2003.05.06.15.07.06;	author jiri_schmid;	state Exp;
+branches;
+next	1.31;
+
+1.31
+date	2003.05.06.09.20.57;	author jiri_schmid;	state Exp;
+branches;
+next	1.30;
+
+1.30
+date	2003.05.05.06.41.43;	author michald;	state Exp;
+branches;
+next	1.29;
+
+1.29
+date	2003.05.01.15.40.15;	author jiri_schmid;	state Exp;
+branches;
+next	1.28;
+
+1.28
+date	2003.05.01.12.17.13;	author michald;	state Exp;
+branches;
+next	1.27;
+
+1.27
+date	2003.05.01.09.15.17;	author jiri_schmid;	state Exp;
+branches;
+next	1.26;
+
+1.26
+date	2003.04.30.14.45.41;	author jiri_schmid;	state Exp;
+branches;
+next	1.25;
+
+1.25
+date	2003.04.30.09.53.35;	author jiri_schmid;	state Exp;
+branches;
+next	1.24;
+
+1.24
+date	2003.04.23.14.38.57;	author jiri_schmid;	state Exp;
+branches;
+next	1.23;
+
+1.23
+date	2003.04.03.09.52.37;	author jiri_schmid;	state Exp;
+branches;
+next	1.22;
+
+1.22
+date	2003.03.25.15.37.37;	author jiri_schmid;	state Exp;
+branches;
+next	1.21;
+
+1.21
+date	2003.03.24.12.17.43;	author jiri_schmid;	state Exp;
+branches;
+next	1.20;
+
+1.20
+date	2003.03.20.16.39.30;	author michald;	state Exp;
+branches;
+next	1.19;
+
+1.19
+date	2003.03.12.16.32.45;	author jiri_schmid;	state Exp;
+branches;
+next	1.18;
+
+1.18
+date	2003.03.11.16.17.10;	author jiri_schmid;	state Exp;
+branches;
+next	1.17;
+
+1.17
+date	2003.03.11.11.05.31;	author jiri_schmid;	state Exp;
+branches;
+next	1.16;
+
+1.16
+date	2003.03.10.16.14.00;	author jiri_schmid;	state Exp;
+branches;
+next	1.15;
+
+1.15
+date	2003.03.10.10.28.37;	author jiri_schmid;	state Exp;
+branches;
+next	1.14;
+
+1.14
+date	2003.03.07.16.18.37;	author jiri_schmid;	state Exp;
+branches;
+next	1.13;
+
+1.13
+date	2003.03.06.15.52.15;	author jiri_schmid;	state Exp;
+branches;
+next	1.12;
+
+1.12
+date	2003.03.06.14.48.59;	author jiri_schmid;	state Exp;
+branches;
+next	1.11;
+
+1.11
+date	2003.03.03.13.23.26;	author spanhel;	state Exp;
+branches;
+next	1.10;
+
+1.10
+date	2003.02.28.10.43.31;	author jiri_schmid;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	2003.02.25.09.18.01;	author jiri_schmid;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	2003.02.24.15.31.09;	author jiri_schmid;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	2003.02.17.09.58.18;	author jiri_schmid;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	2003.01.20.18.23.45;	author spanhel;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	2003.01.16.17.20.19;	author spanhel;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2002.11.08.07.15.01;	author michald;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2002.10.05.17.32.02;	author michald;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2002.09.29.09.08.21;	author michald;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2002.09.24.01.56.41;	author michald;	state Exp;
+branches
+	1.1.1.1;
+next	;
+
+1.1.1.1
+date	2002.09.24.01.56.41;	author michald;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.80
+log
+@added help tab
+@
+text
+@#!/usr/bin/perl
+#-----------------------------------------------------
+#  Bear Tabs
+#-----------------------------------------------------
+# $Id: tabs.cgi,v 1.79 2004/04/13 12:42:23 michald Exp $
+
+use strict;
+my $run_mod_perl = defined(&Apache::RequestRec::BINMODE);	# are we running under mod_perl?
+if ($run_mod_perl) { Apache::RequestRec::BINMODE(':utf8') } else { binmode STDOUT,':utf8' }
+
+use CGI qw( :standard );
+use CGI::Pretty;
+use Encode;	#solves UTF8 coding/encoding issue in regular expresions
+require "const/Const.pm";
+require "const/Tabs.pm";
+
+# ---- init SOAP ---------
+#-------------------------
+our $load = 1;
+if ($load) {	# ensure require will be performed only once in case of mod_perl execution
+	eval "use SOAP::Lite +autodispatch => 
+		uri => 'Bear', 
+		proxy => ['http://$Const::bearHost:$Const::bearPort/', 
+		options => {compress_threshold => $Const::compressThreshold}]; 
+		1"
+	or ( &ErrorDie("ERROR in eval of \"use SOAP::Lite ...\".") );
+	undef $load;
+}
+my $q = new CGI;
+
+# --- test SOAP connection ---
+#-----------------------------
+my $serverVerbName="SOAP Server http://$Const::bearHost:$Const::bearPort/";
+if (! eval "SOAP::Lite->self->fault") {
+	ErrorDie('ERROR: '.$serverVerbName.' not responding<br><form><input type="submit" name="Refresh" value="Refresh" /></form>');
+}
+#*SOAP::Serializer::as_string = \&SOAP::Serializer::as_base64;	#reducing number of XML::Parser char() callbaks  for every single portion of processed stream (e.g. \n)
+
+# --- determine user and his preferences ---
+#-------------------------------------------
+my $wb = ($q->user_agent()=~/MSIE/) ? 'msie' : 'mozilla';
+my $User = $q->remote_user() ? $q->remote_user() : 'anonymous';
+my $use_lang = ($q->param('Lang')) ? $q->param('Lang') : $Const::defaultLanguage;
+my $use_enc = $Const::languages->{$use_lang}{'enc'};
+
+# --- load message dictionary ---
+#---------------------------------
+require "lang/$use_lang.utf";
+
+# --- determine skins ---
+#------------------------
+my $Skin = $q->param('Skin');
+my $skin = ($Skin) ? "skins/$Skin/" : "skins/$wb/default/";
+
+my $TabAct = $q->param('TabAct');
+my $openIn = $q->param('Open');
+my $all_params = "Lang=".$q->param('Lang')."&Cook=".$q->param('Cook')."&Open=$openIn&Proj=".$q->param('Proj')."&Width=".$q->param('Width')."&Skin=$Skin";
+#my png = 'png';#getImageType("$Const::myPath${skin}img/");
+
+# --- print out html form ---
+#----------------------------
+print $q->header(-charset=>$use_enc);
+my $onload;
+if ($TabAct eq 'L') {
+	$onload = "doLMWork('".getLMImages($q->param('Proj'), $use_lang, 1)."')"
+}
+print $q->start_html(
+	-title=>"Tabs",
+	-lang=>$Const::languages->{$use_lang}{lang},	#return language specification in format: language-country (it differs from param Lang)
+	-encoding=>$use_enc,
+	-style=>{-src=>"${skin}base.css"},
+	-head=>meta({-http_equiv => 'Content-Type', -content => "text/html; charset=$use_enc"}),
+	-script=>{-language=>'JAVASCRIPT', -src=>"js/tabs.js"},
+	-onload=>$onload
+);
+
+print "<script type='text/javascript'>\nvar use_param='$all_params';\nvar openIn='$openIn';\nvar tab='$TabAct';</script>\n";
+print "<div class='tabs'><table cellspacing='0' class='tabs'><tr class='tabs' id='top'><td></td></tr><tr class='tabs'>\n";
+&addTabs($q, $use_lang, $skin, $TabAct);
+print "</tr></table></div>\n";
+print "<table class='tabs_icon_bar', cellspacing='0'><tr class='tabs'><td style='background-color:#$Tabs::Tabs->{$TabAct}->{bg}'>\n";
+&addTabIcons($q,$skin, $TabAct,$use_lang);
+print "</td><td style='text-align:right; background-color:#$Tabs::Tabs->{$TabAct}->{bg}' class='instrat'>$Const::tabsLogo</td></tr>";
+print "<tr class='tabs' id='bottom'><td colspan='2' style='background-color:#$Tabs::Tabs->{$TabAct}->{bgg}'></td></tr></table>\n";
+print "<script type='text/javascript'>var remove='$Const::lang->{$use_lang}->{Result_remove} '; var msg='$Const::lang->{$use_lang}->{Continue}';</script>\n";
+
+print $q->end_html;
+
+#----------------------------------------------------
+
+sub addTabs {
+	my ($q, $use_lang, $skin, $TabAct) = @@_;
+	my @@hlpTabs = @@Tabs::Tabs;
+	my $hide = SOAP->GetRoleTabs($q->remote_user(),$q->param('Proj')).$q->param('View');
+	foreach (@@hlpTabs) {
+		next if $hide =~ /$_/ || !defined $hide;
+		my $ids = ($_ eq $TabAct) ? $Tabs::Tabs->{$_}->{bg} : 'AAAAAA';
+		if ($_ eq 'C' && $q->param('Open') ne '_collect') {
+			&addReports($q, $skin, $TabAct);
+			next;
+		}
+		print "<td style='background-color:#$ids' class='tabs_tab_corner'><img src='${skin}img/leftMenu.png'/></td><td class='tabs_tab' style='background-color:#$ids'><a href='index.cgi?TabAct=$_' target='_top' onclick='return checkObjectChange();'>$Const::lang->{$use_lang}->{ $Tabs::Tabs->{$_}->{name} }</a></td><td style='background-color:#$ids' class='tabs_tab_corner'><img src='${skin}img/rightMenu.png'/></td><td></td>";
+	}
+}
+#----------------------------------------------------
+sub addReports {
+	my ($q, $skin, $TabAct) = @@_;
+	my $project = $q->param('Proj'); #name of active project
+	my $ID = $q->param('item_id');
+	my $hlp = decode_utf8($q->param('Tabs')); #string must be decoded to octets to pass regular expresion /perl authors/
+	#it is not necessary to convert it back, perl does it automaticaly when binmode is utf8 for output
+	my @@results = split (/\|/,$hlp);
+	foreach (sort @@results) {
+		my ($name,$id) = split(/~/,$_); #/
+		$name = "$Const::lang->{$use_lang}->{'Tabs Removed Report'}".$id if ($name eq "");
+		my $shortName = $name;	#UTF8 handling issue in regular expresion -> decoding name to octets
+		my $cnt = $q->param('Length');
+		$shortName =~ s/(^.{$cnt})(.*$)/$1.../;
+		my $src = ($id eq $ID && $TabAct eq 'R') ? "${skin}img/dropActive.png" : "${skin}img/drop.png";
+		my $ids = ($id eq $ID && $TabAct eq 'R') ? $Tabs::Tabs->{R}->{bg} : 'AAAAAA';
+
+		print <<END;
+<td style="background-color:#$ids" class='tabs_tab_corner'><img src='${skin}img/leftMenu.png'/></td>
+<td class='tabs_tab' style="background-color:#$ids" >
+	<a href='result' onclick="return viewResult('$id')" title='$name' id='report$id'>$shortName</a>&nbsp;
+	<img class='arr' src="$src" alt='Del' title="$Const::lang->{$use_lang}->{Delete}" onclick="checkRemove('$name','$id','$TabAct')"/>
+</td>
+<td style="background-color:#$ids" class='tabs_tab_corner'><img src='${skin}img/rightMenu.png'/></td>
+<td></td>
+END
+	}
+}
+
+#----------------------------------------------------
+
+sub addTabIcons {
+	my ($q,$skin,$TabAct,$use_lang) = @@_;
+	if ($TabAct eq 'E') {	# toolbar for "Edit" tab
+		print "<table class='iconTab'><tr>\n";
+		foreach (@@Tabs::TabsEdit) {
+			if (/\|/) {
+				print "<td style='width:30px;'></td>\n";
+			} else {
+				print "<td class='iconItem' onclick=\"doWork('$Tabs::TabsDef->{$_}->{id}')\" title='$Const::lang->{$use_lang}{ $Tabs::TabsDef->{$_}->{name} }'><IMG SRC='${skin}img/$Tabs::TabsDef->{$_}->{img}.png' /></td>\n";
+			}
+		}
+		print "</tr></table>\n";
+	} elsif ($TabAct eq 'D') {	# toolbar for "Debug" tab
+		my $st='font-size: 10px;';
+		my $proj = $q->param('Proj');
+		print "<span style=\"color: rgb(127, 255, 255);\"><A HREF=\"debug.cgi?Proj=$proj\" target=\"body\" class='neg' style='$st'>Current Object</A>&nbsp;|&nbsp;";
+		foreach ('MD','MDi','MDk','MDl','MDg','MDgV','MDga','MDgaV','MDgo','MDgoV','Depend','RCache','SCache','Lookup','Links','Users','UsRL','UserPref','Lang') {
+			print "<A HREF='debug.cgi?Action=$_&Proj=$proj&Lang=$use_lang' target='body' class='neg' style='$st'>$_</A>&nbsp;|&nbsp;"
+		}
+		print "</span>";
+	} elsif ($TabAct eq 'A') {
+		print "<table class='iconTab'><tr>\n";
+		foreach (@@Tabs::TabsAdmin) {
+			if (/\|/) {
+				print "<td style='width:30px;'></td>\n";
+			} else {
+				print "<td class='iconItem' onclick=\"doAdminWork('$Tabs::TabsDef->{$_}->{id}')\" title='$Const::lang->{$use_lang}{ $Tabs::TabsDef->{$_}->{name} }'><IMG SRC='${skin}img/$Tabs::TabsDef->{$_}->{img}.png' /></td>\n";
+			}
+		}
+		print "</tr></table>\n";
+	} elsif ($TabAct eq 'L') {
+		print "$Const::lang->{$use_lang}{'Logical Model'}:&nbsp;";
+		foreach ( getLMImages($q->param('Proj'), $use_lang) ) {
+			if (/_(.*)\....$/) {
+				print "<a class='neg' onclick=\"doLMWork('$_')\">$1</a>&nbsp;|&nbsp;";
+			}
+		}
+#		print "</tr></table>\n";
+	}
+}
+
+#----------------------------------------------------
+
+sub getLMImages {
+	my ($project, $lang, $onlyMain) = (shift,shift,shift);
+	return if !($project);
+
+	my @@rtrn;
+	my $dir = "$Const::myPath$Const::ldmPath$project/Ldm/";
+	if (opendir IMG, $dir) {
+		@@rtrn = ( sort grep { /^$lang/ && -f "$dir/$_" } readdir IMG);
+		close IMG;
+	}
+	return $rtrn[0] if  $onlyMain;
+	return @@rtrn
+}
+
+#----------------------------------------------------
+
+sub getImageType {
+	my ($path) = shift;	# directory
+	my $rtrn;
+		if (opendir IMG, $path) {
+			foreach (readdir IMG) {
+				if ($_ =~ /^\./) {
+					next
+				} else {
+					($rtrn) = /\.(...)$/;
+					last if $rtrn;
+				}
+			}
+			close IMG;
+		}
+	return $rtrn
+}
+
+1
+@
+
+
+1.79
+log
+@foundation for N:M relations
+@
+text
+@d5 1
+a5 1
+# $Id: tabs.cgi,v 1.78 2004/04/09 07:04:07 michald Exp $
+a94 1
+	push @@hlpTabs,'C' if $q->param('Open') eq '_collect'; #add tab for collected/executed reports
+d98 4
+a103 7
+	&addReports($q, $skin, $TabAct) if $q->param('Open') ne '_collect';
+	#------- add tabs for derivate report in the end -------
+	my $Deriv = $Tabs::Derivated;
+	if ($Deriv) {
+		my $ids = ($Deriv eq $TabAct) ? $Tabs::Tabs->{$Deriv}->{bg} : 'AAAAAA';
+		print "<td style='background-color:#$ids' class='tabs_tab_corner'><img src='${skin}img/leftMenu.png'/></td><td class='tabs_tab' style='background-color:#$ids'><a href='index.cgi?TabAct=$Deriv' target='_top' onclick='return checkObjectChange();'>$Const::lang->{$use_lang}->{ $Tabs::Tabs->{$Deriv}->{name} }</a></td><td style='background-color:#$ids' class='tabs_tab_corner'><img src='${skin}img/rightMenu.png'/></td><td></td>";
+	}
+@
+
+
+1.78
+log
+@Directed Graph visualization for debugging purposes implemented - need to install GraphViz (look at README)
+@
+text
+@d5 1
+a5 1
+# $Id: tabs.cgi,v 1.77 2004/02/24 10:21:34 jiri_schmid Exp $
+d43 1
+a43 1
+my $use_lang = ($q->param('Lang')) ? $q->param('Lang') : "en";
+d153 1
+a153 1
+		my $st='color: rgb(0, 255, 255)}; font-size: 10px;';
+d155 1
+a155 1
+		print "<span style=\"color: rgb(127, 255, 255);\"><A HREF=\"debug.cgi?Proj=$proj\" target=\"body\" style='$st'>Current Object</A>&nbsp;|&nbsp;";
+d157 1
+a157 1
+			print "<A HREF='debug.cgi?Action=$_&Proj=$proj'  target='body' style='$st'>$_</A>&nbsp;|&nbsp;"
+d188 1
+a188 1
+	my $dir = "$Const::myPath$Const::bearMData$project/Ldm/";
+@
+
+
+1.77
+log
+@prefer access and rights logic changed
+@
+text
+@d5 1
+a5 1
+# $Id: tabs.cgi,v 1.76 2004/02/13 17:09:33 jiri_schmid Exp $
+d153 1
+a153 1
+		my $st='color: rgb(255, 255, 255)}; font-size: 11px;';
+d155 3
+a157 3
+		print "<span style=\"color: rgb(128, 255, 255); font-weight:bold;\"><A HREF=\"debug.cgi?Proj=$proj\" target=\"body\"><span style='$st'>Current Object</span></A>&nbsp;|&nbsp;";
+		foreach ('MD','MDi','MDk','MDl','MDg','MDga','MDgo','Depend','RCache','SCache','Lookup','Links','Users','UsRL','UserPref','Lang') {
+			print "<A HREF='debug.cgi?Action=$_&Proj=$proj'  target='body'><span style='$st'>$_</span></A>&nbsp;|&nbsp;"
+@
+
+
+1.76
+log
+@major tabs control implemented
+@
+text
+@d5 1
+a5 1
+# $Id: tabs.cgi,v 1.75 2004/02/12 16:24:21 jiri_schmid Exp $
+d57 1
+a57 1
+my $all_params = "Lang=".$q->param('Lang')."&Cook=".$q->param('Cook')."&Open=$openIn&Proj=".$q->param('Proj')."&sqlA=".$q->param('sqlA')."&Width=".$q->param('Width')."&Skin=$Skin";
+@
+
+
+1.75
+log
+@prototype of tabs hidding implemented
+@
+text
+@d5 1
+a5 1
+# $Id: tabs.cgi,v 1.74 2004/02/02 09:13:55 michald Exp $
+d94 1
+a94 1
+	my $hide = SOAP->getRoleTabs($q->remote_user(),$q->param('Proj')).$q->param('View') if $q->remote_user() !~ /root/; #temporarily !!! show all tabs for user with root in name
+d97 1
+a97 1
+		next if $hide =~ /$_/;
+d154 2
+a155 1
+		print "<span style=\"color: rgb(128, 255, 255); font-weight:bold;\"><A HREF=\"debug.cgi\" target=\"body\"><span style='$st'>Current Object</span></A>&nbsp;|&nbsp;";
+d157 1
+a157 1
+			print "<A HREF='debug.cgi?Action=$_'  target='body'><span style='$st'>$_</span></A>&nbsp;|&nbsp;"
+@
+
+
+1.74
+log
+@Make independent project specific spaces in MDk, MDl
+@
+text
+@d5 1
+a5 1
+# $Id: tabs.cgi,v 1.73 2004/01/29 13:20:34 jiri_schmid Exp $
+d94 1
+d97 1
+@
+
+
+1.73
+log
+@collected tab implemented
+@
+text
+@d5 1
+a5 1
+# $Id: tabs.cgi,v 1.72 2004/01/20 13:06:01 jiri_schmid Exp $
+d153 1
+a153 1
+		foreach ('MD','MDi','MDn','MDk','MDl','MDg','MDga','MDgo','Depend','RCache','SCache','Lookup','Links','Users','UsRL','UserPref','Lang') {
+@
+
+
+1.72
+log
+@collected reports tab implementation started
+@
+text
+@d5 1
+a5 1
+# $Id: tabs.cgi,v 1.71 2004/01/15 03:23:16 michald Exp $
+d114 3
+a116 3
+	my %results = $hlp =~ /([^\|~]*)~([^\|]*)/g;
+	my ($id, $name);
+	while (($id,$name) = each(%results)) {
+@
+
+
+1.71
+log
+@some minor updates
+@
+text
+@d5 1
+a5 1
+# $Id: tabs.cgi,v 1.70 2003/12/12 12:12:06 jiri_schmid Exp $
+d93 3
+a95 1
+	foreach (@@Tabs::Tabs) {
+d99 1
+a99 1
+	&addReports($q, $skin, $TabAct);
+@
+
+
+1.70
+log
+@found a fixed bug manipulating dynamic params in grid
+@
+text
+@d5 1
+a5 1
+# $Id: tabs.cgi,v 1.69 2003/12/04 15:56:26 jiri_schmid Exp $
+d166 1
+a166 1
+		print "$Const::lang->{$use_lang}{'Logical Model'}:";
+@
+
+
+1.69
+log
+@minor changes in derived reports tab
+@
+text
+@d5 1
+a5 1
+# $Id: tabs.cgi,v 1.68 2003/12/04 12:15:14 jiri_schmid Exp $
+d169 1
+a169 1
+				print " <a class=\"neg\" onclick=\"doLMWork('$_')\">$1</a>&nbsp;|&nbsp;";
+@
+
+
+1.68
+log
+@img type changes tested and fixed
+@
+text
+@d5 1
+a5 1
+# $Id: tabs.cgi,v 1.67 2003/11/20 15:47:29 jiri_schmid Exp $
+d58 1
+a58 1
+my $imgType = 'png';#getImageType("$Const::myPath${skin}img/");
+d79 1
+a79 1
+&addTabs($q, $use_lang, $skin, $imgType, $TabAct);
+d82 1
+a82 1
+&addTabIcons($q,$skin, $imgType, $TabAct,$use_lang);
+d92 1
+a92 1
+	my ($q, $use_lang, $skin, $imgType, $TabAct) = @@_;
+d95 8
+a102 1
+		print "<td style='background-color:#$ids' class='tabs_tab_corner'><img src='${skin}img/leftMenu.$imgType'/></td><td class='tabs_tab' style='background-color:#$ids'><a href='index.cgi?TabAct=$_' target='_top' onclick='return checkObjectChange();'>$Const::lang->{$use_lang}->{ $Tabs::Tabs->{$_}->{name} }</a></td><td style='background-color:#$ids' class='tabs_tab_corner'><img src='${skin}img/rightMenu.$imgType'/></td><td></td>";
+a103 1
+	&addReports($q, $skin, $imgType, $TabAct);
+d107 1
+a107 1
+	my ($q, $skin, $imgType, $TabAct) = @@_;
+d119 1
+a119 1
+		my $src = ($id eq $ID && $TabAct eq 'R') ? "${skin}img/dropActive.$imgType" : "${skin}img/drop.$imgType";
+d123 1
+a123 1
+<td style="background-color:#$ids" class='tabs_tab_corner'><img src='${skin}img/leftMenu.$imgType'/></td>
+d128 1
+a128 1
+<td style="background-color:#$ids" class='tabs_tab_corner'><img src='${skin}img/rightMenu.$imgType'/></td>
+d137 1
+a137 1
+	my ($q,$skin,$imgType,$TabAct,$use_lang) = @@_;
+d144 1
+a144 1
+				print "<td class='iconItem' onclick=\"doWork('$Tabs::TabsDef->{$_}->{id}')\" title='$Const::lang->{$use_lang}{ $Tabs::TabsDef->{$_}->{name} }'><IMG SRC='${skin}img/$Tabs::TabsDef->{$_}->{img}.$imgType' /></td>\n";
+d161 1
+a161 1
+				print "<td class='iconItem' onclick=\"doAdminWork('$Tabs::TabsDef->{$_}->{id}')\" title='$Const::lang->{$use_lang}{ $Tabs::TabsDef->{$_}->{name} }'><IMG SRC='${skin}img/$Tabs::TabsDef->{$_}->{img}.$imgType' /></td>\n";
+@
+
+
+1.67
+log
+@export 2 xls and pdf works (pdf is not fine)
+@
+text
+@d5 1
+a5 1
+# $Id: tabs.cgi,v 1.66 2003/11/20 09:42:45 michald Exp $
+d58 1
+a58 1
+my $imgType = getImageType("$Const::myPath${skin}img/");
+@
+
+
+1.66
+log
+@fix of LDM, cleanup of some obsolete files
+@
+text
+@d5 1
+a5 1
+# $Id: tabs.cgi,v 1.65 2003/11/12 12:44:21 jiri_schmid Exp $
+d148 1
+a148 1
+		print "<\/span>";
+@
+
+
+1.65
+log
+@ldm multiimages implemented
+@
+text
+@d5 1
+a5 1
+# $Id: tabs.cgi,v 1.64 2003/11/07 13:40:44 jiri_schmid Exp $
+d63 4
+d73 2
+a74 1
+	-script=>{-language=>'JAVASCRIPT', -src=>"js/tabs.js"}
+d157 1
+a158 1
+		}
+d160 4
+a163 4
+		print "<table class='iconTab'><tr><td>$Const::lang->{$use_lang}{'Logical Model'}:</td>\n";
+		foreach ( &getLMImages($q->param('Proj'),$use_lang) ) {
+				/([^_]*)(....)$/;
+				print "<td class='textItem' title='$1'><a onclick=\"doLMWork('$_')\">$1</a></td>\n";
+a164 1
+		print "</tr></table>\n";
+d166 2
+d173 7
+a179 11
+my ($project,$lang) = (shift,shift);
+my @@rtrn;
+if ($project) {
+	if (opendir IMG,"$Const::myPath$Const::bearMData$project/Ldm/") {
+		foreach (readdir IMG) {
+			if ($_ =~ /^\./) {
+				next
+			} else {
+				push (@@rtrn,$_) if $_ =~ /^$lang/;
+			}
+		}
+a180 2
+	} else {
+		push (@@rtrn,"$Const::myPath$Const::bearMData$project/Ldm/");
+d182 2
+a183 2
+}
+return @@rtrn
+d189 10
+a198 9
+my ($path) = shift;	# directory
+my $rtrn;
+	if (opendir IMG, $path) {
+		foreach (readdir IMG) {
+			if ($_ =~ /^\./) {
+				next
+			} else {
+				($rtrn) = /\.(...)$/;
+				last if $rtrn;
+d200 1
+d202 1
+a202 3
+		close IMG;
+	}
+return $rtrn
+@
+
+
+1.64
+log
+@tested a fixed saving of all objects
+@
+text
+@d5 1
+a5 1
+# $Id: tabs.cgi,v 1.63 2003/11/04 15:18:54 jiri_schmid Exp $
+d77 1
+a77 1
+&addTabIcons($skin, $imgType, $TabAct,$use_lang);
+d126 1
+a126 1
+	my ($skin, $imgType, $TabAct,$use_lang) = @@_;
+d152 1
+d154 6
+d161 20
+d183 2
+d200 1
+a200 1
+	close IMG;
+@
+
+
+1.63
+log
+@save as - modperl fixies, code improvments
+@
+text
+@d5 1
+a5 1
+# $Id: tabs.cgi,v 1.62 2003/10/31 12:47:54 jiri_schmid Exp $
+d150 1
+a150 1
+				print "<td class='iconItem' onclick=\"doAdminWork('$Tabs::TabsDef->{$_}->{id}')\" title='$Tabs::TabsDef->{$_}->{name}'><IMG SRC='${skin}img/$Tabs::TabsDef->{$_}->{img}.$imgType' /></td>\n";
+@
+
+
+1.62
+log
+@mod perl rocks!
+@
+text
+@d5 1
+a5 1
+# $Id: tabs.cgi,v 1.61 2003/10/09 13:52:51 jiri_schmid Exp $
+d68 1
+a68 2
+	-head=>meta({-http_equiv => 'Content-Type', 
+	-content => "text/html; charset=$use_enc"}),
+d176 1
+a176 1
+1@
+
+
+1.61
+log
+@many EN language fixies
+@
+text
+@d5 1
+a5 1
+# $Id: tabs.cgi,v 1.60 2003/09/30 21:05:38 michald Exp $
+d8 2
+a9 2
+binmode(STDOUT, ':utf8');
+use Encode;	#solves UTF8 coding/encoding issue in regular expresions
+a11 1
+use vars qw($Tabs $Languages $bearHost $bearPort $compress_threshold @@Tabs $StyleSheet $lang $TabsDef @@TabsEdit $tabsLogo @@TabsAdmin);
+d13 3
+a15 1
+our $q = new CGI;
+d17 13
+a29 1
+require "const.def";
+d31 5
+a35 16
+my $user = remote_user();
+my $use_lang = (param('Lang')) ? param('Lang') : "EN";
+my $use_enc = $Languages->{$use_lang}->{'enc'};
+require $Languages->{$use_lang}->{'src'};
+require "tabs.def";
+
+my $TabAct=param('TabAct');
+my $openIn=param('Open');
+my $skin=param('Skin');
+my $objPref;
+my $all_params = "Lang=".param('Lang')."&Cook=".param('Cook')."&Open=$openIn&Proj=".param('Proj')."&sqlA=".param('sqlA')."&Width=".param('Width')."&Skin=$skin";
+if ($skin) {
+	$skin = "skins/$skin/"
+} else {
+	my $wb = ($q->user_agent()=~/MSIE/) ? 'msie' : 'mozilla';
+	$skin = "skins/$wb/default/";
+d37 25
+a61 1
+my $imgType = getImageType("${skin}img/");
+d65 1
+a65 1
+	-lang=>$Languages->{$use_lang}->{lang},	#return language specification in format: language-country (it differs from param Lang)
+d69 2
+a70 2
+		-content => "text/html; charset=$use_enc"}),
+	-script=>{-language=>'JAVASCRIPT', -src=>'js/tabs.js'},
+d72 1
+a72 1
+#print $q->Dump;
+d74 2
+a75 2
+print "<div class='tabs'><table cellspacing='0' class='tabs'><tr class='tabs'id='top'><td></td></tr><tr class='tabs'>\n";
+	&addTabs();
+d77 5
+a81 5
+print "<table class='tabs_icon_bar', cellspacing='0'><tr class='tabs'><td style='background-color:#$Tabs->{$TabAct}->{bg}'>\n";
+	&addTabIcons();
+print "</td><td style='text-align:right; background-color:#$Tabs->{$TabAct}->{bg}' class='instrat'>$tabsLogo</td></tr>";
+print "<tr class='tabs' id='bottom'><td colspan='2' style='background-color:#$Tabs->{$TabAct}->{bgg}'></td></tr></table>\n";
+print "<script type='text/javascript'>var remove='$lang->{Result_remove} '; var msg='$lang->{Continue}';</script>\n";
+d83 1
+a83 1
+print &end_html;
+d87 5
+a91 5
+sub addTabs() {
+	my ($ids,$res);
+	foreach (@@Tabs) {
+		$ids = ($_ eq $TabAct) ? $Tabs->{$_}->{bg} : 'AAAAAA';
+		print "<td style='background-color:#$ids' class='tabs_tab_corner'><img src='${skin}img/leftMenu.$imgType'/></td><td class='tabs_tab' style='background-color:#$ids'><a href='index.cgi?TabAct=$_' target='_top' onclick='return checkObjectChange();'>$Tabs->{$_}->{name}</a></td><td style='background-color:#$ids' class='tabs_tab_corner'><img src='${skin}img/rightMenu.$imgType'/></td><td></td>";
+d93 1
+a93 1
+	&addReports();
+d96 5
+a100 4
+sub addReports(){
+	my $project = param('Proj'); #name of active project
+	my $ID = param('item_id');
+	my $hlp = decode_utf8(param('Tabs')); #string must be decoded to octets to pass regular expresion /perl authors/
+d105 1
+a105 1
+		$name = "$lang->{'Tabs Removed Report'}".$id if ($name eq "");
+d107 1
+a107 1
+		my $cnt = param('Length');
+d110 1
+a110 1
+		my $ids = ($id eq $ID && $TabAct eq 'R') ? $Tabs->{R}->{bg} : 'AAAAAA';
+d113 7
+a119 8
+		<td style="background-color:#$ids" class='tabs_tab_corner'><img src='${skin}img/leftMenu.$imgType'/></td>
+		<td class='tabs_tab' style="background-color:#$ids" >
+			<a href='result' onclick="return viewResult('$id')" title='$name' id='report$id'>$shortName</a>
+			&nbsp;
+			<img class='arr' src="$src" alt='Del' title='$lang->{Delete}' onclick="checkRemove('$name','$id','$TabAct')"/>
+			</td>
+		<td style="background-color:#$ids" class='tabs_tab_corner'><img src='${skin}img/rightMenu.$imgType'/></td>
+		<td></td>
+d126 2
+a127 1
+sub addTabIcons() {
+d130 1
+a130 1
+		foreach (@@TabsEdit) {
+d134 1
+a134 1
+				print "<td class='iconItem' onclick=\"doWork('$TabsDef->{$_}->{id}')\" title='$TabsDef->{$_}->{name}'><IMG SRC='${skin}img/$TabsDef->{$_}->{img}.$imgType' /></td>\n";
+d147 1
+a147 1
+		foreach (@@TabsAdmin) {
+d151 1
+a151 1
+				print "<td class='iconItem' onclick=\"doAdminWork('$TabsDef->{$_}->{id}')\" title='$TabsDef->{$_}->{name}'><IMG SRC='${skin}img/$TabsDef->{$_}->{img}.$imgType' /></td>\n";
+d159 1
+d161 2
+a162 1
+	my ($path)= shift;	# directory
+d168 2
+a169 5
+				my ($rtrn) = /\.(...)$/;
+				if ($rtrn) {
+					closedir IMG;
+					return $rtrn
+					}
+d172 1
+d174 1
+a174 1
+	return "ndf"
+d177 1
+@
+
+
+1.60
+log
+@fixing of the tabs css
+@
+text
+@d5 1
+a5 1
+# $Id: tabs.cgi,v 1.59 2003/09/30 19:39:17 michald Exp $
+a46 1
+
+@
+
+
+1.59
+log
+@moving tabs definition out from the language def files
+@
+text
+@d5 1
+a5 1
+# $Id: tabs.cgi,v 1.58 2003/09/29 05:43:13 michald Exp $
+d12 1
+a12 1
+use vars qw($Tabs $Languages $bearHost $bearPort $compress_threshold @@Tabs $StyleSheet $lang $TabsDef @@TabsEdit @@TabsAdmin);
+d49 1
+a49 1
+print "<br /><div class='tabs'><table cellspacing='0' class='tabs'><tr class='tabs'>\n";
+d54 2
+a55 1
+print "</td><td style='text-align:right; background-color:#$Tabs->{$TabAct}->{bg}' class='instrat'>Insight Strategy&nbsp</td></tr></table>\n";
+@
+
+
+1.58
+log
+@new version of the metadata - multiple attribute PK implementation; improvement of the PrepareSQL
+@
+text
+@d5 1
+a5 1
+# $Id: tabs.cgi,v 1.57 2003/09/24 09:43:24 jiri_schmid Exp $
+d22 1
+d62 6
+a67 6
+my ($ids,$res);
+foreach (@@Tabs) {
+	$ids = ($_ eq $TabAct) ? $Tabs->{$_}->{bg} : 'AAAAAA';
+	print "<td style='background-color:#$ids' class='tabs_tab_corner'><img src='${skin}img/leftMenu.$imgType'/></td><td class='tabs_tab' style='background-color:#$ids'><a href='index.cgi?TabAct=$_' target='_top' onclick='return checkObjectChange();'>$Tabs->{$_}->{name}</a></td><td style='background-color:#$ids' class='tabs_tab_corner'><img src='${skin}img/rightMenu.$imgType'/></td><td></td>";
+}
+&addReports();
+d71 23
+a93 22
+my $project = param('Proj'); #name of active project
+my $ID = param('item_id');
+my $hlp = decode_utf8(param('Tabs')); #string must be decoded to octets to pass regular expresion /perl authors/
+#it is not necessary to convert it back, perl does it automaticaly when binmode is utf8 for output
+my %results = $hlp =~ /([^\|~]*)~([^\|]*)/g;
+my ($id, $name);
+while (($id,$name) = each(%results)) {
+	$name = "$lang->{'Tabs Removed Report'}".$id if ($name eq "");
+	my $shortName = $name;	#UTF8 handling issue in regular expresion -> decoding name to octets
+	my $cnt = param('Length');
+	$shortName =~ s/(^.{$cnt})(.*$)/$1.../;
+	my $src = ($id eq $ID && $TabAct eq 'R') ? "${skin}img/dropActive.$imgType" : "${skin}img/drop.$imgType";
+	my $ids = ($id eq $ID && $TabAct eq 'R') ? $Tabs->{R}->{bg} : 'AAAAAA';
+print <<END;
+	<td style="background-color:#$ids" class='tabs_tab_corner'><img src='${skin}img/leftMenu.$imgType'/></td>
+	<td class='tabs_tab' style="background-color:#$ids" >
+		<a href='result' onclick="return viewResult('$id')" title='$name' id='report$id'>$shortName</a>
+		&nbsp;
+		<img class='arr' src="$src" alt='Del' title='$lang->{Delete}' onclick="checkRemove('$name','$id','$TabAct')"/>
+		</td>
+	<td style="background-color:#$ids" class='tabs_tab_corner'><img src='${skin}img/rightMenu.$imgType'/></td>
+	<td></td>
+d95 1
+a95 1
+}
+d133 12
+a144 11
+my ($path)= shift;	# directory
+if (opendir IMG, $path) {
+	foreach (readdir IMG) {
+		if ($_ =~ /^\./) {
+			next
+		} else {
+			my ($rtrn) = /\.(...)$/;
+			if ($rtrn) {
+				closedir IMG;
+				return $rtrn
+				}
+d147 1
+a147 2
+}
+return "ndf"
+@
+
+
+1.57
+log
+@fixies
+@
+text
+@d5 1
+a5 1
+# $Id: tabs.cgi,v 1.56 2003/09/01 15:03:39 jiri_schmid Exp $
+d112 1
+a112 1
+		foreach ('MD','MDi','MDn','MDk','MDl','MDg','MDga','MDgo','Depend','RCache','MCache','Lookup','Links','Users','UsRL','UserPref','Lang') {
+@
+
+
+1.56
+log
+@final changes, skins seems to be implemented properly
+@
+text
+@d5 1
+a5 1
+# $Id: tabs.cgi,v 1.55 2003/09/01 12:40:05 jiri_schmid Exp $
+d28 6
+a33 1
+$skin = ($skin) ? "skins/$skin/" : "skins/msie/";
+a44 1
+
+@
+
+
+1.55
+log
+@skins implemented. mozilla skin - temporarily copy msie content
+@
+text
+@d5 1
+a5 1
+# $Id: tabs.cgi,v 1.54 2003/08/28 09:26:11 jiri_schmid Exp $
+d28 1
+a28 1
+$skin = ($skin) ? "skins/$skin/" : "";
+d133 5
+a137 3
+			closedir IMG;
+			/(...)$/;
+			return $1
+d141 1
+a141 1
+return undef
+d143 1
+@
+
+
+1.54
+log
+@tabs.cgi speed improvmnet, visual improvment on trees, rights and some other minor improvments
+@
+text
+@d5 1
+a5 1
+# $Id: tabs.cgi,v 1.53 2003/08/26 15:35:41 jiri_schmid Exp $
+d12 1
+a12 1
+use vars qw($Tabs $Languages $bearHost $bearPort $compress_threshold @@Tabs $StyleSheet $lang $ImgP $TabsDef @@TabsEdit @@TabsAdmin);
+d25 1
+d27 3
+a29 2
+my $all_params = "Lang=".param('Lang')."&Cook=".param('Cook')."&Open=".param('Open')."&Proj=".param('Proj')."&sqlA=".param('sqlA')."&Width=".param('Width');
+
+d35 1
+a35 1
+	-style=>{-src=>$StyleSheet},
+d60 1
+a60 1
+	print "<td style='background-color:#$ids' class='tabs_tab_corner'><img src='img/leftMenu.gif'/></td><td class='tabs_tab' style='background-color:#$ids'><a href='index.cgi?TabAct=$_' target='_top' onclick='return checkObjectChange();'>$Tabs->{$_}->{name}</a></td><td style='background-color:#$ids' class='tabs_tab_corner'><img src='img/rightMenu.gif'/></td><td></td>";
+d77 1
+a77 1
+	my $src = ($id eq $ID && $TabAct eq 'R') ? 'img/dropActive.gif' : 'img/drop.gif';
+d80 1
+a80 1
+	<td style="background-color:#$ids" class='tabs_tab_corner'><img src='img/leftMenu.gif'/></td>
+d86 1
+a86 1
+	<td style="background-color:#$ids" class='tabs_tab_corner'><img src='img/rightMenu.gif'/></td>
+d101 1
+a101 1
+				print "<td class='iconItem' onclick=\"doWork('$TabsDef->{$_}->{id}')\" title='$TabsDef->{$_}->{name}'><IMG SRC='$ImgP/$TabsDef->{$_}->{img}' /></td>\n";
+d118 1
+a118 1
+				print "<td class='iconItem' onclick=\"doAdminWork('$TabsDef->{$_}->{id}')\" title='$TabsDef->{$_}->{name}'><IMG SRC='$ImgP/$TabsDef->{$_}->{img}' /></td>\n";
+d123 17
+@
+
+
+1.53
+log
+@rights improvment, create delete duplicate rule implemented
+@
+text
+@d5 1
+a5 1
+# $Id: tabs.cgi,v 1.52 2003/08/25 15:09:09 jiri_schmid Exp $
+d40 11
+a50 15
+print "<script type='text/javascript'>\nvar use_param='$all_params';\nvar openIn='$openIn';\nvar tab='$TabAct';</script>";
+print "<br /><div class='tabs'>";
+print table({-cellspacing=>0, -class=>'tabs'},
+	Tr( {-class=>'tabs'},
+		&addTabs())
+	    );
+print "</div>";
+print table({-class=>"tabs_icon_bar", -cellspacing=>0},
+	Tr({-class=>'tabs'},
+        	td({-style=>'background-color:#'.$Tabs->{$TabAct}->{bg} }, &addTabIcons()),
+		td({-style=>'text-align:right; background-color:#'.$Tabs->{$TabAct}->{bg},-class=>'instrat'},'Insight Strategy&nbsp;')
+		),
+	    );
+print "<script type='text/javascript'>var remove='$lang->{Result_remove} '; var msg='$lang->{Continue}';</script>";
+print "</body></html>";
+d55 6
+a60 8
+    my ($ids,$res);
+    foreach (@@Tabs) {
+        $ids = ($_ eq $TabAct) ? $Tabs->{$_}->{bg} : 'AAAAAA';
+	$res.= "<td style='background-color:#$ids' class='tabs_tab_corner'><img src='img/leftMenu.gif'/></td><td class='tabs_tab' style='background-color:#$ids'><a href='index.cgi?TabAct=$_' target='_top' onclick='return checkObjectChange();'>$Tabs->{$_}->{name}</a></td><td style='background-color:#$ids' class='tabs_tab_corner'><img src='img/rightMenu.gif'/></td>";
+        $res.= "<td></td>";
+    }
+    $res .= &addReports();
+    return $res
+a65 1
+my $res = "";
+d69 1
+a69 10
+
+#-----------------------
+#open DMP,">./html/dmp";
+#use Data::Dumper;
+#print DMP Dumper(%results);
+#print DMP Dumper($hlp);
+#close DMP;
+#-----------------------
+
+my $id; my $name;
+a74 1
+	my $link = "<a href='result' onclick=\"return viewResult('$id')\" title='$name' id='report$id'>".$shortName."</a>"; #web browser expects UTF8 chars -> encoding name from octets
+a75 1
+	$link .= "&nbsp;<img class='arr' src='$src' alt='Del' title='$lang->{Delete}' onclick=\"checkRemove('$name','$id','$TabAct')\"/>";
+d77 10
+a86 2
+	$res.="<td style='background-color:#$ids' class='tabs_tab_corner'><img src='img/leftMenu.gif'/></td><td class='tabs_tab' style='background-color:#$ids' >$link</td><td style='background-color:#$ids' class='tabs_tab_corner'><img src='img/rightMenu.gif'/></td>";
+        $res.= "<td></td>";
+a87 2
+
+return $res
+a92 1
+    my ($res);
+d94 1
+a94 1
+		$res .= "<table class='iconTab'><tr>";
+d97 1
+a97 1
+				$res .= "<td style='width:30px;'></td>";
+d99 1
+a99 1
+				$res .= "<td class='iconItem' onclick=\"doWork('$TabsDef->{$_}->{id}')\" title='$TabsDef->{$_}->{name}'><IMG SRC='$ImgP/$TabsDef->{$_}->{img}' /></td>";
+d102 1
+a102 1
+		$res .= "</tr></table>";
+d105 1
+a105 1
+		$res.="<span style=\"color: rgb(128, 255, 255); font-weight:bold;\"><A HREF=\"debug.cgi\" target=\"body\"><span style='$st'>Current Object</span></A>&nbsp;|&nbsp;";
+d107 1
+a107 1
+			$res.="<A HREF='debug.cgi?Action=$_'  target='body'><span style='$st'>$_</span></A>&nbsp;|&nbsp;"
+d109 1
+a109 1
+		$res=~s/&nbsp;\|&nbsp;$/<\/span>/;
+d111 1
+a111 1
+		$res .= "<table class='iconTab'><tr>";
+d114 1
+a114 1
+				$res .= "<td style='width:30px;'></td>";
+d116 1
+a116 1
+				$res .= "<td class='iconItem' onclick=\"doAdminWork('$TabsDef->{$_}->{id}')\" title='$TabsDef->{$_}->{name}'><IMG SRC='$ImgP/$TabsDef->{$_}->{img}' /></td>";
+d119 1
+a119 1
+		$res .= "</tr></table>";
+a120 1
+    return ($res eq "") ? "&nbsp" : $res;
+@
+
+
+1.52
+log
+@object acl, owner, modifier, datetime creation and modification implemented
+@
+text
+@d5 1
+a5 1
+# $Id: tabs.cgi,v 1.51 2003/08/20 14:23:41 jiri_schmid Exp $
+d12 1
+a12 1
+use vars qw($Tabs $Languages $bearHost $bearPort $compress_threshold @@Tabs $StyleSheet $lang $TabsF @@TabsF $ImgP);
+d108 1
+a108 1
+		foreach (@@TabsF) {
+d112 1
+a112 1
+				$res .= "<td class='iconItem' onclick=\"doWork('$TabsF->{$_}->{id}')\" title='$TabsF->{$_}->{name}'><IMG SRC='$ImgP/$TabsF->{$_}->{img}' /></td>";
+d123 10
+@
+
+
+1.51
+log
+@access object implemented
+@
+text
+@d5 1
+a5 1
+# $Id: tabs.cgi,v 1.50 2003/08/18 05:50:52 michald Exp $
+d112 1
+a112 1
+				$res .= "<td class='iconItem'><IMG SRC='$ImgP/$TabsF->{$_}->{img}' title='$TabsF->{$_}->{name}' onclick=\"doWork('$TabsF->{$_}->{id}')\"/></td>";
+@
+
+
+1.50
+log
+@some ACL improvement
+@
+text
+@d5 1
+a5 1
+# $Id: tabs.cgi,v 1.49 2003/08/14 16:26:54 jiri_schmid Exp $
+d50 1
+a50 1
+		td({-style=>'background-color:#'.$Tabs->{$TabAct}->{bg},-class=>'instrat',-align=>'right'},'Insight Strategy&nbsp;')
+d107 1
+d110 1
+a110 1
+				$res .= "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+d112 1
+a112 1
+				$res .= "<IMG class='arr' SRC='$ImgP/$TabsF->{$_}->{img}' title='$TabsF->{$_}->{name}' align='top' onclick=\"doWork('$TabsF->{$_}->{id}')\"/>&nbsp;&nbsp;";
+d115 1
+@
+
+
+1.49
+log
+@icons rebuilding
+@
+text
+@d5 1
+a5 1
+# $Id: tabs.cgi,v 1.48 2003/07/08 07:12:02 jiri_schmid Exp $
+d117 1
+a117 1
+		foreach ('MD','MDi','MDn','MDk','MDl','MDg','MDga','MDgo','Depend','RCache','MCache','Lookup','Links','UserPref','Lang') {
+@
+
+
+1.48
+log
+@utf8 implementation in last stage
+@
+text
+@d5 1
+a5 1
+# $Id: tabs.cgi,v 1.47 2003/07/07 07:10:39 michald Exp $
+d49 2
+a50 2
+        	td({-bgcolor=>'#'.$Tabs->{$TabAct}->{bg} }, &addTabIcons()),
+		td({-bgcolor=>'#'.$Tabs->{$TabAct}->{bg},-class=>'instrat',-align=>'right'},'Insight Strategy&nbsp;')
+d62 1
+a62 1
+	$res.= "<td bgcolor='#$ids' class='tabs_tab_corner'><img src='img/leftMenu.gif'/></td><td class='tabs_tab' bgcolor='#$ids'><a href='index.cgi?TabAct=$_' target='_top' onclick='return checkObjectChange();'>$Tabs->{$_}->{name}</a></td><td bgcolor='#$ids' class='tabs_tab_corner'><img src='img/rightMenu.gif'/></td>";
+d95 1
+a95 1
+	$res.="<td bgcolor='#$ids' class='tabs_tab_corner'><img src='img/leftMenu.gif'/></td><td class='tabs_tab' bgcolor='#$ids'>$link</td><td bgcolor='#$ids' class='tabs_tab_corner'><img src='img/rightMenu.gif'/></td>";
+@
+
+
+1.47
+log
+@some minor code improvements
+@
+text
+@d5 1
+a5 1
+# $Id: tabs.cgi,v 1.46 2003/07/04 06:19:13 michald Exp $
+d8 3
+d73 2
+a74 1
+my $hlp = param('Tabs');
+d76 9
+a85 1
+use Encode;	#solves UTF8 coding/encoding issue in regular expresions
+d88 1
+a88 1
+	my $shortName = decode_utf8($name);	#UTF8 handling issue in regular expresion -> decoding name to octets
+d91 1
+a91 1
+	my $link = "<a href='result' onclick=\"return viewResult('$id')\" title='$name' id='report$id'>".encode_utf8($shortName)."</a>"; #web browser expects UTF8 chars -> encoding name from octets
+@
+
+
+1.46
+log
+@some fixes for proper utf8 encoding, see README for details
+@
+text
+@d5 1
+a5 1
+# $Id: tabs.cgi,v 1.45 2003/06/21 16:13:05 michald Exp $
+d105 1
+a105 1
+		foreach ('MD','MDi','MDn','MDk','MDl','MDg','MDga','MDgo','Depend','RCache','MCache','Lookup','UserPref','Lang') {
+@
+
+
+1.45
+log
+@improvement of object dependency directed graph
+@
+text
+@d5 1
+a5 1
+# $Id: tabs.cgi,v 1.44 2003/06/20 08:42:29 michald Exp $
+d105 1
+a105 1
+		foreach ('MD','MDi','MDn','MDk','MDl','MDg','MDga','MDgo','Depend','RCache','MCache','Lookup','UserPref') {
+@
+
+
+1.44
+log
+@introduction of new directed graph structures MDga and MDgo
+@
+text
+@d5 1
+a5 1
+# $Id: tabs.cgi,v 1.43 2003/06/03 08:31:09 jiri_schmid Exp $
+d105 1
+a105 1
+		foreach ('MD','MDi','MDn','MDk','MDl','MDg','MDga','MDgo','Pred','Succ','RCache','MCache','Lookup','UserPref') {
+@
+
+
+1.43
+log
+@visual improvment/fixies
+@
+text
+@d5 1
+a5 1
+# $Id: tabs.cgi,v 1.42 2003/06/02 07:34:59 jiri_schmid Exp $
+d105 1
+a105 1
+		foreach ('MD','MDi','MDn','MDk','MDg','RCache','MCache','Lookup','UserPref') {
+@
+
+
+1.42
+log
+@report bug? fixed
+@
+text
+@d5 1
+a5 1
+# $Id: tabs.cgi,v 1.41 2003/05/29 09:52:44 jiri_schmid Exp $
+d59 1
+a59 1
+	$res.= "<td bgcolor='#$ids' class='tabs_tab'><img src='img/leftMenu.gif'/></td><td class='tabs_tab' bgcolor='#$ids'><a href='index.cgi?TabAct=$_' target='_top' onclick='return checkObjectChange();'>$Tabs->{$_}->{name}</a></td><td bgcolor='#$ids' class='tabs_tab'><img src='img/rightMenu.gif'/></td>";
+d83 1
+a83 1
+	$res.="<td bgcolor='#$ids' class='tabs_tab'><img src='img/leftMenu.gif'/></td><td class='tabs_tab' bgcolor='#$ids'>$link</td><td bgcolor='#$ids' class='tabs_tab'><img src='img/rightMenu.gif'/></td>";
+@
+
+
+1.41
+log
+@some code improvment and bug fixies
+@
+text
+@d5 1
+a5 1
+# $Id: tabs.cgi,v 1.40 2003/05/28 15:44:12 jiri_schmid Exp $
+d79 1
+a79 1
+	my $link = "<a href='result' onclick=\"return viewResult('$id')\" title='$name' >".encode_utf8($shortName)."</a>"; #web browser expects UTF8 chars -> encoding name from octets
+@
+
+
+1.40
+log
+@control dialog when changing tabs implemnted
+@
+text
+@d5 1
+a5 1
+# $Id: tabs.cgi,v 1.39 2003/05/28 15:18:32 jiri_schmid Exp $
+d58 2
+a59 2
+        $ids = ($_ eq $TabAct) ? '#'.$Tabs->{$_}->{bg} : '#AAA';
+	$res.= "<td bgcolor='".$ids."' class='tabs_tab'><img src='img/leftMenu.gif'/></td><td class='tabs_tab' bgcolor='".$ids."'><a href='index.cgi?TabAct=".$_."' target='_top' onclick='return checkObjectChange();'>".$Tabs->{$_}->{name}."</a></td><td bgcolor='".$ids."' class='tabs_tab'><img src='img/rightMenu.gif'/></td>";
+d79 5
+a83 5
+	my $link = "<a href='result' onclick=\"return viewResult('".$id."')\" title='".$name."'>".encode_utf8($shortName)."</a>"; #web browser expects UTF8 chars -> encoding name from octets
+	my $src = ($id eq $ID) ? ($TabAct eq 'R') ? 'img/dropActive.gif' : 'img/drop.gif' : 'img/drop.gif';
+	$link .= "&nbsp;<img class='arr' src='".$src."' alt='Del' title='$lang->{Delete}' onclick=\"checkRemove('".$name."','".$id."','".$TabAct."')\"/>";
+	my $ids = ($id eq $ID) ? ($TabAct eq 'R') ? '#'.$Tabs->{R}->{bg} : '#AAA' : '#AAA';
+	$res.="<td bgcolor='".$ids."' class='tabs_tab'><img src='img/leftMenu.gif'/></td><td class='tabs_tab' bgcolor='".$ids."'>".$link."</td><td bgcolor='".$ids."' class='tabs_tab'><img src='img/rightMenu.gif'/></td>";
+d99 1
+a99 1
+				$res .= '<IMG class="arr" SRC="'.$ImgP.'/'.$TabsF->{$_}->{img}.'" title="'.$TabsF->{$_}->{name}.'" align="top" onclick="doWork(\''.$TabsF->{$_}->{id}.'\')"/>&nbsp;&nbsp;';
+d104 1
+a104 1
+		$res.="<span style=\"color: rgb(128, 255, 255); font-weight:bold;\"><A HREF=\"debug.cgi\" target=\"body\"><span style=\"$st\">Current Object</span></A>&nbsp;|&nbsp;";
+d106 1
+a106 1
+			$res.="<A HREF=\"debug.cgi?Action=$_\"  target=\"body\"><span style=\"$st\">$_</span></A>&nbsp;|&nbsp;"
+@
+
+
+1.39
+log
+@user pref changes
+@
+text
+@d5 1
+a5 1
+# $Id: tabs.cgi,v 1.38 2003/05/28 07:34:14 jiri_schmid Exp $
+d50 1
+a50 1
+print "<script type='text/javascript'>var remove='$lang->{Result_remove} ';</script>";
+d59 1
+a59 1
+	$res.= "<td bgcolor='".$ids."' class='tabs_tab'><img src='img/leftMenu.gif'/></td><td class='tabs_tab' bgcolor='".$ids."'><a href='index.cgi?TabAct=".$_."' target='_top'>".$Tabs->{$_}->{name}."</a></td><td bgcolor='".$ids."' class='tabs_tab'><img src='img/rightMenu.gif'/></td>";
+@
+
+
+1.38
+log
+@cvs add/remove changes
+@
+text
+@d5 1
+a5 1
+# $Id: tabs.cgi,v 1.37 2003/05/23 06:40:44 michald Exp $
+d41 1
+a41 1
+		&TabRow2())
+d46 1
+a46 1
+        	td({-bgcolor=>'#'.$Tabs->{$TabAct}->{bg} }, &TabRow3()),
+d55 1
+a55 1
+sub TabRow2 {
+d78 1
+a78 1
+	$shortName =~ s/(^.{$cnt})(.*$)/$1\.\.\./;
+d92 1
+a92 1
+sub TabRow3 {
+@
+
+
+1.37
+log
+@implementation of attribute roles into directed graph
+@
+text
+@d5 1
+a5 1
+# $Id: tabs.cgi,v 1.36 2003/05/21 11:39:43 jiri_schmid Exp $
+a36 1
+
+@
+
+
+1.36
+log
+@visual and code improvment
+@
+text
+@d5 1
+a5 1
+# $Id: tabs.cgi,v 1.35 2003/05/15 15:28:17 jiri_schmid Exp $
+d106 1
+a106 1
+		foreach ('MD','MDi','MDn','RCache','MCache','Lookup','UserPref') {
+@
+
+
+1.35
+log
+@one more visual improvment
+@
+text
+@d5 1
+a5 1
+# $Id: tabs.cgi,v 1.34 2003/05/15 14:54:51 jiri_schmid Exp $
+d23 1
+a23 1
+my $all_params = "Lang=".param('Lang')."&Cook=".param('Cook')."&Open=".param('Open')."&Proj=".param('Proj')."&sqlA=".param('sqlA');
+d39 2
+a40 2
+print "<br>";
+print table({-cellspacing=>0},
+d44 1
+d82 1
+a82 1
+	$link .= "<a href='index.cgi?remove=".$id."&TabAct=".$TabAct." target=>'_top'>&nbsp;<img src='".$src."' alt='Del' onclick=\"return checkRemove('".$name."','".$id."')\"/>";
+@
+
+
+1.34
+log
+@visual imrpovment
+@
+text
+@d5 1
+a5 1
+# $Id: tabs.cgi,v 1.33 2003/05/15 13:47:32 jiri_schmid Exp $
+d59 2
+a60 2
+	$res.=td({-class=>'tabs_tab', -bgcolor=>$ids}, $q->a({-href=>"index.cgi?TabAct=$_", -target=>"_top"},$Tabs->{$_}->{name}));
+        $res.=td({-class=>'tabs_sep'},'&nbsp;');
+d79 1
+a79 1
+	my $link = $q->a({-href=>"result", -onclick=>"return viewResult('$id');", -title=>"$name"}, encode_utf8($shortName)); #web browser expects UTF8 chars -> encoding name from octets
+d81 1
+a81 1
+	$link .= $q->a({-href=>"index.cgi?remove=$id&TabAct=$TabAct", -target=>"_top"},"<img src='$src' alt='Del' onclick=\"return checkRemove('$name','$id')\"/>");
+d83 2
+a84 2
+	$res.=td({-class=>'tabs_tab', -bgcolor=>"$ids"}, $link );
+        $res.=td({-class=>'tabs_sep'},'&nbsp;');
+@
+
+
+1.33
+log
+@found a fixed bug, code improvment
+@
+text
+@d5 1
+a5 1
+# $Id: tabs.cgi,v 1.32 2003/05/06 15:07:06 jiri_schmid Exp $
+d23 1
+a23 1
+my $all_params = "Lang=".param('Lang')."&Cook=".param('Cook')."&Open=".param('Open')."&Proj=".param('Proj');;
+@
+
+
+1.32
+log
+@bug fixies, code improvment
+@
+text
+@d5 1
+a5 1
+# $Id: tabs.cgi,v 1.31 2003/05/06 09:20:57 jiri_schmid Exp $
+d97 4
+a100 10
+				$res.="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";}
+			else {
+				my $hlp_str;
+				if ( $_ eq 'Cop') {$hlp_str = " onclick=\"return check_quit('Copy');\""}
+				elsif ( $_ eq 'Del') { $hlp_str = " onclick=\"return check_quit('Drop');\""}
+				else { $hlp_str = "onclick=\" return check_quit('New');\"";}
+				my $hrf = $TabsF->{$_}->{cgi}.$all_params;
+				$res.="&nbsp;".$q->a({-id=>$TabsF->{$_}->{id}, -href=>$hrf, -target=>$TabsF->{$_}->{target}},
+					"<IMG SRC=\"$ImgP/".$TabsF->{$_}->{img}."\" alt=\"".$TabsF->{$_}->{name}."\" title=\"".$TabsF->{$_}->{name}."\" align=\"top\"".$hlp_str.">");
+				}
+@
+
+
+1.31
+log
+@loading user pref from cache, tabs length implemented
+@
+text
+@d5 1
+a5 1
+# $Id: tabs.cgi,v 1.30 2003/05/05 06:41:43 michald Exp $
+d73 1
+a73 1
+use Encode;
+d75 2
+a76 1
+	my $shortName = decode_utf8($name);
+d79 1
+a79 1
+	my $link = $q->a({-href=>"result", -onclick=>"return viewResult('$id');", -title=>"$name"}, encode_utf8($shortName));
+@
+
+
+1.30
+log
+@implementation of full localized metadata
+@
+text
+@d5 1
+a5 1
+# $Id: tabs.cgi,v 1.29 2003/05/01 15:40:15 jiri_schmid Exp $
+d73 1
+d75 4
+a78 1
+	my $link = $q->a({-href=>"result", -onclick=>"return viewResult('$id');"}, $name);
+@
+
+
+1.29
+log
+@code improvment
+@
+text
+@d5 1
+a5 1
+# $Id: tabs.cgi,v 1.28 2003/05/01 12:17:13 michald Exp $
+d89 1
+a89 1
+	if ($TabAct eq 'E') {	# toolbar for "Folders" tab
+d103 7
+@
+
+
+1.28
+log
+@some minor fixes
+@
+text
+@d5 1
+a5 1
+# $Id: tabs.cgi,v 1.27 2003/05/01 09:15:17 jiri_schmid Exp $
+d9 1
+a9 1
+use vars qw($Tabs $Languages $bearHost $bearPort $compress_threshold);
+a14 14
+# --- make SOAP connection ---
+eval "use SOAP::Lite +autodispatch => 
+	uri => 'Bear', 
+	proxy => ['http://$bearHost:$bearPort/', 
+	options => {compress_threshold => $compress_threshold}]; 
+	1"
+or ( &ErrorDie("ERROR in eval of \"use SOAP::Lite ...\".") );
+
+my $serverVerbName="SOAP Server http://$bearHost:$bearPort/";
+if (! eval "SOAP::Lite->self->fault") {
+	ErrorDie('ERROR: '.$serverVerbName.' not responding<br><form><input type="submit" name="Refresh" value="Refresh" /></form>');
+}
+#*SOAP::Serializer::as_string = \&SOAP::Serializer::as_base64;	#reducing number of XML::Parser char() callbaks  for every single portion of processed stream (e.g. \n)
+
+d16 1
+a16 2
+my $objPref = SOAP->LoadUserPref($user);
+my $use_lang = ($objPref->{'Beard'}->{'language'}) ? $objPref->{'Beard'}->{'language'} : "EN";
+d21 3
+a36 1
+doWork() if (param('remove'));
+d38 1
+a38 1
+print "<script type='text/javascript'>\nvar use_param='$ENV{QUERY_STRING}';\nvar openIn='$objPref->{'Beard'}->{'open_in'}';\nvar tab='$TabAct';</script>";
+d67 1
+a67 1
+my $project = $objPref->{Beard}->{project}; #name of active project
+d70 8
+a77 18
+
+if (! $objPref->{Beard}->{report}->{$ID} && $ID) {
+	my $reportObj = SOAP->GetMetadata($ID);
+	my $newReport;
+	$newReport->{name} = $reportObj->{report}->{$ID}->{name};
+	$newReport->{project} = $objPref->{Beard}->{project};
+	$objPref->{Beard}->{report}->{$ID} = $newReport;
+	my $r=SOAP->SaveUserPref($objPref,$user);
+	if (!$r) {print "<span>ERROR: Saving Report into Preferences metadata failed. ..</span>";};
+}
+
+my $openIn = $objPref->{Beard}->{open_in};
+foreach (keys(%{$objPref->{Beard}->{report}})) {
+	next if ($objPref->{Beard}->{report}->{$_}->{project} ne $project);
+	my $link = $q->a({-href=>"result", -onclick=>"return viewResult('$_','$openIn');"}, $objPref->{Beard}->{report}->{$_}->{name});
+	my $src = ($_ eq $ID) ? ($TabAct eq 'R') ? 'img/dropActive.gif' : 'img/drop.gif' : 'img/drop.gif';
+	$link .= $q->a({-href=>"tabs.cgi?remove=$_&TabAct=$TabAct"},"<img src='$src' alt='Del' onclick=\"return checkRemove('$objPref->{Beard}->{report}->{$_}->{name}','$TabAct')\"/>");
+	my $ids = ($_ eq $ID) ? ($TabAct eq 'R') ? '#'.$Tabs->{R}->{bg} : '#AAA' : '#AAA';
+a104 9
+}
+
+#----------------------------------------------------
+sub doWork {
+my $removeId = param('remove');
+delete($objPref->{Beard}->{report}->{$removeId});
+if (! keys(%{$objPref->{Beard}->{report}})) {delete($objPref->{Beard}->{report});}
+my $r=SOAP->SaveUserPref($objPref,$user);
+if (!$r) {print "<span>ERROR: Saving Report into Preferences metadata failed. ..</span>";};
+@
+
+
+1.27
+log
+@closing window when removing resutl tab implemented
+@
+text
+@d5 1
+a5 1
+# $Id: tabs.cgi,v 1.26 2003/04/30 14:45:41 jiri_schmid Exp $
+d7 1
+a7 1
+#use strict;
+d97 4
+a100 4
+	my $link = $q->a({-href=>"result", -onclick=>"return viewResult('$_');"}, $objPref->{Beard}->{report}->{$_}->{name});
+	$src = ($_ eq $ID) ? ($TabAct eq 'R') ? 'img/dropActive.gif' : 'img/drop.gif' : 'img/drop.gif';
+	$link .= $q->a({-href=>"tabs.cgi?remove=$_&TabAct=$TabAct"},"<img src='$src' alt='Del' onclick=\"return checkRemove('$objPref->{Beard}->{report}->{$_}->{name}','$_')\"/>");
+	$ids = ($_ eq $ID) ? ($TabAct eq 'R') ? '#'.$Tabs->{R}->{bg} : '#AAA' : '#AAA';
+d109 1
+@
+
+
+1.26
+log
+@removing results implemented, minor code improvment
+@
+text
+@d5 1
+a5 1
+# $Id: tabs.cgi,v 1.25 2003/04/30 09:53:35 jiri_schmid Exp $
+d51 1
+a51 1
+print "<script type='text/javascript'>var use_param='$ENV{QUERY_STRING}';</script>";
+d97 1
+a97 1
+	my $link = $q->a({-href=>"result", -onclick=>"return viewResult('$_','$openIn');"}, $objPref->{Beard}->{report}->{$_}->{name});
+d99 1
+a99 1
+	$link .= $q->a({-href=>"tabs.cgi?remove=$_&TabAct=$TabAct"},"<img src='$src' alt='Del' onclick=\"return checkRemove('$objPref->{Beard}->{report}->{$_}->{name}','$TabAct')\"/>");
+@
+
+
+1.25
+log
+@tabs for results implemented
+@
+text
+@d5 1
+a5 1
+# $Id: tabs.cgi,v 1.24 2003/04/23 14:38:57 jiri_schmid Exp $
+a13 3
+my $use_lang = (param('Lang')) ? param('Lang') : "EN";
+my $use_enc = $Languages->{$use_lang}->{'enc'};
+require $Languages->{$use_lang}->{'src'};
+d29 6
+a35 1
+my $user=remote_user();
+d49 1
+a51 1
+#print $q->Dump;
+a61 1
+#	Tr(	td({-bgcolor=>'#EEEEEE'}),'&nbsp')
+d63 1
+a63 1
+
+a79 2
+
+my $objPref = SOAP->LoadUserPref($user);
+d86 4
+a89 4
+	my $new_report;
+	$new_report->{name} = $reportObj->{report}->{$ID}->{name};
+	$new_report->{project} = $objPref->{Beard}->{project};
+	$objPref->{Beard}->{report}->{$ID} = $new_report;
+a92 9
+my $target;
+my $href;
+
+if ($objPref->{Beard}->{open_in} eq "_self") {
+	$target = "_top";
+	$href="index.cgi?TabAct=R&build=no&item_id=";
+} else {
+	$href = "run.cgi?build=no&item_id=";
+}
+d94 1
+d97 5
+a101 3
+	$ids = ($_ eq $ID) ? '#'.$Tabs->{R}->{bg} : '#AAA';
+	if ($target ne "_top") {$target = ($objPref->{Beard}->{open_in} eq "_blank") ? "$_" : "result"; $ids = '#AAA';}
+	$res.=td({-class=>'tabs_tab', -bgcolor=>"$ids"}, $q->a({-href=>"$href$_", -target=>"$target"},$objPref->{Beard}->{report}->{$_}->{name}));
+a111 1
+#		my $IDstr = ($ID ? "ID=$ID" : '');
+d127 9
+@
+
+
+1.24
+log
+@the tree is generated now on server side in html directory as tree.html
+@
+text
+@d5 1
+a5 1
+# $Id: tabs.cgi,v 1.23 2003/04/03 09:52:37 jiri_schmid Exp $
+d9 1
+a9 1
+use vars qw($Tabs $Languages);
+a15 1
+my $all_params = $ENV{QUERY_STRING};
+d18 14
+d33 1
+a33 1
+my $User=remote_user();
+d43 1
+a43 1
+	-script=>{-language=>'JAVASCRIPT', -src=>'js/tabs.js'}
+d48 1
+a48 8
+my $use_param = "\"".$all_params."\"";
+print <<END;
+<script type="text/javascript">
+<!--
+var use_param=$use_param;
+-->
+</script>
+END
+d70 1
+a70 1
+        if ($_ eq $TabAct) { $ids='#'.$Tabs->{$_}->{bg} } else { $ids='#AAAAAA' }
+d74 39
+a112 1
+    $res
+a115 1
+
+@
+
+
+1.23
+log
+@blocking sending action to server, when canceled confirm dialog from tabs.cgi
+@
+text
+@d5 1
+a5 1
+# $Id: tabs.cgi,v 1.22 2003/03/25 15:37:37 jiri_schmid Exp $
+d82 3
+a84 3
+				if ( $_ eq 'Cop') {$hlp_str = "onclick=\"return check_quit('Copy');\""}
+				elsif ( $_ eq 'Del') { $hlp_str = "onclick=\"return check_quit('Drop');\""}
+				else { $hlp_str = "onclick=\"return check_quit('New');\"";}
+@
+
+
+1.22
+log
+@syntax checker for metrics imrpoved, loading user pref file when file missing fixed/imrpoved
+@
+text
+@d5 1
+a5 1
+# $Id: tabs.cgi,v 1.21 2003/03/24 12:17:43 jiri_schmid Exp $
+d82 3
+a84 3
+				if ( $_ eq 'Cop') {$hlp_str = " onclick=\"check_quit(); prepare_duplicate();return true;\""}
+				elsif ( $_ eq 'Del') { $hlp_str = " onclick=\"check_quit(); check_drop();return true;\""}
+				else { $hlp_str = " onclick=\"check_quit();return true;\"";}
+@
+
+
+1.21
+log
+@IE5 bug fixed
+@
+text
+@d5 1
+a5 1
+# $Id: tabs.cgi,v 1.20 2003/03/20 16:39:30 michald Exp $
+d14 1
+a14 1
+my $use_lang = param('Lang');
+@
+
+
+1.20
+log
+@minor fixes
+@
+text
+@d5 1
+a5 1
+# $Id: tabs.cgi,v 1.19 2003/03/12 16:32:45 jiri_schmid Exp $
+d52 1
+a52 1
+		td({-bgcolor=>'#'.$Tabs->{$TabAct}->{bg},-class=>'instrat',-align=>'right'},'Insight Strategy a.s.')
+@
+
+
+1.19
+log
+@user prefernce - open result in: implemented
+@
+text
+@d5 1
+a5 1
+# $Id: tabs.cgi,v 1.18 2003/03/11 16:17:10 jiri_schmid Exp $
+d32 3
+@
+
+
+1.18
+log
+@fixed wrong calling of index.cgi, some unused variables removed
+@
+text
+@d5 1
+a5 1
+# $Id: tabs.cgi,v 1.17 2003/03/11 11:05:31 jiri_schmid Exp $
+a14 1
+my $SharedParam = "Lang=$use_lang&Cook=".param('Cook');
+d16 1
+d32 1
+a32 1
+my $use_param = "\"".$SharedParam."\"";
+d82 1
+a82 1
+				my $hrf = $TabsF->{$_}->{cgi}.$SharedParam;
+@
+
+
+1.17
+log
+@language bug in prefer.cgi fixed
+@
+text
+@d5 1
+a5 1
+# $Id: tabs.cgi,v 1.16 2003/03/10 16:14:00 jiri_schmid Exp $
+d9 1
+a9 1
+use vars qw($CharSet $Tabs $Languages);
+@
+
+
+1.16
+log
+@charset fixed
+@
+text
+@d5 1
+a5 1
+# $Id: tabs.cgi,v 1.15 2003/03/10 10:28:37 jiri_schmid Exp $
+d38 1
+a38 1
+</script>;
+d62 1
+a62 1
+	$res.=td({-class=>'tabs_tab', -bgcolor=>$ids}, $q->a({-href=>"index.cgi?TabAct=$_&$SharedParam", -target=>"_top"},$Tabs->{$_}->{name}));
+@
+
+
+1.15
+log
+@charset test commit
+@
+text
+@d5 1
+a5 1
+# $Id: tabs.cgi,v 1.14 2003/03/07 16:18:37 jiri_schmid Exp $
+d14 3
+a16 17
+
+# --- make SOAP connection ---
+eval "use SOAP::Lite +autodispatch => 
+	uri => 'Bear', 
+	proxy => ['http://$bearHost:$bearPort/', 
+	options => {compress_threshold => $compress_threshold}]; 
+	1"
+or ( &ErrorDie("ERROR in eval of \"use SOAP::Lite ...\".") );
+
+my $serverVerbName="SOAP Server http://$bearHost:$bearPort/";
+if (! eval "SOAP::Lite->self->fault") {
+	ErrorDie('ERROR: '.$serverVerbName.' not responding<br><form><input type="submit" name="Refresh" value="Refresh" /></form>');
+}
+#*SOAP::Serializer::as_string = \&SOAP::Serializer::as_base64;	#reducing number of XML::Parser char() callbaks  for every single portion of processed stream (e.g. \n)
+my $ObjPref = SOAP->LoadUserPref($ENV{REMOTE_USER});
+my $use_lang = $ObjPref->{'Beard'}->{'language'};
+
+d22 1
+a22 1
+print $q->header();
+d25 2
+a26 2
+	-lang=>$Languages->{$use_lang}->{lang},
+	-encoding=>$Languages->{$use_lang}->{enc},
+d29 1
+a29 1
+		-content => "text/html; charset=$Languages->{$use_lang}->{'enc'}"}),
+d32 8
+a39 1
+		
+d62 1
+a62 1
+	$res.=td({-class=>'tabs_tab', -bgcolor=>$ids}, $q->a({-href=>"index.cgi?TabAct=$_", -target=>"_top"},$Tabs->{$_}->{name}));
+d82 2
+a83 1
+				$res.="&nbsp;".$q->a({-id=>$TabsF->{$_}->{id}, -href=>$TabsF->{$_}->{cgi}, -target=>$TabsF->{$_}->{target}},
+@
+
+
+1.14
+log
+@weekend commit, language not fixed :(
+@
+text
+@d5 1
+a5 1
+# $Id: tabs.cgi,v 1.13 2003/03/06 15:52:15 jiri_schmid Exp $
+d43 1
+a43 1
+		-content => "text/html charset=$Languages->{$use_lang}->{'enc'}" }),
+@
+
+
+1.13
+log
+@language files and language options are from now specifed only in const.def
+@
+text
+@d5 1
+a5 1
+# $Id: tabs.cgi,v 1.12 2003/03/06 14:48:59 jiri_schmid Exp $
+d29 1
+a29 1
+my $lang = $ObjPref->{'Beard'}->{'language'};
+d31 1
+a31 1
+require $Languages->{$lang}->{'src'};
+d36 11
+a46 9
+print $q->header(-charset=>$CharSet);
+print <<ENDOFTEXT;
+<html><head>
+<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=$CharSet">
+<link rel="stylesheet" type="text/css" href="$StyleSheet"/>
+</head><body>
+<script language="JAVASCRIPT" src="js/tabs.js" type="text/javascript"></script>
+ENDOFTEXT
+
+d48 12
+a59 13
+print table({-class=>"head", cellspacing=>0},
+    Tr(
+        td({-class=>"head", -id=>"t1", -colspan=>$#Tabs*2+1},'&nbsp;'),
+        td({-class=>"head", -id=>"t0", -rowspan=>"3"}, $TestDBWarn),
+    ),
+    Tr({-class=>"head_tab"}, &TabRow2()),
+    Tr({-class=>"head_tab"},
+        td({-class=>"head_tab", -id=>"t2", -colspan=>$#Tabs*2+2, -bgcolor=>'#'.$Tabs->{$TabAct}->{bg} }, &TabRow3())
+    ),
+    Tr({-class=>"head_tab"},
+        td({-class=>"head_tab", -id=>"t3", -colspan=>$#Tabs*2+2},'&nbsp;')
+    )
+);
+d61 1
+a61 1
+print $q->end_html;
+d69 2
+a70 2
+	$res.=td({-class=>"head_tab", -bgcolor=>$ids}, $q->a({-class=>'head_tab', -href=>"index.cgi?TabAct=$_", -target=>"_top"},$Tabs->{$_}->{name}));
+        $res.=td({-class=>"head", -id=>"sep"},'&nbsp;');
+d89 1
+a89 1
+				$res.="&nbsp;".$q->a({-class=>'head_tab', -id=>$TabsF->{$_}->{id}, -href=>$TabsF->{$_}->{cgi}, -target=>$TabsF->{$_}->{target}},
+@
+
+
+1.12
+log
+@loading and saving user preferneces under its name functional, preferences affects edit.cgi, tabs.cgi and prefer.cgi for now
+@
+text
+@d5 1
+a5 1
+# $Id: tabs.cgi,v 1.11 2003/03/03 13:23:26 spanhel Exp $
+a28 1
+my $cook = "\"".$ObjPref->{'Beard'}->{'cookie'}."\"";
+a42 1
+<script language="JAVASCRIPT">var use_cookie=$cook</script>
+@
+
+
+1.11
+log
+@lang version
+@
+text
+@d5 1
+a5 1
+# $Id: tabs.cgi,v 1.10 2003/02/28 10:43:31 jiri_schmid Exp $
+d9 1
+a9 1
+use vars qw($CharSet $Tabs);
+a13 2
+if ($al eq 'cz') {require 'lang/cz.def'}
+if ($al eq 'us') {require 'lang/us.def'}
+d15 18
+a34 1
+#my $ID=param('ID');
+d44 1
+@
+
+
+1.10
+log
+@added files admin,prefer.cgi, unused content of *.css removed with minor visual changes
+@
+text
+@d5 1
+a5 1
+# $Id: tabs.cgi,v 1.9 2003/02/25 09:18:01 jiri_schmid Exp $
+d9 1
+d14 3
+@
+
+
+1.9
+log
+@added checking of unsaved-changed item, when traying to start editing another one
+@
+text
+@d5 1
+a5 1
+# $Id: tabs.cgi,v 1.8 2003/02/24 15:31:09 jiri_schmid Exp $
+d75 1
+a75 1
+    $res
+@
+
+
+1.8
+log
+@new bugs just found fixed, some visual changes
+@
+text
+@d5 1
+a5 1
+# $Id: tabs.cgi,v 1.7 2003/02/17 09:58:18 jiri_schmid Exp $
+d67 3
+a69 3
+				if ( $_ eq 'Cop') {$hlp_str = " onclick=\"prepare_duplicate()\""}
+				elsif ( $_ eq 'Del') { $hlp_str = " onclick=\"check_drop()\""}
+				else { $hlp_str = "";}
+@
+
+
+1.7
+log
+@added directory for javascript files, deleting items from tree controled by javascipt - tabs.js/check_drop()
+@
+text
+@d5 1
+a5 1
+# $Id: tabs.cgi,v 1.6 2003/01/20 18:23:45 spanhel Exp $
+d64 8
+a71 8
+				$res.="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+			} elsif ($_ eq 'Del')  {
+				$res.="&nbsp;".$q->a({-class=>'head_tab', -href=>$TabsF->{$_}->{cgi}, -target=>$TabsF->{$_}->{target}, -id=>'realise_drop'},
+					"<IMG SRC=\"$ImgP/".$TabsF->{$_}->{img}."\" alt=\"".$TabsF->{$_}->{name}."\" title=\"".$TabsF->{$_}->{name}."\" onclick=\"check_drop();\" align=\"top\">");
+				}
+				else {
+				$res.="&nbsp;".$q->a({-class=>'head_tab', -href=>$TabsF->{$_}->{cgi}, -target=>$TabsF->{$_}->{target}},
+					"<IMG SRC=\"$ImgP/".$TabsF->{$_}->{img}."\" alt=\"".$TabsF->{$_}->{name}."\" title=\"".$TabsF->{$_}->{name}."\" align=\"top\">");
+@
+
+
+1.6
+log
+@reduce number of tabs
+@
+text
+@d5 1
+a5 1
+# $Id: tabs.cgi,v 1.5 2003/01/16 17:20:19 spanhel Exp $
+d24 1
+d65 5
+a69 1
+			} else {
+d72 1
+a72 1
+			}
+@
+
+
+1.5
+log
+@change edit.cgi - tree and object edit desided into two iframes
+@
+text
+@d5 1
+a5 1
+# $Id: tabs.cgi,v 1.4 2002/11/08 07:15:01 michald Exp $
+d59 1
+a59 1
+	if ($TabAct eq 'F') {	# toolbar for "Folders" tab
+@
+
+
+1.4
+log
+@Grid metadata save
+@
+text
+@d5 1
+a5 1
+# $Id: tabs.cgi,v 1.3 2002/10/05 17:32:02 michald Exp $
+d49 1
+a49 1
+        $res.=td({-class=>"head_tab", -bgcolor=>$ids}, $q->a({-class=>'head_tab', -href=>"index.cgi?TabAct=$_", -target=>"_top"},$Tabs->{$_}->{name}));
+d63 1
+a63 1
+				$res.="&nbsp;&nbsp;&nbsp;";
+@
+
+
+1.3
+log
+@grid edit window
+@
+text
+@d5 1
+a5 1
+# $Id: tabs.cgi,v 1.2 2002/09/29 09:08:21 michald Exp $
+d34 1
+a34 1
+        td({-class=>"head_tab", -id=>"t2", -colspan=>$#Tabs*2+2, -bgcolor=>'#'.%Tabs->{$TabAct}->{bg} }, &TabRow3())
+d48 2
+a49 2
+        if ($_ eq $TabAct) { $ids='#'.%Tabs->{$_}->{bg} } else { $ids='#AAAAAA' }
+        $res.=td({-class=>"head_tab", -bgcolor=>$ids}, $q->a({-class=>'head_tab', -href=>"index.cgi?TabAct=$_", -target=>"_top"},%Tabs->{$_}->{name}));
+d65 2
+a66 3
+#				$res.="&nbsp;".$q->a({-class=>'head_tab', -href=>%TabsF->{$_}->{cgi}.$IDstr, -target=>%TabsF->{$_}->{target}},
+				$res.="&nbsp;".$q->a({-class=>'head_tab', -href=>%TabsF->{$_}->{cgi}, -target=>%TabsF->{$_}->{target}},
+					"<IMG SRC=\"$ImgP/".%TabsF->{$_}->{img}."\" alt=\"".%TabsF->{$_}->{name}."\" title=\"".%TabsF->{$_}->{name}."\" align=\"top\">");
+@
+
+
+1.2
+log
+@update of tabs structure
+@
+text
+@d5 1
+a5 1
+# $Id: tabs.cgi,v 1.1.1.1 2002/09/24 01:56:41 michald Exp $
+d15 1
+a15 1
+my $ID=param('ID');
+d59 3
+a61 2
+	if ($TabAct eq 'F') {
+		foreach (@@TabsE) {
+d65 3
+a67 2
+				$res.="&nbsp;".$q->a({-class=>'head_tab', -href=>%TabsE->{$_}->{cgi}."ID=$ID", -target=>%TabsE->{$_}->{target}},
+					"<IMG SRC=\"$ImgP/".%TabsE->{$_}->{img}."\" alt=\"".%TabsE->{$_}->{name}."\" title=\"".%TabsE->{$_}->{name}."\" align=\"top\">");
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d5 1
+a5 1
+# $Id: tabs.cgi,v 1.2 2002/09/16 15:00:20 michal Exp $
+d48 1
+a48 1
+        if ($_ eq $TabAct) { $ids='#'.%Tabs->{$_}->{bg} } else { $ids='#CCCCCC' }
+d59 1
+a59 1
+	if ($TabAct eq 'E') {
+d61 6
+a66 2
+			$res.="&nbsp;".$q->a({-class=>'head_tab', -href=>%TabsE->{$_}->{cgi}."ID=$ID", -target=>%TabsE->{$_}->{target}},
+				"<IMG SRC=\"$ImgP/".%TabsE->{$_}->{img}."\" alt=\"".%TabsE->{$_}->{name}."\" title=\"".%TabsE->{$_}->{name}."\" align=\"middle\">");
+@
+
+
+1.1.1.1
+log
+@Initial release of Bear ROLAP Portal
+@
+text
+@@

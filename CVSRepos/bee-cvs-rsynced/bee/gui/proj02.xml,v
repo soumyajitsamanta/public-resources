@@ -1,0 +1,984 @@
+head	1.13;
+access;
+symbols
+	start:1.1.1.1 vendor:1.1.1;
+locks; strict;
+comment	@# @;
+
+
+1.13
+date	2003.11.06.12.28.24;	author tuco80;	state Exp;
+branches;
+next	1.12;
+
+1.12
+date	2003.10.30.13.57.08;	author tuco80;	state Exp;
+branches;
+next	1.11;
+
+1.11
+date	2003.09.25.09.50.12;	author tuco80;	state Exp;
+branches;
+next	1.10;
+
+1.10
+date	2003.09.08.14.07.20;	author tuco80;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	2003.08.29.11.45.22;	author tuco80;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	2003.08.21.13.20.48;	author tuco80;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	2003.08.08.14.57.37;	author tuco80;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	2003.08.06.11.10.06;	author tuco80;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	2003.08.05.15.21.56;	author tuco80;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2003.08.04.11.22.29;	author tuco80;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2003.07.31.06.37.44;	author michald;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2002.09.26.18.24.15;	author michald;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2002.09.24.01.34.18;	author michald;	state Exp;
+branches
+	1.1.1.1;
+next	;
+
+1.1.1.1
+date	2002.09.24.01.34.18;	author michald;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.13
+log
+@+Color changing for Groups, +Property edition for groups/roles
+@
+text
+@<?xml version='1.0' standalone='yes'?>
+<project id="test1" version="0.1" description="Test Project 1" create-date="2002-04-10">
+  <gui-presentation></gui-presentation>
+  <connection to="bear.instrat.cz/_TRAN/mult/y-3" from="bear.instrat.cz/_TRAN/ciCbAICgqD/ciDbAICgqD-2" name="New Conn ID: QnzbXkWgUN" id="QnzbXkWgUN" description="Goes From ciDbAICgqD to TRAN">
+    <gui-presentation id="1" description="No Description input yet" />
+  </connection>
+  <connection to="bear.instrat.cz/demo/order/date" from="bear.instrat.cz/_TRAN/mult2/z-1" name="New HRel ID: HnT6vqxfE5" id="HnT6vqxfE5" description="Goes From z to date">
+    <gui-presentation id="1" description="No Description input yet" />
+  </connection>
+  <connection to="bear.instrat.cz/_TRAN/mult/y-8" from="bear.instrat.cz/demo/lu_product/id" name="New Conn ID: MWTd4cFcDH" id="MWTd4cFcDH" description="Goes From TAB to TRAN">
+    <gui-presentation id="1" description="No Description input yet" />
+  </connection>
+  <connection to="bear.instrat.cz/_TRAN/mult/y-5" from="bear.instrat.cz/_TRAN/ciCbAICgqD/ciDbAICgqD-4" name="New Conn ID: UHPbXrzgUR" id="UHPbXrzgUR" description="Goes From ciDbAICgqD to TRAN">
+    <gui-presentation id="1" description="No Description input yet" />
+  </connection>
+  <connection to="bear.instrat.cz/_TRAN/mult/y-1" from="_CONST/c1" name="XXX" id="c2">
+    <gui-presentation id="1" />
+    <transfer-type>crypt</transfer-type>
+    <transfer-type>compress</transfer-type>
+  </connection>
+  <connection to="bear.instrat.cz/_TRAN/mult/y-4" from="bear.instrat.cz/_TRAN/ciCbAICgqD/ciDbAICgqD-3" name="New Conn ID: UHObXrzgUR" id="UHObXrzgUR" description="Goes From ciDbAICgqD to TRAN">
+    <gui-presentation id="1" description="No Description input yet" />
+  </connection>
+  <connection to="bear.instrat.cz/_TRAN/mult/x-4" from="bear.instrat.cz/_TRAN/ciCbAICgqD/H2FcZq3iaa-1" name="New Conn ID: H2IcZq3iaa" id="H2IcZq3iaa" description="Goes From H2FcZq3iaa to TRAN">
+    <gui-presentation id="1" description="No Description input yet" />
+  </connection>
+  <connection to="bear.instrat.cz/_TRAN/mult/x-2" from="bear.instrat.cz/_TRAN/ciCbAICgqD/H2DcZq3iaa-1" name="New Conn ID: H2GcZq3iaa" id="H2GcZq3iaa" description="Goes From H2DcZq3iaa to TRAN">
+    <gui-presentation id="1" description="No Description input yet" />
+  </connection>
+  <connection to="bear.instrat.cz/demo/order/id" from="bear.instrat.cz/_TRAN/mult/z-1" id="c5">
+    <gui-presentation id="1" />
+  </connection>
+  <connection to="bear.instrat.cz/_TRAN/mult2/y2-2" from="bear.instrat.cz/_TRAN/xESfeosaFo/xEWfeosaFo-2" name="New Conn ID: xEXfeosaFo" id="xEXfeosaFo" description="Goes From xEWfeosaFo to TRAN">
+    <gui-presentation id="1" description="No Description input yet" />
+  </connection>
+  <connection to="bear.instrat.cz/_TRAN/mult/x-3" from="bear.instrat.cz/_TRAN/ciCbAICgqD/H2EcZq3iaa-1" name="New Conn ID: H2HcZq3iaa" id="H2HcZq3iaa" description="Goes From H2EcZq3iaa to TRAN">
+    <gui-presentation id="1" description="No Description input yet" />
+  </connection>
+  <connection to="bear.instrat.cz/_TRAN/mult/y-7" from="bear.instrat.cz/_TRAN/ciCbAICgqD/XEccZk3h96-1" name="New Conn ID: XEecZk3h96" id="XEecZk3h96" description="Goes From XEccZk3h96 to TRAN">
+    <gui-presentation id="1" description="No Description input yet" />
+  </connection>
+  <connection to="bear.instrat.cz/_TRAN/mult2/y2-1" from="bear.instrat.cz/_TRAN/mult/z-1" name="New HRel ID: BOW6u5RfCn" id="BOW6u5RfCn" description="Goes From z to y2">
+    <gui-presentation id="1" description="No Description input yet" />
+  </connection>
+  <connection to="bear.instrat.cz/_TRAN/mult/y-2" from="bear.instrat.cz/_TRAN/ciCbAICgqD/ciDbAICgqD-1" name="New Conn ID: QnybXkWgUN" id="QnybXkWgUN" description="Goes From ciDbAICgqD to TRAN">
+    <gui-presentation id="1" description="No Description input yet" />
+  </connection>
+  <connection to="bear.instrat.cz/_TRAN/mult/y-6" from="bear.instrat.cz/_TRAN/ciCbAICgqD/XEbcZk3h96-1" name="New Conn ID: XEdcZk3h96" id="XEdcZk3h96" description="Goes From XEbcZk3h96 to TRAN">
+    <gui-presentation id="1" description="No Description input yet" />
+  </connection>
+  <connection to="bear.instrat.cz/_TRAN/mult/x-1" from="bear.instrat.cz/demo/lu_product/id" transfer-type="simple" id="c1">
+    <gui-presentation id="1" />
+  </connection>
+  <connection to="bear.instrat.cz/_TRAN/mult/x-5" from="_CONST/c1" name="New Conn ID: MWUd4cFcDH" id="MWUd4cFcDH" description="Goes From CONST to TRAN">
+    <gui-presentation id="1" description="No Description input yet" />
+  </connection>
+  <trigger name="auto2" type="autostart" id="auto">
+    <gui-presentation coord="50 100" id="1" />
+    <gui-presentation coord="50 100" id="2" />
+  </trigger>
+  <trigger name="autostart" type="autostart" id="autostart">
+    <gui-presentation coord="50 100" id="1" />
+    <gui-presentation coord="50 100" id="2" />
+  </trigger>
+  <content>
+ id=&quot;auto&quot;    </content>
+  <content>
+ id=&quot;bear.instrat.cz/demo/order&quot;    </content>
+  <content>
+ id=&quot;bear.instrat.cz/demo/lu_product&quot;    </content>
+  <fact></fact>
+  <attr></attr>
+  <group></group>
+  <gui-layer width="210" visible="YES" id="1" height="280">
+    <name en="Layer 1" cz="Layer 1" />
+    <description></description>
+  </gui-layer>
+  <gui-layer width="210" id="2" height="280">
+    <name en="Layer 2" cz="Layer 2" />
+    <description></description>
+  </gui-layer>
+  <constant></constant>
+  <hrelation></hrelation>
+  <host tree-mode="close" name="kangaroo" id="kangaroo.instrat.cz" description="DB Server">
+    <source></source>
+    <transformation></transformation>
+  </host>
+  <host tree-mode="open" name="bear" id="bear.instrat.cz" description="My Laptop">
+    <source tree-mode="open" name="Sales Demo" id="demo" type="psql">
+      <table access="RW" tree-mode="open" name="Order" id="order" description="Order table">
+        <gui-presentation coord="501 137" id="1" />
+        <gui-presentation coord="497 302" id="2" />
+        <column name="Order Date" type="date" id="date">
+          <gui-presentation id="1" line="1" />
+          <constraint type="NOTNULL" />
+        </column>
+        <column lenght="4" name="ID" type="integer" id="id" description="Order ID">
+          <gui-presentation id="1" line="2" />
+          <gui-presentation id="2" line="1" />
+          <constraint type="PK" />
+        </column>
+      </table>
+      <table access="RO" name="Base" tree-mode="close" id="lu_base" description="None">
+        <gui-presentation></gui-presentation>
+      </table>
+      <table access="RO" tree-mode="open" name="Product" id="lu_product" description="Product lookup table  ">
+        <gui-presentation coord="94 147" id="1" />
+        <gui-presentation coord="298 302" id="2" />
+        <column lenght="4" name="ID" type="integer" id="id" description="Product ID">
+          <gui-presentation id="1" line="1" />
+          <gui-presentation id="2" line="1" />
+          <constraint type="PK" />
+        </column>
+      </table>
+      <view query="SELECT c.fname||' '||c.lname,t.cust_city_desc FROM lu_cust AS c JOIN lu_cust_city AS t ON c.cust_city_id=t.cust_city_id" name="Customer" description="Customer First and Last Name" id="customer" type="ETL">
+        <gui-presentation coord="500 200" id="1" />
+        <gui-presentation coord="400 300" id="2" />
+        <proc language="perl">$_[0]=~s/(\w)\w* (\w+)/$1. $2/</proc>
+        <column name="City" type="varchar" id="city" description="Customer City">
+          <gui-presentation id="1" line="2" />
+          <gui-presentation id="2" line="1" />
+        </column>
+        <column name="Name" type="varchar" id="name" description="First and Last Name">
+          <gui-presentation id="1" line="1" />
+        </column>
+      </view>
+      <metadata version="1">
+        <columns-query type="SQL">SELECT ... FROM ...</columns-query>
+        <tables-query type="SQL">SELECT ... FROM ...</tables-query>
+      </metadata>
+      <src-conn driver="dbi:Pg">
+        <src-name gui-line="2">demo</src-name>
+        <password gui-line="4" />
+        <user gui-line="3">postgres</user>
+        <port gui-line="1">5432</port>
+      </src-conn>
+    </source>
+    <file name="log.log" tree-mode="close" id="WjMqO6hauT" description="">
+      <src-conn driver="dir">
+        <src-name gui-line="1">/var/logs/WjMqO6hauT</src-name>
+        <password gui-Line="2">dos</password>
+        <user gui-line="3">uno</user>
+        <port gui-line="4">8768</port>
+      </src-conn>
+    </file>
+    <transformation name="NewTran" id="ciCbAICgqD" description="No description Input yet ">
+      <gui-presentation coord="48 234" id="1" />
+      <input length="1" name="Eb" id="ciEbAICgqD">
+        <gui-presentation id="1" description="" line="1" />
+      </input>
+      <proc language="perl" />
+      <output name="bc" id="XEbcZk3h96">
+        <gui-presentation id="1" description="" line="2" />
+      </output>
+      <output length="4" name="Db" id="ciDbAICgqD">
+        <gui-presentation id="1" description="" line="1" />
+      </output>
+      <output name="Dc" id="H2DcZq3iaa">
+        <gui-presentation id="1" description="" line="4" />
+      </output>
+      <output name="cc" id="XEccZk3h96">
+        <gui-presentation id="1" description="" line="3" />
+      </output>
+      <output name="Ec" id="H2EcZq3iaa">
+        <gui-presentation id="1" description="" line="5" />
+      </output>
+      <output name="Fc" id="H2FcZq3iaa">
+        <gui-presentation id="1" description="" line="6" />
+      </output>
+    </transformation>
+    <transformation name="(X+2)*Y" id="mult2" inherit="bear.instrat.cz/TRANSF/mult">
+      <gui-presentation coord="489 251" id="1" />
+      <input length="2" name="Y" type="integer" id="y2" description="Y variable">
+        <gui-presentation id="1" line="1" />
+      </input>
+      <proc></proc>
+      <output name="Z" type="integer" id="z">
+        <gui-presentation id="1" line="1" />
+      </output>
+    </transformation>
+    <transformation name="(X+2)*Y" id="mult">
+      <gui-presentation coord="354 150" id="1" />
+      <proc language="perl">$x+=2;$z=$x*$y;</proc>
+      <input length="8" name="Y" type="integer" id="y" description="Y variable">
+        <gui-presentation id="1" line="2" />
+      </input>
+      <input length="5" name="X" type="integer" id="x" description="X variable">
+        <gui-presentation id="1" line="1" />
+      </input>
+      <timeout unit="s" type="per-cycle">20</timeout>
+      <output name="Z" type="integer" id="z">
+        <gui-presentation id="1" line="1" />
+      </output>
+    </transformation>
+    <transformation name="NewTran" id="xESfeosaFo" description="No description Input yet">
+      <gui-presentation coord="350 366" id="1" />
+      <proc language="Perl">use strict;
+
+my $RE = '^(\S+) \S+ \S+ \[([^:]+):(\d+:\d+:\d+) '.
+		 '([^\]]+)\] &quot;(\S+) (.+?) (\S+)&quot; (\S+) (\S+)';
+
+while(my($line) = $access_log-&gt;fetch) {
+
+	my($domain,$date,$time,$zone,$method,$page,$protocol,$code,$size) = 
+	  ($line =~ $RE) or next;
+	#here we make the transfomation
+	$Time-&gt;put($date,$time,$zone);
+	$Domain-&gt;put($domain);
+#	$Page-&gt;put($page);
+}
+
+</proc>
+      <input length="1" name="Tf" id="xETfeosaFo" line="1">
+        <gui-presentation id="1" description="" line="1" />
+      </input>
+      <input length="1" name="Vf" id="xEVfeosaFo" line="3">
+        <gui-presentation id="1" description="" line="3" />
+      </input>
+      <input length="1" name="Uf" id="xEUfeosaFo" line="2">
+        <gui-presentation id="1" description="" line="2" />
+      </input>
+      <output length="3" name="Wf" id="xEWfeosaFo" line="1">
+        <gui-presentation id="1" description="" line="1" />
+      </output>
+    </transformation>
+  </host>
+  <signal></signal>
+  <const name="Const3" data="200" id="c3">
+    <gui-presentation></gui-presentation>
+  </const>
+  <const name="Constant" data="20" id="c1" description=" ">
+    <gui-presentation coord="154 228" id="1" />
+  </const>
+  <relation name="New Rel ID: OMV6vavfCx" id="OMV6vavfCx" description="Goes From bear.instrat.cz/demo/lu_product/id to bear.instrat.cz/demo/order/date">
+    <gui-presentation></gui-presentation>
+    <to cardinality="N" optional="true">bear.instrat.cz/demo/order/date</to>
+    <from cardinality="1" optional="false">bear.instrat.cz/demo/lu_product/id</from>
+  </relation>
+  <tree-history id="1">
+    <LObj id="_LOBJ">
+      <ATTR mode="open" id="_ATTR" />
+    </LObj>
+    <host mode="open" id="bear.instrat.cz">
+      <source mode="open" id="demo">
+        <table mode="open" id="order" />
+        <table mode="open" id="lu_product" />
+      </source>
+      <transformation mode="open" id="_TRAN" />
+    </host>
+    <LAYER mode="open" id="_LAYER" />
+  </tree-history>
+</project>
+@
+
+
+1.12
+log
+@Little problem with language fixed
+@
+text
+@d3 1
+a3 8
+  <trigger name="autostart" type="autostart" id="autostart">
+    <gui-presentation coord="50 100" id="1" />
+    <gui-presentation coord="50 100" id="2" />
+  </trigger>
+  <trigger name="auto2" type="autostart" id="auto">
+    <gui-presentation coord="50 100" id="1" />
+    <gui-presentation coord="50 100" id="2" />
+  </trigger>
+d7 3
+d13 1
+a13 1
+  <connection to="bear.instrat.cz/demo/order/date" from="bear.instrat.cz/_TRAN/mult2/z-1" name="New HRel ID: HnT6vqxfE5" id="HnT6vqxfE5" description="Goes From z to date">
+a20 3
+  <connection to="bear.instrat.cz/_TRAN/mult/y-5" from="bear.instrat.cz/_TRAN/ciCbAICgqD/ciDbAICgqD-4" name="New Conn ID: UHPbXrzgUR" id="UHPbXrzgUR" description="Goes From ciDbAICgqD to TRAN">
+    <gui-presentation id="1" description="No Description input yet" />
+  </connection>
+d57 8
+a64 2
+  <gui-presentation></gui-presentation>
+  <fact></fact>
+d71 1
+d84 1
+a84 1
+  <host name="kangaroo" tree-mode="close" id="kangaroo.instrat.cz" description="DB Server">
+d88 3
+a90 3
+  <host name="bear" tree-mode="open" id="bear.instrat.cz" description="My Laptop">
+    <source name="Sales Demo" tree-mode="open" id="demo" type="psql">
+      <table access="RW" name="Order" tree-mode="open" id="order" description="Order table">
+d97 1
+a97 1
+        <column name="ID" lenght="4" type="integer" id="id" description="Order ID">
+d103 4
+a106 1
+      <table access="RO" name="Product" tree-mode="open" id="lu_product" description="Product lookup table  ">
+d109 1
+a109 1
+        <column name="ID" lenght="4" type="integer" id="id" description="Product ID">
+d138 8
+a145 10
+    <transformation name="(X+2)*Y" id="mult2" inherit="bear.instrat.cz/TRANSF/mult">
+      <gui-presentation coord="489 251" id="1" />
+      <proc></proc>
+      <input length="2" name="Y" type="integer" id="y2" description="Y variable">
+        <gui-presentation id="1" line="1" />
+      </input>
+      <output name="Z" type="integer" id="z">
+        <gui-presentation id="1" line="1" />
+      </output>
+    </transformation>
+a147 1
+      <proc language="perl" />
+d151 1
+d155 3
+a160 3
+      <output length="4" name="Db" id="ciDbAICgqD">
+        <gui-presentation id="1" description="" line="1" />
+      </output>
+d164 3
+d170 9
+a178 2
+      <output name="Ec" id="H2EcZq3iaa">
+        <gui-presentation id="1" description="" line="5" />
+d183 1
+a189 1
+      <proc language="perl">$x+=2;$z=$x*$y;</proc>
+a196 9
+      <input length="1" name="Tf" id="xETfeosaFo" line="1">
+        <gui-presentation id="1" description="" line="1" />
+      </input>
+      <input length="1" name="Vf" id="xEVfeosaFo" line="3">
+        <gui-presentation id="1" description="" line="3" />
+      </input>
+      <input length="1" name="Uf" id="xEUfeosaFo" line="2">
+        <gui-presentation id="1" description="" line="2" />
+      </input>
+d213 9
+d235 1
+a236 1
+    <gui-presentation></gui-presentation>
+d244 1
+a244 1
+      <source id="demo">
+@
+
+
+1.11
+log
+@Arity of Transformation I/O complete
+@
+text
+@d3 8
+a10 1
+  <gui-presentation></gui-presentation>
+d14 1
+a14 1
+  <connection to="bear.instrat.cz/demo/order/date" from="bear.instrat.cz/_TRAN/mult2/z-1" name="New HRel ID: HnT6vqxfE5" id="HnT6vqxfE5" description="Goes From z to date">
+d17 1
+a17 4
+  <connection to="bear.instrat.cz/_TRAN/mult2/y2-1" from="bear.instrat.cz/_TRAN/mult/z-1" name="New HRel ID: BOW6u5RfCn" id="BOW6u5RfCn" description="Goes From z to y2">
+    <gui-presentation id="1" description="No Description input yet" />
+  </connection>
+  <connection to="bear.instrat.cz/_TRAN/mult/y-5" from="bear.instrat.cz/_TRAN/ciCbAICgqD/ciDbAICgqD-4" name="New Conn ID: UHPbXrzgUR" id="UHPbXrzgUR" description="Goes From ciDbAICgqD to TRAN">
+d25 1
+a25 1
+  <connection to="bear.instrat.cz/_TRAN/mult/y-2" from="bear.instrat.cz/_TRAN/ciCbAICgqD/ciDbAICgqD-1" name="New Conn ID: QnybXkWgUN" id="QnybXkWgUN" description="Goes From ciDbAICgqD to TRAN">
+d31 6
+d40 18
+d61 5
+a65 8
+  <trigger name="auto2" type="autostart" id="auto">
+    <gui-presentation coord="50 100" id="1" />
+    <gui-presentation coord="50 100" id="2" />
+  </trigger>
+  <trigger name="autostart" type="autostart" id="autostart">
+    <gui-presentation coord="50 100" id="1" />
+    <gui-presentation coord="50 100" id="2" />
+  </trigger>
+a71 1
+  <fact></fact>
+d74 8
+a81 2
+  <gui-layer width="210" visible="YES" name="Layer 1" id="1" height="280" />
+  <gui-layer width="210" name="Layer 2" id="2" height="280" />
+d91 2
+a92 2
+        <gui-presentation coord="640 222" id="1" />
+        <gui-presentation coord="500 400" id="2" />
+d104 2
+a105 2
+        <gui-presentation coord="67 172" id="1" />
+        <gui-presentation coord="300 300" id="2" />
+d135 13
+a147 2
+    <transformation name="NewTran" id="ciCbAICgqD" description="No description Input yet">
+      <gui-presentation coord="60 310" id="1" />
+d151 6
+a156 1
+      <proc language="perl" />
+d160 9
+d170 6
+a175 3
+    <transformation name="(X+2)*Y" id="mult2" inherit="bear.instrat.cz/TRANSF/mult">
+      <gui-presentation coord="413 171" id="1" />
+      <input name="Y" type="integer" id="y2" description="Y variable">
+d178 2
+d184 4
+a187 5
+    <transformation name="(X+2)*Y" id="mult">
+      <gui-presentation coord="229 232" id="1" />
+      <proc language="perl">$x+=2;$z=$x*$y;</proc>
+      <input name="Y" type="integer" id="y" description="Y variable">
+        <gui-presentation id="1" line="2" />
+d189 2
+a190 2
+      <input name="X" type="integer" id="x" description="X variable">
+        <gui-presentation id="1" line="1" />
+d192 2
+a193 2
+      <input length="4" id="mult">
+        <gui-presentation></gui-presentation>
+d195 18
+a212 3
+      <timeout unit="s" type="per-cycle">20</timeout>
+      <output name="Z" type="integer" id="z">
+        <gui-presentation id="1" line="1" />
+d216 1
+a216 4
+  <signal to="bear.instrat.cz/_TRAN/mult2/_TRIG" from="bear.instrat.cz/_TRAN/mult/_STAT" id="s4" description=" ">
+    <gui-presentation id="1" />
+    <name></name>
+  </signal>
+d221 1
+a221 1
+    <gui-presentation coord="58 246" id="1" />
+a222 5
+  <relation name="New Rel ID: OMU6vavfCx" id="OMU6vavfCx" description="Goes From bear.instrat.cz/demo/lu_product/id to bear.instrat.cz/demo/order/id">
+    <gui-presentation></gui-presentation>
+    <to cardinality="N" optional="true">bear.instrat.cz/demo/order/id</to>
+    <from cardinality="1" optional="false">bear.instrat.cz/demo/lu_product/id</from>
+  </relation>
+d224 1
+a225 1
+    <to cardinality="N" optional="true">bear.instrat.cz/demo/order/date</to>
+a227 5
+  <relation name="Relation 1" id="c6" description="Test relation 1.  Relates bee 1 and bee 2 ">
+    <gui-presentation id="2" />
+    <to cardinality="1" optional="true">bear.instrat.cz/demo/order/id </to>
+    <from cardinality="N" optional="false">bear.instrat.cz/demo/lu_product/id</from>
+  </relation>
+d233 1
+a233 1
+      <source mode="open" id="demo">
+d237 1
+d239 1
+@
+
+
+1.10
+log
+@Added creation of relations between objects (Hrel,Sign,Rel & Conn)
+@
+text
+@d4 1
+a4 3
+  <gui-presentation></gui-presentation>
+  <gui-presentation></gui-presentation>
+  <connection to="bear.instrat.cz/demo/order/date" from="bear.instrat.cz/_TRAN/mult2/z" name="New HRel ID: HnT6vqxfE5" id="HnT6vqxfE5" description="Goes From z to date">
+d7 1
+a7 1
+  <connection to="bear.instrat.cz/_TRAN/mult2/y2" from="bear.instrat.cz/_TRAN/mult/z" name="New HRel ID: BOW6u5RfCn" id="BOW6u5RfCn" description="Goes From z to y2">
+d10 5
+a14 2
+  <connection to="bear.instrat.cz/demo/order/id" from="bear.instrat.cz/_TRAN/mult/z" id="c5">
+    <gui-presentation id="1" />
+d16 1
+a16 1
+  <connection to="bear.instrat.cz/_TRAN/mult/y" from="_CONST/c1" name="XXX" id="c2">
+d21 10
+a30 1
+  <connection to="bear.instrat.cz/_TRAN/mult/x" from="bear.instrat.cz/demo/lu_product/id" transfer-type="simple" id="c1">
+d52 1
+d56 1
+d105 10
+d133 3
+d150 1
+a150 1
+    <gui-presentation coord="90 315" id="1" />
+d158 1
+a158 1
+    <gui-presentation id="1" description="No Description input yet" />
+@
+
+
+1.9
+log
+@Deletion of objects almost complete
+@
+text
+@d6 6
+d49 1
+a49 1
+        <gui-presentation coord="460 354" id="1" />
+d62 1
+a62 1
+        <gui-presentation coord="20 294" id="1" />
+d94 7
+a100 3
+      <gui-presentation coord="456 109" id="1" />
+      <input></input>
+      <output></output>
+d103 1
+a103 1
+      <gui-presentation></gui-presentation>
+d125 1
+a125 1
+    <gui-presentation coord="105 422" id="1" />
+d127 10
+@
+
+
+1.8
+log
+@+ usage of "SELECTED" tags, move all selected objects at once and selection box with left mouse button instead of right
+@
+text
+@d3 3
+a5 8
+  <trigger name="autostart" type="autostart" id="autostart">
+    <gui-presentation coord="50 100" id="1" />
+    <gui-presentation coord="50 100" id="2" />
+  </trigger>
+  <trigger name="auto2" type="autostart" id="auto">
+    <gui-presentation coord="50 100" id="1" />
+    <gui-presentation coord="50 100" id="2" />
+  </trigger>
+d17 14
+d37 1
+a37 1
+  <host tree-mode="close" name="kangaroo" id="kangaroo.instrat.cz" description="DB Server">
+d40 3
+a42 3
+  <host tree-mode="open" name="bear" id="bear.instrat.cz" description="My Laptop">
+    <source tree-mode="open" name="Sales Demo" id="demo" type="psql">
+      <table access="RW" tree-mode="open" name="Order" id="order" description="Order table">
+d49 1
+a49 1
+        <column lenght="4" name="ID" type="integer" id="id" description="Order ID">
+d55 1
+a55 1
+      <table access="RO" tree-mode="open" name="Product" id="lu_product" description="Product lookup table  ">
+d58 1
+a58 1
+        <column lenght="4" name="ID" type="integer" id="id" description="Product ID">
+d93 2
+a94 1
+      <gui-presentation coord="229 232" id="1" />
+a100 1
+      <proc language="perl">$x+=2;$z=$x*$y;</proc>
+d118 1
+a119 1
+    <gui-presentation id="2" />
+@
+
+
+1.7
+log
+@Added prop.pm and selection property of objects
+@
+text
+@d3 8
+a21 8
+  <trigger name="auto2" type="autostart" id="auto">
+    <gui-presentation coord="50 100" id="1" />
+    <gui-presentation coord="50 100" id="2" />
+  </trigger>
+  <trigger name="autostart" type="autostart" id="autostart">
+    <gui-presentation coord="50 100" id="1" />
+    <gui-presentation coord="50 100" id="2" />
+  </trigger>
+d28 1
+a28 1
+  <host name="kangaroo" tree-mode="close" id="kangaroo.instrat.cz" description="DB Server">
+d31 3
+a33 3
+  <host name="bear" tree-mode="open" id="bear.instrat.cz" description="My Laptop">
+    <source name="Sales Demo" tree-mode="open" id="demo" type="psql">
+      <table access="RW" name="Order" tree-mode="open" id="order" description="Order table">
+d40 1
+a40 1
+        <column name="ID" lenght="4" type="integer" id="id" description="Order ID">
+d46 1
+a46 1
+      <table access="RO" name="Product" tree-mode="open" id="lu_product" description="Product lookup table  ">
+d49 1
+a49 1
+        <column name="ID" lenght="4" type="integer" id="id" description="Product ID">
+a84 1
+      <proc language="perl">$x+=2;$z=$x*$y;</proc>
+d91 1
+d106 1
+a106 1
+    <gui-presentation coord="71 379" id="1" />
+d109 1
+a110 1
+    <to cardinality="1" optional="true">bear.instrat.cz/demo/order/id </to>
+@
+
+
+1.6
+log
+@Edit.pm does all prop.pl used to do
+@
+text
+@a2 8
+  <trigger name="autostart" type="autostart" id="autostart">
+    <gui-presentation coord="50 100" id="1" />
+    <gui-presentation coord="50 100" id="2" />
+  </trigger>
+  <trigger name="auto2" type="autostart" id="auto">
+    <gui-presentation coord="50 100" id="1" />
+    <gui-presentation coord="50 100" id="2" />
+  </trigger>
+d14 8
+d28 1
+a28 1
+  <host tree-mode="close" name="kangaroo" id="kangaroo.instrat.cz" description="DB Server">
+d31 3
+a33 3
+  <host tree-mode="open" name="bear" id="bear.instrat.cz" description="My Laptop">
+    <source tree-mode="open" name="Sales Demo" id="demo" type="psql">
+      <table access="RW" tree-mode="open" name="Order" id="order" description="Order table">
+d40 1
+a40 1
+        <column lenght="4" name="ID" type="integer" id="id" description="Order ID">
+d46 1
+a46 1
+      <table access="RO" tree-mode="open" name="Product" id="lu_product" description="Product lookup table  ">
+d49 1
+a49 1
+        <column lenght="4" name="ID" type="integer" id="id" description="Product ID">
+d85 1
+a91 1
+      <proc language="perl">$x+=2;$z=$x*$y;</proc>
+d98 1
+a98 2
+  <signal to="bear.instrat.cz/_TRAN/mult2/_TRIG" from="bear.instrat.cz/_TRAN/mult/_STAT" id="s4" description="
+">
+d109 1
+a110 1
+    <gui-presentation id="2" />
+a115 1
+      <FACT mode="open" id="_FACT" />
+@
+
+
+1.5
+log
+@changes in Edit.pm (prop.pl now prop.pm)
+@
+text
+@d3 8
+a21 8
+  <trigger name="auto2" type="autostart" id="auto">
+    <gui-presentation coord="50 100" id="1" />
+    <gui-presentation coord="50 100" id="2" />
+  </trigger>
+  <trigger name="autostart" type="autostart" id="autostart">
+    <gui-presentation coord="50 100" id="1" />
+    <gui-presentation coord="50 100" id="2" />
+  </trigger>
+d28 1
+a28 1
+  <host name="kangaroo" tree-mode="close" id="kangaroo.instrat.cz" description="DB Server">
+d31 3
+a33 3
+  <host name="bear" tree-mode="open" id="bear.instrat.cz" description="My Laptop">
+    <source name="Sales Demo" tree-mode="open" id="demo" type="psql">
+      <table access="RW" name="Order" tree-mode="open" id="order" description="Order table">
+d40 1
+a40 1
+        <column name="ID" lenght="4" type="integer" id="id" description="Order ID">
+d46 1
+a46 1
+      <table access="RO" name="Product" tree-mode="open" id="lu_product" description="Product lookup table  ">
+d49 1
+a49 1
+        <column name="ID" lenght="4" type="integer" id="id" description="Product ID">
+a84 1
+      <proc language="perl">$x+=2;$z=$x*$y;</proc>
+d91 1
+d98 2
+a99 1
+  <signal to="bear.instrat.cz/_TRAN/mult2/_TRIG" from="bear.instrat.cz/_TRAN/mult/_STAT" id="s4">
+d101 1
+d110 1
+a111 1
+    <to cardinality="1" optional="true">bear.instrat.cz/demo/order/id </to>
+d115 4
+a118 1
+    <REL mode="open" id="_REL" />
+@
+
+
+1.4
+log
+@Changes in Edit.pm and prop.pl, to have the admin tab created in Edit.pm and not in prop.pl
+@
+text
+@a5 4
+  <trigger name="auto2" type="autostart" id="auto">
+    <gui-presentation coord="50 100" id="1" />
+    <gui-presentation coord="50 100" id="2" />
+  </trigger>
+d14 4
+a17 1
+  <fact></fact>
+d22 1
+d46 1
+a46 1
+      <table access="RO" name="Product" tree-mode="close" id="lu_product" description="Product lookup table">
+d104 1
+a104 1
+  <const name="Const" data="20" id="c1">
+d107 1
+a107 1
+  <relation name="Relation 1" id="c6" description="Test relation 1">
+d117 1
+@
+
+
+1.3
+log
+@some fixes for processing of transformation schema
+@
+text
+@d2 36
+a37 46
+<project description="Test Project 1" create-date="2002-04-10" id="test1" version="0.1">
+  <const data="20" id="c1" name="Const">
+    <gui-presentation coord="71 379" id="1" />
+  </const>
+  <const data="200" id="c3" name="Const3">
+  </const>
+  <relation description="Test relation 1" id="c6">
+    <from optional="false" cardinality="N">bear.instrat.cz/demo/lu_product/id</from>
+    <to optional="true" cardinality="1">bear.instrat.cz/demo/order/id</to>
+    <gui-presentation id="2" />
+  </relation>
+  <host description="My Laptop" id="bear.instrat.cz" name="bear">
+    <transformation inherit="bear.instrat.cz/TRANSF/mult" id="mult2" name="(X+2)*Y">
+      <input></input>
+      <output></output>
+      <gui-presentation coord="456 109" id="1" />
+    </transformation>
+    <transformation id="mult" name="(X+2)*Y">
+      <timeout unit="s" type="per-cycle">20</timeout>
+      <input description="X variable" id="x" type="integer" name="X">
+        <gui-presentation line="1" id="1" />
+      </input>
+      <input description="Y variable" id="y" type="integer" name="Y">
+        <gui-presentation line="2" id="1" />
+      </input>
+      <proc language="perl">$x+=2;$z=$x*$y;</proc>
+      <output id="z" type="integer" name="Z">
+        <gui-presentation line="1" id="1" />
+      </output>
+      <gui-presentation coord="229 232" id="1" />
+    </transformation>
+    <source id="demo" type="psql" name="Sales Demo">
+      <view description="Customer First and Last Name" id="customer" type="ETL" query="SELECT c.fname||' '||c.lname,t.cust_city_desc FROM lu_cust AS c JOIN lu_cust_city AS t ON c.cust_city_id=t.cust_city_id" name="Customer">
+        <column description="Customer City" id="city" type="varchar" name="City">
+          <gui-presentation line="2" id="1" />
+          <gui-presentation line="1" id="2" />
+        </column>
+        <column description="First and Last Name" id="name" type="varchar" name="Name">
+          <gui-presentation line="1" id="1" />
+        </column>
+        <proc language="perl">$_[0]=~s/(\w)\w* (\w+)/$1. $2/</proc>
+        <gui-presentation coord="500 200" id="1" />
+        <gui-presentation coord="400 300" id="2" />
+      </view>
+      <table description="Order table" access="RW" id="order" name="Order">
+        <column id="date" type="date" name="Order Date">
+a38 1
+          <gui-presentation line="1" id="1" />
+d40 3
+a42 1
+        <column description="Order ID" id="id" type="integer" lenght="4" name="ID">
+a43 2
+          <gui-presentation line="2" id="1" />
+          <gui-presentation line="1" id="2" />
+a44 2
+        <gui-presentation coord="460 354" id="1" />
+        <gui-presentation coord="500 400" id="2" />
+d46 6
+a51 2
+      <table description="Product lookup table" access="RO" id="lu_product" name="Product">
+        <column description="Product ID" id="id" type="integer" lenght="4" name="ID">
+a52 2
+          <gui-presentation line="1" id="1" />
+          <gui-presentation line="1" id="2" />
+a53 2
+        <gui-presentation coord="20 294" id="1" />
+        <gui-presentation coord="300 300" id="2" />
+d55 16
+a71 1
+        <port gui-line="1">5432</port>
+d75 1
+a76 4
+      <metadata version="1">
+        <tables-query type="SQL">SELECT ... FROM ...</tables-query>
+        <columns-query type="SQL">SELECT ... FROM ...</columns-query>
+      </metadata>
+d78 19
+d98 1
+a98 4
+  <host description="DB Server" id="kangaroo.instrat.cz" name="kangaroo">
+    <source></source>
+  </host>
+  <signal id="s4" from="bear.instrat.cz/_TRAN/mult/_STAT" to="bear.instrat.cz/_TRAN/mult2/_TRIG">
+d101 19
+a119 17
+  <gui-layer height="280" width="210" id="1" visible="YES" name="Layer 1" />
+  <gui-layer height="280" width="210" id="2" name="Layer 2" />
+  <triger id="autostart" type="autostart" name="autostart">
+    <gui-presentation coord="50 100" id="1" />
+    <gui-presentation coord="50 100" id="2" />
+  </triger>
+  <connection transfer-type="simple" id="c1" from="bear.instrat.cz/demo/lu_product/id" to="bear.instrat.cz/_TRAN/mult/x">
+    <gui-presentation id="1" />
+  </connection>
+  <connection id="c2" from="_CONST/c1" to="bear.instrat.cz/_TRAN/mult/y" name="XXX">
+    <transfer-type>crypt</transfer-type>
+    <transfer-type>compress</transfer-type>
+    <gui-presentation id="1" />
+  </connection>
+  <connection id="c5" from="bear.instrat.cz/_TRAN/mult/z" to="bear.instrat.cz/demo/order/id">
+    <gui-presentation id="1" />
+  </connection>
+@
+
+
+1.2
+log
+@log. model subsyst. improvement
+@
+text
+@a5 3
+  <const data="20" id="c2" name="Const 2">
+    <gui-presentation coord="46 247" id="1" />
+  </const>
+a6 1
+    <gui-presentation coord="200 250" id="2" />
+d83 1
+a83 4
+  <signal id="c3" from="_TRIG/autostart" to="bear.instrat.cz/_TRAN/mult/_TRIG">
+    <gui-presentation id="1" />
+  </signal>
+  <signal id="c4" from="bear.instrat.cz/_TRAN/mult/_STAT" to="bear.instrat.cz/_TRAN/mult2/_TRIG">
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d13 2
+a14 2
+    <from optional="false" cardinality="N">bear.instrat.cz/vmall/lu_product/id</from>
+    <to optional="true" cardinality="1">bear.instrat.cz/vmall/order/id</to>
+d37 1
+a37 1
+    <source id="vmall" type="psql" name="VMall Demo">
+d74 1
+a74 1
+        <src-name gui-line="2">vmall</src-name>
+d99 1
+a99 1
+  <connection transfer-type="simple" id="c1" from="bear.instrat.cz/vmall/lu_product/id" to="bear.instrat.cz/_TRAN/mult/x">
+d107 1
+a107 1
+  <connection id="c5" from="bear.instrat.cz/_TRAN/mult/z" to="bear.instrat.cz/vmall/order/id">
+@
+
+
+1.1.1.1
+log
+@Initial public release of BEE Project.
+@
+text
+@@

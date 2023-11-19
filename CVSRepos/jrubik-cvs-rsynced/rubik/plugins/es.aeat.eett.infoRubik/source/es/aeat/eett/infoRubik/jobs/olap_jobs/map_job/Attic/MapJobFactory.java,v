@@ -1,0 +1,62 @@
+head	1.2;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2008.05.17.15.40.42;	author fsaz;	state dead;
+branches;
+next	1.1;
+
+1.1
+date	2005.11.28.15.33.22;	author fsaz;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@borrando viejos
+@
+text
+@/*
+ * Created on 11-jul-2005
+ *
+ * MapJobFactory.java
+ */
+package es.aeat.eett.infoRubik.jobs.olap_jobs.map_job;
+
+import java.io.File;
+
+import es.aeat.eett.infoRubik.jobs.job_core.Job;
+import es.aeat.eett.infoRubik.jobs.job_core.JobFactory;
+
+
+public class MapJobFactory implements JobFactory {
+
+	public MapJobFactory(){
+	}
+    public Job createJob() throws Exception {
+        return new MapJob();
+    }
+    public Job createJob(File file) throws Exception {
+    	Job job= new MapJob(file);
+        return job;
+    }
+}
+@
+
+
+1.1
+log
+@*** empty log message ***
+@
+text
+@@
+

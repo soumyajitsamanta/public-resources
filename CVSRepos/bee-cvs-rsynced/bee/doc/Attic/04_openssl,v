@@ -1,0 +1,69 @@
+head	1.2;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2003.11.07.12.29.03;	author numberone;	state dead;
+branches;
+next	1.1;
+
+1.1
+date	2003.11.06.14.31.46;	author numberone;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@documentation -- final. no spell checks, no typos check, no grammar check
+@
+text
+@
+OpenSSL KEYS
+------------
+
+Network communication between client and dads is crypted using 
+Secure Socket Layers protocol, using PKI infrastructure. 
+
+Every communication node (dad or client) must have own unique OpenSSL
+key. This key must have CommonName section set to 'role[@@host[:port]]' 
+string (e.g. 'martin' or 'dad@@localhost:2333' are valid keys). 
+This keys are physicaly stored in key.pem files.
+
+In addition, these key.pem files MUST be signed by the same
+certification authority key. Public part of this key is stored in
+root.pem key file, and every node certificates incomming connection's 
+SSL key across this authority key and validates address and port number
+from CommonName section.
+
+The BEE Project is supplied with Demo BEE Root Certification Authority key 
+and set of few working _demo_ keys signed by this authority. Private key
+of this DEMO certification authority key is not included, so you are NOT able
+to generate another demo keys. 
+
+If you want to use BEE in production environment, you HAVE TO generate 
+YOUR OWN Root CA and appropriate set of keys.
+
+Information about how to do this are located in certs/README file.
+In short, you have to generate certification authority root.pem key and
+then generate lot of key.pem files, one for each node connected to
+ETL process.
+
+
+@
+
+
+1.1
+log
+@demo updates (display:// problem)
+@
+text
+@@
+

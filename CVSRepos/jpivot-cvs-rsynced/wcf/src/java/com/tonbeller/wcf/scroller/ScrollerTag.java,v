@@ -1,0 +1,69 @@
+head	1.1;
+access;
+symbols
+	jpivot_1_8_0:1.1
+	focus_1_6_0:1.1.0.6
+	wcf_1_7_0:1.1
+	wcf_1_6_0:1.1
+	jpivot_1_5_0:1.1.0.4
+	Root_jpivot_1_5_0:1.1
+	mondrian_xmla_2005_08_25:1.1.0.2
+	sourceforge_sync:1.1;
+locks; strict;
+comment	@# @;
+
+
+1.1
+date	2005.07.05.14.08.04;	author avix;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@initial version
+@
+text
+@package com.tonbeller.wcf.scroller;
+
+import javax.servlet.jsp.JspException;
+import javax.servlet.jsp.tagext.TagSupport;
+
+import org.apache.log4j.Logger;
+
+import com.tonbeller.wcf.controller.RequestContext;
+
+/**
+ * Adds hidden fields to a form in a jsp that ensure that the browser keeps the
+ * scroll position when a user is navigating. This tag only works if 
+ * the scroller.js javascript file is added to the page.
+ * <p> 
+ * By default scrolling is disabled. A request handler should enable the 
+ * scroller (@@link com.tonbeller.wcf.scroller.Scroller) if its action 
+ * requires keeping the scroll position
+ */
+public class ScrollerTag extends TagSupport {
+
+  private static Logger logger = Logger.getLogger(ScrollerTag.class);
+  private Scroller scroller = new Scroller();
+
+  public int doStartTag() throws JspException {
+    return SKIP_BODY;
+  }
+
+  public int doEndTag() throws JspException {
+    try {
+      RequestContext context = RequestContext.instance();
+      scroller.handleRequest(context, pageContext.getOut());
+    } catch (Exception e) {
+      logger.error("", e);
+      throw new JspException(e);
+    }
+
+    return EVAL_PAGE;
+  }
+}@

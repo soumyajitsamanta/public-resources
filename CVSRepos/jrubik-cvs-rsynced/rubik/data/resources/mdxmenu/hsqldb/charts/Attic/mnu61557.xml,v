@@ -1,0 +1,86 @@
+head	1.2;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2008.05.17.15.43.54;	author fsaz;	state dead;
+branches;
+next	1.1;
+
+1.1
+date	2005.11.28.14.02.37;	author fsaz;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@borrando viejos
+@
+text
+@<?xml version="1.0" encoding="ISO-8859-1"?>
+<RubikMdx>
+  select NON EMPTY Crossjoin(Hierarchize(Crossjoin({[Marital Status].[All Marital Status]}, Union({[Gender].[All Gender]}, [Gender].[All Gender].Children))), {[Measures].[Unit Sales]}) ON COLUMNS,
+  NON EMPTY Hierarchize(Crossjoin({[Customers].[All Customers]}, Union(Crossjoin({[Time].[1997]}, {[Education Level].[All Education Levels]}), Crossjoin({[Time].[1997]}, [Education Level].[All Education Levels].Children)))) ON ROWS
+from [Sales]
+where [Product].[All Products].[Drink].[Dairy].[Dairy].[Milk].[Carlson].[Carlson 1% Milk]
+  <Alias>Char1</Alias>
+  <RubikConnection driver="org.hsqldb.jdbcDriver" url="jdbc:hsqldb:file:./data/resources/hsql/smallFoodmart" userName="sa" password="" catalog="file:./data/resources/catalogs/smallFoodMart.xml" />
+  <View plugin="es.aeat.eett.rubik.chart">
+    <ConfiChart>
+      <ConfiTitle showTitle="true" title="Chart">
+        <Font FontName="Arial" FontSize="18" isBold="true" isItalic="true" />
+        <Color red="255" green="51" blue="51" />
+      </ConfiTitle>
+      <ConfiLegend showLegend="false" />
+      <ConfiPlot>
+        <insets top="4" left="8" bottom="4" right="8" />
+        <outlineColor>
+          <Color red="128" green="128" blue="128" />
+        </outlineColor>
+        <backgroundColor>
+          <Color red="0" green="204" blue="204" />
+        </backgroundColor>
+        <DomainAxis>
+          <Label />
+          <tickLabel tickLabelsVisible="true" tickMarksVisible="true">
+            <Font FontName="SansSerif" FontSize="10" isBold="false" isItalic="false" />
+            <insets top="2" left="4" bottom="2" right="4" />
+          </tickLabel>
+        </DomainAxis>
+        <RangeAxis>
+          <Label />
+          <tickLabel tickLabelsVisible="true" tickMarksVisible="true">
+            <Font FontName="SansSerif" FontSize="10" isBold="false" isItalic="false" />
+            <insets top="2" left="4" bottom="2" right="4" />
+          </tickLabel>
+          <range autoRange="true" />
+        </RangeAxis>
+      </ConfiPlot>
+      <ConfiOther showantiAlias="true">
+        <Color red="204" green="204" blue="204" />
+      </ConfiOther>
+      <ConfiMisc showTickLabelRotate="true" tickLabelRotate="30" width="500" height="300" typeChart="2" showSlicer="false" slicerPosition="1" slicerAlignment="3">
+        <Font FontName="SansSerif" FontSize="12" isBold="false" isItalic="false" />
+      </ConfiMisc>
+    </ConfiChart>
+  </View>
+</RubikMdx>
+
+@
+
+
+1.1
+log
+@*** empty log message ***
+@
+text
+@@
+

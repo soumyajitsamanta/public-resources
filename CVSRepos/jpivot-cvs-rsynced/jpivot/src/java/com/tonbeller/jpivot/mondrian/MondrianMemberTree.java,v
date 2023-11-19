@@ -1,0 +1,761 @@
+head	1.12;
+access;
+symbols
+	jpivot_1_8_0:1.9
+	focus_1_6_0:1.4.0.2
+	jpivot_1_7_0:1.7
+	jpivot_1_6_0:1.4
+	jpivot_1_5_0:1.3.0.2
+	Root_jpivot_1_5_0:1.3
+	mondrian_xmla_2005_08_25:1.1.0.2
+	sourceforge_sync:1.4;
+locks; strict;
+comment	@# @;
+expand	@k@;
+
+
+1.12
+date	2010.07.27.10.07.08;	author uramisten;	state Exp;
+branches;
+next	1.11;
+
+1.11
+date	2010.07.23.07.37.28;	author uramisten;	state Exp;
+branches;
+next	1.10;
+
+1.10
+date	2008.12.22.15.51.55;	author willgorman;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	2007.10.22.06.47.55;	author avix;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	2007.07.09.16.17.06;	author remberson;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	2007.03.06.08.02.19;	author jhyde;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	2007.03.05.20.49.05;	author remberson;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	2007.01.15.09.07.51;	author avix;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2006.11.09.13.25.42;	author avix;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2005.12.13.11.56.40;	author avix;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2005.09.03.21.37.55;	author sgwood;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2005.07.05.14.19.51;	author avix;	state Exp;
+branches
+	1.1.2.1;
+next	;
+
+1.1.2.1
+date	2005.08.29.20.24.19;	author paullucas;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.12
+log
+@Handle Calculated members properly as leaf nodes. Added explicit check for children since level check is insufficient (All has children, but calculated members at root level do/may not). It is conceivable that a calculated member may have another calcualted member under it - using parentMember specification, thus the explicit check.  Display properly in both navigator and table without expand/drilldown icons as expected.
+Changes marked by //ADVR tag
+// TODO: How are ragged hierarchies currently handled? I assume that a similar problem may exist for non-calc members in a hierarchy with leaf nodes at different levels (noChildLevel is currently set at max distance from root, and used as a check)
+@
+text
+@/*
+ * ====================================================================
+ * This software is subject to the terms of the Common Public License
+ * Agreement, available at the following URL:
+ *   http://www.opensource.org/licenses/cpl.html .
+ * Copyright (C) 2003-2004 TONBELLER AG.
+ * All Rights Reserved.
+ * You must accept the terms of that agreement to use this software.
+ * ====================================================================
+ *
+ *
+ */
+package com.tonbeller.jpivot.mondrian;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.Iterator;
+import java.util.List;
+
+import mondrian.olap.ResultLimitExceededException;
+import mondrian.olap.SchemaReader;
+
+import org.apache.log4j.Logger;
+
+import com.tonbeller.jpivot.core.ExtensionSupport;
+import com.tonbeller.jpivot.olap.model.Axis;
+import com.tonbeller.jpivot.olap.model.Hierarchy;
+import com.tonbeller.jpivot.olap.model.Member;
+import com.tonbeller.jpivot.olap.model.Position;
+import com.tonbeller.jpivot.olap.model.Result;
+import com.tonbeller.jpivot.olap.navi.MemberTree;
+import com.tonbeller.jpivot.olap.query.Quax;
+
+/**
+ * Implementation of the DrillExpand Extension for Mondrian Data Source.
+ */
+public class MondrianMemberTree extends ExtensionSupport implements MemberTree {
+
+  static Logger logger = Logger.getLogger(MondrianMemberTree.class);
+
+  /**
+   * Constructor sets ID
+   */
+  public MondrianMemberTree() {
+    super.setId(MemberTree.ID);
+  }
+
+  /**
+   * @@return the root members of a hierarchy. This is for example the "All"
+   *         member or the list of measures.
+   */
+  public Member[] getRootMembers(Hierarchy hier) {
+    try {
+      return internalGetRootMembers(hier);
+    } catch (ResultLimitExceededException e) {
+      logger.error(null, e);
+      throw new TooManyMembersException(e);
+    }
+  }
+
+  private Member[] internalGetRootMembers(Hierarchy hier) {
+    MondrianModel model = (MondrianModel) getModel();
+    mondrian.olap.Hierarchy monHier = ((MondrianHierarchy) hier).getMonHierarchy();
+    mondrian.olap.Query q = ((MondrianQueryAdapter) model.getQueryAdapter()).getMonQuery();
+    // Use the schema reader from the query, because it contains calculated
+    // members defined in both the cube and the query.
+    SchemaReader scr = model.getSchemaReader();
+    List<mondrian.olap.Member> monMembers = scr.getHierarchyRootMembers(monHier);
+    ArrayList aMem = new ArrayList();
+    final List visibleRootMembers = new ArrayList();
+    int k = monMembers.size();
+    for (int i = 0; i < k; i++) {
+      mondrian.olap.Member monMember = (mondrian.olap.Member) monMembers.get(i);
+      if (isVisible(monMember)) {
+        aMem.add(model.addMember(monMember));
+      }
+    }
+
+
+    // find the calculated members for this hierarchy
+    //  show them together with root level members
+     mondrian.olap.Formula[] formulas = q.getFormulas();
+    for (int i = 0; i < formulas.length; i++) {
+      mondrian.olap.Formula f = formulas[i];
+      mondrian.olap.Member monMem = f.getMdxMember();
+      if (monMem != null) {
+        // is the member for this hierarchy,
+        // and is it visible?
+        // if yes add it
+        if (monMem.getHierarchy().equals(monHier)) {
+          if (!isVisible(monMem))
+            continue;
+          // ADVR MOD 2008.12.15
+          // Changed to only add root calculated members (parent==null) to the root.
+          // Other members will be added at the correct place within the
+          // respective hierarchy
+          
+          // find the parent for this member
+          if (monMem.getParentMember()== null){
+              Member m = model.addMember(monMem);
+              if (!aMem.contains(m))
+                aMem.add(m);
+          }
+        }
+      }
+    }
+
+    // order members according to occurrence in query result
+    //  if there is no result available, do not sort
+    Result res = model.currentResult();
+    if (res != null) {
+        // locate the appropriate result axis
+        // find the Quax for this hier
+        MondrianQueryAdapter adapter = (MondrianQueryAdapter) model.getQueryAdapter();
+        Quax quax = adapter.findQuax(hier.getDimension());
+        if (quax != null) {
+            int iDim = quax.dimIdx(hier.getDimension());
+            int iAx = quax.getOrdinal();
+            if (adapter.isSwapAxes())
+              iAx = (iAx + 1) % 2;
+            Axis axis = res.getAxes()[iAx];
+            List positions = axis.getPositions();
+
+            for (Iterator iter = positions.iterator(); iter.hasNext();) {
+              Position pos = (Position) iter.next();
+              Member[] posMembers = pos.getMembers();
+              MondrianMember mem = (MondrianMember) posMembers[iDim];
+              // only add hierarchy items from the query results
+              // if they are actually in in the currently expanding hierarchy!!
+              if (mem.getMonMember().getHierarchy().equals(monHier)) {             
+                if (!(mem.getMonMember().getParentMember() == null))
+                  continue; // ignore, not root
+                if (!visibleRootMembers.contains(mem))
+                  visibleRootMembers.add(mem);
+  
+                // Check if the result axis contains invisible members
+                if (!aMem.contains(mem)) {
+                    aMem.add(mem);
+                }
+              }
+            }
+        }
+    }
+
+    Member[] members = (Member[]) aMem.toArray(new Member[0]);
+
+    // If there is no query result, do not sort
+    if (!visibleRootMembers.isEmpty()) {
+        Arrays.sort(members, new Comparator() {
+          public int compare(Object arg0, Object arg1) {
+            Member m1 = (Member) arg0;
+            Member m2 = (Member) arg1;
+            int index1 = visibleRootMembers.indexOf(m1);
+            int index2 = visibleRootMembers.indexOf(m2);
+            if (index2 == -1)
+              return -1; // m2 is higher, unvisible to the end
+            if (index1 == -1)
+              return 1; // m1 is higher, unvisible to the end
+            return index1 - index2;
+          }
+        });
+    }
+
+    return members;
+  }
+
+  private boolean isVisible(mondrian.olap.Member monMember) {
+    // Name convention: if member starts with "." its hidden
+    if (monMember.getName().startsWith("."))
+      return false;
+
+    MondrianModel model = (MondrianModel) getModel();
+    // Use the schema reader from the query, because it contains calculated
+    // members defined in both the cube and the query.
+    SchemaReader scr = model.getSchemaReader();
+
+    return MondrianUtil.isVisible(scr, monMember);
+  }
+
+  /**
+   * @@return true if the member has children
+   */
+  public boolean hasChildren(Member member) {
+    mondrian.olap.Member monMember = ((MondrianMember) member).getMonMember();
+    if (monMember.isCalculatedInQuery())
+      return false;
+
+    if (monMember.getLevel().getChildLevel() != null){
+       if (!monMember.isCalculated()) return true;
+       // ADVR 2010.07.27
+       // for calculated we need to actually check if there are any children.
+       return this.getChildren(member).length!=0;
+
+    }
+
+    // here for a leaf-level, but also for a level in a parent-child hierarchy:
+    MondrianModel model = (MondrianModel) getModel();
+
+    SchemaReader scr = model.getSchemaReader();
+    return scr.isDrillable(monMember);
+  }
+
+  /**
+   * @@return the children of the member
+   */
+  public Member[] getChildren(Member member) {
+    try {
+      return internalGetChildren(member);
+    } catch (ResultLimitExceededException e) {
+      logger.error(null, e);
+      throw new TooManyMembersException(e);
+    }
+  }
+
+  private Member[] internalGetChildren(Member member) {
+    mondrian.olap.Member monMember = ((MondrianMember) member).getMonMember();
+    //  unreliable: always null in a parent-child hierarch
+    // if (monMember.getLevel().getChildLevel() == null)
+    //   return null;
+
+    MondrianModel model = (MondrianModel) getModel();
+
+    SchemaReader scr = model.getSchemaReader();    
+    List<mondrian.olap.Member> monChildren = scr.getMemberChildren(monMember);
+
+    List list = new ArrayList(monChildren.size());
+    for (int i = 0; i < monChildren.size(); i++) {
+        mondrian.olap.Member m = (mondrian.olap.Member)monChildren.get(i);
+        if (MondrianUtil.isVisible(scr, m)) {
+            list.add(model.addMember(m));
+        }
+    }
+
+    // ADVR MOD 2008.12.15
+    // check for calculated members that belong to this level
+
+    mondrian.olap.Query q = ((MondrianQueryAdapter) model.getQueryAdapter()).getMonQuery();
+
+    // find the calculated members for this hierarchy
+    //  show them together with level members
+    mondrian.olap.Formula[] formulas = q.getFormulas();
+    for (int i = 0; i < formulas.length; i++) {
+      mondrian.olap.Formula f = formulas[i];
+      mondrian.olap.Member monMem = f.getMdxMember();
+      if (monMem != null) {
+        // is the member for this hierarchy,
+        // and is it visible?
+        // if yes add it
+        if (!isVisible(monMem))
+            continue;
+        if (monMem.getDimension().equals(monMember.getDimension()) &&
+            monMem.getHierarchy().equals(monMember.getHierarchy())) {
+
+          // If this calculated member is a child of this current member,
+          //  add it to the child list
+          if ( monMem.getParentMember().equals(monMember)){
+              Member m = model.addMember(monMem);
+              if (!list.contains(m))
+                list.add(m);
+          }
+        }
+      }
+    }
+    // ADVR 2010.07.20
+    // order the children by order of appearance in Query result
+    //  if there is no result available, do not sort
+    Result res = model.currentResult();
+    final List visibleChildMembers = new ArrayList();
+    if (res != null) {
+        // locate the appropriate result axis
+        // find the Quax for this hier
+        MondrianQueryAdapter adapter = (MondrianQueryAdapter) model.getQueryAdapter();
+        mondrian.olap.Hierarchy monHier = monMember.getHierarchy();
+        Hierarchy hier = member.getLevel().getHierarchy();
+
+        Quax quax = adapter.findQuax(hier.getDimension());
+        if (quax != null) {
+            int iDim = quax.dimIdx(hier.getDimension());
+            int iAx = quax.getOrdinal();
+            if (adapter.isSwapAxes())
+              iAx = (iAx + 1) % 2;
+            Axis axis = res.getAxes()[iAx];
+            List positions = axis.getPositions();
+
+            for (Iterator iter = positions.iterator(); iter.hasNext();) {
+              Position pos = (Position) iter.next();
+              Member[] posMembers = pos.getMembers();
+              MondrianMember mem = (MondrianMember) posMembers[iDim];
+              // only add hierarchy items from the query results
+              // if they are actually in in the currently expanding hierarchy!!
+              if (mem.getMonMember().getParentMember()==null)
+                  continue; // skip root members - can't be children
+              if (mem.getMonMember().getHierarchy().equals(monHier)) {
+                if (mem.getMonMember().getParentMember().equals(monMember)){                     
+                    visibleChildMembers.add(mem);
+
+                    // Check if the result axis contains invisible members
+                    if (!list.contains(mem)) {
+                        list.add(mem);
+                    }
+                 }
+              }
+            }
+        }
+    }
+    Member[] children = (Member[]) list.toArray(new Member[list.size()]);
+
+    if (res!=null){  //turned off
+        Arrays.sort(children, new Comparator() {
+          public int compare(Object arg0, Object arg1) {
+            Member m1 = (Member) arg0;
+            Member m2 = (Member) arg1;
+            int index1 = visibleChildMembers.indexOf(m1);
+            int index2 = visibleChildMembers.indexOf(m2);
+            if (index2 == -1)
+              return -1; // m2 is higher, unvisible to the end
+            if (index1 == -1)
+              return 1; // m1 is higher, unvisible to the end
+            return index1 - index2;
+          }
+        });
+    }
+    
+    return children;
+  }
+
+  /**
+   * @@return the parent of member or null, if this is a root member
+   */
+  public Member getParent(Member member) {
+    mondrian.olap.Member monMember = ((MondrianMember) member).getMonMember();
+
+    MondrianModel model = (MondrianModel) getModel();
+
+    SchemaReader scr = model.getSchemaReader();
+    mondrian.olap.Member monParent = scr.getMemberParent(monMember);
+    if (monParent == null)
+      return null; // already top level
+    Member parent = model.addMember(monParent);
+
+    return parent;
+  }
+
+} // End MondrianMemberTree
+@
+
+
+1.11
+log
+@mostly formatting, but a couple changed in MondrianMemberTree
+--> maintain ordering of elements in navigation.  If you move items around, currently they just get reset to their original positions if you reopen the navigator.  Also, support added for calculated members not in the root of a dimension -> linked to a development for mondrian/schema allowing specification of "parentMember" in xml definition of calculated member.  This has been possible in MDX, but the schema and jpivot did not support it.   The saved sort order feature could be changed to be turned on/off by a parameter file (e.g.) if users would like to be able to keep the old results.
+@
+text
+@d149 1
+a149 1
+    if (visibleRootMembers.size() != 0) {
+d188 9
+a196 2
+    if (monMember.getLevel().getChildLevel() != null)
+      return true;
+a315 2
+              System.out.println("Comparing "+m1.getLabel()+ " and " +m2.getLabel());
+              System.out.println("results index1="+index1+", index2="+index2);
+@
+
+
+1.10
+log
+@Updated to latest version of mondrian HEAD, soon to be mondrian 3.1.   API changes were required.  Also fixed a few bugs, including URL vs. VFS assumptions, XMLA incompatibilities, and PDF chart embedding.  Also added a request parameter to the PrintServlet to allow customizing of the output filename.
+@
+text
+@d69 1
+a69 1
+    List monMembers = scr.getHierarchyRootMembers(monHier);
+d80 1
+d94 11
+a104 3
+          Member m = model.addMember(monMem);
+          if (!aMem.contains(m))
+            aMem.add(m);
+d217 2
+a218 2
+    SchemaReader scr = model.getSchemaReader();
+    List monChildren = scr.getMemberChildren(monMember);
+d227 73
+d301 19
+@
+
+
+1.9
+log
+@Fix by Ati: ensure that hierarchy members from the current
+query results are only added IF they are actually in the same hierarchy of the
+dimension as that being expanded. For dimensions with a single hierarchy this
+is trivial, but for multiple hierarchy dimensions this was causing the strange
+display duplication we were experiencing.
+@
+text
+@d69 1
+a69 1
+    mondrian.olap.Member[] monMembers = scr.getHierarchyRootMembers(monHier);
+d72 1
+a72 1
+    int k = monMembers.length;
+d74 1
+a74 1
+      mondrian.olap.Member monMember = monMembers[i];
+d76 1
+a76 1
+        aMem.add(model.addMember(monMembers[i]));
+d209 1
+a209 1
+    mondrian.olap.Member[] monChildren = scr.getMemberChildren(monMember);
+d211 3
+a213 3
+    List list = new ArrayList(monChildren.length);
+    for (int i = 0; i < monChildren.length; i++) {
+        mondrian.olap.Member m = monChildren[i];
+@
+
+
+1.8
+log
+@Created two JPivot base exception classess, JPivotException and
+JPivotRuntimeException, and all JPivot exceptions now have one of
+these as parent class. The mondrian JPivot code now gets its
+SchemaReader from the MDX query rather than the connection so that
+the query's cube's calculated members and the query's defined
+"with" members can be displayed.
+Also, added new JPivot exception, NoValidMemberException, which is
+throw when a query returns no data on one or more axis.
+Lastly, cleaned up html generated by 2 transforms.
+@
+text
+@d120 12
+a131 8
+              if (!(mem.getMonMember().getParentMember() == null))
+                continue; // ignore, not root
+              if (!visibleRootMembers.contains(mem))
+                visibleRootMembers.add(mem);
+
+              // Check if the result axis contains invisible members
+              if (!aMem.contains(mem)) {
+                  aMem.add(mem);
+@
+
+
+1.7
+log
+@Rename mondrian exception classes
+@
+text
+@d68 1
+a68 2
+    //SchemaReader scr = model.getMonConnection().getSchemaReader();
+    SchemaReader scr = q.getSchemaReader(true);
+d160 6
+a165 4
+    // from schema: if visible-Property is not-null and equals false,
+    // then its hidden
+    Object visible = monMember.getPropertyValue(mondrian.olap.Property.VISIBLE.name);
+    return !Boolean.FALSE.equals(visible);
+d179 2
+a180 1
+    SchemaReader scr = model.getMonConnection().getSchemaReader();
+a196 1
+
+d204 1
+a204 1
+    SchemaReader scr = model.getMonConnection().getSchemaReader();
+d206 7
+a212 3
+    Member[] children = new Member[monChildren.length];
+    for (int i = 0; i < children.length; i++) {
+      children[i] = model.addMember(monChildren[i]);
+d214 1
+d226 1
+a226 1
+    SchemaReader scr = model.getMonConnection().getSchemaReader();
+@
+
+
+1.6
+log
+@Upgrading for Mondrian head and adding property
+"com.tonbeller.jpivot.mondrian.logical.mdx" that, if true (default
+is false), JPivot attempts to keep MDX logical rather than
+physical during query modification.
+@
+text
+@d11 1
+a11 1
+ * 
+d61 1
+a61 1
+  
+d99 1
+a99 1
+    }    
+d104 1
+a104 1
+    if (res != null) {    
+d116 1
+a116 1
+            
+d125 1
+a125 1
+              
+d129 1
+a129 1
+              }                                    
+d133 1
+a133 1
+    
+d160 2
+a161 2
+    
+    // from schema: if visible-Property is not-null and equals false, 
+d195 1
+a195 1
+    
+@
+
+
+1.5
+log
+@Support for invisible members in Navigator (contributed by Pappyn Bart)
+@
+text
+@d21 1
+a21 1
+import mondrian.olap.ResultLimitExceeded;
+d56 1
+a56 1
+    } catch (ResultLimitExceeded e) {
+d188 1
+a188 1
+    } catch (ResultLimitExceeded e) {
+@
+
+
+1.4
+log
+@synchronized with tonbeller cvs
+@
+text
+@d72 1
+d99 1
+a99 3
+    }
+
+    Member[] members = (Member[]) aMem.toArray(new Member[0]);
+d104 31
+a134 2
+    if (res == null)
+      return members; // not sorted
+d136 15
+a150 21
+    // locate the appropriate result axis
+    // find the Quax for this hier
+    MondrianQueryAdapter adapter = (MondrianQueryAdapter) model.getQueryAdapter();
+    Quax quax = adapter.findQuax(hier.getDimension());
+    if (quax == null)
+      return members; // should not occur
+    int iDim = quax.dimIdx(hier.getDimension());
+    int iAx = quax.getOrdinal();
+    if (adapter.isSwapAxes())
+      iAx = (iAx + 1) % 2;
+    Axis axis = res.getAxes()[iAx];
+    List positions = axis.getPositions();
+    final List visibleRootMembers = new ArrayList();
+    for (Iterator iter = positions.iterator(); iter.hasNext();) {
+      Position pos = (Position) iter.next();
+      Member[] posMembers = pos.getMembers();
+      MondrianMember mem = (MondrianMember) posMembers[iDim];
+      if (!(mem.getMonMember().getParentMember() == null))
+        continue; // ignore, not root
+      if (!visibleRootMembers.contains(mem))
+        visibleRootMembers.add(mem);
+a152 14
+    Arrays.sort(members, new Comparator() {
+      public int compare(Object arg0, Object arg1) {
+        Member m1 = (Member) arg0;
+        Member m2 = (Member) arg1;
+        int index1 = visibleRootMembers.indexOf(m1);
+        int index2 = visibleRootMembers.indexOf(m2);
+        if (index2 == -1)
+          return -1; // m2 is higher, unvisible to the end
+        if (index1 == -1)
+          return 1; // m1 is higher, unvisible to the end
+        return index1 - index2;
+      }
+    });
+
+@
+
+
+1.3
+log
+@Synchronized with Tonbeller CVS:
+  * Supports Mondrian 2.x API
+  * Added BEA / Websphere Support
+  * More tags in wcf tag library
+  * Bugfixes
+@
+text
+@d75 1
+a75 3
+      // do not add, if not visible
+      Object visible = monMember.getPropertyValue(mondrian.olap.Property.VISIBLE.name);
+      if (!Boolean.FALSE.equals(visible)) {
+d91 1
+a91 2
+          Object visible = monMem.getPropertyValue(mondrian.olap.Property.VISIBLE.name);
+          if (Boolean.FALSE.equals(visible)) {
+a92 1
+          }
+d148 11
+@
+
+
+1.2
+log
+@Upgrade to Mondrian HEAD 8/31/05
+@
+text
+@d76 1
+a76 1
+      Object visible = monMember.getPropertyValue("$visible");
+d93 1
+a93 2
+            Object visible = monMem.getPropertyValue("$visible");
+          //Object visible = monMem.getPropertyValue(mondrian.olap.Property.PROPERTY_VISIBLE);
+@
+
+
+1.1
+log
+@initial version
+@
+text
+@d76 1
+a76 1
+      Object visible = monMember.getPropertyValue(mondrian.olap.Property.PROPERTY_VISIBLE);
+d93 2
+a94 1
+          Object visible = monMem.getPropertyValue(mondrian.olap.Property.PROPERTY_VISIBLE);
+@
+
+
+1.1.2.1
+log
+@mondrian xmla support, mondrian provider, MondrianMemberTree - temp fix to get it to compile with mondrian-head
+PROPERTY_VISIBLE is no longer in mondrian-head
+@
+text
+@d76 1
+a76 2
+      // Object visible = monMember.getPropertyValue(mondrian.olap.Property.VISIBLE);
+      Object visible = mondrian.olap.Property.VISIBLE;
+d93 1
+a93 2
+          // Object visible = monMem.getPropertyValue(mondrian.olap.Property.VISIBLE);
+          Object visible = mondrian.olap.Property.VISIBLE;
+@
+

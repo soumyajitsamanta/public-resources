@@ -1,0 +1,1050 @@
+head	1.33;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.33
+date	2003.11.11.14.03.19;	author jiri_schmid;	state Exp;
+branches;
+next	1.32;
+
+1.32
+date	2003.10.09.13.53.24;	author jiri_schmid;	state Exp;
+branches;
+next	1.31;
+
+1.31
+date	2003.10.03.10.53.09;	author jiri_schmid;	state Exp;
+branches;
+next	1.30;
+
+1.30
+date	2003.10.03.09.09.58;	author jiri_schmid;	state Exp;
+branches;
+next	1.29;
+
+1.29
+date	2003.10.02.14.44.54;	author jiri_schmid;	state Exp;
+branches;
+next	1.28;
+
+1.28
+date	2003.10.01.15.29.38;	author jiri_schmid;	state Exp;
+branches;
+next	1.27;
+
+1.27
+date	2003.09.17.14.51.14;	author jiri_schmid;	state Exp;
+branches;
+next	1.26;
+
+1.26
+date	2003.09.16.14.37.53;	author jiri_schmid;	state Exp;
+branches;
+next	1.25;
+
+1.25
+date	2003.09.01.12.40.09;	author jiri_schmid;	state Exp;
+branches;
+next	1.24;
+
+1.24
+date	2003.08.26.15.35.45;	author jiri_schmid;	state Exp;
+branches;
+next	1.23;
+
+1.23
+date	2003.08.20.14.23.46;	author jiri_schmid;	state Exp;
+branches;
+next	1.22;
+
+1.22
+date	2003.08.14.12.43.51;	author jiri_schmid;	state Exp;
+branches;
+next	1.21;
+
+1.21
+date	2003.08.05.12.49.47;	author jiri_schmid;	state Exp;
+branches;
+next	1.20;
+
+1.20
+date	2003.07.31.12.16.00;	author jiri_schmid;	state Exp;
+branches;
+next	1.19;
+
+1.19
+date	2003.07.30.15.30.47;	author jiri_schmid;	state Exp;
+branches;
+next	1.18;
+
+1.18
+date	2003.07.29.15.18.06;	author jiri_schmid;	state Exp;
+branches;
+next	1.17;
+
+1.17
+date	2003.07.29.15.15.36;	author jiri_schmid;	state Exp;
+branches;
+next	1.16;
+
+1.16
+date	2003.07.29.14.36.42;	author jiri_schmid;	state Exp;
+branches;
+next	1.15;
+
+1.15
+date	2003.07.29.12.28.34;	author jiri_schmid;	state Exp;
+branches;
+next	1.14;
+
+1.14
+date	2003.07.09.09.27.12;	author jiri_schmid;	state Exp;
+branches;
+next	1.13;
+
+1.13
+date	2003.05.21.11.39.46;	author jiri_schmid;	state Exp;
+branches;
+next	1.12;
+
+1.12
+date	2003.05.13.15.19.00;	author jiri_schmid;	state Exp;
+branches;
+next	1.11;
+
+1.11
+date	2003.05.08.15.35.52;	author jiri_schmid;	state Exp;
+branches;
+next	1.10;
+
+1.10
+date	2003.05.05.15.16.34;	author jiri_schmid;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	2003.04.25.11.27.34;	author jiri_schmid;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	2003.04.24.11.29.06;	author jiri_schmid;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	2003.04.23.14.39.05;	author jiri_schmid;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	2003.04.22.15.29.25;	author jiri_schmid;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	2003.04.16.12.17.19;	author jiri_schmid;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2003.04.10.14.21.35;	author jiri_schmid;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2003.03.24.12.17.54;	author jiri_schmid;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2003.03.04.15.36.08;	author spanhel;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2003.02.26.14.48.17;	author jiri_schmid;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.33
+log
+@creating report - minor bugs fixed, seems to be working properly
+@
+text
+@// $Id: dad_drag_only.js,v 1.32 2003/10/09 13:53:24 jiri_schmid Exp $
+var browsertype = 0;	// 0: unknown; 1:IE; 2:mozila based 3:netscape6 (not functional now)
+var posleft, postop, plusleft = 0;	//global vars for actual mouse position
+var plustop = 6;
+var plusleft = 0;
+var ctrl = false; //control key pressed, when mouseDown
+var allowHide = true;
+
+function hideMe() {
+if (divID.style.visibility == "visible" && allowHide) {
+	divID.style.visibility="hidden";
+	dragLocator.id = '';
+	dragLocator.name = '';
+	dragLocator.typ = '';
+} else { allowHide = true;}
+}
+
+function browserdetect() {
+var agt = navigator.userAgent.toLowerCase();
+browsertype = (agt.indexOf('msie') < 0) ? (agt.indexOf('mozilla') < 0 ) ?  0 : 2 : 1;
+if (parseFloat(navigator.appVersion.toLowerCase() < 4)) browsertype = 0;
+}
+
+browserdetect();
+
+function setCtrl(e) { ctrl = (browsertype > 1) ? e.ctrlKey : event.ctrlKey }
+ 
+//get the iframe offset, initialize movebale image in actual frame, webbrowser-BODY ( [manualy defined name of i_frame] );
+function init_var(cnt) {
+divID = parent.document.getElementById("maindiv");
+switch (browsertype) {
+	case 2:
+		document.captureEvents(Event.MOUSEMOVE);
+		document.onmousemove=mousemoveNS;
+		if (cnt>2) {
+			document.captureEvents(Event.MOUSEDOWN);	//capture event object
+			document.onmousedown = setCtrl;	//set var ctrl
+		}
+		break;
+	case 1:
+        	document.onmousemove=mousemoveIE;
+		if (cnt>2) document.onmousedown=setCtrl; //set var ctrl
+		break;
+	case 0: alert('Fatal Error!\nNon-compatible browser detected\nInitializing of vars failed!')
+		return false
+	break; }
+dragLocator = top.frames['body'].dragObject;
+initOffset(cnt);
+}
+
+function initOffset(cnt){
+plusleft = 6;
+if (cnt) {
+	if (cnt > 1) plusleft += parent.document.getElementById('tree_iframe').scrollWidth;	//scrollWidth - the real width of the tree-iframe computed by browser
+	if (cnt > 2) plusleft += parent.document.getElementById('drop_iframe').scrollWidth;	//scrollWidth - the real width of the tree-iframe computed by browser
+}}
+
+//check if the clicked ikon can be shown by dragging, 0 can be draged, 1 can't, called from show_me()
+function check_show(element){
+var typ = String(element.match(/[^\|]*$/));
+switch (String(parent.frames["tree_iframe"].editType)) {
+	case "M": if (typ.match(/A|Af|Fa|Ro|M|P|Fi/)) {return(0);} else return(1);
+ 	case "G": if (typ.match(/A|Af|Fa|Ro|M|P/)) {return(0);} else return(1);
+	case "G3":if (typ.match(/A|Af|Fa|Ro|M|P/)) {return(0);} else return(1);
+	case "Fi":if (typ.match(/A|Af|Fa|Ro|M|P/)) {return(0);} else return(1);
+	case "P": if (typ.match(/A|Af|Fa|Ro|M/)) {return(0);} else return(1);
+	case "Ro":if (typ.match(/A|Af|Fa/)) {return(0)} else return(1);
+	case "R": if (typ == 'R') {return(1)} else return(0);
+	default : if (typ.match(/A|Af|Fa|Ro/)) {return(0)} else return(1);
+}}
+
+//move the icon when dragging - engine, called by mousemoveNS | mousemoveIE
+function moveimg() {
+posleft += plusleft; postop += plustop;
+    if (divID) {
+     if (divID.style) {
+	divID.style.left= posleft+"px";
+	divID.style.top= postop+"px";
+      } else {
+	divID.left= posleft;
+	divID.top= postop; }}
+//window.status = posleft + "::" + postop;
+}
+
+//move the icon when dragging, webbrowser window.event.onmousemove (registered event), for NN only
+function mousemoveNS(e) {
+posleft = e.pageX - window.pageXOffset;
+postop = e.pageY - window.pageYOffset;
+if (divID.style.visibility == "visible") moveimg();
+return(false); }
+
+//move the icon when dragging, webbrowser window.event.onmousemove (registered event), for IE only
+function mousemoveIE() {
+       posleft = event.clientX;
+       postop = event.clientY;
+       if (divID.style.visibility == "visible") moveimg();
+return(false); }
+
+function checkIt() {
+/*var EID = document.getElementById('drop_iframe');
+alert(EID.style.top+","+EID.style.left);*/
+window.status = window.screen.availWidth+"x"+window.screen.availHeight+":"+window.screen.width+"x"+window.screen.height+":"+document.width+"x"+document.height;
+}
+
+@
+
+
+1.32
+log
+@many EN language fixies
+@
+text
+@d1 1
+a1 1
+// $Id: dad_drag_only.js,v 1.31 2003/10/03 10:53:09 jiri_schmid Exp $
+d62 6
+a67 3
+ 	case "G": if (typ.match(/A|Af|M|Fa|Ro|P/)) {return(0);} else return(1);
+	case "G3":if (typ.match(/A|Af|M|Fa|Ro/)) {return(0);} else return(1);
+	case "M": if (typ.match(/A|Af|Fi|M|Fa|Ro|P/)) {return(0);} else return(1);
+a68 3
+	case "Ro":if (typ.match(/A|Af|Fa/)) {return(0)} else return(1);
+	case "Fi":if (typ.match(/A|Af|Fa|M|Ro|P/)) {return(0);} else return(1);
+	case "P":if (typ.match(/A|Af|Fa|M|Ro/)) {return(0);} else return(1);
+@
+
+
+1.31
+log
+@control improvments on param and format2d-color page
+@
+text
+@d1 1
+a1 1
+// $Id: dad_drag_only.js,v 1.30 2003/10/03 09:09:58 jiri_schmid Exp $
+d62 1
+a62 1
+ 	case "G": if (typ.match(/A|Af|M|Fa|Ro/)) {return(0);} else return(1);
+@
+
+
+1.30
+log
+@param - date implemented
+@
+text
+@d1 1
+a1 1
+// $Id: dad_drag_only.js,v 1.29 2003/10/02 14:44:54 jiri_schmid Exp $
+d64 1
+a64 1
+	case "M": if (typ.match(/A|Af|Fi|M|Fa|Ro/)) {return(0);} else return(1);
+d67 1
+a67 1
+	case "Fi":if (typ.match(/A|Af|Fa|M|Ro/)) {return(0);} else return(1);
+@
+
+
+1.29
+log
+@parameters - elements implemented
+@
+text
+@d1 1
+a1 1
+// $Id: dad_drag_only.js,v 1.28 2003/10/01 15:29:38 jiri_schmid Exp $
+d68 1
+a68 1
+	case "P":if (typ.match(/A|Af|Fa|Ro/)) {return(0);} else return(1);
+@
+
+
+1.28
+log
+@prompt implemented
+@
+text
+@d1 1
+a1 1
+// $Id: dad_drag_only.js,v 1.27 2003/09/17 14:51:14 jiri_schmid Exp $
+d68 1
+a68 1
+	case "P":if (typ.match(/A|Af|Fa|M|Ro/)) {return(0);} else return(1);
+@
+
+
+1.27
+log
+@tabed rights on graph3d and report
+@
+text
+@d1 1
+a1 1
+// $Id: dad_drag_only.js,v 1.26 2003/09/16 14:37:53 jiri_schmid Exp $
+d68 1
+@
+
+
+1.26
+log
+@rights page user improvments, unbelieveble IE bug fixed
+@
+text
+@d1 1
+a1 1
+// $Id: dad_drag_only.js,v 1.25 2003/09/01 12:40:09 jiri_schmid Exp $
+d62 4
+a65 4
+ 	case "G": if (typ.match(/A|Af|M|Fa/)) {return(0);} else return(1);
+	case "G3":if (typ.match(/A|Af|M|Fa/)) {return(0);} else return(1);
+	case "M": if (typ.match(/A|Af|Fi|M|Fa/)) {return(0);} else return(1);
+	case "R": if (typ.match(/R/)) {return(1)} else return(0);
+d67 1
+a67 1
+	case "Fi":if (typ.match(/A|Af|Fa|M/)) {return(0);} else return(1);
+@
+
+
+1.25
+log
+@skins implemented. mozilla skin - temporarily copy msie content
+@
+text
+@d1 1
+a1 1
+// $Id: dad_drag_only.js,v 1.24 2003/08/26 15:35:45 jiri_schmid Exp $
+d65 5
+a69 5
+	case "R": if (typ == "R") {return(1)} else return(0);
+	case "Ro": if (typ.match(/A|Af|Fa|Ro/)) {return(0)} else return(1);
+	case "Fi":if (typ.match(/A|Af|Fa|M|Fa/)) {return(0);} else return(1);
+	default : if (typ.match(/A|Af|Fa/)) {return(0)} else return(1);
+break;	}}
+@
+
+
+1.24
+log
+@rights improvment, create delete duplicate rule implemented
+@
+text
+@d1 1
+a1 1
+// $Id: dad_drag_only.js,v 1.23 2003/08/20 14:23:46 jiri_schmid Exp $
+d66 1
+a66 1
+	case "Ro": if (typ == "Ro") {return(0)} else return(1);
+@
+
+
+1.23
+log
+@access object implemented
+@
+text
+@d1 1
+a1 1
+// $Id: dad_drag_only.js,v 1.22 2003/08/14 12:43:51 jiri_schmid Exp $
+d66 1
+d68 1
+a68 1
+	default : if (typ.match(/A|Af|Fa|Ro/)) {return(0)} else return(1);
+@
+
+
+1.22
+log
+@huge code, minor functionality and design improvment on main tree
+@
+text
+@d1 1
+a1 1
+// $Id: dad_drag_only.js,v 1.21 2003/08/05 12:49:47 jiri_schmid Exp $
+d67 1
+a67 1
+	default : if (typ.match(/A|Af|Fa/)) {return(0)} else return(1);
+@
+
+
+1.21
+log
+@fact input field on right pane implemented
+@
+text
+@d1 1
+a1 4
+// $Id: dad_drag_only.js,v 1.20 2003/07/31 12:16:00 jiri_schmid Exp $
+
+var divID;
+var dragLocator;
+d9 1
+a9 10
+function browserdetect() {
+var agt = navigator.userAgent.toLowerCase();
+browsertype = (agt.indexOf('msie') < 0) ? (agt.indexOf('mozilla') < 0 ) ?  0 : 2 : 1;
+if (parseFloat(navigator.appVersion.toLowerCase() < 4)) browsertype = 0;
+}
+
+browserdetect();
+
+//hide the dragged object, after drop or else, webbrowser window.event.onclick (registered event) 
+function hide_me() {
+d18 7
+a24 21
+//show the icon of clicked item, webbrowser-A show_me_ex(id,typ) | also called from remove_me()
+function show_me_ex(item_id,prnt){
+if (prnt==0 || prnt==1) {oc(item_id,prnt,'D'); return} // roll out the directory    || d=="A"
+var EID = document.getElementById("icon"+item_id);
+if (dragLocator.name == mg + "|"+mg_type) {alert(msg_text('mg_alert')); return(false);}
+var pole_Name = EID.name.split("|");
+if (check_show(pole_Name[1]) == 0) {
+	if (pole_Name[1] == "Af") {
+		var nodeParent = findItemById(prnt);
+		var nodeChild = findItemById(item_id);
+		pole_Name[0] = nodeParent[2] + "~"+ nodeChild[2];
+	}
+dragLocator.name = pole_Name[0]+"|"+pole_Name[1];
+	var hlp = divID.innerHTML.replace(/src="[^"]*/,"src='"+EID.src+"'");//replace the src of icon, which has to be viewed
+	divID.innerHTML = hlp.replace(/[^>]*$/,pole_Name[0]);	//replace the name to be viewed
+dragLocator.id = item_id;
+dragLocator.typ = pole_Name[1];
+dragLocator.icon = EID.src;
+      	if (divID.style.visibility == "hidden")	{ divID.style.visibility = "visible"; moveimg();}
+  }
+ else {	hide_me(); }}
+@
+
+
+1.20
+log
+@right pane stage 3
+@
+text
+@d1 1
+a1 1
+// $Id: dad_drag_only.js,v 1.19 2003/07/30 15:30:47 jiri_schmid Exp $
+d86 1
+a86 1
+var typ = element.match(/[^\|]*$/);
+d88 3
+a90 3
+ 	case "G": if (String(typ).match(/A|Af|M/)) {return(0);} else return(1);
+	case "G3":if (String(typ).match(/A|Af|M/)) {return(0);} else return(1);
+	case "M": if (String(typ).match(/A|Af|Fi|M|Fa/)) {return(0);} else return(1);
+d92 2
+a93 2
+	case "Fi":if (String(typ).match(/A|Af|Fa|M/)) {return(0);} else return(1);
+	default : if (typ == "A" || typ == "Af") {return(0)} else return(1);
+@
+
+
+1.19
+log
+@right pane implementation stage 2
+@
+text
+@d1 1
+a1 1
+// $Id: dad_drag_only.js,v 1.18 2003/07/29 15:18:06 jiri_schmid Exp $
+d5 1
+a5 1
+var browsertype = 0;
+d10 1
+d13 4
+a16 9
+var agt= navigator.userAgent.toLowerCase();
+var appVer= navigator.appVersion.toLowerCase();
+browserversion= parseFloat(appVer);
+var iePos= appVer.indexOf('msie');
+ if (iePos!=-1) browserversion= parseFloat(appVer.substring(iePos+5, appVer.indexOf(';',iePos)));
+var nav6Pos = agt.indexOf('netscape6');
+  if (nav6Pos!=-1) browserversion= parseFloat(agt.substring(nav6Pos+10))
+  browsertype = (iePos<0) ? (agt.indexOf('mozilla')<0) ? 0 : 2 : 1;
+return(browsertype>0); }
+d21 8
+a28 1
+function hide_me() { if (divID.style.visibility == "visible") divID.style.visibility="hidden"; }
+d46 1
+d52 1
+a52 7
+function setCtrl(e) { 
+if (browsertype == 2) {
+	ctrl = e.ctrlKey;
+} else {
+	ctrl = event.ctrlKey;
+}
+}
+d58 14
+a71 11
+      case 1:
+        document.onmousemove=mousemoveIE;
+	if (cnt>2) document.onmousedown=setCtrl; //set var ctrl
+	break;
+      case 2:
+        document.captureEvents(Event.MOUSEMOVE|Event.MOUSEDOWN);
+	document.onmousemove=mousemoveNS;
+	if (cnt>2) {
+		document.captureEvents(Event.MOUSEDOWN);	//capture event object
+		document.onmousedown = setCtrl;	//set var ctrl
+	}
+@
+
+
+1.18
+log
+@some "cosmetic" changes
+@
+text
+@d1 1
+a1 1
+// $Id: dad_drag_only.js,v 1.17 2003/07/29 15:15:36 jiri_schmid Exp $
+d9 1
+a9 66
+var OC = true;
+
+//shows / hides the right panel with attributes elements
+function ocElements(EID) {
+var iframe = parent.document.getElementById('elements_iframe');
+var shrt = (iframe.offsetLeft > 800) ? 2 : 3;
+var wdth = Number(String(parent.document.getElementById('tree_iframe').style.width).replace(/.$/,""));
+if (String(EID.src).match(/left/)) {
+	EID.src = 'img/rightArr.gif';
+	if (iframe.style) {
+		parent.document.getElementById('drop_iframe').style.width = (100-2*wdth) + "%";;
+		iframe.style.left = (100-wdth) + "%";
+		iframe.style.width = wdth + "%";
+		document.getElementById('content').style.display = 'block';
+		document.getElementById('contentTitle').style.display = 'inline';
+		initOffset(2);
+		OC = true;
+	}
+} else {
+	EID.src = 'img/leftArr.gif';
+	if (iframe.style) {
+		iframe.style.left = (100-shrt)+'%';
+		iframe.style.width = shrt+'%';
+		parent.document.getElementById('drop_iframe').style.width = (100-wdth-shrt)+'%';
+		document.getElementById('content').style.display = 'none';
+		document.getElementById('contentTitle').style.display = 'none';
+		initOffset(2);
+		OC = false;
+	}
+}
+}
+
+function initOffset(cnt){
+plusleft = 6;
+if (cnt) {
+	if (cnt > 1) plusleft += parent.document.getElementById('tree_iframe').scrollWidth;	//scrollWidth - the real width of the tree-iframe computed by browser
+	if (cnt > 2) plusleft += parent.document.getElementById('drop_iframe').scrollWidth;	//scrollWidth - the real width of the tree-iframe computed by browser
+}}
+
+function changeTitle() {
+var ID = document.getElementById('itemId').value;
+if (String(ID).match(/~/)) {
+	var nodeParent = findItemById(String(ID).match(/^[^~]*/));
+	var nodeChild = findItemById(ID,true);
+	if (nodeParent[3] && nodeChild[3]) set('contentTitle','innerHTML',"&nbsp;"+nodeParent[2]+", "+nodeChild[2]);
+} else if (ID) {
+	var node = findItemById(ID);
+	if (node[3]) set('contentTitle','innerHTML',"&nbsp;"+node[2]);
+}
+return true
+}
+
+function load_me() {
+if (divID.style.visibility == "visible") {
+	hide_me();
+	if (!OC) document.getElementById('openClose').onclick();
+	var ID = dragLocator.id;
+	var node = findItemById(ID);
+	if (node[3] == 'M' || node[3] == '') { //metric has no elements or node wasn't found
+			return
+		} else {
+			self.location.href = 'elements.cgi?Lang='+document.getElementById('activeLang').value+"&Elements="+ID;
+		}
+}
+}
+
+d19 1
+a19 1
+  browsertype= (iePos!=-1) ? 1 : (agt.indexOf('mozilla')!=-1) ? 2 : 0;
+d47 8
+d62 1
+d65 1
+a65 1
+        document.captureEvents(Event.MOUSEMOVE);
+d67 4
+d76 7
+d91 2
+a92 1
+	case "Fi":if (String(typ).match(/A|Af|Fa|M|Af|A/)) {return(0);} else return(1);
+a120 1
+
+@
+
+
+1.17
+log
+@some "cosmetic" changes
+@
+text
+@d1 1
+a1 1
+// $Id: dad_drag_only.js,v 1.15 2003/07/29 12:28:34 jiri_schmid Exp $
+d11 1
+@
+
+
+1.16
+log
+@code improvments
+@
+text
+@d52 1
+a52 1
+	if (nodeParent[3] && nodeChild[3]) set('contentTitle','innerHTML',"&nbsp;"+nodeParent[2]+"~"+nodeChild[2]);
+@
+
+
+1.15
+log
+@right frame implemented
+@
+text
+@d1 1
+a1 1
+// $Id: dad_drag_only.js,v 1.14 2003/07/09 09:27:12 jiri_schmid Exp $
+d22 1
+a22 1
+		document.getElementById('bcontent').style.display = 'inline';
+d33 1
+a33 1
+		document.getElementById('bcontent').style.display = 'none';
+d47 13
+d148 1
+a148 1
+window.status = posleft + "::" + postop;
+@
+
+
+1.14
+log
+@added javascript for graph3d
+@
+text
+@d1 1
+a1 1
+// $Id: dad_drag_only.js,v 1.13 2003/05/21 11:39:46 jiri_schmid Exp $
+d6 55
+a60 2
+var plusleft, plustop, posleft, postop = 0;	//iframe offset, global vars for actual mouse position
+//var mg_alert = "Please, insert the Metrics group item first."; //alert message
+d76 1
+a76 7
+function hide_me() {
+if (divID.style.visibility == "visible")
+ if (dragLocator.name == mg+"|"+mg_type)
+  {window.status="Sorry, illegal operation."}
+ else {	divID.style.visibility="hidden";
+ 	window.status="";}
+ else window.status="";}
+d100 1
+a100 1
+function init_var(i_frame) {
+a101 1
+var hlp = parent.document.getElementById(i_frame);
+a109 2
+plusleft = 6;
+plustop = 6;
+d111 1
+d134 3
+a136 1
+	divID.top= postop; }}}
+a158 25
+function setFrames(def) {
+var breakLine = (def > 1 && def <100) ? def/100 : 0.25;
+var wdth = (browsertype == 2) ? Math.floor(document.width*breakLine) : Math.floor(screen.width*breakLine);
+if (isNaN(wdth)) wdth = Math.floor(screen.width*breakLine);
+var hght = "97%";
+var dropwdth = (100-(breakLine*100))+"%";
+EID = document.getElementById('tree_iframe');
+if (EID.style) {
+ EID.style.width = wdth+"px";
+ EID.style.height = hght;
+ } else {
+ EID.width = wdth;
+ EID.height = hght;
+ }
+EID = document.getElementById('drop_iframe');
+if (EID.style) {
+ EID.style.left = wdth+"px";
+ EID.style.height = hght;
+ EID.style.width = dropwdth;
+ } else {
+ EID.left = wdth;
+ EID.height = hght;
+ EID.width = dropwdth;
+ }
+}
+@
+
+
+1.13
+log
+@visual and code improvment
+@
+text
+@d1 1
+a1 1
+// $Id: dad_drag_only.js,v 1.12 2003/05/13 15:19:00 jiri_schmid Exp $
+d73 3
+a75 2
+ 	case "G": if (typ == "A" || typ == "Af" || typ == "M") {return(0);} else return(1);
+	case "M": if (typ == "A" || typ == "Af" || typ == "Fi" || typ == "M" || typ == "Fa") {return(0);} else return(1);
+d77 1
+a77 1
+	case "Fi":if (typ == "A" || typ == "Af" || typ == "Fa" || typ == "M" || typ == "Af" || typ == "A") {return(0);} else return(1);
+@
+
+
+1.12
+log
+@new report page seems to be fullfunctional, javascript code huge improvment
+@
+text
+@d1 1
+a1 1
+// $Id: dad_drag_only.js,v 1.11 2003/05/08 15:35:52 jiri_schmid Exp $
+d5 1
+d54 2
+a55 4
+if (i_frame)
+ { divID = parent.document.getElementById("maindiv");
+   var hlp = parent.document.getElementById(i_frame);}
+ else { divID = document.getElementById("maindiv");}
+d64 2
+a65 10
+if (hlp) {
+	if (hlp.style) {
+	 plusleft = parseInt(hlp.style.left)+6;
+	 plustop = parseInt(hlp.style.top)+6;}
+	else {
+	 plusleft = parseInt(hlp.left)+6;
+	 plustop = parseInt(hlp.top)+6;}}
+  else { 
+   plusleft = 6;
+   plustop = 6;}
+d103 33
+@
+
+
+1.11
+log
+@report huge improvment
+@
+text
+@d1 1
+a1 1
+// $Id: dad_drag_only.js,v 1.10 2003/05/05 15:16:34 jiri_schmid Exp $
+a2 1
+var imgID;					//variable for manipulating image among frames
+d4 1
+d24 1
+a24 1
+ if (divID.name == mg+"|"+mg_type)
+d34 1
+a34 1
+if (divID.name == mg + "|"+mg_type) {alert(msg_text('mg_alert')); return(false);}
+d42 1
+a42 1
+	divID.name = pole_Name[0]+"|"+pole_Name[1];
+d45 2
+a46 3
+	divID.title = item_id;
+	imgID.alt = item_id;
+	imgID.src = EID.src;
+d54 1
+a54 2
+ { imgID = parent.document.getElementById("mainimg");
+   divID = parent.document.getElementById("maindiv");
+d56 1
+a56 2
+ else { imgID = document.getElementById("mainimg");
+ 	divID = document.getElementById("maindiv");}
+d75 1
+d81 1
+a81 1
+switch (parent.document.getElementById("tree_iframe").name) {
+d84 1
+a84 1
+	case "R": return(0);
+@
+
+
+1.10
+log
+@huge code improvment on client side when substituting from/to ID, minor language dependeces fixies
+@
+text
+@d1 1
+a1 1
+// $Id: dad_drag_only.js,v 1.9 2003/04/25 11:27:34 jiri_schmid Exp $
+d86 2
+a87 2
+	case "R": if (typ == "G" || typ == "Fo" || typ == "Fi") {return(0);} else return(1);
+	case "Fi":if (typ == "A" || typ == "Af" || typ == "Fa" || typ == "M") {return(0);} else return(1);
+@
+
+
+1.9
+log
+@switching among projects implemented
+@
+text
+@d1 1
+a1 1
+// $Id: dad_drag_only.js,v 1.8 2003/04/24 11:29:06 jiri_schmid Exp $
+d36 12
+a47 9
+if (check_show(pole_Name[1]) == 0)
+  {if (pole_Name[1] == "Af")		//get_type(item_id) is defined in tree2.js
+  	{var node = find_item(Tree0,prnt);
+	 pole_Name[0] = node[2] + "~"+ pole_Name[0];}
+   divID.name = pole_Name[0]+"|"+pole_Name[1];
+var	hlp = divID.innerHTML.replace(/src="[^"]*/,"src='"+EID.src+"'");//replace the src of icon, which has to be viewed
+   divID.innerHTML = hlp.replace(/[^>]*$/,pole_Name[0]);	//replace the name to be viewed
+   divID.title = item_id;
+   imgID.src = EID.src;
+@
+
+
+1.8
+log
+@IE bug fixed, code improvment
+@
+text
+@d1 1
+a1 1
+// $Id: dad_drag_only.js,v 1.7 2003/04/23 14:39:05 jiri_schmid Exp $
+d32 1
+a32 1
+if (prnt==0) {oc(item_id,0,prnt); return} // roll out the directory    || d=="A"
+@
+
+
+1.7
+log
+@the tree is generated now on server side in html directory as tree.html
+@
+text
+@d1 1
+a1 1
+// $Id: dad_drag_only.js,v 1.6 2003/04/22 15:29:25 jiri_schmid Exp $
+d31 1
+a31 2
+function show_me_ex(element,prnt){
+var item_id = element.name;
+d38 1
+a38 2
+  	{var node = find_item(Tree0,prnt);;
+	//var hlp = document.getElementById("act_it"); // --> unexplaneable disfunctional in IE from 26.02.2003
+@
+
+
+1.6
+log
+@fixed a modified saving a loadin joined items A~Af
+@
+text
+@d1 1
+a1 1
+// $Id: dad_drag_only.js,v 1.5 2003/04/16 12:17:19 jiri_schmid Exp $
+d22 1
+a22 1
+function hide_me() { 
+d31 3
+a33 2
+function show_me_ex(item_id,prnt){
+if (prnt==0) {oc(item_id,1,prnt); return} // roll out the directory    || d=="A"
+@
+
+
+1.5
+log
+@code improvment, minor fixies
+@
+text
+@d1 1
+a1 1
+// $Id: dad_drag_only.js,v 1.4 2003/04/10 14:21:35 jiri_schmid Exp $
+d31 2
+a32 1
+function show_me_ex(item_id){
+d34 5
+a38 4
+if (divID.name == mg + "|A") {alert(msg_text('mg_alert')); return(false);}
+if (check_show(EID.name) == 0)
+  {if (get_type(item_id) == "Af")		//get_type(item_id) is defined in tree2.js
+  	{var hlp = document.act_it.act_it.text;
+d40 2
+a41 2
+	 EID.name = hlp.match(/[^\|]*$/) + "." + hlp.match(/^[^\|]*/) + "|Af";}
+   divID.name = EID.name;
+d43 1
+a43 1
+   divID.innerHTML = hlp.replace(/[^>]*$/,EID.name.match(/^[^\|]*/));	//replace the name to be viewed
+@
+
+
+1.4
+log
+@metric, filter, report substitutes IDs by javascript, metric & filter resets the original expresion
+@
+text
+@d1 1
+a1 1
+// $Id: dad_drag_only.js,v 1.3 2003/03/24 12:17:54 jiri_schmid Exp $
+a5 1
+var mg = "-METRICS-";			//the special name for automatically generated Metric object
+d24 1
+a24 1
+ if (divID.name == mg+"|A")
+@
+
+
+1.3
+log
+@IE5 bug fixed
+@
+text
+@d1 1
+a1 1
+// $Id: dad_drag_only.js,v 1.2 2003/03/04 15:36:08 spanhel Exp $
+d43 1
+@
+
+
+1.2
+log
+@JavaScript lang localization
+@
+text
+@d1 1
+a1 1
+// $Id: dad_drag_only.js,v 1.1 2003/02/26 14:48:17 jiri_schmid Exp $
+d41 1
+a41 1
+var 	hlp = divID.innerHTML.replace(/src="[^"]*/,"src='"+EID.src+"'");//replace the src of icon, which has to be viewed
+@
+
+
+1.1
+log
+@when file dad.js was optimized file dad_drag_only.js arised to be used by edit.cgi a edit_tree.obj only
+@
+text
+@d1 1
+a1 1
+// $Id:  2003/02/26 13:21:51 jiri_schmid Exp $
+d7 1
+a7 1
+var mg_alert = "Please, insert the Metrics group item first."; //alert message
+d34 1
+a34 1
+if (divID.name == mg + "|A") {alert(mg_alert); return(false);}
+@
+

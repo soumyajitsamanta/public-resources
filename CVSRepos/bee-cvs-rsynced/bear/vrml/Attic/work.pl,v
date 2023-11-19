@@ -1,0 +1,2829 @@
+head	1.12;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.12
+date	2003.06.03.13.42.16;	author vacula;	state dead;
+branches;
+next	1.11;
+
+1.11
+date	2003.05.08.07.42.46;	author michald;	state Exp;
+branches;
+next	1.10;
+
+1.10
+date	2003.04.15.22.10.00;	author michald;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	2003.04.11.12.09.43;	author vacula;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	2003.04.10.14.48.01;	author vacula;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	2003.04.10.14.45.12;	author vacula;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	2003.04.04.14.34.26;	author vacula;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	2003.03.27.14.44.08;	author vacula;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2003.03.26.15.16.37;	author vacula;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2003.03.05.10.39.51;	author vacula;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2003.02.10.10.39.17;	author vacula;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2003.01.31.09.37.45;	author vacula;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.12
+log
+@*** empty log message ***
+@
+text
+@#!/usr/bin/perl -w
+
+use VRML;
+
+%column = (
+	'map'  => ["Z","X","Y","DI"],
+	'name' => ["Mesto","Rok","Prodej","Zbozi"],
+);
+
+%lookup = (
+	'Mesto' => ["Praha","Brno","Liberec","Ostrava","Zlin"],
+	'Rok'   => [1997,1998,1999,2000,2001,2002],
+);
+
+@@data = (
+	[1,1,200,30,],[4,5,864,40,],[2,3,589,30,],[2,1,1065,10],[3,4,34,10,],[1,3,564,20,],
+	[1,2,1200,30,],[4,5,1864,40,],[2,3,1589,30,],[2,1,105,10],[3,4,264,10,],[1,3,464,20,],
+	[1,3,240,30,],[4,3,84,40,],[2,4,89,30,],[2,2,65,10],[3,3,34,10,],[1,3,264,20,],
+	[1,4,280,30,],[4,5,864,40,],[2,3,59,30,],[2,2,1065,10],[3,4,74,10,],[1,4,24,20,],
+	[1,1,20,30,],[4,3,86,40,],[2,4,550,30,],[2,4,165,10],[3,4,34,10,],[1,3,254,20,],
+);
+
+%format = ( 'axis' =>  {'color'     => 'green',
+			'format'    => 'cylinder',
+			'size'      => 10,
+		       },
+	  'lattice'=> {'X' => [
+		       	        { 'step'   => 1,
+			          'format' => 'line',
+	 	 	          'size'   => 1,
+	 		          'color'  => 'blue', },
+				],
+		       
+		       'Z' => [
+		       	        { 'step'   => 1,
+			          'format' => 'line',
+	 	 	          'size'   => 1,
+	 		          'color'  => 'blue', },
+				],
+		       
+		       'Y' => [
+	  			{ 'step'   => 4,
+			          'format' => 'line',
+	 	 	          'size'   => 1,
+	 		          'color'  => 'red',},		       	       
+	  			{ 'step'   => 1,
+			          'format' => 'line',
+	 	 	          'size'   => 1,
+	 		          'color'  => 'blue',},		       	       
+				],
+		       
+		      },
+	  	       
+);
+
+
+##############################################################################################################################################
+#----------------------------------------------------------------------------------------------------------------------------------------------
+
+ $indent = 1;							## define blank space between labels and axses or lattices
+ $vrml = new VRML(2);
+# $vrml->browser('Cosmo Player 2.0','vrmlview');
+ $vrml->navigationinfo('ANY', 1, 1, 1000);			## navigationinfo('type', speed, headlight, visibilityLimit, avatarSize)
+ $vrml->backgroundcolor('black');				## backgroundcolor('skyColor', 'groundColor')
+
+$texdir='png';
+
+my $IDGen=0;	## Initialize for subroutine  IDGen 
+my $IDSt;	## Initialize for subroutine IDGen
+
+
+if ( %{$format{axis}} ) {
+
+   my $color = $format{axis}->{color};
+   my $size  = $format{axis}->{size};
+   my $format = $format{axis}->{format};
+     %X = &DefineAxis('X',$format,$size,$color);
+     &GenerateAxis(%X);
+     %Y = &DefineAxis('Y',$format,$size,$color);
+     &GenerateAxis(%Y);
+     %Z = &DefineAxis('Z',$format,$size,$color);
+     &GenerateAxis(%Z);
+}
+
+if (@@{$format{lattice}->{X}}) {
+   my $num_formats = @@{$format{lattice}->{X}};
+   for (my $i=0;$i<$num_formats;$i++) {
+      my $color = $format{lattice}->{X}->[$i]->{color};
+      my $format = $format{lattice}->{X}->[$i]->{format};
+      my $size = $format{lattice}->{X}->[$i]->{size};
+      my $step = $format{lattice}->{X}->[$i]->{step};
+      %XY = &DefineLattice('X',$color,$format,$size,$step);
+      %XZ = &DefineLattice('X',$color,$format,$size,$step);
+      &GenerateLattice('X',$i);
+	
+   }
+}
+
+if (@@{$format{lattice}->{Y}}) {
+   my $num_formats = @@{$format{lattice}->{Y}};
+   for (my $i=0;$i<$num_formats;$i++) {
+      my $color = $format{lattice}->{Y}->[$i]->{color};
+      my $format = $format{lattice}->{Y}->[$i]->{format};
+      my $size = $format{lattice}->{Y}->[$i]->{size};
+      my $step = $format{lattice}->{Y}->[$i]->{step};
+      %YX = &DefineLattice('Y',$color,$format,$size,$step);
+      %YZ = &DefineLattice('Y',$color,$format,$size,$step);
+      &GenerateLattice('Y',$i);
+	
+   }
+}
+if (@@{$format{lattice}->{Z}}) {
+   my $num_formats = @@{$format{lattice}->{Z}};
+   for (my $i=0;$i<$num_formats;$i++) {
+      my $color = $format{lattice}->{Z}->[$i]->{color};
+      my $format = $format{lattice}->{Z}->[$i]->{format};
+      my $size = $format{lattice}->{Z}->[$i]->{size};
+      my $step = $format{lattice}->{Z}->[$i]->{step};
+      %ZX = &DefineLattice('Z',$color,$format,$size,$step);
+      %ZY = &DefineLattice('Z',$color,$format,$size,$step);
+      &GenerateLattice('Z',$i);
+	
+   }
+}
+
+if (@@data) {
+my $rows = @@data;
+my $cols = @@{$data[0]};
+my (@@translation,$diameter,);
+my $scale = &DiameterOfObject;
+
+for ($row=0;$row < $rows;$row++){
+   for ($col=0;$col<$cols;$col++) {
+my      $item = $data[$row][$col];
+      if ($column{map}[$col] eq 'X') {$translation[0] = $item/$X{scale};}
+      if ($column{map}[$col] eq 'Y') {$translation[1] = $item/$Y{scale};}
+      if ($column{map}[$col] eq 'Z') {$translation[2] = $item/$Z{scale};}
+      if ($column{map}[$col] eq 'DI') {$diameter = $scale*$item;}
+   }
+      &GenerateObject($diameter,@@translation);
+}
+
+}
+
+
+#$vrml->print(1);
+$vrml->save("ID.wrl");
+
+#---------------------------------------------------------------------------------------------------------------------------------------------
+##############################################################################################################################################
+#---------------------------------------------------------------------------------------------------------------------------------------------
+
+sub DefineAxis {
+my $axis = shift;
+my $format = shift;
+my $size = shift;
+my $color = shift;
+my (%X,%Y,%Z);
+ &ParamOfAxis("$axis");
+
+  if ($axis eq 'X') {
+   %X = (
+              'translation' => [$length/2,0,0],
+	      'rotation'    => [0,0,1,-90],
+	      'size'	    => $size,
+	      'format'	    => $format,
+	      'color'	    => $color,
+	      'length'	    => $length,
+	      'label'	    => $label,
+	      'scale'	    => $scale,
+             ),
+	return (%X);	
+  }
+  if ($axis eq 'Y') {
+   %Y = (
+              'translation' => [0,$length/2,0],
+	      'rotation'    => [0,0,0,0],
+	      'size'	    => $size,
+	      'format'	    => $format,
+	      'color'	    => $color,
+	      'length'	    => $length,
+	      'label'	    => $label,
+	      'scale'	    => $scale,
+             ),
+	return (%Y);	
+  }
+  if ($axis eq 'Z') {
+   %Z = (
+              'translation' => [0,0,$length/2],
+	      'rotation'    => [1,0,0,90],
+	      'size'	    => $size,
+	      'format'	    => $format,
+	      'color'	    => $color,
+	      'length'	    => $length,
+	      'label'	    => $label,
+	      'scale'	    => $scale,
+             ),
+	return (%Z);	
+  }
+
+}
+
+#---------------------------------------------------------------------------------------------------------------------------------------------
+
+sub DefineLattice {
+my ($lattice,$color,$format,$size,$step) = @@_;
+my (%XY,%XZ);
+
+  if ($lattice eq 'X') {
+  %XY = %XZ = (
+               'size'	=> $size,
+	       'format'	=> $format,
+	       'color'	=> $color,
+	       'step'   => $step,
+              );
+   return (%XY,%XZ);	
+  } 
+  if ($lattice eq 'Y') {
+  %YX = %YZ = (
+               'size'	=> $size,
+	       'format'	=> $format,
+	       'color'	=> $color,
+	       'step'   => $step,
+              );
+   return (%YX,%YZ);	
+  } 
+  if ($lattice eq 'Z') {
+  %ZX = %ZY = (
+               'size'	=> $size,
+	       'format'	=> $format,
+	       'color'	=> $color,
+	       'step'   => $step,
+              );
+   return (%ZX,%ZY);	
+  } 
+
+
+}
+
+#---------------------------------------------------------------------------------------------------------------------------------------------
+
+sub ParamOfAxis {
+my $axis = shift;
+my $rows = @@data;
+my $cols = @@{$column{map}};
+my (@@steps,$exponent,$digit,$max,$round_max);
+
+ for (my $col=0;$col < $cols;$col++){
+
+  if ($column{map}[$col] eq "$axis") {
+
+    $label = $column{name}[$col];
+    if (exists($lookup{$label})){
+       $length = @@{$lookup{$label}};
+       $scale = 1;
+    }
+    else {
+       $length = 10;
+       $max = 0;
+       for ($row = 0;$row < $rows;$row++) {
+          if ($data[$row][$col] > $max ){ 
+	    $max = $data[$row][$col];
+	  }  
+       }
+#       $scale = $max/10; 
+        @@steps = qw(1 2 2.5 5);
+        $exponent = length($max)-1;
+ 	$digit = eval("1e$exponent");
+	foreach my $item (@@steps){
+  	    $round_max = $item*$digit;
+   	    if ($round_max >= $max){ last; }
+	} 
+	$scale = $round_max/10;
+
+    }
+
+  }
+ }
+
+return ($label,$length,$scale);
+
+}
+
+#---------------------------------------------------------------------------------------------------------------------------------------------
+
+sub DiameterOfObject {
+my $rows = @@data;
+my $cols = @@{$column{map}};
+my (@@steps,$exponent,$digit,$max,$round_max);
+
+for (my $col=0;$col < $cols;$col++){
+
+  if ($column{map}[$col] eq "DI") {
+   $max = 0;
+       for ($row = 0;$row < $rows;$row++) {
+          if ($data[$row][$col] > $max ){ 
+	    $max = $data[$row][$col];
+	  }  
+       }
+        $exponent = length($max);
+ 	$digit = eval("1e$exponent");
+	$scale = 1/$digit;
+  }
+}
+return ($scale);
+ 
+}
+
+#---------------------------------------------------------------------------------------------------------------------------------------------
+
+
+sub GenerateAxis {
+#my $axis = shift;
+my %axis_description = @@_;
+my @@rotation = @@{$axis_description{rotation}};
+my $radius = $axis_description{size}/50;
+my $height = $axis_description{length}/10;
+my $color = $axis_description{color};
+my $format = $axis_description{format};
+my @@translation = @@{$axis_description{translation}};
+
+  if ($format eq 'cylinder') {
+     &GenerateCylinder(%axis_description);
+  }
+  if ($format eq 'box') {
+     &GenerateBox(%axis_description);
+  }
+
+foreach my $trans (@@translation){
+  if ($trans != 0){
+      $trans += ($trans+$height/2);
+  }
+}
+  $vrml->transform_begin("t=@@translation","r=@@rotation");		## t = translation, r = rotation
+  $vrml->cone("$radius $height","d=$color");				## cone('bottom radius height', 'appearance')->d = diffuse color
+  $vrml->transform_end;
+
+}
+#---------------------------------------------------------------------------------------------------------------------------------------------
+
+
+sub GenerateLattice {
+my $lattice = shift;
+my $i = shift;
+my $trans = 0;
+my $item = 0; 
+
+if ($i == 0) { 
+   @@index = qw(0 0 0 0 0 0 0 0 0 0 0 0);
+}
+
+ if ($lattice eq 'X') {
+     for (my $i=0;$i<int($X{length}/$XY{step});$i++) {
+       $trans = $trans + $XY{step};
+	if ($index[$trans] == 0){
+	$index[$trans] = 1;
+
+           $XY{translation} = [$trans,$Y{length}/2,0];
+	   $XY{rotation} = [0,0,0,0];
+	   $XY{length} = $Y{length};
+	   
+            if ($XY{format} eq 'cylinder') {
+               &GenerateCylinder(%XY);
+            }  
+            if ($XY{format} eq 'box') {
+               &GenerateBox(%XY);
+            }  
+            if ($XY{format} eq 'line') {
+               &GenerateLine(%XY);
+            }
+            $XZ{translation} = [$trans,0,$Z{length}/2];
+	    $XZ{rotation} = [1,0,0,90];
+	    $XZ{length} = $Z{length};
+	    
+            if ($XZ{format} eq 'cylinder') {
+               &GenerateCylinder(%XZ);
+            }  
+            if ($XZ{format} eq 'box') {
+               &GenerateBox(%XZ);
+            }  
+            if ($XZ{format} eq 'line') {
+               &GenerateLine(%XZ);
+            }
+	    if ($X{scale} == 1) {						## definition texture
+	       my $id = &IDGen;								
+	       my $label = $lookup{$X{label}}[$trans-1];					
+	       my $color = $XY{color};
+	       &GenerateTexture($id,$label,$color);
+
+	       my @@translation = ($trans-0.2,0,$Z{length}+$indent);
+	       my @@rotation = (1,0,0,90);
+	       my $flag = 0;
+	       my @@texcoord = (2,3,0,1,-1);				## 2,3,0,1,-1 
+	       &GenerateLabel($id,$flag,@@translation,@@rotation,$label,@@texcoord);
+	    }
+	    if ($X{scale} != 1) {						## definition texture
+	       my $id = &IDGen;								
+	       my $label = $X{scale}*$trans;
+	       my $color = $XY{color};
+	       &GenerateTexture($id,$label,$color);
+
+	       my @@translation = ($trans-0.2,0,$Z{length}+$indent);
+	       my @@rotation = (1,0,0,-90);
+	       my $flag = 0;
+	       my @@texcoord = (0,1,2,3,-1);
+	       &GenerateLabel($id,$flag,@@translation,@@rotation,$label,@@texcoord);
+	    }
+	}
+      }	
+  }
+ if ($lattice eq 'Y') {
+     for (my $i=0;$i<int($Y{length}/$YX{step});$i++) {
+       $trans = $trans + $YX{step};
+	if ($index[$trans] == 0){
+	$index[$trans] = 1;
+
+           $YX{translation} = [$X{length}/2,$trans,0];
+	   $YX{rotation} = [0,0,1,90];
+	   $YX{length} = $X{length};
+	   
+            if ($YX{format} eq 'cylinder') {
+               &GenerateCylinder(%YX);
+            }  
+            if ($YX{format} eq 'box') {
+               &GenerateBox(%YX);
+            }  
+            if ($YX{format} eq 'line') {
+               &GenerateLine(%YX);
+            }
+            $YZ{translation} = [0,$trans,$Z{length}/2];
+	    $YZ{rotation} = [1,0,0,90];
+	    $YZ{length} = $Z{length};
+	    
+            if ($YZ{format} eq 'cylinder') {
+               &GenerateCylinder(%YZ);
+            }  
+            if ($YZ{format} eq 'box') {
+               &GenerateBox(%YZ);
+            }  
+            if ($YZ{format} eq 'line') {
+               &GenerateLine(%YZ);
+            }
+	    if ($Y{scale} == 1) {
+	       my $id = &IDGen;								
+	       my $label = $lookup{$Y{label}}[$trans-1];					
+	       my $color = $YZ{color};							
+	       &GenerateTexture($id,$label,$color);	
+
+	       my @@translation = ($X{length}+$indent,$trans+0.2,0);
+               my @@rotation = (0,0,1,270);
+	       my $flag = 0;
+	       my @@texcoord = (3,2,1,0,-1);
+	       &GenerateLabel($id,$flag,@@translation,@@rotation,$label,@@texcoord);
+	    }
+	    if ($Y{scale} != 1) {
+	       my $id = &IDGen;								
+	       my $label = $Y{scale}*$trans;
+	       my $color = $YZ{color};							
+	       &GenerateTexture($id,$label,$color);	
+
+	       my @@translation = ($X{length}+$indent,$trans+0.2,0);
+               my @@rotation = (0,0,1,270);
+	       my $flag = 0;
+	       my @@texcoord = (3,2,1,0,-1);
+	       &GenerateLabel($id,$flag,@@translation,@@rotation,$label,@@texcoord);
+	    }
+	}
+      }	
+  }
+ if ($lattice eq 'Z') {
+     for (my $i=0;$i<int($Z{length}/$ZX{step});$i++) {
+       $trans = $trans + $ZX{step};
+	if ($index[$trans] == 0){
+	$index[$trans] = 1;
+
+           $ZX{translation} = [$X{length}/2,0,$trans];
+	   $ZX{rotation} = [0,0,1,90];
+	   $ZX{length} = $X{length};
+	   
+            if ($ZX{format} eq 'cylinder') {
+               &GenerateCylinder(%ZX);
+            }  
+            if ($ZX{format} eq 'box') {
+               &GenerateBox(%ZX);
+            }  
+            if ($ZX{format} eq 'line') {
+               &GenerateLine(%ZX);
+            }
+            $ZY{translation} = [0,$Y{length}/2,$trans];
+	    $ZY{rotation} = [0,0,0,0];
+	    $ZY{length} = $Y{length};
+	    
+            if ($ZY{format} eq 'cylinder') {
+               &GenerateCylinder(%ZY);
+            }  
+            if ($ZY{format} eq 'box') {
+               &GenerateBox(%ZY);
+            }  
+            if ($ZY{format} eq 'line') {
+               &GenerateLine(%ZY);
+            }
+	    if ($Z{scale} == 1) {
+	       my $id = &IDGen;								
+	       my $label = $lookup{$Z{label}}[$trans-1];					
+	       my $color = $ZY{color};							
+	       &GenerateTexture($id,$label,$color);	
+
+	       my @@translation = ($X{length}+$indent,0,$trans-0.2);
+               my @@rotation = (1,0,0,90);
+	       my $flag = 1;
+	       my @@texcoord = (1,0,3,2,-1);
+	       &GenerateLabel($id,$flag,@@translation,@@rotation,$label,@@texcoord);
+	    }
+	    if ($Z{scale} != 1) {
+	       my $id = &IDGen;								
+	       my $label = $Z{scale}*$trans;
+	       my $color = $ZY{color};							
+	       &GenerateTexture($id,$label,$color);	
+
+	       my @@translation = ($X{length}+$indent,0,$trans-0.2);
+               my @@rotation = (1,0,0,90);
+	       my $flag = 1;
+	       my @@texcoord = (1,0,3,2,-1);
+	       &GenerateLabel($id,$flag,@@translation,@@rotation,$label,@@texcoord);
+	    }
+	}
+      }	
+  }
+
+
+}
+#---------------------------------------------------------------------------------------------------------------------------------------------
+
+sub GenerateObject {
+my $width = $height = $depth = shift;
+my @@translation = @@_;
+#my ($height,$size,$color) = splice(@@_,0,3);
+#my $width = $depth = $size/10;
+
+  $vrml->transform_begin("t=@@translation");				## t = translation, r = rotation
+#  $vrml->box("$width $height $depth","d=$color","tr=$transparency");	##  box('size', 'appearance') -> d = diffuse color,tr = transparency
+$vrml->box("$width $height $depth","d=red","tr=0.5");
+  $vrml->transform_end;
+
+}
+
+#---------------------------------------------------------------------------------------------------------------------------------------------
+
+sub GenerateCylinder {
+my %description = @@_;
+my @@translation = @@{$description{translation}};
+my @@rotation = @@{$description{rotation}};
+my $radius = $description{size}/100;
+my $height = $description{length};
+my $color = $description{color};
+
+  $vrml->transform_begin("t=@@translation","r=@@rotation");			## t = translation, r = rotation
+  $vrml->cylinder("$radius $height","d=$color");				## cylinder('radius height', 'appearance') ->d = diffuse color
+  $vrml->transform_end;
+}
+
+#---------------------------------------------------------------------------------------------------------------------------------------------
+
+sub GenerateBox {
+my %description = @@_;
+my @@translation = @@{$description{translation}};
+my @@rotation = @@{$description{rotation}};
+my $width = $depth = $description{size}/100;
+my $height = $description{length};
+my $color = $description{color};
+
+  $vrml->transform_begin("t=@@translation","r=@@rotation");			## t = translation, r = rotation
+  $vrml->box("$width $height $depth","d=$color");				##  box('size', 'appearance') -> d = diffuse color
+  $vrml->transform_end;
+
+}
+
+#---------------------------------------------------------------------------------------------------------------------------------------------
+
+sub GenerateLine {
+my %description = @@_;
+my @@translation = @@{$description{translation}};
+my @@rotation = @@{$description{rotation}};
+my $height = $description{length};
+my $color = $description{color};
+my $from = -$height/2;
+my $to = $height/2;
+
+  $vrml->transform_begin("t=@@translation","r=@@rotation");			## t = translation, r = rotation
+  $vrml->line("0 $from 0", "0 $to 0", 0, "$color",);				## line('from', 'to', radius, 'appearance', 'path')
+  $vrml->transform_end;
+
+}
+
+#---------------------------------------------------------------------------------------------------------------------------------------------
+
+sub GenerateLabel {
+my $id = shift;
+my $flag = shift;
+my @@translation = splice(@@_,0,3);
+my @@rotation = splice(@@_,0,4);	
+my $string = shift;
+my $length = length($string)/2;
+my $width = 0.4;
+my @@texcoord = @@_;
+
+   if ($flag == 1) { 
+     my $temp = $width;
+     $width = $length;
+     $length = $temp;
+   }
+
+  $vrml->transform_begin("t=@@translation","r=@@rotation");
+  $vrml->insert("Shape {
+		geometry IndexedFaceSet {
+			coord Coordinate  { point [ $width 0 0,
+						    $width $length 0,
+						    0 $length 0,
+					    	    0 0 0        ] }
+				coordIndex [ 0 1 2 3 -1 ]
+				solid FALSE
+				texCoordIndex [@@texcoord]
+			}
+			appearance Appearance {
+				texture ImageTexture{url \"$texdir/$id.png\" 
+							repeatS FALSE
+							repeatT FALSE}
+			} 
+	     }\n");
+  $vrml->transform_end;	     
+
+
+}
+
+#---------------------------------------------------------------------------------------------------------------------------------------------
+
+sub GenerateTexture {
+use GD;
+use constant FONT_DIRECTORY => '/usr/X11R6/lib/X11/fonts/TTF';      ## /usr/X11R6/lib/X11/fonts/TTF
+my $id = shift;
+my $label = shift;
+my $labelcolor = shift;
+my $directory =  FONT_DIRECTORY;
+my $font 	= "$directory/luximb.ttf"; ##"$directory/luximb.ttf";
+my $heigth 	= 20;
+my $string 	= length($label)*14;
+
+open (GD ,">./$texdir/$id.png");
+
+$im = new GD::Image($string,$heigth);   # create new image size $string x $heigth
+
+# create variable which represent individual color 
+#$white = $im->colorAllocate(255,255,255);
+$black = $im->colorAllocate(0,0,0);
+if (     $labelcolor eq 'black') {$color = $im->colorAllocate(0,0,0);  }
+  elsif ($labelcolor eq 'red')   {$color = $im->colorAllocate(255,0,0);}
+  elsif ($labelcolor eq 'green') {$color = $im->colorAllocate(0,255,0);}
+  elsif ($labelcolor eq 'blue')  {$color = $im->colorAllocate(0,0,255);}
+  elsif ($labelcolor eq 'white') {$color = $im->colorAllocate(250,250,250);return $color};
+  
+$im->transparent($black);	# set which color is transparent
+#$im->interlaced(1);
+
+# write string   
+warn "rendering $id\n";
+$im->stringTTF( $color,		# fgcolor 
+		$font,		# fontname
+		14.0,		# pointsize
+		0.0,		# angle
+		4,		# x coordinate to start drawing the string
+		16,		# y coordinate to start drawing the string
+		$label);	# string
+
+
+print GD $im->png; 
+close (GD);
+
+}
+
+#---------------------------------------------------------------------------------------------------------------------------------------------
+
+sub IDGen {	# unique ID generator
+
+	if (!$IDGen) { 
+		($IDSt=sprintf('%04x', time))=~s/.*(\w{4})$/$1/;	# lower 4char hexa presentation of current time
+		$IDSt.=sprintf('%04x', $$);							# PID
+	}
+	if ($IDGen==255) {$IDGen=0} else {$IDGen++};
+
+	return $IDSt.sprintf('%02x',$IDGen);
+
+}
+
+#---------------------------------------------------------------------------------------------------------------------------------------------
+@
+
+
+1.11
+log
+@customization of report SQL
+@
+text
+@@
+
+
+1.10
+log
+@atribute role implementation in MD
+@
+text
+@d66 2
+d625 1
+a625 1
+				texture ImageTexture{url \"texture/$id.png\" 
+d648 1
+a648 1
+open (GD ,">./texture/$id.png");
+@
+
+
+1.9
+log
+@new version
+@
+text
+@d6 1
+a6 1
+	'map'  => ["X","Y","Z","DI"],
+d11 2
+a12 2
+	'Mesto' => ["Praha","Brno","Liberec","Ostrava"],
+	'Rok'   => [1998,1999,2000,2001,2002],
+d15 7
+a21 1
+@@data = ([1,1,200,30,],[4,5,864,40,],[2,3,589,30,],[2,1,1065,10],[3,4,34,10,],[1,3,2564,20,],);
+d34 1
+a34 1
+		       'Y' => [
+d41 2
+a42 6
+		       'Z' => [
+	  			{ 'step'   => 3,
+			          'format' => 'line',
+	 	 	          'size'   => 1,
+	 		          'color'  => 'green',},		       	       
+	  			{ 'step'   => 2,
+d623 1
+a623 1
+				texture ImageTexture{url \"/home/vladis/work/texture/$id.png\" 
+d637 1
+a637 1
+use constant FONT_DIRECTORY => '/usr/X11R6/lib/X11/fonts/TTF';      ## /usr/X11R6/lib/X11/fonts/TTF    /home/vladis/test/fonts
+@
+
+
+1.8
+log
+@new version
+@
+text
+@d389 2
+a390 3
+	       my $ccw = 'TRUE';
+	       my @@texcoord = (0,1,2,3,-1);				## 2,3,0,1,-1 
+	       &GenerateLabel($id,$flag,@@translation,@@rotation,$label,$ccw,@@texcoord);
+d399 1
+a399 1
+	       my @@rotation = (1,0,0,90);
+a400 1
+	       my $ccw = 'TRUE';
+d402 1
+a402 1
+	       &GenerateLabel($id,$flag,@@translation,@@rotation,$label,$ccw,@@texcoord);
+a447 1
+	       my $ccw = 'TRUE';
+d449 1
+a449 1
+	       &GenerateLabel($id,$flag,@@translation,@@rotation,$label,$ccw,@@texcoord);
+d461 1
+a461 2
+	       my $ccw = 'TRUE';
+	       &GenerateLabel($id,$flag,@@translation,@@rotation,$label,$ccw,@@texcoord);
+a506 1
+	       my $ccw = 'TRUE';
+d508 1
+a508 1
+	       &GenerateLabel($id,$flag,@@translation,@@rotation,$label,$ccw,@@texcoord);
+a518 1
+	       my $ccw = 'TRUE';
+d520 1
+a520 1
+	       &GenerateLabel($id,$flag,@@translation,@@rotation,$label,$ccw,@@texcoord);
+a600 1
+my $ccw = shift;
+a617 1
+				ccw $ccw
+d642 1
+a642 1
+my $string 	= length($label)*20;
+@
+
+
+1.7
+log
+@notes
+@
+text
+@a11 1
+#	'Zbozi' => ["klavesnice","mys","monitor","procesor",],
+@
+
+
+1.6
+log
+@new version
+@
+text
+@a2 1
+use locale;
+a4 1
+
+d6 1
+a6 1
+	'map'  => ["X","Y","Z","CLR"],
+d12 2
+a13 2
+	'Zbozi' => ["klavesnice","mys","monitor","procesor",],
+	'Rok'   => [1999,2000,2001,2002,],
+d16 1
+a16 1
+@@data = ([1,1,200,3,],[4,2,864,4,],[2,3,589,3,],[2,1,1065,1],[3,4,34,1,],[1,3,2564,2,],);
+a20 1
+#			'labelcolor'=> 'green',  
+d64 4
+a67 1
+ 
+d70 1
+d74 6
+a79 3
+      &GenerateAxis('X',$color,$format,$size,);
+      &GenerateAxis('Y',$color,$format,$size,);
+      &GenerateAxis('Z',$color,$format,$size,);
+d89 4
+a92 1
+        &GenerateLattice('X',$color,$format,$size,$step,$i);
+d103 4
+a106 1
+        &GenerateLattice('Y',$color,$format,$size,$step,$i);
+a108 1
+
+d111 1
+a111 1
+   for (my $i=0;$i<$num_formats;$i++) {					
+d116 4
+a119 1
+        &GenerateLattice('Z',$color,$format,$size,$step,$i);
+d126 2
+d131 5
+a135 6
+      $item = $data[$row][$col];
+      if ($column{map}[$col] eq 'X') {
+          $translation[0] = $item/$scaleX;
+      }
+      if ($column{map}[$col] eq 'Y') {$translation[1] = $item/$scaleY;}
+      if ($column{map}[$col] eq 'Z') {$translation[2] = $item/$scaleZ;}
+d137 3
+a139 1
+      &GenerateObject(@@translation);
+d142 56
+d200 36
+d239 70
+d310 20
+a329 45
+my ($axis,$color,$format,$size)  = @@_;
+my (@@translation,@@rotation,$align,$font);
+my $indent = $indent;
+my ($label,$length,$scale) = &ParamOfAxis("$axis");				
+
+     if ($axis eq 'X') {
+       @@translation = ($length/2,0,0);
+       @@rotation = (0,0,1,90);
+       @@translation_text = ($length + $indent,0,0);
+       @@rotation_text = (0,0,0,0);
+       $label = $label;
+       $align = "BEGIN";
+     }
+     if ($axis eq 'Y') {
+       @@translation = (0,$length/2,0);
+       @@rotation = (0,0,0,0);
+       @@translation_text = (0,$length + $indent,0);
+       @@rotation_text = (0,1,0,45);
+       $label = $label;
+       $align = "MIDDLE";
+     }
+     if ($axis eq 'Z') {
+       @@translation = (0,0,$length/2);
+       @@rotation = (1,0,0,90);
+       @@translation_text = (0,0,$length + $indent);
+       @@rotation_text = (0,1,0,90);
+       $label = $label;
+       $align = "END";
+     }
+     if ($format eq 'cylinder') {
+        &GenerateCylinder($length,$size,$color,@@translation,@@rotation);
+	&GenerateText($label,@@translation_text,@@rotation_text,$align,);
+     }  
+     if ($format eq 'box') {
+        &GenerateBox($length,$size,$color,@@translation,@@rotation);
+	&GenerateText($label,@@translation_text,@@rotation_text,$align,);
+     }  
+     if ($format eq 'line') {
+        &GenerateLine($length,$size,$color,@@translation,@@rotation);
+	&GenerateText($label,@@translation_text,@@rotation_text,$align,);
+     }
+if ($axis eq 'X') {return ($lengthX = $length,$scaleX = $scale,$labelX = $label)};		
+if ($axis eq 'Y') {return ($lengthY = $length,$scaleY = $scale,$labelY = $label)};
+if ($axis eq 'Z') {return ($lengthZ = $length,$scaleZ = $scale,$labelZ = $label)};
+      
+d331 3
+d335 1
+d338 1
+d340 2
+a341 5
+my ($lattice,$color,$format,$size,$step,$i,) = @@_;
+my $lengthX = $lengthX; my $scaleX = $scaleX; my $labelX = $labelX;
+my $lengthY = $lengthY; my $scaleY = $scaleY; my $labelY = $labelY;
+my $lengthZ = $lengthZ; my $scaleZ = $scaleZ; my $labelZ = $labelZ;
+my (@@translation,@@rotation) = ();
+a343 3
+  if ($i == 0) { 
+     @@index = qw(0 0 0 0 0 0 0 0 0 0 0 0);
+  }
+d345 3
+d349 3
+a351 3
+  if ($lattice eq 'X') {
+     for (my $i=0;$i<int($lengthX/$step);$i++) {
+       $trans = $trans + $step;
+d355 6
+a360 4
+            @@translation = ($trans,$lengthY/2,0);
+            @@rotation = (0,0,0,0);
+            if ($format eq 'cylinder') {
+               &GenerateCylinder($lengthY,$size,$color,@@translation,@@rotation);
+d362 2
+a363 2
+            if ($format eq 'box') {
+               &GenerateBox($lengthY,$size,$color,@@translation,@@rotation);
+d365 2
+a366 2
+            if ($format eq 'line') {
+               &GenerateLine($lengthY,$size,$color,@@translation,@@rotation);
+d368 6
+a373 4
+            @@translation = ($trans,0,$lengthZ/2);
+            @@rotation = (1,0,0,90);
+            if ($format eq 'cylinder') {
+               &GenerateCylinder($lengthZ,$size,$color,@@translation,@@rotation);
+d375 2
+a376 2
+            if ($format eq 'box') {
+               &GenerateBox($lengthZ,$size,$color,@@translation,@@rotation);
+d378 2
+a379 2
+            if ($format eq 'line') {
+               &GenerateLine($lengthZ,$size,$color,@@translation,@@rotation);
+d381 25
+a405 9
+	    if ($scaleX == 1) {
+	       my $id = $trans;								
+	       my $label = $lookup{$labelX}[$trans-1];					
+	       my $color = $color;
+	       my @@translation = ($trans,0,$lengthZ+$indent);
+               my @@rotation = (1,0,0,90);
+	       							
+	       &GenerateTexture($id,$label,$color);	
+	       &GenerateLabel($id,@@translation,@@rotation,$label);
+d408 5
+a412 6
+     } 
+  } 
+
+  if ($lattice eq 'Y') {
+     for (my $i=0;$i<int($lengthY/$step);$i++) {
+       $trans = $trans + $step;
+d416 6
+a421 4
+            @@translation = ($lengthX/2,$trans,0);
+            @@rotation = (0,0,1,90);
+            if ($format eq 'cylinder') {
+               &GenerateCylinder($lengthX,$size,$color,@@translation,@@rotation);
+d423 2
+a424 2
+            if ($format eq 'box') {
+               &GenerateBox($lengthX,$size,$color,@@translation,@@rotation);
+d426 2
+a427 2
+            if ($format eq 'line') {
+               &GenerateLine($lengthX,$size,$color,@@translation,@@rotation);
+d429 6
+a434 4
+            @@translation = (0,$trans,$lengthZ/2);
+            @@rotation = (1,0,0,90);
+            if ($format eq 'cylinder') {
+               &GenerateCylinder($lengthZ,$size,$color,@@translation,@@rotation);
+d436 2
+a437 2
+            if ($format eq 'box') {
+               &GenerateBox($lengthZ,$size,$color,@@translation,@@rotation);
+d439 2
+a440 2
+            if ($format eq 'line') {
+               &GenerateLine($lengthZ,$size,$color,@@translation,@@rotation);
+d442 4
+a445 7
+	    if ($scaleY == 1) {
+	       my $id = $trans;								
+	       my $label = $lookup{$labelY}[$trans-1];					
+	       my $color = $color;
+	       my @@translation = ($lengthX+$indent,$trans,0);
+               my @@rotation = (0,0,1,90);
+	       							
+d447 20
+a466 1
+	       &GenerateLabel($id,@@translation,@@rotation,$label);
+d469 5
+a473 6
+     } 
+  }    
+
+  if ($lattice eq 'Z') {
+     for (my $i=0;$i<int($lengthZ/$step);$i++) {
+	$trans = $trans + $step;
+d477 6
+a482 4
+            @@translation = ($lengthX/2,0,$trans);
+            @@rotation = (0,0,1,90);
+            if ($format eq 'cylinder') {
+               &GenerateCylinder($lengthX,$size,$color,@@translation,@@rotation);
+d484 2
+a485 2
+            if ($format eq 'box') {
+               &GenerateBox($lengthX,$size,$color,@@translation,@@rotation);
+d487 2
+a488 2
+            if ($format eq 'line') {
+               &GenerateLine($lengthX,$size,$color,@@translation,@@rotation);
+d490 6
+a495 5
+
+            @@translation = (0,$lengthY/2,$trans);
+            @@rotation = (0,0,0,0);
+            if ($format eq 'cylinder') {
+               &GenerateCylinder($lengthY,$size,$color,@@translation,@@rotation);
+d497 2
+a498 2
+            if ($format eq 'box') {
+               &GenerateBox($lengthY,$size,$color,@@translation,@@rotation);
+d500 2
+a501 2
+            if ($format eq 'line') {
+               &GenerateLine($lengthY,$size,$color,@@translation,@@rotation);
+d503 17
+a519 7
+	    if ($scaleZ == 1) {
+	       my $id = $trans;								
+	       my $label = $lookup{$labelZ}[$trans-1];					
+	       my $color = $color;
+	       my @@translation = ($lengthX+$indent,0,$trans);
+               my @@rotation = (0,0,0,0);
+	       							
+d521 7
+a527 1
+	       &GenerateLabel($id,@@translation,@@rotation,$label);
+d530 1
+a530 30
+     }
+  }
+
+
+}
+
+#---------------------------------------------------------------------------------------------------------------------------------------------
+
+sub ParamOfAxis {
+my $axis = shift;
+my $rows = @@data;
+my $cols = @@{$column{map}};
+my ($scale);  
+ for (my $col=0;$col < $cols;$col++){
+  if ($column{map}[$col] eq "$axis") {
+    $label = $column{name}[$col];
+    if (exists($lookup{$label})){
+       $length = @@{$lookup{$label}};
+       $scale = 1;
+    }
+    else {
+       $length = 10;
+       $max = 0;
+       for ($row = 0;$row < $rows;$row++) {
+          if ($data[$row][$col] > $max ){ 
+	    $max = $data[$row][$col];
+	  }  
+       }
+       $scale = $max/10 
+    }
+a531 1
+ }
+a532 15
+return ($label,$length,$scale);
+
+}
+
+#---------------------------------------------------------------------------------------------------------------------------------------------
+sub GenerateText {
+my $string = shift;
+my @@translation = splice(@@_,0,3);
+my @@rotation = splice(@@_,0,4);
+my $align = shift;
+my $color = $format{axis}->{color};
+
+$vrml->transform_begin("t=@@translation","r=@@rotation",);
+$vrml->text("$string","d=$color","1 SERIF PLAIN","$align");  		## text('string', 'appearance', 'font', 'align')
+$vrml->transform_end;
+a534 1
+
+d538 1
+d545 1
+a545 1
+$vrml->box("0.3 0.3 0.3","d=red","tr=0.5");
+d553 6
+a558 4
+my ($height,$size,$color) = splice(@@_,0,3);
+my @@translation = splice(@@_,0,3);
+my @@rotation = splice(@@_,0,4);
+my $radius = $size/100;
+d568 6
+a573 4
+my ($height,$size,$color) = splice(@@_,0,3);
+my @@translation = splice(@@_,0,3);
+my @@rotation = splice(@@_,0,4);
+my $width = $depth = $size/100;
+d584 5
+a588 3
+my ($height,$size,$color) = splice(@@_,0,3);
+my @@translation = splice(@@_,0,3);
+my @@rotation = splice(@@_,0,4);
+d602 1
+d606 10
+a615 2
+my $width = length($string)/5;
+my $heigth = 0.5;
+d620 4
+a623 4
+			coord Coordinate  { point [ $heigth 0 0,
+						    $heigth $width 0,
+						    0 $width 0,
+					    	    0 0 0 ] }
+d626 2
+a627 1
+				ccw FALSE
+d630 1
+a630 1
+				texture ImageTexture{url \"1.png\" 
+d644 1
+a644 1
+use constant FONT_DIRECTORY => '/home/vladis/test/fonts';
+d649 1
+a649 1
+my $font 	= "$directory/Generic.ttf";
+d653 1
+a653 1
+open (GD,">./texture/$id.png");
+d658 2
+a659 2
+$white = $im->colorAllocate(255,255,255);
+#$black = $im->colorAllocate(0,0,0);
+d666 1
+a666 1
+$im->transparent($white);	# set which color is transparent
+a681 1
+return ($heigth,$string);
+d687 9
+a695 1
+##############################################################################################################################################
+d697 1
+a697 2
+#$vrml->print(1);
+$vrml->save("ID.wrl");
+d699 1
+@
+
+
+1.5
+log
+@new version
+@
+text
+@d23 1
+a23 1
+			'labelcolor'=> 'green',  
+d40 1
+a40 1
+		       	        { 'step'   => 1,
+d43 1
+a43 1
+	 		          'color'  => 'blue', },
+d45 2
+a46 2
+			          'format' => 'box',
+	 	 	          'size'   => 6,
+d48 4
+a51 4
+	  			{ 'step'   => 3,
+			          'format' => 'cylinder',
+	 	 	          'size'   => 3,
+	 		          'color'  => 'green',},		       	       
+d62 1
+a62 1
+ $indent = 1;
+d85 1
+a85 1
+        &GenerateLattice('X',$color,$format,$size,$step);
+d96 1
+a96 1
+        &GenerateLattice('Y',$color,$format,$size,$step);
+d102 1
+a102 1
+   for (my $i=0;$i<$num_formats;$i++) {
+d107 1
+a107 1
+        &GenerateLattice('Z',$color,$format,$size,$step);
+d118 3
+a120 1
+      if ($column{map}[$col] eq 'X') {$translation[0] = $item/$scaleX;}
+a128 1
+   
+d136 1
+a136 1
+my ($label,$length,$scale) = &ParamOfAxis("$axis");				##  dodelat label !!
+d174 3
+a176 3
+if ($axis eq 'X') {return ($lengthX = $length,$scaleX = $scale)};
+if ($axis eq 'Y') {return ($lengthY = $length,$scaleY = $scale)};
+if ($axis eq 'Z') {return ($lengthZ = $length,$scaleZ = $scale)};
+d183 12
+a194 7
+my ($lattice,$color,$format,$size,$step) = @@_;
+my $lengthX = $lengthX;
+my $lengthY = $lengthY;
+my $lengthZ = $lengthZ;
+my (@@translation,@@rotation);
+my $trans = $step;
+  
+d197 39
+a235 26
+         @@translation = ($trans,$lengthY/2,0);
+         @@rotation = (0,0,0,0);
+         if ($format eq 'cylinder') {
+            &GenerateCylinder($lengthY,$size,$color,@@translation,@@rotation);
+         }  
+         if ($format eq 'box') {
+            &GenerateBox($lengthY,$size,$color,@@translation,@@rotation);
+         }  
+         if ($format eq 'line') {
+            &GenerateLine($lengthY,$size,$color,@@translation,@@rotation);
+         }
+         @@translation = ($trans,0,$lengthZ/2);
+         @@rotation = (1,0,0,90);
+         if ($format eq 'cylinder') {
+            &GenerateCylinder($lengthZ,$size,$color,@@translation,@@rotation);
+         }  
+         if ($format eq 'box') {
+            &GenerateBox($lengthZ,$size,$color,@@translation,@@rotation);
+         }  
+         if ($format eq 'line') {
+            &GenerateLine($lengthZ,$size,$color,@@translation,@@rotation);
+         }
+	 $trans = $trans + $step;
+     }
+ 
+  }    
+d239 38
+a276 25
+         @@translation = ($lengthX/2,$trans,0);
+         @@rotation = (0,0,1,90);
+         if ($format eq 'cylinder') {
+            &GenerateCylinder($lengthX,$size,$color,@@translation,@@rotation);
+         }  
+         if ($format eq 'box') {
+            &GenerateBox($lengthX,$size,$color,@@translation,@@rotation);
+         }  
+         if ($format eq 'line') {
+            &GenerateLine($lengthX,$size,$color,@@translation,@@rotation);
+         }
+         @@translation = (0,$trans,$lengthZ/2);
+         @@rotation = (1,0,0,90);
+         if ($format eq 'cylinder') {
+            &GenerateCylinder($lengthZ,$size,$color,@@translation,@@rotation);
+         }  
+         if ($format eq 'box') {
+            &GenerateBox($lengthZ,$size,$color,@@translation,@@rotation);
+         }  
+         if ($format eq 'line') {
+            &GenerateLine($lengthZ,$size,$color,@@translation,@@rotation);
+         }
+	 $trans = $trans + $step;
+     }
+ 
+d281 38
+a318 23
+         @@translation = ($lengthX/2,0,$trans);
+         @@rotation = (0,0,1,90);
+         if ($format eq 'cylinder') {
+            &GenerateCylinder($lengthX,$size,$color,@@translation,@@rotation);
+         }  
+         if ($format eq 'box') {
+            &GenerateBox($lengthX,$size,$color,@@translation,@@rotation);
+         }  
+         if ($format eq 'line') {
+            &GenerateLine($lengthX,$size,$color,@@translation,@@rotation);
+         }
+         @@translation = (0,$lengthY/2,$trans);
+         @@rotation = (0,0,0,0);
+         if ($format eq 'cylinder') {
+            &GenerateCylinder($lengthY,$size,$color,@@translation,@@rotation);
+         }  
+         if ($format eq 'box') {
+            &GenerateBox($lengthY,$size,$color,@@translation,@@rotation);
+         }  
+         if ($format eq 'line') {
+            &GenerateLine($lengthY,$size,$color,@@translation,@@rotation);
+         }
+	 $trans = $trans + $step;
+d320 2
+a321 2
+ 
+  }    
+d362 1
+a362 1
+my $color = $format{axis}->{labelcolor};
+d379 1
+a379 1
+$vrml->box("0.1 0.1 0.1","d=red","tr=0.5");
+d423 78
+@
+
+
+1.4
+log
+@new version
+@
+text
+@d18 1
+a18 1
+@@data = ([0,0,200,2,],[3,1,864,3,],[1,2,589,2,],[1,0,1065,0],[2,3,34,0,],[0,2,2564,1,],);
+d22 1
+a22 1
+			'size'      => 1,
+d45 2
+a46 2
+			          'format' => 'line',
+	 	 	          'size'   => 10,
+d49 2
+a50 2
+			          'format' => 'line',
+	 	 	          'size'   => 10,
+d62 1
+a62 1
+
+d111 18
+d133 3
+a135 3
+my (@@translation,@@rotation);
+
+my ($label,$length) = &ParamOfAxis("$axis");
+d140 4
+d148 4
+d156 4
+d163 1
+d167 1
+d171 1
+d173 3
+a175 3
+if ($axis eq 'X') {return ($lengthX = $length)};
+if ($axis eq 'Y') {return ($lengthY = $length)};
+if ($axis eq 'Z') {return ($lengthZ = $length)};
+d284 1
+a284 1
+ 
+d290 1
+d293 8
+a300 1
+       $length = 10; 
+d305 29
+a333 1
+return ($label,$length);
+d343 1
+a343 1
+my $radius = $size/10;
+d356 1
+a356 1
+my $width = $depth = $size/10;
+@
+
+
+1.3
+log
+@complete graph with labels
+@
+text
+@d2 1
+d4 1
+d7 3
+a9 142
+open (WORK,">work.wrl")
+	or die "Nelze otevrit soubor work.wrl\n";
+print WORK "#VRML V2.0 utf8
+	    NavigationInfo { type [\"ANY\"] }
+	    Background { skyColor [ 0 0 1 ] }\n";
+
+# to_do :   - dopsat promennou pro predavani barvy pozadi (background)
+
+#	    - dopsat promennou pro predavani zpusobu ovladani (navigation info)
+
+#           - dopsat promennou pro predavani pouziti mlhy ...
+
+#           - dopsat posunuti os (??? jednotlivych os nebo celeho osoveho krize ??? ; ??? bude se zobrazovat v jednom grafu 1 osovy kriz 
+#	      nebo jich muze byt vice ??? ; ??? pokud jich bude vice budou mit ruzne velikosti ???)
+
+#  	    - dodelat zobrazovani objektu
+
+
+
+############################################################## User definition ###############################################################
+
+########  definition: axis  ########
+# Pokud nebude zadana nektera osa, musi byt hodnota pro dane pole 0. Nesmi byt prazdny retezec nebo nedefinovana hodnota !!!
+# Parametr length definuje delku osy a delku souvisejicich pricek. 
+# Pokud element visible obsahuje hodnotu 0,osa se nevykresli.
+# Pokud element obsahuje hash parametru,bude osa vykreslena se zadanymi parametry : color,format ...
+# Pokud element label obsahuje 0, nevykresli se popisek . Pokud obsahuje hash parametru,popisek bude vykreslen se zadanymi parametry
+
+
+# Dodelat moznost posunuti os 
+
+%AXIS = ( 
+	  'X' => [ {'length'  => 6,
+	  	    'visible' => {'color'  => 'blue',
+				  'format' => 'cylinder',
+				  'size'   => 0.1,
+				  'label'  => { 'string'  => 'X',
+						'color'   => 'blue'},  
+				 },
+		   },
+		 ],
+	'Y' => [ { 'length'  => 5,
+	  	   'visible' => {'color'  => 'blue',
+				  'format' => 'cylinder',
+				  'size'   => 0.1,
+				  'label'  => { 'string'  => 'Y',
+						'color'   => 'blue'},  
+				 },
+		   },
+		 ],
+	'Z' => [ { 'length'  => 4,
+	  	   'visible' => {'color'  => 'blue',
+				  'format' => 'cylinder',
+				  'size'   => 0.1,
+				  'label'  => { 'string'  => 'Z',
+						'color'   => 'blue'},  
+				 },
+		   },
+		],	 
+				    
+);				
+
+#######  definition: lattice ########
+%XY = (
+	'tendency_X' => [ 	{'visible' => 1},
+				
+				{'color'    => 'red',
+				 'format'   => 'line',
+				 'size'     => 0.02,
+				 'step'     => 1,
+				 'label'    => [ {'visible' => 1,
+				 	          'string'  => 'smer X 1',
+						  'color'   => 'green' },
+						 {'visible' => 0,
+				 	          'string'  => 'smer X 2',
+						  'color'   => 'green' },
+						 {'visible' => 1,
+				 	          'string'  => 'smer X 3',
+						  'color'   => 'green' },
+						 {'visible' => 0,
+				 	          'string'  => 'smer X 4',
+						  'color'   => 'green' },
+						 {'visible' => 1,
+				 	          'string'  => 'smer X 5',
+						  'color'   => 'green' },
+					       ], 
+				},
+				
+				{'color'   => 'red',
+				 'format'  => 'box',
+				 'size'	   => 0.2,
+				 'step'    => 2,
+				 'label'   => [{'visible' => 1,
+					       'string'  => 'smer X 6',
+					       'color'   => 'red' },
+					       {'visible' => 1,
+					       'string'  => 'smer X 7',
+					       'color'   => 'red' },
+					      ],
+				},
+			] ,
+	'tendency_Y' => [ 	{'visible' => 1},
+				
+				{'color'    => 'red',
+				 'format'   => 'line',
+				 'size'     => 0.02,
+				 'step'     => 1,
+				 'label'    => [ {'visible' => 1,
+				 	          'string'  => 'smer Y 1',
+						  'color'   => 'green' },
+						 {'visible' => 0,
+				 	          'string'  => 'smer Y 2',
+						  'color'   => 'green' },
+						 {'visible' => 1,
+				 	          'string'  => 'smer Y 3',
+						  'color'   => 'green' },
+						 {'visible' => 0,
+				 	          'string'  => 'smer Y 4',
+						  'color'   => 'green' },
+						 {'visible' => 1,
+				 	          'string'  => 'smer Y 5',
+						  'color'   => 'green' },
+						 {'visible' => 1,
+				 	          'string'  => 'smer X 8',
+						  'color'   => 'green' },
+
+					       ], 
+				},
+				
+				{'color'   => 'red',
+				 'format'  => 'box',
+				 'size'	   => 0.2,
+				 'step'    => 2,
+				 'label'   => [{'visible' => 1,
+					       'string'  => 'smer Y 6',
+					       'color'   => 'red' },
+					       {'visible' => 1,
+					       'string'  => 'smer Y 7',
+					       'color'   => 'red' },
+					      ],
+				},
+			],
+d11 5
+a15 79
+%XZ = (
+	'tendency_X' => [ 	{'visible' => 1},
+				
+				{'color'    => 'red',
+				 'format'   => 'line',
+				 'size'     => 0.02,
+				 'step'     => 1,
+				 'label'    => [ {'visible' => 1,
+				 	          'string'  => 'smer X 1',
+						  'color'   => 'green' },
+						 {'visible' => 0,
+				 	          'string'  => 'smer X 2',
+						  'color'   => 'green' },
+						 {'visible' => 1,
+				 	          'string'  => 'smer X 3',
+						  'color'   => 'green' },
+						 {'visible' => 0,
+				 	          'string'  => 'smer X 4',
+						  'color'   => 'green' },
+						 {'visible' => 1,
+				 	          'string'  => 'smer X 5',
+						  'color'   => 'green' },
+					       ], 
+				},
+				
+				{'color'   => 'red',
+				 'format'  => 'box',
+				 'size'	   => 0.2,
+				 'step'    => 2,
+				 'label'   => [{'visible' => 1,
+					       'string'  => 'smer X 6',
+					       'color'   => 'red' },
+					       {'visible' => 1,
+					       'string'  => 'smer X 7',
+					       'color'   => 'red' },
+					      ],
+				},
+			] ,
+	'tendency_Z' => [ 	{'visible' => 1},
+				
+				{'color'    => 'red',
+				 'format'   => 'line',
+				 'size'     => 0.02,
+				 'step'     => 1,
+				 'label'    => [ {'visible' => 1,
+				 	          'string'  => 'smer Z 1',
+						  'color'   => 'green' },
+						 {'visible' => 0,
+				 	          'string'  => 'smer Z 2',
+						  'color'   => 'green' },
+						 {'visible' => 1,
+				 	          'string'  => 'smer Z 3',
+						  'color'   => 'green' },
+						 {'visible' => 0,
+				 	          'string'  => 'smer Z 4',
+						  'color'   => 'green' },
+						 {'visible' => 1,
+				 	          'string'  => 'smer Z 5',
+						  'color'   => 'green' },
+						 {'visible' => 1,
+				 	          'string'  => 'smer X 5',
+						  'color'   => 'green' },
+
+					       ], 
+				},
+				
+				{'color'   => 'red',
+				 'format'  => 'box',
+				 'size'	   => 0.2,
+				 'step'    => 2,
+				 'label'   => [{'visible' => 1,
+					       'string'  => 'smer Z 6',
+					       'color'   => 'red' },
+					       {'visible' => 1,
+					       'string'  => 'smer Z 7',
+					       'color'   => 'red' },
+					      ],
+				},
+			],
+d17 39
+a55 75
+%YZ = (
+	'tendency_Y' => [ 	{'visible' => 1},
+				
+				{'color'    => 'red',
+				 'format'   => 'line',
+				 'size'     => 0.02,
+				 'step'     => 1,
+				 'label'    => [ {'visible' => 1,
+				 	          'string'  => 'smer Y 1',
+						  'color'   => 'green' },
+						 {'visible' => 0,
+				 	          'string'  => 'smer Y 2',
+						  'color'   => 'green' },
+						 {'visible' => 1,
+				 	          'string'  => 'smer Y 3',
+						  'color'   => 'green' },
+						 {'visible' => 0,
+				 	          'string'  => 'smer Y 4',
+						  'color'   => 'green' },
+						 {'visible' => 1,
+				 	          'string'  => 'smer Y 5',
+						  'color'   => 'green' },
+					       ], 
+				},
+				
+				{'color'   => 'red',
+				 'format'  => 'box',
+				 'size'	   => 0.2,
+				 'step'    => 2,
+				 'label'   => [{'visible' => 1,
+					       'string'  => 'smer Y 6',
+					       'color'   => 'red' },
+					       {'visible' => 1,
+					       'string'  => 'smer Y 7',
+					       'color'   => 'red' },
+					      ],
+				},
+			] ,
+	'tendency_Z' => [ 	{'visible' => 1},
+				
+				{'color'    => 'red',
+				 'format'   => 'line',
+				 'size'     => 0.02,
+				 'step'     => 1,
+				 'label'    => [ {'visible' => 1,
+				 	          'string'  => 'smer Z 1',
+						  'color'   => 'green' },
+						 {'visible' => 0,
+				 	          'string'  => 'smer Z 2',
+						  'color'   => 'green' },
+						 {'visible' => 1,
+				 	          'string'  => 'smer Z 3',
+						  'color'   => 'green' },
+						 {'visible' => 0,
+				 	          'string'  => 'smer Z 4',
+						  'color'   => 'green' },
+						 {'visible' => 1,
+				 	          'string'  => 'smer Z 5',
+						  'color'   => 'green' },
+					       ], 
+				},
+				
+				{'color'   => 'red',
+				 'format'  => 'box',
+				 'size'	   => 0.2,
+				 'step'    => 2,
+				 'label'   => [{'visible' => 1,
+					       'string'  => 'smer Z 6',
+					       'color'   => 'red' },
+					       {'visible' => 1,
+					       'string'  => 'smer Z 7',
+					       'color'   => 'red' },
+					      ],
+				},
+			],
+a57 43
+############################################################## User definition ###############################################################
+our @@red   = (1,0,0); 
+our @@green = (0,1,0);
+our @@blue  = (0,0,1);
+our @@white = (1,1,1);
+our @@black = (0,0,0);
+
+#@@color = (1,0,0);
+$indent = 0.5;										## Space between lattice and label
+
+$max_axis =  @@{$AXIS{X}};								## Maximum axis
+if ($max_axis < @@{$AXIS{Y}}){$max_axis = @@{$AXIS{Y}}};
+if ($max_axis < @@{$AXIS{Z}}){$max_axis = @@{$AXIS{Z}}};						
+
+#---- Generate axis  -----#
+for ($i=0;$i<$max_axis;$i++){  #begin of global cycle for
+   if ($AXIS{X} -> [$i]) {
+	$lengthX = ($AXIS{X} -> [$i] -> {length}); 
+	$length  = $AXIS{X} -> [$i] -> {length};
+	if ($AXIS{X} -> [$i] -> {visible} ) {
+	  $color	 = $AXIS{X} -> [$i] -> {visible} -> {color};
+	  $size 	 = $AXIS{X} -> [$i] -> {visible} -> {size}; 				## Size of axis X
+	  $step 	 = 0;									## Step value
+	  $axis 	 = "x";									## Step on axis y
+	  $max 	     	 = 1;									## Only 1 axis per cycle
+	  %translation   = ("x"=>$length/2,"y"=>0,"z"=>0);					## Translation axis X ( tendency X )
+	  %rotation      = ("x"=>0,"y"=>0,"z"=>1);		   				## Rotation axis X  ( pivot axis Z )
+		if ($AXIS{X} -> [$i] -> {visible} -> {label}){
+		  $label 	     = $AXIS{X} -> [$i] -> {visible} -> {label} -> {string};
+		  $labelcolor	     = $AXIS{X} -> [$i] -> {visible} -> {label} -> {color};
+		  %translation_label = ("x"=>$length+$indent,"y"=>0,"z"=>0);			## Translation label of axis X ( tendency X )
+		  &generate_text;
+	}
+	
+     if ($AXIS{X} -> [$i] -> {visible} -> {format} eq "box"){
+     &generate_box; 
+     }
+     if ($AXIS{X} -> [$i] -> {visible} -> {format} eq "cylinder"){
+     &generate_cylinder; 
+     }
+     if ($AXIS{X} -> [$i] -> {visible} -> {format} eq "line"){
+     &generate_line; 
+     }
+d59 27
+a85 1
+     }
+d87 1
+a87 27
+   if ($AXIS{Y} -> [$i]) {
+	$lengthY = ($AXIS{Y} -> [$i] -> {length}); 
+	$length  = $AXIS{Y} -> [$i] -> {length};							
+	if ($AXIS{Y} -> [$i] -> {visible} ) {
+	  $color	 = $AXIS{Y} -> [$i] -> {visible} -> {color};
+	  $size 	 = $AXIS{Y} -> [$i] -> {visible} -> {size}; 				
+	  $step 	 = 0;									
+	  $axis 	 = "y";									
+	  $max 	     	 = 1;									
+	  %translation   = ("x"=>0,"y"=>$length/2,"z"=>0);					
+	  %rotation      = ("x"=>0,"y"=>0,"z"=>0);		   				
+		if ($AXIS{Y} -> [$i] -> {visible} -> {label}){
+		  $label 	     = $AXIS{Y} -> [$i] -> {visible} -> {label} -> {string};
+		  $labelcolor	     = $AXIS{Y} -> [$i] -> {visible} -> {label} -> {color};
+		  %translation_label = ("x"=>0,"y"=>$length+$indent,"z"=>0);			
+		  &generate_text;
+	}
+	
+     if ($AXIS{Y} -> [$i] -> {visible} -> {format} eq "box"){
+     &generate_box; 
+     }
+     if ($AXIS{Y} -> [$i] -> {visible} -> {format} eq "cylinder"){
+     &generate_cylinder; 
+     }
+     if ($AXIS{Y} -> [$i] -> {visible} -> {format} eq "line"){
+     &generate_line; 
+     }
+d89 8
+a96 1
+     }
+d98 1
+a98 27
+   if ($AXIS{Z} -> [$i]) {
+	$lengthZ = ($AXIS{Z} -> [$i] -> {length}); 
+	$length = $AXIS{Z} -> [$i] -> {length};							
+	if ($AXIS{Z} -> [$i] -> {visible} ) {
+	  $color	 = $AXIS{Z} -> [$i] -> {visible} -> {color};
+	  $size 	 = $AXIS{Z} -> [$i] -> {visible} -> {size}; 				
+	  $step 	 = 0;									
+	  $axis 	 = "z";									
+	  $max 	     	 = 1;									
+	  %translation   = ("x"=>0,"y"=>0,"z"=>$length/2);					
+	  %rotation      = ("x"=>1,"y"=>0,"z"=>0);		   				
+		if ($AXIS{Z} -> [$i] -> {visible} -> {label}){
+		  $label 	     = $AXIS{Z} -> [$i] -> {visible} -> {label} -> {string};
+		  $labelcolor	     = $AXIS{Z} -> [$i] -> {visible} -> {label} -> {color};
+		  %translation_label = ("x"=>0,"y"=>0,"z"=>$length+$indent);			
+		  &generate_text;
+	}
+	
+     if ($AXIS{Z} -> [$i] -> {visible} -> {format} eq "box"){
+     &generate_box; 
+     }
+     if ($AXIS{Z} -> [$i] -> {visible} -> {format} eq "cylinder"){
+     &generate_cylinder; 
+     }
+     if ($AXIS{Z} -> [$i] -> {visible} -> {format} eq "line"){
+     &generate_line; 
+     }
+d100 8
+a107 1
+     }
+d109 36
+d146 1
+a146 41
+#---- Generate lattice  -----#
+   if ($XY{tendency_X} -> [0] -> {visible} ) {      
+     for ($i=1;$i<=(@@{$XY{tendency_X}}-1);$i++){
+
+	$length 	   = $lengthX;								## Length of lattice	
+	$color		   = $XY{tendency_X} -> [$i] -> {color};				## Color of lattice
+	$size 		   = $XY{tendency_X} -> [$i] -> {size};  				## Size of lattice
+	$step 		   = $XY{tendency_X} -> [$i] -> {step};  				## Step - value
+	$axis 		   = "y";								## Step on axis y 	
+	$max 		   = int($lengthY/$step);						## Number of lattices
+	%translation 	   = ("x"=>$length/2,"y"=>0,"z"=>0);					## Transform lattice - tendency X 
+	%rotation  	   = ("x"=>0,"y"=>0,"z"=>1);		   				## Rotation - pivot axis Z ##	
+	$stp		   = 0;
+	for ($j=0;$j<$max;$j++){
+		$stp		   += $step;
+	 if ($XY{tendency_X} -> [$i] -> {label} -> [$j] {visible}) {
+		$label 	 	   = $XY{tendency_X} -> [$i] -> {label} -> [$j] -> {string};
+		$labelcolor	   = $XY{tendency_X} -> [$i] -> {label} -> [$j] -> {color};
+		$heigth 	   = 20;
+		$string 	   = (length($label))*(9);
+		%translation_label = ("x"=>$length+$indent,"y"=>(-$heigth/100)+$stp,"z"=>0);
+		%rotation_label    = ("x"=>0,"y"=>0,"z"=>0);
+		$flag 		   = 0;
+		$ccw 		   = "TRUE";
+		$texCoordIndex	   = "";
+               &generate_label;      
+	 }
+	 else {$label = "";}
+	}
+	
+       if ($XY{tendency_X} -> [$i] -> {format} eq "box"){
+       &generate_box; 
+       }
+       if ($XY{tendency_X} -> [$i] -> {format} eq "cylinder"){
+       &generate_cylinder; 
+       }
+       if ($XY{tendency_X} -> [$i] -> {format} eq "line"){
+       &generate_line; 
+       }
+     } 
+   }
+d148 34
+a181 2
+   if ($XY{tendency_Y} -> [0] -> {visible} ) {      
+     for ($i=1;$i<=(@@{$XY{tendency_Y}}-1);$i++){
+d183 1
+a183 77
+	$length 	   = $lengthY;								## Length of lattice	
+	$color		   = $XY{tendency_Y} -> [$i] -> {color};				## Color of lattice
+	$size 		   = $XY{tendency_Y} -> [$i] -> {size};  				## Size of lattice
+	$step 		   = $XY{tendency_Y} -> [$i] -> {step};  				## Step - value
+	$axis 		   = "x";								## Step on axis y 	
+	$max 		   = int($lengthX/$step);						## Number of lattices
+	%translation 	   = ("x"=>0,"y"=>$length/2,"z"=>0);					## Transform lattice - tendency X 
+	%rotation  	   = ("x"=>0,"y"=>0,"z"=>0);		   				## Rotation - pivot axis Z ##	
+	$stp		   = 0;
+	for ($j=0;$j<$max;$j++){
+		$stp		   += $step;
+	 if ($XY{tendency_Y} -> [$i] -> {label} -> [$j] {visible}) {
+		$label 	 	   = $XY{tendency_Y} -> [$i] -> {label} -> [$j] -> {string};
+		$labelcolor	   = $XY{tendency_Y} -> [$i] -> {label} -> [$j] -> {color};
+		$heigth 	   = 20;
+		$string 	   = (length($label))*(9);
+		%translation_label = ("x"=>(-$heigth/100)+$stp,"y"=>$length+$indent,"z"=>0);
+		%rotation_label    = ("x"=>0,"y"=>0,"z"=>0);
+		$flag 		   = 1;
+		$ccw 		   = "TRUE";
+		$texCoordIndex	   = "texCoordIndex [3 2 1 0 -1]";
+               &generate_label;      
+	 }
+	 else {$label = "";}
+	}
+	
+       if ($XY{tendency_Y} -> [$i] -> {format} eq "box"){
+       &generate_box; 
+       }
+       if ($XY{tendency_Y} -> [$i] -> {format} eq "cylinder"){
+       &generate_cylinder; 
+       }
+       if ($XY{tendency_Y} -> [$i] -> {format} eq "line"){
+       &generate_line; 
+       }
+     } 
+   }
+   if ($XZ{tendency_X} -> [0] -> {visible} ) {      
+     for ($i=1;$i<=(@@{$XZ{tendency_X}}-1);$i++){
+ 
+	$length 	   = $lengthX;								## Length of lattice	
+	$color		   = $XZ{tendency_X} -> [$i] -> {color};				## Color of lattice
+	$size 		   = $XZ{tendency_X} -> [$i] -> {size};  				## Size of lattice
+	$step 		   = $XZ{tendency_X} -> [$i] -> {step};  				## Step - value
+	$axis 		   = "z";								## Step on axis y 	
+	$max 		   = int($lengthZ/$step);						## Number of lattices
+	%translation 	   = ("x"=>$length/2,"y"=>0,"z"=>0);					## Transform lattice - tendency X 
+	%rotation  	   = ("x"=>0,"y"=>0,"z"=>1);		   				## Rotation - pivot axis Z ##	
+	$stp		   = 0;
+	for ($j=0;$j<$max;$j++){
+		$stp		   += $step;
+	 if ($XZ{tendency_X} -> [$i] -> {label} -> [$j] {visible}) {
+		$label 	 	   = $XZ{tendency_X} -> [$i] -> {label} -> [$j] -> {string};
+		$labelcolor	   = $XZ{tendency_X} -> [$i] -> {label} -> [$j] -> {color};
+		$heigth 	   = 20;
+		$string 	   = (length($label))*(9);
+		%translation_label = ("x"=>$length+$indent,"y"=>0,"z"=>(-$heigth/100)+$stp);
+		%rotation_label    = ("x"=>1,"y"=>0,"z"=>0);
+		$flag 		   = 0;
+		$ccw 		   = "FALSE";
+		$texCoordIndex	   = "texCoordIndex [1 0 3 2 -1]";
+               &generate_label;      
+	 }
+	 else {$label = "";}
+	}
+	
+       if ($XZ{tendency_X} -> [$i] -> {format} eq "box"){
+       &generate_box; 
+       }
+       if ($XZ{tendency_X} -> [$i] -> {format} eq "cylinder"){
+       &generate_cylinder; 
+       }
+       if ($XZ{tendency_X} -> [$i] -> {format} eq "line"){
+       &generate_line; 
+       }
+     } 
+   }
+d185 26
+a210 2
+   if ($XZ{tendency_Z} -> [0] -> {visible} ) {      
+     for ($i=1;$i<=(@@{$XZ{tendency_Z}}-1);$i++){
+d212 1
+a212 77
+	$length 	   = $lengthZ;								## Length of lattice	
+	$color		   = $XZ{tendency_Z} -> [$i] -> {color};				## Color of lattice
+	$size 		   = $XZ{tendency_Z} -> [$i] -> {size};  				## Size of lattice
+	$step 		   = $XZ{tendency_Z} -> [$i] -> {step};  				## Step - value
+	$axis 		   = "x";								## Step on axis y 	
+	$max 		   = int($lengthX/$step);						## Number of lattices
+	%translation 	   = ("x"=>0,"y"=>0,"z"=>$length/2);					## Transform lattice - tendency X 
+	%rotation  	   = ("x"=>1,"y"=>0,"z"=>0);		   				## Rotation - pivot axis Z ##	
+	$stp		   = 0;
+	for ($j=0;$j<$max;$j++){
+		$stp		   += $step;
+	 if ($XZ{tendency_Z} -> [$i] -> {label} -> [$j] {visible}) {
+		$label 	 	   = $XZ{tendency_Z} -> [$i] -> {label} -> [$j] -> {string};
+		$labelcolor	   = $XZ{tendency_Z} -> [$i] -> {label} -> [$j] -> {color};
+		$heigth 	   = 20;
+		$string 	   = (length($label))*(9);
+		%translation_label = ("x"=>(-$heigth/100)+$stp,"y"=>0,"z"=>$length+$indent);
+		%rotation_label    = ("x"=>1,"y"=>0,"z"=>0);
+		$flag 		   = 1;
+		$ccw 		   = "FALSE";
+		$texCoordIndex	   = "texCoordIndex [2 3 0 1 -1]";
+               &generate_label;      
+	 }
+	 else {$label = "";}
+	}
+	
+       if ($XZ{tendency_Z} -> [$i] -> {format} eq "box"){
+       &generate_box; 
+       }
+       if ($XZ{tendency_Z} -> [$i] -> {format} eq "cylinder"){
+       &generate_cylinder; 
+       }
+       if ($XZ{tendency_Z} -> [$i] -> {format} eq "line"){
+       &generate_line; 
+       }
+     } 
+   }
+   if ($YZ{tendency_Y} -> [0] -> {visible} ) {      
+     for ($i=1;$i<=(@@{$YZ{tendency_Y}}-1);$i++){
+ 
+	$length 	   = $lengthY;								## Length of lattice	
+	$color		   = $YZ{tendency_Y} -> [$i] -> {color};				## Color of lattice
+	$size 		   = $YZ{tendency_Y} -> [$i] -> {size};  				## Size of lattice
+	$step 		   = $YZ{tendency_Y} -> [$i] -> {step};  				## Step - value
+	$axis 		   = "z";								## Step on axis y 	
+	$max 		   = int($lengthZ/$step);						## Number of lattices
+	%translation 	   = ("x"=>0,"y"=>$length/2,"z"=>0);					## Transform lattice - tendency X 
+	%rotation  	   = ("x"=>0,"y"=>0,"z"=>0);		   				## Rotation - pivot axis Z ##	
+	$stp		   = 0;
+	for ($j=0;$j<$max;$j++){
+		$stp		   += $step;
+	 if ($YZ{tendency_Y} -> [$i] -> {label} -> [$j] {visible}) {
+		$label 	 	   = $YZ{tendency_Y} -> [$i] -> {label} -> [$j] -> {string};
+		$labelcolor	   = $YZ{tendency_Y} -> [$i] -> {label} -> [$j] -> {color};
+		$heigth 	   = 20;
+		$string 	   = (length($label))*(9);
+		%translation_label = ("x"=>0,"y"=>$length+$indent,"z"=>(-$heigth/100)+$stp);
+		%rotation_label    = ("x"=>0,"y"=>-1,"z"=>0);
+		$flag 		   = 1;
+		$ccw 		   = "FALSE";
+		$texCoordIndex	   = "";
+               &generate_label;      
+	 }
+	 else {$label = "";}
+	}
+	
+       if ($YZ{tendency_Y} -> [$i] -> {format} eq "box"){
+       &generate_box; 
+       }
+       if ($YZ{tendency_Y} -> [$i] -> {format} eq "cylinder"){
+       &generate_cylinder; 
+       }
+       if ($YZ{tendency_Y} -> [$i] -> {format} eq "line"){
+       &generate_line; 
+       }
+     } 
+   }
+d214 26
+a239 2
+   if ($YZ{tendency_Z} -> [0] -> {visible} ) {      
+     for ($i=1;$i<=(@@{$YZ{tendency_Z}}-1);$i++){
+d241 1
+a241 37
+	$length 	   = $lengthZ;								## Length of lattice	
+	$color		   = $YZ{tendency_Z} -> [$i] -> {color};				## Color of lattice
+	$size 		   = $YZ{tendency_Z} -> [$i] -> {size};  				## Size of lattice
+	$step 		   = $YZ{tendency_Z} -> [$i] -> {step};  				## Step - value
+	$axis 		   = "y";								## Step on axis y 	
+	$max 		   = int($lengthY/$step);						## Number of lattices
+	%translation 	   = ("x"=>0,"y"=>0,"z"=>$length/2);					## Transform lattice - tendency X 
+	%rotation  	   = ("x"=>1,"y"=>0,"z"=>0);		   				## Rotation - pivot axis Z ##	
+	$stp		   = 0;
+	for ($j=0;$j<$max;$j++){
+		$stp		   += $step;
+	 if ($YZ{tendency_Z} -> [$i] -> {label} -> [$j] {visible}) {
+		$label 	 	   = $YZ{tendency_Z} -> [$i] -> {label} -> [$j] -> {string};
+		$labelcolor	   = $YZ{tendency_Z} -> [$i] -> {label} -> [$j] -> {color};
+		$heigth 	   = 20;
+		$string 	   = (length($label))*(9);
+		%translation_label = ("x"=>0,"y"=>(-$heigth/100)+$stp,"z"=>$length+$indent);
+		%rotation_label    = ("x"=>0,"y"=>-1,"z"=>0);
+		$flag 		   = 0;
+		$ccw 		   = "FALSE";
+		$texCoordIndex	   = "texCoordIndex [3 2 1 0 -1]";
+               &generate_label;      
+	 }
+	 else {$label = "";}
+	}
+	
+       if ($YZ{tendency_Z} -> [$i] -> {format} eq "box"){
+       &generate_box; 
+       }
+       if ($YZ{tendency_Z} -> [$i] -> {format} eq "cylinder"){
+       &generate_cylinder; 
+       }
+       if ($YZ{tendency_Z} -> [$i] -> {format} eq "line"){
+       &generate_line; 
+       }
+     } 
+   }
+d243 1
+d245 1
+a245 2
+} # end of global cycle for
+##############################################################################################################################################
+d247 16
+a262 19
+sub generate_text{
+   print WORK "Billboard {
+   		bboxSize -1 -1 -1
+		bboxCenter 0 0 0
+   		children [
+			Transform { 
+				translation $translation_label{x} $translation_label{y} $translation_label{z}
+				children Shape {
+					geometry Text{
+						string [$label]
+					}
+					appearance Appearance {
+						material Material {diffuseColor @@$labelcolor}
+					}
+				}
+			}
+		]
+	   }\n"
+}
+d264 1
+a264 1
+##############################################################################################################################################
+a265 14
+sub generate_box{
+ for ($lattice=1;$lattice<=$max;$lattice++){
+ $translation{$axis} += $step;
+ print WORK "Transform {				
+	translation $translation{x} $translation{y} $translation{z}
+	rotation $rotation{x} $rotation{y} $rotation{z} 1.5705
+		children Shape {
+		geometry Box { size $size $length $size }
+		appearance Appearance {
+			material Material { diffuseColor @@$color  }
+			}
+	}
+       }\n";
+ }
+d268 1
+a268 1
+##############################################################################################################################################
+d270 9
+a278 15
+sub generate_cylinder{
+ for ($lattice=1;$lattice<=$max;$lattice++){
+ $translation{$axis} += $step;
+ print WORK "Transform {				
+	translation $translation{x} $translation{y} $translation{z}
+	rotation $rotation{x} $rotation{y} $rotation{z} 1.5705
+		children Shape {
+		geometry Cylinder { radius $size
+				    height $length }
+		appearance Appearance {
+			material Material { diffuseColor @@$color  }
+			}
+	}
+       }\n";
+ }
+d281 11
+a291 1
+##############################################################################################################################################
+a292 19
+sub generate_line {
+$begin = -$length/2;
+$end   = $length/2;
+ for ($lattice=1;$lattice<=$max;$lattice++){
+ $translation{$axis} += $step;
+ print WORK "Transform{
+ 		translation $translation{x} $translation{y} $translation{z}
+		rotation $rotation{x} $rotation{y} $rotation{z} 1.5705
+ 			children Shape {
+	 	 		appearance   Appearance {
+  		  			material   Material {diffuseColor @@$color}
+		 		}
+		  		geometry IndexedLineSet {
+   		 			coord Coordinate {  point   [ 0 $begin 0, 0 $end 0 ] }
+  		 			coordIndex       [ 0 1 -1 ]
+    		 		}
+			}
+		     }\n";
+}
+d295 1
+a295 1
+##############################################################################################################################################
+d297 10
+a306 16
+sub generate_texture {
+use GD;
+my ($im,$white,$color);
+open (GD,">$label.png");
+ $im = new GD::Image($string,$heigth);   # create new image size $string x $heigth
+
+# create variable which represent individual color 
+$white = $im->colorAllocate(255,255,255);
+if (     $labelcolor eq 'black') {$color = $im->colorAllocate(0,0,0);  }
+  elsif ($labelcolor eq 'red')   {$color = $im->colorAllocate(255,0,0);}
+  elsif ($labelcolor eq 'green') {$color = $im->colorAllocate(0,255,0);}
+  elsif ($labelcolor eq 'blue')  {$color = $im->colorAllocate(0,0,255);}
+  elsif ($labelcolor eq 'white') {$color = $im->colorAllocate(250,250,250);};
+  
+# set which color is transparent
+$im->transparent($white);
+d308 1
+a308 5
+# write string   
+$im->string( gdGiantFont,		## font
+	     0,0,			## start [0,0]
+	     "$label",			## string
+	     $color );			## color
+d310 1
+a310 2
+print GD $im->png;
+}
+d314 2
+a315 35
+sub generate_label {
+ if ($label ne ""){
+   &generate_texture;
+#   $translation_label{$axis} += $step;
+   if ($flag){
+    $width_label = $heigth/40; 
+    $height_label = $string/40;
+   }
+   else {
+   $width_label = $string/40; 
+   $height_label = $heigth/40;
+   }
+   print WORK "Transform {
+		translation $translation_label{x} $translation_label{y} $translation_label{z}
+		rotation $rotation_label{x} $rotation_label{y} $rotation_label{z} 1.5705
+		children Shape {
+			geometry IndexedFaceSet {
+				coord Coordinate  { point [ $width_label 0   0,
+							    $width_label $height_label 0,
+							    0 $height_label 0,
+						    	    0 0   0 ] }
+				coordIndex [ 0 1 2 3 -1 ]
+				solid TRUE
+				ccw $ccw
+				$texCoordIndex 
+			}
+			appearance Appearance {
+				texture ImageTexture{url \"$label.png\" 
+							repeatS FALSE
+							repeatT FALSE}
+			} 
+		}
+	     }\n";
+  }
+}
+a316 2
+##############################################################################################################################################
+close(WORK);
+@
+
+
+1.2
+log
+@add labels
+@
+text
+@d12 1
+d14 1
+d16 1
+a16 2
+#	    - algotitmus pro prevod slovniho zadani barvy na RGB (priklad cervena --> 1 0 0)
+#           - dodelat moznost volby barvy u jednotlivych os a jednotlivych pricek  
+d19 1
+a19 2
+#-!!!-	    - dodelat popisky u grafu (textury)
+#	    - dodelat u mrizek moznost volby mezi jednoduchou carou a boxem o zadane velikosti	
+d21 2
+a22 1
+#	    - dodelat zobrazovani popisku os: pismo - vyska,font(family,style),smer psani(vodorovne,shora-dolu)  
+a24 1
+@@color = (1,0,0);
+d27 39
+a65 17
+%X = ( "visible"    => 1, 				# display axis X ( 1-display 0-not display )
+       "transform"  => 0, 				# transform axis X
+       "length"     => 5,				# length of axis X
+       "size"       => 0.1,				# size of axis X
+       "label"      => "X" );				# display label of axis X ( only if defined )
+
+%Y = ( "visible"   => 1,
+       "transform" => 0,
+       "length"    => 5,
+       "size"      => 0.1,
+       "label"     => "Y" );
+
+%Z = ( "visible"   => 1,
+       "transform" => 0,
+       "length"    => 5,
+       "size"      => 0.1,
+       "label"     => "Z" );
+d68 270
+a337 33
+%visible_XY = ("tendency_X"=>2,"tendency_Y"=>1);	# display surface XY ( 0-not display,2 - display 2 different lattice group)					
+	@@stepxy_X  = qw(3.5 1);				# step of lattice - tendency X ( for each lattice group ) 
+	@@sizexy_X  = qw(0.08 0.02);			# size of lattice - tendency X ( for each lattice group )
+	@@label_XYX = qw(labelXYX popisekX);		# display label of lattice for each lattice group  ->generate texture
+		@@pointsize_XYX  = qw(40 30);		# size of font on the texture      (
+		@@font_XYX       = qw(Arial Arial);	# kind of font on the texture 		   for each lattice group
+		@@background_XYX = qw(blue white);	# background color on the texture 
+		@@fill_XYX       = qw(white black);	# color of text on the texture 						 )
+
+	@@stepxy_Y  = qw(2);    				
+	@@sizexy_Y  = qw(0.03);    			
+	@@label_XYY = qw(labelY);
+		@@pointsize_XYY  = qw(30);
+		@@font_XYY       = qw(Arial);
+		@@background_XYY = qw(white);
+		@@fill_XYY       = qw(black);
+
+%visible_XZ = ("tendency_X"=>1,"tendency_Z"=>1);  	      
+	@@stepxz_X  = qw(2 );  
+	@@sizexz_X  = qw(0.08);    
+	@@label_XZX = qw(labelX);
+		@@pointsize_XZX  = qw(30);
+		@@font_XZX       = qw(Times);
+		@@background_XZX = qw(white);
+		@@fill_XZX       = qw(black);
+
+	@@stepxz_Z =  qw(2);    
+	@@sizexz_Z =  qw(0.02);    
+	@@label_XZZ = qw(labelZ);
+		@@pointsize_XZZ  = qw(30);
+		@@font_XZZ       = qw(Times);
+		@@background_XZZ = qw(white);
+		@@fill_XZZ       = qw(black);
+d339 29
+a367 8
+%visible_YZ = ("tendency_Y"=>1,"tendency_Z"=>2);  	     
+	@@stepyz_Y = qw(2.5);  
+	@@sizeyz_Y = qw(0.08);    
+	@@label_YZY = qw(labelY);
+		@@pointsize_YZY  = qw(30);
+		@@font_YZY       = qw(Times);
+		@@background_YZY = qw(white);
+		@@fill_YZY       = qw(black);
+d369 9
+a377 8
+	@@stepyz_Z = qw(2.5 3.5);  
+	@@sizeyz_Z = qw(0.02 0.08);    
+	@@label_YZZ = qw(labelZ popisekZ);
+		@@pointsize_YZZ  = qw(30 50);
+		@@font_YZZ       = qw(Times Arial);
+		@@background_YZZ = qw(white red);
+		@@fill_YZZ       = qw(black white);
+############################################################## User definition ###############################################################
+d379 29
+a407 30
+#------------------------------  Generate axis ------------------------------------#
+if ($X{visible})  { 								## Display axis X or not
+		  %rotation_axis = ("x"=>0,"y"=>0,"z"=>1); 			## Rotation axis X  ( pivot axis Z )
+  	          %transform_axis = ("x"=>$X{length}/2,"y"=>0,"z"=>0);		## Transform axis X ( tendency X )
+		  %transform_text = ("x"=>$X{length}+1,"y"=>0,"z"=>0);		## Transform label of axis X ( tendency X )
+	          $length = $X{length};						## Length of axix X
+		  $size_axis = $X{size};					## Size of axis X
+		  $label_axis = $X{label};					## Label of axis X
+	          &generate_axis;						## Generate axis X
+		  &generate_text;}						## Generate label of axis X
+
+if ($Y{visible})  { 
+		  %rotation_axis = ("x"=>0,"y"=>0,"z"=>0); 
+	          %transform_axis = ("x"=>0,"y"=>$Y{length}/2,"z"=>0);
+	          %transform_text = ("x"=>0,"y"=>$Y{length}+1,"z"=>0);
+		  $length = $Y{length};
+		  $size_axis = $Y{size};
+		  $label_axis = $Y{label};
+	          &generate_axis;
+		  &generate_text;}
+		  
+if ($Z{visible})  { 
+		  %rotation_axis = ("x"=>1,"y"=>0,"z"=>0); 
+	          %transform_axis = ("x"=>0,"y"=>0,"z"=>$Z{length}/2);
+	          %transform_text = ("x"=>0,"y"=>0,"z"=>$Z{length}+1);
+		  $length = $Z{length};
+		  $size_axis = $Z{size};
+		  $label_axis = $Z{label};
+	          &generate_axis;
+		  &generate_text;}
+d409 2
+d412 41
+d454 80
+a533 24
+#------------------------------------------- Generate lattice  -------------------------------------------------------#
+for ($count = 0;$count < $visible_XY{tendency_X};$count++){		## Generate lattice on XY tendency X ($count=number of lettice group)
+
+     %transform_lattice = ("x"=>$X{length}/2,"y"=>0,"z"=>0);		## Transform lattice - tendency X 
+     %rotation_lattice  = ("x"=>0,"y"=>0,"z"=>1);		   ## Rotation - pivot axis Z ##	
+     $axis 		= "y";					           ## Step on axis y 	
+     $length 		= $X{length};					   ## length of lattice	
+     $step 		= $stepxy_X[$count];  					   ## Step - value
+     $size_lattice 	= $sizexy_X[$count];  		                   ## Size of lattice
+     $max 		= int($Y{length}/$step);				   ## Number of lattices
+
+     %transform_label   = ("x"=>$X{length}+1,"y"=>0,"z"=>0);	
+     %rotation_label    = ("x"=>0,"y"=>0,"z"=>0);
+     $text 	        = $label_XYX[$count];
+     $pointsize         = $pointsize_XYX[$count];
+     $font 	        = $font_XYX[$count];
+     $background        = $background_XYX[$count];
+     $fill	        = $fill_XYX[$count];
+     $flag 		= 0;
+     $ccw 		= "TRUE";
+     $texCoordIndex	= "";
+     &generate_lattice;  	
+}
+for ($count = 0;$count < $visible_XY{tendency_Y};$count++){
+d535 80
+a614 107
+     %transform_lattice = ("x"=>0,"y"=>$Y{length}/2,"z"=>0);
+     %rotation_lattice  = ("x"=>0,"y"=>0,"z"=>0);
+     $axis 		= "x"; 
+     $length 		= $Y{length};
+     $step 		= $stepxy_Y[$count];  
+     $size_lattice 	= $sizexy_Y[$count];
+     $max 		= int($X{length}/$step);
+
+     %transform_label   = ("x"=>0,"y"=>$Y{length}+1,"z"=>0);	
+     %rotation_label    = ("x"=>0,"y"=>0,"z"=>0);
+     $text 	        = $label_XYY[$count];
+     $pointsize         = $pointsize_XYY[$count];
+     $font 	        = $font_XYY[$count];
+     $background        = $background_XYY[$count];
+     $fill	        = $fill_XYY[$count];
+     $flag 		= 1;
+     $ccw 		= "TRUE";
+     $texCoordIndex	= "texCoordIndex [1 0 3 2 -1]";
+     &generate_lattice; 
+}	
+for ($count = 0;$count < $visible_XZ{tendency_X};$count++){
+
+     %transform_lattice = ("x"=>$X{length}/2,"y"=>0,"z"=>0);
+     %rotation_lattice  = ("x"=>0,"y"=>0,"z"=>1);
+     $axis 		= "z"; 
+     $length 		= $X{length};
+     $step 		= $stepxz_X[$count];  
+     $size_lattice 	= $sizexz_X[$count];
+     $max 		= int($Z{length}/$step);
+
+     %transform_label   = ("x"=>$X{length}+1,"y"=>0,"z"=>0);	
+     %rotation_label    = ("x"=>1,"y"=>0,"z"=>0);
+     $text 	        = $label_XZX[$count];
+     $pointsize         = $pointsize_XZX[$count];
+     $font 	        = $font_XZX[$count];
+     $background        = $background_XZX[$count];
+     $fill	        = $fill_XZX[$count];
+     $flag 		= 0;
+     $ccw 		= "FALSE";
+     $texCoordIndex	= "texCoordIndex [3 2 1 0 -1]";
+     &generate_lattice; 
+}	
+for ($count = 0;$count < $visible_XZ{tendency_Z};$count++){
+
+     %transform_lattice = ("x"=>0,"y"=>0,"z"=>$Z{length}/2);
+     %rotation_lattice  = ("x"=>1,"y"=>0,"z"=>0);
+     $axis 		= "x"; 
+     $length 		= $Z{length};
+     $step 		= $stepxz_Z[$count];  
+     $size_lattice 	= $sizexz_Z[$count];
+     $max 		= int($X{length}/$step);
+
+     %transform_label   = ("x"=>0,"y"=>0,"z"=>$Z{length}+1);	
+     %rotation_label    = ("x"=>1,"y"=>0,"z"=>0);
+     $text 	        = $label_XZZ[$count];
+     $pointsize         = $pointsize_XZZ[$count];
+     $font 	        = $font_XZZ[$count];
+     $background        = $background_XZZ[$count];
+     $fill	        = $fill_XZZ[$count];
+     $flag 		= 1;
+     $ccw 		= "FALSE";
+     $texCoordIndex	= "";
+     &generate_lattice; 
+}	
+for ($count = 0;$count < $visible_YZ{tendency_Y};$count++){
+
+     %transform_lattice = ("x"=>0,"y"=>$Y{length}/2,"z"=>0);
+     %rotation_lattice  = ("x"=>0,"y"=>0,"z"=>0);
+     $axis 		= "z"; 
+     $length 		= $Y{length};
+     $step 		= $stepyz_Y[$count];
+     $size_lattice 	= $sizeyz_Y[$count];
+     $max 		= int($Z{length}/$step);
+
+     %transform_label   = ("x"=>0,"y"=>$Y{length}+1,"z"=>0);	
+     %rotation_label    = ("x"=>0,"y"=>-1,"z"=>0);
+     $text 	        = $label_YZY[$count];
+     $pointsize         = $pointsize_YZY[$count];
+     $font 	        = $font_YZY[$count];
+     $background        = $background_YZY[$count];
+     $fill	        = $fill_YZY[$count];
+     $flag 		= 1;
+     $ccw 		= "FALSE";
+     $texCoordIndex	= "";
+     &generate_lattice;  	
+}
+for ($count = 0;$count < $visible_YZ{tendency_Z};$count++){
+     %transform_lattice = ("x"=>0,"y"=>0,"z"=>$Z{length}/2);
+     %rotation_lattice  = ("x"=>1,"y"=>0,"z"=>0);
+     $axis 		= "y"; 
+     $length 		= $Y{length};
+     $step 		= $stepyz_Z[$count];
+     $size_lattice 	= $sizeyz_Z[$count];
+     $max 		= int($Y{length}/$step);
+
+     %transform_label   = ("x"=>0,"y"=>0,"z"=>$Z{length}+1);	
+     %rotation_label    = ("x"=>0,"y"=>-1,"z"=>0);
+     $text 	        = $label_YZZ[$count];
+     $pointsize         = $pointsize_YZZ[$count];
+     $font 	        = $font_YZZ[$count];
+     $background        = $background_YZZ[$count];
+     $fill	        = $fill_YZZ[$count];
+     $flag 		= 0;
+     $ccw 		= "FALSE";
+     $texCoordIndex	= "texCoordIndex [3 2 1 0 -1]";
+     &generate_lattice; 
+ }	
+d616 27
+a642 12
+##############################################################################################################################################
+
+sub generate_axis{
+ print WORK "Transform {				
+	translation $transform_axis{x} $transform_axis{y} $transform_axis{z}
+	rotation $rotation_axis{x} $rotation_axis{y} $rotation_axis{z} 1.5705
+		children Shape {
+		geometry  Cylinder{ radius $size_axis
+				    height $length }
+		appearance Appearance {
+			material Material { diffuseColor @@color  }
+			}
+d644 6
+d651 5
+a655 1
+ \n";
+a656 1
+}
+d658 1
+a661 1
+ if ($label_axis ne ""){
+d663 12
+a674 5
+		Transform { 
+			translation $transform_text{x} $transform_text{y} $transform_text{z}
+			children Shape {
+				geometry Text{
+					string [\"$label_axis\"]
+d677 1
+a677 1
+		}
+a678 1
+ }	   
+d683 14
+a696 13
+sub generate_texture{
+use Image::Magick;
+$string = (length($text)+5) * ($pointsize/1.5); 
+$size = "$string x $pointsize";
+
+ $image=Image::Magick->new(size=>"$size");
+ $image->Read("xc:$background");
+ $image->Annotate(font=>"$font.ttf",fill=>"$fill",pointsize=>$pointsize,
+  text=>"$text\[$lattice\]",gravity=>'Center');
+ $image->Rotate(0);
+ $image->Write("$text\[$lattice\].png");
+#$image->Write("win:");
+
+d701 1
+a701 1
+sub generate_lattice{
+d703 4
+a706 4
+  $transform_lattice{$axis} += $step;
+  print WORK "Transform {				
+	translation $transform_lattice{x} $transform_lattice{y} $transform_lattice{z}
+	rotation $rotation_lattice{x} $rotation_lattice{y} $rotation_lattice{z} 1.5705
+d708 2
+a709 1
+		geometry Box { size $size_lattice $length $size_lattice }
+d711 1
+a711 1
+			material Material { diffuseColor @@color  }
+d715 58
+a772 1
+  if ($text ne ""){
+d774 1
+a774 1
+   $transform_label{$axis} += $step;
+d776 2
+a777 2
+    $width_label = $pointsize/100; 
+    $height_label = $string/100;
+d780 2
+a781 2
+   $width_label = $string/100; 
+   $height_label = $pointsize/100;
+d784 1
+a784 1
+		translation $transform_label{x} $transform_label{y} $transform_label{z}
+d798 1
+a798 1
+				texture ImageTexture{url \"$text\[$lattice\].png\" 
+a804 1
+ }
+a807 1
+
+@
+
+
+1.1
+log
+@Added directory vrml
+@
+text
+@d18 1
+a18 1
+#	    - dodelat popisky u grafu (textury)
+d27 17
+a43 14
+$visible_X = 1; 			        # display axis X
+	$length_X = 5;     		        # length of axis X					
+	$label_X = "X";				# label of axix X
+
+$visible_Y = 1; 			        
+	$length_Y = 5;
+	$label_Y = "Y";         		        
+
+$visible_Z = 1; 			        
+	$length_Z = 5;
+	$label_Z = "Z";     			
+
+$size_axis = 0.1;                               # Size of axis
+
+d46 16
+a61 5
+%visible_XY = ("tendency_X"=>1,"tendency_Y"=>1);   	      # display surface XY 					
+	$stepxy_X = 2;  				    # step of lattice - tendency X 
+	$sizexy_X = 0.08;   		    		    # size of lattice - tendency X
+	$stepxy_Y = 1;    				    # size of lattice - tendency Y
+	$sizexy_Y = 0.02;    				    # size of lattice - tendency Y
+d64 15
+a78 4
+	$stepxz_X = 2;  
+	$sizexz_X = 0.08;    
+	$stepxz_Z = 1;    
+	$sizexz_Z = 0.02;    
+d80 16
+a95 5
+%visible_YZ = ("tendency_Y"=>1,"tendency_Z"=>1);  	     
+	$stepyz_Y = 2;  
+	$sizeyz_Y = 0.08;    
+	$stepyz_Z = 1;  
+	$sizeyz_Z = 0.02;    
+d98 28
+a125 7
+
+##########################################  Generate axis #######################################################
+if ($visible_X)  { %rotation_axis = ("x"=>0,"y"=>0,"z"=>1); 
+  	          %transform_axis = ("x"=>$length_X/2,"y"=>0,"z"=>0);
+		  %transform_text = ("x"=>$length_X+1,"y"=>0,"z"=>0);
+	          $length = $length_X;
+		  $label = $label_X;
+a127 14
+if ($visible_Y)  { %rotation_axis = ("x"=>0,"y"=>0,"z"=>0); 
+	          %transform_axis = ("x"=>0,"y"=>$length_Y/2,"z"=>0);
+	          %transform_text = ("x"=>0,"y"=>$length_Y+1,"z"=>0);
+		  $length = $length_Y;
+		  $label = $label_Y;
+		  &generate_text;
+	          &generate_axis;}
+if ($visible_Z)  { %rotation_axis = ("x"=>1,"y"=>0,"z"=>0); 
+	          %transform_axis = ("x"=>0,"y"=>0,"z"=>$length_Z/2);
+	          %transform_text = ("x"=>0,"y"=>0,"z"=>$length_Z+1);
+		  $length = $length_Z;
+		  $label = $label_Z;
+		  &generate_text;
+	          &generate_axis;}
+d131 21
+a151 9
+########################################## Generate lattice  #######################################################
+if ($visible_XY{tendency_X}){ 					   ## Generate axis on XY tendency X 
+     %transform_lattice = ("x"=>$length_X/2,"y"=>0,"z"=>0);          ## Translation - tendency X ##
+     %rotation_lattice = ("x"=>0,"y"=>0,"z"=>1);		     ## Rotation - pivot axis Z ##	
+     $axis = "y";					          ## Step on axis y 	
+     $step = $stepxy_X;  					  ## Step - value
+     $length = $length_X;					  ## length of lattice
+     $size_lattice = $sizexy_X;  		                  ## Size of lattice
+     $max = int($length_Y/$step);				   ## Number of lattice
+d154 42
+a195 8
+if ($visible_XY{tendency_Y}){
+     %transform_lattice = ("x"=>0,"y"=>$length_Y/2,"z"=>0);
+     %rotation_lattice = ("x"=>0,"y"=>0,"z"=>0);
+     $axis = "x"; 
+     $step = $stepxy_Y;  
+     $length = $length_Y;
+     $size_lattice = $sizexy_Y;
+     $max = int($length_X/$step);
+d198 20
+a217 18
+if ($visible_XZ{tendency_X}){
+     %transform_lattice = ("x"=>$length_X/2,"y"=>0,"z"=>0);
+     %rotation_lattice = ("x"=>0,"y"=>0,"z"=>1);
+     $axis = "z"; 
+     $step = $stepxz_X;
+     $length = $length_X;
+     $size_lattice = $sizexz_X;
+     $max = int($length_Z/$step);
+     &generate_lattice;  	
+}
+if ($visible_XZ{tendency_Z}){
+     %transform_lattice = ("x"=>0,"y"=>0,"z"=>$length_Z/2);
+     %rotation_lattice = ("x"=>1,"y"=>0,"z"=>0);
+     $axis = "x"; 
+     $step = $stepxz_Z;
+     $length = $length_Z;
+     $size_lattice = $sizexz_Z;
+     $max = int($length_X/$step);
+d220 20
+a239 8
+if ($visible_YZ{tendency_Y}){
+     %transform_lattice = ("x"=>0,"y"=>$length_Y/2,"z"=>0);
+     %rotation_lattice = ("x"=>0,"y"=>0,"z"=>0);
+     $axis = "z"; 
+     $step = $stepyz_Y;
+     $length = $length_Y;
+     $size_lattice = $sizeyz_Y;
+     $max = int($length_Z/$step);
+d242 19
+a260 8
+if ($visible_YZ{tendency_Z}){
+     %transform_lattice = ("x"=>0,"y"=>0,"z"=>$length_Z/2);
+     %rotation_lattice = ("x"=>1,"y"=>0,"z"=>0);
+     $axis = "y"; 
+     $step = $stepyz_Z;
+     $length = $length_Z;
+     $size_lattice = $sizeyz_Z;
+     $max = int($length_Y/$step);
+d265 1
+d282 35
+d319 3
+a321 3
+for ($pricka=1;$pricka<=$max;$pricka++){
+ $transform_lattice{$axis} += $step;
+ print WORK "Transform {				
+d330 34
+a363 3
+       }
+ \n";
+
+a366 12
+sub generate_text{
+print WORK "Billboard {
+		Transform { 
+			translation $transform_text{x} $transform_text{y} $transform_text{z}
+			children Shape {
+				geometry Text{
+					string [\"$label\"]
+				}
+			}
+		}
+	   }"
+}
+@
+

@@ -1,0 +1,33 @@
+head	1.1;
+access;
+symbols
+	jpivot_1_8_0:1.1
+	focus_1_6_0:1.1.0.2
+	jpivot_1_7_0:1.1;
+locks; strict;
+comment	@# @;
+
+
+1.1
+date	2006.11.24.14.42.32;	author zapodot;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@New translation for Norwegian bokmaal (nb) which is more or less similar to the Norwegian (no) translation
+@
+text
+@sort.mode.natural=Naturlig orden
+sort.mode.1=Fallende hierarki
+sort.mode.2=Stigende hierarki 
+sort.mode.3=Fallende, bryt hierarki
+sort.mode.4=Stigende, bryt hierarki
+sort.mode.5=Topprangering
+sort.mode.6=Bunnrangering
+@

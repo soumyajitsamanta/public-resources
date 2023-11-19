@@ -1,0 +1,138 @@
+head	1.2;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2008.05.17.15.43.49;	author fsaz;	state dead;
+branches;
+next	1.1;
+
+1.1
+date	2005.11.28.14.02.36;	author fsaz;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@borrando viejos
+@
+text
+@#
+# JPF-demo start-up configuration properties
+#
+
+# Comma separated list of folders with plug-ins
+# (plug-in repositories)
+workbench.boot.pluginsFolders = ./plugins
+
+# Folder where to store application data and configuration files
+workbench.boot.dataFolder = ./data
+
+#
+# Available LookAndFeel 
+# Default LookAndFeel=com.jgoodies.plaf.plastic.Plastic3DLookAndFeel
+#
+
+#LookAndFeel=javax.swing.plaf.metal.MetalLookAndFeel
+#LookAndFeel=com.sun.java.swing.plaf.motif.MotifLookAndFeel
+#LookAndFeel=com.sun.java.swing.plaf.mac.MacLookAndFeel
+#LookAndFeel=com.sun.java.swing.plaf.windows.WindowsLookAndFeel
+#LookAndFeel=com.jgoodies.plaf.windows.ExtWindowsLookAndFeel
+#LookAndFeel=com.jgoodies.plaf.plastic.PlasticLookAndFeel
+#LookAndFeel=com.jgoodies.plaf.plastic.Plastic3DLookAndFeel
+LookAndFeel=com.jgoodies.plaf.plastic.PlasticXPLookAndFeel
+
+#
+# Available Theme
+# Default Theme: None
+#
+#Theme=Brown Sugar
+#Theme=Dark Star
+#Theme=Desert Blue
+#Theme=Desert Bluer
+#Theme=Desert Green
+#Theme=Desert Red
+#Theme=Desert Yellow
+Theme=Experience Blue
+#Theme=Experience Green
+#Theme=Silver
+#Theme=Sky Blue
+#Theme=Sky Bluer
+#Theme=Sky Bluer - Tahoma
+#Theme=Sky Green
+#Theme=Sky Krupp
+#Theme=Sky Pink
+#Theme=Sky Red
+#Theme=Sky Yellow
+
+#
+# Log4j configuration
+#
+#log4j.rootLogger = ALL,console
+
+#log4j.rootLogger =DEBUG,CHAINSAW_CLIENT
+#log4j.rootLogger =DEBUG,CHAINSAW
+#log4j.appender.CHAINSAW=org.apache.log4j.net.SocketAppender
+#log4j.appender.CHAINSAW.RemoteHost=localhost
+#log4j.appender.CHAINSAW.Port=4445
+#log4j.appender.CHAINSAW.LocationInfo=true
+
+
+log4j.logger.org.jpf.demo.toolbox = ALL,launcher
+log4j.logger.org.java.plugin = INFO,jpf
+#log4j.logger.es.aeat.eett.rubik = INFO,rubik
+log4j.logger.es.aeat.eett.rubik = ALL,rubik
+
+log4j.appender.console = org.apache.log4j.varia.NullAppender
+#log4j.appender.console = org.apache.log4j.ConsoleAppender
+log4j.appender.console.layout = org.apache.log4j.PatternLayout
+log4j.appender.console.layout.conversionPattern = %d [%t] %-5p %c %m%n
+
+log4j.appender.launcher = org.apache.log4j.FileAppender
+log4j.appender.launcher.file = ${applicationRoot}/logs/launcher.log
+log4j.appender.launcher.layout = org.apache.log4j.PatternLayout
+log4j.appender.launcher.layout.conversionPattern = %d [%t] %-5p %c %m%n
+log4j.appender.launcher.append = false
+
+log4j.appender.jpf = org.apache.log4j.FileAppender
+log4j.appender.jpf.file = ${applicationRoot}/logs/jpf.log
+log4j.appender.jpf.layout = org.apache.log4j.PatternLayout
+log4j.appender.jpf.layout.conversionPattern = %d [%t] %-5p %c %m%n
+log4j.appender.jpf.append = false
+
+log4j.appender.rubik = org.apache.log4j.FileAppender
+log4j.appender.rubik.file = ${applicationRoot}/logs/rubik.log
+log4j.appender.rubik.layout = org.apache.log4j.PatternLayout
+log4j.appender.rubik.layout.conversionPattern = %d [%t] %-5p %c %m%n
+log4j.appender.rubik.append = false
+log4j.appender.rubik.Threshold=WARN
+
+#log4j.appender.rubik.CHAINSAW_CLIENT=org.apache.log4j.net.SocketAppender
+#log4j.appender.rubik.CHAINSAW_CLIENT.RemoteHost=localhost
+#log4j.appender.rubik.CHAINSAW_CLIENT.Port=4445
+#log4j.appender.rubik.CHAINSAW_CLIENT.LocationInfo=true
+
+#log4j.appender.CHAINSAW_CLIENT=org.apache.log4j.net.SocketAppender
+#log4j.appender.CHAINSAW_CLIENT.RemoteHost=localhost
+#log4j.appender.CHAINSAW_CLIENT.Port=4445
+#log4j.appender.CHAINSAW_CLIENT.LocationInfo=true
+
+
+@
+
+
+1.1
+log
+@*** empty log message ***
+@
+text
+@@
+

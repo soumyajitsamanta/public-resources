@@ -1,0 +1,678 @@
+head	1.23;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.23
+date	2004.04.27.10.57.15;	author vasekd;	state Exp;
+branches;
+next	1.22;
+
+1.22
+date	2004.04.26.18.08.52;	author vasekd;	state Exp;
+branches;
+next	1.21;
+
+1.21
+date	2003.12.10.08.48.23;	author jiri_schmid;	state Exp;
+branches;
+next	1.20;
+
+1.20
+date	2003.11.07.09.35.11;	author jiri_schmid;	state Exp;
+branches;
+next	1.19;
+
+1.19
+date	2003.09.24.14.59.18;	author jiri_schmid;	state Exp;
+branches;
+next	1.18;
+
+1.18
+date	2003.09.22.14.15.27;	author jiri_schmid;	state Exp;
+branches;
+next	1.17;
+
+1.17
+date	2003.09.22.13.55.05;	author vasekd;	state Exp;
+branches;
+next	1.16;
+
+1.16
+date	2003.09.17.11.41.25;	author jiri_schmid;	state Exp;
+branches;
+next	1.15;
+
+1.15
+date	2003.09.10.09.08.58;	author jiri_schmid;	state Exp;
+branches;
+next	1.14;
+
+1.14
+date	2003.09.03.15.10.46;	author jiri_schmid;	state Exp;
+branches;
+next	1.13;
+
+1.13
+date	2003.07.02.13.44.34;	author jiri_schmid;	state Exp;
+branches;
+next	1.12;
+
+1.12
+date	2003.06.26.09.31.43;	author jiri_schmid;	state Exp;
+branches;
+next	1.11;
+
+1.11
+date	2003.06.26.07.53.55;	author jiri_schmid;	state Exp;
+branches;
+next	1.10;
+
+1.10
+date	2003.06.20.15.29.24;	author jiri_schmid;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	2003.06.19.14.59.45;	author jiri_schmid;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	2003.06.16.12.20.25;	author jiri_schmid;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	2003.06.16.11.09.10;	author jiri_schmid;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	2003.06.16.08.33.05;	author jiri_schmid;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	2003.06.09.14.50.52;	author jiri_schmid;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2003.03.18.08.58.20;	author jiri_schmid;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2003.03.17.16.05.12;	author jiri_schmid;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2003.02.24.15.31.20;	author jiri_schmid;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2003.01.30.11.51.14;	author jiri_schmid;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.23
+log
+@fixed padding and margin
+@
+text
+@/* this part does not affect the REPORT, is used to proper view of style in format page on both Mozilla and IE based web browsers*/
+BODY.graph {background-color:transparent; padding: 0; margin: 0px, 0px, 0px, 5px;}
+TABLE.graph {border-style: none; empty-cells:show; padding:0; border-spacing:0;}
+TABLE.graph  TD { color: inherit; background-color: inherit; text-align: left; white-space:normal;}
+SPAN.cursor {white-space:nowrap; font-weight:normal; cursor:pointer; cursor:hand;}
+SPAN.preview {white-space:nowrap; margin: 3px;}
+TABLE.Neutral { color: inherit;
+   background-color: inherit;
+   border: none;
+   text-align:left;
+   margin:0px; }
+TD.Neutral {text-align:left; font-weight:bold; padding:5px;}
+TD.bcg { background-color: #eee; }
+
+THEAD.t{ background-color: #70cc70; border-bottom: 2px solid #555; padding: inherit; margin: inherit;}  /*color even even (first dark) */
+TBODY.t1 {background-color: #d8d84b; border-bottom: 2px solid #555; padding: inherit; margin: inherit;} /*color odd even (second dark)*/
+TR.t1 {background-color: #f2f27b;}                  /*color odd odd (second light)*/
+TBODY.t2 {background-color: #70cc70; border-bottom: 2px solid #555; padding: inherit; margin: inherit;} /*color even even (first dark) */
+TR.t2 {background-color: #a0e5a0}                 /*color even odd (first light)*/
+
+TD.None { color: inherit;  background-color: inherit;  border: none;}
+/* this part defines fonts, colors and borders of the REPORT*/
+BODY {background-color:#eee}
+/*T A B L E  L A Y O U T*/
+
+TABLE {font-family: serif;
+		font-size: 10px;
+		color: rgb(0,25,25);
+		border: 3px solid rgb(102,102,102);
+		border-collapse: collapse;
+		padding: 1px;
+		margin: 5px;
+		white-space: nowrap;
+		empty-cells: show;
+		cursor:default}
+
+/*TH {padding: 2px; margin: 0; text-align: center; white-space: nowrap;}*/
+/*TR {padding: 1px; margin: 0; white-space: nowrap;}*/
+/*TD {padding: 1px; margin: 0; text-align: right; white-space: nowrap;}*/
+
+/*B O R D E R S*/
+.ttd{border-top:2px solid rgb(102,102,102); border-right:1px dashed rgb(102,102,102); padding: 0px; margin: 0px} /*horizontal and vertical border bold-dashed*/
+.ttr{border-top:2px solid rgb(102,102,102); border-right:1px solid rgb(102,102,102); padding: 0px; margin: 0px} /*horizontal and vertical border bold*/
+.td{border-top:1px solid rgb(102,102,102); border-right:1px dashed rgb(102,102,102); padding: 0px; margin: 0px} /*horizontal and vertical border thin-dashed*/
+.tr{border-top:1px solid rgb(102,102,102); border-right:1px solid rgb(102,102,102); padding: 0px; margin: 0px} /*horizontal and vertical border thin*/
+
+.r {border-right:1px solid 102,102,102; padding: 1px; margin: 0px} /*vertical border bold*/
+.d {border-right:1px solid 102,102,102; padding: 1px; margin: 0px} /*vertical border thin-dashed*/
+
+/*C O L O R S*/
+.ee{background-color: rgb(112,204,112);  text-align:right; font-size: 10px; font-family: serif; color: rgb(0,25,25); padding: 1px;} /*color even even (first dark) */
+.eo{background-color: rgb(160,229,160);  text-align:right; font-size: 10px; font-family: serif; color: rgb(0,25,25); padding: 1px;} /*color even odd (first light)*/
+.oe{background-color: rgb(216,216,75);  text-align:right; font-size: 10px; font-family: serif; color: rgb(0,25,25); padding: 1px;} /*color odd even (second dark)*/
+.oo{background-color: rgb(242,242,123);  text-align:right; font-size: 10px; font-family: serif; color: rgb(0,25,25); padding: 1px;} /*color odd odd (second light)*/
+.set {background-color: rgb(255,0,0) !important;  color: rgb(0,25,25);}
+
+/*color row header */
+TH.ee{background-color: rgb(112,204,112);  text-align:center; font-size: 10px; font-family: serif; color: rgb(0,25,25);} /*color even even (first dark) */
+TH.eo{background-color: rgb(160,229,160);  text-align:center; font-size: 10px; font-family: serif; color: rgb(0,25,25);} /*color even odd (first light)*/
+TH.oe{background-color: rgb(216,216,75);  text-align:center; font-size: 10px; font-family: serif; color: rgb(0,25,25);} /*color odd even (second dark)*/
+TH.oo{background-color: rgb(242,242,123);  text-align:center; font-size: 10px; font-family: serif; color: rgb(0,25,25);} /*color odd odd (second light)*/
+
+TH.r {border-top:1px dotted rgb(102,102,102); border-right:1px solid rgb(102,102,102); padding: 1px; margin: 0px} /*vertical border bold*/
+TH.d {border-top:1px dotted rgb(102,102,102); border-right:1px dashed rgb(102,102,102); padding: 1px; margin: 0px} /*vertical border thin-dashed*/
+
+TH.ch{background-color: rgb(0,0,125); text-align: center; font-size: 10px; font-family: serif; color: rgb(204,204,204); padding: 1px; margin: 0px;}  /*color row header */ 
+TH.dv{border-right: 1px dotted rgb(102,102,102);}
+
+/*border column header */
+TH.tt{border-top:2px solid rgb(102,102,102); border-right: 1px dotted rgb(102,102,102);  padding: 0px; background-color: rgb(112,204,112); text-align:center; font-size: 10px; font-family: serif; color: rgb(0,25,25)} /*color odd column header*/
+TH.tr{border-top:1px solid rgb(102,102,102); border-right: 1px solid rgb(102,102,102);  padding: 0px}  /*color odd row header*/
+TH.ttr{border-top:2px solid rgb(102,102,102); border-right: 1px solid rgb(102,102,102);  padding: 0px} /*color 1st even row header*/
+TH.t{border-top:2px solid rgb(102,102,102); border-right: 1px dotted rgb(102,102,102);  padding: 0px; background-color: rgb(112,204,112); text-align:center; font-size: 10px; font-family: serif; color: rgb(0,25,25)}  /*color 1st even row header*/
+@
+
+
+1.22
+log
+@new format of table
+@
+text
+@d4 1
+a4 1
+TABLE.graph  TD { color: inherit; background-color: inherit; text-align: center;}
+d6 1
+d31 2
+a32 2
+		padding: px;
+		margin: px;
+d42 4
+a45 4
+.ttd{border-top:2px solid rgb(102,102,102); border-right:1px dashed rgb(102,102,102); padding: px; margin: px} /*horizontal and vertical border bold-dashed*/
+.ttr{border-top:2px solid rgb(102,102,102); border-right:1px solid rgb(102,102,102); padding: px; margin: px} /*horizontal and vertical border bold*/
+.td{border-top:1px solid rgb(102,102,102); border-right:1px dashed rgb(102,102,102); padding: px; margin: px} /*horizontal and vertical border thin-dashed*/
+.tr{border-top:1px solid rgb(102,102,102); border-right:1px solid rgb(102,102,102); padding: px; margin: px} /*horizontal and vertical border thin*/
+d47 2
+a48 2
+.r {border-right:1px solid 102,102,102; padding: px; margin: px} /*vertical border bold*/
+.d {border-right:1px solid 102,102,102; padding: px; margin: px} /*vertical border thin-dashed*/
+d51 4
+a54 4
+.ee{background-color: rgb(112,204,112);  text-align:right; font-size: 10px; font-family: serif; color: rgb(0,25,25); padding: px;} /*color even even (first dark) */
+.eo{background-color: rgb(160,229,160);  text-align:right; font-size: 10px; font-family: serif; color: rgb(0,25,25); padding: px;} /*color even odd (first light)*/
+.oe{background-color: rgb(216,216,75);  text-align:right; font-size: 10px; font-family: serif; color: rgb(0,25,25); padding: px;} /*color odd even (second dark)*/
+.oo{background-color: rgb(242,242,123);  text-align:right; font-size: 10px; font-family: serif; color: rgb(0,25,25); padding: px;} /*color odd odd (second light)*/
+d63 2
+a64 2
+TH.r {border-top:1px dotted rgb(102,102,102); border-right:1px solid rgb(102,102,102); padding: px; margin: px} /*vertical border bold*/
+TH.d {border-top:1px dotted rgb(102,102,102); border-right:1px dashed rgb(102,102,102); padding: px; margin: px} /*vertical border thin-dashed*/
+d66 1
+a66 1
+TH.ch{background-color: rgb(0,0,125); text-align: center; font-size: 10px; font-family: serif; color: rgb(204,204,204); padding: px; margin: px;}  /*color row header */ 
+d70 4
+a73 4
+TH.tt{border-top:2px solid rgb(102,102,102); border-right: 1px dotted rgb(102,102,102);  padding: px; background-color: rgb(112,204,112); text-align:center; font-size: 10px; font-family: serif; color: rgb(0,25,25)} /*color odd column header*/
+TH.tr{border-top:1px solid rgb(102,102,102); border-right: 1px solid rgb(102,102,102);  padding: px}  /*color odd row header*/
+TH.ttr{border-top:2px solid rgb(102,102,102); border-right: 1px solid rgb(102,102,102);  padding: px} /*color 1st even row header*/
+TH.t{border-top:2px solid rgb(102,102,102); border-right: 1px dotted rgb(102,102,102);  padding: px; background-color: rgb(112,204,112); text-align:center; font-size: 10px; font-family: serif; color: rgb(0,25,25)}  /*color 1st even row header*/
+@
+
+
+1.21
+log
+@all drills implemented
+@
+text
+@d1 72
+a72 68
+/* this part does not affect the REPORT, is used to proper view of style in format page on both Mozilla and IE based web browsers*/
+BODY.graph {background-color:transparent; padding: 0; margin: 0px, 0px, 0px, 5px;}
+TABLE.graph {border-style: none; empty-cells:show; padding:0; border-spacing:0;}
+TABLE.graph  TD { color: inherit; background-color: inherit; text-align: center;}
+SPAN.cursor {white-space:nowrap; font-weight:normal; cursor:pointer; cursor:hand;}
+TABLE.Neutral {	color: inherit;
+		background-color: inherit;
+		border: none;
+		text-align:left;
+		margin:0px; }
+TD.Neutral {text-align:left; font-weight:bold; padding:5px;}
+TD.bcg { background-color: #eee; }
+
+THEAD.t{ background-color: #70cc70; border-bottom: 2px solid #555; padding: inherit; margin: inherit;}	/*color even even (first dark) */
+TBODY.t1 {background-color: #d8d84b; border-bottom: 2px solid #555; padding: inherit; margin: inherit;}	/*color odd even (second dark)*/
+TR.t1 {background-color: #f2f27b;}									/*color odd odd (second light)*/
+TBODY.t2 {background-color: #70cc70; border-bottom: 2px solid #555; padding: inherit; margin: inherit;}	/*color even even (first dark) */
+TR.t2 {background-color: #a0e5a0}									/*color even odd (first light)*/
+
+TD.None { color: inherit;  background-color: inherit;  border: none;}
+
+/* this part defines fonts, colors and borders of the REPORT*/
+BODY {background-color:#eee}
+/*T A B L E  L A Y O U T*/
+TABLE {	font-family: Arial, sans-serif;
+	font-size: 14px;
+	color: #000000;
+	border: 4px solid #555;
+	border-collapse: collapse;
+	padding: 1px;
+	margin: 5px;
+	white-space: nowrap;
+	empty-cells: show;
+	cursor:default}
+
+TH {padding: 1px; margin: 0; text-align: center !important; white-space: nowrap;}
+TR {padding: 1px; margin: 0; white-space: nowrap;}
+TD {padding: 1px; margin: 0; text-align: right; white-space: nowrap;}
+
+/*B O R D E R S*/
+.t { border-top: 1px solid #555; padding: 1px; margin: 0;}	/*top*/
+.r { border-right: 2px solid #555; padding: 1px; margin: 0;}				/*vertical border bold*/
+.d { border-right: 1px dashed #555; padding: 1px; margin: 0;} 				/*vertical border thin-dashed*/
+.tt{ border-top: 2px solid #555; padding: 1px; margin: 0;}				/*horizontal border bold */
+.tr{ border-top: 1px solid #555; border-right: 2px solid #555; padding: 0; margin: 0;}  /*horizontal and vertical border thin*/
+.td{ border-top: 1px solid #555; border-right: 1px dashed #555; padding: 0; margin: 0;} /*horizontal and vertical border thin-dashed*/
+.ttr{ border-top: 2px solid #555; border-right: 2px solid #555; padding: 0; margin: 0; } /*horizontal and vertical border bold*/
+.ttd{ border-top: 2px solid #555; border-right: 1px dashed #555; padding: 0; margin: 0; }/*horizontal and vertical border bold-dashed*/
+.dv { border-right: 1px dashed #555; padding: 1px; margin: 0;}			/*description vertical*/
+.dh { border-bottom: 1px dashed #555; padding: 1px; margin: 0;}			/*description horizontal*/
+
+/*C O L O R S*/
+.ee{ background-color: #70cc70; padding: 1px; margin: 0; text-align:right;}	  	/*color even even (first dark) */
+.eo{ background-color: #a0e5a0; padding: 1px; margin: 0; text-align:right;}	  	/*color even odd (first light)*/
+.oe{ background-color: #d8d84b; padding: 1px; margin: 0; text-align:right;}	  	/*color odd even (second dark)*/
+.oo{ background-color: #f2f27b; padding: 1px; margin: 0; text-align:right;}	  	/*color odd odd (second light)*/
+.set { background-color: #00893b !important; color:#fff !important}
+
+/*color row header */
+TH.ee{ background-color: #11c166; padding: 1px; margin: 0; text-align:right;}  	    /*color even even (first dark) */
+TH.eo{ background-color: #11c166; padding: 1px; margin: 0; text-align:right;}	    /*color even odd (first light)*/
+TH.oe{ background-color: #11c166; padding: 1px; margin: 0; text-align:right;}	     /*color odd even (second dark)*/
+TH.oo{ background-color: #11c166; padding: 1px; margin: 0; text-align:right;}	    /*color odd odd (second light)*/
+/*color column header */
+TH.ch{ background-color: #11c166; padding: 1px; margin: 0; text-align:right;}
+TH.tr{ border-top: 1px solid #555; border-right: 2px solid #555; padding: 0; margin: 0;}
+TH.ttr{ border-top: 2px solid #555; border-right: 2px solid #555; padding: 0; margin: 0;}
+TH.oo{ background-color: #11c166; padding: 1px; margin: 0; text-align:right;}	    /*color odd odd (second light)*/@
+
+
+1.20
+log
+@saving rights of attr and fact fixed
+@
+text
+@d49 2
+@
+
+
+1.19
+log
+@graph2d improvments
+@
+text
+@d66 1
+a66 3
+TH.oo{ background-color: #11c166; padding: 1px; margin: 0; text-align:right;}	    /*color odd odd (second light)*/
+/*color row header */
+TH.ch{ background-color: #11c166; padding: 1px; margin: 0; text-align:right;}       
+@
+
+
+1.18
+log
+@report menu improvments
+@
+text
+@d2 1
+a2 1
+BODY.graph {background-color:#5190e2; padding: 0; margin: 0px, 0px, 0px, 5px;}
+@
+
+
+1.17
+log
+@Added new table formats
+@
+text
+@d54 2
+a55 2
+.oo{ background-color: #f2f27b; padding: 1px; margin: 0; text-align:right }	  	/*color odd odd (second light)*/
+.set { background-color: #00893b !important; color:#fff}
+@
+
+
+1.16
+log
+@bug fixies
+@
+text
+@d47 2
+a48 2
+.ttr{ border-top: 2px solid #555; border-right: 2px solid #555; padding: 0; margin: 0;} /*horizontal and vertical border bold*/
+.ttd{ border-top: 2px solid #555; border-right: 1px dashed #555; padding: 0; margin: 0;}/*horizontal and vertical border bold-dashed*/
+d54 1
+a54 1
+.oo{ background-color: #f2f27b; padding: 1px; margin: 0; text-align:right;}	  	/*color odd odd (second light)*/
+d63 6
+a68 1
+TH.ch{ background-color: #11c166; padding: 1px; margin: 0; text-align:right;}  	    @
+
+
+1.15
+log
+@ACl changes, report outup visual improvments
+@
+text
+@d57 1
+d61 3
+a63 1
+TH.oo{ background-color: #11c166; padding: 1px; margin: 0; text-align:right;}	    /*color odd odd (second light)*/@
+
+
+1.14
+log
+@implementation of right clik menu
+@
+text
+@d55 1
+@
+
+
+1.13
+log
+@header descriptions finally implemented
+@
+text
+@d33 2
+a34 1
+	empty-cells: show;}
+@
+
+
+1.12
+log
+@css report visual changes, code improvment
+@
+text
+@d5 1
+a5 1
+
+@
+
+
+1.11
+log
+@report ids substitution by lookup content seems to be full functional
+@
+text
+@d53 6
+a58 1
+.oo{ background-color: #f2f27b; padding: 1px; margin: 0; text-align:right;}	  	/*color odd odd (second light)*/@
+
+
+1.10
+log
+@added new css style
+@
+text
+@d35 3
+a37 3
+TH {padding: 1px; margin: 0; text-align: center !important}
+TR {padding: 1px; margin: 0;}
+TD {padding: 1px; margin: 0; text-align: right}
+@
+
+
+1.9
+log
+@huge improvment on format page
+@
+text
+@d23 1
+a23 1
+
+@
+
+
+1.8
+log
+@minor styles changes
+@
+text
+@d2 3
+a4 2
+BODY {	color: black;
+	background-color: #eee;}
+d11 2
+d31 1
+a31 1
+	margin: 10px;
+d34 1
+d37 1
+a37 1
+TD {padding: 1px; margin: 0;}
+@
+
+
+1.7
+log
+@css changes-visual imrpovments
+@
+text
+@d1 1
+d11 11
+d25 1
+a25 1
+	border: 4px solid #555 !important;
+a30 4
+
+COL.right_dashed{border-right: 1px dashed #555; }
+COL.right_solid{border-right: 2px solid #555; }
+
+d35 1
+d37 13
+a49 19
+.tt { border-top: 2px solid #555; padding: 1px; margin: 0;}	/*top*/
+.r { border-right: 2px solid #555; padding: 1px; margin: 0;}	/*right*/
+.d { border-right: 1px dashed #555; padding: 1px; margin: 0;}     /*right dash*/
+.tr{ border-top: 1px solid #555; border-right: 2px solid #555; padding: 0; margin: 0;}  /*top right*/
+.td{ border-top: 1px solid #555; border-right: 1px dashed #555; padding: 0; margin: 0;} /*top right dash*/
+.ttr{ border-top: 2px solid #555; border-right: 2px solid #555; padding: 0; margin: 0;} /*top right*/
+.ttd{ border-top: 2px solid #555; border-right: 1px dashed #555; padding: 0; margin: 0;} /*top right dash*/
+.ee{ background-color: #70cc70; padding: 1px; margin: 0; text-align:right;}	  /*color odd even*/
+.eo{ background-color: #a0e5a0; padding: 1px; margin: 0; text-align:right;}	  /*color odd odd*/
+.oe{ background-color: #d8d84b; padding: 1px; margin: 0; text-align:right;}	  /*color even even*/
+.oo{ background-color: #f2f27b; padding: 1px; margin: 0; text-align:right;}	  /*color even odd*/
+
+THEAD.t{ background-color: #70cc70; border-bottom: 2px solid #555; padding: inherit; margin: inherit; text-align:center;}
+TBODY.t1 {background-color: #d8d84b; border-bottom: 2px solid #555; padding: inherit; margin: inherit;}
+TR.t1 {background-color: #f2f27b;}
+TBODY.t2 {background-color: #70cc70; border-bottom: 2px solid #555; padding: inherit; margin: inherit;}
+TR.t2 {background-color: #a0e5a0}
+
+TD.None { color: inherit;  background-color: inherit;  border: none;}@
+
+
+1.6
+log
+@styles in report implemented
+@
+text
+@d13 1
+a13 1
+	border: 4px solid #055 !important;
+d27 8
+a34 5
+.t { border-top: 2px solid #555; padding: 1px; margin: 0;}	/*top*/
+.r { border-right: 2px solid #555; padding: 1px; margin: 0;} 	/*right*/
+.d { border-right: 1px dashed #555; padding: 1px; margin: 0;}	  /*right dash*/
+.tr{ border-top: 2px solid #555; border-right: 2px solid #555; padding: 0; margin: 0;}	/*top right*/
+.td{ border-top: 2px solid #555; border-right: 1px dashed #555; padding: 0; margin: 0;} /*top right dash*/
+@
+
+
+1.5
+log
+@minor visual IE/Mozilla imrpovmnet
+@
+text
+@d4 6
+a11 1
+	font-style: italic;
+d13 1
+d15 11
+a25 12
+	border: 2px solid #555555; 
+	padding: 0;
+	margin: 0;
+	white-space: nowrap;}
+
+TABLE.Neutral {	color: inherit;
+		background-color: inherit;
+		border: none;
+		text-align:left; }
+
+COL.right_dashed{border-right: 1px dashed #555555; }
+COL.right_solid{border-right: 2px solid #555555; }
+d30 12
+a41 19
+.tr{ border-top: 2px solid #555; border-right: 2px solid #055; padding: 0; margin: 0;}	/*top right*/
+.td{ border-top: 2px solid #555; border-right: 1px dashed #055; padding: 0; margin: 0;}	/*top right dash*/
+
+THEAD{ background-color: #ddd; border-bottom: 2px solid #555555; padding: inherit; margin: inherit; text-align:center;}
+THEAD A:link {color: #0000AA; font-weight: bold;}
+THEAD A:visited {color: #0000AA; font-weight: bold;}
+TH {color: inherit; background-color: inherit;}
+
+TBODY.t1 {background-color: #70cc70; border-bottom: 2px solid #555555; padding: inherit; margin: inherit;}
+TR.t1 {background-color: #a0e5a0;}
+TBODY.t1 A:link {color: #0000AA; font-weight: bold;}
+TBODY.t1 A:visited {color: #0000AA; font-weight: bold;}
+
+TBODY.t2 {background-color: #d8d84b; border-bottom: 2px solid #555555; padding: inherit; margin: inherit;}
+TR.t2 {background-color: #f2f27b}
+TBODY.t2 A:link {color: #000055; font-weight: bold;}
+TBODY.t2 A:visited {color: #000055; font-weight: bold;}
+
+TD { color: inherit; background-color: inherit; text-align: right;}
+@
+
+
+1.4
+log
+@language change affects TABS immediatly
+@
+text
+@d9 1
+a9 1
+	border: 5px solid #555555; 
+d22 7
+a28 1
+THEAD{ background-color: #ddd; border-bottom: 3px solid #555555; padding: inherit; margin: inherit; text-align:center;}
+d33 1
+a33 1
+TBODY.t1 {background-color: #70cc70; border-bottom: 3px solid #555555; padding: inherit; margin: inherit;}
+d38 1
+a38 1
+TBODY.t2 {background-color: #d8d84b; border-bottom: 3px solid #555555; padding: inherit; margin: inherit;}
+@
+
+
+1.3
+log
+@css improvment for better result with xml-xsl conversion
+@
+text
+@d23 2
+a24 2
+THEAD A:link {color: #0000FF; font-weight: bold;}
+THEAD A:visited {color: #0000FF; font-weight: bold;}
+d29 2
+a30 2
+TBODY.t1 A:link {color: #0000FF; font-weight: bold;}
+TBODY.t1 A:visited {color: #0000FF; font-weight: bold;}
+d34 2
+a35 2
+TBODY.t2 A:link {color: #0000FF; font-weight: bold;}
+TBODY.t2 A:visited {color: #0000FF; font-weight: bold;}
+@
+
+
+1.2
+log
+@new bugs just found fixed, some visual changes
+@
+text
+@d2 1
+a2 1
+	background-color: #a8daff;}
+d9 1
+a9 1
+	border: 5px solid #999999; 
+d19 2
+a20 3
+COLGROUP.Both { border-left: 1px solid #000066; border-right: 2px solid blue;}
+COLGROUP.Right { border-right: 2px solid #000066; }
+COLGROUP.Last { border-right: 3px solid #999999; }
+d22 4
+a25 2
+COL.init {width:50px;}
+COL.Right{border-right: 2px dashed #000066; }
+d27 1
+a27 3
+THEAD{ background-color: #aaddbb; border-bottom: 3px solid #000066; padding: inherit; margin: inherit; text-align:center;}
+
+TBODY.t1 {background-color: #70cc70; border-bottom: 3px solid #000066; padding: inherit; margin: inherit;}
+d29 2
+d32 1
+a32 1
+TBODY.t2 {background-color: #d8d84b; border-bottom: 3px solid #000066; padding: inherit; margin: inherit;}
+d34 2
+a35 2
+
+TFOOT {border-bottom: 3px solid #999999; border-right: 3px solid #999999;  }
+@
+
+
+1.1
+log
+@improved drag&drop, improved code for format_css.html, some minor visual changes
+@
+text
+@d2 1
+a2 1
+	background-color: #EEEEEE;}
+@
+

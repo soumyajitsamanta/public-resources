@@ -1,0 +1,135 @@
+head	1.2;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2002.09.28.10.31.56;	author michald;	state dead;
+branches;
+next	1.1;
+
+1.1
+date	2002.09.26.17.34.11;	author spanhel;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@removing of test html pages
+@
+text
+@<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html
+	PUBLIC "-//W3C//DTD XHTML Basic 1.0//EN"
+	"http://www.w3.org/TR/xhtml-basic/xhtml-basic10.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US">
+<head>
+   <title>Report Definition</title>
+   <link rel="stylesheet" type="text/css" href="base.css" />
+   <script language="JAVASCRIPT" src="tree2.js" type="text/javascript"></script>
+   <script language="JAVASCRIPT" src="attr.js" type="text/javascript"></script>
+</head>
+
+<body>
+
+
+
+<table class = "main" >
+  <tr> 
+    <td class = "tree" rowspan="3">
+      <div class= "valign_top"> 
+       <script type="text/javascript">
+       <!--
+       var URL = new Array;
+       URL[0]  = "http://kangaroo.instrat.cz/bear/index.cgi?TabAct=E";	
+       URL[1]  = "http://kangaroo.instrat.cz/bear/index.cgi?TabAct=R";	
+       var Tree = new Array;
+       Tree[0]  = "1|0|Grids|D|";
+       Tree[1]  = "5|1|G1|G|";
+       Tree[2]  = "6|1|G2|G|";
+       Tree[3]  = "2|0|Metrics|D|";
+       Tree[4]  = "3|0|Filters|D|";
+       Tree[5]  = "4|0|Reports|D|";
+       Tree[6]  = "7|2|M1|M|";
+       Tree[7]  = "8|2|M2|M|";
+       Tree[8]  = "9|3|F1|F|";
+       Tree[9]  = "10|3|F2|F|";
+       Tree[10] = "11|4|R1|R|";
+       Tree[11] = "111|11|F2|F|";
+       Tree[12] = "112|11|G2|G|";
+       //-->
+       </script>
+       <div id="tree">
+       <script type="text/javascript">
+	 <!--        
+	   createTree(Tree,"<B>Demo</B>",0,0,URL);
+	 //-->
+       </script>
+       </div>
+      </div>
+    </td>
+
+    <td class = "description">
+     <form action="" metod="" name="filter"> 
+       <table>
+       <tr class = "f_main">
+           <td></td>
+           <td>
+	     <div class = "text">Filter expresion:<br></div>
+             <input class = "text" type="text" name="filter_expr" size="29" maxlength="100">
+	     <input class = "text" type="hidden" name="filter_expr_h">
+	   </td>       
+       </tr>
+       <tr class = "f_main">
+	  <td>
+	  <img class = "arr" src="img/rightArr.gif" onclick='click_report(document.filter,1);return true;'>
+	  </td>	
+	  <td>
+	      <div class = "text">Filter name:<br></div>
+              <input class = "text" type="text" name="filter_name" size="29" maxlength="100">
+	      <input class = "text" type="hidden" name="filter_name_h">
+	      </td>
+       </tr>
+       <tr class = "f_main">
+	  <td></td>
+	  <td>
+	      <div class = "text">Filt er description:<br></div>
+	      <textarea class =" text " cols="23" rows="5" name="filter_des"></textarea>
+	      </td>
+       </tr>
+       <tr class = "f_main">
+	  <td></td>	
+	  <td><input class = "text" type="submit" name="save" value="Save" width="15" height="210"> 
+	  <input class = "text" type="reset" name="reset" value="Reset" width="15" height="10" onclick='reset_all_filter(); return true;'>
+	  <input class = "text" type="button" name="reload" value="Reload" width="15" height="10">
+	  </td>
+
+       </tr>
+       </table>
+       </form>   
+    </td>
+  </tr>
+</table>
+
+
+
+</body>
+</html>
+
+@
+
+
+1.1
+log
+@html edit pages
+@
+text
+@@
+

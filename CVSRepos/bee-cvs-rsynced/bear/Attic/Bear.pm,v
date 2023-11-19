@@ -1,0 +1,134 @@
+head	1.2;
+access;
+symbols
+	start:1.1.1.1 vendor:1.1.1;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2002.09.24.15.42.37;	author michald;	state dead;
+branches;
+next	1.1;
+
+1.1
+date	2002.09.24.01.56.42;	author michald;	state Exp;
+branches
+	1.1.1.1;
+next	;
+
+1.1.1.1
+date	2002.09.24.01.56.42;	author michald;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@minor change of cvs tree structure
+@
+text
+@# zmena zmena zmena g 
+package Bear;
+
+use strict;
+
+use vars qw($MetaData);
+
+my $version = '0.01';
+my $copyright = '(C) Insight Strategy, a. s., 2002';
+
+my $MetaData = { 'meta' => [
+	{
+		'id' => '1',
+		'type' => 'DIR',
+		'name' => 'Attributes',
+		'desc' => 'Attributes Directory',
+		'cont' => [
+			{ 
+				'id' => '22',
+				'type' => 'ATTR',
+				'name' => 'Day',
+				'desc' => 'Day of Transaction',
+				'def' => {}
+			},
+			{
+				'id' => '6',
+				'type' => 'ATTR',
+				'name' => 'Month',
+				'desc' => 'Day of Transaction',
+				'def' => {}
+			},
+			{
+				'id' => '4',
+				'type' => 'ATTR',
+				'name' => 'Product',
+				'desc' => 'Product SKU',
+				'def' => {}
+			},
+		],				
+	},
+	{
+		'id' => '3',
+		'type' => 'DIR',
+		'name' => 'Metrics',
+		'desc' => 'Metrics Directory',
+		'cont' => [
+			{ 
+				'id' => '7',
+				'type' => 'METR',
+				'name' => 'Revenue',
+				'desc' => 'Total Revenue',
+				'def' => {}
+			},
+			{
+				'id' => '5',
+				'type' => 'METR',
+				'name' => 'Cost',
+				'desc' => 'Total Cost',
+				'def' => {}
+			},
+		],				
+	},
+]};	
+
+sub about {                    
+  return "Bear Server v$version\n$copyright\n";     
+}
+
+sub echo { 
+	my ($class, $s) = @@_;
+	return $s;
+}
+
+sub GetMetadata {
+	my ($class, $node, @@param) = @@_;
+	my $m = $MetaData->{meta};
+	return $m;
+}
+
+1;
+
+__END__
+
+# zmena zmena zmena@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@@
+
+
+1.1.1.1
+log
+@Initial release of Bear ROLAP Portal
+@
+text
+@@

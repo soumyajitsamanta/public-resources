@@ -1,0 +1,58 @@
+head	1.1;
+access;
+symbols
+	jpivot_1_8_0:1.1
+	focus_1_6_0:1.1.0.6
+	wcf_1_7_0:1.1
+	wcf_1_6_0:1.1
+	jpivot_1_5_0:1.1.0.4
+	Root_jpivot_1_5_0:1.1
+	mondrian_xmla_2005_08_25:1.1.0.2
+	sourceforge_sync:1.1;
+locks; strict;
+comment	@# @;
+
+
+1.1
+date	2005.07.05.14.04.59;	author avix;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@initial version
+@
+text
+@package com.tonbeller.wcf.convert;
+
+import junit.framework.Test;
+import junit.framework.TestSuite;
+
+/**
+ * @@author andreas
+ *
+ * To change this generated comment edit the template variable "typecomment":
+ * Window>Preferences>Java>Templates.
+ * To enable and disable the creation of type comments go to
+ * Window>Preferences>Java>Code Generation.
+ */
+public class AllTests {
+
+  public static Test suite() {
+    TestSuite suite = new TestSuite("Test for com.tonbeller.wcf.convert");
+    //$JUnit-BEGIN$
+    suite.addTest(new TestSuite(BooleanConverterTest.class));
+    suite.addTest(new TestSuite(ConverterFactoryTest.class));
+    suite.addTest(new TestSuite(EditCtrlConverterTest.class));
+    suite.addTest(new TestSuite(SelectMultipleConverterTest.class));
+    suite.addTest(new TestSuite(SelectSingleConverterTest.class));
+    //$JUnit-END$
+    return suite;
+  }
+}
+@

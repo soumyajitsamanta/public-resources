@@ -1,0 +1,1839 @@
+head	1.4;
+access;
+symbols
+	jpivot_1_8_0:1.3
+	focus_1_6_0:1.3.0.4
+	jpivot_1_7_0:1.3
+	jpivot_1_6_0:1.3
+	jpivot_1_5_0:1.3.0.2
+	Root_jpivot_1_5_0:1.3
+	mondrian_xmla_2005_08_25:1.1.0.2
+	sourceforge_sync:1.3;
+locks; strict;
+comment	@# @;
+expand	@k@;
+
+
+1.4
+date	2010.07.23.07.37.28;	author uramisten;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2005.12.12.13.12.43;	author sgwood;	state Exp;
+branches
+	1.3.4.1;
+next	1.2;
+
+1.2
+date	2005.11.12.00.38.56;	author sgwood;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2005.07.05.14.19.52;	author avix;	state Exp;
+branches;
+next	;
+
+1.3.4.1
+date	2008.04.17.10.44.18;	author hbaier;	state Exp;
+branches;
+next	1.3.4.2;
+
+1.3.4.2
+date	2008.05.19.06.13.45;	author kunarief;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.4
+log
+@mostly formatting, but a couple changed in MondrianMemberTree
+--> maintain ordering of elements in navigation.  If you move items around, currently they just get reset to their original positions if you reopen the navigator.  Also, support added for calculated members not in the root of a dimension -> linked to a development for mondrian/schema allowing specification of "parentMember" in xml definition of calculated member.  This has been possible in MDX, but the schema and jpivot did not support it.   The saved sort order feature could be changed to be turned on/off by a parameter file (e.g.) if users would like to be able to keep the old results.
+@
+text
+@/*
+ * ====================================================================
+ * This software is subject to the terms of the Common Public License
+ * Agreement, available at the following URL:
+ *   http://www.opensource.org/licenses/cpl.html .
+ * Copyright (C) 2003-2004 TONBELLER AG.
+ * All Rights Reserved.
+ * You must accept the terms of that agreement to use this software.
+ * ====================================================================
+ */
+package com.tonbeller.jpivot.chart;
+
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.axis.CategoryAxis;
+import org.jfree.chart.axis.CategoryAxis3D;
+import org.jfree.chart.axis.DateAxis;
+import org.jfree.chart.axis.NumberAxis;
+import org.jfree.chart.axis.NumberAxis3D;
+import org.jfree.chart.axis.ValueAxis;
+import org.jfree.chart.labels.CategoryToolTipGenerator;
+import org.jfree.chart.labels.PieToolTipGenerator;
+import org.jfree.chart.labels.StandardCategoryToolTipGenerator;
+import org.jfree.chart.labels.StandardPieToolTipGenerator;
+import org.jfree.chart.labels.StandardXYToolTipGenerator;
+import org.jfree.chart.labels.XYToolTipGenerator;
+import org.jfree.chart.plot.CategoryPlot;
+import org.jfree.chart.plot.MultiplePiePlot;
+import org.jfree.chart.plot.PiePlot;
+import org.jfree.chart.plot.PiePlot3D;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.chart.plot.XYPlot;
+import org.jfree.chart.renderer.category.AreaRenderer;
+import org.jfree.chart.renderer.category.BarRenderer;
+import org.jfree.chart.renderer.category.BarRenderer3D;
+import org.jfree.chart.renderer.category.CategoryItemRenderer;
+import org.jfree.chart.renderer.category.LineAndShapeRenderer;
+import org.jfree.chart.renderer.category.StackedAreaRenderer;
+import org.jfree.chart.renderer.category.StackedBarRenderer;
+import org.jfree.chart.renderer.category.StackedBarRenderer3D;
+import org.jfree.chart.renderer.xy.StandardXYItemRenderer;
+import org.jfree.chart.urls.CategoryURLGenerator;
+import org.jfree.chart.urls.PieURLGenerator;
+import org.jfree.chart.urls.StandardXYURLGenerator;
+import org.jfree.chart.urls.XYURLGenerator;
+import org.jfree.data.category.CategoryDataset;
+import org.jfree.data.xy.XYDataset;
+import org.jfree.util.TableOrder;
+
+/**
+ * Utility methods for creating charts.
+ * This class is derived from JFreeChart ChartFactory class.
+ *
+ */
+public class ChartFactory {
+    // set url prefix to empty string
+    static String urlPrefix = "";
+
+    /**
+     * Creates a chart containing multiple pie charts, from a TableDataset.
+     *
+     * @@param title  the chart title.
+     * @@param data  the dataset for the chart.
+     * @@param extractType  <code>PER_ROW</code> or <code>PER_COLUMN</code> (defined in 
+     *                     {@@link PiePlot}).
+     * @@param legend  a flag specifying whether or not a legend is required.
+     * @@param tooltips  configure chart to generate tool tips?
+     * @@param urls  configure chart to generate URLs?
+     *
+     * @@return a pie chart.
+     */
+    public static JFreeChart createPieChart(String title,
+            java.awt.Font titleFont,
+            CategoryDataset data,
+            TableOrder order,
+            boolean legend,
+            boolean tooltips,
+            boolean urls,
+            PieURLGenerator urlGenerator) {
+
+        MultiplePiePlot plot = new MultiplePiePlot(data);
+        plot.setDataExtractOrder(order);
+
+        PiePlot pp = (PiePlot) plot.getPieChart().getPlot();
+        //pp.setInsets(new Insets(0, 5, 5, 5));
+        pp.setBackgroundPaint(null);
+        // no outline around each piechart
+        pp.setOutlineStroke(null);
+        //plot.setOutlineStroke(null);
+        PieToolTipGenerator tooltipGenerator = null;
+        if (tooltips) {
+            tooltipGenerator = new StandardPieToolTipGenerator();
+        }
+
+        //PieURLGenerator urlGenerator = null;
+        if (!urls) {
+            urlGenerator = null;
+        }
+
+        pp.setToolTipGenerator(tooltipGenerator);
+        pp.setLabelGenerator(null);
+        pp.setURLGenerator(urlGenerator);
+
+        JFreeChart chart = new JFreeChart(title, titleFont, plot, legend);
+
+        return chart;
+
+    }
+
+    /**
+     * Creates a sample dataset for the demo.
+     * 
+     * @@return A sample dataset.
+     */
+    public static JFreeChart create3DPieChart(String title,
+            java.awt.Font titleFont,
+            CategoryDataset data,
+            TableOrder order,
+            boolean legend,
+            boolean tooltips,
+            boolean urls,
+            PieURLGenerator urlGenerator) {
+
+        MultiplePiePlot plot = new MultiplePiePlot(data);
+        plot.setDataExtractOrder(order);
+
+        //plot.setOutlineStroke(null);
+
+        JFreeChart pieChart = new JFreeChart(new PiePlot3D(null));
+        pieChart.setBackgroundPaint(null);
+        plot.setPieChart(pieChart);
+
+        PiePlot3D pp = (PiePlot3D) plot.getPieChart().getPlot();
+        pp.setBackgroundPaint(null);
+        //pp.setInsets(new Insets(0, 5, 5, 5));
+
+        // no outline around each piechart
+        pp.setOutlineStroke(null);
+
+        PieToolTipGenerator tooltipGenerator = null;
+        if (tooltips) {
+            tooltipGenerator = new StandardPieToolTipGenerator();
+        }
+
+        if (!urls) {
+            urlGenerator = null;
+        }
+
+        pp.setToolTipGenerator(tooltipGenerator);
+        pp.setLabelGenerator(null);
+        pp.setURLGenerator(urlGenerator);
+        JFreeChart chart = new JFreeChart(title, titleFont, plot, legend);
+
+        return chart;
+
+    }
+
+    /**
+     * Creates a vertical bar chart with default settings.
+     *
+     * @@param title  the chart title.
+     * @@param categoryAxisLabel  the label for the category axis.
+     * @@param valueAxisLabel  the label for the value axis.
+     * @@param data  the dataset for the chart.
+     * @@param legend  a flag specifying whether or not a legend is required.
+     * @@param tooltips  configure chart to generate tool tips?
+     * @@param urls  configure chart to generate URLs?
+     *
+     * @@return a vertical bar chart.
+     */
+    public static JFreeChart createBarChart(String title,
+            java.awt.Font titleFont,
+            String categoryAxisLabel,
+            String valueAxisLabel,
+            CategoryDataset data,
+            PlotOrientation orientation,
+            boolean legend,
+            boolean tooltips,
+            boolean urls,
+            CategoryURLGenerator urlGenerator) {
+
+        CategoryAxis categoryAxis = new CategoryAxis(categoryAxisLabel);
+        ValueAxis valueAxis = new NumberAxis(valueAxisLabel);
+        BarRenderer renderer = new BarRenderer();
+
+        if (tooltips) {
+            renderer.setToolTipGenerator(new StandardCategoryToolTipGenerator());
+        }
+        if (urls) {
+            renderer.setItemURLGenerator(urlGenerator);
+        }
+        CategoryPlot plot = new CategoryPlot(data, categoryAxis, valueAxis, renderer);
+        plot.setOrientation(orientation);
+        JFreeChart chart = new JFreeChart(title, titleFont, plot, legend);
+
+        return chart;
+
+    }
+
+    /**
+     * Creates a vertical 3D-effect bar chart with default settings.
+     *
+     * @@param title  the chart title.
+     * @@param categoryAxisLabel  the label for the category axis.
+     * @@param valueAxisLabel  the label for the value axis.
+     * @@param data  the dataset for the chart.
+     * @@param legend  a flag specifying whether or not a legend is required.
+     * @@param tooltips  configure chart to generate tool tips?
+     * @@param urls  configure chart to generate URLs?
+     *
+     * @@return a vertical 3D-effect bar chart.
+     */
+    public static JFreeChart createBarChart3D(String title,
+            java.awt.Font titleFont,
+            String categoryAxisLabel,
+            String valueAxisLabel,
+            CategoryDataset data,
+            PlotOrientation orientation,
+            boolean legend,
+            boolean tooltips,
+            boolean urls,
+            CategoryURLGenerator urlGenerator) {
+
+        CategoryAxis categoryAxis = new CategoryAxis3D(categoryAxisLabel);
+        ValueAxis valueAxis = new NumberAxis3D(valueAxisLabel);
+
+        BarRenderer3D renderer = new BarRenderer3D();
+
+        //renderer.setLabelGenerator(new StandardCategoryLabelGenerator());
+        if (tooltips) {
+            renderer.setToolTipGenerator(new StandardCategoryToolTipGenerator());
+        }
+        if (urls) {
+            renderer.setItemURLGenerator(urlGenerator);
+        }
+
+        CategoryPlot plot = new CategoryPlot(data, categoryAxis, valueAxis, renderer);
+        plot.setOrientation(orientation);
+        plot.setForegroundAlpha(0.75f);
+
+        JFreeChart chart = new JFreeChart(title, titleFont, plot, legend);
+
+        return chart;
+
+    }
+
+    /**
+     * Creates a stacked vertical bar chart with default settings.
+     *
+     * @@param title  the chart title.
+     * @@param domainAxisLabel  the label for the category axis.
+     * @@param rangeAxisLabel  the label for the value axis.
+     * @@param data   the dataset for the chart.
+     * @@param legend  a flag specifying whether or not a legend is required.
+     * @@param tooltips  configure chart to generate tool tips?
+     * @@param urls  configure chart to generate URLs?
+     *
+     * @@return The chart.
+     */
+    public static JFreeChart createStackedBarChart(String title,
+            java.awt.Font titleFont,
+            String domainAxisLabel,
+            String rangeAxisLabel,
+            CategoryDataset data,
+            PlotOrientation orientation,
+            boolean legend,
+            boolean tooltips,
+            boolean urls,
+            CategoryURLGenerator urlGenerator) {
+
+        CategoryAxis categoryAxis = new CategoryAxis(domainAxisLabel);
+        ValueAxis valueAxis = new NumberAxis(rangeAxisLabel);
+
+        // create the renderer...
+        StackedBarRenderer renderer = new StackedBarRenderer();
+        if (tooltips) {
+            renderer.setToolTipGenerator(new StandardCategoryToolTipGenerator());
+        }
+        if (urls) {
+            renderer.setItemURLGenerator(urlGenerator);
+        }
+
+        CategoryPlot plot = new CategoryPlot(data, categoryAxis, valueAxis, renderer);
+        plot.setOrientation(orientation);
+        JFreeChart chart = new JFreeChart(title, titleFont, plot, legend);
+
+        return chart;
+
+    }
+
+    /**
+     * Creates a stacked vertical bar chart with default settings.
+     *
+     * @@param title  the chart title.
+     * @@param categoryAxisLabel  the label for the category axis.
+     * @@param valueAxisLabel  the label for the value axis.
+     * @@param data  the dataset for the chart.
+     * @@param legend  a flag specifying whether or not a legend is required.
+     * @@param tooltips  configure chart to generate tool tips?
+     * @@param urls  configure chart to generate URLs?
+     *
+     * @@return a stacked vertical bar chart.
+     */
+    public static JFreeChart createStackedBarChart3D(String title,
+            java.awt.Font titleFont,
+            String categoryAxisLabel,
+            String valueAxisLabel,
+            CategoryDataset data,
+            PlotOrientation orientation,
+            boolean legend,
+            boolean tooltips,
+            boolean urls,
+            CategoryURLGenerator urlGenerator) {
+
+        // create the axes...
+        CategoryAxis categoryAxis = new CategoryAxis3D(categoryAxisLabel);
+        ValueAxis valueAxis = new NumberAxis3D(valueAxisLabel);
+
+        // create the renderer...
+        CategoryItemRenderer renderer = new StackedBarRenderer3D();
+        CategoryToolTipGenerator toolTipGenerator = null;
+        if (tooltips) {
+            toolTipGenerator = new StandardCategoryToolTipGenerator();
+        }
+        if (urls) {
+            renderer.setItemURLGenerator(urlGenerator);
+        }
+        renderer.setToolTipGenerator(toolTipGenerator);
+
+        // create the plot...
+        CategoryPlot plot = new CategoryPlot(data, categoryAxis, valueAxis, renderer);
+        plot.setOrientation(orientation);
+
+        // create the chart...
+        JFreeChart chart = new JFreeChart(title, titleFont, plot, legend);
+
+        return chart;
+
+    }
+
+    /**
+     * Creates a line chart with default settings.
+     *
+     * @@param title  the chart title.
+     * @@param categoryAxisLabel  the label for the category axis.
+     * @@param valueAxisLabel  the label for the value axis.
+     * @@param data  the dataset for the chart.
+     * @@param legend  a flag specifying whether or not a legend is required.
+     * @@param tooltips  configure chart to generate tool tips?
+     * @@param urls  configure chart to generate URLs?
+     *
+     * @@return a line chart.
+     */
+    public static JFreeChart createLineChart(String title,
+            java.awt.Font titleFont,
+            String categoryAxisLabel,
+            String valueAxisLabel,
+            CategoryDataset data,
+            PlotOrientation orientation,
+            boolean legend,
+            boolean tooltips,
+            boolean urls,
+            CategoryURLGenerator urlGenerator) {
+
+        CategoryAxis categoryAxis = new CategoryAxis(categoryAxisLabel);
+        ValueAxis valueAxis = new NumberAxis(valueAxisLabel);
+
+        LineAndShapeRenderer renderer = new LineAndShapeRenderer();
+        renderer.setLinesVisible(true);
+        renderer.setShapesVisible(false);
+        if (tooltips) {
+            renderer.setToolTipGenerator(new StandardCategoryToolTipGenerator());
+        }
+        if (urls) {
+            renderer.setItemURLGenerator(urlGenerator);
+        }
+        CategoryPlot plot = new CategoryPlot(data, categoryAxis, valueAxis, renderer);
+        plot.setOrientation(orientation);
+        JFreeChart chart = new JFreeChart(title, titleFont, plot, legend);
+
+        return chart;
+
+    }
+
+    /**
+     * Creates an area chart with default settings.
+     *
+     * @@param title  the chart title.
+     * @@param categoryAxisLabel  the label for the category axis.
+     * @@param valueAxisLabel  the label for the value axis.
+     * @@param data  the dataset for the chart.
+     * @@param legend  a flag specifying whether or not a legend is required.
+     * @@param tooltips  configure chart to generate tool tips?
+     * @@param urls  configure chart to generate URLs?
+     *
+     * @@return an area chart.
+     */
+    public static JFreeChart createAreaChart(String title,
+            java.awt.Font titleFont,
+            String categoryAxisLabel,
+            String valueAxisLabel,
+            CategoryDataset data,
+            PlotOrientation orientation,
+            boolean legend,
+            boolean tooltips,
+            boolean urls,
+            CategoryURLGenerator urlGenerator) {
+
+        CategoryAxis categoryAxis = new CategoryAxis(categoryAxisLabel);
+        categoryAxis.setCategoryMargin(0.0);
+        ValueAxis valueAxis = new NumberAxis(valueAxisLabel);
+        AreaRenderer renderer = new AreaRenderer();
+        if (tooltips) {
+            renderer.setToolTipGenerator(new StandardCategoryToolTipGenerator());
+        }
+        if (urls) {
+            renderer.setItemURLGenerator(urlGenerator);
+        }
+        CategoryPlot plot = new CategoryPlot(data, categoryAxis, valueAxis, renderer);
+        plot.setOrientation(orientation);
+        JFreeChart chart = new JFreeChart(title, titleFont, plot, legend);
+
+        return chart;
+
+    }
+
+    /**
+     * Creates a stacked area chart with default settings.
+     *
+     * @@param title  the chart title.
+     * @@param categoryAxisLabel  the label for the category axis.
+     * @@param valueAxisLabel  the label for the value axis.
+     * @@param data  the dataset for the chart.
+     * @@param legend  a flag specifying whether or not a legend is required.
+     * @@param tooltips  configure chart to generate tool tips?
+     * @@param urls  configure chart to generate URLs?
+     *
+     * @@return an area chart.
+     */
+    public static JFreeChart createStackedAreaChart(String title,
+            java.awt.Font titleFont,
+            String categoryAxisLabel,
+            String valueAxisLabel,
+            CategoryDataset data,
+            PlotOrientation orientation,
+            boolean legend,
+            boolean tooltips,
+            boolean urls,
+            CategoryURLGenerator urlGenerator) {
+
+        CategoryAxis categoryAxis = new CategoryAxis(categoryAxisLabel);
+        ValueAxis valueAxis = new NumberAxis(valueAxisLabel);
+
+        StackedAreaRenderer renderer = new StackedAreaRenderer();
+        if (tooltips) {
+            renderer.setToolTipGenerator(new StandardCategoryToolTipGenerator());
+        }
+        if (urls) {
+            renderer.setItemURLGenerator(urlGenerator);
+        }
+
+        CategoryPlot plot = new CategoryPlot(data, categoryAxis, valueAxis, renderer);
+        plot.setOrientation(orientation);
+        JFreeChart chart = new JFreeChart(title, titleFont, plot, legend);
+
+        return chart;
+
+    }
+
+    /**
+     * Creates and returns a time series chart.
+     * <P>
+     * A time series chart is an XYPlot with a date axis (horizontal) and a number axis (vertical),
+     * and each data item is connected with a line.
+     * <P>
+     * Note that you can supply a TimeSeriesCollection to this method, as it implements the
+     * XYDataset interface.
+     *
+     * @@param title  the chart title.
+     * @@param timeAxisLabel  a label for the time axis.
+     * @@param valueAxisLabel  a label for the value axis.
+     * @@param data  the dataset for the chart.
+     * @@param legend  a flag specifying whether or not a legend is required.
+     * @@param tooltips  configure chart to generate tool tips?
+     * @@param urls  configure chart to generate URLs?
+     *
+     * @@return a time series chart.
+     */
+    public static JFreeChart createTimeSeriesChart(String title,
+            java.awt.Font titleFont,
+            String timeAxisLabel,
+            String valueAxisLabel,
+            XYDataset data,
+            boolean legend,
+            boolean tooltips,
+            boolean urls) {
+
+        ValueAxis timeAxis = new DateAxis(timeAxisLabel);
+        timeAxis.setLowerMargin(0.02);  // reduce the default margins on the time axis
+        timeAxis.setUpperMargin(0.02);
+        NumberAxis valueAxis = new NumberAxis(valueAxisLabel);
+        valueAxis.setAutoRangeIncludesZero(false);  // override default
+        XYPlot plot = new XYPlot(data, timeAxis, valueAxis, null);
+
+        XYToolTipGenerator tooltipGenerator = null;
+        if (tooltips) {
+            tooltipGenerator = StandardXYToolTipGenerator.getTimeSeriesInstance();
+        //new StandardXYToolTipGenerator(DateFormat.getDateInstance());                                                
+        }
+
+        XYURLGenerator urlGenerator = null;
+        if (urls) {
+            urlGenerator = new StandardXYURLGenerator();
+        }
+
+        plot.setRenderer(new StandardXYItemRenderer(StandardXYItemRenderer.LINES, tooltipGenerator, urlGenerator));
+
+        JFreeChart chart = new JFreeChart(title, JFreeChart.DEFAULT_TITLE_FONT, plot, legend);
+
+        return chart;
+
+    }
+
+}
+@
+
+
+1.3
+log
+@Upgrade to JFreeChart 1.0.0
+@
+text
+@d48 1
+d55 49
+a103 51
+	
+	// set url prefix to empty string
+	static String urlPrefix = "";
+	
+	/**
+	 * Creates a chart containing multiple pie charts, from a TableDataset.
+	 *
+	 * @@param title  the chart title.
+	 * @@param data  the dataset for the chart.
+	 * @@param extractType  <code>PER_ROW</code> or <code>PER_COLUMN</code> (defined in 
+	 *                     {@@link PiePlot}).
+	 * @@param legend  a flag specifying whether or not a legend is required.
+	 * @@param tooltips  configure chart to generate tool tips?
+	 * @@param urls  configure chart to generate URLs?
+	 *
+	 * @@return a pie chart.
+	 */
+	public static JFreeChart createPieChart(String title, 
+											java.awt.Font titleFont,
+											CategoryDataset data,
+											TableOrder order,
+											boolean legend, 
+											boolean tooltips, 
+											boolean urls,
+                                                                                        PieURLGenerator urlGenerator
+											) {
+
+		MultiplePiePlot plot = new MultiplePiePlot(data);         
+                plot.setDataExtractOrder(order);
+                
+                PiePlot pp= (PiePlot) plot.getPieChart().getPlot();		
+                //pp.setInsets(new Insets(0, 5, 5, 5));
+                pp.setBackgroundPaint(null);
+                // no outline around each piechart
+                pp.setOutlineStroke(null);
+                //plot.setOutlineStroke(null);
+		PieToolTipGenerator tooltipGenerator = null;
+		if (tooltips) {
+			tooltipGenerator = new StandardPieToolTipGenerator();
+		}
+               
+		//PieURLGenerator urlGenerator = null;
+		if (!urls) {
+			urlGenerator = null;
+		}
+                
+                pp.setToolTipGenerator(tooltipGenerator);
+                pp.setLabelGenerator(null);
+		pp.setURLGenerator(urlGenerator);
+                
+		JFreeChart chart = new JFreeChart(title, titleFont, plot, legend);
+d105 1
+a105 1
+		return chart;
+d107 3
+a109 2
+	}
+        /**
+d114 404
+a517 408
+        
+        public static JFreeChart create3DPieChart(String title, 
+											java.awt.Font titleFont,
+											CategoryDataset data,
+											TableOrder order,
+											boolean legend, 
+											boolean tooltips, 
+											boolean urls,
+                                                                                        PieURLGenerator urlGenerator
+											) {
+       
+                MultiplePiePlot plot = new MultiplePiePlot(data);
+                plot.setDataExtractOrder(order);
+                
+                //plot.setOutlineStroke(null);
+                
+                JFreeChart pieChart = new JFreeChart(new PiePlot3D(null));                                                          
+		pieChart.setBackgroundPaint(null);
+                plot.setPieChart(pieChart);
+                
+                PiePlot3D pp = (PiePlot3D) plot.getPieChart().getPlot();
+                pp.setBackgroundPaint(null);
+                //pp.setInsets(new Insets(0, 5, 5, 5));
+               
+                // no outline around each piechart
+		pp.setOutlineStroke(null);               
+                
+                PieToolTipGenerator tooltipGenerator = null;
+		if (tooltips) {
+			tooltipGenerator = new StandardPieToolTipGenerator();
+		}
+                
+                if (!urls) {
+			urlGenerator = null;
+		}
+                
+                pp.setToolTipGenerator(tooltipGenerator);
+                pp.setLabelGenerator(null);
+		pp.setURLGenerator(urlGenerator);
+		JFreeChart chart = new JFreeChart(title, titleFont, plot, legend);
+
+		return chart;
+
+	}
+	/**
+	 * Creates a vertical bar chart with default settings.
+	 *
+	 * @@param title  the chart title.
+	 * @@param categoryAxisLabel  the label for the category axis.
+	 * @@param valueAxisLabel  the label for the value axis.
+	 * @@param data  the dataset for the chart.
+	 * @@param legend  a flag specifying whether or not a legend is required.
+	 * @@param tooltips  configure chart to generate tool tips?
+	 * @@param urls  configure chart to generate URLs?
+	 *
+	 * @@return a vertical bar chart.
+	 */
+	public static JFreeChart createBarChart(String title,
+													java.awt.Font titleFont,
+													String categoryAxisLabel,
+													String valueAxisLabel,
+													CategoryDataset data,
+													PlotOrientation orientation,
+													boolean legend,
+													boolean tooltips,
+													boolean urls,
+													CategoryURLGenerator urlGenerator
+													) {
+
+		CategoryAxis categoryAxis = new CategoryAxis(categoryAxisLabel);
+		ValueAxis valueAxis = new NumberAxis(valueAxisLabel);
+		BarRenderer renderer = new BarRenderer();
+
+		if (tooltips) {
+			renderer.setToolTipGenerator(new StandardCategoryToolTipGenerator());
+		}
+		if (urls) {
+			renderer.setItemURLGenerator(urlGenerator);
+		}
+		CategoryPlot plot = new CategoryPlot(data, categoryAxis, valueAxis, renderer);
+		plot.setOrientation(orientation);
+		JFreeChart chart = new JFreeChart(title, titleFont, plot, legend);
+
+		return chart;
+
+	}
+
+	/**
+	 * Creates a vertical 3D-effect bar chart with default settings.
+	 *
+	 * @@param title  the chart title.
+	 * @@param categoryAxisLabel  the label for the category axis.
+	 * @@param valueAxisLabel  the label for the value axis.
+	 * @@param data  the dataset for the chart.
+	 * @@param legend  a flag specifying whether or not a legend is required.
+	 * @@param tooltips  configure chart to generate tool tips?
+	 * @@param urls  configure chart to generate URLs?
+	 *
+	 * @@return a vertical 3D-effect bar chart.
+	 */
+	public static JFreeChart createBarChart3D(String title,
+													  java.awt.Font titleFont,
+													  String categoryAxisLabel,
+													  String valueAxisLabel,
+													  CategoryDataset data,
+													  PlotOrientation orientation,
+													  boolean legend,
+													  boolean tooltips,
+													  boolean urls,
+													  CategoryURLGenerator urlGenerator) {
+
+		CategoryAxis categoryAxis = new CategoryAxis3D(categoryAxisLabel);
+		ValueAxis valueAxis = new NumberAxis3D(valueAxisLabel);
+
+		BarRenderer3D renderer = new BarRenderer3D();
+                
+                //renderer.setLabelGenerator(new StandardCategoryLabelGenerator());
+		if (tooltips) {			
+                        renderer.setToolTipGenerator(new StandardCategoryToolTipGenerator());
+		}
+		if (urls) {
+			renderer.setItemURLGenerator(urlGenerator);
+		}
+
+		CategoryPlot plot = new CategoryPlot(data, categoryAxis, valueAxis, renderer);
+		plot.setOrientation(orientation);
+		plot.setForegroundAlpha(0.75f);
+
+		JFreeChart chart = new JFreeChart(title, titleFont, plot, legend);
+
+		return chart;
+
+	}
+    
+	/**
+	 * Creates a stacked vertical bar chart with default settings.
+	 *
+	 * @@param title  the chart title.
+	 * @@param domainAxisLabel  the label for the category axis.
+	 * @@param rangeAxisLabel  the label for the value axis.
+	 * @@param data   the dataset for the chart.
+	 * @@param legend  a flag specifying whether or not a legend is required.
+	 * @@param tooltips  configure chart to generate tool tips?
+	 * @@param urls  configure chart to generate URLs?
+	 *
+	 * @@return The chart.
+	 */
+	public static JFreeChart createStackedBarChart(String title,
+														   java.awt.Font titleFont,
+														   String domainAxisLabel,
+														   String rangeAxisLabel,
+														   CategoryDataset data,
+														   PlotOrientation orientation,
+														   boolean legend,
+														   boolean tooltips,
+														   boolean urls,
+														CategoryURLGenerator urlGenerator) {
+        
+		CategoryAxis categoryAxis = new CategoryAxis(domainAxisLabel);
+		ValueAxis valueAxis = new NumberAxis(rangeAxisLabel);
+
+		// create the renderer...
+		StackedBarRenderer renderer = new StackedBarRenderer();
+		if (tooltips) {
+			renderer.setToolTipGenerator(new StandardCategoryToolTipGenerator());
+		}
+		if (urls) {
+			renderer.setItemURLGenerator(urlGenerator);
+		}
+
+		CategoryPlot plot = new CategoryPlot(data, categoryAxis, valueAxis, renderer);
+		plot.setOrientation(orientation);
+		JFreeChart chart = new JFreeChart(title, titleFont, plot, legend);
+
+		return chart;
+            
+	}
+                                                             
+	/**
+	 * Creates a stacked vertical bar chart with default settings.
+	 *
+	 * @@param title  the chart title.
+	 * @@param categoryAxisLabel  the label for the category axis.
+	 * @@param valueAxisLabel  the label for the value axis.
+	 * @@param data  the dataset for the chart.
+	 * @@param legend  a flag specifying whether or not a legend is required.
+	 * @@param tooltips  configure chart to generate tool tips?
+	 * @@param urls  configure chart to generate URLs?
+	 *
+	 * @@return a stacked vertical bar chart.
+	 */
+	public static JFreeChart createStackedBarChart3D(String title,
+															java.awt.Font titleFont,
+															 String categoryAxisLabel, 
+															 String valueAxisLabel, 
+															 CategoryDataset data,
+															 PlotOrientation orientation,
+															 boolean legend,
+															 boolean tooltips,
+															 boolean urls,
+															CategoryURLGenerator urlGenerator) {
+
+		// create the axes...
+		CategoryAxis categoryAxis = new CategoryAxis3D(categoryAxisLabel);
+		ValueAxis valueAxis = new NumberAxis3D(valueAxisLabel);
+
+		// create the renderer...
+		CategoryItemRenderer renderer = new StackedBarRenderer3D();
+		CategoryToolTipGenerator toolTipGenerator = null;
+		if (tooltips) {
+			toolTipGenerator = new StandardCategoryToolTipGenerator();
+		}
+		if ( urls ) {
+			renderer.setItemURLGenerator(urlGenerator);
+		}
+		renderer.setToolTipGenerator(toolTipGenerator);
+		
+		// create the plot...
+		CategoryPlot plot = new CategoryPlot(data, categoryAxis, valueAxis, renderer);
+		plot.setOrientation(orientation);
+
+		// create the chart...
+		JFreeChart chart = new JFreeChart(title, titleFont, plot, legend);
+
+		return chart;
+
+	}
+
+
+	/**
+	 * Creates a line chart with default settings.
+	 *
+	 * @@param title  the chart title.
+	 * @@param categoryAxisLabel  the label for the category axis.
+	 * @@param valueAxisLabel  the label for the value axis.
+	 * @@param data  the dataset for the chart.
+	 * @@param legend  a flag specifying whether or not a legend is required.
+	 * @@param tooltips  configure chart to generate tool tips?
+	 * @@param urls  configure chart to generate URLs?
+	 *
+	 * @@return a line chart.
+	 */
+	public static JFreeChart createLineChart(String title,
+											java.awt.Font titleFont,
+											 String categoryAxisLabel,
+											 String valueAxisLabel,
+											 CategoryDataset data,
+											 PlotOrientation orientation,
+											 boolean legend,
+											 boolean tooltips,
+											 boolean urls,
+											CategoryURLGenerator urlGenerator) {
+
+		CategoryAxis categoryAxis = new CategoryAxis(categoryAxisLabel);
+		ValueAxis valueAxis = new NumberAxis(valueAxisLabel);
+
+		LineAndShapeRenderer renderer = new LineAndShapeRenderer();
+		renderer.setLinesVisible(true);
+		renderer.setShapesVisible(false);
+		if (tooltips) {
+			renderer.setToolTipGenerator(new StandardCategoryToolTipGenerator());
+		}
+		if (urls) {
+			renderer.setItemURLGenerator(urlGenerator);
+		}
+		CategoryPlot plot = new CategoryPlot(data, categoryAxis, valueAxis, renderer);
+		plot.setOrientation(orientation);
+		JFreeChart chart = new JFreeChart(title, titleFont, plot, legend);
+
+		return chart;
+
+	}
+
+	/**
+	 * Creates an area chart with default settings.
+	 *
+	 * @@param title  the chart title.
+	 * @@param categoryAxisLabel  the label for the category axis.
+	 * @@param valueAxisLabel  the label for the value axis.
+	 * @@param data  the dataset for the chart.
+	 * @@param legend  a flag specifying whether or not a legend is required.
+	 * @@param tooltips  configure chart to generate tool tips?
+	 * @@param urls  configure chart to generate URLs?
+	 *
+	 * @@return an area chart.
+	 */
+	public static JFreeChart createAreaChart(String title,
+											java.awt.Font titleFont,
+											 String categoryAxisLabel,
+											 String valueAxisLabel,
+											 CategoryDataset data,
+											 PlotOrientation orientation,
+											 boolean legend,
+											 boolean tooltips,
+											 boolean urls,
+											 CategoryURLGenerator urlGenerator) {
+
+		CategoryAxis categoryAxis = new CategoryAxis(categoryAxisLabel);
+		categoryAxis.setCategoryMargin(0.0);
+		ValueAxis valueAxis = new NumberAxis(valueAxisLabel);
+		AreaRenderer renderer = new AreaRenderer();
+		if (tooltips) {
+			renderer.setToolTipGenerator(new StandardCategoryToolTipGenerator());
+                }
+		if (urls) {
+			renderer.setItemURLGenerator(urlGenerator);
+		}
+		CategoryPlot plot = new CategoryPlot(data, categoryAxis, valueAxis, renderer);
+		plot.setOrientation(orientation);
+		JFreeChart chart = new JFreeChart(title, titleFont, plot, legend);
+
+		return chart;
+
+	}
+
+	/**
+	 * Creates a stacked area chart with default settings.
+	 *
+	 * @@param title  the chart title.
+	 * @@param categoryAxisLabel  the label for the category axis.
+	 * @@param valueAxisLabel  the label for the value axis.
+	 * @@param data  the dataset for the chart.
+	 * @@param legend  a flag specifying whether or not a legend is required.
+	 * @@param tooltips  configure chart to generate tool tips?
+	 * @@param urls  configure chart to generate URLs?
+	 *
+	 * @@return an area chart.
+	 */
+	public static JFreeChart createStackedAreaChart(String title,
+													java.awt.Font titleFont,
+													String categoryAxisLabel,
+													String valueAxisLabel,
+													CategoryDataset data,
+													PlotOrientation orientation,
+													boolean legend,
+													boolean tooltips,
+													boolean urls,
+	CategoryURLGenerator urlGenerator) {
+
+		CategoryAxis categoryAxis = new CategoryAxis(categoryAxisLabel);
+		ValueAxis valueAxis = new NumberAxis(valueAxisLabel);
+
+		StackedAreaRenderer renderer = new StackedAreaRenderer();
+		if (tooltips) {
+			renderer.setToolTipGenerator(new StandardCategoryToolTipGenerator());
+		}
+		if (urls) {
+			renderer.setItemURLGenerator(urlGenerator);
+		}
+
+		CategoryPlot plot = new CategoryPlot(data, categoryAxis, valueAxis, renderer);
+		plot.setOrientation(orientation);
+		JFreeChart chart = new JFreeChart(title, titleFont, plot, legend);
+
+		return chart;
+
+	}
+
+
+	/**
+	 * Creates and returns a time series chart.
+	 * <P>
+	 * A time series chart is an XYPlot with a date axis (horizontal) and a number axis (vertical),
+	 * and each data item is connected with a line.
+	 * <P>
+	 * Note that you can supply a TimeSeriesCollection to this method, as it implements the
+	 * XYDataset interface.
+	 *
+	 * @@param title  the chart title.
+	 * @@param timeAxisLabel  a label for the time axis.
+	 * @@param valueAxisLabel  a label for the value axis.
+	 * @@param data  the dataset for the chart.
+	 * @@param legend  a flag specifying whether or not a legend is required.
+	 * @@param tooltips  configure chart to generate tool tips?
+	 * @@param urls  configure chart to generate URLs?
+	 *
+	 * @@return a time series chart.
+	 */
+	public static JFreeChart createTimeSeriesChart(String title,
+												java.awt.Font titleFont,
+												   String timeAxisLabel,
+												   String valueAxisLabel,
+												   XYDataset data,
+												   boolean legend,
+												   boolean tooltips,
+												   boolean urls) {
+
+		ValueAxis timeAxis = new DateAxis(timeAxisLabel);
+		timeAxis.setLowerMargin(0.02);  // reduce the default margins on the time axis
+		timeAxis.setUpperMargin(0.02);
+		NumberAxis valueAxis = new NumberAxis(valueAxisLabel);
+		valueAxis.setAutoRangeIncludesZero(false);  // override default
+		XYPlot plot = new XYPlot(data, timeAxis, valueAxis, null);
+
+		XYToolTipGenerator tooltipGenerator = null;
+		if (tooltips) {
+			tooltipGenerator = StandardXYToolTipGenerator.getTimeSeriesInstance();
+                            //new StandardXYToolTipGenerator(DateFormat.getDateInstance());                                                
+		}
+
+		XYURLGenerator urlGenerator = null;
+		if (urls) {
+			urlGenerator = new StandardXYURLGenerator();
+		}
+                
+                plot.setRenderer(new StandardXYItemRenderer(StandardXYItemRenderer.LINES, tooltipGenerator, urlGenerator));
+		
+                JFreeChart chart = new JFreeChart(title, JFreeChart.DEFAULT_TITLE_FONT, plot, legend);
+d519 1
+a519 1
+		return chart;
+d521 1
+a521 1
+	}
+@
+
+
+1.3.4.1
+log
+@* merged focus changes of jpivot into focus_1_6_0
+@
+text
+@a12 5
+import java.awt.Color;
+import java.awt.Paint;
+import java.text.AttributedString;
+import java.text.NumberFormat;
+
+a18 1
+import org.jfree.chart.axis.NumberTickUnit;
+a20 3
+import org.jfree.chart.labels.ItemLabelAnchor;
+import org.jfree.chart.labels.ItemLabelPosition;
+import org.jfree.chart.labels.PieSectionLabelGenerator;
+a22 1
+import org.jfree.chart.labels.StandardPieSectionLabelGenerator;
+a24 1
+import org.jfree.chart.labels.StandardXYZToolTipGenerator;
+a26 2
+import org.jfree.chart.plot.DefaultDrawingSupplier;
+import org.jfree.chart.plot.DrawingSupplier;
+a29 1
+import org.jfree.chart.plot.Plot;
+a35 1
+import org.jfree.chart.renderer.category.IntervalBarRenderer;
+a40 2
+import org.jfree.chart.renderer.xy.XYBubbleRenderer;
+import org.jfree.chart.renderer.xy.XYItemRenderer;
+a44 1
+import org.jfree.data.Range;
+a45 4
+import org.jfree.data.category.DefaultCategoryDataset;
+import org.jfree.data.category.DefaultIntervalCategoryDataset;
+import org.jfree.data.general.PieDataset;
+import org.jfree.data.xy.DefaultXYZDataset;
+a46 1
+import org.jfree.ui.TextAnchor;
+a57 6
+	public interface LabelType {
+		public static int NONE = 0;
+		public static int NAMES = 1;
+		public static int NUMBERS = 2;
+	}
+
+a67 1
+	 * @@param colorPaints
+d78 1
+a78 3
+											PieURLGenerator urlGenerator,
+											int labelType,
+											Paint[] colorPaints
+a83 2
+		setColorPaintsForPlot(colorPaints, plot);
+
+a84 2
+
+		pp.setSectionPaint(null);
+a100 2
+		switch(labelType) {
+		case LabelType.NONE:
+a101 27
+			break;
+		case LabelType.NAMES:
+			pp.setLabelGenerator(new StandardPieSectionLabelGenerator());
+			break;
+
+		case LabelType.NUMBERS:
+			pp.setLabelGenerator(new PieSectionLabelGenerator() {
+				public AttributedString generateAttributedSectionLabel(PieDataset dataSet, Comparable key) {
+					return new AttributedString(this.generateSectionLabel(dataSet, key));
+				}
+
+				public String generateSectionLabel(PieDataset dataSet, Comparable key) {
+					NumberFormat numberFormat = getNumberFormat(dataSet);
+					return numberFormat.format(dataSet.getValue(key));
+				}
+
+				private NumberFormat getNumberFormat(PieDataset dataSet) {
+					for(int i =0; i < dataSet.getItemCount(); i++)
+						if(dataSet.getValue(i).doubleValue() > 1.0d)
+							return NumberFormat.getNumberInstance();
+
+					return NumberFormat.getPercentInstance();
+				}
+
+			});
+
+		}
+a108 14
+
+	private static void setColorPaintsForPlot(Paint[] colorPaints, Plot plot) {
+		Paint[] defaultPaintSequence = DefaultDrawingSupplier.DEFAULT_PAINT_SEQUENCE;
+		for (int i = 0; i < colorPaints.length; i++) {
+			defaultPaintSequence[i] = colorPaints[i];
+		}
+		DrawingSupplier drawingSupplier = new DefaultDrawingSupplier(
+				defaultPaintSequence,
+				DefaultDrawingSupplier.DEFAULT_OUTLINE_PAINT_SEQUENCE,
+				DefaultDrawingSupplier.DEFAULT_STROKE_SEQUENCE,
+				DefaultDrawingSupplier.DEFAULT_OUTLINE_STROKE_SEQUENCE,
+				DefaultDrawingSupplier.DEFAULT_SHAPE_SEQUENCE);
+		plot.setDrawingSupplier(drawingSupplier);
+	}
+a110 1
+         * @@param colorPaints
+d122 1
+a122 2
+                                            PieURLGenerator urlGenerator,
+                                            Paint[] colorPaints
+a127 2
+		setColorPaintsForPlot(colorPaints, plot);
+
+a152 1
+
+a167 1
+	 * @@param colorPaints array color for series
+d180 1
+a180 2
+													CategoryURLGenerator urlGenerator,
+													Paint[] colorPaints
+a192 3
+
+		setColorPaintsForRenderer(colorPaints, renderer);
+
+a200 7
+	private static void setColorPaintsForRenderer( Paint[] colorPaints, CategoryItemRenderer renderer) {
+		if(colorPaints != null)
+			for (int i = 0; i < colorPaints.length; i++) {
+				renderer.setSeriesPaint(i, colorPaints[i]);
+			}
+	}
+
+a210 1
+	 * @@param colorPaints
+d223 1
+a223 2
+													  CategoryURLGenerator urlGenerator,
+													  Paint[] colorPaints) {
+a237 2
+		setColorPaintsForRenderer(colorPaints, renderer);
+
+a257 1
+	 * @@param colorPaints
+d270 1
+a270 2
+														   CategoryURLGenerator urlGenerator,
+														   Paint[] colorPaints) {
+a283 2
+		setColorPaintsForRenderer(colorPaints, renderer);
+
+a301 1
+	 * @@param colorPaints
+d314 1
+a314 2
+															 CategoryURLGenerator urlGenerator,
+															 Paint[] colorPaints) {
+a330 2
+		setColorPaintsForRenderer(colorPaints, renderer);
+
+a352 1
+	 * @@param colorPaints
+d365 1
+a365 2
+											 CategoryURLGenerator urlGenerator,
+											 Paint[] colorPaints) {
+a378 3
+
+		setColorPaintsForRenderer(colorPaints, renderer);
+
+a396 1
+	 * @@param colorPaints
+d409 1
+a409 2
+											 CategoryURLGenerator urlGenerator,
+											 Paint[] colorPaints) {
+a420 1
+		setColorPaintsForRenderer(colorPaints, renderer);
+a438 1
+	 * @@param colorPaints
+d451 1
+a451 2
+													CategoryURLGenerator urlGenerator,
+													Paint[] colorPaints) {
+d463 1
+a463 1
+		setColorPaintsForRenderer(colorPaints, renderer);
+a526 385
+	/**
+	 * Creates a bar chart from a table with three columns (on the screen):
+	 * <ol><li>the first column corresponds to the low value</li>
+	 * <li>the second column corresponds to the middle value</li>
+	 * <li>the third column corresponds to the high value</li>
+	 * </ol>
+	 *
+	 * at least three columns are required else a normal category chart will be
+	 * displayed
+	 *
+	 * @@param title  the chart title.
+	 * @@param domainAxisLabel  the label for the category axis.
+	 * @@param rangeAxisLabel  the label for the value axis.
+	 * @@param rawData   the dataset for the chart.
+	 * @@param legend  a flag specifying whether or not a legend is required.
+	 * @@param tooltips  configure chart to generate tool tips?
+	 * @@param urls  configure chart to generate URLs?
+	 * @@param colorPaints
+	 *
+	 * @@return The chart.
+	 */
+	public static JFreeChart createLowHighIntervalChart(String title,
+														   java.awt.Font titleFont,
+														   String domainAxisLabel,
+														   String rangeAxisLabel,
+														   CategoryDataset rawData,
+														   PlotOrientation orientation,
+														   boolean legend,
+														   boolean tooltips,
+														   boolean urls,
+														   CategoryURLGenerator urlGenerator,
+														   Paint[] colorPaints) {
+        boolean insufficientRows = false;
+		CategoryDataset bottomData = null;
+		CategoryDataset topData = null;
+		int columnCount = rawData.getColumnCount();
+		int rowCount    = rawData.getRowCount();
+
+
+		if(rowCount >= 3) {
+			Double[][] bottomStarts = new Double[1][columnCount];
+			Double[][] bottomEnds = new Double[1][columnCount];
+			Double[][] topStarts = new Double[1][columnCount];
+			Double[][] topEnds = new Double[1][columnCount];
+
+			for(int column = 0; column < columnCount; column++) {
+				bottomStarts[0][column] = (Double) rawData.getValue(0, column);
+				bottomEnds  [0][column] = (Double) rawData.getValue(1, column);
+				topStarts   [0][column] = (Double) rawData.getValue(1, column);
+				topEnds     [0][column] = (Double) rawData.getValue(2, column);
+			}
+
+			final Comparable[] bottomKey = new Comparable[] { (Comparable) rawData.getRowKey(0) };
+			final Comparable[] columnKeys = (Comparable[]) rawData.getColumnKeys().toArray(new Comparable[columnCount]);
+			bottomData = new DefaultIntervalCategoryDataset(
+					bottomKey,
+					columnKeys,
+					bottomStarts,
+					bottomEnds
+			);
+			final Comparable[] topKey = new Comparable[] { (Comparable) rawData.getRowKey(2) };
+			topData = new DefaultIntervalCategoryDataset(
+					topKey,
+					columnKeys,
+					topStarts,
+					topEnds
+			);
+		} else {
+			insufficientRows = true;
+			bottomData = rawData;
+		}
+
+		CategoryAxis categoryAxis = new CategoryAxis(domainAxisLabel);
+		ValueAxis valueAxis = new NumberAxis(rangeAxisLabel);
+		valueAxis.setRange(new Range(0.0,10.0));
+
+		// create the renderer...
+		IntervalBarRenderer bottomRenderer = new IntervalBarRenderer();
+		IntervalBarRenderer topRenderer = new IntervalBarRenderer();
+
+		if (tooltips) {
+			bottomRenderer.setToolTipGenerator(new StandardCategoryToolTipGenerator());
+			topRenderer.setToolTipGenerator(new StandardCategoryToolTipGenerator());
+		}
+		if (urls) {
+			bottomRenderer.setItemURLGenerator(urlGenerator);
+			topRenderer.setItemURLGenerator(urlGenerator);
+		}
+
+		setColorPaintsForRenderer(colorPaints, bottomRenderer);
+
+		CategoryPlot plot = new CategoryPlot(bottomData, categoryAxis, valueAxis, bottomRenderer);
+		if(!insufficientRows) {
+			plot.setDataset (1, topData);
+			plot.setRenderer(1, topRenderer);
+		}
+		plot.setOrientation(orientation);
+		JFreeChart chart = new JFreeChart(title, titleFont, plot, legend);
+
+		return chart;
+
+	}
+
+	/**
+	 * Creates an interval chart from a table as follows:
+	 * <ul>
+	 * 	<li>The first column is the beginning of the first interval</li>
+	 * 	<li>The second column is the end of the first interval</li>
+	 *  <li>all other columns are currently ignored</li>
+	 * </ul>
+	 *
+	 * At least two columns are mandatory, else a normal bar chart will be displayed
+	 *
+	 * @@param title  the chart title.
+	 * @@param domainAxisLabel  the label for the category axis.
+	 * @@param rangeAxisLabel  the label for the value axis.
+	 * @@param rawData   the dataset for the chart.
+	 * @@param legend  a flag specifying whether or not a legend is required.
+	 * @@param tooltips  configure chart to generate tool tips?
+	 * @@param urls  configure chart to generate URLs?
+	 * @@param colorPaints
+	 *
+	 * @@return The chart.
+	 */
+	public static JFreeChart createIntervalChart(String title,
+														   java.awt.Font titleFont,
+														   String domainAxisLabel,
+														   String rangeAxisLabel,
+														   CategoryDataset rawData,
+														   PlotOrientation orientation,
+														   boolean legend,
+														   boolean tooltips,
+														   boolean urls,
+														   CategoryURLGenerator urlGenerator,
+														   Paint[] colorPaints) {
+        boolean insufficientRows = false;
+		CategoryDataset dataset = null;
+		int columnCount = rawData.getColumnCount();
+		int rowCount    = rawData.getRowCount();
+
+		if(rowCount >= 2) {
+			Double[][] starts = new Double[1][columnCount];
+			Double[][] ends = new Double[1][columnCount];
+
+			for(int column = 0; column < columnCount; column++) {
+				starts[0][column] = (Double) rawData.getValue(0, column);
+				ends  [0][column] = (Double) rawData.getValue(1, column);
+			}
+
+			final Comparable[] intervalKey = new Comparable[] { (Comparable) (rawData.getRowKey(1) + "-" + rawData.getRowKey(0)) };
+			final Comparable[] columnKeys = (Comparable[]) rawData.getColumnKeys().toArray(new Comparable[columnCount]);
+			dataset = new DefaultIntervalCategoryDataset(
+					intervalKey,
+					columnKeys,
+					starts,
+					ends
+			);
+		} else {
+			insufficientRows = true;
+			dataset = rawData;
+		}
+
+		CategoryAxis categoryAxis = new CategoryAxis(domainAxisLabel);
+		ValueAxis valueAxis = new NumberAxis(rangeAxisLabel);
+		valueAxis.setRange(new Range(0.0,10.0));
+
+
+		// create the renderer...
+		BarRenderer renderer = null;
+		if(!insufficientRows)
+			renderer = new IntervalBarRenderer();
+		else
+			renderer = new StackedBarRenderer();
+
+		if (tooltips) {
+			renderer.setToolTipGenerator(new StandardCategoryToolTipGenerator());
+		}
+		if (urls) {
+			renderer.setItemURLGenerator(urlGenerator);
+		}
+
+		setColorPaintsForRenderer(colorPaints, renderer);
+
+		CategoryPlot plot = new CategoryPlot(dataset, categoryAxis, valueAxis, renderer);
+
+		plot.setOrientation(orientation);
+		JFreeChart chart = new JFreeChart(title, titleFont, plot, legend);
+
+		return chart;
+
+	}
+
+	/**
+	 * Creates a bubble Chart from a table with two columns and many rows
+	 * <ol>
+	 * <li>the first column corresponds to the x axis</li>
+	 * <li>the first column label corresponds to the label of the x axis</li>
+	 * <li>the second column corresponds to the y axis</li>
+	 * <li>the second column label corresponds to the label of the y axis</li>
+	 * </ol>
+	 *
+	 * if less than two columns are given, a simple bar chart is displayed
+	 *
+	 * @@param title  the chart title.
+	 * @@param domainAxisLabel  the label for the category axis.
+	 * @@param rangeAxisLabel  the label for the value axis.
+	 * @@param rawData   the dataset for the chart.
+	 * @@param legend  a flag specifying whether or not a legend is required.
+	 * @@param tooltips  configure chart to generate tool tips?
+	 * @@param colorPaints
+	 *
+	 * @@return The chart.
+	 */
+	public static JFreeChart createBubbleMatrixChart(String title,
+													   java.awt.Font titleFont,
+													   String domainAxisLabel,
+													   String rangeAxisLabel,
+													   CategoryDataset rawData,
+													   PlotOrientation orientation,
+													   boolean legend,
+													   boolean tooltips,
+													   boolean urls,
+													   CategoryURLGenerator urlGenerator,
+													   Paint[] colorPaints) {
+        // The weird thing is, that rows and columns are swapped, so the columns on the
+        // display are the rows in the dataset and vice versa
+
+		int columnCount = rawData.getColumnCount();
+		if(rawData.getRowCount() >= 2) {
+			DefaultXYZDataset dataset = new DefaultXYZDataset();
+
+			// now copy the data into the XYZDataset
+			double xMax = Double.MIN_VALUE;
+			double yMax = Double.MIN_VALUE;
+			double xMin = Double.MAX_VALUE;
+			double yMin = Double.MAX_VALUE;
+			for(int c = 0; c < columnCount; c++) {
+				xMax = java.lang.Math.max(xMax, rawData.getValue(0, c).doubleValue());
+				xMin = java.lang.Math.min(xMin, rawData.getValue(0, c).doubleValue());
+				yMax = java.lang.Math.max(yMax, rawData.getValue(1, c).doubleValue());
+				yMin = java.lang.Math.min(yMin, rawData.getValue(1, c).doubleValue());
+				dataset.addSeries(
+					rawData.getColumnKey(c),
+					new double[][] {
+						new double[] { rawData.getValue(0, c).doubleValue() },
+						new double[] { rawData.getValue(1, c).doubleValue()},
+						new double[] { 0.2 }
+					}
+	            );
+			}
+
+
+/*			// create bubble at 10x10 with size 0
+			dataset.addSeries(
+					"",
+					new double[][] {
+					new double[] { 10 },
+					new double[] { 10 },
+					new double[] { 0 }});
+*/
+	        JFreeChart chart = org.jfree.chart.ChartFactory.createBubbleChart(
+	        		null, // Title
+	        		rawData.getRowKey(0).toString(), // x label
+	        		rawData.getRowKey(1).toString(), // y label
+	        		dataset, orientation,
+	        		legend, // legend
+	        		tooltips, // tooltips
+	        		false // urls
+	        );
+
+	        XYPlot plot = (XYPlot) chart.getPlot();
+
+			setColorPaintsForPlot(colorPaints, plot);
+
+			NumberAxis axis = (NumberAxis) plot.getDomainAxis();
+			if (xMin >= 0 && xMax <= 10) {
+				axis.setAutoTickUnitSelection(false);
+				axis.setTickUnit(new NumberTickUnit(1.0));
+				axis.setAutoRange(false);
+				axis.setRange(new Range(0, 10));
+			}
+
+			axis = (NumberAxis) plot.getRangeAxis(0);
+			if (yMin >= 0 && yMax <= 10) {
+				axis.setAutoTickUnitSelection(false);
+				axis.setTickUnit(new NumberTickUnit(1.0));
+				axis.setAutoRange(false);
+				axis.setRange(new Range(0, 10));
+			}
+
+
+
+
+
+	        XYBubbleRenderer xyBubbleRenderer = new XYBubbleRenderer(XYBubbleRenderer.SCALE_ON_DOMAIN_AXIS);
+
+	        // set point 10x10 to white
+	        /*
+	        xyBubbleRenderer.setSeriesPaint(columnCount, Color.WHITE);
+	        xyBubbleRenderer.setSeriesOutlinePaint(columnCount, Color.WHITE);
+	        xyBubbleRenderer.setSeriesFillPaint(columnCount, Color.WHITE);
+	        */
+
+	        XYItemRenderer renderer = plot.getRenderer();
+	        plot.setRenderer(xyBubbleRenderer);
+	        plot.setForegroundAlpha(1f);
+
+	        for ( int i = 0; i < columnCount; i++){
+	        	xyBubbleRenderer.setSeriesOutlinePaint(i, Color.BLACK);
+	        }
+			if (tooltips) {
+				renderer.setToolTipGenerator(new StandardXYZToolTipGenerator());
+			}
+
+	        renderer.setItemLabelsVisible(true);
+	        renderer.setPositiveItemLabelPosition(new ItemLabelPosition(
+	                ItemLabelAnchor.CENTER, TextAnchor.CENTER));
+	        return chart;
+		} else
+			return createBarChart(title, titleFont, domainAxisLabel, rangeAxisLabel,
+						rawData, orientation, legend, tooltips, urls, urlGenerator, colorPaints);
+	}
+
+	public static JFreeChart createBarLineChart(String title,
+												   java.awt.Font titleFont,
+												   String domainAxisLabel,
+												   String rangeAxisLabel,
+												   CategoryDataset rawData,
+												   PlotOrientation orientation,
+												   boolean legend,
+												   boolean tooltips,
+												   boolean urls,
+												   CategoryURLGenerator urlGenerator,
+												   Paint[] colorPaints) {
+
+		// The weird thing is, that rows and columns are swapped, so the columns on the
+		// display are the rows in the dataset and vice versa
+
+		DefaultCategoryDataset dataBar = new DefaultCategoryDataset();
+		DefaultCategoryDataset dataLine = new DefaultCategoryDataset();
+
+		int columnCount = rawData.getColumnCount();
+		if(rawData.getRowCount() == 2)
+
+
+			// now copy the data into the XYZDataset
+			for(int c = 0; c < columnCount; c++) {
+				dataBar.addValue(rawData.getValue(0, c).doubleValue(),
+						rawData.getRowKey(0),rawData.getColumnKey(c));
+				dataLine.addValue(rawData.getValue(1, c).doubleValue(),
+						rawData.getRowKey(1),rawData.getColumnKey(c));
+
+			}
+
+
+
+
+		final CategoryItemRenderer rendererBar = new BarRenderer();
+
+		rendererBar.setItemLabelsVisible(true);
+
+		setColorPaintsForRenderer(colorPaints, rendererBar);
+
+		final CategoryPlot plot = new CategoryPlot();
+		plot.setDataset(dataBar);
+		plot.setRenderer(rendererBar);
+
+		plot.setDomainAxis(new CategoryAxis(domainAxisLabel));
+		plot.setRangeAxis(new NumberAxis(rangeAxisLabel));
+
+		plot.setOrientation(orientation);
+
+		final CategoryItemRenderer rendererLine = new LineAndShapeRenderer();
+		plot.setDataset(1, dataLine);
+		plot.setRenderer(1, rendererLine);
+
+		// change the rendering order so the primary dataset appears "behind" the
+		// other datasets...
+		// plot.setDatasetRenderingOrder(DatasetRenderingOrder.FORWARD);
+
+		// plot.getDomainAxis().setCategoryLabelPositions(CategoryLabelPositions.UP_45);
+		JFreeChart chart = new JFreeChart(title, titleFont, plot, legend);
+
+		return chart;
+	}
+@
+
+
+1.3.4.2
+log
+@* adding feature for hidden member selection
+@
+text
+@a15 1
+import java.text.DecimalFormat;
+a24 1
+import org.jfree.chart.axis.TickUnits;
+a30 1
+import org.jfree.chart.labels.StandardCategoryItemLabelGenerator;
+a37 1
+import org.jfree.chart.plot.DatasetRenderingOrder;
+a54 1
+import org.jfree.chart.renderer.category.WaterfallBarRenderer;
+a68 1
+import org.jfree.ui.RectangleInsets;
+a69 1
+import org.jfree.util.SortOrder;
+a871 12
+		/* This is for dumping test values to stderr
+		System.err.println("new DefaultCategoryDataset");
+		for(int rows = 0; rows < rawData.getRowCount(); rows++) {
+			for(int cols = 0; cols < rawData.getColumnCount(); cols++) {
+				System.out.println(
+						"dataset.addValue(" + rawData.getValue(rows, cols) +
+						", \"" + rawData.getRowKey(rows)+
+						"\", \"" + rawData.getColumnKey(cols) + "\");");
+			}
+		}
+		*/
+
+a885 8
+			}
+
+			double bubbleSize = (xMin >= 0 && xMax <= 10) ?
+									0.2
+									:
+									((xMax - xMin)*0.02);
+
+			for(int c = 0; c < columnCount; c++) {
+d891 1
+a891 1
+							new double[] { bubbleSize }
+d896 9
+a918 1
+
+a919 1
+
+d924 1
+a924 1
+				axis.setRange(new Range(0.0, 10.0));
+d932 1
+a932 1
+				axis.setRange(new Range(0.0, 10.0));
+d936 3
+a1029 102
+
+
+/**
+ * Creates a Waterfall chart with default settings.
+ *
+ * @@param title  the chart title.
+ * @@param categoryAxisLabel  the label for the category axis.
+ * @@param valueAxisLabel  the label for the value axis.
+ * @@param data  the dataset for the chart.
+ * @@param legend  a flag specifying whether or not a legend is required.
+ * @@param tooltips  configure chart to generate tool tips?
+ * @@param urls  configure chart to generate URLs?
+ * @@param colorPaints array color for series
+ *
+ * @@return a vertical bar chart.
+ */
+public static JFreeChart createWaterfallChart(String title,
+												java.awt.Font titleFont,
+												String categoryAxisLabel,
+												String valueAxisLabel,
+												CategoryDataset data,
+												PlotOrientation orientation,
+												boolean legend,
+												boolean tooltips,
+												boolean urls,
+												CategoryURLGenerator urlGenerator,
+												Paint[] colorPaints
+												) {
+
+
+    JFreeChart chart = org.jfree.chart.ChartFactory.createWaterfallChart(
+    		title,
+    		categoryAxisLabel,
+    		valueAxisLabel,
+            data,
+            PlotOrientation.VERTICAL,
+            false,
+            true,
+            false
+        );
+        chart.setBackgroundPaint(Color.white);
+        CategoryPlot plot = chart.getCategoryPlot();
+        plot.setBackgroundPaint(Color.lightGray);
+        plot.setRangeGridlinePaint(Color.white);
+        plot.setRangeGridlinesVisible(true);
+        plot.setAxisOffset(new RectangleInsets(5.0, 5.0, 5.0, 5.0));
+
+//		setColorPaintsForPlot(colorPaints, plot);
+
+//      plot.setDatasetRenderingOrder(DatasetRenderingOrder.FORWARD);
+//		plot.setColumnRenderingOrder(SortOrder.DESCENDING);
+//		plot.setRowRenderingOrder(SortOrder.DESCENDING);
+
+
+
+        ValueAxis rangeAxis = plot.getRangeAxis();
+
+        // create a custom tick unit collection...
+        DecimalFormat formatter = new DecimalFormat("##,###");
+        formatter.setNegativePrefix("(");
+        formatter.setNegativeSuffix(")");
+        TickUnits standardUnits = new TickUnits();
+        standardUnits.add(new NumberTickUnit(5, formatter));
+        standardUnits.add(new NumberTickUnit(10, formatter));
+        standardUnits.add(new NumberTickUnit(20, formatter));
+        standardUnits.add(new NumberTickUnit(50, formatter));
+        standardUnits.add(new NumberTickUnit(100, formatter));
+        standardUnits.add(new NumberTickUnit(200, formatter));
+        standardUnits.add(new NumberTickUnit(500, formatter));
+        standardUnits.add(new NumberTickUnit(1000, formatter));
+        standardUnits.add(new NumberTickUnit(2000, formatter));
+        standardUnits.add(new NumberTickUnit(5000, formatter));
+        rangeAxis.setStandardTickUnits(standardUnits);
+
+//        BarRenderer renderer = (BarRenderer) plot.getRenderer();
+        WaterfallBarRenderer renderer = (WaterfallBarRenderer) plot.getRenderer();
+
+        renderer.setDrawBarOutline(false);
+
+    	if (tooltips) {
+		renderer.setToolTipGenerator(new StandardCategoryToolTipGenerator());
+		}
+		if (urls) {
+			renderer.setItemURLGenerator(urlGenerator);
+		}
+
+
+//        setColorPaintsForRenderer(colorPaints, renderer);
+
+
+        DecimalFormat labelFormatter = new DecimalFormat("##,###.00");
+        labelFormatter.setNegativePrefix("(");
+        labelFormatter.setNegativeSuffix(")");
+        renderer.setItemLabelGenerator(
+            new StandardCategoryItemLabelGenerator("{2}", labelFormatter)
+        );
+        renderer.setItemLabelsVisible(true);
+
+	return chart;
+
+	}
+
+a1030 1
+
+@
+
+
+1.2
+log
+@Upgrade to JFreeChart 1.0.0-rc1. The API for JFreeChart is frozen, so this should be fine for the official 1.0.0 release
+@
+text
+@d23 1
+a23 1
+import org.jfree.chart.labels.StandardPieItemLabelGenerator;
+d92 1
+a92 1
+			tooltipGenerator = new StandardPieItemLabelGenerator();
+d143 1
+a143 1
+			tooltipGenerator = new StandardPieItemLabelGenerator();
+@
+
+
+1.1
+log
+@initial version
+@
+text
+@d371 2
+a372 2
+		renderer.setDrawLines(true);
+		renderer.setDrawShapes(false);
+@
+

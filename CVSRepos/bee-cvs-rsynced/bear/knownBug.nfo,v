@@ -1,0 +1,154 @@
+head	1.7;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.7
+date	2003.09.18.14.10.45;	author jiri_schmid;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	2003.09.17.14.51.10;	author jiri_schmid;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	2003.08.12.14.09.45;	author jiri_schmid;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2003.08.11.12.30.57;	author jiri_schmid;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2003.07.29.14.36.37;	author jiri_schmid;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2003.07.11.16.00.49;	author jiri_schmid;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2003.07.02.13.45.35;	author jiri_schmid;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.7
+log
+@tabs imlemented almost everywhere
+@
+text
+@IE bugs:
+selectHtmlElement covers drugged object or working dialog
+	draged object becomes hidden when dragging over such element
+	(eg Metric - Aggregation level)
+shifted aligment
+	first line of images is shifted right comparing to all other lines
+	(eg Format-3D graph/graph, when more then 1 line)
+inactive scrollbar in menu is visible
+	scrollbar is viewed into the located area of the overflowing object, when set visible:auto,
+	thus auto is contraproductive and scrollbars are alltime visible
+
+tree-items do not change color, when mouse over
+	no reason, sorry.
+
+
+IE5 bug
+drugged object is not shown
+	iframes - tree and edit has unspecified high viewing priority (the object is moved behind them)
+
+Mozilla 1.4 bug
+saving object graph3d or grid colapse webbrowser
+	no reason, sorry.
+save and run does not open report in new window
+	allow pop-up windows for Bear Web Site //menu: Tools-Popup manager-manage popups//
+
+Netscape 7.x
+like Mozilla
+
+Opera 7.x
+>>limitations
+browser does not shows moving object
+the elements-right-pane is almost disfunctional
+object removed from grid definition is not reinsertable (Grid - definition)
+the multirows elements must be doube clicked to drop the "invisible" moved object (Metric-definition, Aggregation level)
+@
+
+
+1.6
+log
+@tabed rights on graph3d and report
+@
+text
+@d24 1
+a24 1
+	no reason, sorry.
+@
+
+
+1.5
+log
+@left pane is colapsible now
+@
+text
+@d23 2
+@
+
+
+1.4
+log
+@admin page implementation started
+@
+text
+@d23 10
+@
+
+
+1.3
+log
+@code improvments
+@
+text
+@d12 3
+@
+
+
+1.2
+log
+@graph3d next stage
+@
+text
+@d2 1
+a2 1
+selectHtmlElement covers drugged object
+d9 4
+a12 1
+	scrollbar is viewed into the located area of the overflowing object, when set visible:auto, thus auto is contraproductive
+d19 1
+a19 1
+	no reason, sorry.@
+
+
+1.1
+log
+@file with known bugs
+@
+text
+@d9 1
+a9 1
+	scrollbar is viewed into the located area of the overflowing object, when set visible:auto
+d13 4
+@
+

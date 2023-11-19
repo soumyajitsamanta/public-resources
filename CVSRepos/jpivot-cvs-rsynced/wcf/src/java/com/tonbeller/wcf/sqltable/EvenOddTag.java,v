@@ -1,0 +1,97 @@
+head	1.1;
+access;
+symbols
+	jpivot_1_8_0:1.1
+	focus_1_6_0:1.1.0.6
+	wcf_1_7_0:1.1
+	wcf_1_6_0:1.1
+	jpivot_1_5_0:1.1.0.4
+	Root_jpivot_1_5_0:1.1
+	mondrian_xmla_2005_08_25:1.1.0.2
+	sourceforge_sync:1.1;
+locks; strict;
+comment	@# @;
+
+
+1.1
+date	2005.07.05.14.04.33;	author avix;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@initial version
+@
+text
+@/*
+ * ====================================================================
+ * This software is subject to the terms of the Common Public License
+ * Agreement, available at the following URL:
+ *   http://www.opensource.org/licenses/cpl.html .
+ * Copyright (C) 2003-2004 TONBELLER AG.
+ * All Rights Reserved.
+ * You must accept the terms of that agreement to use this software.
+ * ====================================================================
+ *
+ * 
+ */
+package com.tonbeller.wcf.sqltable;
+
+import java.io.IOException;
+
+import javax.servlet.jsp.JspException;
+import javax.servlet.jsp.jstl.core.LoopTag;
+import javax.servlet.jsp.jstl.core.LoopTagStatus;
+import javax.servlet.jsp.tagext.TagSupport;
+
+import org.apache.log4j.Logger;
+
+/**
+ * appends "even" or "odd" depending on the index of the sorrounding
+ * loop tag.
+ * @@author av
+ */
+public class EvenOddTag extends TagSupport {
+  String clazz;
+  String even;
+  String odd;
+
+  private static final Logger logger = Logger.getLogger(EvenOddTag.class);
+
+  public int doStartTag() throws JspException {
+    LoopTag tag = (LoopTag) super.findAncestorWithClass(this, LoopTag.class);
+    if (tag == null)
+      throw new JspException("must be nested in a loop tag");
+      
+    LoopTagStatus status = tag.getLoopStatus();
+    String s;
+    if (status.getCount() % 2 == 0)
+      s = (clazz == null) ? even : clazz + "-even";
+    else
+      s = (clazz == null) ? odd : clazz + "-odd";
+    try {
+      pageContext.getOut().print(s);
+    } catch (IOException e) {
+      logger.error(null, e);
+    }
+
+    return super.doStartTag();
+  }
+
+  public void setClazz(String clazz) {
+    this.clazz = clazz;
+  }
+
+  public void setEven(String even) {
+    this.even = even;
+  }
+  public void setOdd(String odd) {
+    this.odd = odd;
+  }
+}
+@

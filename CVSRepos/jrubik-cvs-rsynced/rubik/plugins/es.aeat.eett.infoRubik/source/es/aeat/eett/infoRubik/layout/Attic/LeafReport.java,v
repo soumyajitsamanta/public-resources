@@ -1,0 +1,91 @@
+head	1.2;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2008.05.17.15.40.42;	author fsaz;	state dead;
+branches;
+next	1.1;
+
+1.1
+date	2005.11.28.15.13.35;	author fsaz;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@borrando viejos
+@
+text
+@/*
+ * Created on 16-abr-2005
+ *
+ * LeafReport.java
+ *
+ */
+package es.aeat.eett.infoRubik.layout;
+
+import java.util.List;
+
+import org.jdom.Element;
+
+import es.aeat.eett.infoRubik.jobs.job_core.Job;
+import es.aeat.eett.infoRubik.reports.Report;
+import es.aeat.eett.infoRubik.reports.ReportMutableTreeNode;
+
+/**
+ * @@author f00992
+ */
+public interface LeafReport {
+    public static final String H_DIV="HDiv";
+    public static final String V_DIV="VDiv";
+    public static final String LAYOUT=ReportMutableTreeNode.getKEY_REPORT_LEAF();
+    public static final String NAME_JOB=Job.KEY_JOB;
+    public static final String CAPTION_JOB="captionJob";
+
+    /**
+     *
+     * @@return String
+     */
+    public String getIDLeaf();
+    /**
+     * remove conten;
+     */
+    public void removeChildren();
+    /**
+     * @@return Returns the rootElement.
+     */
+    public Element getRootElement();
+
+    /**
+     * @@return Returns the jobsNames.
+     */
+    public List getJobsNames();
+    /**
+     * @@return Returns the jobsElements.
+     */
+    public List getJobsElements();
+	/**
+	 * @@param rootElement
+	 */
+	public void setRootElement(Element rootElement);
+	public void removeAll(Report report);
+	public boolean isFull();
+}@
+
+
+1.1
+log
+@*** empty log message ***
+@
+text
+@@
+

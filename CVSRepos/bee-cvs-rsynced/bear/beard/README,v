@@ -1,0 +1,470 @@
+head	1.16;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.16
+date	2004.04.14.14.17.57;	author jiri_schmid;	state Exp;
+branches;
+next	1.15;
+
+1.15
+date	2004.04.14.09.06.45;	author jiri_schmid;	state Exp;
+branches;
+next	1.14;
+
+1.14
+date	2004.04.13.12.42.37;	author michald;	state Exp;
+branches;
+next	1.13;
+
+1.13
+date	2004.03.12.16.11.27;	author michald;	state Exp;
+branches;
+next	1.12;
+
+1.12
+date	2004.03.11.07.59.00;	author michald;	state Exp;
+branches;
+next	1.11;
+
+1.11
+date	2004.03.05.13.39.45;	author vasekd;	state Exp;
+branches;
+next	1.10;
+
+1.10
+date	2004.03.04.14.43.15;	author jiri_schmid;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	2004.03.02.13.00.58;	author jiri_schmid;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	2004.02.25.16.05.07;	author jiri_schmid;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	2004.02.02.09.14.07;	author michald;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	2003.11.26.05.36.27;	author michald;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	2003.11.22.18.38.26;	author michald;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2003.11.10.20.37.26;	author michald;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2003.11.09.15.29.41;	author michald;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2002.09.25.18.24.13;	author michald;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2002.09.24.15.42.38;	author michald;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.16
+log
+@code improvments
+@
+text
+@This directory contains BEAR SOAP Server.
+
+Configuration File:
+-------------------
+Server configuration is defined in Const.pm file.
+
+Run SOAP Server as a daemon
+--------------------------------------------------------------
+Copy script "beard" to /etc/init.d/ (or other location where is yours daemons) and edit them:
+-you can change user who starts SOAP daemon (default user="root")
+-you have to change path to directory where is beard.pl (default beard=${BEARD-/var/www/html/bear/beard/beard.pl})  
+-you have to change path to directory where is html cache located (default cache=${CACHE-/var/www/html/bear/html})  
+
+Usage:
+./beard {start|stop|restart|status|clear} ("clear" delete html cache) 
+
+!scripts in /etc/init.d/ must be run as a user root (the user is defined by the var user in beard script)
+
+
+Cache DB:
+---------
+Both Lookup and Report Cache are located in local MySQL DBMS now. One have to create Cache database e.g. "CREATE DATABASE cache" and set proper connection parameters ($CacheDB) in Const.pm. 
+
+
+Meta Data Directory:
+--------------------
+XML Metadata for each particular project are located in mdata/ directory (path is specified in Const.pm file).
+Semantic Layer is defined by mdata/projectname.xml file, Analytical Objects definition are spread under mdata/projectname/.
+User Preferences are located under mdata/Prefer.
+
+User Roles for each project are located in mdata/projectname/Roles. There should be two mandatory roles available:
+	Root role has to use ID in form projectname_root, usually with prefferences set to "rights="RWED".
+	Role for All has to use ID in form projectname_all. Prefferences for this role will be use in case no real role will match actual user.
+
+Meta Data Processing Notes:
+---------------------------
+Meta Data of the Semantic Layer has to contain following objects only:
+- host: has to contain <source> definition with DB connection parameters
+- attr
+- fact
+Meta Data can contain following objects optionally:
+- hrelation: only needed for relations not implicitly set by PK/FK connections defined by <attr> objects. Relation on logical model layer (MDga Directed Graph) will be set in direction to side of the hrelation with 'N' cardinality. Bidirectional edge on the logical model will be set in case both edges of the hrelation has 'N' cardinality.
+- group: group of the attributes with optional attribute role definition
+
+Get full control over bear portal
+---------------------------------
+To get full control over Bear - portal you need to create user account with Bear-root privileges
+add user of the root name into /mdata/[project]/Roles/root.xml <uuser>name</uuser>
+
+the structure for root.xml:
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<project>
+  <urole tabs="" rights="RWEDC" id="[Project]_root" acl="[Project]_root" change="on" name='root' description='root'>
+    <uuser>name</uuser>
+  </urole>
+</project>
+
+Do steps defined in README for bear-portal
+
+Rights for attributes and facts:
+------------------------------
+After new project launched, it is neccessary to save rights or set implicit rights 4 attributes and facts.
+This can be done by root only.
+
+Specifications for directory and its XML definition files in mdata:
+-------------------------------------------------------------------
+Each XML files that defines specific meta-data for (stored under mdata/[project]/.. directory has its type,
+these types are:
+"attribute":	directory type 2 store attribute's rights definitions
+"fact":		directory type 2 store fact's rights definitions
+"metric":	directory type 2 store metric definitions
+"grid":		grid def
+"graph3d":	grapd 3d def
+"format3d":	format for graph 3d
+"format2d":	2d format for grid
+"format":	table format for grid
+"filter":	filter def
+"report":	report def
+"role":		user role def (important KEY word)
+"param":	dynamic param def
+
+ex.: for folder Facts and its XML definition file Facts.xml:
+a) without localization:
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<project>
+   <folder id="[some id]" type="fact" name="" description="">
+  </folder>
+</project>
+
+b) with localization:
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<project>
+   <folder id="[some id]" type="fact">
+    <name><cz>Fakta</cz><en>Facts</en></name>
+    <description><cz>Slozka Faktu</cz><en>Facts Folder</en></description>
+  </folder>
+</project>
+
+Specification for Access directory and its definitions xml files
+--------------------------------------------------------------
+specific types:
+"roles":	defines name 4 folder with project roles viewed on admin page in object tree (important KEY word)
+"groups":	defines group name and description (important KEY word)
+"users":	defines users name (important KEY word)
+
+Defining folders 4 tree objects (without attributes)
+-------------------------------------------------------------------
+In main definition XML file define folder nodes as shown below:
+
+  <folder type="" id="[some folder id]" order="[number specifing order in object tree in current tree level]" parent="[id of parent folder]">
+    <description cz="" en="" />
+    <name cz="" en="" />
+  </folder>
+
+Important!
+1) "id of parent folder" 4 root folder is defined in XML file in mdata/[project]/[object type].xml
+2) type of folder have to be same as type of object
+
+And in the object define folder, where item should be placed
+<[object type] id="[...]" folder="[some folder id]" ... >
+...
+</fact>
+
+When defined folders with same ID, the unpredictable (Perl hash-rules) first folder will be used.
+
+=============================================================================================================
+Optional Apache mod_soap Configuration:
+---------------------------------------
+
+Following example assuming startup file in /etc/httpd/conf.d/startup.pl. Contents of the /etc/httpd/conf/httpd.conf (or e.g. /etc/httpd/conf.d/perl.conf if "Include conf.d/*.conf" is presented in httpd.conf):
+	....................................
+	LoadModule perl_module modules/mod_perl.so
+	PerlRequire "/etc/httpd/conf.d/startup.pl"
+	<Location /mod_soap>
+	  SetHandler modperl
+	  PerlHandler SOAP::Apache
+	</Location>
+	....................................
+
+Module mod_soap has to be able to find out Bear package under Library path. You can define such specific path as part of the /etc/httpd/conf.d/startup.pl file, containing:
+	....................................
+	use Apache2 ();
+	use Apache::compat ();
+	use lib qw(/path/to/modules /path/to/other/mod_perl/modules ...);
+	1
+	....................................
+
+It seems that Apache MPM Worker offers lower latency for initial SOAP Calls than MPM Prefork on GNU/Linux systems. Pleas follow instructions on http://httpd.apache.org/docs-2.0/mpm.html. On RH9 you can ensure it by usage of the precompiled httpd.worker server by creation of the /etc/sysconfig/httpd file containing:
+	....................................
+	HTTPD=/usr/sbin/httpd.worker
+	....................................
+By contraries MPM Worker shows worst response under the heavy concurrent load.
+@
+
+
+1.15
+log
+@universal custom folders system implemented 4 facts
+@
+text
+@d106 1
+a106 1
+Defining folders 4 facts
+d110 1
+a110 1
+  <folder type="fact" id="[some folder id]" order="[number specifing oreder in objetc tree in current tree level]" parent="[id of parent folder]">
+d115 3
+a117 1
+Important! "id of parent folder" 4 root folder is defined in XML file in mdata/[project]/Fact.xml
+d119 2
+a120 2
+And in the fact define folder, where item should be placed
+<fact id="r44fUzYdm7" folder="[some folder id]" ... >
+@
+
+
+1.14
+log
+@foundation for N:M relations
+@
+text
+@d106 17
+@
+
+
+1.13
+log
+@minor fixes and some comments
+@
+text
+@d35 9
+d60 1
+a60 1
+Rights 4 attributes and facts:
+d74 3
+a76 3
+"format3d":	format 4 graph 3d
+"format2d":	2d format 4 grid
+"format":	table format 4 grid
+d99 1
+a99 1
+Specification 4 Access directory and its definitions xml files
+@
+
+
+1.12
+log
+@initial implementation of caches in the local DB
+@
+text
+@d22 1
+a22 2
+Both Lookup and Report Cache are located in local MySQL DBMS now. One have to create Cache database e.g. "CREATE DATABASE
+cache" and set proper connection parameters ($CacheDB) in Const.pm. 
+@
+
+
+1.11
+log
+@info for starting SOAP as a daemon
+@
+text
+@d19 7
+a35 27
+Apache mod_soap Configuration:
+------------------------------
+
+Following example assuming startup file in /etc/httpd/conf.d/startup.pl. Contents of the /etc/httpd/conf/httpd.conf (or e.g. /etc/httpd/conf.d/perl.conf if "Include conf.d/*.conf" is presented in httpd.conf):
+	....................................
+	LoadModule perl_module modules/mod_perl.so
+	PerlRequire "/etc/httpd/conf.d/startup.pl"
+	<Location /mod_soap>
+	  SetHandler modperl
+	  PerlHandler SOAP::Apache
+	</Location>
+	....................................
+
+Module mod_soap has to be able to find out Bear package under Library path. You can define such specific path as part of the /etc/httpd/conf.d/startup.pl file, containing:
+	....................................
+	use Apache2 ();
+	use Apache::compat ();
+	use lib qw(/path/to/modules /path/to/other/mod_perl/modules ...);
+	1
+	....................................
+
+It seems that Apache MPM Worker offers lower latency for initial SOAP Calls than MPM Prefork on GNU/Linux systems. Pleas follow instructions on http://httpd.apache.org/docs-2.0/mpm.html. On RH9 you can ensure it by usage of the precompiled httpd.worker server by creation of the /etc/sysconfig/httpd file containing:
+	....................................
+	HTTPD=/usr/sbin/httpd.worker
+	....................................
+By contraries MPM Worker shows worst response under the heavy concurrent load.
+
+d97 29
+@
+
+
+1.10
+log
+@fixing bugs and improving useability and performance
+@
+text
+@d7 12
+@
+
+
+1.9
+log
+@changed id handling 4 access tree
+@
+text
+@d53 1
+a53 1
+  <urole tabs="" rights="RWEDC" id="[Project]_root" change="on" name='root' description='root'>
+@
+
+
+1.8
+log
+@fixed rights logic and folder XML definition files are specific for each project now
+@
+text
+@d79 1
+a79 1
+"role":		user role def
+d99 6
+@
+
+
+1.7
+log
+@Make independent project specific spaces in MDk, MDl
+@
+text
+@d1 1
+a1 1
+This directory contains BEAR SOAP Server. 
+d44 55
+@
+
+
+1.6
+log
+@cleadnup of some obsolete files
+@
+text
+@a34 1
+	use Bear;
+d38 1
+a38 1
+It seems better (lower latency for initial SOAP Calls) to run Apache MPM Worker than MPM Prefork on GNU/Linux systems. Pleas follow instructions on http://httpd.apache.org/docs-2.0/mpm.html. On RH9 you can ensure it by usage of the precompiled httpd.worker server by creation of the /etc/sysconfig/httpd file containing:
+d42 1
+a42 1
+
+@
+
+
+1.5
+log
+@fix undefined call to decode in case attr descr is NULL
+@
+text
+@d5 1
+a5 1
+Server configuration is defined in const.def file.
+d9 1
+a9 1
+XML Metadata for each particular project are located in mdata/ directory (path is specified in const.def file).
+@
+
+
+1.4
+log
+@README update
+@
+text
+@d13 4
+@
+
+
+1.3
+log
+@some small fixes
+@
+text
+@d32 1
+@
+
+
+1.2
+log
+@beard metadata connection
+@
+text
+@d3 2
+d7 3
+a9 1
+XML Metadata for each particular project are located in mdata/ directory (specified in const.def file).
+d11 29
+@
+
+
+1.1
+log
+@minor change of cvs tree structure
+@
+text
+@d3 1
+a3 1
+Server configuration is defined in conf.pl file.
+d5 1
+a5 1
+XML Metadata for each particular project are located in mdata/ directory (specified in conf.pl file).
+@
+

@@ -1,0 +1,1530 @@
+head	1.51;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.51
+date	2003.10.16.14.08.53;	author jiri_schmid;	state dead;
+branches;
+next	1.50;
+
+1.50
+date	2003.09.18.14.07.41;	author jiri_schmid;	state Exp;
+branches;
+next	1.49;
+
+1.49
+date	2003.09.01.12.40.08;	author jiri_schmid;	state Exp;
+branches;
+next	1.48;
+
+1.48
+date	2003.08.28.09.26.16;	author jiri_schmid;	state Exp;
+branches;
+next	1.47;
+
+1.47
+date	2003.08.26.15.35.45;	author jiri_schmid;	state Exp;
+branches;
+next	1.46;
+
+1.46
+date	2003.08.13.14.22.03;	author jiri_schmid;	state Exp;
+branches;
+next	1.45;
+
+1.45
+date	2003.08.13.13.16.28;	author jiri_schmid;	state Exp;
+branches;
+next	1.44;
+
+1.44
+date	2003.08.05.13.03.00;	author jiri_schmid;	state Exp;
+branches;
+next	1.43;
+
+1.43
+date	2003.06.03.08.16.07;	author jiri_schmid;	state Exp;
+branches;
+next	1.42;
+
+1.42
+date	2003.05.27.14.12.13;	author jiri_schmid;	state Exp;
+branches;
+next	1.41;
+
+1.41
+date	2003.05.26.15.01.40;	author jiri_schmid;	state Exp;
+branches;
+next	1.40;
+
+1.40
+date	2003.05.19.14.32.31;	author jiri_schmid;	state Exp;
+branches;
+next	1.39;
+
+1.39
+date	2003.05.16.12.58.11;	author jiri_schmid;	state Exp;
+branches;
+next	1.38;
+
+1.38
+date	2003.05.14.15.36.46;	author jiri_schmid;	state Exp;
+branches;
+next	1.37;
+
+1.37
+date	2003.05.13.15.19.00;	author jiri_schmid;	state Exp;
+branches;
+next	1.36;
+
+1.36
+date	2003.05.08.15.35.51;	author jiri_schmid;	state Exp;
+branches;
+next	1.35;
+
+1.35
+date	2003.05.06.15.07.06;	author jiri_schmid;	state Exp;
+branches;
+next	1.34;
+
+1.34
+date	2003.04.16.11.18.13;	author jiri_schmid;	state Exp;
+branches;
+next	1.33;
+
+1.33
+date	2003.04.14.15.12.03;	author jiri_schmid;	state Exp;
+branches;
+next	1.32;
+
+1.32
+date	2003.04.14.12.56.37;	author jiri_schmid;	state Exp;
+branches;
+next	1.31;
+
+1.31
+date	2003.04.14.11.06.07;	author jiri_schmid;	state Exp;
+branches;
+next	1.30;
+
+1.30
+date	2003.04.11.15.25.24;	author jiri_schmid;	state Exp;
+branches;
+next	1.29;
+
+1.29
+date	2003.04.10.14.19.17;	author jiri_schmid;	state Exp;
+branches;
+next	1.28;
+
+1.28
+date	2003.04.07.14.54.49;	author jiri_schmid;	state Exp;
+branches;
+next	1.27;
+
+1.27
+date	2003.04.04.09.34.02;	author jiri_schmid;	state Exp;
+branches;
+next	1.26;
+
+1.26
+date	2003.03.10.16.14.10;	author jiri_schmid;	state Exp;
+branches;
+next	1.25;
+
+1.25
+date	2003.03.04.10.19.19;	author spanhel;	state Exp;
+branches;
+next	1.24;
+
+1.24
+date	2003.03.04.08.24.56;	author jiri_schmid;	state Exp;
+branches;
+next	1.23;
+
+1.23
+date	2003.03.03.13.30.26;	author spanhel;	state Exp;
+branches;
+next	1.22;
+
+1.22
+date	2003.02.28.13.43.18;	author jiri_schmid;	state Exp;
+branches;
+next	1.21;
+
+1.21
+date	2003.02.28.10.43.39;	author jiri_schmid;	state Exp;
+branches;
+next	1.20;
+
+1.20
+date	2003.02.25.09.18.10;	author jiri_schmid;	state Exp;
+branches;
+next	1.19;
+
+1.19
+date	2003.02.21.09.29.05;	author jiri_schmid;	state Exp;
+branches;
+next	1.18;
+
+1.18
+date	2003.02.20.14.44.59;	author jiri_schmid;	state Exp;
+branches;
+next	1.17;
+
+1.17
+date	2003.02.14.09.13.00;	author jiri_schmid;	state Exp;
+branches;
+next	1.16;
+
+1.16
+date	2003.02.12.15.01.57;	author jiri_schmid;	state Exp;
+branches;
+next	1.15;
+
+1.15
+date	2003.02.11.16.07.12;	author jiri_schmid;	state Exp;
+branches;
+next	1.14;
+
+1.14
+date	2003.02.03.09.25.29;	author jiri_schmid;	state Exp;
+branches;
+next	1.13;
+
+1.13
+date	2003.01.27.16.38.50;	author jiri_schmid;	state Exp;
+branches;
+next	1.12;
+
+1.12
+date	2003.01.24.16.34.32;	author jiri_schmid;	state Exp;
+branches;
+next	1.11;
+
+1.11
+date	2003.01.23.16.43.12;	author spanhel;	state Exp;
+branches;
+next	1.10;
+
+1.10
+date	2003.01.23.09.47.30;	author spanhel;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	2003.01.21.14.18.04;	author spanhel;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	2003.01.20.18.23.50;	author spanhel;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	2003.01.18.12.23.08;	author michald;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	2003.01.16.17.20.20;	author spanhel;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	2002.11.26.16.29.03;	author spanhel;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2002.11.21.16.27.21;	author spanhel;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2002.11.01.11.49.40;	author spanhel;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2002.10.25.15.05.24;	author spanhel;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2002.10.25.14.03.25;	author spanhel;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.51
+log
+@mod-perl implementation stage 1, rebuilding global vars in .pl to global pointers
+@
+text
+@#-----------------------------------------------------
+#  Filter Editation
+#-----------------------------------------------------
+# $Id: filter_ed.pl,v 1.50 2003/09/18 14:07:41 jiri_schmid Exp $
+
+use strict;
+use CGI qw( :standard );
+use CGI::Pretty;
+
+require "const.def";
+require "local_lib.pl";
+
+use vars qw($ID $Obj $ObjT $use_lang $open $lang $all_params $localTab $skin $skinPath $imgType $DefaultLanguage);
+
+#-----------------------------------------------------
+# print_form is called from edit.cgi
+
+sub print_form {
+	print startform(-action=>'', -name=>'object', onsubmit=>'return reset_tree_name();');
+	print hidden('ObjT',$ObjT);
+	print hidden('all_params',$all_params);
+	print hidden('local_tab',$localTab);
+	my $name = LocalizedObj($Obj->{name}, "Object #$ID", lc($use_lang), $DefaultLanguage);
+	print <<END;
+<input type="hidden" value="$use_lang" id="activeLang" name="active_lang" />
+<input type="hidden" value="$skin" id="skin" name="skin" />
+<input type="hidden" value="$imgType" id="imgType" />
+<input type='hidden' name='item_id' id='ITEM_ID' value='$ID'/>
+<script src="js/filter_metric.js" type="text/javascript"></script>
+<table><tr>
+	<td style='width:20px'><img src="${skinPath}img/filter.$imgType"></td>
+	<td class="neutral_title">$lang->{'Filter Edit'}</td>
+	<td >- $name</td>
+</tr></table>
+END
+&generateTabs($localTab,'Filter','filter','def','rights');
+print "<table class='local_tabline' cellspacing='0'><tr><td>\n";
+&generateContent();
+print "</td></tr><tr><td>&nbsp;</td></tr></table>";
+print "<script type='text/javascript'>var params = '$all_params';</script>";
+print &endform;
+}
+
+1
+@
+
+
+1.50
+log
+@tabs imlemented almost everywhere
+@
+text
+@d4 1
+a4 1
+# $Id: filter_ed.pl,v 1.49 2003/09/01 12:40:08 jiri_schmid Exp $
+@
+
+
+1.49
+log
+@skins implemented. mozilla skin - temporarily copy msie content
+@
+text
+@d4 1
+a4 1
+# $Id: filter_ed.pl,v 1.48 2003/08/28 09:26:16 jiri_schmid Exp $
+d13 1
+a13 1
+use vars qw($ID $Obj $ObjT $descr_w $descr_r $name_w $use_lang $saved @@Languages $Languages $DefaultLanguage $all_params $skin $skinPath $imgType);
+d19 1
+a19 1
+	print startform(-action=>'', -name=>'object', onsubmit=>'return filter_checker();');
+d22 1
+a22 2
+	print hidden('skin',$skin);
+	print "<input type=\"hidden\" value=\"$use_lang\" id=\"activeLang\" name=\"active_lang\">\n";
+d24 5
+a28 1
+	print <<END ;
+a34 4
+<br />
+<table class="page_skeleton">
+<tr class="page_skeleton">
+<td class="page_skeleton">
+d36 6
+a41 59
+
+&generateFilterEdit();
+
+print <<END ;
+</td>
+<td class="page_skeleton">&nbsp;</td>
+<td class="page_skeleton">
+	<table class="neutral">
+	<tr><td class="neutral_bold">$lang->{'Name'}</td></tr>
+	<tr><td align="center">
+		<span class='nowrap'>
+		<input value="" onchange="object_changed()" type="text" name="name" id="NAME" size="$name_w" maxlength="100"/>
+		<select name="langSpec" id="langSpec" onchange="tmpChangeLocal()">
+END
+foreach (@@Languages) {
+	my $lcL = lc($_);
+	my $name = LocalizedObj($Obj->{name}, "Object #$ID", $lcL, $DefaultLanguage);
+	print "<option value='$name'>$_</option>";
+}
+print <<END;
+		</select>
+		<input type="hidden" name="item_id" id="ITEM_ID" value="$ID"/>
+		</span>
+	</td></tr>
+	<tr><td><hr></td></tr>
+	<tr><td class="neutral_bold">$lang->{'Description'}</td></tr>
+	<tr><td align="center"><textarea onchange="object_changed()" cols="$descr_w" rows="$descr_r" name="desc" id="DESC"></textarea></td></tr>
+	<tr><td><hr></td></tr>
+	<tr><td align="center">
+	<table class="buttons" cellpading="0" cellspacing="0">
+	<tr>	<td class="buttons"><input type="submit" name="Action" value="$lang->{'Save'}" onclick="return check_name()"/></td>
+		<td class="buttons">	<input type="submit" name="Action" value="$lang->{'Save As'}" onclick="return readName();"/>
+					<input type="hidden" name="saveAsName" id="saveAsName" value="" /></td>
+		<td class="buttons"><input type="button" name="reset" value="$lang->{'Reset'}" onclick="subst_ID_expr('object_filter'); subst_item_id()"/></td>
+		<td class="buttons"><input type="submit" name="Rights" value="$lang->{'Right'}" onclick='setRightsPage()'/></td>
+	</td></tr>
+	</table>
+	</td></tr>
+	</table>
+</td></tr></table>
+<script type="text/javascript">
+	var msg="$lang->{'New Save Part1'}$lang->{'New Filter Save'}$lang->{'New Save Part2'}";
+	subst_ID_expr('object_filter');
+	subst_item_id();
+	var saveAsMsg = "$lang->{SaveAsMsg}$lang->{'New Filter'}";
+	reloadTree($saved);
+
+</script>
+END
+	print &endform;
+}
+
+#---------------------------------------------------
+
+sub set_next_param {
+	my $o=shift;
+	# !!! parametry ColObj, ... budou nahrazeny parametry nesoucimi ID objektu nastavovanym JavaScripten onUnload
+	delete $o->{expr};
+	$o->{expr} = param('expr_id');
+@
+
+
+1.48
+log
+@tabs.cgi speed improvmnet, visual improvment on trees, rights and some other minor improvments
+@
+text
+@d4 1
+a4 1
+# $Id: filter_ed.pl,v 1.47 2003/08/26 15:35:45 jiri_schmid Exp $
+d13 1
+a13 1
+use vars qw($ID $Obj $ObjT $descr_w $descr_r $name_w $use_lang $saved @@Languages $Languages $DefaultLanguage);
+d21 2
+d28 1
+a28 1
+	<td style='width:20px'><img src="img/filter.gif"></td>
+@
+
+
+1.47
+log
+@rights improvment, create delete duplicate rule implemented
+@
+text
+@d4 1
+a4 1
+# $Id: filter_ed.pl,v 1.46 2003/08/13 14:22:03 jiri_schmid Exp $
+d22 1
+d25 6
+a30 2
+<table><tr><td width="20"><img src="img/filter.gif"></td><td class="neutral_title">$lang->{'Filter Edit'}</td></tr></table>
+<br>
+@
+
+
+1.46
+log
+@code clearing and improvment
+@
+text
+@d4 1
+a4 1
+# $Id: filter_ed.pl,v 1.45 2003/08/13 13:16:28 jiri_schmid Exp $
+d64 1
+a64 1
+		<td class="buttons"><input type="submit" name="Rights" value="$lang->{'Right'}"/></td>
+@
+
+
+1.45
+log
+@setting up rights inetrface for each object implemnted
+@
+text
+@d4 1
+a4 1
+# $Id: filter_ed.pl,v 1.44 2003/08/05 13:03:00 jiri_schmid Exp $
+d19 2
+a20 10
+	my $cgi = shift;
+	print_form_cont($cgi);
+}
+
+#-----------------------------------------------------
+
+sub print_form_cont {
+	my $cgi = shift;
+	print $cgi->startform(-action=>'', -name=>'object', onsubmit=>'return filter_checker();');
+	print $cgi->hidden('ObjT',$ObjT);
+d79 1
+a79 1
+	print $cgi->endform;
+a84 1
+	my($cgi) = shift;
+d88 1
+a88 1
+	$o->{expr} = $cgi->param('expr_id');
+@
+
+
+1.44
+log
+@noWrap on name and language
+@
+text
+@d4 1
+a4 1
+# $Id: filter_ed.pl,v 1.43 2003/06/03 08:16:07 jiri_schmid Exp $
+d69 2
+a70 2
+			<td class="buttons">	<input type="submit" name="Action" value="$lang->{'Save As'}" onclick="return readName();"/>
+						<input type="hidden" name="saveAsName" id="saveAsName" value="" /></td>
+d72 1
+@
+
+
+1.43
+log
+@code improvment
+@
+text
+@d4 1
+a4 1
+# $Id: filter_ed.pl,v 1.42 2003/05/27 14:12:13 jiri_schmid Exp $
+d48 1
+d60 1
+@
+
+
+1.42
+log
+@implemented setLocalizedObj & LocalizedObj on client side
+@
+text
+@d4 1
+a4 1
+# $Id: filter_ed.pl,v 1.41 2003/05/26 15:01:40 jiri_schmid Exp $
+a50 1
+my $choosed;
+a51 1
+	$choosed = ($_ eq $use_lang) ? ' selected' : '';
+d54 1
+a54 1
+	print "<option value='$name' $choosed>$_</option>";
+@
+
+
+1.41
+log
+@saving under non-selected language implemented
+@
+text
+@d4 1
+a4 1
+# $Id: filter_ed.pl,v 1.40 2003/05/19 14:32:31 jiri_schmid Exp $
+d13 1
+a13 1
+use vars qw($ID $Obj $ObjT $descr_w $descr_r $name_w $use_lang $saved @@Languages $Languages);
+d55 2
+a56 1
+	print "<option value='$Obj->{name}->{$lcL}' $choosed>$_</option>";
+@
+
+
+1.40
+log
+@save-as bug when canceling saving fixed
+@
+text
+@d4 1
+a4 1
+# $Id: filter_ed.pl,v 1.39 2003/05/16 12:58:11 jiri_schmid Exp $
+d13 1
+a13 1
+use vars qw($ID $Obj $ObjT $descr_w $descr_r $name_w $use_lang $saved);
+d29 1
+a29 1
+	print $cgi->hidden('active_lang',$use_lang);
+d48 11
+a58 1
+		<input value="$Obj->{name}" onchange="object_changed()" type="text" name="name" id="NAME" size="$name_w" maxlength="100"/>
+d63 1
+a63 1
+	<tr><td align="center"><textarea onchange="object_changed()" cols="$descr_w" rows="$descr_r" name="desc" id="DESC">$Obj->{description}</textarea></td></tr>
+@
+
+
+1.39
+log
+@save as implemented everywhere
+@
+text
+@d4 1
+a4 1
+# $Id: filter_ed.pl,v 1.38 2003/05/14 15:36:46 jiri_schmid Exp $
+d58 1
+a58 1
+			<td class="buttons">	<input type="submit" name="Action" value="$lang->{'Save As'}" onclick="readName()"/>
+@
+
+
+1.38
+log
+@minor code improvments
+@
+text
+@d4 1
+a4 1
+# $Id: filter_ed.pl,v 1.37 2003/05/13 15:19:00 jiri_schmid Exp $
+d13 1
+a13 1
+use vars qw($ID $Obj $ObjT $descr_w $descr_r $name_w $use_lang);
+d58 2
+d70 3
+@
+
+
+1.37
+log
+@new report page seems to be fullfunctional, javascript code huge improvment
+@
+text
+@d4 1
+a4 1
+# $Id: filter_ed.pl,v 1.36 2003/05/08 15:35:51 jiri_schmid Exp $
+d57 1
+a57 1
+	<tr>	<td class="buttons"><input type="submit" name="Action" value="$lang->{'Save'}" onclick="return check_name(\'#$ID\')"/></td>
+@
+
+
+1.36
+log
+@report huge improvment
+@
+text
+@d4 1
+a4 1
+# $Id: filter_ed.pl,v 1.35 2003/05/06 15:07:06 jiri_schmid Exp $
+d27 1
+a27 1
+	print $cgi->startform(-action=>'', -name=>'filter', onsubmit=>'return filter_checker();');
+d31 1
+a31 1
+<script language="JAVASCRIPT" src="js/filter_metric.js" type="text/javascript"></script>
+d37 5
+a41 35
+<table class = "neutral" cellpading="0" cellspacing="0">
+  <tr>	<td class="neutral_bold" colspan="3">$lang->{'Filter expresion'}</td></tr>
+  <tr>
+  	<td valign="top"><img src="img/tree/metric.gif" vspace="5"><br><img src="img/tree/attr.gif"><br><img src="img/tree/fact.gif" vspace="5"><br><img src='img/tree/attr_form.gif'></td>
+    	<td>
+		<textarea id="filter_filter" onclick="drop_textarea(this)" name="expr" cols="$descr_w" rows="$descr_r"></textarea>
+		<input type="hidden" name="expr_id" id="filter_filter_id" value="$Obj->{expr}"/>
+	</td>
+	<td valign="bottom" align="center" width="20"><img class="cursor" src="img/delete.gif" onclick='clear_name(document.filter.expr);return true;'></td>
+  </tr>
+  <tr><td align="center" colspan="3">
+  <table width="60%">
+    <tr><td class="visual_down">
+	<table class="visual_up" cellpading="0" cellspacing="0">
+	<tr>
+	 <td class="visual_up_button" onmouseover='active(this)' onmouseout='passive(this)' onclick='exprr(document.filter.expr,"(");'><a name="lb">(</a></td>
+	 <td class="visual_up_button" onmouseover='active(this)' onmouseout='passive(this)' onclick='exprr(document.filter.expr,")");'><a name="rb">)</a></td>
+         <td class="visual_up_button" onmouseover='active(this)' onmouseout='passive(this)' onclick='exprr(document.filter.expr,"=");'><a name="eq">=</a></td>
+	 <td class="visual_up_button" onmouseover='active(this)' onmouseout='passive(this)' onclick='exprr(document.filter.expr,"<");'><a name="lr">&lt;</a></td>
+	 <td class="visual_up_button" onmouseover='active(this)' onmouseout='passive(this)' onclick='exprr(document.filter.expr,">");'><a name="gr">&gt;</a></td>
+	</tr>
+	</table>
+   </td></tr>
+   <tr><td class="visual_down">
+	<table class="visual_up" cellpading="0" cellspacing="0">
+	<tr>
+	 <td class="visual_up_button" onmouseover='active(this)' onmouseout='passive(this)' onclick='exprr(document.filter.expr,"AND");'><a name="AND">AND</a></td>
+	 <td class="visual_up_button" onmouseover='active(this)' onmouseout='passive(this)' onclick='exprr(document.filter.expr,"OR");'><a name="OR">OR</a></td>
+         <td class="visual_up_button" onmouseover='active(this)' onmouseout='passive(this)' onclick='exprr(document.filter.expr,"NOT");'><a name="NOT">NOT</a></td>
+	</tr>
+	</table>
+   </td></tr>
+   </table>
+   </td></tr>
+</table>
+d58 1
+a58 1
+		<td class="buttons"><input type="button" name="reset" value="$lang->{'Reset'}" onclick="subst_ID_expr('filter_filter'); subst_item_id()"/></td>
+d64 1
+a64 1
+<script language="JAVASCRIPT" type="text/javascript">
+d66 1
+a66 1
+	subst_ID_expr('filter_filter');
+@
+
+
+1.35
+log
+@bug fixies, code improvment
+@
+text
+@d4 1
+a4 1
+# $Id: filter_ed.pl,v 1.34 2003/04/16 11:18:13 jiri_schmid Exp $
+a101 2
+
+#---------------------------------------------------
+@
+
+
+1.34
+log
+@id substitution implemented in all of *_ed.pl
+@
+text
+@d4 1
+a4 1
+# $Id: filter_ed.pl,v 1.33 2003/04/14 15:12:03 jiri_schmid Exp $
+d27 1
+a27 1
+	print $cgi->startform(-action=>'', -name=>'filter', onsubmit=>'filter_checker();return true;');
+@
+
+
+1.33
+log
+@minor changes in naming of new objects
+@
+text
+@d4 1
+a4 1
+# $Id: filter_ed.pl,v 1.32 2003/04/14 12:56:37 jiri_schmid Exp $
+d87 1
+a87 1
+	<tr>	<td class="buttons"><input type="submit" name="Action" value="$lang->{'Save'}" onclick="return check_name(\'$lang->{'New Filter'} #$ID\')"/></td>
+@
+
+
+1.32
+log
+@ID <-> name substitutions implemented on client side in required cases
+@
+text
+@d4 1
+a4 1
+# $Id: filter_ed.pl,v 1.31 2003/04/14 11:06:07 jiri_schmid Exp $
+d87 3
+a89 3
+	<tr>	<td class="buttons"><input type="submit" name="Action" value="$lang->{'Save'}" onclick="return check_name(\'$lang->{'New Filter'}\')"/></td>
+		<td class="buttons"><input type="button" name="reset" value="$lang->{'Reset'}" onclick="subst_ID_expr('filter_filter')"/></td>
+		<td class="buttons"><input type="button" name="reload" value="$lang->{'Reload'}" onclick="filter_checker()"/></td></tr>
+@
+
+
+1.31
+log
+@new item localization implemented, prompt for changing name when saving under server side generated name
+@
+text
+@d4 1
+a4 1
+# $Id: filter_ed.pl,v 1.30 2003/04/11 15:25:24 jiri_schmid Exp $
+a28 1
+	print $cgi->hidden('item_id',$ID);
+d77 4
+a80 1
+	<tr><td align="center"><input value="$Obj->{name}" onchange="object_changed()" type="text" name="name" id="NAME" size="$name_w" maxlength="100"></td></tr>
+d87 3
+a89 3
+	<tr>	<td class="buttons"><input type="submit" name="Action" value="$lang->{'Save'}" onclick="check_name(\'$lang->{'New Filter'}\')"></td>
+		<td class="buttons"><input type="button" name="reset" value="$lang->{'Reset'}" onclick="subst_ID_expr('filter_filter')"></td>
+		<td class="buttons"><input type="button" name="reload" value="$lang->{'Reload'}" onclick="filter_checker()"></td></tr>
+d97 1
+@
+
+
+1.30
+log
+@substitution of id on grid when loading fixed for Mozilla and IE
+@
+text
+@d4 1
+a4 1
+# $Id: filter_ed.pl,v 1.29 2003/04/10 14:19:17 jiri_schmid Exp $
+d85 1
+a85 1
+	<tr>	<td class="buttons"><input type="submit" name="Action" value="$lang->{'Save'}"></td>
+d92 4
+a95 1
+<script language="JAVASCRIPT" type="text/javascript">subst_ID_expr('filter_filter');</script>
+@
+
+
+1.29
+log
+@metric, filter, report substitutes IDs by javascript, metric & filter resets the original expresion
+@
+text
+@d4 1
+a4 1
+# $Id: filter_ed.pl,v 1.28 2003/04/07 14:54:49 jiri_schmid Exp $
+d32 1
+a32 1
+<script language="JAVASCRIPT" src="js/filter.js" type="text/javascript"></script>
+@
+
+
+1.28
+log
+@metric checker replaces names by id
+@
+text
+@d4 1
+a4 1
+# $Id: filter_ed.pl,v 1.27 2003/04/04 09:34:02 jiri_schmid Exp $
+d27 1
+a27 1
+	print $cgi->startform(-action=>'', -name=>'filter', onsubmit=>'reset_tree_name();return true;');
+d32 1
+a32 1
+
+d42 4
+a45 1
+    	<td><textarea id="filter_filter" onclick="drop_textarea(this)" cols="$descr_w" rows="$descr_r" name="expr">$Obj->{expr}</textarea></td>
+d56 2
+a57 2
+	 <td class="visual_up_button" onmouseover='active(this)' onmouseout='passive(this)' onclick='exprr(document.filter.expr,"<");'><a name="lr">&lt</a></td>
+	 <td class="visual_up_button" onmouseover='active(this)' onmouseout='passive(this)' onclick='exprr(document.filter.expr,">");'><a name="gr">&gt</a></td>
+d78 1
+a78 1
+	<tr><td align="center"><input value="$Obj->{name}" onchange="object_changed()" type="text" name="name" size="$name_w" maxlength="100"></td></tr>
+d81 1
+a81 1
+	<tr><td align="center"><textarea onchange="object_changed()" cols="$descr_w" rows="$descr_r" name="desc">$Obj->{description}</textarea></td></tr>
+d86 2
+a87 2
+		<td class="buttons"><input type="reset" name="reset" value="$lang->{'Reset'}"></td>
+		<td class="buttons"><input type="button" name="reload" value="$lang->{'Reload'}" onclick="metric_checker()"></td></tr>
+d92 1
+a92 1
+
+d106 1
+a106 1
+	$o->{expr} = $cgi->param('expr');
+@
+
+
+1.27
+log
+@metric checker improved, into filter page added buttons
+@
+text
+@d4 1
+a4 1
+# $Id: filter_ed.pl,v 1.26 2003/03/10 16:14:10 jiri_schmid Exp $
+d84 1
+a84 1
+		<td class="buttons"><input type="button" name="reload" value="$lang->{'Reload'}" onclick='reload_btn();return true;'></td></tr>
+@
+
+
+1.26
+log
+@charset fixed
+@
+text
+@d4 1
+a4 1
+# $Id: filter_ed.pl,v 1.25 2003/03/04 10:19:19 spanhel Exp $
+d55 9
+@
+
+
+1.25
+log
+@added cz localization
+@
+text
+@d4 1
+a4 1
+# $Id: filter_ed.pl,v 1.24 2003/03/04 08:24:56 jiri_schmid Exp $
+d13 1
+a13 1
+use vars qw($ID $Obj $ObjT $descr_w $descr_r $name_w);
+d30 1
+@
+
+
+1.24
+log
+@internal technical-development commit
+@
+text
+@d4 1
+a4 1
+# $Id: filter_ed.pl,v 1.23 2003/03/03 13:30:26 spanhel Exp $
+d32 1
+a32 1
+<table><tr><td class="neutral_title">$lang->{'Filter Edit'}</td></tr></table>
+@
+
+
+1.23
+log
+@lang version
+@
+text
+@d4 1
+a4 1
+# $Id: filter_ed.pl,v 1.22 2003/02/28 13:43:18 jiri_schmid Exp $
+d32 1
+a32 1
+<table><tr><td width="20"><img src="img/filter.gif"></td><td class="neutral_title">$lang->{'Filter Edit'}</td></tr></table>
+d38 1
+a38 8
+  <tr><td>
+	<table width="100%">
+         <tr>
+	 <td width="15px"><img src="img/filter.gif" align = "left"></td>
+	 <td class="neutral_bold">$lang->{'Filter expresion'}</td>
+	 </tr>
+	</table>
+  </td></tr>
+d40 3
+a42 1
+    <td><textarea id="filter_filter" onclick="drop_textarea(this)" cols="$descr_w" rows="$descr_r" name="expr">$Obj->{expr}</textarea></td>
+d44 11
+a54 17
+  <tr><td align="center">
+  	<table align="center" width="100%">
+	<tr><td width="20%">&nbsp</td>
+	    <td class="visual_down"  width="60%">
+		<table class="visual_up" cellpading="0" cellspacing="0">
+		<tr>
+		 <td class="visual_up_button" onmouseover='active(this)' onmouseout='passive(this)' onclick='exprr(document.filter.expr,"(");'><a name="lb">(</a></td>
+		 <td class="visual_up_button" onmouseover='active(this)' onmouseout='passive(this)' onclick='exprr(document.filter.expr,")");'><a name="rb">)</a></td>
+                 <td class="visual_up_button" onmouseover='active(this)' onmouseout='passive(this)' onclick='exprr(document.filter.expr,"=");'><a name="eq">=</a></td>
+		 <td class="visual_up_button" onmouseover='active(this)' onmouseout='passive(this)' onclick='exprr(document.filter.expr,"<");'><a name="lr">&lt</a></td>
+		 <td class="visual_up_button" onmouseover='active(this)' onmouseout='passive(this)' onclick='exprr(document.filter.expr,">");'><a name="gr">&gt</a></td>
+		 </tr>
+		</table>
+	     </td>
+	<td width="20%" align="right"><img class = "cursor" align="right" src="img/delete.gif" onclick='clear_name(document.filter.expr);clear_name(document.filter.expr_h);return true;'>
+	        <input type="hidden" name="expr_h" value="">
+	</td></tr>
+d58 2
+@
+
+
+1.22
+log
+@weekend-leaving commit, (last?) code cleaning
+@
+text
+@d4 1
+a4 1
+# $Id: filter_ed.pl,v 1.21 2003/02/28 10:43:39 jiri_schmid Exp $
+d13 1
+a13 1
+use vars qw($ID $Obj $ObjT $al $descr_w $descr_r $name_w);
+d32 1
+a32 1
+<table><tr><td width="20"><img src="img/filter.gif"></td><td class="neutral_title">$al->{'Filter Edit'}</td></tr></table>
+d42 1
+a42 1
+	 <td class="neutral_bold">$al->{'Filter expresion'}</td>
+d73 1
+a73 1
+	<tr><td class="neutral_bold">$al->{'Name'}</td></tr>
+d76 1
+a76 1
+	<tr><td class="neutral_bold">$al->{'Description'}</td></tr>
+d81 3
+a83 3
+	<tr>	<td class="buttons"><input type="submit" name="Action" value="$al->{'Save'}"></td>
+		<td class="buttons"><input type="reset" name="reset" value="$al->{'Reset'}"></td>
+		<td class="buttons"><input type="button" name="reload" value="$al->{'Reload'}" onclick='reload_btn();return true;'></td></tr>
+@
+
+
+1.21
+log
+@added files admin,prefer.cgi, unused content of *.css removed with minor visual changes
+@
+text
+@d4 1
+a4 1
+# $Id: filter_ed.pl,v 1.20 2003/02/25 09:18:10 jiri_schmid Exp $
+d72 8
+a79 11
+  <table class="neutral">
+   <tr><td class="neutral_bold">$al->{'Filter name'}</td></tr>
+   <tr><td align="center">
+   	<input value="$Obj->{name}" type="text" name="name" size="$name_w" maxlength="100" onchange="object_changed()">
+	<input class = "text" type="hidden" name="filter_name_h">
+   </td></tr>
+   <tr><td><hr></td></tr>
+   <tr><td class="neutral_bold">$al->{'Filter description'}</td></tr>
+   <tr><td class="neutral_center"><textarea onchange="object_changed()" cols="$descr_w" rows="$descr_r" name="desc">$Obj->{description}</textarea></td></tr>
+   <tr><td><hr></td></tr>
+   <tr><td align="center">
+d85 3
+a87 4
+   </td></tr>
+</table>
+</td></tr>
+</table>			     
+@
+
+
+1.20
+log
+@added checking of unsaved-changed item, when traying to start editing another one
+@
+text
+@d4 1
+a4 1
+# $Id: filter_ed.pl,v 1.19 2003/02/21 09:29:05 jiri_schmid Exp $
+d32 1
+a32 1
+<table><tr><td width="20"><img src="img/filter.gif"></td><td class="neutral_bold">$al->{'Filter Edit'}</td></tr></table>
+@
+
+
+1.19
+log
+@IE save bug fixed / grid - new uknown bug when saving found, not fixed yet
+@
+text
+@d4 1
+a4 1
+# $Id: filter_ed.pl,v 1.18 2003/02/20 14:44:59 jiri_schmid Exp $
+d75 1
+a75 1
+   	<input value="$Obj->{name}" class = "text" type="text" name="name" size="$name_w" maxlength="100">
+d80 1
+a80 1
+   <tr><td class="neutral_center"><textarea class =" text " cols="$descr_w" rows="$descr_r" name="desc">$Obj->{description}</textarea></td></tr>
+@
+
+
+1.18
+log
+@save item bug and delete item bug fixed
+@
+text
+@d4 1
+a4 1
+# $Id: filter_ed.pl,v 1.17 2003/02/14 09:13:00 jiri_schmid Exp $
+d29 1
+a29 1
+#	print $cgi->hidden('ID',$ID);
+d84 3
+a86 3
+	<tr>	<td class="buttons"><button type="submit" name="Action" value="Save|$ID">$al->{'Save'}</button></td>
+		<td class="buttons"><button type="reset" name="reset" value="Reset">$al->{'Reset'}</button></td>
+		<td class="buttons"><button type="button" name="reload" value="Reload" onclick='reload_btn();return true;'>$al->{'Reload'}</button></td></tr>
+@
+
+
+1.17
+log
+@some code and visual improvment
+@
+text
+@d4 1
+a4 1
+# $Id: filter_ed.pl,v 1.16 2003/02/12 15:01:57 jiri_schmid Exp $
+d27 1
+a27 1
+	print $cgi->startform(-action=>'', -name=>'filter', onsubmit=>'save_new_name();return true;');
+d29 1
+a29 1
+	print $cgi->hidden('ID',$ID);
+d82 1
+a82 1
+   <tr><td align="right">
+d84 3
+a86 5
+	   <tr>
+		<td class="buttons" valign="middle"><button type="submit" name="Action" value="$al->{'Save'}"><img src="img/save_small.gif" alt="$al->{'Save'}"> $al->{'Save'}</button></td>
+	        <td class="buttons" valign="middle"><button type="reset"  name="reset"  value="$al->{'Reset'}"><img src="img/save_as_small.gif" alt="$al->{'Save As'}"> $al->{'Save As'}</button></td>
+		<td class="buttons" valign="middle"><button type="button" name="reload" value="$al->{'Reload'}"><img src="img/reload_small.gif" alt="$al->{'Reload'}"> $al->{'Reload'}</button></td>
+	   </tr>
+@
+
+
+1.16
+log
+@format_ed.pl, format.html, format_[css|graph].html fixed and tuned
+@
+text
+@d4 1
+a4 1
+# $Id: filter_ed.pl,v 1.15 2003/02/11 16:07:12 jiri_schmid Exp $
+d13 1
+a13 1
+use vars qw($ID $Obj $ObjT $al);
+d34 3
+d41 1
+a41 1
+	 <td width="15px"><img class="cursor" src="img/rightArr.gif" onclick='fill_expr(document.filter.expr,parent.frames[0].document.act_it.act_it.text);return true;' align = "left"></td>
+d47 1
+a47 1
+    <td><textarea id="filter_filter" onclick="drop_textarea(this)" cols="43" rows="5" name="expr">$Obj->{expr}</textarea></td>
+d68 5
+a72 1
+   <tr><td><hr></td></tr>
+d75 1
+a75 1
+   	<input value="$Obj->{name}" class = "text" type="text" name="name" size="45" maxlength="100">
+d80 1
+a80 1
+   <tr><td class="neutral_center"><textarea class =" text " cols="43" rows="5" name="desc">$Obj->{description}</textarea></td></tr>
+d92 2
+@
+
+
+1.15
+log
+@large rebuilding of format_ed.pl and linked files format[|_css|_graph].html,
+@
+text
+@d4 1
+a4 1
+# $Id: filter_ed.pl,v 1.14 2003/02/03 09:25:29 jiri_schmid Exp $
+d55 1
+a56 1
+		 <td class="visual_up_button" onmouseover='active(this)' onmouseout='passive(this)' onclick='exprr(document.filter.expr,"<");'><a name="lr">&lt</a></td>
+@
+
+
+1.14
+log
+@few MSIE visual bugs found and fixed
+@
+text
+@d4 1
+a4 1
+# $Id: filter_ed.pl,v 1.13 2003/01/27 16:38:50 jiri_schmid Exp $
+d75 1
+a75 1
+   <tr><td align="center">
+d78 3
+a80 3
+	       <td class="buttons"><input type="submit" name="Action" value="$al->{'Save'}"></td>
+	       <td class="buttons"><input type="reset"  name="reset"  value="$al->{'Reset'}"></td>
+	       <td class="buttons"><input type="button" name="reload" value="$al->{'Reload'}"></td>
+@
+
+
+1.13
+log
+@script improvment in dad.js, unexplaneabale visual bugs fixed by changing page structure of metrics_ed.pl, filter_ed.pl and report_ed.pl, visual improvment of Grid Page
+@
+text
+@d4 1
+a4 1
+# $Id: filter_ed.pl,v 1.12 2003/01/24 16:34:32 jiri_schmid Exp $
+d78 3
+a80 3
+	       <td class="buttons"><input class = "text" type="submit" name="Action" value="$al->{'Save'}"   width="15" height="210"></td>
+	       <td class="buttons"><input class = "text" type="reset"  name="reset"  value="$al->{'Reset'}"  width="15" height="10" ></td>
+	       <td class="buttons"><input class = "text" type="button" name="reload" value="$al->{'Reload'}" width="15" height="10" ></td>
+@
+
+
+1.12
+log
+@minor bugs in dad.js fixed, some visual changes in interfaceoB
+@
+text
+@d4 1
+a4 1
+# $Id: filter_ed.pl,v 1.11 2003/01/23 16:43:12 spanhel Exp $
+d31 3
+a33 1
+<h3><img src="img/filter.gif">&nbsp;$al->{'Filter Edit'}</h3>
+@
+
+
+1.11
+log
+@added object metric in grid_ed.pl
+@
+text
+@d4 1
+a4 1
+# $Id: filter_ed.pl,v 1.10 2003/01/23 09:47:30 spanhel Exp $
+a42 3
+    <td valign="bottom"><img class = "cursor" src="img/delete.gif" onclick='clear_name(document.filter.expr);clear_name(document.filter.expr_h);return true;'>
+                        <input type="hidden" name="expr_h" value="">
+    </td></tr>
+d45 3
+a47 2
+  	<table>
+	<tr><td class="visual_down">
+d50 6
+a55 6
+		 <td class="visual_up_button" onclick='exprr(document.filter.expr,"(");'><a name="lb">(</a></td>
+		 <td class="visual_up_button" onclick='exprr(document.filter.expr,")");'><a name="rb">)</a></td>
+                 <td class="visual_up_button" onclick='exprr(document.filter.expr,"=");'><a name="eq">=</a></td>
+		 <td class="visual_up_button" onclick='exprr(document.filter.expr,">");'><a name="gr">&gt</a></td>
+		 <td class="visual_up_button" onclick='exprr(document.filter.expr,"<");'><a name="lr">&lt</a></td>
+		</tr>
+d57 3
+@
+
+
+1.10
+log
+@removed ID used by Drag and Drop
+@
+text
+@d4 1
+a4 1
+# $Id: filter_ed.pl,v 1.9 2003/01/21 14:18:04 spanhel Exp $
+d27 1
+a27 1
+	print $cgi->startform(-action=>'', -name=>'filter', -onsubmit=>'alert("jo");');
+d41 6
+a46 1
+  <tr><td><textarea id="filter_filter" onclick="drop_textarea(this)" cols="43" rows="5" name="expr">$Obj->{expr}</textarea></td></tr>
+@
+
+
+1.9
+log
+@load metadata to grid_ed.pl
+@
+text
+@d4 1
+a4 1
+# $Id: filter_ed.pl,v 1.8 2003/01/20 18:23:50 spanhel Exp $
+d27 1
+a27 1
+	print $cgi->startform(-action=>'', -name=>'filter');
+d69 5
+a73 5
+	<tr>
+	<td class="buttons"><input class = "text" type="submit" name="Action" value="$al->{'Save'}" width="15" height="210" onclick = 'save_new_name(document.filter.name.value);'></td>
+	<td class="buttons"><input class = "text" type="reset" name="reset" value="$al->{'Reset'}" width="15" height="10" ></td>
+	<td class="buttons"><input class = "text" type="button" name="reload" value="$al->{'Reload'}" width="15" height="10" ></td>
+	</tr>
+@
+
+
+1.8
+log
+@reduce number of tabs
+@
+text
+@d4 1
+a4 1
+# $Id: filter_ed.pl,v 1.6 2003/01/16 17:20:20 spanhel Exp $
+d13 1
+a13 1
+use vars qw($ID $Obj $ObjT);
+a19 1
+#	print_decl($cgi);
+a24 23
+sub print_decl {
+	my $cgi = shift;
+
+	print <<END ;   # openNodes ... list of nodes which are currently open
+   <script type="text/javascript">
+   <!--
+     var openNodes = new Array();
+     var URL = new Array;
+     URL[0]  = "";	// "D"	
+     URL[1]  = ""; 	// "G"
+     URL[2]  = ""; 	// "Fi"
+     URL[3]  = ""; 	// "R"
+     URL[4]  = ""; 	// "A"
+     URL[5]  = ""; 	// "Fa"
+     URL[6]  = ""; 	// "Fo"
+     URL[7]  = ""; 	// "M"   
+   //-->
+   </script>
+END
+}
+
+#-----------------------------------------------------
+
+a26 2
+	
+#	print $cgi->startform(-action=>'', -name=>'grid', -onSubmit=>'setAll(setAll(document.PromptForm.MetricsUse); resetAll(document.PromptForm.Metrics; document.PromptForm.RowObj); setAll(document.PromptForm.ColObj); setAll(document.PromptForm.PageObj); resetAll(document.PromptForm.AvailObj)');
+d31 1
+a31 1
+<h3><img src="img/filter.gif"> Filter Edit</h3>
+d37 1
+a37 1
+	 <td class="neutral_bold">Filter expresion:</td>
+d41 1
+a41 1
+  <tr><td><textarea cols="43" rows="5" name="expr">$Obj->{expr}</textarea></td></tr>
+d58 1
+a58 1
+   <tr><td class="neutral_bold">Filter name:</td></tr>
+d64 1
+a64 1
+   <tr><td class="neutral_bold">Filter description:</td></tr>
+d70 3
+a72 3
+	<td class="buttons"><input class = "text" type="submit" name="Action" value="Save" width="15" height="210" onclick = 'save_new_name(document.filter.name.value);'></td>
+	<td class="buttons"><input class = "text" type="reset" name="reset" value="Reset" width="15" height="10" ></td>
+	<td class="buttons"><input class = "text" type="button" name="reload" value="Reload" width="15" height="10" ></td>
+@
+
+
+1.7
+log
+@edit_obj with drag/drop functionality
+@
+text
+@d57 45
+a101 49
+<h3><img class = "rubbish" src="img/filter.gif"> Filter Edit</h3>
+<table class = "main" cellpading="0" cellspacing="0">
+  <tr> 
+    <td class = "description">
+       <table>
+       <tr class = "f_main" align="center">
+           <td class="t1">
+             <img class = "arr" src="img/rightArr.gif" onclick='fill_expr(document.filter.expr,parent.frames[0].document.act_it.act_it.text);return true;' align = "left">
+	     <div class = "text">&nbsp;&nbsp;Filter expresion:<br></div>
+	     <textarea class =" text " cols="43" rows="5" name="expr">$Obj->{expr}</textarea>
+	   </td>       
+       </tr>
+       <tr class = "f_main">
+           <td class="t1" align="center">
+         	<a name="lb" class = "mtr" onclick='exprr(document.filter.expr,"(");'>&nbsp; ( &nbsp;</a>&nbsp;
+		<a name="rb" class = "mtr" onclick='exprr(document.filter.expr,")");'>&nbsp; ) &nbsp;</a>&nbsp;
+                <a name="eq" class = "mtr" onclick='exprr(document.filter.expr,"=");'>&nbsp; = &nbsp;</a>&nbsp;
+		<a name="gr" class = "mtr" onclick='exprr(document.filter.expr,">");'>&nbsp; > &nbsp;</a>&nbsp;
+		<a name="lr" class = "mtr" onclick='exprr(document.filter.expr,"<");'>&nbsp; < &nbsp;</a>&nbsp;
+
+	   </td>       
+       </tr>
+       <tr class = "f_main">
+	  <td>
+             <div class = "text">Filter name:<br></div>
+               
+	       <input value="$Obj->{name}" class = "text" type="text" name="name" size="45" maxlength="100">
+	       <input class = "text" type="hidden" name="filter_name_h">
+	  </td>
+       </tr>
+       <tr class = "f_main" align="center">
+
+	  <td>
+	      <div class = "text">Filter description:<br></div>
+	      <textarea class =" text " cols="43" rows="5" name="desc">$Obj->{description}</textarea>
+	      </td>
+       </tr>
+       <tr class = "f_main" align="center">
+
+	  <td>
+	    <input class = "text" type="submit" name="Action" value="Save" width="15" height="210" onclick = 'save_new_name(document.filter.name.value);'> 
+	    <input class = "text" type="reset" name="reset" value="Reset" width="15" height="10" >
+	    <input class = "text" type="button" name="reload" value="Reload" width="15" height="10" >
+	  </td>
+
+       </tr>
+       </table>
+    </td>
+  </tr>
+@
+
+
+1.6
+log
+@change edit.cgi - tree and object edit desided into two iframes
+@
+text
+@d4 1
+a4 1
+# $Id: filter_ed.pl,v 1.5 2002/11/26 16:29:03 spanhel Exp $
+d82 3
+a84 2
+              <input value="$Obj->{name}" class = "text" type="text" name="name" size="45" maxlength="100">
+	      <input class = "text" type="hidden" name="filter_name_h">
+d97 3
+a99 3
+	    <input class = "text" type="submit" name="Action" value="Save" width="15" height="210"> 
+	    <input class = "text" type="reset" name="reset" value="Reset" width="15" height="10">
+	    <input class = "text" type="button" name="reload" value="Reload" width="15" height="10">
+@
+
+
+1.5
+log
+@format_ed.pl - grid & graph
+@
+text
+@d4 1
+a4 1
+# $Id: filter_ed.pl,v 1.4 2002/11/21 16:27:21 spanhel Exp $
+d20 1
+a20 1
+	print_decl($cgi);
+d58 1
+a58 1
+<table class = "main" >
+a59 11
+    <td class = "tree" rowspan="3">
+       <div id="tree">
+END
+
+           my $i=0;
+    &DefHiearchy("StoreDemo",$i,"filter|metric|attr");
+    &ListHiearchy("StoreDemo",$i);
+print <<END ;
+      </div>
+    </td>
+
+d62 1
+a62 1
+       <tr class = "f_main">
+d64 1
+a64 1
+             <img class = "arr" src="img/rightArr.gif" onclick='fill_expr(document.filter.expr,Tree0);return true;' align = "left">
+d66 1
+a66 1
+	     <textarea class =" text " cols="40" rows="5" name="expr">$Obj->{expr}</textarea>
+d70 1
+a70 1
+           <td class="t1">
+d86 1
+a86 1
+       <tr class = "f_main">
+d93 1
+a93 1
+       <tr class = "f_main">
+a117 1
+
+@
+
+
+1.4
+log
+@loading and saving data
+@
+text
+@d4 1
+a4 1
+# $Id: filter_ed.pl,v 1.3 2002/11/01 11:49:40 spanhel Exp $
+d34 8
+a41 8
+     URL[0]  = "index.cgi?TabAct=E&";	// "D"	
+     URL[1]  = "index.cgi?TabAct=E&"; 	// "G"
+     URL[2]  = "index.cgi?TabAct=E&"; 	// "Fi"
+     URL[3]  = "index.cgi?TabAct=E&"; 	// "R"
+     URL[4]  = "index.cgi?TabAct=E&"; 	// "A"
+     URL[5]  = "index.cgi?TabAct=E&"; 	// "Fa"
+     URL[6]  = "index.cgi?TabAct=E&"; 	// "Fo"
+     URL[7]  = "index.cgi?TabAct=E&"; 	// "M"   
+@
+
+
+1.3
+log
+@added dynamic tree for edit html pages, created format_ed.pl (CSS), changed cookie ID (edit.cgi)
+@
+text
+@d4 1
+a4 1
+# $Id: filter_ed.pl,v 1.2 2002/10/25 15:05:24 spanhel Exp $
+d75 1
+a75 1
+             <img class = "arr" src="img/rightArr.gif" onclick='fill_expr(document.filter.filter_expr,Tree0);return true;' align = "left">
+d77 11
+a87 1
+             <input class = "text" type="text" name="filter_expr" size="26" maxlength="100">
+d92 2
+a93 3
+
+	      <div class = "text">Filter name:<br></div>
+              <input value="$Obj->{name}" class = "text" type="text" name="name" size="29" maxlength="100">
+d95 1
+a95 1
+	      </td>
+d101 1
+a101 1
+	      <textarea class =" text " cols="23" rows="5" name="desc">$Obj->{description}</textarea>
+d124 12
+@
+
+
+1.2
+log
+@*** empty log message ***
+@
+text
+@d4 1
+a4 1
+# $Id: filter_ed.pl,v 1.1 2002/10/25 14:03:25 spanhel Exp $
+d57 1
+a57 1
+
+d63 1
+d65 1
+a65 1
+    &DefHiearchy("StoreDemo",$i,"filter|metric");
+d84 1
+a84 1
+              <input class = "text" type="text" name="filter_name" size="29" maxlength="100">
+d92 1
+a92 1
+	      <textarea class =" text " cols="23" rows="5" name="filter_des"></textarea>
+d97 4
+a100 3
+	  <td><input class = "text" type="submit" name="save" value="Save" width="15" height="210"> 
+	  <input class = "text" type="reset" name="reset" value="Reset" width="15" height="10" onclick='reset_all_filter(); return true;'>
+	  <input class = "text" type="button" name="reload" value="Reload" width="15" height="10">
+@
+
+
+1.1
+log
+@edit pages created
+@
+text
+@d4 1
+a4 1
+# $Id: grid_ed.pl,v 1.2 2002/10/23 11:17:36 michald Exp $
+d64 1
+a64 1
+    &DefHiearchy("StoreDemo",$i);
+d74 1
+a74 1
+             <img class = "arr" src="img/rightArr.gif" onclick='fill_expr(document.filter.filter_expr,Tree);return true;' align = "left">
+@
+

@@ -1,0 +1,75 @@
+head	1.1;
+access;
+symbols
+	jpivot_1_8_0:1.1
+	focus_1_6_0:1.1.0.6
+	wcf_1_7_0:1.1
+	wcf_1_6_0:1.1
+	jpivot_1_5_0:1.1.0.4
+	Root_jpivot_1_5_0:1.1
+	mondrian_xmla_2005_08_25:1.1.0.2
+	sourceforge_sync:1.1;
+locks; strict;
+comment	@# @;
+
+
+1.1
+date	2005.07.05.14.04.33;	author avix;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@initial version
+@
+text
+@/*
+ * ====================================================================
+ * This software is subject to the terms of the Common Public License
+ * Agreement, available at the following URL:
+ *   http://www.opensource.org/licenses/cpl.html .
+ * Copyright (C) 2003-2004 TONBELLER AG.
+ * All Rights Reserved.
+ * You must accept the terms of that agreement to use this software.
+ * ====================================================================
+ *
+ * 
+ */
+package com.tonbeller.wcf.sqltable;
+
+import javax.servlet.jsp.JspException;
+import javax.servlet.jsp.tagext.TagSupport;
+
+import com.tonbeller.tbutils.res.Resources;
+
+/**
+ * @@author av
+ * @@since Oct 6, 2004
+ */
+public abstract class SqlTableNestedTag extends TagSupport {
+
+  protected SqlTableTag getTableTag() throws JspException {
+    SqlTableTag tag = (SqlTableTag) findAncestorWithClass(this, SqlTableTag.class);
+    if (tag == null)
+      throw new JspException(getClass().getName() + " tag must be nested inside an SqlTable Tag");
+    return tag;
+  }
+
+  protected SqlTable getTable() throws JspException {
+    return getTableTag().getTable();
+  }
+
+  protected Resources getResources() throws JspException {
+    return getTableTag().getResources();
+  }
+  
+  protected boolean isRenderActions() throws JspException {
+    return getTableTag().isRenderActions();
+  }
+}
+@

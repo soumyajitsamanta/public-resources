@@ -1,0 +1,129 @@
+head	1.2;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2008.05.17.15.43.54;	author fsaz;	state dead;
+branches;
+next	1.1;
+
+1.1
+date	2005.11.28.14.02.37;	author fsaz;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@borrando viejos
+@
+text
+@<script><![CDATA[
+var svgdoc;
+var theLayers= new Array();
+var bound={x1:10E38,y1:10E38,x2:-10E38,y2:-10E38};
+var sldnode;var eldnode; var fcnode;
+
+function execScript(evt){
+	var targ = evt.getTarget();
+	svgdoc = targ.getOwnerDocument();
+	if(window!=null) window.beforeunload=unloadWidget();
+	if(window.parent!=null) window.parent.beforeunload=unloadWidget();
+	arrangeSVG(evt,0.8);
+	init(evt);
+	initzp(evt);
+	createToolbarButton(evt)
+}
+function pn(obj){
+	return printNode(obj);
+}
+function pxml(str){
+	return parseXML(str,svgdoc);
+}
+function be(txt){
+	browserEval(txt);
+}
+function doZoom(evt){
+  SetStaticZP(evt); 
+}
+function doScroll(evt){
+	SetStaticZP(evt);
+}
+function getFeature(){};
+function init(evt){
+	sldnode = svgdoc.getElementsByTagName('StyledLayerDescriptor').item(0);
+	eldnode = svgdoc.getElementsByTagName('ExtendedLayerDescriptor').item(0);
+	fcnode = svgdoc.getElementsByTagName('featureCollection').item(0);
+	createLayers();
+	createExtent();	
+	addPanBox();
+	addEvents();
+}
+function createLayers(){
+	mapLay = svgdoc.getElementById('mapLayers');
+	mapLays = mapLay.getElementsByTagName("g");
+	if (mapLays.length<1) return;
+	for (i=0;i<mapLays.length;i++){
+		feats =mapLays.item(i).getChildNodes();
+		for (j=0;j<feats.length;j++){
+			if (feats.item(j).nodeName!="#text") {
+				//alert("feature["+j+"]="+feats.item(j))
+				getbound(feats.item(j));
+			}
+		}
+	}
+//shuffle the stack order
+	eldest = mapLays.item(0);	
+	nmv = mapLays.length;
+	for (i=0;i<nmv;i++){
+		movedg = mapLays.item(nmv-1);
+		if (movedg==eldest) break;
+		mapLay.removeChild(movedg);
+		mapLay.insertBefore(movedg,eldest);
+	}
+}
+
+function getbound(p2){	
+	if(p2==null) return;
+	//alert('p2:'+p2);
+	bbx=p2.getBBox();
+	bound.x1=Math.min(bound.x1,bbx.x);
+	bound.x2=Math.max(bound.x2,(bbx.x+bbx.width));
+	bound.y1=Math.min(bound.y1,bbx.y);
+	bound.y2=Math.max(bound.y2,(bbx.y+bbx.height));
+}
+function createExtent(){
+	mapLay = svgdoc.getElementById("mapLayers");
+	keyMap = svgdoc.getElementById("keyMap");
+	map = svgdoc.getElementById("map");
+	vbstr=bound.x1+" "+bound.y1+" "+(bound.x2-bound.x1)+" "+(bound.y2-bound.y1);
+	h2=bound.y2+bound.y1;
+	matrix="matrix(1 0 0 -1 0 "+h2+")";
+	map.setAttribute("viewBox",vbstr);
+	keyMap.setAttribute("viewBox",vbstr);
+	mapLay.setAttribute("transform",matrix);
+
+  backgr=svgdoc.getElementById("bg");
+  backgr.setAttribute("x",bound.x1);
+  backgr.setAttribute("y",bound.y1);
+  backgr.setAttribute("width",bound.x2-bound.x1);
+  backgr.setAttribute("height",bound.y2-bound.y1);
+}
+]]></script>
+@
+
+
+1.1
+log
+@*** empty log message ***
+@
+text
+@@
+

@@ -1,0 +1,880 @@
+head	1.21;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.21
+date	2003.10.31.12.47.57;	author jiri_schmid;	state dead;
+branches;
+next	1.20;
+
+1.20
+date	2003.10.17.11.36.16;	author jiri_schmid;	state Exp;
+branches;
+next	1.19;
+
+1.19
+date	2003.10.16.14.08.53;	author jiri_schmid;	state Exp;
+branches;
+next	1.18;
+
+1.18
+date	2003.09.26.11.16.26;	author jiri_schmid;	state Exp;
+branches;
+next	1.17;
+
+1.17
+date	2003.09.01.12.40.08;	author jiri_schmid;	state Exp;
+branches;
+next	1.16;
+
+1.16
+date	2003.08.13.14.22.03;	author jiri_schmid;	state Exp;
+branches;
+next	1.15;
+
+1.15
+date	2003.08.06.15.22.33;	author jiri_schmid;	state Exp;
+branches;
+next	1.14;
+
+1.14
+date	2003.08.05.08.39.25;	author jiri_schmid;	state Exp;
+branches;
+next	1.13;
+
+1.13
+date	2003.08.05.08.02.11;	author jiri_schmid;	state Exp;
+branches;
+next	1.12;
+
+1.12
+date	2003.08.04.14.17.37;	author jiri_schmid;	state Exp;
+branches;
+next	1.11;
+
+1.11
+date	2003.08.04.12.07.40;	author jiri_schmid;	state Exp;
+branches;
+next	1.10;
+
+1.10
+date	2003.08.04.09.51.29;	author jiri_schmid;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	2003.08.04.08.12.54;	author jiri_schmid;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	2003.08.01.13.07.14;	author jiri_schmid;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	2003.07.31.14.34.42;	author jiri_schmid;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	2003.07.28.13.39.58;	author jiri_schmid;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	2003.07.25.10.53.21;	author jiri_schmid;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2003.07.25.09.28.51;	author jiri_schmid;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2003.07.24.10.37.52;	author jiri_schmid;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2003.07.23.11.44.56;	author jiri_schmid;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2003.07.22.15.17.20;	author jiri_schmid;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.21
+log
+@mod perl rocks!
+@
+text
+@#-----------------------------------------------------
+#  Grid Editation
+#-----------------------------------------------------
+# $Id: graph3d_color_ed.pl,v 1.20 2003/10/17 11:36:16 jiri_schmid Exp $
+
+use strict;
+our($Shapes);
+
+#-----------------------------------------------------
+sub generateContent() {
+my($variables, $lang, $obj) = (shift, shift, shift);
+my $saved = $$variables->{saved} if exists $$variables->{saved};
+my $localTab = $$variables->{localTab};
+my $imgType = \$$variables->{imgType};
+my $skinPath = \$$variables->{skinPath};
+
+my ($fill, $shape, $itemsType);
+print "<br><table class='page_skeleton'><tr class='page_skeleton'><td class='page_skeleton_ex' align='center'>";
+if (&existsDefinition($obj,$localTab)) {
+if (@@{$$obj->{$localTab}{items}} == 0) {
+	print "<span style='padding: 15px; line-height: 30px'>$$lang->{'Report Qualitative'}</span>";
+} else {
+my ($rowspan, $check);
+if ($$obj->{$localTab}{quantity} eq "on") {
+	$rowspan = "rowspan='3'";
+	$check = "onchange='checkNum(this)'";
+};
+$$obj->{$localTab}{default} = "120,40,80" if !$$obj->{$localTab}{default};
+my @@colors = split(/,/,$$obj->{$localTab}{default});
+
+print <<END;
+	<table style='text-align:left;width:100%'>
+	<tr>	<th style='white-space:nowrap'>$$lang->{'Graph3d default'}</td>
+		<td><input onfocus='setSelf(this)' ondblclick='setColor(this)' type='text' name='default' id='default0' size='10' value='$$obj->{$localTab}{default}'/></td>
+		<td $rowspan>
+			<table class='neutral_100' style="text-align:center"><tr>
+				<td colspan='5'>$$lang->{'Graph3d color'}:</td>
+			</tr><tr>
+				<td id='color' class='cursor' style='background-color:rgb($$obj->{$localTab}{default}); width:100px' title='$$obj->{$localTab}{default}' onclick='addColor(this)' rowspan='4'>&nbsp</td>
+				<td style='text-align:right; color:#f00'>$$lang->{'Graph3d red'}</td><td><img class='cursor' onclick='minus("red")' src='$${skinPath}img/downArr.$$imgType' onmousedown="startDecrease('red')" onmouseup='stopTimer()'></td><td><input id='red' size='4' style='text-align:center' type='text' value='$colors[0]' onchange='changeColor()'/></td><td><img onclick='plus("red")' class='cursor' style='padding:2px' src='$${skinPath}img/upArr.$$imgType' onmousedown="startIncrease('red')" onmouseup='stopTimer()'></td>
+			</tr><tr>
+				<td style='text-align:right; color:#0f0'>$$lang->{'Graph3d green'}</td><td><img class='cursor' onclick='minus("green")' src='$${skinPath}img/downArr.$$imgType' onmousedown="startDecrease('green')" onmouseup='stopTimer()'></td><td><input id='green' type='text' style='text-align:center' size='4' value='$colors[1]' onchange='changeColor()'/></td><td><img onclick='plus("green")' class='cursor' style='padding:2px' src='$${skinPath}img/upArr.$$imgType' onmousedown="startIncrease('green')" onmouseup='stopTimer()'></td>
+			</tr><tr>
+				<td style='text-align:right; color:#00f'>$$lang->{'Graph3d blue'}</td><td><img class='cursor' onclick='minus("blue")' src='$${skinPath}img/downArr.$$imgType' onmousedown="startDecrease('blue')" onmouseup='stopTimer()'></td><td><input id='blue' type='text' style='text-align:center' size='4' value='$colors[2]' onchange='changeColor()'/></td><td><img onclick='plus("blue")' class='cursor' style='padding:2px' src='$${skinPath}img/upArr.$$imgType' onmousedown="startIncrease('blue')" onmouseup='stopTimer()'></td>
+			</tr>
+		</table>
+	</td></tr>
+END
+	if ($rowspan) {
+		print "<tr><th style='white-space:nowrap'>$$lang->{'Min'}</th><td><input onfocus='setSelf(this); setBin(this)' $check size='10' type='text' name='min' id='inputmin' value='$$obj->{$localTab}{min}'/></td></tr>";
+		print "<tr><th style='white-space:nowrap'>$$lang->{'Max'}</th><td><input onfocus='setSelf(this); setBin(this)' $check size='10' type='text' name='max' id='inputmax' value='$$obj->{$localTab}{max}'/></td></tr>";
+	}
+	my @@ids;
+	print "<tr><td colspan='3'><hr/></td></tr>";
+	my $name = "Graph3d Item$localTab";
+	print "<tr><th style='text-align:left' colspan='2'>$$lang->{$name}</th><td style='text-align:right'><img class='cursor' src='$${skinPath}img/delete.$$imgType' title=\"$$lang->{'Delete Active'}\" onclick='emptyBin()'></td></tr></table>";	
+	print "<table style='text-align:left; width:100%'>";
+	if (SOAP->GetObjectType(${$$obj->{$localTab}{items}}[$#{$$obj->{$localTab}{items}}]) =~ /metric/) {
+		$itemsType = "<input type='hidden' value='1' name='metric' />";
+		foreach (0..$#{$$obj->{$localTab}{items}}) {
+		print "<tr><td colspan='4'><hr/></td></tr>";
+			my $id = @@{$$obj->{$localTab}{items}}[$_];
+			my $end = sprintf("%.0f",8/@@{$$obj->{$localTab}{items}});
+			my $rowspan = $end+2;
+			print "<tr><td style='text-align:center' rowspan='$rowspan'><span id='$id'>$id</span>:</td><td style='text-align:center'>$$lang->{'Graph3d Interval'}</td><td style='text-align:center'>$$lang->{'Graph3d Size'}</td><td></td></tr>";
+				for my $cnt (0..$end) {
+				my $index1 = $cnt * 2;
+				my $index2 = $cnt * 2 + 1;
+				print "<tr><td><input type='text' style='width:100%' name='view${_}$cnt' value='$$obj->{$localTab}{rules}[$_][$index1]' onfocus='setBin(this)'/></td><td><input type='text' style='width:100%' ondblclick='setColor(this)' value='$$obj->{$localTab}{rules}[$_][$index2]' name='change${_}$cnt' id='change${_}$cnt' onfocus='setSelf(this); setBin(this)' /></td><td class='cursor' id='color${_}$cnt' onclick='reloadColor(this)' style='background-color:rgb($$obj->{$localTab}{rules}[$_][$index2]); width:25px'></td></tr>";
+				}
+			push(@@ids,$id);
+		}
+	} else {
+		print "<tr>";
+		foreach (0..$#{$$obj->{$localTab}{items}}) {
+			my $id = @@{$$obj->{$localTab}{items}}[$_];
+			push(@@ids,$id);
+			print "<td style='text-align:center'><span class='cursor' title=\"$$lang->{'Elements show'}\" id='$id' onclick='loadElement(this)'>$id</span>:</td>"; 
+		}
+		print "<td style='text-align:center'>$$lang->{'Graph3d Size'}</td><td>&nbsp</td></tr>";
+		my $plusOne = @@{$$obj->{$localTab}{items}};
+		for my $cnt (0..5) {
+			print "<tr>";
+			foreach (0..$#{$$obj->{$localTab}{items}}) {
+				print "<td><input type='text' style='width:100%' name='view${cnt}_${_}' value=\"$$obj->{$localTab}{rules}[$cnt][$_]\" onfocus='setBin(this)' onclick='addValue(this)'/></td>"; 
+				}
+			print "<td><input type='text' style='width:100%' value='$$obj->{$localTab}{rules}[$cnt][$plusOne]' name='change${cnt}' id='change$cnt' ondblclick='setColor(this)' onfocus='setSelf(this); setBin(this)' /></td><td class='cursor' id='color$cnt' onclick='reloadColor(this)' style='background-color:rgb($$obj->{$localTab}{rules}[$cnt][$plusOne]); width:25px'></td>";
+			print "</tr>";
+		}
+	}
+	print "</table>";
+	print "<input type='hidden' id='ids' value='".join("|",@@ids)."'/>";
+	$fill = "fillAxis(true);";
+print <<END;
+	</td></tr>	
+	<tr class="page_skeleton">
+	<td class="page_skeleton">
+		<table class="neutral_100">
+		<tr><td align="center">
+			<table class="buttons" cellpading="0" cellspacing="0">
+			<tr>	<td class="buttons"><input type="submit" name="Action" value="$$lang->{'Save'}" /></td>
+				<td class="buttons">
+						<input type="submit" name="Action" value="$$lang->{'Save As'}" onclick="return readName();"/>
+						<input type="hidden" name="saveAsName" id="saveAsName" value="" />
+				</td>
+				<td class="buttons"><input type="reset" name="reset" value="$$lang->{'Reset'}" /></td>
+			</tr>
+			</table>
+		</td></tr>
+		</table>
+	</td></tr>
+END
+}
+}
+print <<END;
+</td></tr>
+</table>
+$itemsType
+<script type="text/javascript" src="js/graph3d.js"></script>
+<script type="text/javascript">
+	var msg="$$lang->{'New Save Part1'}$$lang->{'New Graph3d Save'}$$lang->{'New Save Part2'}";
+	var saveAsMsg = "$$lang->{SaveAsMsg}$$lang->{'New Graph3d'}";
+	reloadTree($saved);
+	$fill
+</script>
+END
+}
+
+#---------------------------------------------------
+
+sub set_next_param {
+my ($o,$variables) = (shift,shift);
+&saveDTSC($o,$$variables->{localTab});
+}
+
+
+1
+@
+
+
+1.20
+log
+@last changes-fixies coresponding mod-perl stage 1
+@
+text
+@d4 1
+a4 1
+# $Id: graph3d_color_ed.pl,v 1.19 2003/10/16 14:08:53 jiri_schmid Exp $
+@
+
+
+1.19
+log
+@mod-perl implementation stage 1, rebuilding global vars in .pl to global pointers
+@
+text
+@d4 1
+a4 1
+# $Id: graph3d_color_ed.pl,v 1.18 2003/09/26 11:16:26 jiri_schmid Exp $
+d99 1
+a99 1
+		<tr><td align="right">
+d102 4
+@
+
+
+1.18
+log
+@format2d color tab implemented
+@
+text
+@d4 1
+a4 1
+# $Id: graph3d_color_ed.pl,v 1.17 2003/09/01 12:40:08 jiri_schmid Exp $
+d7 1
+a7 8
+use CGI qw( :standard );
+use CGI::Pretty;
+
+require "const.def";
+require "local_lib.pl";
+
+
+use vars qw($Obj $descr_w $use_lang $saved $lang $localTab $Shapes $skinPath $imgType);
+d11 7
+a17 1
+	my ($fill, $shape, $itemsType);
+d19 3
+a21 3
+if (&existsDefinition) {
+if (@@{$Obj->{$localTab}{items}} == 0) {
+	print "<span style='padding: 15px; line-height: 30px'>$lang->{'Report Qualitative'}</span>";
+d24 1
+a24 1
+if ($Obj->{$localTab}{quantity} eq "on") {
+d28 2
+a29 2
+$Obj->{$localTab}{default} = "120,40,80" if !$Obj->{$localTab}{default};
+my @@colors = split(/,/,$Obj->{$localTab}{default});
+d33 2
+a34 2
+	<tr>	<th style='white-space:nowrap'>$lang->{'Graph3d default'}</td>
+		<td><input onfocus='setSelf(this)' ondblclick='setColor(this)' type='text' name='default' id='default0' size='10' value='$Obj->{$localTab}{default}'/></td>
+d37 1
+a37 1
+				<td colspan='5'>$lang->{'Graph3d color'}:</td>
+d39 2
+a40 2
+				<td id='color' class='cursor' style='background-color:rgb($Obj->{$localTab}{default}); width:100px' title='$Obj->{$localTab}{default}' onclick='addColor(this)' rowspan='4'>&nbsp</td>
+				<td style='text-align:right; color:#f00'>$lang->{'Graph3d red'}</td><td><img class='cursor' onclick='minus("red")' src='${skinPath}img/downArr.$imgType' onmousedown="startDecrease('red')" onmouseup='stopTimer()'></td><td><input id='red' size='4' style='text-align:center' type='text' value='$colors[0]' onchange='changeColor()'/></td><td><img onclick='plus("red")' class='cursor' style='padding:2px' src='${skinPath}img/upArr.$imgType' onmousedown="startIncrease('red')" onmouseup='stopTimer()'></td>
+d42 1
+a42 1
+				<td style='text-align:right; color:#0f0'>$lang->{'Graph3d green'}</td><td><img class='cursor' onclick='minus("green")' src='${skinPath}img/downArr.$imgType' onmousedown="startDecrease('green')" onmouseup='stopTimer()'></td><td><input id='green' type='text' style='text-align:center' size='4' value='$colors[1]' onchange='changeColor()'/></td><td><img onclick='plus("green")' class='cursor' style='padding:2px' src='${skinPath}img/upArr.$imgType' onmousedown="startIncrease('green')" onmouseup='stopTimer()'></td>
+d44 1
+a44 1
+				<td style='text-align:right; color:#00f'>$lang->{'Graph3d blue'}</td><td><img class='cursor' onclick='minus("blue")' src='${skinPath}img/downArr.$imgType' onmousedown="startDecrease('blue')" onmouseup='stopTimer()'></td><td><input id='blue' type='text' style='text-align:center' size='4' value='$colors[2]' onchange='changeColor()'/></td><td><img onclick='plus("blue")' class='cursor' style='padding:2px' src='${skinPath}img/upArr.$imgType' onmousedown="startIncrease('blue')" onmouseup='stopTimer()'></td>
+d50 2
+a51 2
+		print "<tr><th style='white-space:nowrap'>$lang->{'Min'}</th><td><input onfocus='setSelf(this); setBin(this)' $check size='10' type='text' name='min' id='inputmin' value='$Obj->{$localTab}{min}'/></td></tr>";
+		print "<tr><th style='white-space:nowrap'>$lang->{'Max'}</th><td><input onfocus='setSelf(this); setBin(this)' $check size='10' type='text' name='max' id='inputmax' value='$Obj->{$localTab}{max}'/></td></tr>";
+d56 1
+a56 1
+	print "<tr><th style='text-align:left' colspan='2'>$lang->{$name}</th><td style='text-align:right'><img class='cursor' src='${skinPath}img/delete.$imgType' title=\"$lang->{'Delete Active'}\" onclick='emptyBin()'></td></tr></table>";	
+d58 1
+a58 1
+	if (SOAP->GetObjectType(${$Obj->{$localTab}{items}}[$#{$Obj->{$localTab}{items}}]) =~ /metric/) {
+d60 1
+a60 1
+		foreach (0..$#{$Obj->{$localTab}{items}}) {
+d62 2
+a63 2
+			my $id = @@{$Obj->{$localTab}{items}}[$_];
+			my $end = sprintf("%.0f",8/@@{$Obj->{$localTab}{items}});
+d65 1
+a65 1
+			print "<tr><td style='text-align:center' rowspan='$rowspan'><span id='$id'>$id</span>:</td><td style='text-align:center'>$lang->{'Graph3d Interval'}</td><td style='text-align:center'>$lang->{'Graph3d Size'}</td><td></td></tr>";
+d69 1
+a69 1
+				print "<tr><td><input type='text' style='width:100%' name='view${_}$cnt' value='$Obj->{$localTab}{rules}[$_][$index1]' onfocus='setBin(this)'/></td><td><input type='text' style='width:100%' ondblclick='setColor(this)' value='$Obj->{$localTab}{rules}[$_][$index2]' name='change${_}$cnt' id='change${_}$cnt' onfocus='setSelf(this); setBin(this)' /></td><td class='cursor' id='color${_}$cnt' onclick='reloadColor(this)' style='background-color:rgb($Obj->{$localTab}{rules}[$_][$index2]); width:25px'></td></tr>";
+d75 2
+a76 2
+		foreach (0..$#{$Obj->{$localTab}{items}}) {
+			my $id = @@{$Obj->{$localTab}{items}}[$_];
+d78 1
+a78 1
+			print "<td style='text-align:center'><span class='cursor' title=\"$lang->{'Elements show'}\" id='$id' onclick='loadElement(this)'>$id</span>:</td>"; 
+d80 2
+a81 2
+		print "<td style='text-align:center'>$lang->{'Graph3d Size'}</td><td>&nbsp</td></tr>";
+		my $plusOne = @@{$Obj->{$localTab}{items}};
+d84 2
+a85 2
+			foreach (0..$#{$Obj->{$localTab}{items}}) {
+				print "<td><input type='text' style='width:100%' name='view${cnt}_${_}' value=\"$Obj->{$localTab}{rules}[$cnt][$_]\" onfocus='setBin(this)' onclick='addValue(this)'/></td>"; 
+d87 1
+a87 1
+			print "<td><input type='text' style='width:100%' value='$Obj->{$localTab}{rules}[$cnt][$plusOne]' name='change${cnt}' id='change$cnt' ondblclick='setColor(this)' onfocus='setSelf(this); setBin(this)' /></td><td class='cursor' id='color$cnt' onclick='reloadColor(this)' style='background-color:rgb($Obj->{$localTab}{rules}[$cnt][$plusOne]); width:25px'></td>";
+d101 2
+a102 2
+			<tr>	<td class="buttons"><input type="submit" name="Action" value="$lang->{'Save'}" /></td>
+				<td class="buttons"><input type="reset" name="reset" value="$lang->{'Reset'}" /></td>
+d117 2
+a118 2
+	var msg="$lang->{'New Save Part1'}$lang->{'New Graph3d Save'}$lang->{'New Save Part2'}";
+	var saveAsMsg = "$lang->{SaveAsMsg}$lang->{'New Graph3d'}";
+d128 2
+a129 1
+&saveDTSC;
+@
+
+
+1.17
+log
+@skins implemented. mozilla skin - temporarily copy msie content
+@
+text
+@d4 1
+a4 1
+# $Id: graph3d_color_ed.pl,v 1.16 2003/08/13 14:22:03 jiri_schmid Exp $
+d116 1
+a116 1
+<script type="text/javascript" src="js/graph3d.js"></script>	
+a119 1
+	var TargeT;
+@
+
+
+1.16
+log
+@code clearing and improvment
+@
+text
+@d4 1
+a4 1
+# $Id: graph3d_color_ed.pl,v 1.15 2003/08/06 15:22:33 jiri_schmid Exp $
+d14 1
+a14 1
+use vars qw($Obj $descr_w $use_lang $saved $lang $localTab $Shapes);
+d41 1
+a41 1
+				<td style='text-align:right; color:#f00'>$lang->{'Graph3d red'}</td><td><img class='cursor' onclick='minus("red")' src='img/downArr.gif' onmousedown="startDecrease('red')" onmouseup='stopTimer()'></td><td><input id='red' size='4' style='text-align:center' type='text' value='$colors[0]' onchange='changeColor()'/></td><td><img onclick='plus("red")' class='cursor' style='padding:2px' src='img/upArr.gif' onmousedown="startIncrease('red')" onmouseup='stopTimer()'></td>
+d43 1
+a43 1
+				<td style='text-align:right; color:#0f0'>$lang->{'Graph3d green'}</td><td><img class='cursor' onclick='minus("green")' src='img/downArr.gif' onmousedown="startDecrease('green')" onmouseup='stopTimer()'></td><td><input id='green' type='text' style='text-align:center' size='4' value='$colors[1]' onchange='changeColor()'/></td><td><img onclick='plus("green")' class='cursor' style='padding:2px' src='img/upArr.gif' onmousedown="startIncrease('green')" onmouseup='stopTimer()'></td>
+d45 1
+a45 1
+				<td style='text-align:right; color:#00f'>$lang->{'Graph3d blue'}</td><td><img class='cursor' onclick='minus("blue")' src='img/downArr.gif' onmousedown="startDecrease('blue')" onmouseup='stopTimer()'></td><td><input id='blue' type='text' style='text-align:center' size='4' value='$colors[2]' onchange='changeColor()'/></td><td><img onclick='plus("blue")' class='cursor' style='padding:2px' src='img/upArr.gif' onmousedown="startIncrease('blue')" onmouseup='stopTimer()'></td>
+d57 1
+a57 1
+	print "<tr><th style='text-align:left' colspan='2'>$lang->{$name}</th><td style='text-align:right'><img class='cursor' src='img/delete.gif' title=\"$lang->{'Delete Active'}\" onclick='emptyBin()'></td></tr></table>";	
+@
+
+
+1.15
+log
+@user ACL implementation started
+@
+text
+@d4 1
+a4 1
+# $Id: graph3d_color_ed.pl,v 1.14 2003/08/05 08:39:25 jiri_schmid Exp $
+a17 1
+	my $cgi = shift;
+d41 1
+a41 1
+				<td style='text-align:right; color:#f00'>$lang->{'Graph3d red'}</td><td><img class='cursor' onclick='minus("red")' src='img/downArr.gif' onmousedown=\"startDecrease('red')\" onmouseup='stopTimer()'></td><td><input id='red' size='4' style='text-align:center' type='text' value='$colors[0]' onchange='changeColor()'/></td><td><img onclick='plus("red")' class='cursor' style='padding:2px' src='img/upArr.gif' onmousedown=\"startIncrease('red')\" onmouseup='stopTimer()'></td>
+d43 1
+a43 1
+				<td style='text-align:right; color:#0f0'>$lang->{'Graph3d green'}</td><td><img class='cursor' onclick='minus("green")' src='img/downArr.gif' onmousedown=\"startDecrease('green')\" onmouseup='stopTimer()'></td><td><input id='green' type='text' style='text-align:center' size='4' value='$colors[1]' onchange='changeColor()'/></td><td><img onclick='plus("green")' class='cursor' style='padding:2px' src='img/upArr.gif' onmousedown=\"startIncrease('green')\" onmouseup='stopTimer()'></td>
+d45 1
+a45 1
+				<td style='text-align:right; color:#00f'>$lang->{'Graph3d blue'}</td><td><img class='cursor' onclick='minus("blue")' src='img/downArr.gif' onmousedown=\"startDecrease('blue')\" onmouseup='stopTimer()'></td><td><input id='blue' type='text' style='text-align:center' size='4' value='$colors[2]' onchange='changeColor()'/></td><td><img onclick='plus("blue")' class='cursor' style='padding:2px' src='img/upArr.gif' onmousedown=\"startIncrease('blue')\" onmouseup='stopTimer()'></td>
+@
+
+
+1.14
+log
+@minor code simplification
+@
+text
+@d4 1
+a4 1
+# $Id: graph3d_color_ed.pl,v 1.13 2003/08/05 08:02:11 jiri_schmid Exp $
+d39 1
+a39 1
+				<td colspan='5'>Barva:</td>
+@
+
+
+1.13
+log
+@bug fixies
+@
+text
+@d4 1
+a4 1
+# $Id: graph3d_color_ed.pl,v 1.12 2003/08/04 14:17:37 jiri_schmid Exp $
+d131 1
+a131 40
+# remove this two lines, after datas cleard from old keys (sizes and intervals)
+delete $Obj->{$localTab}{sizes} if exists $Obj->{$localTab}{sizes};
+delete $Obj->{$localTab}{intervals} if exists $Obj->{$localTab}{intervals};
+delete $Obj->{$localTab}{rules} if exists $Obj->{$localTab}{rules};
+my @@pole;
+my $name;
+my $add;
+if (param('metric')) {
+	foreach (0..$#{$Obj->{$localTab}{items}}) {
+		undef @@pole;
+		my $id = @@{$Obj->{$localTab}{items}}[$_];
+		my $end = sprintf("%.0f",8/@@{$Obj->{$localTab}{items}});
+		for my $cnt (0..$end) {
+			$name = "view${_}$cnt";
+			push(@@pole,param($name),param("change".${_}.$cnt)) if param($name);
+			}
+		@@{$Obj->{$localTab}{rules}}[$_] = [@@pole];
+	}
+} else {
+	for my $cnt (0..5) {
+		$add = 0;
+		undef @@pole;
+		foreach (0..$#{$Obj->{$localTab}{items}}) {
+			$name = "view${cnt}_$_";
+			$add++ if param($name);
+			push(@@pole,param($name));
+		}
+		$name = "change${cnt}";
+		push(@@pole,param($name));
+		@@{$Obj->{$localTab}{rules}}[$cnt] = [@@pole] if $add > 0;
+	}
+}
+if ($Obj->{$localTab}{quantity} eq "on") {
+	$Obj->{$localTab}{interpolation} = param('interpolation');
+	$Obj->{$localTab}{max} = param('max');
+	$Obj->{$localTab}{min} = param('min');
+} else {
+$Obj->{$localTab}{interpolation} = 'constant';
+}
+$Obj->{$localTab}{default} = param('default');
+d133 1
+@
+
+
+1.12
+log
+@UI improvments
+@
+text
+@d4 1
+a4 1
+# $Id: graph3d_color_ed.pl,v 1.11 2003/08/04 12:07:40 jiri_schmid Exp $
+d87 1
+a87 1
+				print "<td><input type='text' style='width:100%' name='view${cnt}_${_}' value='$Obj->{$localTab}{rules}[$cnt][$_]' onfocus='setBin(this)' onclick='addValue(this)'/></td>"; 
+@
+
+
+1.11
+log
+@graph3d-color inerface improvment, run.cgi bug fix
+@
+text
+@d4 1
+a4 1
+# $Id: graph3d_color_ed.pl,v 1.10 2003/08/04 09:51:29 jiri_schmid Exp $
+d42 1
+a42 1
+				<td style='text-align:right; color:#f00'>red:</td><td><img class='cursor' onclick='minus("red")' src='img/downArr.gif' onmousedown=\"startDecrease('red')\" onmouseup='stopTimer()'></td><td><input id='red' size='4' style='text-align:center' type='text' value='$colors[0]' onchange='changeColor()'/></td><td><img onclick='plus("red")' class='cursor' style='padding:2px' src='img/upArr.gif' onmousedown=\"startIncrease('red')\" onmouseup='stopTimer()'></td>
+d44 1
+a44 1
+				<td style='text-align:right; color:#0f0'>green:</td><td><img class='cursor' onclick='minus("green")' src='img/downArr.gif' onmousedown=\"startDecrease('green')\" onmouseup='stopTimer()'></td><td><input id='green' type='text' style='text-align:center' size='4' value='$colors[1]' onchange='changeColor()'/></td><td><img onclick='plus("green")' class='cursor' style='padding:2px' src='img/upArr.gif' onmousedown=\"startIncrease('green')\" onmouseup='stopTimer()'></td>
+d46 1
+a46 1
+				<td style='text-align:right; color:#00f'>blue:</td><td><img class='cursor' onclick='minus("blue")' src='img/downArr.gif' onmousedown=\"startDecrease('blue')\" onmouseup='stopTimer()'></td><td><input id='blue' type='text' style='text-align:center' size='4' value='$colors[2]' onchange='changeColor()'/></td><td><img onclick='plus("blue")' class='cursor' style='padding:2px' src='img/upArr.gif' onmousedown=\"startIncrease('blue')\" onmouseup='stopTimer()'></td>
+d71 1
+a71 1
+				print "<tr><td><input type='text' style='width:100%' name='view${_}$cnt' value='$Obj->{$localTab}{rules}[$_][$index1]' onfocus='setBin(this)'/></td><td><input type='text' style='width:100%' ondblclick='setColor(this)' value='$Obj->{$localTab}{rules}[$_][$index2]' name='change${_}$cnt' onfocus='setSelf(this); setBin(this)' /></td><td id='color${_}$cnt' style='background-color:rgb($Obj->{$localTab}{rules}[$_][$index2]); width:25px'></td></tr>";
+d89 1
+a89 1
+			print "<td><input type='text' style='width:100%' value='$Obj->{$localTab}{rules}[$cnt][$plusOne]' name='change${cnt}' ondblclick='setColor(this)' onfocus='setSelf(this); setBin(this)' /></td><td id='color$cnt' style='background-color:rgb($Obj->{$localTab}{rules}[$cnt][$plusOne]); width:25px'></td>";
+@
+
+
+1.10
+log
+@code improvment, bug fixies
+@
+text
+@d4 1
+a4 1
+# $Id: graph3d_color_ed.pl,v 1.9 2003/08/04 08:12:54 jiri_schmid Exp $
+d63 1
+a63 1
+		print "<tr><td colspan='3'><hr/></td></tr>";
+d67 1
+a67 1
+			print "<tr><td style='text-align:center' rowspan='$rowspan'><span id='$id'>$id</span>:</td><td style='text-align:center'>$lang->{'Graph3d Interval'}</td><td style='text-align:center'>$lang->{'Graph3d Size'}</td></tr>";
+d71 1
+a71 1
+				print "<tr><td><input type='text' style='width:100%' name='view${_}$cnt' value='$Obj->{$localTab}{rules}[$_][$index1]' onfocus='setBin(this)'/></td><td><input type='text' style='width:100%' ondblclick='setColor(this)' value='$Obj->{$localTab}{rules}[$_][$index2]' name='change${_}$cnt' onfocus='setSelf(this); setBin(this)'></td></tr>";
+d82 1
+a82 1
+		print "<td style='text-align:center'>$lang->{'Graph3d Size'}</td></tr>";
+d89 1
+a89 1
+			print "<td><input type='text' style='width:100%' value='$Obj->{$localTab}{rules}[$cnt][$plusOne]' name='change${cnt}' onfocus='setBin(this)'></td>";
+@
+
+
+1.9
+log
+@changes depending on implemntation of right pane on graph3d page done
+@
+text
+@d4 1
+a4 1
+# $Id: graph3d_color_ed.pl,v 1.8 2003/08/01 13:07:14 jiri_schmid Exp $
+d36 1
+a36 1
+		<td><input onfocus='setSelf(this)' type='text' name='default' id='default0' size='10' value='$Obj->{$localTab}{default}'/></td>
+d42 1
+a42 1
+				<td style='text-align:right; color:#f00'>red:</td><td><img class='cursor' onclick='minus("red")' src='img/downArr.gif'></td><td><input id='red' size='4' style='text-align:center' type='text' value='$colors[0]' onchange='changeColor()'/></td><td><img onclick='plus("red")' class='cursor' style='padding:2px' src='img/upArr.gif'></td>
+d44 1
+a44 1
+				<td style='text-align:right; color:#0f0'>green:</td><td><img class='cursor' onclick='minus("green")' src='img/downArr.gif'></td><td><input id='green' type='text' style='text-align:center' size='4' value='$colors[1]' onchange='changeColor()'/></td><td><img onclick='plus("green")' class='cursor' style='padding:2px' src='img/upArr.gif'></td>
+d46 1
+a46 1
+				<td style='text-align:right; color:#00f'>blue:</td><td><img class='cursor' onclick='minus("blue")' src='img/downArr.gif'></td><td><input id='blue' type='text' style='text-align:center' size='4' value='$colors[2]' onchange='changeColor()'/></td><td><img onclick='plus("blue")' class='cursor' style='padding:2px' src='img/upArr.gif'></td>
+d71 1
+a71 1
+				print "<tr><td><input type='text' style='width:100%' name='view${_}$cnt' value='$Obj->{$localTab}{rules}[$_][$index1]' onfocus='setBin(this)'/></td><td><input type='text' style='width:100%' value='$Obj->{$localTab}{rules}[$_][$index2]' name='change${_}$cnt' onfocus='setBin(this)'></td></tr>";
+@
+
+
+1.8
+log
+@graph3d relevant changes made to cooperate with right pane, multiple metric not alowed yet
+@
+text
+@d4 1
+a4 1
+# $Id: graph3d_color_ed.pl,v 1.7 2003/07/31 14:34:42 jiri_schmid Exp $
+d19 1
+a19 1
+	my ($fill, $shape);
+a29 1
+my @@shapeFiles = GetFiles('./img/vrmltypes','png');
+d52 2
+a53 2
+		print "<tr><th style='white-space:nowrap'>Minimum:</th><td><input $check size='10' type='text' name='min' id='inputmin' value='$Obj->{$localTab}{min}'/></td></tr>";
+		print "<tr><th style='white-space:nowrap'>Maximum:</th><td><input $check size='10' type='text' name='max' id='inputmax' value='$Obj->{$localTab}{max}'/></td></tr>";
+d58 18
+a75 10
+	print "<tr><th style='text-align:left' colspan='2'>$lang->{$name}</th><td style='text-align:right'><img class='cursor' src='img/delete.gif' title=\"$lang->{'Delete Active'}\" onclick='emptyBin()'></td></tr>";
+	print "</table><table style='text-align:left'><tr>";
+	foreach (0..$#{$Obj->{$localTab}{items}}) {
+		my $id = @@{$Obj->{$localTab}{items}}[$_];
+		push(@@ids,$id);
+		print "<td style='text-align:center'><span class='cursor' title=\"$lang->{'Elements show'}\" id='$id' onclick='loadElement(this)'>$id</span>:</td>"; 
+	}
+	print "<td style='text-align:center'>$lang->{'Graph3d Size'}</td></tr>";
+	my $plusOne = @@{$Obj->{$localTab}{items}};
+	for my $cnt (0..5) {
+d78 14
+a91 4
+			print "<td><input type='text' style='width:100%' name='view${cnt}_${_}' value='$Obj->{$localTab}{rules}[$cnt][$_]' onfocus='setBin(this)' onclick='addValue(this)'/></td>"; 
+			}
+		print "<td><input type='text' style='width:100%' value='$Obj->{$localTab}{rules}[$cnt][$plusOne]' name='change${cnt}' onfocus='setSelf(this); setBin(this)'></td>";
+		print "</tr>";
+d116 1
+a133 1
+
+a134 1
+for my $cnt (0..5) {
+d137 2
+a138 1
+my $add = 0;
+d140 19
+a158 2
+		$name = "view${cnt}_$_";
+		$add++ if param($name);
+d160 1
+a161 3
+$name = "change${cnt}";
+push(@@pole,param($name));
+@@{$Obj->{$localTab}{rules}}[$cnt] = [@@pole] if $add > 0;
+a171 1
+
+@
+
+
+1.7
+log
+@right pane implementation aproaching final stage
+@
+text
+@d4 1
+a4 1
+# $Id: graph3d_color_ed.pl,v 1.6 2003/07/28 13:39:58 jiri_schmid Exp $
+d31 3
+d37 1
+a37 1
+		<td><input onfocus='setSelf(this)' type='text' name='default' $check id='default0' size='10' value="$Shapes->{$Obj->{$localTab}{default}}{name}"/></td>
+d42 2
+a43 2
+				<td id='color' style='background-color:#646464; width:100px' rowspan='4'>&nbsp</td>
+				<td style='text-align:right; color:#f00'>red:</td><td><img class='cursor' onclick='minus("red")' src='img/downArr.gif'></td><td><input id='red' size='4' style='text-align:center' type='text' value='100' onchange='changeColor()'/></td><td><img onclick='plus("red")' class='cursor' style='padding:2px' src='img/upArr.gif'></td>
+d45 1
+a45 1
+				<td style='text-align:right; color:#0f0'>green:</td><td><img class='cursor' onclick='minus("green")' src='img/downArr.gif'></td><td><input id='green' type='text' style='text-align:center' size='4' value='100' onchange='changeColor()'/></td><td><img onclick='plus("green")' class='cursor' style='padding:2px' src='img/upArr.gif'></td>
+d47 1
+a47 1
+				<td style='text-align:right; color:#00f'>blue:</td><td><img class='cursor' onclick='minus("blue")' src='img/downArr.gif'></td><td><input id='blue' type='text' style='text-align:center' size='4' value='100' onchange='changeColor()'/></td><td><img onclick='plus("blue")' class='cursor' style='padding:2px' src='img/upArr.gif'></td>
+d57 1
+a57 2
+	print "<tr><td colspan='3'><hr/></td></tr></table>";
+	print "<table style='text-align:left; width:100%'>";
+d59 13
+a71 8
+	print "<tr><th style='text-align:left'>$lang->{$name}</th><td style='text-align:center'>$lang->{'Graph3d Interval'}</td><td style='text-align:center'>$lang->{'Graph3d Size'}</td></tr>";
+	foreach my $cnt (0..$#{$Obj->{$localTab}{items}}) {
+	print "<tr><td colspan='3'><hr/></td></tr>";
+		my $id = @@{$Obj->{$localTab}{items}}[$cnt];
+		my $end = sprintf("%.0f",9/@@{$Obj->{$localTab}{items}});
+		print "<tr><td><span class='cursor' id='$id' onclick='loadElement(this)'>$id</span>: <img class='cursor' src='img/delete.gif' title=\"$lang->{'Delete Active'}\" onclick='emptyBin()'></td><td><input type='text' style='width:100%' name='view$cnt' value='${$Obj->{$localTab}{intervals}}[$cnt]' $check/></td><td><input type='text' onchange='checkNum(this)' style='width:100%' value='${$Obj->{$localTab}{sizes}}[$cnt]' name='size$cnt'></td></tr>";
+			for (1..$end) {
+			print "<tr><td>&nbsp;&nbsp;rozsah $_</td><td><input type='text' style='width:100%' name='view${cnt}_${_}' value='' onfocus='setBin(this)' onclick='addValue(this)'/></td><td><input type='text' style='width:100%' value='' name='size${cnt}_${_}' onfocus='setBin(this)'></td></tr>";
+d73 2
+a74 1
+		push(@@ids,$id);
+a75 1
+	print "<tr><td><input type='hidden' id='ids' value='".join("|",@@ids)."'/></td></tr>";
+d77 1
+d113 9
+d123 3
+a125 4
+		my $name = "view$_";
+		@@{$Obj->{$localTab}{intervals}}[$_] = param($name);
+		$name = "size$_";
+		@@{$Obj->{$localTab}{sizes}}[$_] = param($name);
+d127 12
+a138 7
+	if ($Obj->{$localTab}{quantity} eq "on") {
+		$Obj->{$localTab}{max} = param('max');
+		$Obj->{$localTab}{min} = param('min');
+	} else {
+	$Obj->{$localTab}{interpolation} = 'constant';
+	}
+	$Obj->{$localTab}{default} = param('default');
+d140 1
+@
+
+
+1.6
+log
+@minor code improvments
+@
+text
+@d4 1
+a4 1
+# $Id: graph3d_color_ed.pl,v 1.5 2003/07/25 10:53:21 jiri_schmid Exp $
+d58 8
+a65 3
+	foreach (0..$#{$Obj->{$localTab}{items}}) {
+		my $id = @@{$Obj->{$localTab}{items}}[$_];
+		print "<tr><td id='$id'>$id :</td><td><input type='text' $check style='width:100%' name='view$_' value='${$Obj->{$localTab}{intervals}}[$_]'/></td><td><input type='text' onfocus='setSelf(this)' style='width:100%' value='$_' name='size$_' id='size$_'></td></tr>";
+@
+
+
+1.5
+log
+@switching tab bug fixed
+@
+text
+@d4 1
+a4 1
+# $Id: graph3d_color_ed.pl,v 1.4 2003/07/25 09:28:51 jiri_schmid Exp $
+d32 1
+a32 1
+	<table style='text-align:center;width:100%'>
+d40 1
+a40 1
+				<td style='text-align:right; color:#f00'>red:</td><td><img class='cursor' onclick='minus("red")' src='img/downArr.gif'></td><td><input id='red' size='4' type='text' value='100' onchange='changeColor()'/></td><td><img onclick='plus("red")' class='cursor' style='padding:2px' src='img/upArr.gif'></td>
+d42 1
+a42 1
+				<td style='text-align:right; color:#0f0'>green:</td><td><img class='cursor' onclick='minus("green")' src='img/downArr.gif'></td><td><input id='green' type='text' size='4' value='100' onchange='changeColor()'/></td><td><img onclick='plus("green")' class='cursor' style='padding:2px' src='img/upArr.gif'></td>
+d44 1
+a44 1
+				<td style='text-align:right; color:#00f'>blue:</td><td><img class='cursor' onclick='minus("blue")' src='img/downArr.gif'></td><td><input id='blue' type='text' size='4' value='100' onchange='changeColor()'/></td><td><img onclick='plus("blue")' class='cursor' style='padding:2px' src='img/upArr.gif'></td>
+@
+
+
+1.4
+log
+@minor bug fixies and code improvment
+@
+text
+@d4 1
+a4 1
+# $Id: graph3d_shape_ed.pl,v 1.3 2003/07/24 10:37:52 jiri_schmid Exp $
+d21 1
+a21 1
+if (exists $Obj->{$localTab}){
+d39 2
+a40 2
+				<td id='color' style='background-color:#aaa; width:100px' rowspan='4'>&nbsp</td>
+				<td style='text-align:right'>red:</td><td><img class='cursor' onclick='minus("red")' src='img/downArr.gif'></td><td><input id='red' size='4' type='text' value='11' onchange='changeColor()'/></td><td><img onclick='plus("red")' class='cursor' style='padding:2px' src='img/upArr.gif'></td>
+d42 1
+a42 1
+				<td style='text-align:right'>green:</td><td><img class='cursor' onclick='minus("green")' src='img/downArr.gif'></td><td><input id='green' type='text' size='4' value='11' onchange='changeColor()'/></td><td><img onclick='plus("green")' class='cursor' style='padding:2px' src='img/upArr.gif'></td>
+d44 1
+a44 1
+				<td style='text-align:right'>blue:</td><td><img class='cursor' onclick='minus("blue")' src='img/downArr.gif'></td><td><input id='blue' type='text' size='4' value='11' onchange='changeColor()'/></td><td><img onclick='plus("blue")' class='cursor' style='padding:2px' src='img/upArr.gif'></td>
+@
+
+
+1.3
+log
+@next tab implmented
+@
+text
+@d4 1
+a4 1
+# $Id: graph3d_color_ed.pl,v 1.2 2003/07/23 11:44:56 jiri_schmid Exp $
+d14 1
+a14 1
+use vars qw($Obj $descr_w $use_lang $saved $lang $localTab);
+d19 12
+a30 1
+	my $fill;
+d32 16
+a47 3
+<br>
+<table class="page_skeleton">
+<tr class="page_skeleton"><td class="page_skeleton_ex" align="center">
+d49 4
+a52 5
+if (exists $Obj->{$localTab}){
+if (@@{$Obj->{$localTab}{items}} == 0) {
+	print "<span style='padding: 15px; line-height: 30px'>$lang->{'Report Qualitative'}</span>"
+} elsif ($localTab eq 'color') {
+	my @@reload;
+d54 2
+d57 1
+a57 1
+		print "<table><tr><th style='text-align:left'>$lang->{$name}</th><td style='text-align:center'>$lang->{'Graph3d Interval'}</td>";
+d60 1
+a60 1
+		print "<tr><td id='$id'>$id :</td><td><input type='text' name='$id' id='input$id' size='$descr_w' value='' onchange='checkNum(this)'/></td></tr>";
+a61 1
+		push(@@reload,${$Obj->{$localTab}{intervals}}[$_]);
+d63 2
+a64 1
+	print "<tr><td><input type='hidden' id='ids' value='".join("|",@@ids)."'/><input type='hidden' id='reload' value='".join("|",@@reload)."'/></td></tr>";
+d66 1
+a66 2
+	print <<END;
+		</table>
+d73 2
+a74 2
+			<tr>	<td class="buttons"><input type="submit" name="Action" value="$lang->{'Save'}" onclick="" /></td>
+				<td class="buttons"><input type="button" name="reset" value="$lang->{'Reset'}" onclick="fillAxis()" /></td>
+d90 1
+d100 13
+a112 3
+#	foreach (0..$#{$Obj->{$localTab}{items}}) {
+#		@@{$Obj->{$localTab}{intervals}}[$_] = param(${$Obj->{$localTab}{items}}[$_]);
+#	}
+@
+
+
+1.2
+log
+@next tab implemented on graph3d page
+@
+text
+@d4 1
+a4 1
+# $Id: graph3d_color_ed.pl,v 1.1 2003/07/22 15:17:20 jiri_schmid Exp $
+d26 1
+a26 1
+if ($Obj->{$localTab}{quantity} eq "off" || @@{$Obj->{$localTab}{items}} == 0) {
+@
+
+
+1.1
+log
+@added files defining tabs on graph3d page
+@
+text
+@d4 1
+a4 1
+# $Id: graph3d_def_ed.pl,v 1.2 2003/07/11 16:00:53 jiri_schmid Exp $
+d25 1
+d57 1
+@
+

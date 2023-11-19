@@ -1,0 +1,104 @@
+head	1.2;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2005.06.28.12.26.18;	author igorludi;	state dead;
+branches;
+next	1.1;
+
+1.1
+date	2005.06.28.11.35.03;	author igorludi;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@*** empty log message ***
+@
+text
+@package rex.graphics;
+
+import javax.swing.JDialog;
+import java.awt.GridLayout;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+import java.awt.Color;
+import javax.swing.JButton;
+import javax.swing.JPasswordField;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import rex.utils.S;
+import javax.swing.JFrame;
+import java.awt.Dimension;
+import java.awt.Toolkit;
+import javax.swing.JPanel;
+import java.awt.BorderLayout;
+
+public class AuthenticationDialog extends JDialog {
+   JTextField username;
+   JPasswordField password;
+   public AuthenticationDialog(JDialog owner) {
+      super((JFrame)null, "Enter username and password", true);
+//      S.out("starting dialog...");
+      JPanel jp = new JPanel(new GridLayout (2, 2));
+      jp.add (new JLabel ("Username:"));
+      username = new JTextField();
+      username.setBackground (Color.lightGray);
+      jp.add (username);
+      jp.add (new JLabel("Password:"));
+      password = new JPasswordField();
+      password.setBackground (Color.lightGray);
+      jp.add (password);
+      getContentPane().setLayout (new BorderLayout());
+      getContentPane().add (jp, BorderLayout.CENTER);
+      JButton jb = new JButton ("OK");
+      jb.addActionListener (new ActionListener() {
+         public void actionPerformed (ActionEvent e) {
+            S.out("disposing...");
+            dispose();
+         }
+      });
+      getContentPane().add (jb, BorderLayout.SOUTH);
+      Dimension sd = Toolkit.getDefaultToolkit().getScreenSize();
+      setLocation(sd.width / 2 - 250 / 2, sd.height / 2 - 120 / 2);
+      setResizable(false);
+      setSize(250, 120);
+//      pack();
+      setVisible(true);
+   }
+
+   public String getPassword(){
+//      S.out("returning password = " + new String(password.getPassword()));
+      return new String(password.getPassword());
+   }
+   public char[] getPasswordCA(){
+//      S.out("returning password = " + new String(password.getPassword()));
+      return password.getPassword();
+   }
+
+   public String getUsername(){
+//      S.out("returning username =" + username.getText() );
+      return username.getText();
+   }
+
+
+}
+@
+
+
+1.1
+log
+@first time commit
+@
+text
+@@
+

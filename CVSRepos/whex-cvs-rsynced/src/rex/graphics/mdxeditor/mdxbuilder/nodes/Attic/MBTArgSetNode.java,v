@@ -1,0 +1,225 @@
+head	1.2;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2006.01.13.12.21.31;	author igorludi;	state dead;
+branches;
+next	1.1;
+
+1.1
+date	2005.10.18.14.04.41;	author igorludi;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@*** empty log message ***
+@
+text
+@package rex.graphics.mdxeditor.mdxbuilder.nodes;
+
+
+import javax.swing.*;
+import javax.swing.tree.*;
+
+import rex.graphics.mdxeditor.mdxbuilder.dnd.*;
+import rex.graphics.mdxeditor.mdxfunctions.*;
+import rex.utils.*;
+import rex.graphics.dimensiontree.elements.DimensionTreeElement;
+
+/**
+ *
+ * Node representing MdxFunction's set argument. Unlike other arguments, set is a container node and can have children.
+ * @@author Igor Mekterovic
+ * @@version 0.3
+ */
+public class MBTArgSetNode extends DefaultMBTArgNode{
+
+   private static String childrenIndent = "  ";
+   static ImageIcon icon;
+   static {
+      icon = S.getAppIcon("MBTArgSetNode.gif");
+   }
+   public MBTArgSetNode(){
+      super();
+   }
+
+   public MBTArgSetNode(    String _argName
+                            ) {
+      super(false, _argName, false);
+   }
+   public MBTArgSetNode(    String _argName
+                          , boolean _respawnArg
+                            ) {
+      super(false, _argName,  _respawnArg);
+   }
+   public MBTArgSetNode(    boolean _isHeadArg
+                          , String _argName
+                            ) {
+      super(_isHeadArg, _argName,  false);
+   }
+   public MBTArgSetNode(    boolean _isHeadArg
+                          , String _argName
+                          , boolean _respawnArg
+                          , boolean _optionalArg
+                            ) {
+      super(_isHeadArg, _argName, _respawnArg, _optionalArg);
+
+   }
+
+   /**
+    *
+    * @@return String
+    */
+   public String getToolTip(){
+      return "SET NODE:" + getArgName();
+   }
+
+   /**
+    *
+    * @@param indent String
+    * @@return String
+    */
+   public  String getMdx(String indent){
+      if (this.getChildren() == null) return "";
+      int i;
+      StringBuffer mdx = new StringBuffer("");
+      for (i=0; i < this.getChildren().size(); i++){
+         if (mdx.length()==0)
+            mdx.append(this.getChild(i).getMdx(indent + childrenIndent));
+         else
+            mdx.append("\n" +  addCommaAfterBlanks(this.getChild(i).getMdx(indent + childrenIndent)));
+      }
+      if (mdx.indexOf("\n") == -1)
+//         If there is only one function/member then return single line MDX
+         return indent + "{" + mdx.toString().trim() + "}";
+      else
+         return indent + "{"
+            + "\n" + mdx
+            + "\n" + indent + "}";
+
+   }
+
+
+
+   /**
+    *
+    */
+   void setAcceptableFlavorsArray(){
+      acceptableFlavorsMimeTypes = new String[] {
+                                     TransferableMdxBuilderTreeNode.DIMENSION_TREE_NODE_LEVEL_FLAVOR_STRING
+                                   , TransferableMdxBuilderTreeNode.DIMENSION_TREE_NODE_DIMENSION_FLAVOR_STRING
+                                   , TransferableMdxBuilderTreeNode.DIMENSION_TREE_NODE_HIERARCHY_FLAVOR_STRING
+                                   , TransferableMdxBuilderTreeNode.DIMENSION_TREE_NODE_MEASURE_FLAVOR_STRING
+                                   , TransferableMdxBuilderTreeNode.DIMENSION_TREE_NODE_MEMBER_FLAVOR_STRING
+                                   , TransferableMdxBuilderTreeNode.MDX_BUILDER_TREE_SET_FUNCTION_NODE_FLAVOR_STRING
+                                   , TransferableMdxBuilderTreeNode.MDX_BUILDER_TREE_NAMED_SET_NODE_FLAVOR_STRING
+                                   , TransferableMdxBuilderTreeNode.MDX_BUILDER_TREE_CALCULATED_MEMBER_NODE_FLAVOR_STRING
+      };
+   }
+
+   /**
+    * Returns an icon for the set node.
+    * @@return ImageIcon
+    */
+   public ImageIcon getIcon(){ return icon; }
+
+
+   /**
+    *
+    * @@param droppedData Object
+    * @@param containerNode DefaultMutableTreeNode
+    * @@param treeModel DefaultTreeModel
+    */
+   public  void handleDrop(  Object droppedData
+                           , DefaultMutableTreeNode containerNode
+                           , DefaultTreeModel treeModel){
+     if (droppedData instanceof MdxFunction){
+
+         this.addMdxFunctionChild( ((MdxFunction)droppedData)
+                                             , containerNode
+                                             , treeModel);
+      } else if (droppedData instanceof MBTFunctionNode){
+
+         this.moveMBTFunctionNode( ( (MBTFunctionNode) droppedData)
+                                  , containerNode
+                                  , treeModel);
+
+      } else if (droppedData instanceof DimensionTreeElement){
+         if (membersFromDifferentDimensionPresent(this, ((DimensionTreeElement)droppedData).getDimensionUniqueName())>0){
+            JOptionPane.showMessageDialog(   null
+                                        , "You cannot add this member set because there are members from OTHER dimensions already present in this set!\n"
+                                        , "Cannot add member"
+                                        , JOptionPane.INFORMATION_MESSAGE);
+
+         }else{
+            try {
+               this.addChildAndMBTMembersNode(droppedData
+                                              , containerNode
+                                              , treeModel);
+            }
+            catch (Exception e) {
+               e.printStackTrace();
+            }
+         }
+
+      } else{
+         try {
+            this.addChildAndMBTMembersNode(droppedData
+                                           , containerNode
+                                           , treeModel);
+         }
+         catch (Exception e) {
+            e.printStackTrace();
+         }
+
+      }
+
+
+      maybeRespawnOnDrop(containerNode, treeModel);
+
+   }
+
+
+   /**
+    *
+    * @@return String[]
+    */
+   public String[] getPopUpActionList(){
+      return new String[]{MBTPopUpActions.DELETE_CHILDREN};
+   }
+
+   /**
+    *
+    * @@param action String
+    * @@param actionNode DefaultMutableTreeNode
+    * @@param treeModel DefaultTreeModel
+    */
+   public void handlePopUpAction(  String action
+                                 , DefaultMutableTreeNode actionNode
+                                 , DefaultTreeModel treeModel){
+
+      if (action.equals(MBTPopUpActions.DELETE_CHILDREN)){
+         removeAllChildrenFromTheTree(actionNode, treeModel);
+      }
+   }
+}
+@
+
+
+1.1
+log
+@*** empty log message ***
+@
+text
+@@
+

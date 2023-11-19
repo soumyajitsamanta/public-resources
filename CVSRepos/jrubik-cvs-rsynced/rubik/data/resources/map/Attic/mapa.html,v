@@ -1,0 +1,64 @@
+head	1.2;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2008.05.17.15.43.54;	author fsaz;	state dead;
+branches;
+next	1.1;
+
+1.1
+date	2005.11.28.14.02.37;	author fsaz;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@borrando viejos
+@
+text
+@<html>
+<head>
+<script language="JavaScript" src="svgcheck.js"></script>
+
+<script language="JavaScript">
+<!--
+//	checkAndGetSVGViewer();
+// -->
+</script>
+
+</head>
+<body onload="cambiaVentana()">
+
+
+
+
+<script type='text/javascript'>
+<!--
+  function cambiaVentana()  {
+		window.open("mapa.svg","Mapa", "toolbar=no,directories=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes");
+		self.opener = "";
+		self.close();
+  }
+//-->
+</script>
+
+</body>
+</html>@
+
+
+1.1
+log
+@*** empty log message ***
+@
+text
+@@
+

@@ -1,0 +1,317 @@
+head	1.2;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2008.05.17.15.40.42;	author fsaz;	state dead;
+branches;
+next	1.1;
+
+1.1
+date	2005.11.28.15.13.35;	author fsaz;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@borrando viejos
+@
+text
+@/*
+ * Created on 14-mar-2005
+ *
+ * LeafPanel.java
+ *
+ */
+package es.aeat.eett.infoRubik.layout;
+
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.io.IOException;
+
+import javax.swing.AbstractAction;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.event.TreeSelectionEvent;
+import javax.swing.event.TreeSelectionListener;
+import javax.swing.tree.TreePath;
+
+import org.java.plugin.PluginManager;
+import org.jdom.Attribute;
+
+import es.aeat.eett.infoRubik.InfoRugikPlugin;
+import es.aeat.eett.infoRubik.reports.ReportsListener;
+import es.aeat.eett.infoRubik.reports.Report;
+import es.aeat.eett.infoRubik.reports.ReportMutableTreeNode;
+
+/**
+ * @@author f00992
+ *
+ */
+public class LeafPanel extends JPanel
+implements TreeSelectionListener, LeafReportListener{
+	private LayoutPanel  layoutPanel=null;
+	private ReportMutableTreeNode activeNode=null;
+	private  JTextField textID;
+
+	private InfoRugikPlugin infoRugikPlugin=null;
+
+
+	/**
+	 * @@throws Exception
+	 */
+	public LeafPanel() throws Exception {
+		super(new BorderLayout());
+		iniComponents();
+	}
+	private void iniComponents() throws Exception{
+	    add(createPaneNort(), BorderLayout.NORTH);
+	    layoutPanel=new LayoutPanel(new PopupTrigger(), new PopupLayout());
+	    layoutPanel.addLeafReportListener(this);
+	    add(layoutPanel, BorderLayout.CENTER);
+
+	    PluginManager pm= PluginManager.lookup(LeafPanel.class);
+		infoRugikPlugin=(InfoRugikPlugin)pm
+			.getPlugin(InfoRugikPlugin.PLUGIN_ID);
+
+	}
+
+	private JPanel createPaneNort(){
+	    JPanel pane= new JPanel();
+	    pane.setLayout(new FlowLayout());
+	    pane.add(new JLabel("ID"));
+	    textID=new JTextField();
+	    textID.setEditable(false);
+	    textID.setColumns(30);
+	    pane.add(textID);
+	    /*
+		JButton b= new JButton();
+		b.setEnabled(false);
+		ActionMasterDeploy actionDeploy= new ActionMasterDeploy();// new ActionShowDeploy();
+		b.setAction(actionDeploy);
+		pane.add(b);
+		*/
+		JButton bClear= new JButton(new ActionLayoutClear("Limpiar LeafReport"));
+		pane.add(bClear);
+		/*
+		JButton bSave= new JButton(new ActionSaveXml("Save Xml"));
+		pane.add(bSave);
+		JButton bRestore= new JButton(new ActionRestoreXml("Restore xml"));
+		pane.add(bRestore);
+		*/
+	    return pane;
+	}
+
+    /**
+     * @@return Returns the layoutPanel.
+     */
+    LayoutPanel getLayoutPanel() {
+        return layoutPanel;
+    }
+    /**
+     * @@param layoutPanel The layoutPanel to set.
+     */
+    void setLayoutPanel(LayoutPanel layoutPanel) {
+        this.layoutPanel = layoutPanel;
+    }
+
+    /**
+     * @@return Returns the activeNode.
+     */
+    ReportMutableTreeNode getActiveNode() {
+        return activeNode;
+    }
+    ////////////////////// Implementacion de TreeSelectionListener ///////////////////
+	/* (non-Javadoc)
+	 * @@see javax.swing.event.TreeSelectionListener#valueChanged(javax.swing.event.TreeSelectionEvent)
+	 */
+    public void valueChanged(TreeSelectionEvent e) {
+    	TreePath path=e.getNewLeadSelectionPath();
+    	if(activeNode!=null){
+    		activeNode=null;
+    		layoutPanel.setNLeaf(activeNode);
+    	}
+    	if(path!=null){
+    		ReportMutableTreeNode n=(ReportMutableTreeNode) path.getLastPathComponent();
+    		if(!n.isReportLeaf()){// isVisible->Hide
+    			infoRugikPlugin.fireHideRight();
+    		}
+    		if(n.isReportLeaf()){// isVisible->Change active ReportLeaf
+    			infoRugikPlugin.fireShowRight(ReportsListener.RIGHTPANEL);
+    			activeNode=n;
+    			layoutPanel.setNLeaf(activeNode);
+    			layoutPanel.load(n.getLeafReport().getRootElement());
+    			textID.setText(n.getLeafReport().getIDLeaf());
+    		}
+    	}
+    }
+    ////////////////// Fin Implementacion de TreeSelectionListener ///////////////////
+
+    ////////////////// Implementacion de LeafReportListener ///////////////////
+	/* (non-Javadoc)
+	 * @@see es.aeat.etss.plugins.infoRubik.layout.LeafReportListener#LeafReportChanged()
+	 */
+	public void LeafReportChanged() {
+	    activeNode.getLeafReport().getRootElement().removeContent();
+	    Attribute a=new Attribute(ReportMutableTreeNode.getKEY_ID_LEAF(),activeNode.getLeafReport().getIDLeaf());
+		activeNode.getLeafReport().setRootElement(layoutPanel.getRootElement());
+		activeNode.getLeafReport().getRootElement().setAttribute(a);
+		Report repor=(Report) activeNode.getReportRootNode().getUserObject();
+		try {
+			repor.save();
+		} catch (IOException ex) {
+			// TODO Auto-generated catch block
+			ex.printStackTrace();
+		}
+	}
+	////////////////// Fin Implementacion de LeafReportListener ///////////////////
+
+}//Fin class LeafPanel
+
+class  ActionLayoutClear extends AbstractAction{
+
+
+    ActionLayoutClear(String name) {
+        super(name);
+    }
+    /* (non-Javadoc)
+     * @@see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+     */
+    public void actionPerformed(ActionEvent e) {
+        if(e.getSource() instanceof JButton ){
+            JButton b= (JButton) e.getSource();
+            if(b.getParent().getParent()instanceof LeafPanel){
+                LeafPanel scroll=(LeafPanel) b.getParent().getParent();
+                //Borrando fileJobs
+                ReportMutableTreeNode node=scroll.getActiveNode();
+                Report report=(Report) node.getReportRootNode().getUserObject();
+                node.getLeafReport().removeAll(report);
+                //Limpiando layoutPanel
+                scroll.getLayoutPanel().removeChildren();
+                scroll.revalidate();
+                scroll.repaint();
+                scroll.getLayoutPanel().fireLeafReportChanged();
+            }
+        }
+
+    }
+
+}// Fin class ActionLayoutClear
+/*
+class  ActionSaveXml extends AbstractAction{
+
+	ActionSaveXml(String name) {
+        super(name);
+    }
+    public void actionPerformed(ActionEvent e) {
+        if(e.getSource() instanceof JButton ){
+            JButton b= (JButton) e.getSource();
+            System.out.println(b.getParent().getParent().getClass().getName());
+            System.out.println(b.getParent().getParent().getParent().getClass().getName());
+            if(b.getParent().getParent()instanceof LeafPanel){
+                LeafPanel panel=(LeafPanel) b.getParent().getParent();
+                save(panel.getLayoutPanel());
+            }
+        }
+    }
+	private void save (LayoutPanel layoutPanel){
+		File fileOut= getFileOut(null, layoutPanel);
+		Document document=layoutPanel.getDocument();
+		if (fileOut!=null){
+			Format format=Format.getPrettyFormat();
+			format.setEncoding(Misc.ISO_8859_1);
+		    XMLOutputter outp = new XMLOutputter(format);
+		    PrintWriter writer;
+			try {
+				writer = new PrintWriter(new FileWriter(fileOut));
+				outp.output(document, writer);
+				writer.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+	private File getFileOut(String rutaDir, Component cParent){
+	    File fileOut=null;
+		JFileChooser fileChooser = new JFileChooser();
+		try{
+			if (rutaDir!=null){
+				File dir= new  File(rutaDir);
+				fileChooser.setCurrentDirectory(dir);
+			}
+		}catch(Exception ex){;}
+		if(JFileChooser.APPROVE_OPTION ==fileChooser.showSaveDialog(cParent)){
+		    fileOut=fileChooser.getSelectedFile();
+		}
+		return fileOut;
+	}
+
+}// Fin class ActionSaveXml
+
+class  ActionRestoreXml extends AbstractAction{
+	ActionDivHor actionDivHor= new ActionDivHor("");
+	ActionDivVer actionDivVer= new ActionDivVer("");
+
+    ActionRestoreXml(String name) {
+        super(name);
+    }
+    public void actionPerformed(ActionEvent e) {
+        if(e.getSource() instanceof JButton ){
+            JButton b= (JButton) e.getSource();
+            if(b.getParent().getParent()instanceof LeafPanel){
+                LeafPanel panel=(LeafPanel) b.getParent().getParent();
+                try {
+					restore(panel.getLayoutPanel());
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+            }
+        }
+    }
+	private void restore(LayoutPanel layoutPanel) throws Exception{
+		File fileInput=getFileInput(null, layoutPanel);
+		if(fileInput!=null){
+			Document document=Misc.JDomChk(fileInput,LeafReport.LAYOUT);
+			layoutPanel.load(document);
+		}
+	}
+
+	private File getFileInput(String rutaDir, Component cParent){
+	    File fileInput=null;
+		JFileChooser fileChooser = new JFileChooser();
+		try{
+			if (rutaDir!=null){
+				File dir= new  File(rutaDir);
+				fileChooser.setCurrentDirectory(dir);
+			}
+		}catch(Exception ex){;}
+		if(JFileChooser.APPROVE_OPTION ==fileChooser.showOpenDialog(cParent) ){
+			fileInput=fileChooser.getSelectedFile();
+		}
+		return fileInput;
+	}
+
+}// Fin class ActionRestoreXml
+*/@
+
+
+1.1
+log
+@*** empty log message ***
+@
+text
+@@
+

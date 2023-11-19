@@ -1,0 +1,153 @@
+head	1.4;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.4
+date	2006.01.13.12.21.33;	author igorludi;	state dead;
+branches;
+next	1.3;
+
+1.3
+date	2005.10.18.14.04.42;	author igorludi;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2005.10.18.13.40.57;	author igorludi;	state dead;
+branches;
+next	1.1;
+
+1.1
+date	2005.06.28.14.11.35;	author igorludi;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.4
+log
+@*** empty log message ***
+@
+text
+@package rex.utils;
+
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.SwingUtilities;
+
+/**
+ * <p>Title: WHEX</p>
+ * <p>Description: </p>
+ * <p>Copyright: Copyright (c) 2003</p>
+ * <p>Company: </p>
+ * @@author Kyle Davis
+ * @@version 1.0
+ */
+
+
+public class WaitCursorEventQueue extends EventQueue {
+
+    public WaitCursorEventQueue(int delay) {
+        this.delay = delay;
+        waitTimer = new WaitCursorTimer();
+        waitTimer.setDaemon(true);
+        waitTimer.start();
+    }
+
+    protected void dispatchEvent(AWTEvent event) {
+        waitTimer.startTimer(event.getSource());
+        try {
+            super.dispatchEvent(event);
+        }
+        finally {
+            waitTimer.stopTimer();
+        }
+    }
+
+    private int delay;
+    private WaitCursorTimer waitTimer;
+
+    private class WaitCursorTimer extends Thread {
+
+        synchronized void startTimer(Object source) {
+            this.source = source;
+            notify();
+        }
+
+        synchronized void stopTimer() {
+            if (parent == null)
+                interrupt();
+            else {
+                parent.setCursor(null);
+                parent = null;
+            }
+        }
+
+        public synchronized void run() {
+            while (true) {
+                try {
+                    //wait for notification from startTimer()
+                    wait();
+
+                    //wait for event processing to reach the threshold, or
+                    //interruption from stopTimer()
+                    wait(delay);
+
+                    if (source instanceof Component)
+                        parent = SwingUtilities.getRoot((Component)source);
+                    else if (source instanceof MenuComponent) {
+                        MenuContainer mParent =
+                                ((MenuComponent)source).getParent();
+                        if (mParent instanceof Component)
+                            parent = SwingUtilities.getRoot(
+                                    (Component)mParent);
+                    }
+
+                    if (parent != null && parent.isShowing())
+                        parent.setCursor(
+                                Cursor.getPredefinedCursor(
+                                    Cursor.WAIT_CURSOR));
+                }
+                catch (InterruptedException ie) { }
+            }
+        }
+
+        private Object source;
+        private Component parent;
+    }
+}
+
+
+
+@
+
+
+1.3
+log
+@*** empty log message ***
+@
+text
+@@
+
+
+1.2
+log
+@*** empty log message ***
+@
+text
+@@
+
+
+1.1
+log
+@*** empty log message ***
+@
+text
+@@
+

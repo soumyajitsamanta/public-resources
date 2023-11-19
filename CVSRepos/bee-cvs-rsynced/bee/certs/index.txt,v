@@ -1,0 +1,47 @@
+head	1.2;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2003.09.12.09.29.52;	author numberone;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2003.02.17.23.34.49;	author numberone;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@user@@pass
+@
+text
+@V	040908082029Z		01	unknown	/C=CZ/ST=Czech Republic/O=Insight Strategy, a.s./OU=The Bee Project/CN=dad@@localhost:2333/emailAddress=sarfy@@insightstrategy.cz
+V	040908082115Z		02	unknown	/C=CZ/ST=Czech Republic/O=Insight Strategy, a.s./OU=The Bee Project/CN=auth@@localhost:2332/emailAddress=sarfy@@insightstrategy.cz
+V	040908082131Z		03	unknown	/C=CZ/ST=Czech Republic/O=Insight Strategy, a.s./OU=The Bee Project/CN=client/emailAddress=sarfy@@insightstrategy.cz
+@
+
+
+1.1
+log
+@Msg - some changes forced by moving to libnet
+certs: clear 'auth' key semantics, README for generating CA keys
+switch to new Net-1.2: libnet + ssl layer
+@
+text
+@d1 3
+a3 3
+V	040217225152Z		01	unknown	/C=CZ/ST=Czech Republic/O=Insight Strategy, a.s./OU=The Bee Project/CN=auth@@localhost:2332/Email=xsarfy@@fi.muni.cz
+V	040217225529Z		02	unknown	/C=CZ/ST=Czech Republic/O=Insight Strategy, a.s./OU=The Bee Project/CN=martin/client@@localhost/Email=xsarfy@@fi.muni.cz
+V	040217225637Z		03	unknown	/C=CZ/ST=Czech Republic/O=Insight Strategy, a.s./OU=The Bee Project/CN=dad@@localhost:2333/Email=xsarfy@@fi.muni.cz
+@
+

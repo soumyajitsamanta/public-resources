@@ -1,0 +1,100 @@
+head	1.1;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.1
+date	2004.03.01.16.16.48;	author numberone;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@
+Added beard2 -- new bear daemon source tree.
+
+mdata subsystem works, some docs, some tests, etc.
+
+cached in progress
+@
+text
+@
+mdata-rw:
+
+	nacteni metadat, DG
+
+	vytvoreni -rw a -ro socketu
+
+	vytvoreni shm
+
+	$id = 1
+
+	odforkovani poolu mdata-ro
+
+	while(accept(-ro)) {
+
+		pokud prislo SIGCHLD {
+			vypis warning
+			[spust znovu?]
+			next
+		}
+
+		obsluz
+
+		pokud potrebujes zapsat do metadat {
+
+			shm-lock
+			$hash = deserializuj
+			najdi nejvetsi cislo $max v $hash->kid->{..}
+			smaz vsechny po $hash->set->{$max}
+			$hash->set->{++$max} = 'set/del ...';
+			shm serializuj
+			shm-unlock
+
+			posli SIGUSR vsem deckam
+		}
+
+	}
+
+mdata-ro:
+
+	while(accept) {
+		
+		pokud prislo SIGUSR {
+			$hash = deserializuj
+			while(exists $hash->set->{$id} {
+				aplikuj
+				$id++;
+			}
+			pokud probehla aspon jedna zmena {
+				shm-lock
+				$hash = deserializuj
+				$hash->kid->{$$} = $id
+				shm-serializuj
+				shm-unlock
+			}
+			next
+		}
+
+		obsluz
+	
+	}
+
+shm:
+	ShareLite, fetch, store, lock, unlock
+
+	$hash:
+		%kid - klic je pid
+			   hodnota je posledni akceptana zmena
+		%set - klic je poradove cislo zmeny
+			 - hodnota je definice zmeny
+
+
+@

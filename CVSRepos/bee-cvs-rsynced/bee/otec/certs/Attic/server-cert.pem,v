@@ -1,0 +1,110 @@
+head	1.2;
+access;
+symbols
+	start:1.1.1.1 vendor:1.1.1;
+locks; strict;
+comment	@# @;
+
+
+1.2
+date	2003.02.07.21.17.43;	author numberone;	state dead;
+branches;
+next	1.1;
+
+1.1
+date	2002.09.24.01.40.59;	author michald;	state Exp;
+branches
+	1.1.1.1;
+next	;
+
+1.1.1.1
+date	2002.09.24.01.40.59;	author michald;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@removing old 'otec'
+@
+text
+@Certificate:
+    Data:
+        Version: 3 (0x2)
+        Serial Number: 2 (0x2)
+        Signature Algorithm: md5WithRSAEncryption
+        Issuer: CN=kerberos
+        Validity
+            Not Before: Aug 19 20:16:58 2002 GMT
+            Not After : Aug 19 20:16:58 2003 GMT
+        Subject: CN=otec
+        Subject Public Key Info:
+            Public Key Algorithm: rsaEncryption
+            RSA Public Key: (1024 bit)
+                Modulus (1024 bit):
+                    00:a9:1c:d9:9b:82:0c:85:75:48:76:6e:8a:21:43:
+                    1f:f4:92:b3:09:20:3b:38:a9:77:94:62:75:d8:91:
+                    1a:87:47:f4:26:8e:cb:08:28:dc:b6:ff:c9:58:90:
+                    06:7b:93:a1:4d:79:6b:c9:91:0d:f9:4c:6a:42:e5:
+                    46:0f:53:dc:8d:a8:3f:22:63:b1:aa:43:b6:98:a9:
+                    cb:d6:45:7c:d9:bb:84:70:d0:07:a2:3a:ad:6d:16:
+                    76:2a:91:2f:72:d0:7f:df:d0:1c:b3:41:a7:9e:31:
+                    2c:e2:8f:40:d1:af:2f:01:06:ed:6b:dc:a3:04:c3:
+                    9b:5f:13:4a:5e:7a:d6:08:a1
+                Exponent: 65537 (0x10001)
+        X509v3 extensions:
+            X509v3 Basic Constraints: 
+                CA:FALSE
+            Netscape Comment: 
+                OpenSSL Generated Certificate
+            X509v3 Subject Key Identifier: 
+                B6:36:2B:AF:14:F4:C4:5A:10:46:38:B8:B1:6B:27:B3:22:E6:B8:09
+            X509v3 Authority Key Identifier: 
+                keyid:C1:55:D5:CF:D0:C6:3D:FE:A4:E6:51:07:62:3E:A6:2D:F9:96:C7:86
+                DirName:/CN=kerberos
+                serial:00
+
+    Signature Algorithm: md5WithRSAEncryption
+        ae:35:f9:bf:20:30:8a:13:81:19:e1:bb:b7:17:5a:fc:ad:c1:
+        1d:31:de:46:dd:9b:b9:69:af:ef:7d:ab:f5:ef:72:b7:bd:f6:
+        ac:e4:b7:82:88:2f:9c:d3:a0:e9:f7:28:07:12:1d:9f:90:55:
+        db:51:de:08:f6:2f:6f:6a:c7:b1:3e:42:dd:b1:0e:69:00:c5:
+        ac:70:e6:43:df:ca:12:4c:38:6f:c6:dd:2e:61:5d:22:4f:65:
+        df:98:05:52:97:e8:51:44:86:e6:9d:53:ac:5b:d6:5b:12:78:
+        d9:49:dd:c1:53:a8:67:70:a8:03:74:18:d6:89:58:9a:03:0e:
+        30:48
+-----BEGIN CERTIFICATE-----
+MIICMTCCAZqgAwIBAgIBAjANBgkqhkiG9w0BAQQFADATMREwDwYDVQQDEwhrZXJi
+ZXJvczAeFw0wMjA4MTkyMDE2NThaFw0wMzA4MTkyMDE2NThaMA8xDTALBgNVBAMT
+BG90ZWMwgZ8wDQYJKoZIhvcNAQEBBQADgY0AMIGJAoGBAKkc2ZuCDIV1SHZuiiFD
+H/SSswkgOzipd5RiddiRGodH9CaOywgo3Lb/yViQBnuToU15a8mRDflMakLlRg9T
+3I2oPyJjsapDtpipy9ZFfNm7hHDQB6I6rW0WdiqRL3LQf9/QHLNBp54xLOKPQNGv
+LwEG7WvcowTDm18TSl561gihAgMBAAGjgZgwgZUwCQYDVR0TBAIwADAsBglghkgB
+hvhCAQ0EHxYdT3BlblNTTCBHZW5lcmF0ZWQgQ2VydGlmaWNhdGUwHQYDVR0OBBYE
+FLY2K68U9MRaEEY4uLFrJ7Mi5rgJMDsGA1UdIwQ0MDKAFMFV1c/Qxj3+pOZRB2I+
+pi35lseGoRekFTATMREwDwYDVQQDEwhrZXJiZXJvc4IBADANBgkqhkiG9w0BAQQF
+AAOBgQCuNfm/IDCKE4EZ4bu3F1r8rcEdMd5G3Zu5aa/vfav173K3vfas5LeCiC+c
+06Dp9ygHEh2fkFXbUd4I9i9vasexPkLdsQ5pAMWscOZD38oSTDhvxt0uYV0iT2Xf
+mAVSl+hRRIbmnVOsW9ZbEnjZSd3BU6hncKgDdBjWiViaAw4wSA==
+-----END CERTIFICATE-----
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@@
+
+
+1.1.1.1
+log
+@Initial public release of BEE Project.
+@
+text
+@@

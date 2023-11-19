@@ -1,0 +1,110 @@
+head	1.1;
+access;
+symbols
+	jpivot_1_8_0:1.1
+	focus_1_6_0:1.1.0.6
+	jpivot_1_7_0:1.1
+	jpivot_1_6_0:1.1
+	jpivot_1_5_0:1.1.0.4
+	Root_jpivot_1_5_0:1.1
+	mondrian_xmla_2005_08_25:1.1.0.2
+	sourceforge_sync:1.1;
+locks; strict;
+comment	@# @;
+expand	@k@;
+
+
+1.1
+date	2005.07.05.14.19.53;	author avix;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.1
+log
+@initial version
+@
+text
+@/*
+ * ====================================================================
+ * This software is subject to the terms of the Common Public License
+ * Agreement, available at the following URL:
+ *   http://www.opensource.org/licenses/cpl.html .
+ * Copyright (C) 2003-2004 TONBELLER AG.
+ * All Rights Reserved.
+ * You must accept the terms of that agreement to use this software.
+ * ====================================================================
+ *
+ * 
+ */
+package com.tonbeller.jpivot.olap.model.impl;
+
+import com.tonbeller.jpivot.olap.model.Cell;
+import com.tonbeller.jpivot.olap.model.NumberFormat;
+import com.tonbeller.jpivot.olap.model.Visitor;
+
+/**
+ * Created on 11.10.2002
+ * 
+ * @@author av
+ */
+public class CellImpl extends PropertyHolderImpl implements Cell {
+  String formattedValue;
+  Object value;
+
+  /**
+   * Returns the formattedValue.
+   * @@return String
+   */
+  public String getFormattedValue() {
+    return formattedValue;
+  }
+
+  /**
+   * Returns the value.
+   * @@return Object
+   */
+  public Object getValue() {
+    return value;
+  }
+
+  /**
+   * Sets the formattedValue.
+   * @@param formattedValue The formattedValue to set
+   */
+  public void setFormattedValue(String formattedValue) {
+    this.formattedValue = formattedValue;
+  }
+
+  /**
+   * Sets the value.
+   * @@param value The value to set
+   */
+  public void setValue(Object value) {
+    this.value = value;
+  }
+
+  public boolean isNull() {
+    return value == null;
+  }
+
+  public void accept(Visitor visitor) {
+    visitor.visitCell(this);
+  }
+  
+  public Object getRootDecoree() {
+    return this;
+  }
+
+  public NumberFormat getFormat() {
+    if (value instanceof Number)
+      return new NumberFormatImpl();
+    return null;
+  }
+
+}
+@

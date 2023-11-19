@@ -1,0 +1,445 @@
+head	1.8;
+access;
+symbols
+	start:1.1.1.1 vendor:1.1.1;
+locks; strict;
+comment	@# @;
+
+
+1.8
+date	2003.02.07.21.17.30;	author numberone;	state dead;
+branches;
+next	1.7;
+
+1.7
+date	2003.02.05.15.39.46;	author numberone;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	2002.09.29.14.47.16;	author numberone;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	2002.09.29.12.58.33;	author numberone;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2002.09.28.18.02.47;	author numberone;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2002.09.27.13.54.52;	author numberone;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2002.09.26.07.52.42;	author numberone;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2002.09.24.01.40.58;	author michald;	state Exp;
+branches
+	1.1.1.1;
+next	;
+
+1.1.1.1
+date	2002.09.24.01.40.58;	author michald;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.8
+log
+@removing old 'otec'
+@
+text
+@# $Id: client.pm,v 1.7 2003/02/05 15:39:46 numberone Exp $
+
+package client;
+
+use lib '.';
+use common;
+use bee;
+
+use lib '../lib';
+use url;
+use Msg;
+
+use Data::Dumper;
+use strict;
+
+our $client; # global, for xmlrpc
+
+my $bee_id = 0; # unique bee id counter
+
+sub new {
+	my($pkg,$msg) = @@_;
+
+#	fix: $auth->query('user',$msg->user,$msg->peer);
+
+	print "client \`".$msg->user."\' from ".$msg->peer."\n";
+	bless {
+		msg   => $msg,
+		bee   => [],   # bee-list
+		queue => [],   # pending messages to client
+		key   => $msg->user."\@@".$msg->host, # FIX: from cert
+	}, $pkg;
+};
+
+sub peek { shift->{msg}->peek }
+
+sub close {
+	my($client) = @@_;
+	$client->{closed} = 1;
+
+	foreach(@@{$client->{bee}}) {
+		kill 9,$_->{id}; wait();
+	}
+
+	print "client ".$client->{msg}->peer." closed\n\n";
+}
+
+sub find {
+	my($client,$id) = @@_;
+	foreach my $bee (@@{$client->{bee}}) {
+		return $bee if($bee->{id} eq $id);
+	}
+	return undef;
+}
+
+sub watch {
+	my($client,$bee) = @@_;
+	if($bee->{state} eq 'letfly') {
+		if($bee->{client}->peek > 0) {
+			my $msg = $bee->{client}->recv();
+			if($msg =~ /^landed\s/) {
+				print "bee landed, status $'\n";
+				$bee->{state} = 'landed';
+				$client->message($bee,'landed',status=>$');
+			} elsif($msg =~ /^display\s/) {
+				$client->message($bee,'display',line=>$'); # line? brr
+			}
+		}
+	}
+}
+
+sub message {
+	my $client  = shift;
+	my $bee     = shift;
+	my $message = shift;
+
+	push @@{$client->{queue}}, {
+		bee     => $bee ? $bee->{id} : undef,
+		message => $message,
+		@@_
+	};
+}
+
+my $methods = {
+	bee    => \&rpc_bee,
+#   otec-functions: echo, version, status..
+	queue  => \&rpc_queue,
+
+#	status => \&rpc_status;
+	input  => \&rpc_input,
+	output => \&rpc_output,
+	letfly => sub { bee_call('letfly',@@_) },
+
+	tables		=> \&rpc_tables,
+
+	test   => sub { my $x = shift; return Dumper($x) }
+#	link
+#	run
+};
+
+sub serve { 
+	$client = shift; # set global
+	$client->{msg}->serve($methods);
+	$client = undef;
+}
+
+sub rpc_bee {
+	my($name,$input,$output,$script) = @@_;
+
+	my $bee = new bee($name,$input,$output,\$script);
+	return undef unless defined $bee;
+
+	push @@{$client->{bee}}, $bee;
+	return $bee->{id};
+}
+
+sub rpc_queue {
+	my $copy = $client->{queue};
+	$client->{queue} = []; # empty queue
+	return $copy;
+}
+
+sub bee_call {
+	my $method = shift;
+	my $bee = $client->find(shift);
+	die unless $bee;
+	return undef unless $bee;
+	# what if bee flies?
+	$bee->{state} = $method;
+	return $bee->{client}->call($method,@@_);
+}
+
+#sub rpc_status {
+#	my $bee = $client->find(shift);
+#	return $bee ? $bee->{status} : undef;
+#}
+
+sub rpc_tables {
+	my($full,$select) = @@_;
+	my $url = url::split($full);
+	my @@tables = ();
+
+	# todo: auth: check permissions.. !!!!!!!
+#	$auth->query();
+
+	return "error: table specified in url ?!?" if($url->{table});
+
+	if($url->{proto} eq 'dbi') {
+		eval {
+			# fix: todo..
+			unless($select) {
+				$select = $::auth-query('tablequery',$full);
+			}
+			my $credit = $::auth->query('read',
+						 $client->{key},$::selfkey,$full);
+			if($credit) {
+				my $db = common::database($url,$credit);
+				my $ary = $db->selectall_arrayref($select);
+				foreach(@@$ary) {
+					push @@tables,join(" ",@@$_);
+				}
+			}
+		}
+
+	} elsif($url->{proto} eq 'dir') {
+		# check url->host!
+		my $db = $url->{db};
+		return "error: directory not specified in $full" unless($db);
+		opendir(DIR,$db) || return "error: $db\: $!";
+		foreach(readdir(DIR)) {
+			next if(/^\./);
+			push @@tables,$_    if(-f "$db$_");
+			push @@tables,"$_/" if(-d "$db$_");
+		}
+		closedir(DIR);
+
+	} else {
+		return "error: unknown proto $full";
+	}
+	return \@@tables;
+}
+
+
+
+
+
+# undef == deny
+sub auth_inout {
+	my($mode,$fullurl) = @@_;
+	return undef unless defined $fullurl;
+	my $url = url::split($fullurl);
+	my $p = $url->{proto};
+	return 1 unless(($p eq 'dir') or ($p eq 'dbi'));
+
+	my $credit = $::auth->query($mode,$client->{key},$::selfkey,$fullurl);
+	die "`".$client->{key}." not authorized to $mode `$fullurl' source\n" 
+			unless($credit);
+
+#	if($p eq 'dbi') {
+#		return 
+#	}
+
+	return $credit;
+}
+
+
+sub rpc_input {
+	my $bee = shift;
+	my $num = shift() - 1;
+	my $arg = { @@_ };
+	$arg->{auth} = auth_inout('read',$arg->{url});
+	bee_call('input',$bee,$num,$arg);
+}
+
+
+sub rpc_output {
+	my $bee = shift;
+	my $num = shift() - 1;
+	my $arg = { @@_ };
+	$arg->{auth} = auth_inout('write',$arg->{url});
+	bee_call('output',$bee,$num,$arg);
+}
+
+
+@
+
+
+1.7
+log
+@SSL to INET - for testing...
+@
+text
+@d1 1
+a1 1
+# $Id: client.pm,v 1.6 2002/09/29 14:47:16 numberone Exp $
+@
+
+
+1.6
+log
+@table query seems to work
+@
+text
+@d1 1
+a1 1
+# $Id: client.pm,v 1.5 2002/09/29 12:58:33 numberone Exp $
+d58 1
+a58 1
+		if($bee->{client}->peek) {
+@
+
+
+1.5
+log
+@tablequery
+@
+text
+@d1 1
+a1 1
+# $Id: client.pm,v 1.4 2002/09/28 18:02:47 numberone Exp $
+d6 1
+a148 1
+			use DBI;
+d153 9
+a161 1
+			push @@tables,"from $full using $select";
+@
+
+
+1.4
+log
+@argument order fix in bee-rpc_input
+@
+text
+@d1 1
+a1 1
+# $Id: client.pm,v 1.3 2002/09/27 13:54:52 numberone Exp $
+d29 1
+a92 1
+	tablequery	=> \&rpc_tablequery,
+d150 4
+a153 1
+			push @@tables,"zatim neumime ($select)";
+a174 4
+sub rpc_tablequery {
+	my $url = shift;
+#	return $::auth->query('tablequery',$url);
+}
+d178 1
+d181 1
+a181 1
+	return unless defined $fullurl;
+d184 1
+a184 1
+	return unless(($p eq 'dir') or ($p eq 'dbi'));
+d186 3
+a188 2
+	my $user = 'martin@@localhost'; # huhuhu
+	my $credit = $::auth->query($mode,$user,$fullurl);
+d194 1
+a194 1
+	return 'heslo';
+a213 2
+
+
+@
+
+
+1.3
+log
+@tablequery, bee->dad msg
+@
+text
+@d1 1
+a1 1
+# $Id: client.pm,v 1.2 2002/09/26 07:52:42 numberone Exp $
+d87 2
+a88 2
+	input  => sub { bee_call('input', @@_) },
+	output => sub { bee_call('output',@@_) },
+d91 2
+a92 2
+	tables => \&rpc_tables,
+	tablequery => \&rpc_tablequery,
+d122 3
+a124 2
+	my $method  = shift;
+	my $bee     = $client->find(shift);
+d128 1
+a128 1
+	return $bee->{msg}->call($method,@@_);
+d173 2
+a174 2
+	my $url = url::split(shift);
+	return "SELECT * FROM system";
+d176 39
+@
+
+
+1.2
+log
+@version merging with my cvs
+@
+text
+@d1 1
+a1 1
+# $Id: client.pm,v 1.1.1.1 2002/09/24 01:40:58 michald Exp $
+d21 3
+d56 2
+a57 2
+		if($bee->{msg}->peek) {
+			my $msg = $bee->{msg}->recv();
+d92 1
+d136 1
+a136 1
+	my($full) = shift;
+d140 2
+a141 1
+	# auth: check permissions.. !!!!!!!
+d149 1
+d170 5
+@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d1 1
+a1 1
+# $Id: client.pm,v 1.4 2002/08/28 21:31:14 martin Exp $
+d163 1
+@
+
+
+1.1.1.1
+log
+@Initial public release of BEE Project.
+@
+text
+@@

@@ -1,0 +1,2759 @@
+head	1.19;
+access;
+symbols;
+locks; strict;
+comment	@# @;
+
+
+1.19
+date	2003.06.21.16.13.10;	author michald;	state dead;
+branches;
+next	1.18;
+
+1.18
+date	2003.05.05.06.41.47;	author michald;	state Exp;
+branches;
+next	1.17;
+
+1.17
+date	2003.04.16.12.17.19;	author jiri_schmid;	state Exp;
+branches;
+next	1.16;
+
+1.16
+date	2003.04.15.22.10.00;	author michald;	state Exp;
+branches;
+next	1.15;
+
+1.15
+date	2003.04.14.15.12.03;	author jiri_schmid;	state Exp;
+branches;
+next	1.14;
+
+1.14
+date	2003.04.10.14.19.17;	author jiri_schmid;	state Exp;
+branches;
+next	1.13;
+
+1.13
+date	2003.04.08.07.32.19;	author michald;	state Exp;
+branches;
+next	1.12;
+
+1.12
+date	2003.04.07.13.28.33;	author michald;	state Exp;
+branches;
+next	1.11;
+
+1.11
+date	2003.02.14.10.13.07;	author michald;	state Exp;
+branches;
+next	1.10;
+
+1.10
+date	2003.02.14.09.56.51;	author michald;	state Exp;
+branches;
+next	1.9;
+
+1.9
+date	2002.11.26.08.08.32;	author michald;	state Exp;
+branches;
+next	1.8;
+
+1.8
+date	2002.11.12.18.18.52;	author michald;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	2002.11.12.12.04.03;	author michald;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	2002.11.10.17.17.31;	author michald;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	2002.10.22.15.11.16;	author michald;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2002.10.02.11.14.05;	author michald;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2002.09.30.10.02.24;	author michald;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2002.09.25.18.24.14;	author michald;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2002.09.24.15.42.38;	author michald;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.19
+log
+@improvement of object dependency directed graph
+@
+text
+@<?xml version='1.0' standalone='yes'?>
+<project>
+
+  <connection></connection>
+  
+  <fact name="F Prodej [ks]" id="1302">
+    <expr>localhost/delta/polozky_dodak/ks</expr>
+    <expr>localhost/delta/objem_prodeje_agr2/ks</expr>
+    <gui-presentation coord="246 500" id="3" />
+  </fact>
+  <fact name="F Obrat [Kc]" id="1303">
+    <expr>localhost/delta/polozky_dodak/cena</expr>
+    <expr>localhost/delta/objem_prodeje_agr2/cenaXks</expr>
+    <gui-presentation coord="246 550" id="3" />
+  </fact>
+
+  <triger></triger>
+  
+  <attr pk="localhost/delta/kraj/kraj_id" name="Kraj" id="1222" description="">
+    <gui-presentation coord="56 197" id="3" />
+    <directory id="3" />
+    <display>
+	  <nazev><cz name='nazev'>localhost/delta/kraj/kraj_desc</cz><en name='name'>localhost/delta/kraj/kraj_desc</en></nazev>
+	  <kr_naz><cz name='kr. nazev'>localhost/delta/kraj/kraj_desc</cz></kr_naz>
+	</display>
+  </attr>
+  <attr pk="localhost/delta/okres/okres_id" name="Okres" description="" id="1208" fk="localhost/delta/misto/okres_id">
+    <gui-presentation coord="596 267" id="3" />
+    <directory id="3" />
+    <display>
+	  <nazev><cz name='nazev'>localhost/delta/okres/okres_desc</cz></nazev>
+	</display>
+  </attr>
+  <attr pk="localhost/delta/misto/psc_id" name="Misto" description="" id="1207" fk="localhost/delta/zakaznik/psc">
+    <gui-presentation coord="570 318" id="3" />
+    <directory id="3" />
+    <display>
+	  <nazev><cz name='nazev'>localhost/delta/misto/nazev</cz></nazev>
+	</display>
+  </attr>
+ <attr pk="localhost/delta/typ_zakaznika/typ_id" name="Typ zakaznika" id="1206" fk="localhost/delta/typ_zakaznika/typ_id" description="">
+    <gui-presentation coord="527 403" id="3" />
+    <directory id="3" />
+    <display>
+	  <nazev><cz name='nazev'>localhost/delta/typ_zakaznika/typ_desc</cz></nazev>
+	</display>
+  </attr>
+  <attr pk="localhost/delta/zakaznik/zak_id" name="Zakaznik" id="1205" fk="localhost/delta/fakt_aggr/ico" description="">
+    <gui-presentation coord="494 475" id="3" />
+    <directory id="3" />
+    <display>
+	  <nazev><cz name='nazev'>localhost/delta/zakaznik/nazev</cz><en name='name'>localhost/delta/zakaznik/nazev</en></nazev>
+	  <ico><cz name='ICO'>localhost/delta/zakaznik/ico</cz></ico>
+	</display>
+  </attr>
+  <attr pk="localhost/delta/lu_quarter/quarter_id" name="Kvartal" id="1221" description="">
+    <gui-presentation coord="139 231" id="3" />
+    <directory id="3" />
+    <display>
+	  <nazev><cz name='nazev'>localhost/delta/lu_quarter/quarter_desc</cz></nazev>
+	</display>
+  </attr>
+  <attr pk="localhost/delta/lu_month/month_id" name="Mesic" description="" id="1210" fk="localhost/delta/lu_date/month_id">
+    <gui-presentation coord="136 307" id="3" />
+    <directory id="3" />
+    <display>
+	  <nazev><cz name='nazev'>localhost/delta/lu_month/month_desc</cz><en name='name'>localhost/delta/lu_month/month_desc</en></nazev>
+	</display>
+  </attr>
+  <attr pk="localhost/delta/lu_month_of_year/month_of_year" name="Mesic v roce" description="" id="1212" fk="localhost/delta/lu_month/month_of_year">
+    <gui-presentation coord="160 250" id="3" />
+    <directory id="3" />
+    <display>
+	  <nazev><cz name='nazev'>localhost/delta/lu_month_of_year/month_of_year_cz</cz><en name='name'>localhost/delta/lu_month_of_year/month_of_year_en</en></nazev>
+	</display>
+  </attr>
+  <attr pk="localhost/delta/lu_date/date_id" id="1202">
+    <name>
+	  <cz>Datum</cz><en>Date</en>
+    </name>
+    <description>
+	  <cz>Datum (den)</cz><en>Date (day)</en>
+    </description>
+    <role>
+	  <zuctovani>
+	    <name><cz>zuctovani</cz><en>Payment</en></name>
+	    <fk>localhost/delta/fakt_aggr/dat_zuct</fk>
+	    <fk>localhost/delta/fakt/dat_zuct</fk>
+	  </zuctovani>
+	  <fakturace>
+	    <name><cz>fakturace</cz><en>Invoice</en></name>
+            <fk>localhost/delta/fakt_aggr/dat_faktur</fk>
+	  </fakturace>
+    </role>
+    <gui-presentation coord="123 418" id="3" />
+    <directory id="3" />
+    <display>
+	  <name><cz name='datum'>localhost/delta/lu_date/DATE_FORMAT(date_id,'%d.%m.%y')</cz><en name='Date'>localhost/delta/lu_date/DATE_FORMAT(date_id,'%m/%d/%y')</en></name>
+	  <lname><en name='Date Long'>localhost/delta/lu_date/DATE_FORMAT(date_id,'%M %D, %Y')</en><cz name='datum dl.'>localhost/delta/lu_date/DATE_FORMAT(date_id,'%d. %M %Y')</cz></lname>
+    </display>
+    <link>
+	  <kal><cz name='Kalendar'>("http://cal.cgi?ID=$1&amp;L=cz", localhost/delta/lu_date/date_id)</cz><en name='Calendar'>("http://cal.cgi?ID=$1&amp;L=en", localhost/delta/lu_date/date_id)</en></kal>
+	  <sum><cz name='Poznamka'>("http://dnote.cgi?ID=$1&amp;L=cz&amp;U=$USER", localhost/delta/lu_date/date_id)</cz><en name='Note'>("http://dnote.cgi?ID=$1&amp;L=en&amp;U=$USER", localhost/delta/lu_date/date_id)</en></sum>
+    </link>
+  </attr>
+  <attr pk="localhost/delta/lu_date_category/category_id" name="Kategorie data" description="" id="1211" fk="localhost/delta/date_category/category_id">
+    <gui-presentation coord="21 359" id="3" />
+    <directory id="3" />
+    <display>
+	  <nazev><cz name='nazev'>localhost/delta/lu_date_category/category_desc</cz></nazev>
+	</display>
+  </attr>
+  <attr pk="localhost/delta/cenik/cenik_id" name="Cenik" id="1204" fk="localhost/delta/fakt_aggr/cenik_id" description="Typ ceniku">
+    <gui-presentation coord="374 404" id="3" />
+    <directory id="3" />
+    <display>
+	  <nazev><cz name='nazev'>localhost/delta/cenik/cenik_desc</cz></nazev>
+	</display>
+  </attr>
+  <attr pk="localhost/delta/vyrobek/vyrobek_id" name="Vyrobek" description="Vyrobek" id="1201" fk="localhost/delta/fakt_aggr/vyrobek_id">
+    <gui-presentation coord="251 382" id="3" />
+    <directory id="3" />
+    <display>
+	  <orig-id><cz name='puvodni id'>localhost/delta/vyrobek/orig_id</cz><en name='original id'>localhost/delta/vyrobek/orig_id</en></orig-id>
+	  <name><cz name='nazev'>localhost/delta/vyrobek/vyrobek_desc</cz><en name='nazev'>localhost/delta/vyrobek/vyrobek_desc</en></name>
+    </display>
+    <link>
+	  <desc><cz name='Popis'>("http://descr.cgi?ID=$1&amp;L=cz", localhost/delta/vyrobek/orig_id)</cz><en name='Description'>("http://descr.cgi?ID=$1&amp;L=en",localhost/delta/vyrobek/orig_id)</en></desc>
+	  <po><cz name='Objednavka'>("http://po.cgi?ID=$1&amp;L=cz&amp;U=$USER", localhost/delta/vyrobek/orig_id)</cz><en name='Purchase Order'>("http://po.cgi?ID=$1&amp;L=en&amp;U=$USER",localhost/delta/vyrobek/orig_id)</en></po>
+    </link>
+  </attr>
+  <attr pk="localhost/delta/typ_vyrobku/typ_id" name="Typ vyrobku" description="" id="1203" fk="localhost/delta/vyrobek/vyrobek_typ_id">
+    <gui-presentation coord="251 294" id="3" />
+    <directory id="3" />
+    <display>
+	  <nazev><cz name='nazev'>localhost/delta/typ_vyrobku/typ_desc</cz></nazev>
+	</display>
+  </attr>
+
+  <host name="localhost" id="localhost" description="">
+    <source name="delta" type="mysql" id="delta">
+      <view></view>
+      <table access="RO" name="Date category" id="lu_date_category" description="">
+        <gui-presentation coord="173 457" id="1" />
+        <gui-presentation coord="182 458" id="2" />
+        <column lenght="3" name="Category ID" type="tinyint unsigned" id="category_id" description="">
+          <gui-presentation id="1" line="1" />
+          <gui-presentation id="2" line="1" />
+          <constraint type="PK" />
+        </column>
+        <column lenght="20" name="Category desc" type="char" id="category_desc" description="">
+          <gui-presentation id="1" line="2" />
+          <gui-presentation id="2" line="2" />
+        </column>
+      </table>
+      <table access="RO" name="Okres" id="okres" description="">
+        <gui-presentation coord="123 53" id="1" />
+        <gui-presentation coord="123 53" id="2" />
+        <column lenght="3" name="Kraj ID" type="tinyint unsigned" id="kraj_id" description="">
+          <gui-presentation id="1" line="2" />
+          <gui-presentation id="2" line="2" />
+        </column>
+        <column lenght="50" name="Okres desc" type="char" id="okres_desc" description="">
+          <gui-presentation id="1" line="3" />
+          <gui-presentation id="2" line="3" />
+        </column>
+        <column lenght="4" name="Okres ID" type="tinyint" id="okres_id" description="">
+          <gui-presentation id="1" line="1" />
+          <gui-presentation id="2" line="1" />
+          <constraint type="PK" />
+        </column>
+      </table>
+      <table access="RO" name="Month of year" id="lu_month_of_year" description="">
+        <gui-presentation coord="6 309" id="1" />
+        <gui-presentation coord="6 309" id="2" />
+        <column lenght="2" name="Month of year" type="tinyint" id="month_of_year" description="">
+          <gui-presentation id="1" line="1" />
+          <gui-presentation id="2" line="1" />
+          <constraint type="PK" />
+        </column>
+        <column lenght="8" name="Month of year name" type="char" id="month_of_year_name" description="">
+          <gui-presentation id="1" line="2" />
+          <gui-presentation id="2" line="2" />
+        </column>
+      </table>
+      <table access="RO" name="Zakaznik" id="zakaznik" description="">
+        <gui-presentation coord="379 100" id="1" />
+        <gui-presentation coord="379 100" id="2" />
+        <column lenght="3" name="Kraj ID" type="tinyint unsigned" id="kraj_id" description="">
+          <gui-presentation id="1" line="8" />
+          <gui-presentation id="2" line="8" />
+        </column>
+        <column lenght="3" name="Typ ID" type="tinyint unsigned" id="typ_id" description="">
+          <gui-presentation id="1" line="9" />
+          <gui-presentation id="2" line="9" />
+        </column>
+        <column lenght="20" name="C zak odber" type="bigint unsigned" id="c_zak_odber" description="">
+          <gui-presentation id="1" line="2" />
+          <gui-presentation id="2" line="2" />
+        </column>
+        <column lenght="20" name="Ico" type="bigint unsigned" id="ico" description="">
+          <gui-presentation id="1" line="3" />
+          <gui-presentation id="2" line="3" />
+        </column>
+        <column lenght="8" name="Psc" type="mediumint unsigned" id="psc" description="">
+          <gui-presentation id="1" line="6" />
+          <gui-presentation id="2" line="6" />
+        </column>
+        <column lenght="20" name="Zak ID" type="bigint unsigned" id="zak_id" description="">
+          <gui-presentation id="1" line="1" />
+          <gui-presentation id="2" line="1" />
+          <constraint type="PK" />
+        </column>
+        <column lenght="50" name="Adr" type="char" id="adr" description="">
+          <gui-presentation id="1" line="5" />
+          <gui-presentation id="2" line="5" />
+        </column>
+        <column lenght="50" name="Nazev" type="char" id="nazev" description="">
+          <gui-presentation id="1" line="4" />
+          <gui-presentation id="2" line="4" />
+        </column>
+        <column lenght="3" name="Okres ID" type="tinyint unsigned" id="okres_id" description="">
+          <gui-presentation id="1" line="7" />
+          <gui-presentation id="2" line="7" />
+        </column>
+      </table>
+      <table access="RO" name="Date" id="lu_date" description="">
+        <gui-presentation coord="347 381" id="1" />
+        <gui-presentation coord="380 368" id="2" />
+        <column lenght="4" name="Year ID" type="smallint unsigned" id="year_id" description="">
+          <gui-presentation id="1" line="4" />
+          <gui-presentation id="2" line="4" />
+        </column>
+        <column lenght="3" name="Category ID" type="tinyint unsigned" id="category_id" description="">
+          <gui-presentation id="1" line="7" />
+          <gui-presentation id="2" line="7" />
+        </column>
+        <column lenght="date" name="Date ID" type="date" id="date_id" description="">
+          <gui-presentation id="1" line="1" />
+          <gui-presentation id="2" line="1" />
+          <constraint type="PK" />
+        </column>
+        <column lenght="6" name="Month ID" type="mediumint unsigned" id="month_id" description="">
+          <gui-presentation id="1" line="2" />
+          <gui-presentation id="2" line="2" />
+        </column>
+        <column lenght="3" name="Day in week" type="tinyint unsigned" id="day_in_week" description="">
+          <gui-presentation id="1" line="6" />
+          <gui-presentation id="2" line="6" />
+        </column>
+        <column lenght="6" name="Quarter ID" type="mediumint unsigned" id="quarter_id" description="">
+          <gui-presentation id="1" line="3" />
+          <gui-presentation id="2" line="3" />
+        </column>
+        <column lenght="6" name="Week ID" type="mediumint unsigned" id="week_id" description="">
+          <gui-presentation id="1" line="5" />
+          <gui-presentation id="2" line="5" />
+        </column>
+      </table>
+      <table access="RO" name="Vyrobek" id="vyrobek" description="">
+        <gui-presentation coord="353 598" id="1" />
+        <gui-presentation coord="373 543" id="2" />
+        <column lenght="5" name="Vyrobek ID" type="smallint unsigned" id="vyrobek_id" description="">
+          <gui-presentation id="1" line="1" />
+          <gui-presentation id="2" line="1" />
+          <constraint type="PK" />
+        </column>
+        <column lenght="3" name="Vyrobek typ ID" type="tinyint unsigned" id="vyrobek_typ_id" description="">
+          <gui-presentation id="1" line="2" />
+          <gui-presentation id="2" line="2" />
+        </column>
+        <column lenght="50" name="Vyrobek desc" type="char" id="vyrobek_desc" description="">
+          <gui-presentation id="1" line="3" />
+          <gui-presentation id="2" line="3" />
+        </column>
+        <column lenght="5" name="Orig ID" type="smallint unsigned" id="orig_id" description="">
+          <gui-presentation id="1" line="4" />
+          <gui-presentation id="2" line="4" />
+        </column>
+      </table>
+      <table access="RO" name="Cenik" id="cenik" description="">
+        <gui-presentation coord="537 571" id="1" />
+        <gui-presentation coord="383 285" id="2" />
+        <column lenght="50" name="Cenik desc" type="char" id="cenik_desc" description="">
+          <gui-presentation id="1" line="2" />
+          <gui-presentation id="2" line="2" />
+        </column>
+        <column lenght="6" name="Cenik ID" type="char" id="cenik_id" description="">
+          <gui-presentation id="1" line="1" />
+          <gui-presentation id="2" line="1" />
+          <constraint type="PK" />
+        </column>
+      </table>
+      <table access="RO" name="Typ zakaznika" id="typ_zakaznika" description="">
+        <gui-presentation coord="189 194" id="1" />
+        <gui-presentation coord="189 194" id="2" />
+        <column lenght="3" name="Typ ID" type="tinyint unsigned" id="typ_id" description="">
+          <gui-presentation id="1" line="1" />
+          <gui-presentation id="2" line="1" />
+          <constraint type="PK" />
+        </column>
+        <column lenght="10" name="Typ desc" type="char" id="typ_desc" description="">
+          <gui-presentation id="1" line="2" />
+          <gui-presentation id="2" line="2" />
+        </column>
+      </table>
+      <table access="RO" name="Misto" id="misto" description="">
+        <gui-presentation coord="253 76" id="1" />
+        <gui-presentation coord="253 76" id="2" />
+        <column lenght="3" name="Kraj ID" type="tinyint unsigned" id="kraj_id" description="">
+          <gui-presentation id="1" line="3" />
+          <gui-presentation id="2" line="3" />
+        </column>
+        <column lenght="8" name="Psc ID" type="mediumint unsigned" id="psc_id" description="">
+          <gui-presentation id="1" line="1" />
+          <gui-presentation id="2" line="1" />
+          <constraint type="PK" />
+        </column>
+        <column lenght="3" name="Okres ID" type="tinyint unsigned" id="okres_id" description="">
+          <gui-presentation id="1" line="2" />
+          <gui-presentation id="2" line="2" />
+        </column>
+        <column lenght="50" name="Nazev" type="char" id="nazev" description="">
+          <gui-presentation id="1" line="4" />
+          <gui-presentation id="2" line="4" />
+        </column>
+      </table>
+      <table access="RO" name="Quarter" id="lu_quarter" description="">
+        <gui-presentation coord="39 382" id="1" />
+        <gui-presentation coord="39 382" id="2" />
+        <column lenght="4" name="Year ID" type="smallint" id="year_id" description="">
+          <gui-presentation id="1" line="3" />
+          <gui-presentation id="2" line="3" />
+        </column>
+        <column lenght="7" name="Quarter desc" type="char" id="quarter_desc" description="">
+          <gui-presentation id="1" line="2" />
+          <gui-presentation id="2" line="2" />
+        </column>
+        <column lenght="6" name="Quarter ID" type="mediumint" id="quarter_id" description="">
+          <gui-presentation id="1" line="1" />
+          <gui-presentation id="2" line="1" />
+          <constraint type="PK" />
+        </column>
+      </table>
+      <table access="RO" name="Dodaci list detail" id="polozky_dodak" description="">
+        <gui-presentation coord="663 375" id="1" />
+        <column lenght="5" name="Ks" type="smallint unsigned" id="ks" description="">
+          <gui-presentation id="1" line="6" />
+        </column>
+        <column lenght="5" name="Vyrobek ID" type="smallint unsigned" id="vyrobek_id" description="">
+          <gui-presentation id="1" line="3" />
+        </column>
+        <column lenght="20" name="Faktura ID" type="bigint unsigned" id="faktura_id" description="">
+          <gui-presentation id="1" line="2" />
+        </column>
+        <column lenght="20" name="C zak odber" type="bigint unsigned" id="c_zak_odber" description="">
+          <gui-presentation id="1" line="4" />
+        </column>
+        <column lenght="20" name="Polozky dodak ID" type="bigint unsigned" id="polozky_dodak_id" description="">
+          <gui-presentation id="1" line="1" />
+          <constraint type="PK" />
+        </column>
+        <column lenght="6" name="Cenik ID" type="char" id="cenik_id" description="">
+          <gui-presentation id="1" line="5" />
+        </column>
+        <column lenght="decimal(5,2)" name="Cena" type="decimal(5,2)" id="cena" description="">
+          <gui-presentation id="1" line="7" />
+        </column>
+      </table>
+      <table access="RO" name="Cenikove ceny" id="cenikove_ceny" description="">
+        <gui-presentation coord="666 611" id="1" />
+        <column lenght="5" name="Vyrobek ID" type="smallint unsigned" id="vyrobek_id" description="">
+          <gui-presentation id="1" line="2" />
+          <constraint type="PK" />
+        </column>
+        <column lenght="date" name="End date" type="date" id="end_date" description="">
+          <gui-presentation id="1" line="4" />
+        </column>
+        <column lenght="6" name="Cenik ID" type="char" id="cenik_id" description="">
+          <gui-presentation id="1" line="1" />
+          <constraint type="PK" />
+        </column>
+        <column lenght="date" name="Effective date" type="date" id="ess_date" description="">
+          <gui-presentation coord="666 611" id="1" line="3" />
+        </column>
+        <column lenght="decimal(5,2)" name="Cena" type="decimal(5,2)" id="cena" description="">
+          <gui-presentation id="1" line="5" />
+        </column>
+      </table>
+      <table access="RO" name="Typ vyrobku" id="typ_vyrobku" description="">
+        <gui-presentation coord="155 633" id="1" />
+        <gui-presentation coord="191 606" id="2" />
+        <column lenght="3" name="Typ ID" type="tinyint unsigned" id="typ_id" description="">
+          <gui-presentation id="1" line="1" />
+          <gui-presentation id="2" line="1" />
+          <constraint type="PK" />
+        </column>
+        <column lenght="50" name="Typ desc" type="char" id="typ_desc" description="">
+          <gui-presentation id="1" line="2" />
+          <gui-presentation id="2" line="2" />
+        </column>
+      </table>
+      <table access="RO" name="Faktura" id="faktura" description="">
+        <gui-presentation coord="525 328" id="1" />
+        <column lenght="20" name="Fak ID" type="bigint unsigned" id="fak_id" description="">
+          <gui-presentation id="1" line="1" />
+          <constraint type="PK" />
+        </column>
+        <column lenght="20" name="Zak fak ID" type="bigint unsigned" id="zak_fak_id" description="">
+          <gui-presentation id="1" line="2" />
+        </column>
+        <column lenght="date" name="Dat zuct" type="date" id="dat_zuct" description="">
+          <gui-presentation id="1" line="3" />
+        </column>
+      </table>
+      <table access="RO" name="Faktura aggr" id="fakt_aggr" description="Agregovane faktury">
+        <gui-presentation coord="663 375" id="2" />
+        <column lenght="5" name="Ks" type="smallint unsigned" id="ks" description="">
+          <gui-presentation id="2" line="6" />
+        </column>
+        <column lenght="5" name="Vyrobek ID" type="smallint unsigned" id="vyrobek_id" description="">
+          <gui-presentation id="2" line="5" />
+        </column>
+        <column lenght="20" name="Faktura ID" type="bigint unsigned" id="faktura_id" description="">
+          <gui-presentation id="2" line="1" />
+        </column>
+        <column lenght="20" name="Zak fak ID" type="bigint unsigned" id="zak_fak_id" description="">
+          <gui-presentation id="2" line="2" />
+        </column>
+        <column lenght="date" name="Dat zuct" type="date" id="dat_zuct" description="">
+          <gui-presentation id="2" line="4" />
+        </column>
+        <column lenght="6" name="Cenik ID" type="char" id="cenik_id" description="">
+          <gui-presentation id="2" line="3" />
+        </column>
+        <column lenght="decimal(5,2)" name="Cena" type="decimal(5,2)" id="cena" description="">
+          <gui-presentation id="2" line="7" />
+        </column>
+      </table>
+      <table access="RO" name="Kraj" id="kraj" description="">
+        <gui-presentation coord="5 34" id="1" />
+        <gui-presentation coord="5 34" id="2" />
+        <column lenght="4" name="Kraj ID" type="tinyint" id="kraj_id" description="">
+          <gui-presentation id="1" line="1" />
+          <gui-presentation id="2" line="1" />
+          <constraint type="PK" />
+        </column>
+        <column lenght="50" name="Kraj desc" type="char" id="kraj_desc" description="">
+          <gui-presentation id="1" line="2" />
+          <gui-presentation id="2" line="2" />
+        </column>
+      </table>
+      <table access="RO" name="Month" id="lu_month" description="">
+        <gui-presentation coord="195 327" id="1" />
+        <gui-presentation coord="195 327" id="2" />
+        <column lenght="2" name="Month of year" type="tinyint unsigned" id="month_of_year" description="">
+          <gui-presentation id="1" line="3" />
+          <gui-presentation id="2" line="3" />
+        </column>
+        <column lenght="4" name="Year ID" type="smallint unsigned" id="year_id" description="">
+          <gui-presentation id="1" line="5" />
+          <gui-presentation id="2" line="5" />
+        </column>
+        <column lenght="6" name="Month ID" type="mediumint unsigned" id="month_id" description="">
+          <gui-presentation id="1" line="1" />
+          <gui-presentation id="2" line="1" />
+          <constraint type="PK" />
+        </column>
+        <column lenght="20" name="Month desc" type="char" id="month_desc" description="">
+          <gui-presentation id="1" line="2" />
+          <gui-presentation id="2" line="2" />
+        </column>
+        <column lenght="6" name="Quarter ID" type="mediumint unsigned" id="quarter_id" description="">
+          <gui-presentation id="1" line="4" />
+          <gui-presentation id="2" line="4" />
+        </column>
+      </table>
+      <metadata version="1">
+        <columns-query type="SQL">SHOW COLUMNS FROM ?Table?</columns-query>
+        <tables-query type="SQL">SHOW TABLES</tables-query>
+      </metadata>
+      <src-conn driver="dbi:MySQL">
+        <src-name gui-line="2">delta_hot</src-name>
+        <password gui-line="4" />
+        <user gui-line="3">root</user>
+        <port gui-line="1">3306</port>
+      </src-conn>
+ </source>
+  </host>
+  <signal></signal>
+  <gui-layer width="280" visible="YES" name="Base Physical DM" id="1" height="210" />
+  <gui-layer width="280" name="Logical DM" id="3" height="210" />
+  <gui-layer width="280" name="Physical Snowflake DM" id="2" height="210" />
+  <const></const>
+  <relation id="c3" description="">
+    <gui-presentation id="1" />
+    <gui-presentation id="2" />
+    <to cardinality="N" optional="true">localhost/delta/lu_date/month_id</to>
+    <from cardinality="1" optional="false">localhost/delta/lu_month/month_id</from>
+  </relation>
+  <relation id="c4" description="">
+    <gui-presentation id="1" />
+    <gui-presentation id="2" />
+    <to cardinality="N" optional="true">localhost/delta/lu_month/quarter_id</to>
+    <from cardinality="1" optional="false">localhost/delta/lu_quarter/quarter_id</from>
+  </relation>
+  <relation id="c9" description="">
+    <gui-presentation id="1" />
+    <to cardinality="N" optional="true">localhost/delta/cenikove_ceny/cenik_id</to>
+    <from cardinality="1" optional="false">localhost/delta/cenik/cenik_id</from>
+  </relation>
+  <relation id="c2" description="">
+    <gui-presentation id="1" />
+    <gui-presentation id="2" />
+    <to cardinality="N" optional="true">localhost/delta/zakaznik/psc</to>
+    <from cardinality="1" optional="false">localhost/delta/misto/psc_id</from>
+  </relation>
+  <relation id="c10" description="">
+    <gui-presentation id="1" />
+    <gui-presentation id="2" />
+    <to cardinality="N" optional="true">localhost/delta/vyrobek/vyrobek_typ_id</to>
+    <from cardinality="1" optional="false">localhost/delta/typ_vyrobku/typ_id</from>
+  </relation>
+  <relation id="c18" description="">
+    <gui-presentation id="2" />
+    <to cardinality="N" optional="true">localhost/delta/fakt_aggr/dat_zuct</to>
+    <from cardinality="1" optional="false">localhost/delta/lu_date/date_id</from>
+  </relation>
+  <relation id="c15" description="">
+    <gui-presentation id="1" />
+    <to cardinality="N" optional="true">localhost/delta/polozky_dodak/vyrobek_id</to>
+    <from cardinality="1" optional="false">localhost/delta/vyrobek/vyrobek_id</from>
+  </relation>
+  <relation id="c12" description="">
+    <gui-presentation id="1" />
+    <to cardinality="N" optional="true">localhost/delta/polozky_dodak/faktura_id</to>
+    <from cardinality="1" optional="false">localhost/delta/faktura/fak_id</from>
+  </relation>
+  <relation id="c7" description="">
+    <gui-presentation id="1" />
+    <gui-presentation id="2" />
+    <to cardinality="N" optional="true">localhost/delta/misto/okres_id</to>
+    <from cardinality="1" optional="false">localhost/delta/okres/okres_id</from>
+  </relation>
+  <relation id="c5" description="">
+    <gui-presentation id="1" />
+    <gui-presentation id="2" />
+    <to cardinality="N" optional="true">localhost/delta/lu_date/category_id</to>
+    <from cardinality="1" optional="false">localhost/delta/lu_date_category/category_id</from>
+  </relation>
+  <relation id="c13" description="">
+    <gui-presentation id="1" />
+    <to cardinality="N" optional="true">localhost/delta/faktura/dat_zuct</to>
+    <from cardinality="1" optional="false">localhost/delta/lu_date/date_id</from>
+  </relation>
+  <relation id="c6" description="">
+    <gui-presentation id="1" />
+    <gui-presentation id="2" />
+    <to cardinality="N" optional="true">localhost/delta/lu_month/month_of_year</to>
+    <from cardinality="1" optional="false">localhost/delta/lu_month_of_year/month_of_year</from>
+  </relation>
+  <relation id="c14" description="">
+    <gui-presentation id="1" />
+    <to cardinality="N" optional="true">localhost/delta/faktura/zak_fak_id</to>
+    <from cardinality="1" optional="false">localhost/delta/zakaznik/ico</from>
+  </relation>
+  <relation id="c11" description="">
+    <gui-presentation id="1" />
+    <to cardinality="N" optional="true">localhost/delta/cenikove_ceny/vyrobek_id</to>
+    <from cardinality="1" optional="false">localhost/delta/vyrobek/vyrobek_id</from>
+  </relation>
+  <relation id="c19" description="">
+    <gui-presentation id="2" />
+    <to cardinality="N" optional="true">localhost/delta/fakt_aggr/zak_fak_id</to>
+    <from cardinality="1" optional="false">localhost/delta/zakaznik/ico</from>
+  </relation>
+  <relation id="c17" description="">
+    <gui-presentation id="2" />
+    <to cardinality="N" optional="true">localhost/delta/fakt_aggr/cenik_id</to>
+    <from cardinality="1" optional="false">localhost/delta/cenik/cenik_id</from>
+  </relation>
+  <relation id="c16" description="">
+    <gui-presentation id="2" />
+    <to cardinality="N" optional="true">localhost/delta/fakt_aggr/vyrobek_id</to>
+    <from cardinality="1" optional="false">localhost/delta/vyrobek/vyrobek_id</from>
+  </relation>
+  <relation id="c1" description="">
+    <gui-presentation id="1" />
+    <gui-presentation id="2" />
+    <to cardinality="N" optional="true">localhost/delta/zakaznik/typ_id</to>
+    <from cardinality="1" optional="false">localhost/delta/typ_zakaznika/typ_id</from>
+  </relation>
+  <relation id="c8" description="">
+    <gui-presentation id="1" />
+    <gui-presentation id="2" />
+    <to cardinality="N" optional="true">localhost/delta/okres/kraj_id</to>
+    <from cardinality="1" optional="false">localhost/delta/kraj/kraj_id</from>
+  </relation>
+  <relation id="c28" description="">
+    <gui-presentation id="1" />
+    <to cardinality="N" optional="true">localhost/delta/misto/kraj_id</to>
+    <from cardinality="1" optional="false">localhost/delta/kraj/kraj_id</from>
+  </relation>
+  <relation id="c29" description="">
+    <gui-presentation id="1" />
+    <to cardinality="N" optional="true">localhost/delta/zakaznik/okres_id</to>
+    <from cardinality="1" optional="false">localhost/delta/okres/okres_id</from>
+  </relation>
+</project>
+@
+
+
+1.18
+log
+@implementation of full localized metadata
+@
+text
+@@
+
+
+1.17
+log
+@code improvment, minor fixies
+@
+text
+@d6 3
+a8 1
+  <fact expr="localhost/delta/polozky_dodak/ks" name="F Prodej [ks]" id="1302">
+d11 3
+a13 1
+  <fact expr="localhost/delta/polozky_dodak/cena" name="F Obrat [Kc]" id="1303">
+d77 19
+a95 2
+  <attr pk="localhost/delta/lu_date/date_id" id="1202" name="uhersky rok" description="">
+    <gui-presentation coord="160 250" id="3" />
+d98 7
+a104 2
+	  <nazev><cz name='nazev'>localhost/delta/lu_month_of_year/month_of_year_cz</cz><en name='name'>localhost/delta/lu_month_of_year/month_of_year_en</en></nazev>
+	</display>
+d482 6
+@
+
+
+1.16
+log
+@atribute role implementation in MD
+@
+text
+@d73 2
+a74 16
+  <attr pk="localhost/delta/lu_date/date_id" id="1202" description="">
+    <name>
+	  <cz>Den</cz><en>Datex</en>
+    </name>
+    <role>
+	  <zuctovani>
+	    <name><cz>zuctovani</cz><en>Payment</en></name>
+	    <fk>localhost/delta/fakt_aggr/dat_zuct</fk>
+	    <fk>localhost/delta/fakt/dat_zuct</fk>
+	  </zuctovani>
+	  <fakturace>
+	    <name><cz>fakturace</cz><en>Invoice</en></name>
+            <fk>localhost/delta/fakt_aggr/dat_faktur</fk>
+	  </fakturace>
+    </role>
+    <gui-presentation coord="123 418" id="3" />
+d77 2
+a78 3
+	  <name><cz name='datum'>localhost/delta/lu_date/DATE_FORMAT(date_id,'%d.%m.%y')</cz><en name='Date'>localhost/delta/lu_date/DATE_FORMAT(date_id,'%m/%d/%y')</en></name>
+	  <lname><en name='Date Long'>localhost/delta/lu_date/DATE_FORMAT(date_id,'%M %D, %Y')</en><cz name='datum dl.'>localhost/delta/lu_date/DATE_FORMAT(date_id,'%d. %M %Y')</cz></lname>
+    </display>
+@
+
+
+1.15
+log
+@minor changes in naming of new objects
+@
+text
+@a12 28
+  <fact expr="localhost/delta/polozky_dodak/ks" name="2sF Prodej [ks]" id="222s1302">
+    <gui-presentation coord="246 500" id="222s3" />
+  </fact>
+  <fact expr="localhost/delta/polozky_dodak/cena" name="2sF Obrat [Kc]" id="222s1303">
+    <gui-presentation coord="246 550" id="222s3" />
+  </fact>
+
+  <fact expr="localhost/delta/polozky_dodak/ks" name="3sF Prodej [ks]" id="333s1302">
+    <gui-presentation coord="246 500" id="333s3" />
+  </fact>
+  <fact expr="localhost/delta/polozky_dodak/cena" name="3sF Obrat [Kc]" id="333s1303">
+    <gui-presentation coord="246 550" id="333s3" />
+  </fact>
+
+  <fact expr="localhost/delta/polozky_dodak/ks" name="4sF Prodej [ks]" id="444s1302">
+    <gui-presentation coord="246 500" id="444s3" />
+  </fact>
+  <fact expr="localhost/delta/polozky_dodak/cena" name="4sF Obrat [Kc]" id="444s1303">
+    <gui-presentation coord="246 550" id="444s3" />
+  </fact>
+
+  <fact expr="localhost/delta/polozky_dodak/ks" name="5sF Prodej [ks]" id="555s1302">
+    <gui-presentation coord="246 500" id="555s3" />
+  </fact>
+  <fact expr="localhost/delta/polozky_dodak/cena" name="5sF Obrat [Kc]" id="555s1303">
+    <gui-presentation coord="246 550" id="555s3" />
+  </fact>
+  
+d73 15
+a87 1
+  <attr pk="localhost/delta/lu_date/date_id" name="Den" id="1202" fk="localhost/delta/fakt_aggr/dat_zuct" description="">
+d93 1
+a93 1
+	</display>
+d115 1
+a115 1
+	</display>
+d119 1
+a119 1
+	</link>
+a128 205
+
+  <attr pk="localhost/delta/kraj/kraj_id" name="5Kraj" id="2x1222" description="">
+    <gui-presentation coord="56 197" id="2x3" />
+    <directory id="2x3" />
+    <display>
+	  <nazev><cz name='nazev'>localhost/delta/kraj/kraj_desc</cz><en name='name'>localhost/delta/kraj/kraj_desc</en></nazev>
+	  <kr_naz><cz name='kr. nazev'>localhost/delta/kraj/kraj_desc</cz></kr_naz>
+	</display>
+  </attr>
+  <attr pk="localhost/delta/okres/okres_id" name="5Okres" description="" id="2x1208" fk="localhost/delta/misto/okres_id">
+    <gui-presentation coord="596 267" id="2x3" />
+    <directory id="2x3" />
+    <display>
+	  <nazev><cz name='nazev'>localhost/delta/okres/okres_desc</cz></nazev>
+	</display>
+  </attr>
+  <attr pk="localhost/delta/misto/psc_id" name="5Misto" description="" id="2x1207" fk="localhost/delta/zakaznik/psc">
+    <gui-presentation coord="570 318" id="2x3" />
+    <directory id="2x3" />
+    <display>
+	  <nazev><cz name='nazev'>localhost/delta/misto/nazev</cz></nazev>
+	</display>
+  </attr>
+ <attr pk="localhost/delta/typ_zakaznika/typ_id" name="5Typ zakaznika" id="2x1206" fk="localhost/delta/typ_zakaznika/typ_id" description="">
+    <gui-presentation coord="527 403" id="2x3" />
+    <directory id="2x3" />
+    <display>
+	  <nazev><cz name='nazev'>localhost/delta/typ_zakaznika/typ_desc</cz></nazev>
+	</display>
+  </attr>
+  <attr pk="localhost/delta/zakaznik/zak_id" name="5Zakaznik" id="2x1205" fk="localhost/delta/fakt_aggr/ico" description="">
+    <gui-presentation coord="494 475" id="2x3" />
+    <directory id="2x3" />
+    <display>
+	  <nazev><cz name='nazev'>localhost/delta/zakaznik/nazev</cz><en name='name'>localhost/delta/zakaznik/nazev</en></nazev>
+	  <ico><cz name='ICO'>localhost/delta/zakaznik/ico</cz></ico>
+	</display>
+  </attr>
+  <attr pk="localhost/delta/lu_quarter/quarter_id" name="5Kvartal" id="2x1221" description="">
+    <gui-presentation coord="139 231" id="2x3" />
+    <directory id="2x3" />
+    <display>
+	  <nazev><cz name='nazev'>localhost/delta/lu_quarter/quarter_desc</cz></nazev>
+	</display>
+  </attr>
+  <attr pk="localhost/delta/lu_month/month_id" name="5Mesic" description="" id="2x1210" fk="localhost/delta/lu_date/month_id">
+    <gui-presentation coord="136 307" id="2x3" />
+    <directory id="2x3" />
+    <display>
+	  <nazev><cz name='nazev'>localhost/delta/lu_month/month_desc</cz><en name='name'>localhost/delta/lu_month/month_desc</en></nazev>
+	</display>
+  </attr>
+  <attr pk="localhost/delta/lu_month_of_year/month_of_year" name="5Mesic v roce" description="" id="2x1212" fk="localhost/delta/lu_month/month_of_year">
+    <gui-presentation coord="160 250" id="2x3" />
+    <directory id="2x3" />
+    <display>
+	  <nazev><cz name='nazev'>localhost/delta/lu_month_of_year/month_of_year_cz</cz><en name='name'>localhost/delta/lu_month_of_year/month_of_year_en</en></nazev>
+	</display>
+  </attr>
+  <attr pk="localhost/delta/lu_date/date_id" name="5Den" id="2x1202" fk="localhost/delta/fakt_aggr/dat_zuct" description="">
+    <gui-presentation coord="123 418" id="2x3" />
+    <directory id="2x3" />
+    <display>
+	  <name><cz name='datum'>localhost/delta/lu_date/DATE_FORMAT(date_id,'%d.%m.%y')</cz><en name='Date'>localhost/delta/lu_date/DATE_FORMAT(date_id,'%m/%d/%y')</en></name>
+	  <lname><en name='Date Long'>localhost/delta/lu_date/DATE_FORMAT(date_id,'%M %D, %Y')</en><cz name='datum dl.'>localhost/delta/lu_date/DATE_FORMAT(date_id,'%d. %M %Y')</cz></lname>
+	</display>
+  </attr>
+  <attr pk="localhost/delta/lu_date_category/category_id" name="5Kategorie data" description="" id="2x1211" fk="localhost/delta/date_category/category_id">
+    <gui-presentation coord="21 359" id="2x3" />
+    <directory id="2x3" />
+    <display>
+	  <nazev><cz name='nazev'>localhost/delta/lu_date_category/category_desc</cz></nazev>
+	</display>
+  </attr>
+  <attr pk="localhost/delta/cenik/cenik_id" name="5Cenik" id="2x1204" fk="localhost/delta/fakt_aggr/cenik_id" description="Typ ceniku">
+    <gui-presentation coord="374 404" id="2x3" />
+    <directory id="2x3" />
+    <display>
+	  <nazev><cz name='nazev'>localhost/delta/cenik/cenik_desc</cz></nazev>
+	</display>
+  </attr>
+  <attr pk="localhost/delta/vyrobek/vyrobek_id" name="5Vyrobek" description="Vyrobek" id="2x1201" fk="localhost/delta/fakt_aggr/vyrobek_id">
+    <gui-presentation coord="251 382" id="2x3" />
+    <directory id="2x3" />
+    <display>
+	  <orig-id><cz name='puvodni id'>localhost/delta/vyrobek/orig_id</cz><en name='original id'>localhost/delta/vyrobek/orig_id</en></orig-id>
+	  <name><cz name='nazev'>localhost/delta/vyrobek/vyrobek_desc</cz><en name='nazev'>localhost/delta/vyrobek/vyrobek_desc</en></name>
+	</display>
+    <link>
+	  <desc><cz name='Popis'>("http://descr.cgi?ID=$1&amp;L=cz", localhost/delta/vyrobek/orig_id)</cz><en name='Description'>("http://descr.cgi?ID=$1&amp;L=en",localhost/delta/vyrobek/orig_id)</en></desc>
+	  <po><cz name='Objednavka'>("http://po.cgi?ID=$1&amp;L=cz&amp;U=$USER", localhost/delta/vyrobek/orig_id)</cz><en name='Purchase Order'>("http://po.cgi?ID=$1&amp;L=en&amp;U=$USER",localhost/delta/vyrobek/orig_id)</en></po>
+	</link>
+  </attr>
+  <attr pk="localhost/delta/typ_vyrobku/typ_id" name="5Typ vyrobku" description="" id="2x1203" fk="localhost/delta/vyrobek/vyrobek_typ_id">
+    <gui-presentation coord="251 294" id="2x3" />
+    <directory id="2x3" />
+    <display>
+	  <nazev><cz name='nazev'>localhost/delta/typ_vyrobku/typ_desc</cz></nazev>
+	</display>
+  </attr>
+
+
+  <attr pk="localhost/delta/kraj/kraj_id" name="8Kraj" id="3x1222" description="">
+    <gui-presentation coord="56 197" id="3x3" />
+    <directory id="3x3" />
+    <display>
+	  <nazev><cz name='nazev'>localhost/delta/kraj/kraj_desc</cz><en name='name'>localhost/delta/kraj/kraj_desc</en></nazev>
+	  <kr_naz><cz name='kr. nazev'>localhost/delta/kraj/kraj_desc</cz></kr_naz>
+	</display>
+  </attr>
+  <attr pk="localhost/delta/okres/okres_id" name="8Okres" description="" id="3x1208" fk="localhost/delta/misto/okres_id">
+    <gui-presentation coord="596 267" id="3x3" />
+    <directory id="3x3" />
+    <display>
+	  <nazev><cz name='nazev'>localhost/delta/okres/okres_desc</cz></nazev>
+	</display>
+  </attr>
+  <attr pk="localhost/delta/misto/psc_id" name="8Misto" description="" id="3x1207" fk="localhost/delta/zakaznik/psc">
+    <gui-presentation coord="570 318" id="3x3" />
+    <directory id="3x3" />
+    <display>
+	  <nazev><cz name='nazev'>localhost/delta/misto/nazev</cz></nazev>
+	</display>
+  </attr>
+ <attr pk="localhost/delta/typ_zakaznika/typ_id" name="8Typ zakaznika" id="3x1206" fk="localhost/delta/typ_zakaznika/typ_id" description="">
+    <gui-presentation coord="527 403" id="3x3" />
+    <directory id="3x3" />
+    <display>
+	  <nazev><cz name='nazev'>localhost/delta/typ_zakaznika/typ_desc</cz></nazev>
+	</display>
+  </attr>
+  <attr pk="localhost/delta/zakaznik/zak_id" name="8Zakaznik" id="3x1205" fk="localhost/delta/fakt_aggr/ico" description="">
+    <gui-presentation coord="494 475" id="3x3" />
+    <directory id="3x3" />
+    <display>
+	  <nazev><cz name='nazev'>localhost/delta/zakaznik/nazev</cz><en name='name'>localhost/delta/zakaznik/nazev</en></nazev>
+	  <ico><cz name='ICO'>localhost/delta/zakaznik/ico</cz></ico>
+	</display>
+  </attr>
+  <attr pk="localhost/delta/lu_quarter/quarter_id" name="8Kvartal" id="3x1221" description="">
+    <gui-presentation coord="139 231" id="3x3" />
+    <directory id="3x3" />
+    <display>
+	  <nazev><cz name='nazev'>localhost/delta/lu_quarter/quarter_desc</cz></nazev>
+	</display>
+  </attr>
+  <attr pk="localhost/delta/lu_month/month_id" name="8Mesic" description="" id="3x1210" fk="localhost/delta/lu_date/month_id">
+    <gui-presentation coord="136 307" id="3x3" />
+    <directory id="3x3" />
+    <display>
+	  <nazev><cz name='nazev'>localhost/delta/lu_month/month_desc</cz><en name='name'>localhost/delta/lu_month/month_desc</en></nazev>
+	</display>
+  </attr>
+  <attr pk="localhost/delta/lu_month_of_year/month_of_year" name="8Mesic v roce" description="" id="3x1212" fk="localhost/delta/lu_month/month_of_year">
+    <gui-presentation coord="160 250" id="3x3" />
+    <directory id="3x3" />
+    <display>
+	  <nazev><cz name='nazev'>localhost/delta/lu_month_of_year/month_of_year_cz</cz><en name='name'>localhost/delta/lu_month_of_year/month_of_year_en</en></nazev>
+	</display>
+  </attr>
+  <attr pk="localhost/delta/lu_date/date_id" name="8Den" id="3x1202" fk="localhost/delta/fakt_aggr/dat_zuct" description="">
+    <gui-presentation coord="123 418" id="3x3" />
+    <directory id="3x3" />
+    <display>
+	  <name><cz name='datum'>localhost/delta/lu_date/DATE_FORMAT(date_id,'%d.%m.%y')</cz><en name='Date'>localhost/delta/lu_date/DATE_FORMAT(date_id,'%m/%d/%y')</en></name>
+	  <lname><en name='Date Long'>localhost/delta/lu_date/DATE_FORMAT(date_id,'%M %D, %Y')</en><cz name='datum dl.'>localhost/delta/lu_date/DATE_FORMAT(date_id,'%d. %M %Y')</cz></lname>
+	</display>
+  </attr>
+  <attr pk="localhost/delta/lu_date_category/category_id" name="8Kategorie data" description="" id="3x1211" fk="localhost/delta/date_category/category_id">
+    <gui-presentation coord="21 359" id="3x3" />
+    <directory id="3x3" />
+    <display>
+	  <nazev><cz name='nazev'>localhost/delta/lu_date_category/category_desc</cz></nazev>
+	</display>
+  </attr>
+  <attr pk="localhost/delta/cenik/cenik_id" name="8Cenik" id="3x1204" fk="localhost/delta/fakt_aggr/cenik_id" description="Typ ceniku">
+    <gui-presentation coord="374 404" id="3x3" />
+    <directory id="3x3" />
+    <display>
+	  <nazev><cz name='nazev'>localhost/delta/cenik/cenik_desc</cz></nazev>
+	</display>
+  </attr>
+  <attr pk="localhost/delta/vyrobek/vyrobek_id" name="8Vyrobek" description="Vyrobek" id="3x1201" fk="localhost/delta/fakt_aggr/vyrobek_id">
+    <gui-presentation coord="251 382" id="3x3" />
+    <directory id="3x3" />
+    <display>
+	  <orig-id><cz name='puvodni id'>localhost/delta/vyrobek/orig_id</cz><en name='original id'>localhost/delta/vyrobek/orig_id</en></orig-id>
+	  <name><cz name='nazev'>localhost/delta/vyrobek/vyrobek_desc</cz><en name='nazev'>localhost/delta/vyrobek/vyrobek_desc</en></name>
+	</display>
+    <link>
+	  <desc><cz name='Popis'>("http://descr.cgi?ID=$1&amp;L=cz", localhost/delta/vyrobek/orig_id)</cz><en name='Description'>("http://descr.cgi?ID=$1&amp;L=en",localhost/delta/vyrobek/orig_id)</en></desc>
+	  <po><cz name='Objednavka'>("http://po.cgi?ID=$1&amp;L=cz&amp;U=$USER", localhost/delta/vyrobek/orig_id)</cz><en name='Purchase Order'>("http://po.cgi?ID=$1&amp;L=en&amp;U=$USER",localhost/delta/vyrobek/orig_id)</en></po>
+	</link>
+  </attr>
+  <attr pk="localhost/delta/typ_vyrobku/typ_id" name="8Typ vyrobku" description="" id="3x1203" fk="localhost/delta/vyrobek/vyrobek_typ_id">
+    <gui-presentation coord="251 294" id="3x3" />
+    <directory id="3x3" />
+    <display>
+	  <nazev><cz name='nazev'>localhost/delta/typ_vyrobku/typ_desc</cz></nazev>
+	</display>
+  </attr>
+
+
+
+  
+@
+
+
+1.14
+log
+@metric, filter, report substitutes IDs by javascript, metric & filter resets the original expresion
+@
+text
+@d12 28
+d142 205
+@
+
+
+1.13
+log
+@fix of Name2Ptr
+@
+text
+@d457 1
+a457 7
+      <src-conn driver="dbi:MySQL">
+        <src-name gui-line="2">delta_hot</src-name>
+        <password gui-line="4" />
+        <user gui-line="3">root</user>
+        <port gui-line="1">3306</port>
+      </src-conn>
+    </source>
+@
+
+
+1.12
+log
+@object name substitution in expressions
+@
+text
+@d6 1
+a6 1
+  <fact expr="localhost/delta/polozky_dodak/ks" name="Prodej ks" id="1302">
+d9 1
+a9 1
+  <fact expr="localhost/delta/polozky_dodak/cena" name="Obrat Kc" id="1303">
+d103 2
+a104 2
+	  <desc><cz name='Popis'>("http://descr.cgi?ID=$1&amp;L=cz",localhost/delta/vyrobek/orig_id)</cz><en name='Description'>("http://descr.cgi?ID=$1&amp;L=en",localhost/delta/vyrobek/orig_id)</en></desc>
+	  <po><cz name='Objednavka'>("http://po.cgi?ID=$1&amp;L=cz&amp;U=$USER",localhost/delta/vyrobek/orig_id)</cz><en name='Purchase Order'>("http://po.cgi?ID=$1&amp;L=en&amp;U=$USER",localhost/delta/vyrobek/orig_id)</en></po>
+@
+
+
+1.11
+log
+@fix demo metadata
+@
+text
+@d2 2
+a3 1
+<project version="0.1" description="Test Project 1" create-date="2002-04-10" id="test1">
+d5 3
+a7 4
+  <fact name="Prodej [Kc]" id="302">
+    <gui-presentation coord="46 500" id="2" />
+    <expr>bear.instrat.cz/demo/order/amt</expr>
+    <expr>bear.instrat.cz/demo/order_m_c/amt</expr>
+d9 2
+a10 7
+  <fact expr="bear.instrat.cz/demo/order/cost" name="Prodej [t]" id="301">
+    <gui-presentation coord="46 450" id="2" />
+  </fact>
+  <fact name="Prodej kusu" id="300" description="Product Sales in USD with lower granuality at day level">
+    <gui-presentation coord="46 400" id="2" />
+    <expr>bear.instrat.cz/demo/order/price</expr>
+    <expr>bear.instrat.cz/demo/order_m_c/price</expr>
+d12 1
+d14 73
+a86 2
+  <attr name="Den" id="200">
+    <gui-presentation coord="322 409" id="3" />
+d88 6
+a93 10
+  <attr pk="bear.instrat.cz/demo/l_cust/id" name="Odberatel" id="201" description="Customer Attribute with name, e-mail and addr possible forms">
+    <gui-presentation coord="198 173" id="2" />
+    <gui-presentation coord="198 173" id="1" />
+    <fk>bear.instrat.cz/demo/order_m_c/cust</fk>
+    <fk>bear.instrat.cz/demo/order/cust</fk>
+    <directory id="2" />
+    <display e-mail="bear.instrat.cz/demo/l_cust/email" jmeno="bear.instrat.cz/demo/l_cust/{f_name+' '+l_name}" addr="bear.instrat.cz/demo/l_cust/{zip+' '+&amp;lookup(bear.instrat.cz/demo/l_city/,id=city)-&gt;desc+' '+addr" />
+  </attr>
+  <attr name="Typ odberatele" id="202">
+    <gui-presentation coord="329 109" id="2" />
+d95 11
+a105 2
+  <attr name="Dodavatel" id="203">
+    <gui-presentation coord="329 109" id="2" />
+d107 6
+a112 2
+  <attr name="Sortiment" id="204">
+    <gui-presentation coord="329 109" id="2" />
+d114 3
+a116 2
+  <host name="bear" id="bear.instrat.cz" description="My Laptop">
+    <source name="Demo" type="psql" id="demo">
+d118 21
+a138 3
+      <table access="RO" name="Month" id="l_month" description="Month lookup table">
+        <gui-presentation coord="135 68" id="1" />
+        <column name="Quarter" type="int" id="q">
+d140 1
+d142 3
+a144 2
+        <column name="Month ID" type="int" id="id">
+          <gui-presentation coord="22 11" id="1" line="1" />
+d147 8
+a154 2
+        <column name="Month of Year" type="int" id="month_y">
+          <gui-presentation coord="22 11" id="1" line="2" />
+d156 3
+a158 2
+        <column name="Year" type="int" id="year">
+          <gui-presentation id="1" line="4" />
+d161 10
+a170 4
+      <table access="RO" name="Day" id="l_day" description="Day lookup table">
+        <gui-presentation coord="392 58" id="1" />
+        <column name="Week" type="int" id="week">
+          <gui-presentation coord="184 44" id="1" line="3" />
+d172 1
+a172 1
+        <column name="Month" type="int" id="month">
+d174 5
+d180 5
+a184 1
+        <column name="Day ID" type="date" id="id">
+d186 1
+d189 5
+a193 1
+        <column name="Year" type="int" id="year">
+d195 5
+d202 4
+a205 3
+      <table access="RO" name="Product" id="l_product" description="Product lookup table">
+        <gui-presentation coord="355 402" id="1" />
+        <column name="Product Color" type="char" id="color">
+d207 18
+d226 1
+a226 1
+        <column name="Product Weight" type="char" id="weight">
+d228 5
+d234 5
+a238 1
+        <column name="ID" lenght="4" type="int" id="id" description="Product ID">
+d240 1
+d243 1
+a243 1
+        <column name="Product Name" type="char" id="descr">
+d245 1
+d247 5
+a251 4
+      </table>
+      <table access="RO" name="City" id="l_city" description="City lookup table">
+        <gui-presentation coord="21 301" id="1" />
+        <column name="City Population" type="int" id="population">
+d253 1
+d255 7
+a261 2
+        <column name="Region" type="int" id="reg">
+          <gui-presentation id="1" line="3" />
+d263 1
+a263 1
+        <column name="City ID" type="int" id="id">
+d265 1
+d268 8
+a275 2
+        <column name="City Category" type="int" id="categ">
+          <gui-presentation id="1" line="5" />
+d277 1
+a277 1
+        <column name="City Name" type="char" id="descr">
+d279 1
+d282 8
+a289 3
+      <table access="RW" name="Order Ag. (m,c)" id="order_m_c" description="Order Agregate Table on level (month,customer)">
+        <gui-presentation coord="343 167" id="1" />
+        <column name="Order Month" type="int" id="month">
+d291 6
+a296 1
+          <constraint type="NOTNULL" />
+d298 1
+a298 1
+        <column name="Sale Price" type="num" id="price">
+d300 1
+d302 9
+a310 1
+        <column name="Customer" type="int" id="cust">
+d312 12
+a323 1
+          <constraint type="NOTNULL" />
+d325 1
+a325 1
+        <column name="Sale Amount" type="int" id="amt">
+d328 1
+a328 4
+      </table>
+      <table access="RW" name="Order" id="order" description="Order table">
+        <gui-presentation coord="568 192" id="1" />
+        <column name="Order Date" type="date" id="date">
+a329 1
+          <constraint type="NOTNULL" />
+d331 2
+a332 2
+        <column name="Sale Price" type="num" id="price">
+          <gui-presentation id="1" line="6" />
+d334 1
+a334 1
+        <column name="ID" lenght="4" type="int" id="id" description="Order ID">
+d338 14
+a351 1
+        <column name="Product" type="int" id="product">
+a352 1
+          <constraint type="NOTNULL" />
+d354 3
+a356 2
+        <column name="Product Cost" type="num" id="revenue">
+          <gui-presentation id="1" line="7" />
+d358 2
+a359 3
+        <column name="Customer" type="int" id="cust">
+          <gui-presentation id="1" line="3" />
+          <constraint type="NOTNULL" />
+d361 1
+a361 1
+        <column name="Sale Amount" type="int" id="amt">
+d365 9
+a373 3
+      <table access="RO" name="Customer" id="l_cust" description="Customer lookup table">
+        <gui-presentation coord="180 271" id="1" />
+        <column name="First Name" type="char" id="f_name">
+d375 1
+d377 11
+a387 1
+        <column name="Last Name" type="char" id="l_name">
+d390 36
+a425 2
+        <column name="e-mail" type="char" id="email">
+          <gui-presentation id="1" line="5" />
+d427 7
+a433 2
+        <column name="ZIP Code" type="char" id="zip">
+          <gui-presentation id="1" line="7" />
+d435 3
+a437 2
+        <column name="Customer City" type="int" id="city">
+          <gui-presentation id="1" line="8" />
+d439 1
+a439 1
+        <column name="Customer ID" type="int" id="id">
+d441 1
+d444 3
+a446 2
+        <column name="Address" type="char" id="addr">
+          <gui-presentation id="1" line="6" />
+d448 1
+a448 1
+        <column name="Gender" type="bool" id="gender">
+d450 1
+d453 6
+a458 2
+      <src-conn driver="dbi:Pg">
+        <src-name gui-line="2">demo</src-name>
+d460 2
+a461 2
+        <user gui-line="3">postgres</user>
+        <port gui-line="1">5432</port>
+d466 3
+d470 1
+a470 3
+  <gui-layer width="210" name="Physical Layer" id="1" height="280" />
+  <gui-layer width="210" visible="YES" name="Logical Layer" id="2" height="280" />
+  <relation id="403">
+d472 3
+a474 2
+    <to cardinality="N" optional="true">bear.instrat.cz/demo/l_day/month</to>
+    <from cardinality="1" optional="false">bear.instrat.cz/demo/l_month/id</from>
+d476 2
+a477 1
+  <relation id="406">
+d479 7
+a485 2
+    <to cardinality="1" optional="false">_LOBJ/_ATTR/202</to>
+    <from cardinality="N" optional="true">_LOBJ/_ATTR/201</from>
+d487 2
+a488 1
+  <relation id="407">
+d490 2
+a491 2
+    <to cardinality="1" optional="false">_LOBJ/_ATTR/202</to>
+    <from cardinality="N" optional="true">_LOBJ/_ATTR/204</from>
+d493 1
+a493 1
+  <relation id="401">
+d495 3
+a497 2
+    <to cardinality="N" optional="true">bear.instrat.cz/demo/order/product</to>
+    <from cardinality="1" optional="false">bear.instrat.cz/demo/l_product/id</from>
+d499 6
+a504 1
+  <relation id="402">
+d506 2
+a507 2
+    <to cardinality="N" optional="true">bear.instrat.cz/demo/order/date</to>
+    <from cardinality="1" optional="false">bear.instrat.cz/demo/l_day/id</from>
+d509 1
+a509 1
+  <relation id="408">
+d511 8
+a518 2
+    <to cardinality="N" optional="true">bear.instrat.cz/demo/order_m_c/cust</to>
+    <from cardinality="1" optional="false">bear.instrat.cz/demo/l_cust/id</from>
+d520 1
+a520 1
+  <relation id="409">
+d522 51
+a572 2
+    <to cardinality="N" optional="true">bear.instrat.cz/demo/order_m_c/month</to>
+    <from cardinality="1" optional="false">bear.instrat.cz/demo/l_month/id</from>
+d574 1
+a574 1
+  <relation id="405">
+d576 2
+a577 2
+    <to cardinality="N" optional="true">bear.instrat.cz/demo/l_cust/city</to>
+    <from cardinality="1" optional="false">bear.instrat.cz/demo/l_city/id</from>
+d579 1
+a579 1
+  <relation id="404">
+d581 2
+a582 2
+    <to cardinality="N" optional="true">bear.instrat.cz/demo/order/cust</to>
+    <from cardinality="1" optional="false">bear.instrat.cz/demo/l_cust/id</from>
+@
+
+
+1.10
+log
+@fix saving of metadata after Grid edit
+@
+text
+@d2 1
+a2 1
+<project>
+d4 4
+a7 2
+  <fact expr="localhost/delta/polozky_dodak/ks" name="Prodej [ks]" id="1302">
+    <gui-presentation coord="246 500" id="3" />
+d9 7
+a15 2
+  <fact expr="localhost/delta/polozky_dodak/cena" name="Obrat [Kc]" id="1303">
+    <gui-presentation coord="246 550" id="3" />
+d18 2
+a19 27
+  <attr pk="localhost/delta/kraj/kraj_id" name="Kraj" id="1209" description="">
+    <gui-presentation coord="629 200" id="3" />
+    <directory id="3" />
+    <display nazev="localhost/delta/kraj/kraj_desc" />
+  </attr>
+  <attr pk="localhost/delta/typ_zakaznika/typ_id" name="Typ zakaznika" id="1206" fk="localhost/delta/typ_zakaznika/typ_id" description="">
+    <gui-presentation coord="527 403" id="3" />
+    <directory id="3" />
+  </attr>
+  <attr pk="localhost/delta/cenik/cenik_id" name="Cenik" id="1204" fk="localhost/delta/fakt_aggr/cenik_id" description="Typ ceniku">
+    <gui-presentation coord="374 404" id="3" />
+    <directory id="3" />
+  </attr>
+  <attr pk="localhost/delta/okres/okres_id" name="Okres" description="" id="1208" fk="localhost/delta/misto/okres_id">
+    <gui-presentation coord="596 267" id="3" />
+    <directory id="3" />
+    <display nazev="localhost/delta/okres/okres_desc" />
+  </attr>
+  <attr pk="localhost/delta/lu_month/month_id" name="Mesic" description="" id="1210" fk="localhost/delta/lu_date/month_id">
+    <gui-presentation coord="136 307" id="3" />
+    <directory id="3" />
+    <display nazev="localhost/delta/lu_month/month_desc" />
+  </attr>
+  <attr pk="localhost/delta/kraj/kraj_id" name="Rok" id="1222" description="">
+    <gui-presentation coord="56 197" id="3" />
+    <directory id="3" />
+    <display nazev="localhost/delta/kraj/kraj_desc" />
+d21 10
+a30 3
+  <attr pk="localhost/delta/zakaznik/zak_id" name="Zakaznik" id="1205" fk="localhost/delta/fakt_aggr/ico" description="">
+    <gui-presentation coord="494 475" id="3" />
+    <directory id="3" />
+d32 2
+a33 4
+  <attr pk="localhost/delta/lu_date/category_id" name="Kategorie data" description="" id="1211" fk="localhost/delta/date_category/category_id">
+    <gui-presentation coord="21 359" id="3" />
+    <directory id="3" />
+    <display nazev="localhost/delta/category/category_desc" />
+d35 2
+a36 3
+  <attr pk="localhost/delta/lu_date/date_id" name="Den" id="1202" fk="localhost/delta/fakt_aggr/dat_zuct" description="">
+    <gui-presentation coord="123 418" id="3" />
+    <directory id="3" />
+d38 2
+a39 22
+  <attr pk="localhost/delta/vyrobek/vyrobek_id" name="Vyrobek" description="Vyrobek" id="1201" fk="localhost/delta/fakt_aggr/vyrobek_id">
+    <gui-presentation coord="251 382" id="3" />
+    <directory id="3" />
+    <display orig-id="localhost/delta/vyrobek/orig_id" nazev="localhost/delta/vyrobek/vyrobek_desc" />
+  </attr>
+  <attr pk="localhost/delta/typ_vyrobku/typ_id" name="Typ vyrobku" description="" id="1203" fk="localhost/delta/vyrobek/vyrobek_typ_id">
+    <gui-presentation coord="251 294" id="3" />
+    <directory id="3" />
+    <display nazev="localhost/delta/typ_vyrobku/typ_desc" />
+  </attr>
+  <attr pk="localhost/delta/misto/psc_id" name="Misto" description="" id="1207" fk="localhost/delta/zakaznik/psc">
+    <gui-presentation coord="570 318" id="3" />
+    <directory id="3" />
+    <display nazev="localhost/delta/misto/typ_desc" />
+  </attr>
+  <attr pk="localhost/delta/kraj/kraj_id" name="Kvartal" id="1221" description="">
+    <gui-presentation coord="139 231" id="3" />
+    <directory id="3" />
+    <display nazev="localhost/delta/kraj/kraj_desc" />
+  </attr>
+  <host name="localhost" id="localhost" description="">
+    <source name="delta" type="mysql" id="delta">
+d41 3
+a43 21
+      <table access="RO" name="Date category" id="lu_date_category" description="">
+        <gui-presentation coord="173 457" id="1" />
+        <gui-presentation coord="182 458" id="2" />
+        <column lenght="3" name="Category ID" type="tinyint unsigned" id="category_id" description="">
+          <gui-presentation id="1" line="1" />
+          <gui-presentation id="2" line="1" />
+          <constraint type="PK" />
+        </column>
+        <column lenght="20" name="Category desc" type="char" id="category_desc" description="">
+          <gui-presentation id="1" line="2" />
+          <gui-presentation id="2" line="2" />
+        </column>
+      </table>
+      <table access="RO" name="Okres" id="okres" description="">
+        <gui-presentation coord="123 53" id="1" />
+        <gui-presentation coord="123 53" id="2" />
+        <column lenght="3" name="Kraj ID" type="tinyint unsigned" id="kraj_id" description="">
+          <gui-presentation id="1" line="2" />
+          <gui-presentation id="2" line="2" />
+        </column>
+        <column lenght="50" name="Okres desc" type="char" id="okres_desc" description="">
+a44 1
+          <gui-presentation id="2" line="3" />
+d46 2
+a47 3
+        <column lenght="4" name="Okres ID" type="tinyint" id="okres_id" description="">
+          <gui-presentation id="1" line="1" />
+          <gui-presentation id="2" line="1" />
+d50 2
+a51 8
+      </table>
+      <table access="RO" name="Month of year" id="lu_month_of_year" description="">
+        <gui-presentation coord="6 309" id="1" />
+        <gui-presentation coord="6 309" id="2" />
+        <column lenght="2" name="Month of year" type="tinyint" id="month_of_year" description="">
+          <gui-presentation id="1" line="1" />
+          <gui-presentation id="2" line="1" />
+          <constraint type="PK" />
+d53 2
+a54 3
+        <column lenght="8" name="Month of year name" type="char" id="month_of_year_name" description="">
+          <gui-presentation id="1" line="2" />
+          <gui-presentation id="2" line="2" />
+d57 4
+a60 10
+      <table access="RO" name="Zakaznik" id="zakaznik" description="">
+        <gui-presentation coord="379 100" id="1" />
+        <gui-presentation coord="379 100" id="2" />
+        <column lenght="3" name="Kraj ID" type="tinyint unsigned" id="kraj_id" description="">
+          <gui-presentation id="1" line="8" />
+          <gui-presentation id="2" line="8" />
+        </column>
+        <column lenght="3" name="Typ ID" type="tinyint unsigned" id="typ_id" description="">
+          <gui-presentation id="1" line="9" />
+          <gui-presentation id="2" line="9" />
+d62 1
+a62 1
+        <column lenght="20" name="C zak odber" type="bigint unsigned" id="c_zak_odber" description="">
+a63 1
+          <gui-presentation id="2" line="2" />
+d65 1
+a65 9
+        <column lenght="20" name="Ico" type="bigint unsigned" id="ico" description="">
+          <gui-presentation id="1" line="3" />
+          <gui-presentation id="2" line="3" />
+        </column>
+        <column lenght="8" name="Psc" type="mediumint unsigned" id="psc" description="">
+          <gui-presentation id="1" line="6" />
+          <gui-presentation id="2" line="6" />
+        </column>
+        <column lenght="20" name="Zak ID" type="bigint unsigned" id="zak_id" description="">
+a66 1
+          <gui-presentation id="2" line="1" />
+d69 1
+a69 5
+        <column lenght="50" name="Adr" type="char" id="adr" description="">
+          <gui-presentation id="1" line="5" />
+          <gui-presentation id="2" line="5" />
+        </column>
+        <column lenght="50" name="Nazev" type="char" id="nazev" description="">
+a70 5
+          <gui-presentation id="2" line="4" />
+        </column>
+        <column lenght="3" name="Okres ID" type="tinyint unsigned" id="okres_id" description="">
+          <gui-presentation id="1" line="7" />
+          <gui-presentation id="2" line="7" />
+d73 3
+a75 4
+      <table access="RO" name="Date" id="lu_date" description="">
+        <gui-presentation coord="347 381" id="1" />
+        <gui-presentation coord="380 368" id="2" />
+        <column lenght="4" name="Year ID" type="smallint unsigned" id="year_id" description="">
+a76 1
+          <gui-presentation id="2" line="4" />
+d78 2
+a79 3
+        <column lenght="3" name="Category ID" type="tinyint unsigned" id="category_id" description="">
+          <gui-presentation id="1" line="7" />
+          <gui-presentation id="2" line="7" />
+d81 1
+a81 1
+        <column lenght="date" name="Date ID" type="date" id="date_id" description="">
+a82 1
+          <gui-presentation id="2" line="1" />
+d85 1
+a85 1
+        <column lenght="6" name="Month ID" type="mediumint unsigned" id="month_id" description="">
+a86 13
+          <gui-presentation id="2" line="2" />
+        </column>
+        <column lenght="3" name="Day in week" type="tinyint unsigned" id="day_in_week" description="">
+          <gui-presentation id="1" line="6" />
+          <gui-presentation id="2" line="6" />
+        </column>
+        <column lenght="6" name="Quarter ID" type="mediumint unsigned" id="quarter_id" description="">
+          <gui-presentation id="1" line="3" />
+          <gui-presentation id="2" line="3" />
+        </column>
+        <column lenght="6" name="Week ID" type="mediumint unsigned" id="week_id" description="">
+          <gui-presentation id="1" line="5" />
+          <gui-presentation id="2" line="5" />
+d89 4
+a92 7
+      <table access="RO" name="Vyrobek" id="vyrobek" description="">
+        <gui-presentation coord="353 598" id="1" />
+        <gui-presentation coord="373 543" id="2" />
+        <column lenght="5" name="Vyrobek ID" type="smallint unsigned" id="vyrobek_id" description="">
+          <gui-presentation id="1" line="1" />
+          <gui-presentation id="2" line="1" />
+          <constraint type="PK" />
+d94 1
+a94 5
+        <column lenght="3" name="Vyrobek typ ID" type="tinyint unsigned" id="vyrobek_typ_id" description="">
+          <gui-presentation id="1" line="2" />
+          <gui-presentation id="2" line="2" />
+        </column>
+        <column lenght="50" name="Vyrobek desc" type="char" id="vyrobek_desc" description="">
+a95 1
+          <gui-presentation id="2" line="3" />
+d97 1
+a97 13
+        <column lenght="5" name="Orig ID" type="smallint unsigned" id="orig_id" description="">
+          <gui-presentation id="1" line="4" />
+          <gui-presentation id="2" line="4" />
+        </column>
+      </table>
+      <table access="RO" name="Cenik" id="cenik" description="">
+        <gui-presentation coord="537 571" id="1" />
+        <gui-presentation coord="383 285" id="2" />
+        <column lenght="50" name="Cenik desc" type="char" id="cenik_desc" description="">
+          <gui-presentation id="1" line="2" />
+          <gui-presentation id="2" line="2" />
+        </column>
+        <column lenght="6" name="Cenik ID" type="char" id="cenik_id" description="">
+a98 1
+          <gui-presentation id="2" line="1" />
+d101 2
+a102 8
+      </table>
+      <table access="RO" name="Typ zakaznika" id="typ_zakaznika" description="">
+        <gui-presentation coord="189 194" id="1" />
+        <gui-presentation coord="189 194" id="2" />
+        <column lenght="3" name="Typ ID" type="tinyint unsigned" id="typ_id" description="">
+          <gui-presentation id="1" line="1" />
+          <gui-presentation id="2" line="1" />
+          <constraint type="PK" />
+d104 1
+a104 1
+        <column lenght="10" name="Typ desc" type="char" id="typ_desc" description="">
+a105 1
+          <gui-presentation id="2" line="2" />
+d108 3
+a110 8
+      <table access="RO" name="Misto" id="misto" description="">
+        <gui-presentation coord="253 76" id="1" />
+        <gui-presentation coord="253 76" id="2" />
+        <column lenght="3" name="Kraj ID" type="tinyint unsigned" id="kraj_id" description="">
+          <gui-presentation id="1" line="3" />
+          <gui-presentation id="2" line="3" />
+        </column>
+        <column lenght="8" name="Psc ID" type="mediumint unsigned" id="psc_id" description="">
+d112 1
+a112 6
+          <gui-presentation id="2" line="1" />
+          <constraint type="PK" />
+        </column>
+        <column lenght="3" name="Okres ID" type="tinyint unsigned" id="okres_id" description="">
+          <gui-presentation id="1" line="2" />
+          <gui-presentation id="2" line="2" />
+d114 1
+a114 1
+        <column lenght="50" name="Nazev" type="char" id="nazev" description="">
+a115 9
+          <gui-presentation id="2" line="4" />
+        </column>
+      </table>
+      <table access="RO" name="Quarter" id="lu_quarter" description="">
+        <gui-presentation coord="39 382" id="1" />
+        <gui-presentation coord="39 382" id="2" />
+        <column lenght="4" name="Year ID" type="smallint" id="year_id" description="">
+          <gui-presentation id="1" line="3" />
+          <gui-presentation id="2" line="3" />
+d117 1
+a117 1
+        <column lenght="7" name="Quarter desc" type="char" id="quarter_desc" description="">
+d119 1
+a119 1
+          <gui-presentation id="2" line="2" />
+d121 2
+a122 4
+        <column lenght="6" name="Quarter ID" type="mediumint" id="quarter_id" description="">
+          <gui-presentation id="1" line="1" />
+          <gui-presentation id="2" line="1" />
+          <constraint type="PK" />
+d125 3
+a127 9
+      <table access="RO" name="Dodaci list detail" id="polozky_dodak" description="">
+        <gui-presentation coord="663 375" id="1" />
+        <column lenght="5" name="Ks" type="smallint unsigned" id="ks" description="">
+          <gui-presentation id="1" line="6" />
+        </column>
+        <column lenght="5" name="Vyrobek ID" type="smallint unsigned" id="vyrobek_id" description="">
+          <gui-presentation id="1" line="3" />
+        </column>
+        <column lenght="20" name="Faktura ID" type="bigint unsigned" id="faktura_id" description="">
+d129 1
+d131 2
+a132 2
+        <column lenght="20" name="C zak odber" type="bigint unsigned" id="c_zak_odber" description="">
+          <gui-presentation id="1" line="4" />
+d134 1
+a134 1
+        <column lenght="20" name="Polozky dodak ID" type="bigint unsigned" id="polozky_dodak_id" description="">
+d138 3
+a140 2
+        <column lenght="6" name="Cenik ID" type="char" id="cenik_id" description="">
+          <gui-presentation id="1" line="5" />
+d142 1
+a142 1
+        <column lenght="decimal(5,2)" name="Cena" type="decimal(5,2)" id="cena" description="">
+d145 3
+a147 13
+      </table>
+      <table access="RO" name="Cenikove ceny" id="cenikove_ceny" description="">
+        <gui-presentation coord="666 611" id="1" />
+        <column lenght="5" name="Vyrobek ID" type="smallint unsigned" id="vyrobek_id" description="">
+          <gui-presentation id="1" line="2" />
+          <constraint type="PK" />
+        </column>
+        <column lenght="date" name="End date" type="date" id="end_date" description="">
+          <gui-presentation id="1" line="4" />
+        </column>
+        <column lenght="6" name="Cenik ID" type="char" id="cenik_id" description="">
+          <gui-presentation id="1" line="1" />
+          <constraint type="PK" />
+d149 1
+a149 4
+        <column lenght="date" name="Effective date" type="date" id="ess_date" description="">
+          <gui-presentation coord="666 611" id="1" line="3" />
+        </column>
+        <column lenght="decimal(5,2)" name="Cena" type="decimal(5,2)" id="cena" description="">
+d153 3
+a155 9
+      <table access="RO" name="Typ vyrobku" id="typ_vyrobku" description="">
+        <gui-presentation coord="155 633" id="1" />
+        <gui-presentation coord="191 606" id="2" />
+        <column lenght="3" name="Typ ID" type="tinyint unsigned" id="typ_id" description="">
+          <gui-presentation id="1" line="1" />
+          <gui-presentation id="2" line="1" />
+          <constraint type="PK" />
+        </column>
+        <column lenght="50" name="Typ desc" type="char" id="typ_desc" description="">
+a156 1
+          <gui-presentation id="2" line="2" />
+d158 1
+a158 11
+      </table>
+      <table access="RO" name="Faktura" id="faktura" description="">
+        <gui-presentation coord="525 328" id="1" />
+        <column lenght="20" name="Fak ID" type="bigint unsigned" id="fak_id" description="">
+          <gui-presentation id="1" line="1" />
+          <constraint type="PK" />
+        </column>
+        <column lenght="20" name="Zak fak ID" type="bigint unsigned" id="zak_fak_id" description="">
+          <gui-presentation id="1" line="2" />
+        </column>
+        <column lenght="date" name="Dat zuct" type="date" id="dat_zuct" description="">
+d161 2
+a162 5
+      </table>
+      <table access="RO" name="Faktura aggr" id="fakt_aggr" description="Agregovane faktury">
+        <gui-presentation coord="663 375" id="2" />
+        <column lenght="5" name="Ks" type="smallint unsigned" id="ks" description="">
+          <gui-presentation id="2" line="6" />
+d164 2
+a165 2
+        <column lenght="5" name="Vyrobek ID" type="smallint unsigned" id="vyrobek_id" description="">
+          <gui-presentation id="2" line="5" />
+d167 2
+a168 8
+        <column lenght="20" name="Faktura ID" type="bigint unsigned" id="faktura_id" description="">
+          <gui-presentation id="2" line="1" />
+        </column>
+        <column lenght="20" name="Zak fak ID" type="bigint unsigned" id="zak_fak_id" description="">
+          <gui-presentation id="2" line="2" />
+        </column>
+        <column lenght="date" name="Dat zuct" type="date" id="dat_zuct" description="">
+          <gui-presentation id="2" line="4" />
+d170 1
+a170 11
+        <column lenght="6" name="Cenik ID" type="char" id="cenik_id" description="">
+          <gui-presentation id="2" line="3" />
+        </column>
+        <column lenght="decimal(5,2)" name="Cena" type="decimal(5,2)" id="cena" description="">
+          <gui-presentation id="2" line="7" />
+        </column>
+      </table>
+      <table access="RO" name="Kraj" id="kraj" description="">
+        <gui-presentation coord="5 34" id="1" />
+        <gui-presentation coord="5 34" id="2" />
+        <column lenght="4" name="Kraj ID" type="tinyint" id="kraj_id" description="">
+a171 1
+          <gui-presentation id="2" line="1" />
+d174 2
+a175 3
+        <column lenght="50" name="Kraj desc" type="char" id="kraj_desc" description="">
+          <gui-presentation id="1" line="2" />
+          <gui-presentation id="2" line="2" />
+d177 1
+a177 22
+      </table>
+      <table access="RO" name="Month" id="lu_month" description="">
+        <gui-presentation coord="195 327" id="1" />
+        <gui-presentation coord="195 327" id="2" />
+        <column lenght="2" name="Month of year" type="tinyint unsigned" id="month_of_year" description="">
+          <gui-presentation id="1" line="3" />
+          <gui-presentation id="2" line="3" />
+        </column>
+        <column lenght="4" name="Year ID" type="smallint unsigned" id="year_id" description="">
+          <gui-presentation id="1" line="5" />
+          <gui-presentation id="2" line="5" />
+        </column>
+        <column lenght="6" name="Month ID" type="mediumint unsigned" id="month_id" description="">
+          <gui-presentation id="1" line="1" />
+          <gui-presentation id="2" line="1" />
+          <constraint type="PK" />
+        </column>
+        <column lenght="20" name="Month desc" type="char" id="month_desc" description="">
+          <gui-presentation id="1" line="2" />
+          <gui-presentation id="2" line="2" />
+        </column>
+        <column lenght="6" name="Quarter ID" type="mediumint unsigned" id="quarter_id" description="">
+a178 1
+          <gui-presentation id="2" line="4" />
+d181 2
+a182 6
+      <metadata version="1">
+        <columns-query type="SQL">SHOW COLUMNS FROM ?Table?</columns-query>
+        <tables-query type="SQL">SHOW TABLES</tables-query>
+      </metadata>
+      <src-conn driver="dbi:MySQL">
+        <src-name gui-line="2">delta</src-name>
+d184 2
+a185 2
+        <user gui-line="3">root</user>
+        <port gui-line="1">3306</port>
+a189 3
+  <gui-layer width="280" visible="YES" name="Base Physical DM" id="1" height="210" />
+  <gui-layer width="280" name="Logical DM" id="3" height="210" />
+  <gui-layer width="280" name="Physical Snowflake DM" id="2" height="210" />
+d191 3
+a193 24
+  <relation id="c3" description="">
+    <gui-presentation id="1" />
+    <gui-presentation id="2" />
+    <to cardinality="N" optional="true">localhost/delta/lu_date/month_id</to>
+    <from cardinality="1" optional="false">localhost/delta/lu_month/month_id</from>
+  </relation>
+  <relation id="c4" description="">
+    <gui-presentation id="1" />
+    <gui-presentation id="2" />
+    <to cardinality="N" optional="true">localhost/delta/lu_month/quarter_id</to>
+    <from cardinality="1" optional="false">localhost/delta/lu_quarter/quarter_id</from>
+  </relation>
+  <relation id="c9" description="">
+    <gui-presentation id="1" />
+    <to cardinality="N" optional="true">localhost/delta/cenikove_ceny/cenik_id</to>
+    <from cardinality="1" optional="false">localhost/delta/cenik/cenik_id</from>
+  </relation>
+  <relation id="c2" description="">
+    <gui-presentation id="1" />
+    <gui-presentation id="2" />
+    <to cardinality="N" optional="true">localhost/delta/zakaznik/psc</to>
+    <from cardinality="1" optional="false">localhost/delta/misto/psc_id</from>
+  </relation>
+  <relation id="c10" description="">
+d195 2
+a196 3
+    <gui-presentation id="2" />
+    <to cardinality="N" optional="true">localhost/delta/vyrobek/vyrobek_typ_id</to>
+    <from cardinality="1" optional="false">localhost/delta/typ_vyrobku/typ_id</from>
+d198 1
+a198 1
+  <relation id="c18" description="">
+d200 2
+a201 7
+    <to cardinality="N" optional="true">localhost/delta/fakt_aggr/dat_zuct</to>
+    <from cardinality="1" optional="false">localhost/delta/lu_date/date_id</from>
+  </relation>
+  <relation id="c15" description="">
+    <gui-presentation id="1" />
+    <to cardinality="N" optional="true">localhost/delta/polozky_dodak/vyrobek_id</to>
+    <from cardinality="1" optional="false">localhost/delta/vyrobek/vyrobek_id</from>
+d203 1
+a203 7
+  <relation id="c12" description="">
+    <gui-presentation id="1" />
+    <to cardinality="N" optional="true">localhost/delta/polozky_dodak/faktura_id</to>
+    <from cardinality="1" optional="false">localhost/delta/faktura/fak_id</from>
+  </relation>
+  <relation id="c7" description="">
+    <gui-presentation id="1" />
+d205 2
+a206 2
+    <to cardinality="N" optional="true">localhost/delta/misto/okres_id</to>
+    <from cardinality="1" optional="false">localhost/delta/okres/okres_id</from>
+d208 1
+a208 1
+  <relation id="c5" description="">
+d210 2
+a211 3
+    <gui-presentation id="2" />
+    <to cardinality="N" optional="true">localhost/delta/lu_date/category_id</to>
+    <from cardinality="1" optional="false">localhost/delta/lu_date_category/category_id</from>
+d213 1
+a213 1
+  <relation id="c13" description="">
+d215 2
+a216 2
+    <to cardinality="N" optional="true">localhost/delta/faktura/dat_zuct</to>
+    <from cardinality="1" optional="false">localhost/delta/lu_date/date_id</from>
+d218 1
+a218 1
+  <relation id="c6" description="">
+d220 2
+a221 34
+    <gui-presentation id="2" />
+    <to cardinality="N" optional="true">localhost/delta/lu_month/month_of_year</to>
+    <from cardinality="1" optional="false">localhost/delta/lu_month_of_year/month_of_year</from>
+  </relation>
+  <relation id="c14" description="">
+    <gui-presentation id="1" />
+    <to cardinality="N" optional="true">localhost/delta/faktura/zak_fak_id</to>
+    <from cardinality="1" optional="false">localhost/delta/zakaznik/ico</from>
+  </relation>
+  <relation id="c11" description="">
+    <gui-presentation id="1" />
+    <to cardinality="N" optional="true">localhost/delta/cenikove_ceny/vyrobek_id</to>
+    <from cardinality="1" optional="false">localhost/delta/vyrobek/vyrobek_id</from>
+  </relation>
+  <relation id="c19" description="">
+    <gui-presentation id="2" />
+    <to cardinality="N" optional="true">localhost/delta/fakt_aggr/zak_fak_id</to>
+    <from cardinality="1" optional="false">localhost/delta/zakaznik/ico</from>
+  </relation>
+  <relation id="c17" description="">
+    <gui-presentation id="2" />
+    <to cardinality="N" optional="true">localhost/delta/fakt_aggr/cenik_id</to>
+    <from cardinality="1" optional="false">localhost/delta/cenik/cenik_id</from>
+  </relation>
+  <relation id="c16" description="">
+    <gui-presentation id="2" />
+    <to cardinality="N" optional="true">localhost/delta/fakt_aggr/vyrobek_id</to>
+    <from cardinality="1" optional="false">localhost/delta/vyrobek/vyrobek_id</from>
+  </relation>
+  <relation id="c1" description="">
+    <gui-presentation id="1" />
+    <gui-presentation id="2" />
+    <to cardinality="N" optional="true">localhost/delta/zakaznik/typ_id</to>
+    <from cardinality="1" optional="false">localhost/delta/typ_zakaznika/typ_id</from>
+d223 1
+a223 1
+  <relation id="c8" description="">
+d225 2
+a226 3
+    <gui-presentation id="2" />
+    <to cardinality="N" optional="true">localhost/delta/okres/kraj_id</to>
+    <from cardinality="1" optional="false">localhost/delta/kraj/kraj_id</from>
+d228 1
+a228 1
+  <relation id="c28" description="">
+d230 2
+a231 2
+    <to cardinality="N" optional="true">localhost/delta/misto/kraj_id</to>
+    <from cardinality="1" optional="false">localhost/delta/kraj/kraj_id</from>
+d233 1
+a233 1
+  <relation id="c29" description="">
+d235 2
+a236 55
+    <to cardinality="N" optional="true">localhost/delta/zakaznik/okres_id</to>
+    <from cardinality="1" optional="false">localhost/delta/okres/okres_id</from>
+  </relation>
+
+  <relation id="l1" description="kraj/okres">
+    <gui-presentation id="2" />
+    <from cardinality="1" optional="false">1209</from>
+    <to cardinality="N" optional="true">1208</to>
+  </relation>
+  <relation id="l2" description="okres/misto">
+    <gui-presentation id="2" />
+    <from cardinality="1" optional="false">1208</from>
+    <to cardinality="N" optional="true">1207</to>
+  </relation>
+  <relation id="l3" description="misto/zakaznik">
+    <gui-presentation id="2" />
+    <from cardinality="1" optional="false">1207</from>
+    <to cardinality="N" optional="true">1205</to>
+  </relation>
+  <relation id="l4" description="typ_zakaznika/zakaznik">
+    <gui-presentation id="2" />
+    <from cardinality="1" optional="false">1209</from>
+    <to cardinality="N" optional="true">1205</to>
+  </relation>
+
+  <relation id="l5" description="rok/mesic">
+    <gui-presentation id="2" />
+    <from cardinality="1" optional="false">1222</from>
+    <to cardinality="N" optional="true">1210</to>
+  </relation>
+  <relation id="l6" description="kvartal/mesic">
+    <gui-presentation id="2" />
+    <from cardinality="1" optional="false">1221</from>
+    <to cardinality="N" optional="true">1210</to>
+  </relation>
+  <relation id="l7" description="rok/kvartal">
+    <gui-presentation id="2" />
+    <from cardinality="1" optional="false">1222</from>
+    <to cardinality="N" optional="true">1221</to>
+  </relation>
+  <relation id="l8" description="kat_data/den">
+    <gui-presentation id="2" />
+    <from cardinality="1" optional="false">1211</from>
+    <to cardinality="N" optional="true">1202</to>
+  </relation>
+  <relation id="l9" description="mesic/den">
+    <gui-presentation id="2" />
+    <from cardinality="1" optional="false">1210</from>
+    <to cardinality="N" optional="true">1202</to>
+  </relation>
+
+  <relation id="l10" description="typ_vyrobku/vyrobek">
+    <gui-presentation id="2" />
+    <from cardinality="1" optional="false">1203</from>
+    <to cardinality="N" optional="true">1201</to>
+a237 1
+
+@
+
+
+1.9
+log
+@name to ID translation
+@
+text
+@d2 1
+a2 1
+<project version="0.1" description="Test Project 1" create-date="2002-04-10" id="test1">
+d4 2
+a5 4
+  <fact name="Prodej [Kc]" id="302">
+    <gui-presentation coord="46 500" id="2" />
+    <expr>bear.instrat.cz/demo/order/amt</expr>
+    <expr>bear.instrat.cz/demo/order_m_c/amt</expr>
+d7 2
+a8 7
+  <fact expr="bear.instrat.cz/demo/order/cost" name="Prodej [t]" id="301">
+    <gui-presentation coord="46 450" id="2" />
+  </fact>
+  <fact name="Prodej kusu" id="300" description="Product Sales in USD with lower granuality at day level">
+    <gui-presentation coord="46 400" id="2" />
+    <expr>bear.instrat.cz/demo/order/price</expr>
+    <expr>bear.instrat.cz/demo/order_m_c/price</expr>
+d11 27
+a37 2
+  <attr name="Den" id="200">
+    <gui-presentation coord="322 409" id="3" />
+d39 3
+a41 10
+  <attr pk="bear.instrat.cz/demo/l_cust/id" name="Odberatel" id="201" description="Customer Attribute with name, e-mail and addr possible forms">
+    <gui-presentation coord="198 173" id="2" />
+    <gui-presentation coord="198 173" id="1" />
+    <fk>bear.instrat.cz/demo/order_m_c/cust</fk>
+    <fk>bear.instrat.cz/demo/order/cust</fk>
+    <directory id="2" />
+    <display e-mail="bear.instrat.cz/demo/l_cust/email" jmeno="bear.instrat.cz/demo/l_cust/{f_name+' '+l_name}" addr="bear.instrat.cz/demo/l_cust/{zip+' '+&amp;lookup(bear.instrat.cz/demo/l_city/,id=city)-&gt;desc+' '+addr" />
+  </attr>
+  <attr name="Typ odberatele" id="202">
+    <gui-presentation coord="329 109" id="2" />
+d43 4
+a46 2
+  <attr name="Dodavatel" id="203">
+    <gui-presentation coord="329 109" id="2" />
+d48 3
+a50 2
+  <attr name="Sortiment" id="204">
+    <gui-presentation coord="329 109" id="2" />
+d52 22
+a73 2
+  <host name="bear" id="bear.instrat.cz" description="My Laptop">
+    <source name="Demo" type="psql" id="demo">
+d75 21
+a95 3
+      <table access="RO" name="Month" id="l_month" description="Month lookup table">
+        <gui-presentation coord="135 68" id="1" />
+        <column name="Quarter" type="int" id="q">
+d97 1
+d99 3
+a101 2
+        <column name="Month ID" type="int" id="id">
+          <gui-presentation coord="22 11" id="1" line="1" />
+d104 8
+a111 2
+        <column name="Month of Year" type="int" id="month_y">
+          <gui-presentation coord="22 11" id="1" line="2" />
+d113 3
+a115 2
+        <column name="Year" type="int" id="year">
+          <gui-presentation id="1" line="4" />
+d118 10
+a127 4
+      <table access="RO" name="Day" id="l_day" description="Day lookup table">
+        <gui-presentation coord="392 58" id="1" />
+        <column name="Week" type="int" id="week">
+          <gui-presentation coord="184 44" id="1" line="3" />
+d129 1
+a129 1
+        <column name="Month" type="int" id="month">
+d131 1
+d133 9
+a141 1
+        <column name="Day ID" type="date" id="id">
+d143 1
+d146 5
+a150 1
+        <column name="Year" type="int" id="year">
+d152 5
+d159 4
+a162 3
+      <table access="RO" name="Product" id="l_product" description="Product lookup table">
+        <gui-presentation coord="355 402" id="1" />
+        <column name="Product Color" type="char" id="color">
+d164 18
+d183 1
+a183 1
+        <column name="Product Weight" type="char" id="weight">
+d185 5
+d191 5
+a195 1
+        <column name="ID" lenght="4" type="int" id="id" description="Product ID">
+d197 1
+d200 1
+a200 1
+        <column name="Product Name" type="char" id="descr">
+d202 5
+d208 1
+a208 4
+      </table>
+      <table access="RO" name="City" id="l_city" description="City lookup table">
+        <gui-presentation coord="21 301" id="1" />
+        <column name="City Population" type="int" id="population">
+d210 1
+d212 7
+a218 2
+        <column name="Region" type="int" id="reg">
+          <gui-presentation id="1" line="3" />
+d220 1
+a220 1
+        <column name="City ID" type="int" id="id">
+d222 1
+d225 8
+a232 2
+        <column name="City Category" type="int" id="categ">
+          <gui-presentation id="1" line="5" />
+d234 1
+a234 1
+        <column name="City Name" type="char" id="descr">
+d236 1
+d239 8
+a246 3
+      <table access="RW" name="Order Ag. (m,c)" id="order_m_c" description="Order Agregate Table on level (month,customer)">
+        <gui-presentation coord="343 167" id="1" />
+        <column name="Order Month" type="int" id="month">
+d248 6
+a253 1
+          <constraint type="NOTNULL" />
+d255 1
+a255 1
+        <column name="Sale Price" type="num" id="price">
+d257 9
+d267 1
+a267 1
+        <column name="Customer" type="int" id="cust">
+d269 6
+a274 1
+          <constraint type="NOTNULL" />
+d276 7
+a282 1
+        <column name="Sale Amount" type="int" id="amt">
+d285 1
+a285 4
+      </table>
+      <table access="RW" name="Order" id="order" description="Order table">
+        <gui-presentation coord="568 192" id="1" />
+        <column name="Order Date" type="date" id="date">
+a286 1
+          <constraint type="NOTNULL" />
+d288 2
+a289 2
+        <column name="Sale Price" type="num" id="price">
+          <gui-presentation id="1" line="6" />
+d291 1
+a291 1
+        <column name="ID" lenght="4" type="int" id="id" description="Order ID">
+d295 14
+a308 1
+        <column name="Product" type="int" id="product">
+a309 1
+          <constraint type="NOTNULL" />
+d311 3
+a313 2
+        <column name="Product Cost" type="num" id="revenue">
+          <gui-presentation id="1" line="7" />
+d315 2
+a316 3
+        <column name="Customer" type="int" id="cust">
+          <gui-presentation id="1" line="3" />
+          <constraint type="NOTNULL" />
+d318 1
+a318 1
+        <column name="Sale Amount" type="int" id="amt">
+d322 9
+a330 3
+      <table access="RO" name="Customer" id="l_cust" description="Customer lookup table">
+        <gui-presentation coord="180 271" id="1" />
+        <column name="First Name" type="char" id="f_name">
+d332 1
+d334 11
+a344 1
+        <column name="Last Name" type="char" id="l_name">
+d347 36
+a382 2
+        <column name="e-mail" type="char" id="email">
+          <gui-presentation id="1" line="5" />
+d384 7
+a390 2
+        <column name="ZIP Code" type="char" id="zip">
+          <gui-presentation id="1" line="7" />
+d392 3
+a394 2
+        <column name="Customer City" type="int" id="city">
+          <gui-presentation id="1" line="8" />
+d396 1
+a396 1
+        <column name="Customer ID" type="int" id="id">
+d398 1
+d401 3
+a403 2
+        <column name="Address" type="char" id="addr">
+          <gui-presentation id="1" line="6" />
+d405 1
+a405 1
+        <column name="Gender" type="bool" id="gender">
+d407 1
+d410 6
+a415 2
+      <src-conn driver="dbi:Pg">
+        <src-name gui-line="2">demo</src-name>
+d417 2
+a418 2
+        <user gui-line="3">postgres</user>
+        <port gui-line="1">5432</port>
+d423 3
+d427 24
+a450 3
+  <gui-layer width="210" name="Physical Layer" id="1" height="280" />
+  <gui-layer width="210" visible="YES" name="Logical Layer" id="2" height="280" />
+  <relation id="403">
+d452 3
+a454 2
+    <to cardinality="N" optional="true">bear.instrat.cz/demo/l_day/month</to>
+    <from cardinality="1" optional="false">bear.instrat.cz/demo/l_month/id</from>
+d456 1
+a456 1
+  <relation id="406">
+d458 7
+a464 2
+    <to cardinality="1" optional="false">_LOBJ/_ATTR/202</to>
+    <from cardinality="N" optional="true">_LOBJ/_ATTR/201</from>
+d466 7
+a472 1
+  <relation id="407">
+d474 2
+a475 2
+    <to cardinality="1" optional="false">_LOBJ/_ATTR/202</to>
+    <from cardinality="N" optional="true">_LOBJ/_ATTR/204</from>
+d477 1
+a477 1
+  <relation id="401">
+d479 3
+a481 2
+    <to cardinality="N" optional="true">bear.instrat.cz/demo/order/product</to>
+    <from cardinality="1" optional="false">bear.instrat.cz/demo/l_product/id</from>
+d483 1
+a483 1
+  <relation id="402">
+d485 2
+a486 2
+    <to cardinality="N" optional="true">bear.instrat.cz/demo/order/date</to>
+    <from cardinality="1" optional="false">bear.instrat.cz/demo/l_day/id</from>
+d488 1
+a488 1
+  <relation id="408">
+d490 34
+a523 2
+    <to cardinality="N" optional="true">bear.instrat.cz/demo/order_m_c/cust</to>
+    <from cardinality="1" optional="false">bear.instrat.cz/demo/l_cust/id</from>
+d525 1
+a525 1
+  <relation id="409">
+d527 3
+a529 2
+    <to cardinality="N" optional="true">bear.instrat.cz/demo/order_m_c/month</to>
+    <from cardinality="1" optional="false">bear.instrat.cz/demo/l_month/id</from>
+d531 1
+a531 1
+  <relation id="405">
+d533 2
+a534 2
+    <to cardinality="N" optional="true">bear.instrat.cz/demo/l_cust/city</to>
+    <from cardinality="1" optional="false">bear.instrat.cz/demo/l_city/id</from>
+d536 1
+a536 1
+  <relation id="404">
+d538 55
+a592 2
+    <to cardinality="N" optional="true">bear.instrat.cz/demo/order/cust</to>
+    <from cardinality="1" optional="false">bear.instrat.cz/demo/l_cust/id</from>
+d594 1
+@
+
+
+1.8
+log
+@new obj. name to ID transition in SaveMData
+@
+text
+@d4 1
+a4 1
+  <fact name="Product Amount" id="302">
+d9 1
+a9 1
+  <fact expr="bear.instrat.cz/demo/order/cost" name="Product Cost [USD]" id="301">
+d12 1
+a12 1
+  <fact name="Product Sales [USD]" id="300" description="Product Sales in USD with lower granuality at day level">
+d18 1
+a18 1
+  <attr name="Order Date" id="204">
+d21 1
+a21 1
+  <attr pk="bear.instrat.cz/demo/l_cust/id" name="Customer" id="201" description="Customer Attribute with name, e-mail and addr possible forms">
+d27 1
+a27 1
+    <display e-mail="bear.instrat.cz/demo/l_cust/email" name="bear.instrat.cz/demo/l_cust/{f_name+' '+l_name}" addr="bear.instrat.cz/demo/l_cust/{zip+' '+&amp;lookup(bear.instrat.cz/demo/l_city/,id=city)-&gt;desc+' '+addr" />
+d29 7
+a35 1
+  <attr name="Customer City" id="202">
+@
+
+
+1.7
+log
+@substitution of obj. names by ptr to objects during SaveMData
+@
+text
+@d19 1
+a19 1
+    <gui-presentation coord="322 409" id="2" />
+@
+
+
+1.6
+log
+@saving object metadata
+@
+text
+@d23 1
+@
+
+
+1.5
+log
+@add demo metadata
+@
+text
+@d2 6
+a7 6
+<project description="Test Project 1" create-date="2002-04-10" id="test1" version="0.1">
+  <const></const>
+  <fact id="300" name="Product Sales [USD]" description="Product Sales in USD with lower granuality at day level">
+    <expr>bear.instrat.cz/demo/order/price</expr>
+    <expr>bear.instrat.cz/demo/order_m_c/price</expr>
+    <gui-presentation coord="46 400" id="2" />
+d9 1
+a9 2
+  <fact id="301" name="Product Cost [USD]">
+    <expr>bear.instrat.cz/demo/order/cost</expr>
+d12 4
+a15 4
+  <fact id="302" name="Product Amount">
+    <expr>bear.instrat.cz/demo/order/amt</expr>
+    <expr>bear.instrat.cz/demo/order_m_c/amt</expr>
+    <gui-presentation coord="46 500" id="2" />
+d17 16
+a32 47
+  <relation id="401">
+    <from optional="false" cardinality="1">bear.instrat.cz/demo/l_product/id</from>
+    <to optional="true" cardinality="N">bear.instrat.cz/demo/order/product</to>
+    <gui-presentation id="1" />
+  </relation>
+  <relation id="402">
+    <from optional="false" cardinality="1">bear.instrat.cz/demo/l_day/id</from>
+    <to optional="true" cardinality="N">bear.instrat.cz/demo/order/date</to>
+    <gui-presentation id="1" />
+  </relation>
+  <relation id="403">
+    <from optional="false" cardinality="1">bear.instrat.cz/demo/l_month/id</from>
+    <to optional="true" cardinality="N">bear.instrat.cz/demo/l_day/month</to>
+    <gui-presentation id="1" />
+  </relation>
+  <relation id="404">
+    <from optional="false" cardinality="1">bear.instrat.cz/demo/l_cust/id</from>
+    <to optional="true" cardinality="N">bear.instrat.cz/demo/order/cust</to>
+    <gui-presentation id="1" />
+  </relation>
+  <relation id="405">
+    <from optional="false" cardinality="1">bear.instrat.cz/demo/l_city/id</from>
+    <to optional="true" cardinality="N">bear.instrat.cz/demo/l_cust/city</to>
+    <gui-presentation id="1" />
+  </relation>
+  <relation id="406">
+    <to optional="false" cardinality="1">_LOBJ/_ATTR/202</to>
+    <from optional="true" cardinality="N">_LOBJ/_ATTR/201</from>
+    <gui-presentation id="2" />
+  </relation>
+  <relation id="407">
+    <to optional="false" cardinality="1">_LOBJ/_ATTR/202</to>
+    <from optional="true" cardinality="N">_LOBJ/_ATTR/204</from>
+    <gui-presentation id="2" />
+  </relation>
+  <relation id="408">
+    <from optional="false" cardinality="1">bear.instrat.cz/demo/l_cust/id</from>
+    <to optional="true" cardinality="N">bear.instrat.cz/demo/order_m_c/cust</to>
+    <gui-presentation id="1" />
+  </relation>
+  <relation id="409">
+    <from optional="false" cardinality="1">bear.instrat.cz/demo/l_month/id</from>
+    <to optional="true" cardinality="N">bear.instrat.cz/demo/order_m_c/month</to>
+    <gui-presentation id="1" />
+  </relation>
+  <host description="My Laptop" id="bear.instrat.cz" name="bear">
+    <source id="demo" type="psql" name="Demo">
+d34 4
+a37 3
+      <table description="Product lookup table" access="RO" id="l_product" name="Product">
+        <column id="descr" type="char" name="Product Name">
+          <gui-presentation line="2" id="1" />
+d39 2
+a40 1
+        <column description="Product ID" id="id" type="int" lenght="4" name="ID">
+a41 1
+          <gui-presentation line="1" id="1" />
+d43 2
+a44 2
+        <column id="weight" type="char" name="Product Weight">
+          <gui-presentation line="3" id="1" />
+d46 2
+a47 2
+        <column id="color" type="char" name="Product Color">
+          <gui-presentation line="4" id="1" />
+a48 1
+        <gui-presentation coord="355 402" id="1" />
+d50 4
+a53 8
+      <table description="Order table" access="RW" id="order" name="Order">
+        <column id="product" type="int" name="Product">
+          <constraint type="NOTNULL" />
+          <gui-presentation line="4" id="1" />
+        </column>
+        <column id="cust" type="int" name="Customer">
+          <constraint type="NOTNULL" />
+          <gui-presentation line="3" id="1" />
+d55 2
+a56 2
+        <column id="amt" type="int" name="Sale Amount">
+          <gui-presentation line="5" id="1" />
+d58 2
+a59 1
+        <column description="Order ID" id="id" type="int" lenght="4" name="ID">
+a60 1
+          <gui-presentation line="1" id="1" />
+d62 2
+a63 6
+        <column id="date" type="date" name="Order Date">
+          <constraint type="NOTNULL" />
+          <gui-presentation line="2" id="1" />
+        </column>
+        <column id="price" type="num" name="Sale Price">
+          <gui-presentation line="6" id="1" />
+a64 4
+        <column id="revenue" type="num" name="Product Cost">
+          <gui-presentation line="7" id="1" />
+        </column>
+        <gui-presentation coord="568 192" id="1" />
+d66 4
+a69 3
+      <table description="Customer lookup table" access="RO" id="l_cust" name="Customer">
+        <column id="l_name" type="char" name="Last Name">
+          <gui-presentation line="3" id="1" />
+d71 2
+a72 2
+        <column id="zip" type="char" name="ZIP Code">
+          <gui-presentation line="7" id="1" />
+d74 2
+a75 1
+        <column id="id" type="int" name="Customer ID">
+a76 1
+          <gui-presentation line="1" id="1" />
+d78 8
+a85 2
+        <column id="f_name" type="char" name="First Name">
+          <gui-presentation line="2" id="1" />
+d87 2
+a88 2
+        <column id="city" type="int" name="Customer City">
+          <gui-presentation line="8" id="1" />
+d90 3
+a92 2
+        <column id="addr" type="char" name="Address">
+          <gui-presentation line="6" id="1" />
+d94 2
+a95 2
+        <column id="email" type="char" name="e-mail">
+          <gui-presentation line="5" id="1" />
+d97 2
+a98 2
+        <column id="gender" type="bool" name="Gender">
+          <gui-presentation line="4" id="1" />
+a99 1
+        <gui-presentation coord="180 271" id="1" />
+d101 5
+a105 3
+      <table description="Month lookup table" access="RO" id="l_month" name="Month">
+        <column id="month_y" type="int" name="Month of Year">
+          <gui-presentation coord="22 11" line="2" id="1" />
+d107 2
+a108 3
+        <column id="id" type="int" name="Month ID">
+          <constraint type="PK" />
+          <gui-presentation coord="22 11" line="1" id="1" />
+d110 3
+a112 2
+        <column id="q" type="int" name="Quarter">
+          <gui-presentation line="3" id="1" />
+d114 2
+a115 2
+        <column id="year" type="int" name="Year">
+          <gui-presentation line="4" id="1" />
+a116 1
+        <gui-presentation coord="135 68" id="1" />
+d118 4
+a121 2
+      <table description="Order Agregate Table on level (month,customer)" access="RW" id="order_m_c" name="Order Ag. (m,c)">
+        <column id="month" type="int" name="Order Month">
+a122 1
+          <gui-presentation line="1" id="1" />
+d124 9
+a132 1
+        <column id="cust" type="int" name="Customer">
+a133 1
+          <gui-presentation line="2" id="1" />
+d135 2
+a136 2
+        <column id="amt" type="int" name="Sale Amount">
+          <gui-presentation line="3" id="1" />
+d138 6
+a143 2
+        <column id="price" type="num" name="Sale Price">
+          <gui-presentation line="4" id="1" />
+a144 1
+        <gui-presentation coord="343 167" id="1" />
+d146 4
+a149 3
+      <table description="Day lookup table" access="RO" id="l_day" name="Day">
+        <column id="month" type="int" name="Month">
+          <gui-presentation line="2" id="1" />
+d151 2
+a152 3
+        <column id="id" type="date" name="Day ID">
+          <constraint type="PK" />
+          <gui-presentation line="1" id="1" />
+d154 2
+a155 2
+        <column id="year" type="int" name="Year">
+          <gui-presentation line="4" id="1" />
+d157 2
+a158 2
+        <column id="week" type="int" name="Week">
+          <gui-presentation coord="184 44" line="3" id="1" />
+d160 2
+a161 5
+        <gui-presentation coord="392 58" id="1" />
+      </table>
+      <table description="City lookup table" access="RO" id="l_city" name="City">
+        <column id="reg" type="int" name="Region">
+          <gui-presentation line="3" id="1" />
+d163 3
+a165 2
+        <column id="categ" type="int" name="City Category">
+          <gui-presentation line="5" id="1" />
+d167 2
+a168 2
+        <column id="population" type="int" name="City Population">
+          <gui-presentation line="4" id="1" />
+d170 2
+a171 2
+        <column id="descr" type="char" name="City Name">
+          <gui-presentation line="2" id="1" />
+a172 5
+        <column id="id" type="int" name="City ID">
+          <constraint type="PK" />
+          <gui-presentation line="1" id="1" />
+        </column>
+        <gui-presentation coord="21 301" id="1" />
+a174 1
+        <port gui-line="1">5432</port>
+d178 1
+d182 49
+a230 24
+
+  <gui-layer height="280" width="210" id="1" name="Physical Layer" />
+  <gui-layer height="280" width="210" id="2" visible="YES" name="Logical Layer" />
+
+  <attr id="201" name="Customer" description="Customer Attribute with name, e-mail and addr possible forms">
+  	<display>
+	  <name>bear.instrat.cz/demo/l_cust/{f_name+' '+l_name}</name>
+  	  <e-mail>bear.instrat.cz/demo/l_cust/email</e-mail>
+  	  <addr>bear.instrat.cz/demo/l_cust/{zip+' '+&amp;lookup(bear.instrat.cz/demo/l_city/,id=city)->desc+' '+addr</addr>
+	</display>
+    <fk>bear.instrat.cz/demo/order_m_c/cust</fk>
+    <fk>bear.instrat.cz/demo/order/cust</fk>
+	<pk>bear.instrat.cz/demo/l_cust/id</pk>
+    <gui-presentation coord="198 173" id="2" />
+    <directory id="2" />
+  </attr>
+  <attr id="202" name="Customer City">
+    <gui-presentation coord="199 100" id="2" />
+  </attr>
+  <attr id="204" name="Order Date">
+    <gui-presentation coord="217 235" id="2" />
+  </attr>
+  <triger></triger>
+  <connection></connection>
+@
+
+
+1.4
+log
+@Create New Objects functionality
+@
+text
+@d4 1
+a4 1
+  <fact id="300" name="Product Sales [USD]" description="Product Sales in USD\nwith lower granuality at day level">
+@
+
+
+1.3
+log
+@client metadata connection, client tree presentation
+@
+text
+@d4 1
+a4 1
+  <fact id="300" name="Product Sales [USD]">
+d9 9
+d218 1
+a218 1
+  <attr id="201" name="Custommer">
+d230 1
+a230 1
+  <attr id="202" name="Custommer City">
+@
+
+
+1.2
+log
+@beard metadata connection
+@
+text
+@d4 1
+a4 1
+  <fact id="3" name="Product Sales [USD]">
+d9 1
+a9 1
+  <relation id="1">
+d14 1
+a14 1
+  <relation id="2">
+d19 1
+a19 1
+  <relation id="3">
+d24 1
+a24 1
+  <relation id="4">
+d29 1
+a29 1
+  <relation id="5">
+d34 3
+a36 3
+  <relation id="6">
+    <to optional="false" cardinality="1">_LOBJ/_ATTR/2</to>
+    <from optional="true" cardinality="N">_LOBJ/_ATTR/1</from>
+d39 3
+a41 3
+  <relation id="7">
+    <to optional="false" cardinality="1">_LOBJ/_ATTR/2</to>
+    <from optional="true" cardinality="N">_LOBJ/_ATTR/4</from>
+d44 1
+a44 1
+  <relation id="8">
+d49 1
+a49 1
+  <relation id="9">
+d209 1
+a209 23
+  <folder id="100" name="Metrics"/>
+     <gui-presentation line="3"/>
+  <folder/>
+  <folder id="101" name="Attributes" description="Attributes Folder" >
+     <gui-presentation line="1"/>
+  <folder/>
+  <folder id="102" name="Facts">
+     <gui-presentation line="2"/>
+  <folder/>
+  <folder id="103" name="Filters">
+     <gui-presentation line="4"/>
+  <folder/>
+  <folder id="104" name="Grids" description="Attributes Folder">
+     <gui-presentation line="5"/>
+  <folder/>
+  <folder id="106" name="Formats">
+     <gui-presentation line="5"/>
+  <folder/>
+  <folder id="105" name="Reports">
+     <gui-presentation line="6"/>
+  <folder/>
+  
+  <attr id="1" name="Custommer">
+d221 1
+a221 1
+  <attr id="2" name="Custommer City">
+d224 1
+a224 1
+  <attr id="4" name="Order Date">
+@
+
+
+1.1
+log
+@minor change of cvs tree structure
+@
+text
+@d199 1
+a199 1
+        <src-name gui-line="2">vmall</src-name>
+d205 1
+a205 1
+  <signal></signal>
+d208 23
+d241 1
+@
+
