@@ -1,0 +1,23 @@
+Tool,Open Source,Cloud Hosted Available,Desktop Application Available,Commercial Support,Company,Remarks
+Apache Druid,Y,N,Y,N,"Apache Foundation, Metamarkets",
+Apache HBase,Y,Y,Y,N,"Apache Foundation, Powerset",Commercial support by third parties.
+Apache Hive,Y,Y,Y,N,"Apache Foundation, Facebook",
+Apache Mahout,Y,N,Y,N,Apache Foundation,
+Apache Spark,Y,Y,Y,N,Apache Foundation,
+Apache Sqoop,Y,Y,Y,N,Apache Foundation,Commercial support by third parties.
+Eclipse BIRT,Y,N,Y,N,Eclipse Foundation,
+Google BigQuery,N,Y,N,Y,Alphabet,
+Google Looker,N,Y,N,Y,Alphabet,
+Informatica,N,Y,Y,Y,Informatica,Data and analysis is online and the orchestration and admin console is available in desktop.
+Jaspersoft Reports,Y,Y,Y,Y,Jaspersoft,
+KNIME,Y,Y,Y,Y,KNIME AG,
+Metabase,Y,Y,Y,Y,Metabase,
+Microsoft Analysis Service,N,Y,Y,Y,Microsoft,Only GUI for desktop.
+OpenRefine,Y,N,Y,Y,Alphabet,
+Pentaho Mondria,Y,Y,Y,Y,Hitachi Vantara,Pentaho Business suite contains this
+Penthao,Y,Y,Y,Y,Hitachi Vantara,
+Power BI,N,Y,Y,Y,Microsoft,
+Tableau,N,Y,Y,Y,Tableau,
+Talend,Y,Y,Y,Y,Qlik,"Components like Talend Data Integration is open source, other offerings available after license"
+Vertica,N,Y,Y,Y,"OpenText, MicroFocus",
+Zoho Analytics,N,Y,N,Y,Zoho,
