@@ -73,3 +73,7 @@ git clone https://github.com/pentaho/maven-parent-poms.git ./pentaho-collections
 git clone https://github.com/pentaho/metastore.git         ./pentaho-collections/metastore
 git clone https://github.com/pentaho/mondrian.git          ./pentaho-collections/mondrian
 git clone https://github.com/pentaho/pentaho-kettle.git    ./pentaho-collections/pentaho-kettle
+git clone https://github.com/knime/knime-sdk-setup.git
+git clone https://github.com/knime/knime-workbench.git
+git clone https://github.com/apache/zeppelin.git
+git clone https://github.com/apache/hop.git

@@ -6,9 +6,7 @@ file with this contains the unicode
 code points for the letters as given below.
 
 # सवर
-अ 	आ 	इ 	ई 	उ 	ऊ 	ए 	ऐ 	ओ 	औ
-
-अं 	अः
+अ 	आ 	इ 	ई 	उ 	ऊ 	ए 	ऐ 	ओ 	औ 	अं 	अः
 
 # वयंजन
 क 	ख 	ग 	घ 	ङ
@@ -30,12 +28,21 @@ code points for the letters as given below.
 # Numbers
 ० १ २ ३ ४ ५ ६ ७ ८ ९
 
+# Matras (मात्राएं)
+Matras denoted on क:
+
+का   कि   की   कु   कू   के   कै   को   कौ   कं   कः   क्   कृ   कॄ   क॑   क़   कॅ   कॉ   कँ   क॒
+
+कॆ कॊ 
+
 # Other symbols:
 क़ ख़ ग़ ज़ ड़ ढ़ फ़ य़ ऩ ऱ
 
 # Some other special characters:
-ऀ ँ ं ः ऄ ऋ ऌ ऍ ऎ ऑ ऒ ळ ऴ ऺ ऻ ़ ऽ ा ि ी ु ू ृ ॄ ॅ 
-
-ॆ े ै ॉ ॊ ो ौ ् ॎ ॏ ॑ ॒ ॓ ॔ ॕ ॖ ॗ ॱ ॲ ॳ ॴ ॵ ॶ ॷ ॸ 
+ॲ ॳ ॴ ॵ ॶ ॷ ॸ 
 
 ॹ ॺ ॻ ॼ ॽ ॾ ॿ 
+
+ऀ ँ ं  ऄ ऋ ऌ ऍ ऎ ऑ ऒ ळ ऴ ऺ ऻ ़ ऽ  ॄ  
+
+ ॉ ॎ ॏ ॓ ॔ ॕ ॖ ॗ ॱ
