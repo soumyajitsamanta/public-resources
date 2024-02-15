@@ -77,3 +77,14 @@ git clone https://github.com/knime/knime-sdk-setup.git
 git clone https://github.com/knime/knime-workbench.git
 git clone https://github.com/apache/zeppelin.git
 git clone https://github.com/apache/hop.git
+git clone https://github.com/sonatype/nexus-public.git
+git clone https://github.com/openrewrite/rewrite.git
+git clone https://github.com/distribution/distribution.git
+git clone git://git.netsurf-browser.org/netsurf.git
+git clone https://github.com/eclipse-jgit/jgit.git
+git clone https://github.com/ImageMagick/ImageMagick.git
+git clone https://github.com/strukturag/libheif
+git clone https://github.com/strukturag/libde265
+git clone https://github.com/joncampbell123/dosbox-x.git
+git clone https://github.com/symbl-cc/symbl-data.git
+git clone https://github.com/metabase/metabase.git
