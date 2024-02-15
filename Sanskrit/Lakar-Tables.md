@@ -96,7 +96,7 @@ Wherever there are स् it can be replaced by : and ending with : can be repla
 | :---------: | :---: | :-----: | :----: |
 | प्रथम पुरुष |  ति   |   त:    | अन्ति  |
 | मध्यम पुरुष |  सि   |   थ:    |   थ    |
-| उत्तम पुरुष |  मि   |   आव:   |  आम:   |
+| उत्तम पुरुष |  आमि   |   आव:   |  आम:   |
 
 २. लोट् लकार - अनुज्ञा - Imperative Mood
 
@@ -122,7 +122,7 @@ Wherever there are स् it can be replaced by : and ending with : can be repla
 | मध्यम पुरुष | यास्  |  यातम्  |  यात   |
 | उत्तम पुरुष | याम्  |   याव   |  याम   |
 
-५. लुट् लकार - बयानी - Periphrastic
+५. लुट् लकार - बयानी - First Future Tense or Periphrastic
 
 | पुरुष       | एकवचन  | द्विवचन | बहुवचन  |
 | ----------- | ------ | ------- | ------- |
@@ -154,7 +154,7 @@ Wherever there are स् it can be replaced by : and ending with : can be repla
 | मध्यम पुरुष | यास्  | यास्तम्  | यास्त  |
 | उत्तम पुरुष | यासम् | यास्व    | यास्म  |
 
-९. लिट् लकार - - (Past Perfect Tense)
+९. लिट् लकार -  - (Past Perfect Tense)
 
 |    पुरुष    | एकवचन | द्विवचन | बहुवचन |
 | :---------: | :---: | :-----: | :----: |
@@ -196,7 +196,7 @@ Wherever there are स् it can be replaced by : and ending with : can be repla
 | मध्यम पुरुष | थास्  |  आथाम्  | ध्वम्  |
 | उत्तम पुरुष |   इ   |   वहि   |  महि   |
 
-४. विधिलिङ्ग् लकार - चाहिए के अर्थ में - Potential Mood
+४. विधिलिङ्ग् लकार - जरूरत - Potential Mood
 
 |    पुरुष    | एकवचन | द्विवचन | बहुवचन |
 | :---------: | :---: | :-----: | :----: |
@@ -204,7 +204,7 @@ Wherever there are स् it can be replaced by : and ending with : can be repla
 | मध्यम पुरुष | ईथास् | ईयाथाम् | ईध्वम् |
 | उत्तम पुरुष |  ईय   |  ईवहि   |  ईमहि  |
 
-५. लुट् लकार (First Future Tense or Periphrastic)
+५. लुट् लकार - बयानी - First Future Tense or Periphrastic
 
 | पुरुष       | एकवचन | द्विवचन | बहुवचन  |
 | ----------- | ----- | ------- | ------- |
@@ -212,7 +212,7 @@ Wherever there are स् it can be replaced by : and ending with : can be repla
 | मध्यम पुरुष | तासे  | तासाथे  | ताध्वे  |
 | उत्तम पुरुष | ताहे  | तास्वहे | तास्महे |
 
-६. लृट् लकार - भविष्यत् - Second Future Tense
+६. लृट् लकार - भविष्यत् काल - Second Future Tense
 
 | पुरुष       | एकवचन | द्विवचन | बहुवचन  |
 | ----------- | ----- | ------- | ------- |
