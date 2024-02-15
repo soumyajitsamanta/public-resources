@@ -1,116 +1,0 @@
-head	1.2;
-access;
-symbols;
-locks; strict;
-comment	@# @;
-
-
-1.2
-date	2008.05.17.15.40.42;	author fsaz;	state dead;
-branches;
-next	1.1;
-
-1.1
-date	2005.11.28.14.02.37;	author fsaz;	state Exp;
-branches;
-next	;
-
-
-desc
-@@
-
-
-1.2
-log
-@borrando viejos
-@
-text
-@/* * Created on 24-ago-2005 * * IndexFactoryInfo.java *  */package es.aeat.eett.infoRubik;
-
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
-
-import org.java.plugin.PluginManager;import org.java.plugin.registry.Documentation;import org.java.plugin.registry.Extension;import es.aeat.eett.infoRubik.index.index_core.IndexFactory;
-public final class IndexFactoryInfo {
-    private static Set allIndexFactory;
-
-    public static Set getAll() {
-        if (allIndexFactory == null) {
-        	allIndexFactory = new HashSet();
-            PluginManager pm = PluginManager.lookup(JobFactoryInfo.class);
-            Collection extensions = pm.getRegistry().getExtensionPoint(
-            		InfoRugikPlugin.PLUGIN_ID, "IndexFactory").getConnectedExtensions();
-            for (Iterator it = extensions.iterator(); it.hasNext();) {
-            	Extension ext=(Extension) it.next();
-            	IndexFactoryInfo indexFactoryInfo=new IndexFactoryInfo(ext);
-            	allIndexFactory.add(indexFactoryInfo);
-            }
-            allIndexFactory = Collections.unmodifiableSet(allIndexFactory);
-        }
-        return allIndexFactory;
-    }
-    
-    public static IndexFactoryInfo getById(String id) throws Exception {
-        for (Iterator it = getAll().iterator(); it.hasNext();) {
-        	IndexFactoryInfo indexFactoryInfo = (IndexFactoryInfo) it.next();            if (id.equals(indexFactoryInfo.getId())) {
-                return indexFactoryInfo;
-            }               
-        }
-        throw new Exception("unknown IndexFactoryInfo ID - " + id);
-    }
-
-    private Extension ext;
-    private String nameIndex=null;    private IndexFactory indexFactory=null;
-    
-    private IndexFactoryInfo(final Extension anExt) {
-        ext = anExt;
-    }
-    
-    public String getId() {
-        return ext.getUniqueId();
-    }
-    public IndexFactory getIndexFactory() throws IllegalAccessException, ClassNotFoundException, Exception{
-        if (indexFactory == null) {            String className = ext.getParameter("class").valueAsString();            PluginManager mngr = PluginManager.lookup(this);            mngr.activatePlugin(ext.getDeclaringPluginDescriptor().getId());            ClassLoader classLoader = mngr.getPluginClassLoader(                    ext.getDeclaringPluginDescriptor());            indexFactory = (IndexFactory) (classLoader.loadClass(className)).newInstance();        }        return indexFactory;    }	/**	 * @@return nameIndex	 */    public String getNameIndex() {		if(nameIndex==null && ext.getParameter("name")!=null){			nameIndex= ext.getParameter("name").valueAsString();		}		return nameIndex;	}    public Documentation getDocumentation() {
-        return ext.getDocumentation();
-    }
-    
-    
-    /**
-     * @@see java.lang.Object#hashCode()
-     */
-    public int hashCode() {
-        return getId().hashCode();
-    }
-    
-    /**
-     * @@see java.lang.Object#equals(java.lang.Object)
-     */
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (!(obj instanceof IndexFactoryInfo)) {
-            return false;
-        }
-        return getId().equals(((IndexFactoryInfo) obj).getId());
-    }
-    
-    /**
-     * @@see java.lang.Object#toString()
-     */
-    public String toString() {
-        return getId();
-    }}
-@
-
-
-1.1
-log
-@*** empty log message ***
-@
-text
-@@
-
