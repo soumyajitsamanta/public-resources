@@ -88,3 +88,14 @@ git clone https://github.com/strukturag/libde265
 git clone https://github.com/joncampbell123/dosbox-x.git
 git clone https://github.com/symbl-cc/symbl-data.git
 git clone https://github.com/metabase/metabase.git
+git clone https://github.com/kiegroup/jbpm.git
+git clone https://github.com/kiegroup/drools.git
+git clone https://github.com/kiegroup/jbpm-wb.git
+git clone https://github.com/kiegroup/kie-wb-distributions.git
+git clone https://github.com/sanbornm/xsdtohtml.git
+git clone https://github.com/sindresorhus/awesome.git
+git clone https://github.com/remkop/picocli.git
+git clone https://github.com/keycloak/keycloak.git
+git clone https://github.com/transmission/transmission.git
+git clone https://github.com/FascinatedBox/bonk.git
+git clone https://github.com/AmrDeveloper/GQL.git

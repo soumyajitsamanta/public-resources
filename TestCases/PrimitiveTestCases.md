@@ -71,10 +71,10 @@ mn-long : Minimum long value.
 # For Arrays:
 
 - Null as the value of list : var list = null
-- Null as only element(s) of list : var list = \[ null \]
-- Valid values with null element: var list = \[ VV1, null, VV2 \]
-- Valid values with duplicate element: var list = \[ VV1, VV1 \]
-- List containing wrong data type : var list:string\[\] = \[ int, float, long, obj, null \]
+- Null as only element(s) of list : var list = [ null ]
+- Valid values with null element: var list = [ VV1, null, VV2 ]
+- Valid values with duplicate element: var list = [ VV1, VV1 ]
+- List containing wrong data type : var list:string[] = [ int, float, long, obj, null ]
 
 # For Object
 - Null as value : var objRef = null

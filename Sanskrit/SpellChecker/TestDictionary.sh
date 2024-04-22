@@ -1,1 +1,0 @@
-cat TextToTest.txt | hunspell -a -d sk-temp

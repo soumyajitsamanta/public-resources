@@ -1,9 +1,0 @@
-# Contains the paths defined and how to use paths and frequently used commands
-
-echo "# Common Commands"
-echo "mvn test org.apache.maven.plugins:maven-checkstyle-plugin:3.2.0:checkstyle org.apache.maven.plugins:maven-pmd-plugin:3.19.0:pmd pmd:cpd"
-echo "Run dbs on folder:        mongod --dbpath {db_folder} , mysqld --datadir {db_folder}"
-echo "Limit virtual mem to 8GB: ulimit -v 8388608"
-echo "See all ports and apps:   netstat -a -n -o"
-echo "Path of MTP mounted:      /var/run/user/1000/gvfs/"
-echo ""
