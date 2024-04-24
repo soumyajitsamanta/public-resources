@@ -1,0 +1,6 @@
+/target/
+
+# Eclipse artifacts
+.settings/
+.project
+.classpath
