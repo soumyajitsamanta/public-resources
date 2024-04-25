@@ -99,3 +99,6 @@ git clone https://github.com/keycloak/keycloak.git
 git clone https://github.com/transmission/transmission.git
 git clone https://github.com/FascinatedBox/bonk.git
 git clone https://github.com/AmrDeveloper/GQL.git
+git clone https://github.com/PaddlePaddle/VisualDL.git
+git clone https://github.com/zetane/viewer.git
+git clone https://github.com/lutzroeder/netron.git

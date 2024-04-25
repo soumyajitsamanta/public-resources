@@ -66,6 +66,26 @@
             </archive>
           </configuration>
         </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-dependency-plugin</artifactId>
+          <configuration>
+            <includeScope>compile</includeScope>
+            <prependGroupId>true</prependGroupId>
+            <outputDirectory>${project.build.directory}/lib</outputDirectory>
+            <overWriteReleases>false</overWriteReleases>
+            <overWriteSnapshots>false</overWriteSnapshots>
+            <overWriteIfNewer>true</overWriteIfNewer>
+          </configuration>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-assembly-plugin</artifactId>
+          <version>3.7.1</version>
+          <configuration>
+            <updateOnly>true</updateOnly>
+          </configuration>
+        </plugin>
       </plugins>
     </pluginManagement>
   </build>
