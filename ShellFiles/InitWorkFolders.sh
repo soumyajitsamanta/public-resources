@@ -30,10 +30,6 @@ fi
 
 echo ""
 
-# Create Use binary in bin
-cp ./use ~/Project/bin/
-chmod +x ~/Project/bin/use
-
 # Add to bashrc or print line to add to bashrc
 echo "Add to ~/.bashrc the following lines:"
 echo ""

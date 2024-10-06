@@ -102,3 +102,9 @@ git clone https://github.com/AmrDeveloper/GQL.git
 git clone https://github.com/PaddlePaddle/VisualDL.git
 git clone https://github.com/zetane/viewer.git
 git clone https://github.com/lutzroeder/netron.git
+git clone https://github.com/oracle/fastr.git
+git clone https://github.com/apache/echarts.git
+git clone https://github.com/tensorflow/tensorboard.git
+git clone https://github.com/onnx/onnx.git
+git clone https://github.com/microsoft/onnxruntime.git
+git clone https://github.com/apache/skywalking.git
