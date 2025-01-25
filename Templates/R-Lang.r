@@ -1,0 +1,2 @@
+# Data types available:
+# - Number
