@@ -12,8 +12,7 @@
 
 # The calling convention of $PROGRAM
 # Make has special variables to call programs like $MAKE calls make in another process and gives it the parameters passed from user
-# Make also uses other programs in special syntax like $(CC) for the value of env variable CC, default it 'cc' program.
-# Make has 
+# Make also uses variables in special syntax like $(CC) for the value of env variable CC.
 
 # Including other makefiles, the file name supports expansions, wildcards
 include deps.make
@@ -35,6 +34,19 @@ vpath *.h ../headers
 # $|: Names of all order-only prerequisites.
 # $*: The actual target file's stem which matches the implicit rule.
 # 		Like for file dir/a.foo.b and target pattern a.%.b then stem is dir/foo
+# ‘$(@D)’: The directory part of the file name of the target, with the trailing slash removed.
+# ‘$(@F)’: The file-within-directory part of the file name of the target.
+# ‘$(*D)’ OR ‘$(*F)’: The directory part and the file-within-directory part of the stem
+# ‘$(%D)’ OR ‘$(%F)’: The directory part and the file-within-directory part of the target archive member
+# ‘$(<D)’ OR ‘$(<F)’: The directory part and the file-within-directory part of the first prerequisite. 
+# ‘$(^D)’ OR ‘$(^F)’: Lists of the directory parts and the file-within-directory parts of all prerequisites. 
+# ‘$(+D)’ OR ‘$(+F)’: Lists of the directory parts and the file-within-directory parts of all prerequisites, with deduplicates.
+# ‘$(?D)’ OR ‘$(?F)’: Lists of the directory parts and the file-within-directory parts of all prerequisites that are newer than the target. 
+
+# Pattern Matching:
+# % is pattern for all files or folders and pattern matching is done on file name unless pattern has /
+# Without / e%t matches eat or src/eat
+# lib/%.c matches lib/a.c or lib/abcd.c
 
 # Phony target
 # Phony target whose dependencies are not creating by
