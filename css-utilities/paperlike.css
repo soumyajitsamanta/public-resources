@@ -1,0 +1,138 @@
+/* 
+This is typographically like making print documents
+To use crate index.html, index.css files.
+Fill the minimum html format as below:
+
+<html>
+    <head>
+    <title>My Paperlike Document</title>
+    <link rel="stylesheet" href="paperlike.css">
+    <link rel="stylesheet" href="index.css">
+    </head>
+    <body>
+    </body>
+</html>
+
+
+Place the styles which are created by user in index.css file.
+Now use the classes below to select a paper size and other properties.
+
+Available paper sizes:
+A0-13: pg-a0 to pg-a13
+B0-13: pg-b0 to pg-b13
+C0-10: pg-c0 to pg-c10
+
+Selecting paper size:
+On body add classes selecting from sizes available
+<body class="pg-a0">
+
+*/
+
+:root {
+    --pg-no-top: none;
+    --pg-no-bottom: none;
+    --pg-no-pos:center;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body{
+    margin: 0;
+    padding: 0;
+    counter-reset: pageno 0;
+}
+
+.pg-a0  .pg {width: 840mm; height: 1189mm; }
+.pg-a1  .pg {width: 594mm; height: 840mm ;  }
+.pg-a2  .pg {width: 420mm; height: 594mm ;  }
+.pg-a3  .pg {width: 297mm; height: 420mm ;  }
+.pg-a4  .pg {width: 210mm; height: 297mm ;  }
+.pg-a5  .pg {width: 148mm; height: 210mm ;  }
+.pg-a6  .pg {width: 105mm; height: 148mm ;  }
+.pg-a7  .pg {width: 74mm;  height: 105mm ;  }
+.pg-a8  .pg {width: 52mm;  height: 74mm ;  }
+.pg-a9  .pg {width: 37mm;  height: 52mm ;  }
+.pg-a10 .pg {width: 26mm;  height: 37mm ;  }
+.pg-a11 .pg {width: 18mm;  height: 26mm ;  }
+.pg-a12 .pg {width: 13mm;  height: 18mm ;  }
+.pg-a13 .pg {width: 9mm;   height: 13mm ;  }
+.pg-b0  .pg {width:1000mm; height:1414mm;  }
+.pg-b1  .pg {width:707mm;  height:1000mm;  }
+.pg-b2  .pg {width:500mm;  height:707mm;  }
+.pg-b3  .pg {width:353mm;  height:500mm;  }
+.pg-b4  .pg {width:250mm;  height:353mm;  }
+.pg-b5  .pg {width:176mm;  height:250mm;  }
+.pg-b6  .pg {width:125mm;  height:176mm;  }
+.pg-b7  .pg {width:88mm;   height:125mm;  }
+.pg-b8  .pg {width:62mm;   height:88mm;  }
+.pg-b9  .pg {width:44mm;   height:62mm;  }
+.pg-b10 .pg {width:31mm;   height:44mm;  }
+.pg-b11 .pg {width:22mm;   height:31mm;  }
+.pg-b12 .pg {width:15mm;   height:22mm;  }
+.pg-b13 .pg {width:11mm;   height:15mm;  }
+.pg-c0  .pg {width:917mm ; height: 1297 mm;  }
+.pg-c1  .pg {width:648mm ; height: 917 mm;  }
+.pg-c2  .pg {width:458mm ; height: 648 mm;  }
+.pg-c3  .pg {width:324mm ; height: 458 mm;  }
+.pg-c4  .pg {width:229mm ; height: 324 mm;  }
+.pg-c5  .pg {width:162mm ; height: 229 mm;  }
+.pg-c6  .pg {width:114mm ; height: 162 mm;  }
+.pg-c7  .pg {width:81mm ;  height: 114 mm;  }
+.pg-c8  .pg {width:57mm ;  height: 81 mm;  }
+.pg-c9  .pg {width:40mm ;  height: 57 mm;  }
+.pg-c10 .pg {width:28mm ;  height: 40 mm; }
+
+/* Normal pages */
+.pg{
+    padding: 0;
+    counter-increment: pageno;
+    text-align: justify;
+}
+
+.pg *{
+    text-indent: .5in;
+}
+
+/* Unnumbered pages */
+.pg-no-none {
+    counter-increment: none;
+    --pg-no-top: none;
+    --pg-no-bottom: none;
+    padding-top: 2in;
+}
+
+/* Page Numberings Start */
+.pg-no-top{    --pg-no-top: block;}
+.pg-no-bottom{    --pg-no-bottom: block;}
+.pg-no-left{    --pg-no-pos:left;}
+.pg-no-right{    --pg-no-pos:right;}
+
+.pg::before {
+    display: var(--pg-no-top);
+    text-align: var(--pg-no-pos);
+    content: counter(pageno);
+}
+
+.pg::after {
+    display: var(--pg-no-bottom);
+    text-align: var(--pg-no-pos);
+    content: counter(pageno);
+}
+
+/* Page Numberings End */
+
+
+/* Font Styles */
+
+.f-times{    font-family: "Times New Roman", serif;}
+.f-aptos{    font-family: "Aptos", aptos, serif;}
+.f-calibri {    font-family: "Calibri", serif;}
+.f-arial {    font-family: "Arial", serif;}
+.f-georgia {    font-family: "Georgia", serif;}
+
+.noindent {    text-indent: 0;}
+
+.line-height-1-and-half {    line-height: 1.5;}
+.line-height-double {    line-height: 2;}
