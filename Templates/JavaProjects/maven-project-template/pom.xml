@@ -22,13 +22,13 @@
       <dependency>
         <groupId>info.picocli</groupId>
         <artifactId>picocli</artifactId>
-        <version>4.7.5</version>
+        <version>4.7.7</version>
       </dependency>
       <!-- JUnit jupiter tests -->
       <dependency>
         <groupId>org.junit.jupiter</groupId>
         <artifactId>junit-jupiter</artifactId>
-        <version>5.9.1</version>
+        <version>5.14.2</version>
         <scope>test</scope>
       </dependency>
     </dependencies>
@@ -36,6 +36,87 @@
 
   <build>
     <defaultGoal>package</defaultGoal>
+    <plugins>
+      <!-- Report plugins globally applied to verify phase -->
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>versions-maven-plugin</artifactId>
+        <version>2.21.0</version>
+        <executions>
+          <execution>
+            <id>versions-report</id>
+            <phase>verify</phase>
+            <goals>
+              <goal>dependency-updates-aggregate-report</goal>
+              <goal>plugin-updates-aggregate-report</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-report-plugin</artifactId>
+        <version>3.5.4</version>
+          <executions>
+            <execution>
+              <id>surefire-report</id>
+              <phase>verify</phase>
+              <goals>
+                <goal>report</goal>
+              </goals>
+            </execution>
+          </executions>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-checkstyle-plugin</artifactId>
+        <version>3.6.0</version>
+        <executions>
+          <execution>
+            <id>checkstyle</id>
+            <phase>verify</phase>
+            <goals>
+              <goal>checkstyle-aggregate</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-pmd-plugin</artifactId>
+        <version>3.28.0</version>
+        <executions>
+          <execution>
+            <id>pmd</id>
+            <phase>verify</phase>
+            <goals>
+              <goal>aggregate-pmd</goal>
+              <goal>aggregate-cpd</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <version>3.12.0</version>
+        <executions>
+          <execution>
+            <id>aggregate-javadoc</id>
+            <phase>package</phase>
+            <goals>
+              <goal>aggregate-no-fork</goal>
+              <goal>aggregate-jar</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+
     <pluginManagement>
       <plugins>
         <plugin>
@@ -89,4 +170,5 @@
       </plugins>
     </pluginManagement>
   </build>
+  
 </project>
