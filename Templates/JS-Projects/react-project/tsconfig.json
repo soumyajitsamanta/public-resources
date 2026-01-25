@@ -1,0 +1,37 @@
+{
+  "compilerOptions": {
+    // "rootDir": "./src",
+    // "outDir": "./dist",
+
+    // Environment Settings
+    "module": "es2022",
+    "moduleResolution": "bundler",
+    "target": "es2022",
+    "lib": ["DOM", "DOM.Iterable"],
+
+    // Other Outputs
+    // "sourceMap": true,
+    // "declaration": true,
+    // "declarationMap": true,
+
+    // Style Options
+    "noImplicitReturns": true,
+    "noImplicitOverride": true,
+
+    // Recommended Options
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    // "exactOptionalPropertyTypes": true,
+    // "verbatimModuleSyntax": true,
+    "isolatedModules": true,
+    "noUncheckedSideEffectImports": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+
+    // Preact configs
+    "jsx": "react-jsx",
+    // "jsxImportSource": "preact",
+    "baseUrl": "./",
+    "moduleDetection": "force",
+  }
+}

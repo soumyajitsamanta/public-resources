@@ -1,0 +1,1 @@
+For the vite created project use `npm create vite@latest project-name -- --template react-ts`. Similarly for preact-ts, react, preact
