@@ -4,7 +4,6 @@ if [ $is_Git_AlreadyDone = 'y' ];
 then 
     echo "Installing Alias s=status, g=log graph"
     git config --global alias.s status
-    git config --global alias.g "log --graph --all --oneline --date=iso"
 fi
 
 echo ""
@@ -47,4 +46,4 @@ echo " - VSCodium"
 echo " - LaTeX if journal formatted documents needed"
 echo " - SDL Library"
 echo " - Compilers and their collections e.g. GCC,TCC"
-echo " - LibreOffice"
+echo " - OnlyOffice"
